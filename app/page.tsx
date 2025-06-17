@@ -32,6 +32,8 @@ export default function Home() {
   const [hoveredMenu, setHoveredMenu] = React.useState<number | null>(null);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = React.useState(false);
   const [currentBanner, setCurrentBanner] = React.useState(0);
+  const [animateIn, setAnimateIn] = React.useState(false);
+  const [isPaused, setIsPaused] = React.useState(false);
 
   const bannerData = [
     {
@@ -104,12 +106,24 @@ export default function Home() {
 
   // 5초마다 배너 자동 전환
   React.useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentBanner((prev) => (prev + 1) % bannerData.length);
-    }, 5000);
+    let timer: NodeJS.Timeout;
+    if (!isPaused) {
+      timer = setInterval(() => {
+        setCurrentBanner((prev) => (prev + 1) % bannerData.length);
+      }, 5000);
+    }
 
     return () => clearInterval(timer);
-  }, []);
+  }, [isPaused]);
+
+  // Animation trigger for banner content
+  React.useEffect(() => {
+    setAnimateIn(false); // Reset animation state
+    const timeoutId = setTimeout(() => {
+      setAnimateIn(true); // Trigger slide-in animation
+    }, 50); // Small delay to allow initial state to render
+    return () => clearTimeout(timeoutId);
+  }, [currentBanner]);
 
   // Debugging log
   React.useEffect(() => {
@@ -258,7 +272,16 @@ export default function Home() {
             </form>
           </div>
           {/* 프로모션 텍스트 & 이미지 */}
-          <div className="flex-1 flex flex-col items-start text-white relative pl-0 md:pl-8">
+          <div 
+            key={currentBanner}
+            className={`
+              flex-1 flex flex-col items-start text-white relative pl-0 md:pl-8
+              transition-all duration-500 ease-out
+              ${
+                animateIn ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
+              }
+            `}
+          >
             <div 
               className="text-xs md:text-sm font-semibold mb-1 transition-colors duration-500"
               style={{ color: bannerData[currentBanner].bgColor === '#3a8094' ? 'white' : 'white' }}
@@ -292,12 +315,24 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {/* 슬라이드 인디케이터 */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-1 z-20">
+        {/* 슬라이드 인디케이터 및 재생/일시정지 버튼 */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20 items-center">
+          <button 
+            onClick={() => setIsPaused(!isPaused)}
+            className="text-white opacity-80 hover:opacity-100 transition-opacity duration-200 p-1 rounded-full bg-black/20"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+              <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
+            </svg>
+          </button>
           {bannerData.map((_, index) => (
             <div
               key={index}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              onClick={() => {
+                setCurrentBanner(index);
+                setIsPaused(true); // Pause on manual selection
+              }}
+              className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
                 currentBanner === index ? 'bg-white scale-125' : 'bg-white/50'
               }`}
             />
