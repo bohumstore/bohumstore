@@ -1,18 +1,19 @@
 "use client";
 import Image from "next/image";
 import React from "react";
+import { HomeIcon, UserGroupIcon, FireIcon, HeartIcon, UserIcon, BriefcaseIcon, CurrencyDollarIcon, ScaleIcon, ChartBarIcon, AcademicCapIcon } from "@heroicons/react/24/solid";
 
 const navItems = [
-  { label: "종합", icon: "🔷", mobileIcon: "📦", subItems: ["실손의료보험", "질병보험", "상해보험", "입원보험"] },
-  { label: "어린이", icon: "👶", mobileIcon: "👶", subItems: ["어린이보험", "교육보험", "어린이실손보험"] },
-  { label: "암·뇌·심장", icon: "🔥", mobileIcon: "🫀", subItems: ["화재보험", "재물보험", "배상책임보험"] },
-  { label: "수술비", icon: "❤️", mobileIcon: "💉", subItems: ["암보험", "뇌혈관보험", "심장질환보험"] },
-  { label: "유병자", icon: "💚", mobileIcon: "🏥", subItems: ["정기보험", "종신보험", "연금보험"] },
-  { label: "간병인", icon: "🚗", mobileIcon: "👨‍⚕️", subItems: ["운전자보험", "자동차보험", "교통사고보험"] },
-  { label: "종신", icon: "🦷", mobileIcon: "🦷", subItems: ["치아보험", "치과보험", "치아교정보험"] },
-  { label: "연금", icon: "👨‍👩‍👧", mobileIcon: "💰", subItems: ["유병자보험", "만성질환보험", "장애인보험"] },
-  { label: "배상책임", icon: "🐾", mobileIcon: "⚖️", subItems: ["반려동물보험", "애완동물보험", "수의사비용보험"] },
-  { label: "보장분석", icon: "📊", mobileIcon: "📊", subItems: ["보험료계산", "보장내용분석", "보험가입가이드"] }
+  { label: "종합", icon: <HomeIcon className="w-5 h-5 text-pink-300" />, mobileIcon: "📦", subItems: ["실손의료보험", "질병보험", "상해보험", "입원보험"] },
+  { label: "어린이", icon: <UserGroupIcon className="w-5 h-5 text-yellow-300" />, mobileIcon: "��", subItems: ["어린이보험", "교육보험", "어린이실손보험"] },
+  { label: "암·뇌·심장", icon: <FireIcon className="w-5 h-5 text-orange-300" />, mobileIcon: "🫀", subItems: ["화재보험", "재물보험", "배상책임보험"] },
+  { label: "수술비", icon: <HeartIcon className="w-5 h-5 text-red-300" />, mobileIcon: "💉", subItems: ["암보험", "뇌혈관보험", "심장질환보험"] },
+  { label: "유병자", icon: <UserIcon className="w-5 h-5 text-green-300" />, mobileIcon: "🏥", subItems: ["정기보험", "종신보험", "연금보험"] },
+  { label: "간병인", icon: <BriefcaseIcon className="w-5 h-5 text-blue-300" />, mobileIcon: "👨‍⚕️", subItems: ["운전자보험", "자동차보험", "교통사고보험"] },
+  { label: "종신", icon: <AcademicCapIcon className="w-5 h-5 text-purple-300" />, mobileIcon: "🦷", subItems: ["치아보험", "치과보험", "치아교정보험"] },
+  { label: "연금", icon: <CurrencyDollarIcon className="w-5 h-5 text-yellow-200" />, mobileIcon: "💰", subItems: ["유병자보험", "만성질환보험", "장애인보험"] },
+  { label: "배상책임", icon: <ScaleIcon className="w-5 h-5 text-indigo-300" />, mobileIcon: "⚖️", subItems: ["반려동물보험", "애완동물보험", "수의사비용보험"] },
+  { label: "보장분석", icon: <ChartBarIcon className="w-5 h-5 text-cyan-300" />, mobileIcon: "📊", subItems: ["보험료계산", "보장내용분석", "보험가입가이드"] }
 ];
 
 const mainCategories = [
@@ -156,36 +157,45 @@ export default function Home() {
         }
       `}</style>
       {/* 상단 네비게이션 */}
-      <header className={`relative bg-white border-b border-gray-200 ${isMegaMenuOpen ? "shadow-lg" : ""}`}>
-        <div className="max-w-7xl mx-auto flex flex-col items-center justify-center px-4 py-6 border-b border-gray-200">
+      <header className={`sticky top-0 z-50 bg-white border-b border-gray-200 ${isMegaMenuOpen ? "shadow-lg" : ""}`}>
+        <div className="w-full flex flex-col items-center justify-center px-4 py-6 border-b border-gray-200">
           <div className="flex items-center justify-center w-full">
             <Image src="/bohumstore-logo.png" alt="보험스토어 로고" height={60} width={220} priority />
           </div>
         </div>
-        <div className="max-w-7xl mx-auto">
-          <nav
-            className="grid grid-cols-5 md:flex md:flex-nowrap md:gap-2 lg:gap-4 px-2 sm:px-4 py-3 font-semibold text-gray-800 md:justify-center overflow-x-auto"
-            onMouseLeave={handleMenuLeave}
-          >
-            {navItems.map((item, idx) => (
-              <div
-                key={item.label}
-                className="relative"
-                onMouseEnter={() => handleMenuEnter(idx)}
-              >
-                <a
-                  href="#"
-                  className={`px-2 md:px-3 py-2 rounded-full transition-colors duration-150 whitespace-nowrap text-sm sm:text-base md:text-lg border-b-2 border-transparent hover:border-[#3a8094] flex flex-col md:flex-row items-center gap-1 md:gap-2 ${
-                    hoveredMenu === idx && isMegaMenuOpen
-                      ? "text-[#3a8094] font-bold border-[#3a8094]"
-                      : "hover:text-[#3a8094]"
-                  }`}
+        <div className="w-full">
+          {/* 모바일 메뉴 (md 미만에서만 보임) */}
+          <nav className="w-full border-b border-gray-200 bg-white md:hidden px-2 py-2">
+            <div className="grid grid-cols-5 gap-2">
+              {navItems.map((item) => (
+                <button
+                  key={item.label}
+                  className="flex flex-col items-center justify-center rounded-xl bg-white shadow-sm py-2 px-1 text-xs font-semibold transition hover:bg-blue-50"
                 >
-                  <span className="text-xl md:text-2xl">{item.mobileIcon}</span>
-                  <span className="text-center md:text-left">{item.label}</span>
-                </a>
-              </div>
-            ))}
+                  <span>{item.icon}</span>
+                  <span className="mt-1">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          </nav>
+          {/* 웹 메뉴 (md 이상에서만 보임) */}
+          <nav className="w-full border-b border-gray-200 bg-white hidden md:block">
+            <ul className="flex justify-center items-center gap-6">
+              {navItems.map((item, idx) => (
+                <li key={item.label}>
+                  <a
+                    href="#"
+                    className={`flex items-center gap-2 px-3 py-5 text-[1.1875rem] font-semibold border-b-2 border-transparent transition-colors duration-150
+                      ${hoveredMenu === idx && isMegaMenuOpen ? "text-[#3a8094] !border-[#3a8094]" : "hover:text-[#3a8094] hover:!border-[#3a8094]"}
+                    `}
+                    onMouseEnter={() => handleMenuEnter(idx)}
+                  >
+                    <span>{item.icon}</span>
+                    <span>{item.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </nav>
         </div>
 
@@ -200,14 +210,12 @@ export default function Home() {
               {navItems.map((item, idx) => (
                 <div
                   key={item.label}
-                  className={`px-3 py-2 transition-colors h-full border border-gray-200 rounded-md ${
-                    hoveredMenu === idx
-                      ? "bg-blue-50 border-blue-200 z-10"
-                      : ""}
+                  className={`px-3 py-2 rounded-lg transition ${
+                    hoveredMenu === idx ? "bg-blue-50" : ""
                   }`}
                 >
                   <div
-                    className={`font-bold mb-1 text-sm md:text-base flex items-center gap-1 ${
+                    className={`font-bold mb-1 text-sm md:text-base flex items-center gap-1 transition-all duration-200 ${
                       hoveredMenu === idx ? "text-[#3a8094]" : "text-gray-800"
                     }`}
                   >
@@ -218,7 +226,7 @@ export default function Home() {
                       <li key={subIdx}>
                         <a
                           href="#"
-                          className={`block px-1 py-0.5 rounded text-gray-700 text-xs md:text-sm hover:bg-blue-50 hover:text-blue-700 ${
+                          className={`block px-1 py-0.5 rounded text-gray-700 text-xs md:text-sm transition-all duration-150 hover:font-bold hover:scale-105 hover:text-blue-700 ${
                             hoveredMenu === idx ? "font-semibold" : ""
                           }`}
                         >
@@ -235,10 +243,10 @@ export default function Home() {
       </header>
 
       {/* 메인 프로모션 섹션 */}
-      <main className={`w-full py-12 md:py-20 relative overflow-hidden transition-colors duration-500`} style={{ backgroundColor: bannerData[currentBanner].bgColor }}>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start gap-8 px-4 relative z-10">
+      <main className={`w-full py-12 md:py-20 relative overflow-hidden transition-colors duration-500 ${isMegaMenuOpen ? 'blur-sm' : ''}`} style={{ backgroundColor: bannerData[currentBanner].bgColor }}>
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center md:items-start gap-8 px-4 relative z-10 min-h-[60vh] md:min-h-0">
           {/* 상품 검색/상담 폼 */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md">
+          <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md order-1">
             <h2 className="text-lg font-bold mb-4 text-gray-800">어떤 상품을 찾으세요?</h2>
             <div className="flex flex-wrap gap-2 mb-4">
               {bannerData.map((banner, index) => (
@@ -275,34 +283,21 @@ export default function Home() {
           <div 
             key={currentBanner}
             className={`
-              flex-1 flex flex-col items-start text-white relative pl-0 md:pl-8
+              flex-1 flex flex-col items-center md:items-start text-white relative pl-0 md:pl-8 text-center md:text-left order-2 md:order-2
               transition-all duration-500 ease-out
               ${
                 animateIn ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
               }
             `}
           >
-            <div 
-              className="text-xs md:text-sm font-semibold mb-1 transition-colors duration-500"
-              style={{ color: bannerData[currentBanner].bgColor === '#3a8094' ? 'white' : 'white' }}
-            >
-              {bannerData[currentBanner].category} 가입자 10만명 돌파!
-            </div>
-            <div className="text-xl md:text-3xl font-extrabold mb-2 leading-tight">
-              {bannerData[currentBanner].title}
-            </div>
-            <div className="text-2xl md:text-4xl font-extrabold mb-4 leading-tight">
-              {bannerData[currentBanner].subtitle}
-            </div>
-            <ul className="mb-6 text-sm md:text-lg font-medium list-none space-y-1">
+            <p className="text-base md:text-lg font-semibold mb-2" style={{color: bannerData[currentBanner].bgColor}}>{bannerData[currentBanner].category}</p>
+            <p className="text-2xl md:text-3xl font-bold mb-1">{bannerData[currentBanner].title}</p>
+            <p className="text-xl md:text-2xl font-bold mb-4">{bannerData[currentBanner].subtitle}</p>
+            <ul className="list-disc pl-4 space-y-2 text-base md:text-lg">
               {bannerData[currentBanner].features.map((feature, index) => (
-                <li key={index} className="flex items-center gap-2">
-                  <span className="text-green-300">✔</span> {feature}
-                </li>
+                <li key={index}>{feature}</li>
               ))}
             </ul>
-            <p className="text-xs opacity-70">*의료비 II 특약 고급형 기준</p>
-            
             {/* 이미지 (강아지, 고양이, 구급상자, 보장확대) */}
             <div className="absolute bottom-[-100px] right-[-150px] w-[500px] h-[400px] md:w-[750px] md:h-[550px] hidden md:block z-0">
                 <Image 
@@ -343,24 +338,27 @@ export default function Home() {
       </main>
 
       {/* 하단 주요 상품 아이콘 메뉴 */}
-      <section className="bg-white py-8 border-t border-gray-200">
+      <section className={`bg-white py-8 border-t border-gray-200 transition-all duration-300 ${isMegaMenuOpen ? 'blur-sm' : ''}`}>
         <div className="max-w-7xl mx-auto">
           <div
-            className="flex flex-nowrap justify-center gap-x-4 overflow-x-auto"
+            className="grid grid-cols-5 md:grid-cols-10 gap-4 justify-items-center"
           >
             {mainCategories.map((cat) => (
-              <div key={cat.label} className="flex flex-col items-center gap-2 w-[100px] flex-shrink-0">
-                <div className="w-20 h-20 flex items-center justify-center rounded-full bg-gray-100 text-4xl mb-1">
+              <div 
+                key={cat.label} 
+                className="flex flex-col items-center gap-2 w-full max-w-[100px] group cursor-pointer transition-all duration-300 hover:scale-105"
+              >
+                <div className="w-20 h-20 flex items-center justify-center rounded-full bg-gray-100 text-4xl mb-1 transition-all duration-300 group-hover:bg-blue-100 group-hover:shadow-lg">
                   {cat.icon}
                 </div>
-                <span className="text-sm font-semibold text-gray-700 text-center whitespace-nowrap">{cat.label}</span>
+                <span className="text-sm font-semibold text-gray-700 text-center whitespace-nowrap transition-colors duration-300 group-hover:text-blue-600">{cat.label}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
       {/* 푸터 */}
-      <footer className="bg-[#f8f8f8] border-t border-gray-200 py-8 mt-4">
+      <footer className={`bg-[#f8f8f8] border-t border-gray-200 py-8 mt-4 transition-all duration-300 ${isMegaMenuOpen ? 'blur-sm' : ''}`}>
         <div className="max-w-5xl mx-auto px-4 text-center text-gray-500 text-sm flex flex-col gap-2">
           <div className="font-bold text-gray-700">보험스토어</div>
           <div>대표: 홍길동 | 사업자등록번호: 123-45-67890 | 이메일: info@bohumstore.com</div>
