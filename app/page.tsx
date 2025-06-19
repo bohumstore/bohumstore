@@ -362,6 +362,9 @@ export default function Home() {
                       {item.badge && (
                         <span className="absolute top-2 right-3 px-1 py-0 rounded-full text-[10px] font-bold bg-red-500 text-white z-10 shadow animate-pulse">{item.badge}</span>
                       )}
+                      {item.label === '연금보험' && (
+                        <span className="absolute top-2 right-3 px-1 py-0 rounded-full text-[10px] font-bold bg-[#2563eb] text-white z-10 shadow animate-pulse">NEW</span>
+                      )}
                       {item.icon}
                       <span className="text-sm whitespace-nowrap ml-2">{item.label}</span>
                     </button>
@@ -418,6 +421,9 @@ export default function Home() {
                 >
                   {item.badge && (
                     <span className="absolute top-2 right-3 px-1 py-0 rounded-full text-[10px] font-bold bg-red-500 text-white z-10 shadow animate-pulse">{item.badge}</span>
+                  )}
+                  {item.label === '연금보험' && (
+                    <span className="absolute top-2 right-3 px-1 py-0 rounded-full text-[10px] font-bold bg-[#2563eb] text-white z-10 shadow animate-pulse">NEW</span>
                   )}
                   {item.icon}
                   <span className="text-sm whitespace-nowrap ml-2">{item.label}</span>
