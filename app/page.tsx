@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import { HomeIcon, UserGroupIcon, FireIcon, HeartIcon, UserIcon, BriefcaseIcon, CurrencyDollarIcon, ScaleIcon, ChartBarIcon, AcademicCapIcon } from "@heroicons/react/24/solid";
+import { HomeIcon, UserGroupIcon, FireIcon, HeartIcon, UserIcon, BriefcaseIcon, CurrencyDollarIcon, ScaleIcon, ChartBarIcon, AcademicCapIcon, TruckIcon, ShieldCheckIcon, SparklesIcon, ChatBubbleLeftRightIcon, MagnifyingGlassIcon, DocumentIcon, CalculatorIcon, HandRaisedIcon, Squares2X2Icon } from "@heroicons/react/24/outline";
 
 const navItems = [
   { label: "종합", icon: <HomeIcon className="w-5 h-5 text-pink-300" />, mobileIcon: "📦", subItems: ["실손의료보험", "질병보험", "상해보험", "입원보험"] },
@@ -35,6 +35,12 @@ export default function Home() {
   const [currentBanner, setCurrentBanner] = React.useState(0);
   const [animateIn, setAnimateIn] = React.useState(false);
   const [isPaused, setIsPaused] = React.useState(false);
+  // 햄버거 메뉴 오픈 상태
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  // 탭 상태: '보장별' 또는 '보험사별'
+  const [activeTab, setActiveTab] = React.useState<'보장별' | '보험사별'>('보장별');
+  // 메인 탭 상태: '보장별' 또는 '보험사별'
+  const [mainTab, setMainTab] = React.useState<'보장별' | '보험사별'>('보장별');
 
   const bannerData = [
     {
@@ -105,6 +111,49 @@ export default function Home() {
     }
   ];
 
+  // 보장별 상품 리스트 예시 (Outline SVG 아이콘, 파스텔톤 컬러, 20개 이상)
+  const coverageList = [
+    { label: '추천 원클릭 비교', icon: <HandRaisedIcon className="w-6 h-6 text-[#B4E197]" /> },
+    { label: '내보험찾기', icon: <MagnifyingGlassIcon className="w-6 h-6 text-[#A7C7E7]" /> },
+    { label: '유병자보험', icon: <UserIcon className="w-6 h-6 text-[#F7B267]" />, badge: 'HOT' },
+    { label: '무해지 건강보험', icon: <DocumentIcon className="w-6 h-6 text-[#B4AEE8]" /> },
+    { label: '수술·입원비보험', icon: <DocumentIcon className="w-6 h-6 text-[#B4E197]" /> },
+    { label: '암보험', icon: <FireIcon className="w-6 h-6 text-[#F4845F]" />, shimmer: true },
+    { label: '어린이보험', icon: <UserGroupIcon className="w-6 h-6 text-[#F7B267]" /> },
+    { label: '운전자보험', icon: <HomeIcon className="w-6 h-6 text-[#A7C7E7]" /> },
+    { label: '간호간병보험', icon: <BriefcaseIcon className="w-6 h-6 text-[#B4E197]" /> },
+    { label: '치매간병보험', icon: <ScaleIcon className="w-6 h-6 text-[#B4AEE8]" /> },
+    { label: '종신·정기보험', icon: <UserIcon className="w-6 h-6 text-[#B4E197]" /> },
+    { label: '연금보험', icon: <CurrencyDollarIcon className="w-6 h-6 text-[#B4E197]" /> },
+    { label: '치아보험', icon: <AcademicCapIcon className="w-6 h-6 text-[#A7C7E7]" /> },
+    { label: '골프·주택화재보험', icon: <ShieldCheckIcon className="w-6 h-6 text-[#B4E197]" /> },
+    { label: '6월 추천보험', icon: <SparklesIcon className="w-6 h-6 text-[#F7B267]" /> },
+    { label: '보험리모델링', icon: <ChartBarIcon className="w-6 h-6 text-[#B4E197]" /> },
+    { label: '보험나이계산기', icon: <CalculatorIcon className="w-6 h-6 text-[#A7C7E7]" /> },
+    { label: '뉴스&칼럼', icon: <ChatBubbleLeftRightIcon className="w-6 h-6 text-[#B4AEE8]" /> },
+  ];
+  // 보험사별 상품 리스트 예시 (아이콘 포함)
+  const companyList = [
+    { label: '삼성화재', icon: '🏢' },
+    { label: 'DB손해보험', icon: '🏢' },
+    { label: 'KB손해보험', icon: '🏢' },
+    { label: 'MG손해보험', icon: '🏢' },
+    { label: 'NH농협손해보험', icon: '🏢' },
+    { label: '롯데손해보험', icon: '🏢' },
+    { label: '메리츠화재', icon: '🏢' },
+    { label: '한화손해보험', icon: '🏢' },
+    { label: '현대해상', icon: '🏢' },
+    { label: '흥국화재', icon: '🏢' },
+    { label: 'AIA생명', icon: '🏢' },
+    { label: 'IBK연금보험', icon: '🏢' },
+    { label: '교보생명', icon: '🏢' },
+    { label: '동양생명', icon: '🏢' },
+    { label: '라이프생명', icon: '🏢' },
+    { label: '미래에셋생명', icon: '🏢' },
+    { label: '삼성생명', icon: '🏢' },
+    { label: '흥국생명', icon: '🏢' },
+  ];
+
   // 5초마다 배너 자동 전환
   React.useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -158,12 +207,27 @@ export default function Home() {
       `}</style>
       {/* 상단 네비게이션 */}
       <header className={`sticky top-0 z-50 bg-white border-b border-gray-200 ${isMegaMenuOpen ? "shadow-lg" : ""}`}>
-        <div className="w-full flex flex-col items-center justify-center px-4 py-6 border-b border-gray-200">
-          <div className="flex items-center justify-center w-full">
+        {/* 모바일: 로고+햄버거만 */}
+        <div className="flex items-center justify-between px-4 py-4 md:hidden border-b">
+          <button
+            className="p-2"
+            onClick={() => setIsDrawerOpen(true)}
+            aria-label="메뉴 열기"
+          >
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="text-gray-700">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <div className="flex-1 flex justify-center">
+            <Image src="/bohumstore-logo.png" alt="보험스토어 로고" height={40} width={120} className="h-10 w-auto md:h-[60px] md:w-[220px]" priority />
+          </div>
+          <div className="w-10" /> {/* 우측 여백 맞춤 */}
+        </div>
+        {/* 데스크탑: 네비게이션, 메가메뉴 등 */}
+        <div className="hidden md:block">
+          <div className="flex items-center justify-center w-full py-6 border-b border-gray-200">
             <Image src="/bohumstore-logo.png" alt="보험스토어 로고" height={60} width={220} priority />
           </div>
-        </div>
-        <div className="w-full">
           {/* 모바일 메뉴 (md 미만에서만 보임) */}
           <nav className="w-full border-b border-gray-200 bg-white md:hidden px-2 py-2">
             <div className="grid grid-cols-5 gap-2">
@@ -240,7 +304,141 @@ export default function Home() {
             </div>
           </div>
         )}
+        {/* 햄버거 메뉴 오버레이 (모바일) */}
+        {isDrawerOpen && (
+          <div className="fixed inset-0 z-[999] bg-gradient-to-b from-orange-100 to-white flex flex-col md:hidden animate-fadeIn">
+            {/* 상단 닫기 및 주요 아이콘 */}
+            <div className="flex items-center justify-between px-4 py-4 border-b bg-gradient-to-r from-orange-400 to-orange-300">
+              <span className="font-bold text-lg text-white">회원가입/로그인</span>
+              <button onClick={() => setIsDrawerOpen(false)} aria-label="닫기">
+                <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="text-white">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            {/* 주요 아이콘 메뉴 */}
+            <div className="grid grid-cols-4 gap-2 px-4 py-3 bg-white border-b">
+              <div className="flex flex-col items-center gap-1">
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-orange-100 text-orange-500 text-2xl mb-1">24h</div>
+                <span className="text-xs font-semibold text-gray-700 text-center">24시간 상담신청</span>
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-orange-100 text-orange-500 text-2xl mb-1">50D</div>
+                <span className="text-xs font-semibold text-gray-700 text-center">내보험찾기</span>
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-orange-100 text-orange-500 text-2xl mb-1">4AC</div>
+                <span className="text-xs font-semibold text-gray-700 text-center">상담게시판</span>
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-orange-100 text-orange-500 text-2xl mb-1">697</div>
+                <span className="text-xs font-semibold text-gray-700 text-center">자동차보험비교</span>
+              </div>
+            </div>
+            {/* 탭 UI */}
+            <div className="flex border-b bg-white">
+              <button
+                className={`flex-1 py-3 text-base font-semibold ${activeTab === '보장별' ? 'border-b-2 border-orange-500 text-orange-600 bg-orange-50' : 'text-gray-700 bg-white'}`}
+                onClick={() => setActiveTab('보장별')}
+              >
+                보장별 상품비교
+              </button>
+              <button
+                className={`flex-1 py-3 text-base font-semibold ${activeTab === '보험사별' ? 'border-b-2 border-orange-500 text-orange-600 bg-orange-50' : 'text-gray-700 bg-white'}`}
+                onClick={() => setActiveTab('보험사별')}
+              >
+                보험사별 상품비교
+              </button>
+            </div>
+            {/* 탭별 리스트 */}
+            <div className="flex-1 overflow-y-auto p-4 bg-white">
+              {activeTab === '보장별' ? (
+                <div className="grid grid-cols-2 gap-2">
+                  {coverageList.map((item) => (
+                    <button
+                      key={item.label}
+                      className={`flex flex-row items-center justify-start gap-2 py-2 px-2 pl-3 rounded-lg border border-gray-200 bg-white shadow-sm hover:shadow-md transition font-medium text-gray-800 min-h-[44px] text-left relative overflow-hidden`}
+                    >
+                      {item.badge && (
+                        <span className="absolute top-2 right-3 px-1 py-0 rounded-full text-[10px] font-bold bg-red-500 text-white z-10 shadow animate-pulse">{item.badge}</span>
+                      )}
+                      {item.icon}
+                      <span className="text-sm whitespace-nowrap ml-2">{item.label}</span>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-3 gap-3">
+                  {companyList.map((item) => (
+                    <button
+                      key={item.label}
+                      className="flex items-center gap-2 py-4 px-3 rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition font-medium text-gray-800"
+                    >
+                      <span className="text-xl">{item.icon}</span>
+                      <span className="text-xs">{item.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            {/* 하단 프로모션 영역 */}
+            <div className="bg-orange-50 border-t px-4 py-3">
+              <div className="font-bold text-orange-700 mb-2">6월 추천 간호간병보험</div>
+              <div className="bg-white rounded-lg shadow p-3 mb-2 text-xs text-gray-700">(무)A예게맞춘간편 3.5.5건강보험2307·무해지(납입중60%납입후50%)_간병인플랜</div>
+              <div className="font-bold text-orange-700 mb-2">6월 추천 실손의료보험</div>
+              <div className="bg-white rounded-lg shadow p-3 text-xs text-gray-700">(무)프로미라이프 실손의료비보험2404</div>
+            </div>
+          </div>
+        )}
       </header>
+
+      {/* 모바일 전용 탭+리스트 (헤더 아래) */}
+      <section className="md:hidden w-full bg-white border-b">
+        <div className="flex">
+          <button
+            className={`flex-1 py-3 text-base font-semibold ${mainTab === '보장별' ? 'border-b-2 border-blue-500 text-blue-600 bg-blue-50' : 'text-gray-700 bg-white'}`}
+            onClick={() => setMainTab('보장별')}
+          >
+            보장별 상품비교
+          </button>
+          <button
+            className={`flex-1 py-3 text-base font-semibold ${mainTab === '보험사별' ? 'border-b-2 border-blue-500 text-blue-600 bg-blue-50' : 'text-gray-700 bg-white'}`}
+            onClick={() => setMainTab('보험사별')}
+          >
+            보험사별 상품비교
+          </button>
+        </div>
+        <div className="p-3">
+          {mainTab === '보장별' ? (
+            <div className="grid grid-cols-2 gap-2">
+              {coverageList.map((item) => (
+                <button
+                  key={item.label}
+                  className={`flex flex-row items-center justify-start gap-2 py-2 px-2 pl-3 rounded-lg border border-gray-200 bg-white shadow-sm hover:shadow-md transition font-medium text-gray-800 min-h-[44px] text-left relative overflow-hidden`}
+                >
+                  {item.badge && (
+                    <span className="absolute top-2 right-3 px-1 py-0 rounded-full text-[10px] font-bold bg-red-500 text-white z-10 shadow animate-pulse">{item.badge}</span>
+                  )}
+                  {item.icon}
+                  <span className="text-sm whitespace-nowrap ml-2">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-3 gap-3">
+              {companyList.map((item) => (
+                <button
+                  key={item.label}
+                  className="flex items-center gap-2 py-4 px-3 rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition font-medium text-gray-800"
+                >
+                  <span className="text-xl">{item.icon}</span>
+                  <span className="text-xs">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* 메인 프로모션 섹션 */}
       <main className={`w-full py-12 md:py-20 relative overflow-hidden transition-colors duration-500 ${isMegaMenuOpen ? 'blur-sm' : ''}`} style={{ backgroundColor: bannerData[currentBanner].bgColor }}>
