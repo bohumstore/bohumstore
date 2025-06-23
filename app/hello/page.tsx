@@ -73,6 +73,7 @@ export default function HelloPage() {
                   <button type="button" className="ml-2 text-sm text-[#fa5a5a] underline hover:opacity-80 cursor-pointer">보기</button>
                 </div>
                 <button type="submit" className="w-full bg-[#3a8094] text-white font-bold rounded-xl py-4 text-lg hover:opacity-90 transition flex items-center justify-center gap-2 mt-2">
+                  <CalculatorIcon className="w-6 h-6" />
                   보험료 확인하기
                 </button>
                 <div className="flex flex-row gap-2 mt-2">
