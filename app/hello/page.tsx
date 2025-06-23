@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { coverageData } from '../data/coverageData';
 
 export default function HelloPage() {
   const [gender, setGender] = useState("");
@@ -236,13 +237,79 @@ export default function HelloPage() {
             </div>
           )}
           {activeTab === '보장 내용' && (
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-              <div className="flex-1">
-                <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">보험료가 부담된다면,<br />해약환급금 미지급형으로 선택하세요</div>
-                <div className="text-base text-gray-500 mb-6">납입기간 중에 보험을 해지할 경우 해약환급금이 없는 대신, 월 납입 보험료를 더 절약할 수 있습니다.</div>
+            <div className="space-y-12 px-4">
+              {/* 기본계약 */}
+              <div>
+                <div>
+                  <h3 className="text-2xl font-bold pb-4">{coverageData.basic.title}</h3>
+                </div>
+                <div className="mt-6">
+                  <div className="flex border-y-2 border-gray-400 py-4">
+                    <div className="w-1/4 font-bold">담보명</div>
+                    <div className="w-1/2 font-bold">보장내용</div>
+                    <div className="w-1/4 text-right font-bold">지급금액</div>
+                  </div>
+                  <div className="divide-y divide-gray-200">
+                    {coverageData.basic.items.map((item, index) => (
+                      <div key={index} className={`flex py-8 ${item.name === "일반상해사망" ? "border-b-2 border-gray-400" : ""}`}>
+                        <div className="w-1/4 text-lg">{item.name}</div>
+                        <div className="w-1/2 text-base text-gray-600">
+                          {item.description}
+                          {item.details && (
+                            <ul className="mt-2 space-y-1">
+                              {item.details.map((detail, idx) => (
+                                <li key={idx} className="text-sm text-gray-500">{detail}</li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                        <div className="w-1/4 text-lg text-right">{item.amount}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <div className="flex-1 flex justify-center items-center">
-                <img src="https://via.placeholder.com/220x160.png?text=해약환급금+일러스트" alt="해약환급금 일러스트" className="w-[220px] h-[160px] object-contain" />
+
+              {/* 선택계약 */}
+              <div>
+                <div>
+                  <h3 className="text-2xl font-bold pb-4">{coverageData.optional.title}</h3>
+                </div>
+                <div className="mt-6">
+                  <div className="flex border-y-2 border-gray-400 py-4">
+                    <div className="w-1/4 font-bold">담보명</div>
+                    <div className="w-1/2 font-bold">보장내용</div>
+                    <div className="w-1/4 text-right font-bold">지급금액</div>
+                  </div>
+                  <div className="divide-y divide-gray-200">
+                    {coverageData.optional.items.map((item, index) => (
+                      <div key={index} className={`flex py-8 ${item.name === "뇌혈관질환진단비" ? "border-b-2 border-gray-400" : ""}`}>
+                        <div className="w-1/4 text-lg">{item.name}</div>
+                        <div className="w-1/2 text-base text-gray-600">{item.description}</div>
+                        <div className="w-1/4 text-lg text-right">{item.amount}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 안내문구 */}
+                <div className="space-y-4 text-sm text-gray-500 mt-8">
+                  <p>※ 일반보험(무)와(과제4)에서 암(무)와(과제4)하면 약관에서 정한 각종 신생물로 분류되는 기타 파부의 각삭신생물, 비침윤의 각삭신생물을 제외한 모든 분야며, 암주장까지는 제포 포함계극물부터 90일이 되는 날의 다음 날 입니다.</p>
+                  <p>※ 상기 가입예시는 이해를 돕기 위한 것으로, 성별, 연령별로 가입 가능한 담보 및 가입금액은 달라질 수 있습니다. 예시된 담보 외에 가입 가능한 담보들은 전문 상담원을 통해 자세히 안내 받으실 수 있습니다.</p>
+                  
+                  <div className="bg-gray-50 p-6 rounded-lg mt-8">
+                    <div className="flex items-center gap-2 text-gray-700 font-medium mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                      </svg>
+                      <span className="text-lg">알아두실 사항</span>
+                    </div>
+                    <ul className="space-y-2">
+                      <li>• 상기 가입예시는 이해를 돕기 위한 것으로, 성별, 연령별로 가입 가능한 담보 및 가입금액은 달라질 수 있습니다. 예시된 담보 외에 가입 가능한 담보들은 전문 상담원을 통해 자세히 안내 받으실 수 있습니다.</li>
+                      <li>• 자세한 설명은 약관 및 상품설명서를 참조하시기 바랍니다.</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           )}
