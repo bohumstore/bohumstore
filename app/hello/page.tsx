@@ -6,9 +6,70 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 
 export default function HelloPage() {
   const [gender, setGender] = useState("");
+  const [name, setName] = useState("");
   const [birth, setBirth] = useState("");
+  const [phone, setPhone] = useState("");
   const [activeTab, setActiveTab] = useState('상품정보');
   const [showNotice, setShowNotice] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
+
+  const validateForm = () => {
+    if (!gender) {
+      alert("성별을 선택해주세요.");
+      return false;
+    }
+    if (!name) {
+      alert("이름을 입력해주세요.");
+      return false;
+    }
+    if (!birth) {
+      alert("생년월일을 입력해주세요.");
+      return false;
+    }
+    if (!phone) {
+      alert("연락처를 입력해주세요.");
+      return false;
+    }
+    if (!/^010\d{8}$/.test(phone)) {
+      alert("올바른 휴대폰 번호를 입력해주세요.");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validateForm()) {
+      // 폼이 유효한 경우의 처리
+      console.log("Form submitted:", { gender, name, birth, phone });
+    }
+  };
+
+  const handleConsult = () => {
+    if (validateForm()) {
+      // 상담신청 처리
+      console.log("Consultation requested:", { gender, name, birth, phone });
+    }
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // 숫자만 추출
+    const numbers = value.replace(/[^0-9]/g, '');
+    
+    // 11자리로 제한하고 010으로 시작하도록
+    if (numbers.length <= 11) {
+      if (numbers.length === 0) {
+        setPhone('010');
+      } else if (numbers.length <= 3) {
+        setPhone('010');
+      } else {
+        // 010이 아닌 다른 번호로 시작하려고 할 경우 010으로 강제
+        const validNumber = '010' + numbers.slice(3);
+        setPhone(validNumber);
+      }
+    }
+  };
 
   return (
     <div className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full">
@@ -45,30 +106,75 @@ export default function HelloPage() {
               <div className="absolute -top-6 left-1/2 -translate-x-1/2 flex items-center gap-2">
                 <div className="bg-[#3a8094] text-white text-base font-bold rounded-full px-6 py-2 shadow-lg">간편 계산</div>
               </div>
-              <form className="flex flex-col gap-4 mt-8">
+              <form className="flex flex-col gap-4 mt-8" onSubmit={handleSubmit}>
                 <div className="flex gap-4 items-center">
                   <span className="text-base font-bold text-gray-700">성별</span>
                   <label className="flex items-center gap-2 text-base font-semibold cursor-pointer">
-                    <input type="radio" name="gender" className="accent-[#3a8094] w-5 h-5 cursor-pointer" /> 남자
+                    <input 
+                      type="radio" 
+                      name="gender" 
+                      value="male"
+                      checked={gender === "male"}
+                      onChange={(e) => setGender(e.target.value)}
+                      className="accent-[#3a8094] w-5 h-5 cursor-pointer" 
+                    /> 남자
                   </label>
                   <label className="flex items-center gap-2 text-base font-semibold cursor-pointer">
-                    <input type="radio" name="gender" className="accent-[#3a8094] w-5 h-5 cursor-pointer" /> 여자
+                    <input 
+                      type="radio" 
+                      name="gender" 
+                      value="female"
+                      checked={gender === "female"}
+                      onChange={(e) => setGender(e.target.value)}
+                      className="accent-[#3a8094] w-5 h-5 cursor-pointer" 
+                    /> 여자
                   </label>
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className="text-base font-bold text-gray-700">이름</label>
-                  <input type="text" placeholder="이름을 입력하세요." className="border rounded px-3 py-2 text-base" />
+                  <input 
+                    type="text" 
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="이름을 입력하세요." 
+                    className="border rounded px-3 py-2 text-base" 
+                  />
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className="text-base font-bold text-gray-700">생년월일</label>
-                  <input type="text" placeholder="예) 900101" maxLength={6} className="border rounded px-3 py-2 text-base" />
+                  <input 
+                    type="text" 
+                    value={birth}
+                    onChange={(e) => setBirth(e.target.value)}
+                    placeholder="예) 900101" 
+                    maxLength={6} 
+                    className="border rounded px-3 py-2 text-base" 
+                  />
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className="text-base font-bold text-gray-700">연락처</label>
-                  <input type="text" placeholder="010 - 없이 입력하세요." className="border rounded px-3 py-2 text-base" />
+                  <input 
+                    type="text" 
+                    value={phone}
+                    onChange={handlePhoneChange}
+                    placeholder="010으로 시작하는 11자리" 
+                    className="border rounded px-3 py-2 text-base"
+                    maxLength={11}
+                    onFocus={(e) => {
+                      if (!phone) {
+                        setPhone('010');
+                      }
+                    }}
+                  />
                 </div>
                 <div className="flex justify-end items-center gap-2 mt-2">
-                  <input type="checkbox" id="agree" className="w-4 h-4 cursor-pointer" checked readOnly />
+                  <input 
+                    type="checkbox" 
+                    id="agree" 
+                    className="w-4 h-4 cursor-pointer accent-gray-200" 
+                    checked={isChecked}
+                    onChange={(e) => setIsChecked(e.target.checked)}
+                  />
                   <label htmlFor="agree" className="text-sm text-gray-700 select-none">
                     개인정보수집 및 활용동의
                   </label>
@@ -79,7 +185,11 @@ export default function HelloPage() {
                   보험료 확인하기
                 </button>
                 <div className="flex flex-row gap-2 mt-2">
-                  <button type="button" className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-4 text-lg flex items-center justify-center gap-2 hover:opacity-90 transition cursor-pointer">
+                  <button 
+                    type="button" 
+                    onClick={handleConsult}
+                    className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-4 text-lg flex items-center justify-center gap-2 hover:opacity-90 transition cursor-pointer"
+                  >
                     <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'><path strokeLinecap='round' strokeLinejoin='round' d='M2.25 12a9.75 9.75 0 1 1 19.5 0v3.375a2.625 2.625 0 0 1-2.625 2.625h-1.125a.375.375 0 0 1-.375-.375V15a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 0 .75-.75V12a8.25 8.25 0 1 0-16.5 0v1.5a.75.75 0 0 0 .75.75h.75A.75.75 0 0 1 6 15v2.625a.375.375 0 0 1-.375.375H4.5A2.625 2.625 0 0 1 1.875 15.375V12Z' /></svg>
                     상담신청
                   </button>
