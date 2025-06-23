@@ -84,7 +84,7 @@ export default function HelloPage() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-8 md:gap-12 px-4 md:py-4">
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
-            <div className="text-sm text-gray-500 mb-2">무배당 KB 연금보험2501(맞춤플랜)</div>
+            <div className="text-sm text-gray-500 mb-2">KB 트리플 레벨업 연금보험 무배당(보증형)</div>
             <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">KB 연금보험<br />노후를 위한 든든한 선택</h1>
             <ul className="mb-8 space-y-2">
               <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start"><span className="text-xl mr-2">✔</span>월납 연금보험, 중도인출/추가납입 가능</li>
@@ -409,8 +409,9 @@ export default function HelloPage() {
       <footer className="w-full bg-[#f8f8f8] border-t border-gray-200 py-8 mt-4">
         <div className="max-w-5xl mx-auto px-4 text-center text-gray-500 text-sm flex flex-col gap-2">
           <div className="font-bold text-gray-700">보험스토어</div>
-          <div>대표: 홍길동 | 사업자등록번호: 123-45-67890 | 이메일: info@bohumstore.com</div>
-          <div>주소: 서울특별시 강남구 테헤란로 123, 10층</div>
+          <div>(주)메타리치보험대리점 | 대리점등록번호: 제2023070016호</div>
+          <div>대표: 서지후 | 등록번호: 제20060383110008호</div>
+          <div>주소: 경기도 고양시 덕양구 꽃마을로 44, 4층(향동동,서원DMC타워)</div>
           <div className="mt-2">© {new Date().getFullYear()} BohumStore. All rights reserved.</div>
         </div>
       </footer>
