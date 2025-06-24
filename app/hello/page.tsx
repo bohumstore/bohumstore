@@ -4,15 +4,28 @@ import Image from "next/image";
 import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { coverageData } from '../data/coverageData';
+import React from "react";
+
+// 커스텀 애니메이션 keyframes (점프+반짝임)
+const style = (
+  <style jsx global>{`
+    @keyframes jump-glow {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 #3a80e0); }
+      30% { transform: scale(1.18) translateY(-6px); filter: drop-shadow(0 0 8px #87b7f0); }
+      60% { transform: scale(0.95) translateY(2px); filter: drop-shadow(0 0 0 #3a80e0); }
+    }
+  `}</style>
+);
 
 export default function HelloPage() {
   const [gender, setGender] = useState("");
   const [name, setName] = useState("");
   const [birth, setBirth] = useState("");
   const [phone, setPhone] = useState("");
-  const [activeTab, setActiveTab] = useState('상품정보');
+  const [activeTab, setActiveTab] = useState('상품 정보');
   const [showNotice, setShowNotice] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
+  const [showPrivacy, setShowPrivacy] = useState(false);
 
   const validateForm = () => {
     if (!gender) {
@@ -58,21 +71,62 @@ export default function HelloPage() {
     // 숫자만 추출
     const numbers = value.replace(/[^0-9]/g, '');
     
-    // 11자리로 제한하고 010으로 시작하도록
-    if (numbers.length <= 11) {
-      if (numbers.length === 0) {
-        setPhone('010');
-      } else if (numbers.length <= 3) {
-        setPhone('010');
+    // 010 이후 8자리만 입력 가능하도록
+    if (numbers.startsWith('010')) {
+      const remainingNumbers = numbers.slice(3);
+      if (remainingNumbers.length <= 8) {
+        setPhone('010' + remainingNumbers);
+      }
       } else {
         // 010이 아닌 다른 번호로 시작하려고 할 경우 010으로 강제
-        const validNumber = '010' + numbers.slice(3);
-        setPhone(validNumber);
-      }
+      setPhone('010');
     }
   };
 
+  // 개인정보 동의 전문 (모달용)
+  const privacyText = (
+    <div className="overflow-y-auto px-6 py-4 text-[15px] leading-relaxed" style={{maxHeight:'60vh'}}>
+      <div className="mb-4 font-bold text-lg">[개인 정보 수집 및 이용 동의]</div>
+      <div className="mb-4">㈜ 메타리치 보험스토어는 상담신청 및 보험상품 소개를 위해 고객님의 개인정보 수집, 이용 및 제공에 대한 동의를 받고 있습니다.</div>
+      <div className="mb-2 font-bold">▣ 개인정보 수집ㆍ이용 동의</div>
+      <div className="mb-2">당사 및 당사 업무수탁자는 「개인정보보호법」, 「정보통신망 이용촉진 및 정보 보호 등에 관한 법률」에 따라 귀하의 개인정보를 다음과 같이 수집·이용하고자 합니다.</div>
+      <div className="mb-2 font-semibold">1. 개인정보 수집 및 이용 목적</div>
+      <div className="mb-2">- 보험 상담 및 상품소개, 보험 리모델링 및 가입 권유를 위한 안내 및 서비스 제공</div>
+      <div className="mb-2 font-semibold">2. 개인정보 수집 및 이용 항목</div>
+      <div className="mb-2">- 이름, 성별, 생년월일, 연락처, IP주소</div>
+      <div className="mb-2 font-semibold">3. 개인정보 보유 및 이용기간</div>
+      <div className="mb-2">- 동의일로부터 5년</div>
+      <div className="mb-2 font-semibold">4. 동의를 거부할 권리 및 동의를 거부할 경우의 불이익</div>
+      <div className="mb-2">- 귀하는 개인정보 수집, 이용에 대한 동의를 거부할 권리가 있습니다.<br/>- 동의 거부시 보험계약 상담 등의 서비스를 받으실 수 없습니다.</div>
+      <div className="mb-2 font-bold">▣ 개인정보 제공에 관한 동의</div>
+      <div className="mb-2 font-semibold">1. 제공 받는 자</div>
+      <div className="mb-2">- 당사 소속 설계사, 당사의 모집 위탁 계약을 체결한 자 (대리점, 설계사)</div>
+      <div className="mb-2 font-semibold">2. 개인정보를 제공받는 자의 이용 목적</div>
+      <div className="mb-2">- 보험 상품/서비스 소개 및 상담</div>
+      <div className="mb-2 font-semibold">3. 제공하는 정보</div>
+      <div className="mb-2">- 이름, 성별, 생년월일, 연락처</div>
+      <div className="mb-2 font-semibold">4. 제공받는 자의 개인정보 보유 및 이용 기간</div>
+      <div className="mb-2">- 동의일로부터 5년</div>
+      <div className="mb-2 font-semibold">5. 동의를 거부할 권리 및 동의를 거부할 경우의 불이익</div>
+      <div className="mb-2">- 귀하는 개인정보 수집, 이용에 대한 동의를 거부할 권리가 있습니다.<br/>- 동의 거부 시 보험계약 상담 등의 서비스를 받으실 수 없습니다.</div>
+      <div className="mb-2 font-bold">▣ 개인정보 활용에 관한 동의</div>
+      <div className="mb-2">㈜메타리치  보험스토어는 「개인정보보호법」및「신용정보의 이용 및 보호에 관한 법률」에 따라 당사 상품소개 및 홍보 등을 위하여 귀하의 개인(신용)정보를 다음과 같이 수집ㆍ이용하고자 합니다.</div>
+      <div className="mb-2">* 동의 후 언제든지 동의 철회 중단을 요청하실 수 있습니다.</div>
+      <div className="mb-2 font-semibold">1. 수집항목</div>
+      <div className="mb-2">- 이름, 성별, 생년월일, 연락처, IP주소</div>
+      <div className="mb-2 font-semibold">2. 보유·이용기간</div>
+      <div className="mb-2">- 정보동의고객 : 동의일로부터 5년</div>
+      <div className="mb-2 font-semibold">3. 수집목적</div>
+      <div className="mb-2">상담신청에 대한 응대, 우편 · 전화 · 인터넷 · 방문 등을 통한 유익한 정보의 제공, 금융상품 소개 및 가입 권유, 재무설계서비스 및 기타 서비스의 제공 안내, 이벤트 · 행사의 안내 등 회사의 정상적인 영업에 관계된 행위</div>
+      <div className="mb-2">* 상담신청은 개인정보 활용 동의를 거부하셔도 전화로 상담을 진행할 수 있습니다.</div>
+      <div className="mb-2 font-bold">※ 동의 철회를 위한 안내</div>
+      <div>본 동의를 하시더라도 당사 고객센터를 통해 동의를 철회하거나 가입 권유 목적의 연락에 대한 중단을 요청하실 수 있습니다.</div>
+    </div>
+  );
+
   return (
+    <>
+      {style}
     <div className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full">
       {/* 상단 네비 - 로고만 가운데, 배경색 #f8f8f8, 연회색 경계선 */}
       <header className="w-full flex items-center justify-center py-6 px-4 md:px-12 bg-[#f8f8f8] border-b border-gray-200">
@@ -80,7 +134,13 @@ export default function HelloPage() {
       </header>
 
       {/* 브랜드 슬로건/보험료 확인 영역 (이미지 스타일) */}
-      <section className="w-full bg-[#ffe15a] py-4 md:py-6">
+        <section 
+          className="w-full bg-[#ffe15a] py-4 md:py-6"
+          style={{
+            backgroundImage: 'radial-gradient(#f8d34a 2px, transparent 2px)',
+            backgroundSize: '20px 20px',
+          }}
+        >
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-8 md:gap-12 px-4 md:py-4">
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
@@ -91,13 +151,40 @@ export default function HelloPage() {
               <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start"><span className="text-xl mr-2">✔</span>다양한 연금 지급 옵션, 맞춤형 설계</li>
               <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start"><span className="text-xl mr-2">✔</span>가입/상담 간편 신청</li>
             </ul>
-            <div className="relative w-[100px] h-[100px] md:w-[120px] md:h-[120px] flex items-center justify-center mx-auto md:mx-0">
-              <div className="absolute inset-0 rounded-full bg-[#ffe1e1] opacity-80" />
-              <img
-                src="https://via.placeholder.com/300x300.png?text=연금보험"
-                alt="연금보험 일러스트"
-                className="relative rounded-full w-[80px] h-[80px] md:w-[100px] md:h-[100px] object-cover border-8 border-white shadow-lg"
-              />
+              {/* 환급률/적립액 안내 UI */}
+              <div className="w-full max-w-full md:max-w-lg mx-auto bg-white rounded-xl shadow-md mb-6 p-4 px-2 md:px-0 md:py-8">
+                <div className="flex flex-row justify-between items-stretch md:items-end gap-4 md:gap-0 mb-2">
+                  <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
+                    <div className="inline-block bg-[#ff8c1a] text-white text-xs font-bold px-4 py-1 rounded-full mb-2">7년 시점</div>
+                    <div className="flex flex-col items-center">
+                      <span className="text-2xl md:text-5xl mb-1">💰</span>
+                      <div className="font-bold text-xs md:text-xl">환급률</div>
+                      <div className="text-xl md:text-4xl font-extrabold text-[#ff8c1a]">100%</div>
+                      <div className="text-xs text-gray-500 mt-1">* 5년납</div>
+                    </div>
+                  </div>
+                  <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
+                    <div className="inline-block bg-[#3a80e0] text-white text-xs font-bold px-4 py-1 rounded-full mb-2">10년 시점</div>
+                    <div className="flex flex-col items-center">
+                      <span className="text-2xl md:text-5xl mb-1">💰</span>
+                      <div className="font-bold text-xs md:text-xl">환급률</div>
+                      <div className="text-xl md:text-4xl font-extrabold text-[#3a80e0] animate-[jump-glow_1.2s_ease-in-out_infinite]">130%</div>
+                      <div className="text-xs text-gray-500 mt-1 whitespace-nowrap">* 5년납</div>
+                    </div>
+                  </div>
+                  <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
+                    <div className="inline-block bg-[#e23c3c] text-white text-xs font-bold px-4 py-1 rounded-full mb-2">연금개시 시점</div>
+                    <div className="flex flex-col items-center">
+                      <span className="text-2xl md:text-5xl mb-1">🐷</span>
+                      <div className="font-bold text-xs md:text-xl">계약자적립액</div>
+                      <div className="text-lg md:text-4xl font-extrabold text-[#e23c3c]">2.0%</div>
+                      <div className="text-xs text-gray-500 mt-1">* 10년 이후 매년 2% 증가</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-xs text-gray-500 text-center mt-4">
+                  * 환급률은 트리플 레벨업 보증률 반영한 금액 입니다.
+                </div>
             </div>
             <div className="text-xs text-gray-400 mt-4">준법감시인 심의필 제2025-광고-1168호(2025.06.05~2026.06.04)</div>
           </div>
@@ -147,7 +234,7 @@ export default function HelloPage() {
                     type="text" 
                     value={birth}
                     onChange={(e) => setBirth(e.target.value)}
-                    placeholder="예) 900101" 
+                      placeholder="예) 880818" 
                     maxLength={6} 
                     className="border rounded px-3 py-2 text-base" 
                   />
@@ -158,12 +245,17 @@ export default function HelloPage() {
                     type="text" 
                     value={phone}
                     onChange={handlePhoneChange}
-                    placeholder="010으로 시작하는 11자리" 
+                      placeholder="010 전화번호 8자리" 
                     className="border rounded px-3 py-2 text-base"
                     maxLength={11}
                     onFocus={(e) => {
-                      if (!phone) {
+                        if (!phone || phone === '010') {
                         setPhone('010');
+                      }
+                    }}
+                      onBlur={(e) => {
+                        if (phone === '010') {
+                          setPhone('');
                       }
                     }}
                   />
@@ -179,7 +271,7 @@ export default function HelloPage() {
                   <label htmlFor="agree" className="text-sm text-gray-700 select-none">
                     개인정보수집 및 활용동의
                   </label>
-                  <button type="button" className="ml-2 text-sm text-[#fa5a5a] underline hover:opacity-80 cursor-pointer">보기</button>
+                    <button type="button" className="ml-2 text-sm text-[#fa5a5a] underline hover:opacity-80 cursor-pointer" onClick={() => setShowPrivacy(true)}>보기</button>
                 </div>
                 <button type="submit" className="w-full bg-[#3a8094] text-white font-bold rounded-xl py-4 text-lg hover:opacity-90 transition flex items-center justify-center gap-2 mt-2 cursor-pointer">
                   <CalculatorIcon className="w-6 h-6" />
@@ -194,10 +286,15 @@ export default function HelloPage() {
                     <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'><path strokeLinecap='round' strokeLinejoin='round' d='M2.25 12a9.75 9.75 0 1 1 19.5 0v3.375a2.625 2.625 0 0 1-2.625 2.625h-1.125a.375.375 0 0 1-.375-.375V15a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 0 .75-.75V12a8.25 8.25 0 1 0-16.5 0v1.5a.75.75 0 0 0 .75.75h.75A.75.75 0 0 1 6 15v2.625a.375.375 0 0 1-.375.375H4.5A2.625 2.625 0 0 1 1.875 15.375V12Z' /></svg>
                     상담신청
                   </button>
-                  <button type="button" className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-4 text-lg flex items-center justify-center gap-2 hover:opacity-90 transition cursor-pointer">
+                    <a 
+                      href="http://pf.kakao.com/_lrubxb/chat" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-4 text-lg flex items-center justify-center gap-2 hover:opacity-90 transition cursor-pointer"
+                    >
                     <ChatBubbleLeftRightIcon className="w-6 h-6" />
                     채팅 상담하기
-                  </button>
+                    </a>
                 </div>
               </form>
             </div>
@@ -210,10 +307,10 @@ export default function HelloPage() {
         <div className="max-w-5xl mx-auto px-4">
           {/* 탭 네비게이션 */}
           <div className="flex border-b border-gray-200 mb-10">
-            {['상품정보', '보장 내용'].map(tab => (
+              {['상품 정보', '보장 내용', '해약환급금 예시표'].map(tab => (
               <button
                 key={tab}
-                className={`flex-1 text-2xl md:text-3xl font-extrabold pb-4 border-b-4 transition-colors duration-200 ${activeTab === tab ? 'border-[#3a8094] text-[#3a8094]' : 'border-transparent text-[#333] hover:text-[#3a8094]'} cursor-pointer`}
+                  className={`flex-1 text-lg md:text-3xl font-extrabold pb-4 border-b-4 transition-colors duration-200 ${activeTab === tab ? 'border-[#3a8094] text-[#3a8094]' : 'border-transparent text-[#333] hover:text-[#3a8094]'} cursor-pointer`}
                 onClick={() => setActiveTab(tab)}
                 style={{ minWidth: 0 }}
               >
@@ -223,103 +320,340 @@ export default function HelloPage() {
           </div>
 
           {/* 탭별 내용 */}
-          {activeTab === '상품정보' && (
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-              <div className="flex-1">
-                <div className="text-2xl md:text-3xl font-bold text-[#3a8094] mb-4">곧 만날 우리 아이를 위한 신생아플랜, 출생부터 100세까지</div>
-                <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">성장단계별 발생할 수 있는<br />상해사고, 질병에 대비하세요.</div>
-                <div className="text-lg text-gray-700 mb-2">(특약)</div>
-                <div className="text-base text-gray-500 mb-6">성인 암 진단비, 뇌혈관질환진단비, 심장질환진단비, 각종 수술비 보장 (특약)</div>
+            {activeTab === '상품 정보' && (
+              <div className="space-y-8 px-4 py-6">
+                {/* 가입안내 제목 */}
+                <h2 className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2">가입안내</h2>
+
+                {/* 상품 구성 */}
+                <div className="space-y-4">
+                  <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">상품 구성</h3>
+                  <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <div className="space-y-4">
+                      <div className="flex flex-col md:flex-row md:items-center border-b border-gray-200 pb-4">
+                        <div className="w-32 font-bold text-[#1e3a8a]">주계약</div>
+                        <div className="flex-1 space-y-1">
+                          <div>KB 트리플 레벨업 연금보험 무배당(보증형)</div>
+                          <div>KB 트리플 레벨업 연금보험 무배당(미보증형)</div>
+                        </div>
+                      </div>
+                      <div className="flex flex-col md:flex-row md:items-center">
+                        <div className="w-32 font-bold text-[#1e3a8a]">제도성특약</div>
+                        <div>지정대리 청구서비스특약</div>
               </div>
-              <div className="flex-1 flex justify-center items-center">
-                <img src="https://via.placeholder.com/240x180.png?text=일러스트" alt="특약 일러스트" className="w-[240px] h-[180px] object-contain" />
               </div>
             </div>
-          )}
-          {activeTab === '보장 내용' && (
-            <div className="space-y-12 px-4">
-              {/* 기본계약 */}
-              <div>
-                <div>
-                  <h3 className="text-2xl font-bold pb-4">{coverageData.basic.title}</h3>
                 </div>
-                <div className="mt-6">
-                  <div className="flex border-y-2 border-gray-400 py-4">
-                    <div className="w-1/4 font-bold">담보명</div>
-                    <div className="w-1/2 font-bold">보장내용</div>
-                    <div className="w-1/4 text-right font-bold">지급금액</div>
-                  </div>
-                  <div className="divide-y divide-gray-200">
-                    {coverageData.basic.items.map((item, index) => (
-                      <div key={index} className={`flex py-8 ${item.name === "일반상해사망" ? "border-b-2 border-gray-400" : ""}`}>
-                        <div className="w-1/4 text-lg">{item.name}</div>
-                        <div className="w-1/2 text-base text-gray-600">
-                          {item.description}
-                          {item.details && (
-                            <ul className="mt-2 space-y-1">
-                              {item.details.map((detail, idx) => (
-                                <li key={idx} className="text-sm text-gray-500">{detail}</li>
-                              ))}
-                            </ul>
-                          )}
+
+                {/* 연금지급형태, 연금개시나이, 보험기간 및 납입주기 */}
+                <div className="space-y-4">
+                  <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">연금지급형태, 연금개시나이, 보험기간 및 납입주기</h3>
+                  <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <div className="space-y-6">
+                      <div className="flex flex-col md:flex-row border-b border-gray-200 pb-4">
+                        <div className="w-32 font-bold text-[#1e3a8a]">연금지급형태</div>
+                        <div className="flex-1">
+                          종신연금형<br />
+                          ~ 20년보증, 100세보증 또는 기대여명보증
                         </div>
-                        <div className="w-1/4 text-lg text-right">{item.amount}</div>
                       </div>
-                    ))}
+                      <div className="flex flex-col md:flex-row border-b border-gray-200 pb-4">
+                        <div className="w-32 font-bold text-[#1e3a8a]">연금개시나이</div>
+                        <div>45세 ~ 85세</div>
+                      </div>
+                      <div className="flex flex-col md:flex-row border-b border-gray-200 pb-4">
+                        <div className="w-32 font-bold text-[#1e3a8a]">보험기간</div>
+                        <div className="flex-1 space-y-4">
+                          <div>
+                            <div className="font-bold">연금개시전 보험기간</div>
+                            <div>보험가입일부터 연금지급개시 계약해당일 전일까지</div>
+                          </div>
+                          <div>
+                            <div className="font-bold">연금개시후 보험기간</div>
+                            <div>연금지급개시 계약해당일부터 종신까지</div>
                   </div>
+                        </div>
+                      </div>
+                      <div className="flex flex-col md:flex-row">
+                        <div className="w-32 font-bold text-[#1e3a8a]">보험료납입주기</div>
+                        <div>월납</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-blue-50 p-4 rounded-lg space-y-2 text-sm">
+                    <p>주1) 보험가입시점의 연금지급형태는 종신연금형으로 정해지며, 계약자는 연금지급개시전까지 약관에 따라 연금지급형태를 변경할 수 있습니다.</p>
+                    <p>주2) '기대여명'은 통계청 제18호(통계청장의 승인)에 의해 통계청장이 승인하여 고시하는 기대사망 통계표에 따른 만나이별의 성별·연령별 기대여명연수(소수점 이하는 버림)를 말하며, 피보험자의 연금개시나이를 기준으로 산정합니다. 단만, 기대여명이 5년 미만인 경우 기대여명은 5년으로 하며, 이 경우에는 관련 세제혜택에 제한될 수 있습니다.</p>
                 </div>
               </div>
 
-              {/* 선택계약 */}
-              <div>
-                <div>
-                  <h3 className="text-2xl font-bold pb-4">{coverageData.optional.title}</h3>
+                {/* 보험료 납입기간, 최소거치기간 및 가입나이 */}
+                <div className="space-y-4">
+                  <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">보험료 납입기간, 최소거치기간 및 가입나이</h3>
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="bg-[#1e3a8a] text-white">
+                        <th className="border border-gray-300 p-3">보험료납입기간</th>
+                        <th className="border border-gray-300 p-3">최소거치기간</th>
+                        <th className="border border-gray-300 p-3">가입나이</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="border border-gray-300 p-3 text-center">5년납</td>
+                        <td className="border border-gray-300 p-3 text-center">10년</td>
+                        <td className="border border-gray-300 p-3 text-center" rowSpan={3}>
+                          0세 ~ MIN [연금개시나이- 15, 70] 세
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="border border-gray-300 p-3 text-center">7년납</td>
+                        <td className="border border-gray-300 p-3 text-center">8년</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-gray-300 p-3 text-center">10년납</td>
+                        <td className="border border-gray-300 p-3 text-center">5년</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p className="text-sm text-gray-600">※ 최소거치기간 : 보험료 납입완료후 연금지급개시시점까지의 최소기간</p>
                 </div>
-                <div className="mt-6">
-                  <div className="flex border-y-2 border-gray-400 py-4">
-                    <div className="w-1/4 font-bold">담보명</div>
-                    <div className="w-1/2 font-bold">보장내용</div>
-                    <div className="w-1/4 text-right font-bold">지급금액</div>
+
+                {/* 보험료에 관한 사항 */}
+                <div className="space-y-6">
+                  <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">보험료에 관한 사항</h3>
+                  
+                  {/* 기본보험료 */}
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-bold text-[#1e3a8a] border-b border-[#1e3a8a] pb-2">기본보험료</h4>
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr className="bg-[#1e3a8a] text-white">
+                          <th className="border border-gray-300 p-3">보험료납입기간</th>
+                          <th className="border border-gray-300 p-3">가입나이</th>
+                          <th className="border border-gray-300 p-3">최소보험료(1구좌당)</th>
+                          <th className="border border-gray-300 p-3">최대보험료(1구좌당)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="border border-gray-300 p-3 text-center">5년납</td>
+                          <td className="border border-gray-300 p-3 text-center">0세 ~ 70세</td>
+                          <td className="border border-gray-300 p-3 text-center">30만원</td>
+                          <td className="border border-gray-300 p-3 text-center" rowSpan={3}>100만원</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-gray-300 p-3 text-center">7년납</td>
+                          <td className="border border-gray-300 p-3 text-center">0세 ~ 70세</td>
+                          <td className="border border-gray-300 p-3 text-center">20만원</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-gray-300 p-3 text-center">10년납</td>
+                          <td className="border border-gray-300 p-3 text-center">0세 ~ 70세</td>
+                          <td className="border border-gray-300 p-3 text-center">10만원</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p className="text-sm text-gray-600">※ 구좌란 보험금과 보험료를 동일 금액비로 위한 계약의 단위를 의미하며, 구좌당 최소·최대 보험료 등은 보험 상품마다 차이가 있으므로 자세한 내용은 약관을 참고해 주시길 바랍니다.</p>
                   </div>
-                  <div className="divide-y divide-gray-200">
-                    {coverageData.optional.items.map((item, index) => (
-                      <div key={index} className={`flex py-8 ${item.name === "뇌혈관질환진단비" ? "border-b-2 border-gray-400" : ""}`}>
-                        <div className="w-1/4 text-lg">{item.name}</div>
-                        <div className="w-1/2 text-base text-gray-600">{item.description}</div>
-                        <div className="w-1/4 text-lg text-right">{item.amount}</div>
+
+                  {/* 추가납입보험료 */}
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-bold text-[#1e3a8a] border-b border-[#1e3a8a] pb-2">추가납입보험료</h4>
+                    <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 space-y-4">
+                      <p>(1) 추가납입보험료는 해당월까지 납입 가능한 기본보험료 납입총액(선납 포함)의 200%를 한도로 납입할 수 있으며, 중도인출에 관한 사항에 의한 인출금액이 있을 경우에는 그 금액만큼 추가로 납입이 가능합니다.</p>
+                      <p>(2) 추가납입보험료는 해당월까지 기본보험료가 납입된 경우에 한하여 납입할 수 있으며, 기본보험료와 같이 자동이체 서비스를 이용하여 추가납입을 하는 경우에는 기본보험료의 200%를 한도로 납입하실 수 있습니다.</p>
+                      <p>(3) 중도인출에 관한 사항에 의한 인출금액이 있을 경우, 그 금액만큼 해당월에는 추가납입보험료로 합니다.</p>
+                    </div>
+
+                    <div className="bg-blue-50 p-6 rounded-lg space-y-3">
+                      <div className="text-red-600">[보험료 추가납입제도 안내]</div>
+                      <div className="text-red-600 space-y-2">
+                        <p>- 이 보험계약은 기본보험료 이외에 보험기간중에 추가로 납입할 수 있는 추가적립보험료 납입제도를 운영하고 있으며, 이미 납입하고 있는 저축성보험에 추가납입 하실 경우 사업비 절감효과로 새로운 저축성보험에 추가가입하는 것 보다 해약환급률 및 만기환급금을 높일 수 있습니다.</p>
+                        <p>- 다만, 추가납입제도 및 횟수, 납입가능 기간 등은 해당상품에 따라 제한될 수 있습니다.</p>
+                        <p>- 자세한 사항은 약관내용을 참조하시기 바랍니다.</p>
                       </div>
-                    ))}
+                    </div>
+                  </div>
+
+                  {/* 중도인출에 관한 사항 */}
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-bold text-[#1e3a8a] border-b border-[#1e3a8a] pb-2">중도인출에 관한 사항</h4>
+                    <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 space-y-4">
+                      <p>(1) 연금개시전 보험기간 중 보험년도 기준 년12회(단 또는 월 첫수 제한 없음)에 한하여 1회당 인출수령시점 계약자적립금(보험계약대출원금과 이자를 차감한 금액)의 80%범위 이내에서 연금계약 계약자적립금의 일부를 인출할 수 있습니다. 단, 인출금액은 10만원 이상 만원단위로 인출할 수 있습니다.</p>
+                      <p>(2) 연금계약 계약자적립금의 일부를 인출하기 위해서는 인출후 연금계약 계약자적립금(보험계약대출원금과 이자를 차감한 금액)이 1구좌당 300만원 이상이어야 합니다.</p>
+                      <p>(3) 계약일로부터 10년 이내에 연금계약 계약자적립금의 일부를 인출하는 경우 각 인출시점까지의 인출금액 총합계는 이미 납입한 보험료를 초과할 수 없습니다.</p>
+                      <p>(4) 중도인출은 추가납입보험료 계약자적립금에서 우선적으로 가능하며, 추가납입보험료 계약자적립금이 부족한 경우에 한하여 기본보험료 계약자적립금에서 인출할 수 있습니다.</p>
+                      <p>(5) 연금계약 계약자적립금의 일부를 인출하는 경우 수수료는 없으며, 인출된 금액은 연금계약의 계약자적립금에서 차감합니다.</p>
+                      <p className="text-red-600">(6) 연금계약 계약자적립금 인출 시 인출금액 및 인출금액에 적립되는 이자만큼 연금계약 계약자적립금에서 차감하여 지급하므로 연금액 및 해약환급금이 감소할 수 있습니다.</p>
+                    </div>
                   </div>
                 </div>
 
-                {/* 안내문구 */}
-                <div className="space-y-4 text-sm text-gray-500 mt-8">
-                  <p>※ 일반보험(무)와(과제4)에서 암(무)와(과제4)하면 약관에서 정한 각종 신생물로 분류되는 기타 파부의 각삭신생물, 비침윤의 각삭신생물을 제외한 모든 분야며, 암주장까지는 제포 포함계극물부터 90일이 되는 날의 다음 날 입니다.</p>
-                  <p>※ 상기 가입예시는 이해를 돕기 위한 것으로, 성별, 연령별로 가입 가능한 담보 및 가입금액은 달라질 수 있습니다. 예시된 담보 외에 가입 가능한 담보들은 전문 상담원을 통해 자세히 안내 받으실 수 있습니다.</p>
-                  
-                  <div className="bg-gray-50 p-6 rounded-lg mt-8">
-                    <div className="flex items-center gap-2 text-gray-700 font-medium mb-4">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-                      </svg>
-                      <span className="text-lg">알아두실 사항</span>
-                    </div>
-                    <ul className="space-y-2">
-                      <li>• 상기 가입예시는 이해를 돕기 위한 것으로, 성별, 연령별로 가입 가능한 담보 및 가입금액은 달라질 수 있습니다. 예시된 담보 외에 가입 가능한 담보들은 전문 상담원을 통해 자세히 안내 받으실 수 있습니다.</li>
-                      <li>• 자세한 설명은 약관 및 상품설명서를 참조하시기 바랍니다.</li>
-                    </ul>
+                {/* 최저사망적립금에 관한 사항 */}
+                <div className="space-y-4">
+                  <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">최저사망적립금에 관한 사항</h3>
+                  <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <p>최저사망적립금이라 함은 "연금개시전 보험기간, 동안 피보험자 사망시 공시이율로 부리한 계약자적립금액과 관계없이 보장하는 최저한도의 계약자적립금"으로서 사망시점의 이미 납입한 보험료를 말합니다.</p>
                   </div>
                 </div>
+
+                {/* 트리플 레벨업 보증에 관한 사항 */}
+                <div className="space-y-4">
+                  <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">트리플 레벨업 보증에 관한 사항(보증형에 한함)</h3>
+                  <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <p className="mb-6">트리플 레벨업 보증이라 함은 공시이율로 부리한 계약자적립금액과 관계없이 트리플 레벨업 보증시점에 보장하는 최저한도의 기본보험료 계약자적립금 보증으로서, 이 보험의 '보험료 및 해약환급금 산출방법서'에서 정한 방법에 따라 계산한 금액으로 합니다.</p>
+                  
+                    <div className="bg-blue-50 p-6 rounded-lg">
+                      <div className="text-center font-bold mb-4 text-[#1e3a8a]">트리플 레벨업 보증금액 = 트리플 레벨업 보증 기준금액 X 트리플 레벨업 보증비율</div>
+                      <table className="w-full border-collapse">
+                        <thead>
+                          <tr className="bg-[#1e3a8a] text-white">
+                            <th className="border border-gray-300 p-3">트리플 레벨업<br />보증시점</th>
+                            <th className="border border-gray-300 p-3">트리플 레벨업<br />보증 기준금액</th>
+                            <th className="border border-gray-300 p-3" colSpan={3}>트리플 레벨업 보증비율</th>
+                          </tr>
+                          <tr className="bg-[#1e3a8a] text-white">
+                            <th className="border border-gray-300 p-3" colSpan={2}></th>
+                            <th className="border border-gray-300 p-3">5년납</th>
+                            <th className="border border-gray-300 p-3">7년납</th>
+                            <th className="border border-gray-300 p-3">10년납</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td className="border border-gray-300 p-3">계약일부터 7년<br />경과시점의 연계약해당일</td>
+                            <td className="border border-gray-300 p-3" rowSpan={2}>보증시점 전일까지의<br />"기초 기본보험료"</td>
+                            <td className="border border-gray-300 p-3 text-center">100%</td>
+                            <td className="border border-gray-300 p-3 text-center">100%</td>
+                            <td className="border border-gray-300 p-3 text-center">100%</td>
+                          </tr>
+                          <tr>
+                            <td className="border border-gray-300 p-3">계약일부터 10년<br />경과시점의 연계약해당일</td>
+                            <td className="border border-gray-300 p-3 text-center">130%</td>
+                            <td className="border border-gray-300 p-3 text-center">125%</td>
+                            <td className="border border-gray-300 p-3 text-center">120%</td>
+                          </tr>
+                          <tr>
+                            <td className="border border-gray-300 p-3">연금개시시점</td>
+                            <td className="border border-gray-300 p-3 text-center" colSpan={4}>
+                              계약일부터 10년 경과시점의 트리플 레벨업 보증비율<br />
+                              + ("연금개시전 보험기간" - 10(년)) × 2%
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div className="mt-4 space-y-2 text-sm">
+                      <p>단, "트리플 레벨업 보증시점" 마다 각 시점까지 납입하기로 약정된 기본보험료 납입이 완료되지 않은 경우, "트리플 레벨업 보증시점"은 해당 기본보험료의 납입이 완료된 날까지 "기초 기본보험료"를 말합니다.</p>
+                      <p className="text-red-500">※ 트리플 레벨업 보증 기준금액은 갱신 또는 중도인출이 발생한 경우 기본보험료 계약자적립금에 비례하여 감소하며, 중도인출금액을 재납입하더라도 원복되지 않습니다.</p>
+                      <p className="text-red-600">※ 연금개시시점의 트리플 레벨업 보증은 연금을 개시할 경우에만 적용되며, 연금을 시작하지 않을 경우 보증되지 않습니다.</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 연금지급개시시점의 연금계약 계약자적립금에 관한 사항 */}
+                <div className="space-y-4">
+                  <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">연금지급개시시점의 연금계약 계약자적립금에 관한 사항</h3>
+                  <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 space-y-4">
+                    <p>(1) 보증형 : 연금지급개시시점의 기본보험료 계약자적립금이 트리플 레벨업 보증에 관한 사항(보증형에 한함)에 의한 연금개시시점 트리플 레벨업 보증금액을 어떠한 경우 연금개시시점 트리플 레벨업 보증금액을 기본보험료 계약자적립금의 최저한도로 하여 연금계약 계약자적립금을 구합니다.</p>
+                    <p>(2) 미보증형 : 연금지급개시시점의 연금계약 계약자적립금이 '이미 납입한 보험료(연금계약 계약자적립금의 인출이 있었을 때에는 이를 차감한 금액) + 1,000원'이하일 경우 '이미 납입한 보험료(연금계약 계약자적립금의 인출이 있었을 때에는 이를 차감한 금액) + 1,000원'으로 합니다.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            {activeTab === '보장 내용' && (
+              <div className="space-y-8 px-4 py-6">
+                {/* 연금개시전 보험기간 */}
+                <div className="space-y-4">
+                  <h2 className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2">1. 연금개시전 보험기간</h2>
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="bg-[#1e3a8a]">
+                        <th className="border border-gray-300 p-3 text-white">급부명</th>
+                        <th className="border border-gray-300 p-3 text-white">지급사유</th>
+                        <th className="border border-gray-300 p-3 text-white">지급금액</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="border border-gray-300 p-3">고도재해장해 급여금</td>
+                        <td className="border border-gray-300 p-3">"연금개시전 보험기간" 중 피보험자가 장해분류표 중 동일한 재해로 여러 신체부위의 장해지급률을 더하여 80% 이상인 장해상태가 되었을 경우(단만, 최초 1회에 한하여 지급)</td>
+                        <td className="border border-gray-300 p-3 text-center">매월 <span className="font-bold text-[#1e3a8a]">40</span>만원(36회 지급)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div className="space-y-2 text-sm text-gray-600">
+                    <p>주1) 고도재해장해급여금은 매월 보험금 지급사유 발생해당일에 드리며, 최초의 보험금 지급사유 발생해당일부터 3년을 고도재해장해급여금의 지급기간으로 합니다. 단만, 해당월에 보험금 지급사유 발생해당일이 없는 경우 해당월의 마지막 날을 보험금 지급사유 발생해당일로 합니다.</p>
+                    <p>주2) 피보험자가 연금개시전 보험기간 중 사망하였을 경우에는 사망신의의 연금계약 계약자적립액과 최저사망적립액 중 큰 금액을 지급하여 드립니다.</p>
+                  </div>
+                </div>
+
+                {/* 연금개시후 보험기간 */}
+                <div className="space-y-4">
+                  <h2 className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2">2. 연금개시후 보험기간</h2>
+                  <p className="text-gray-600 mb-4">- 계약자는 해당 약관에 따라 연금지급개시전에 연금지급형태 및 연금지급형태의 구성비율, 생활설계자금선택비율을 변경할 수 있습니다.</p>
+                  
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="bg-[#1e3a8a]">
+                        <th className="border border-gray-300 p-3 text-white">급부명</th>
+                        <th className="border border-gray-300 p-3 text-white">지급사유</th>
+                        <th className="border border-gray-300 p-3 text-white">지급금액</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="border border-gray-300 p-3">생활설계자금</td>
+                        <td className="border border-gray-300 p-3">피보험자가 연금지급개시일에 살아 있을 때</td>
+                        <td className="border border-gray-300 p-3">연금지급개시시점의 연금계약 계약자적립액에 "생활설계자금 선택비율"을 곱한 금액을 기준으로 계산한 금액</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-gray-300 p-3">종신연금형</td>
+                        <td className="border border-gray-300 p-3">피보험자가 매년 보험계약해당일에 살아 있을 때 (20년보증, 100세보증 또는 기대여명보증시)</td>
+                        <td className="border border-gray-300 p-3">연금지급개시시점의 연금계약 계약자적립액에 (1-생활설계자금 선택비율)을 곱한 금액을 기준으로 계산한 연금액 지급</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-gray-300 p-3">확정연금형</td>
+                        <td className="border border-gray-300 p-3">"연금개시후 보험기간" 중 매년 보험계약 해당일</td>
+                        <td className="border border-gray-300 p-3">연금지급개시시점의 연금계약 계약자적립액에 (1-생활설계자금 선택비율)을 곱한 금액을 기준으로 계산한 연금액을 확정 연금지급기간 (5년, 10년, 15년, 20년) 동안 지급</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-gray-300 p-3">상속연금형</td>
+                        <td className="border border-gray-300 p-3">"연금개시후 보험기간" 중 피보험자가 매년 보험계약해당일에 살아있을 때</td>
+                        <td className="border border-gray-300 p-3">연금지급개시시점의 연금계약 계약자적립액에 (1-생활설계자금 선택비율)을 곱한 금액을 기준으로 공시이율에 의하여 계산한 연금액을 지급 (단만, 피보험자 사망시에는 사망시점의 연금계약 계약자적립액을 연금수익자에게 지급)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div className="space-y-2 text-sm text-gray-600">
+                    <p>주1) "생활설계자금 선택비율"이란 생활설계자금의 인출을 위해 계약자가 직자가 정하는 비율 이내에서 선택한 비율을 말합니다. 단만, "생활설계자금 선택비율"을 별도로 지정하지 않은 경우에는 "생활설계자금 선택비율"을 0%로 하며, 이 경우 생활설계자금을 인출할 수 없고, 연금지급개시시점의 연금계약 계약자적립액 전액을 기준으로 보험료 및 해약환급금 산출방법서에 따라 연금액적 산출합니다. 단만, 기본보험료를 5년(60회)이상 납입하지 않은 경우에는 "생활설계자금 선택비율"을 0%로 합니다.</p>
+                    <p>주2) 종신연금형의 경우 연금지급개시 후 보증지급기간 안에 피보험자가 사망하더라도 보증지급기간까지의 미지급된 각 연금액을 연금지급일에 드립니다.</p>
+                    <p>주3) 종신연금형(100세 보증)은 "100세-연금개시나이"를 보증기간 연금액에서 보증지급합니다.</p>
+                    <p>주4) 확정연금형으로 변경한 경우 연금개시시 후 해당 확정 연금지급기간(5년, 10년, 15년, 20년) 동안에 피보험자가 사망하더라도 각 확정 연금지급기간(5년, 10년, 15년, 20년)까지의 지급되지 않은 각 연금액을 연금지급일에 드립니다.</p>
+                    <p>주5) 연금액은 "공시이율"을 적용하여 계산되므로 "공시이율"이 변경되면 매년 지급되는 연금액도 변경됩니다.</p>
+                    <p>주6) 종신연금형의 경우 연금지급 계시전 연금지급률의 계정 등에 따라 생존연금의 증가에게 되는 경우 연금개시 당시의 연금사망률 및 연금계약 계약자적립액을 기준으로 산출한 새로운금을 지급하여 드립니다.</p>
+                    <p>주7) 상속연금형의 "계약자적립액"이란 연금개시시점의 연금계약 계약자적립액에 "공시이율"로 적립한 금액에서 상속연금형의 연금액 발생분(연금액 계약관리비용 포함)을 뺀 나머지 금액을 공시이율로 적립한 금액으로 "보험료 및 해약환급금 산출방법서"에 정한 바에 따라 계산됩니다.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === '해약환급금 예시표' && (
+              <div className="space-y-8 px-4 py-6">
+                {/* 해약환급금 예시표 내용 */}
+                <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                  <p>해약환급금 예시표 내용이 여기에 들어갈 것으로 가정합니다.</p>
               </div>
             </div>
           )}
 
           {/* 하단 버튼 */}
           <div className="flex flex-col md:flex-row gap-4 justify-center mt-10">
-            <a href="/product-guide.pdf" download className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
+              <a href="/kb-guide.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
               상품안내장
             </a>
-            <a href="/terms.pdf" download className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
+              <a href="/kb-guide2.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
               약관
             </a>
             <button type="button" onClick={() => setShowNotice(true)} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">꼭 알아두실 사항</button>
@@ -369,7 +703,7 @@ export default function HelloPage() {
               </div>
               <div className="mb-4">
                 <div className="font-bold mb-1">청약 철회에 관한 사항</div>
-                <div>보험계약자는 보험증권을 받은 날부터 15일 이내에 청약을 철회할 수 있으며, 청약의 철회를 접수한 날부터 3영업일 이내에 보험료를 돌려드립니다. 단, 회사가 건강상태 진단을 지원하는 계약, 보험기간이 90일 이내인 계약 또는 전문금융소비자가 체결한 계약이거나, 청약을 한 날부터 30일(다만, 청약시점에 만 65세 이상인 보험계약자가 전화를 이용하여 계약을 체결한 경우 청약한 날부터 45일)을 초과한 경우는 청약철회가 제한됩니다.</div>
+                  <div>보험계약자는 보험증권을 받은 날부터 15일 이내에 청약을 철회할 수 있으며, 청약의 철회를 접수한 날부터 3영업일 이내에 보험료를 돌려드립니다. 단, 회사가 건강상태 진단을 지원하는 계약, 보험기간이 90일 이내인 계약이거나, 청약을 한 날부터 30일(다만, 청약시점에 만 65세 이상인 보험계약자가 전화를 이용하여 계약을 체결한 경우 청약한 날부터 45일)을 초과한 경우는 청약철회가 제한됩니다.</div>
               </div>
               <div className="mb-4">
                 <div className="mb-1">[일반금융소비자] 전문금융소비자가 아닌 보험계약자를 말합니다.</div>
@@ -405,6 +739,21 @@ export default function HelloPage() {
         </div>
       )}
 
+        {showPrivacy && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+            <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] flex flex-col relative">
+              <div className="flex items-center justify-between px-6 pt-6 pb-2 border-b border-gray-200">
+                <div className="text-xl font-bold">개인정보 수집 및 이용 동의</div>
+                <button onClick={() => setShowPrivacy(false)} className="p-1 text-gray-400 hover:text-gray-700"><XMarkIcon className="w-7 h-7" /></button>
+              </div>
+              {privacyText}
+              <div className="flex border-t border-gray-200">
+                <button onClick={() => setShowPrivacy(false)} className="flex-1 py-4 text-lg font-bold bg-[#ffe15a] text-gray-900 border-r border-gray-200 hover:bg-yellow-200 transition">확인</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 푸터 */}
       <footer className="w-full bg-[#f8f8f8] border-t border-gray-200 py-8 mt-4">
         <div className="max-w-5xl mx-auto px-4 text-center text-gray-500 text-sm flex flex-col gap-2">
@@ -416,5 +765,6 @@ export default function HelloPage() {
         </div>
       </footer>
     </div>
+    </>
   );
 } 
