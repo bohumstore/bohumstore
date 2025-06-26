@@ -510,6 +510,7 @@ export default function Home() {
                     layout="fill"
                     objectFit="contain"
                     objectPosition="bottom right"
+                    unoptimized
                 />
             </div>
           </div>
