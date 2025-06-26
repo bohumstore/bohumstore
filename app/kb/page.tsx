@@ -1,7 +1,5 @@
 "use client";
-import { useState } from "react";
-import { XMarkIcon } from "@heroicons/react/24/solid";
-import { coverageData } from '../data/coverageData';
+import { useEffect, useState } from "react";
 import React from "react";
 import Header from "./components/Header";
 import Slogan from "./components/Slogan";
@@ -13,16 +11,32 @@ import Tabs from "../components/Tabs";
 import ProductInfo from "./components/BodyTabViews/ProductInfo";
 import CoverageDetails from "./components/BodyTabViews/CoverageDetails";
 import Surrender from "./components/BodyTabViews/Surrender";
+import { supabase } from "../api/supabase";
 
 export default function KBTripleLevelupAnnuityPage() {
-  const [showNotice, setShowNotice] = useState(false);
-  const [showPrivacy, setShowPrivacy] = useState(false);
-
   const tabs = [
     { label: '상품 정보',      content: <ProductInfo /> },
     { label: '보장 내용',      content: <CoverageDetails /> },
     { label: '해약환급금 예시표', content: <Surrender /> },
   ];
+
+  const [showNotice, setShowNotice] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
+
+  useEffect(() => {
+    getProduct()
+  }, []);
+
+  const getProduct = async () => {
+    const { data, error } = await supabase.from('product').select('*');
+    if (error) {
+      console.error("Error fetching product data:", error);
+      return null;
+    }
+    console.log(data);
+    return data;
+  }
+
   return (
     <>
       <style jsx global>{`
