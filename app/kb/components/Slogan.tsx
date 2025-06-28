@@ -46,17 +46,19 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   }
 
   const handleInsuranceCostCalculate = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!validateForm()) return
-    setCounselType(1);
-    handlePostOTP();
+    alert('보험료 계산 기능은 현재 준비 중입니다. 곧 업데이트 예정입니다.');
+    // e.preventDefault()
+    // if (!validateForm()) return
+    // setCounselType(1);
+    // handlePostOTP();
   }
 
   const handleRequestInsuranceCounsel = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!validateForm()) return
-    setCounselType(2);
-    handlePostOTP();
+    alert('상담 신청 기능은 현재 준비 중입니다. 곧 업데이트 예정입니다.');
+    // e.preventDefault()
+    // if (!validateForm()) return
+    // setCounselType(2);
+    // handlePostOTP();
   }
 
 

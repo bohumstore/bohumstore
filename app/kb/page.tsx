@@ -24,7 +24,7 @@ export default function KBTripleLevelupAnnuityPage() {
   const [showPrivacy, setShowPrivacy] = useState(false);
 
   useEffect(() => {
-    getProduct()
+    // getProduct()
   }, []);
 
   const getProduct = async () => {

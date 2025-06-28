@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import { HomeIcon, UserGroupIcon, FireIcon, HeartIcon, UserIcon, BriefcaseIcon, CurrencyDollarIcon, ScaleIcon, ChartBarIcon, AcademicCapIcon, TruckIcon, ShieldCheckIcon, SparklesIcon, ChatBubbleLeftRightIcon, MagnifyingGlassIcon, DocumentIcon, CalculatorIcon, HandRaisedIcon, Squares2X2Icon } from "@heroicons/react/24/outline";
+import { HomeIcon, UserGroupIcon, FireIcon, HeartIcon, UserIcon, BriefcaseIcon, CurrencyDollarIcon, ScaleIcon, ChartBarIcon, AcademicCapIcon, ShieldCheckIcon, SparklesIcon, ChatBubbleLeftRightIcon, MagnifyingGlassIcon, DocumentIcon, CalculatorIcon, HandRaisedIcon } from "@heroicons/react/24/outline";
 
 const navItems = [
   { label: "종합", icon: <HomeIcon className="w-5 h-5 text-pink-300" />, mobileIcon: "📦", subItems: ["실손의료보험", "질병보험", "상해보험", "입원보험"] },
