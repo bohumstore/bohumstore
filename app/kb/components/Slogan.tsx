@@ -109,6 +109,13 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       return false;
     }
 
+    // 보험연령 체크 (0~70세만 가입 가능)
+    const formInsuranceAge = Number(getInsuranceAge(birth));
+    if (isNaN(formInsuranceAge) || formInsuranceAge < 0 || formInsuranceAge > 70) {
+      alert('이 상품은 0~70세까지만 가입이 가능합니다.');
+      return false;
+    }
+
     if (!phone) { 
       alert('연락처를 입력해주세요.'); 
       return false;
@@ -253,9 +260,33 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setConsultOtpResendAvailable(false);
   };
   const handleConsultVerify = () => {
+    if (!consultOtpCode || consultOtpCode.length !== 6) {
+      alert('6자리 인증번호를 입력해주세요.');
+      return;
+    }
     setConsultIsVerified(true);
     alert('인증이 완료되었습니다.');
   };
+
+  // 보험연령 계산 함수
+  const getInsuranceAge = (birth: string) => {
+    if (!/^\d{8}$/.test(birth)) return '';
+    const birthYear = parseInt(birth.substring(0, 4));
+    const birthMonth = parseInt(birth.substring(4, 6));
+    const birthDay = parseInt(birth.substring(6, 8));
+    const today = new Date();
+    let age = today.getFullYear() - birthYear;
+    if (
+      today.getMonth() + 1 < birthMonth ||
+      (today.getMonth() + 1 === birthMonth && today.getDate() < birthDay)
+    ) {
+      age -= 1;
+    }
+    return age;
+  };
+
+  // 보험연령 계산
+  const insuranceAge = getInsuranceAge(birth);
 
   // 총 납입액, 환급률, 확정이자, 해약환급금 계산
   let amount = 0;
@@ -277,7 +308,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   return (
     <>
       <section
-        className="w-full bg-[#ffe15a] py-4 md:py-6"
+        className="w-full bg-[#ffe15a] py-2 md:py-3"
         style={{
           backgroundImage: 'radial-gradient(#f8d34a 2px, transparent 2px)',
           backgroundSize: '20px 20px',
@@ -289,9 +320,22 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             <div className="text-sm text-gray-500 mb-2">KB 트리플 레벨업 연금보험 무배당(보증형)</div>
             <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">KB 연금보험<br />노후를 위한 든든한 선택</h1>
             <ul className="mb-8 space-y-2">
-              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start"><span className="text-xl mr-2">✔</span>월납 연금보험, 중도인출/추가납입 가능</li>
-              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start"><span className="text-xl mr-2">✔</span>다양한 연금 지급 옵션, 맞춤형 설계</li>
-              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start"><span className="text-xl mr-2">✔</span>가입/상담 간편 신청</li>
+              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
+                <span className="text-xl mr-2 text-[#ff8c1a]">✔</span>
+                7년시점 원금 보증, 10년시점 130% 해약환급률 보증 <span className="text-xs align-baseline">(5년납)</span>
+              </li>
+              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
+                <span className="text-xl mr-2 text-[#ff8c1a]">✔</span>
+                병력 무심사 / 무사망 보장 / 전건 가입 가능
+              </li>
+              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
+                <span className="text-xl mr-2 text-[#ff8c1a]">✔</span>
+                가입 0~70세 / 연금개시 45~85세
+              </li>
+              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
+                <span className="text-xl mr-2 text-[#ff8c1a]">✔</span>
+                비과세 (월 150만원 한도, 10년 유지)
+              </li>
             </ul>
               {/* 환급률/적립액 안내 UI */}
               <div className="w-full max-w-full md:max-w-lg mx-auto bg-white rounded-xl shadow-md mb-6 p-4 px-2 md:px-0 md:py-8">
@@ -554,10 +598,16 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             <>
               {/* 보험료 계산 결과 */}
               <div className="bg-gray-50 rounded-lg p-2">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
-                  <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name} </span>
-                  <span className="text-lg text-[#7c3aed] font-bold align-middle">님</span>
-                  <span className="align-middle text-gray-900"> {isVerified ? '보험료 산출 결과' : '보험료 산출 예상 정보'}</span>
+                <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center">
+                  <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name}</span>
+                  <span className="text-lg text-[#7c3aed] font-bold align-middle">&nbsp;님</span>
+                  {insuranceAge !== '' && (
+                    <span className="font-bold ml-2 flex items-center">
+                      <span className="text-lg text-[#3a8094]">보험연령 </span>
+                      <span className="text-2xl font-extrabold text-[#ef4444] mx-1">{insuranceAge}</span>
+                      <span className="text-lg text-[#3a8094]">세</span>
+                    </span>
+                  )}
                 </h3>
                 <div className="grid grid-cols-1 gap-1">
                   <div className="bg-white p-2 rounded border border-gray-200">
@@ -767,10 +817,16 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             </div>
           )}
           <div className="bg-gray-50 rounded-lg p-2.5 mb-0.5">
-            <h3 className="mb-2">
-              <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name} </span>
-              <span className="text-lg text-[#7c3aed] font-bold align-middle">님</span>
-              <span className="align-middle text-gray-900 text-base font-bold ml-1">상담신청 정보</span>
+            <h3 className="mb-2 flex items-center">
+              <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name}</span>
+              <span className="text-lg text-[#7c3aed] font-bold align-middle">&nbsp;님</span>
+              {insuranceAge !== '' && (
+                <span className="font-bold ml-2 flex items-center">
+                  <span className="text-lg text-[#3a8094]">보험연령 </span>
+                  <span className="text-2xl font-extrabold text-[#ef4444] mx-1">{insuranceAge}</span>
+                  <span className="text-lg text-[#3a8094]">세</span>
+                </span>
+              )}
             </h3>
             <div className="grid grid-cols-1 gap-1.5">
               <div className="bg-white p-2.5 rounded border border-gray-200">
@@ -891,12 +947,6 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 type="button"
                 onClick={handleConsultVerify}
                 className="w-full px-2 py-2.5 bg-[#3a8094] text-white rounded-md text-base font-semibold hover:bg-[#2c6070] transition-colors mt-1"
-                disabled={
-                  !name ||
-                  !phone ||
-                  !consultOtpCode ||
-                  consultOtpCode.length !== 6
-                }
               >
                 인증 및 상담신청
               </button>
