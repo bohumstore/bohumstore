@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
+import FireworksEffect from './FireworksEffect';
 
 const INSURANCE_COMPANY_ID = 1; // KB 손해보험
 const INSURANCE_PRODUCT_ID = 1; // KB 트리플 레벨업 연금보험 무배당 id 코드값
@@ -34,6 +35,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   const [consultOtpTimer, setConsultOtpTimer] = useState(0);
   const [consultOtpResendAvailable, setConsultOtpResendAvailable] = useState(true);
   const [consultIsVerified, setConsultIsVerified] = useState(false);
+  const [consultOtpSent, setConsultOtpSent] = useState(false);
 
   const [consultType, setConsultType] = useState('연금보험');
   const [consultTime, setConsultTime] = useState('아무때나');
@@ -168,6 +170,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   }
 
   const handleVerifyAndShowInfo = () => {
+    if (!otpSent) {
+      alert('인증번호를 먼저 전송해 주세요.');
+      return;
+    }
     if (otpCode.length !== 6) {
       alert('6자리 인증번호를 입력해주세요.');
       return;
@@ -245,21 +251,32 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleOpenConsultModal = () => {
+    if (!gender || !name || !birth || !phone) {
+      alert('성별, 이름, 생년월일, 연락처를 모두 입력해 주세요.');
+      return;
+    }
     setConsultIsVerified(false);
     setConsultOtpCode("");
     setConsultOtpTimer(0);
     setConsultOtpResendAvailable(true);
     setShowConsultModal(true);
+    setConsultOtpSent(false);
   };
   const handleCloseConsultModal = () => {
     setConsultIsVerified(false);
     setShowConsultModal(false);
+    setConsultOtpSent(false);
   };
   const handleConsultSendOTP = () => {
     setConsultOtpTimer(180);
     setConsultOtpResendAvailable(false);
+    setConsultOtpSent(true);
   };
   const handleConsultVerify = () => {
+    if (!consultOtpSent) {
+      alert('인증번호를 먼저 전송해 주세요.');
+      return;
+    }
     if (!consultOtpCode || consultOtpCode.length !== 6) {
       alert('6자리 인증번호를 입력해주세요.');
       return;
@@ -590,9 +607,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         <div className="space-y-4">
           {/* 보험료 산출 완료 안내 박스 (인증 후) */}
           {isVerified && (
-            <div className="bg-[#f8f8ff] rounded p-3 mb-2 text-center">
-              <div className="text-lg text-black font-bold">보험료 산출이 완료되었습니다.</div>
-            </div>
+            <>
+              <FireworksEffect show={true} />
+              <div className="bg-[#f8f8ff] rounded p-3 mb-2 text-center">
+                <div className="text-lg text-black font-bold">보험료 산출이 완료되었습니다.</div>
+              </div>
+            </>
           )}
           {!otpSent ? (
             <>
@@ -807,10 +827,13 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         <div className="space-y-3">
           {/* 안내문구 */}
           {consultIsVerified ? (
-            <div className="bg-[#f8f8ff] rounded p-3 mb-1 text-center">
-              <div className="text-lg text-black font-bold">상담신청이 접수되었습니다.</div>
-              <div className="text-sm text-gray-600 mt-1">담당자가 선택하신 상담 시간에 연락드릴 예정입니다.</div>
-            </div>
+            <>
+              <FireworksEffect show={true} />
+              <div className="bg-[#f8f8ff] rounded p-3 mb-1 text-center">
+                <div className="text-lg text-black font-bold">상담신청이 접수되었습니다.</div>
+                <div className="text-sm text-gray-600 mt-1">담당자가 선택하신 상담 시간에 연락드릴 예정입니다.</div>
+              </div>
+            </>
           ) : (
             <div className="text-sm text-gray-700 bg-[#f8f8ff] rounded p-2 mb-1 text-center font-semibold">
               상담신청을 위해 아래 정보를 입력해 주세요.
