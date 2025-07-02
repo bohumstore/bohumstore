@@ -148,7 +148,6 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     try {
       await request.post('/api/postOTP', { phone })
       setOtpSent(true)
-      setShowResultModal(true)
     } catch (e: any) {
       console.error(e)
       alert('인증번호 전송에 실패했습니다.')
@@ -170,10 +169,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   }
 
   const handleVerifyAndShowInfo = () => {
-    if (!otpSent) {
-      alert('인증번호를 먼저 전송해 주세요.');
-      return;
-    }
+    // if (!otpSent) {
+    //   alert('인증번호를 먼저 전송해 주세요.');
+    //   return;
+    // }
     if (otpCode.length !== 6) {
       alert('6자리 인증번호를 입력해주세요.');
       return;
@@ -205,9 +204,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setIsVerified(false);
   };
 
-  const handleSendOTP = () => {
+  const handleSendOTP = async () => {
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
+    await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
   };
 
   const formatTime = (sec: number) => {
@@ -230,6 +230,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   const handleCloseModal = () => {
     setIsVerified(false);
     setShowResultModal(false);
+    setOtpTimer(0);
+    setOtpResendAvailable(true);
   };
 
   // 입력값 변경 시 인증상태 초기화
@@ -266,6 +268,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setConsultIsVerified(false);
     setShowConsultModal(false);
     setConsultOtpSent(false);
+    setConsultOtpTimer(0);
+    setConsultOtpResendAvailable(true);
   };
   const handleConsultSendOTP = () => {
     setConsultOtpTimer(180);
