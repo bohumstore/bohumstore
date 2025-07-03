@@ -53,8 +53,8 @@ export default function KBTripleLevelupAnnuityPage() {
         <Header />
         <Slogan onOpenPrivacy={() => setShowPrivacy(true)} />
         {/* 상품 상세 영역 (탭/강조타이틀/설명/특약/일러스트/하단버튼) */}
-        <section className="w-full bg-white py-12 md:py-20">
-          <div className="max-w-5xl mx-auto px-4">
+        <section className="w-full bg-white py-8 sm:py-12 md:py-16 lg:py-20">
+          <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 md:px-10 lg:px-16">
             <Tabs tabs={tabs} />
             {/* 하단 버튼 */}
             <div className="flex flex-col md:flex-row gap-4 justify-center mt-10">
