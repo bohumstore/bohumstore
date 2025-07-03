@@ -145,8 +145,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   }
 
   const handlePostOTP = async () => {
+    const templateId = "UA_7754"
     try {
-      await request.post('/api/postOTP', { phone })
+      await request.post('/api/postOTP', { phone, templateId })
       setOtpSent(true)
     } catch (e: any) {
       console.error(e)
@@ -161,12 +162,6 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setShowResultModal(true);
   }
 
-  const handleRequestInsuranceCounsel = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-    setCounselType(2);
-    handlePostOTP();
-  }
 
   const handleVerifyAndShowInfo = () => {
     // if (!otpSent) {
@@ -181,12 +176,38 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     alert('인증이 완료되었습니다.');
   };
 
-  const handleConsult = () => {
-    if (validateForm()) {
-      // 상담신청 처리
-      console.log("Consultation requested:", { gender, name, birth, phone });
+  const handleVerifyOTP = async () => {
+  if (otpCode.length !== 6) {
+    alert("6자리 인증번호를 입력해주세요.");
+    return;
+  }
+
+  setVerifying(true);
+  try {
+    const res = await request.post("/api/verifyOTP", {
+      phone,
+      name,
+      birth,
+      gender,
+      code: otpCode,
+      counselType: counselType,
+      INSURANCE_COMPANY_ID,
+      INSURANCE_PRODUCT_ID,
+    });
+    if (res.data.success) {
+      setIsVerified(true);
+      setOtpSent(false);
+      alert("인증이 완료되었습니다!");
+    } else {
+      alert("인증에 실패했습니다.");
     }
-  };
+  } catch (e: any) {
+    alert(e.error || "인증에 실패했습니다.");
+  } finally {
+    setVerifying(false);
+  }
+};
+
 
   const handleBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -214,16 +235,6 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     const m = Math.floor(sec / 60).toString().padStart(2, '0');
     const s = (sec % 60).toString().padStart(2, '0');
     return `${m}:${s}`;
-  };
-
-  // 기존 보험료 확인하기 버튼(모달 오픈) 위치에서 상태 초기화
-  const handleOpenResultModal = () => {
-    setIsVerified(false);
-    setOtpCode("");
-    setOtpTimer(0);
-    setOtpResendAvailable(true);
-    setOtpSent(false);
-    setShowResultModal(true);
   };
 
   // 모달 닫힐 때 인증상태 초기화
@@ -802,11 +813,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                     </button>
                     <button
                       type="button"
-                      onClick={handleVerifyAndShowInfo}
-                      className="flex-1 px-4 py-2 bg-[#3a8094] text-white rounded-md text-sm font-medium 
-                               hover:bg-[#2c6070] transition-colors"
+                      onClick={handleVerifyOTP}
+                      disabled={verifying}
+                      className="w-full px-4 py-2 bg-[#3a8094] text-white rounded-md text-base font-semibold hover:bg-[#2c6070] transition-colors"
+                      style={{ maxWidth: '128px' }}
                     >
-                      인증확인
+                      {verifying ? "검증 중…" : "인증 확인"}
                     </button>
                   </div>
                 </div>
