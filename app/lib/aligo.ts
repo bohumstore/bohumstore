@@ -56,9 +56,10 @@ export function postRequest(data: Record<string, any>): Promise<any> {
 
   for (const key in data) {
     if (key === 'uri') continue
+
+    // 파일(image, fimage) 처리 (기존 로직)
     if (key === 'image' || key === 'fimage') {
       if (Array.isArray(data[key])) {
-        // multiparty 로 넘어온 파일 배열
         const file = data[key][0]
         form.append(
           key,
@@ -69,8 +70,17 @@ export function postRequest(data: Record<string, any>): Promise<any> {
           }
         )
       }
+
+    // 그 외 일반 필드
     } else {
-      form.append(key, data[key])
+      const value = data[key]
+
+      // 객체면 JSON.stringify
+      if (typeof value === 'object') {
+        form.append(key, JSON.stringify(value))
+      } else {
+        form.append(key, String(value))
+      }
     }
   }
 

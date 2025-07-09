@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { supabase } from "../supabase";
 import { alimtalkSend } from "@/app/lib/aligo";
 import aligoAuth from "../utils/aligoAuth";
+import { link } from "fs";
+import { use } from "react";
 
 export async function POST(req: Request) {
   const {
@@ -13,6 +15,11 @@ export async function POST(req: Request) {
     counselType,
     companyId,
     productId,
+    insuranceType,
+    counselTime,
+    mounthlyPremium = null,
+    paymentPeriod = null,
+    tenYearReturnRate = null,
   } = await req.json();
 
   const { data, error } = await supabase
@@ -22,10 +29,6 @@ export async function POST(req: Request) {
     .order("created_at", { ascending: false })
     .limit(1)
     .single();
-
-  console.log("인증번호", data)
-
-  console.log("인증번호 확인 요청:", { phone, code });
 
   if (error || !data) {
     return NextResponse.json(
@@ -44,7 +47,7 @@ export async function POST(req: Request) {
 
   const { data: existingUser } = await supabase
     .from("user")
-    .select("id")
+    .select("id, phone, name, birth, gender")
     .eq("phone", phone)
     .single();
 
@@ -53,7 +56,7 @@ export async function POST(req: Request) {
     const { data: newUser, error: insertErr } = await supabase
       .from("user")
       .insert({ phone, name, birth, gender })
-      .select("id")
+      .select("id, phone, name, birth, gender")
       .single();
     if (insertErr) {
       console.error(insertErr);
@@ -65,108 +68,102 @@ export async function POST(req: Request) {
     user = newUser;
   }
 
-  /* 현재 알림톡 허용아이피 추가가 필요한 상황이므로 수정 필요 */
-  let requestData;
-  if (counselType === 1) {
-    const { data: counselData, error: calcErr } = await supabase
-      .from("counsel")
-      .insert({
-        user_id:         user.id,
-        company_id:      companyId,
-        product_id:      productId,
-        counsel_type_id: 1,
-      })
-      .select(`
-        id,
-        company:company_id (
-          name
-        ),
-        product:product_id (
-          name,
-          category:category_id (
-            name
-          )
-        )
-      `)
-      .single();
+  const { data: product, error: productErr } = await supabase
+    .from('product')
+    .select('name')
+    .eq('id', productId)
+    .single()
 
-    if (calcErr || !counselData) {
-      console.error(calcErr);
-      return NextResponse.json({ error: "보험료 계산 요청 중 오류가 발생했습니다." }, { status: 500 });
-    }
-
-    // requestData = {
-    //   headers: {
-    //     "content-type": "application/json",
-    //   },
-    //   body: {
-    //     tpl_code:    "UA_8331",   // ex) "UA_7754"
-    //     sender:      "010-8897-7486",   // ex) "021112222"
-    //     receiver_1:  phone,                              // 수신자
-    //     subject_1:   "계산디비 - 관리자전송",
-    //     message_1:   `
-    //     [보험료계산]
-    //     ${counselData.company.name}
-    //     ${counselData.product.category.name}
-    //     ${user.birth}
-    //     ${user.gender}
-    //     ${user.phone}
-    //     `, // 본문
-    //     testMode: "Y",
-    //   },
-    // };
-  }
-  if (counselType === 2) {
-    const { data: counselData, error: calcErr } = await supabase
-      .from("counsel")
-      .insert({
-        user_id:         user.id,
-        company_id:      companyId,
-        product_id:      productId,
-        counsel_type_id: 1,
-      })
-      .select(`
-        id,
-        company:company_id (
-          name
-        ),
-        product:product_id (
-          name,
-          category:category_id (
-            name
-          )
-        )
-      `)
-      .single();
-
-    if (calcErr || !counselData) {
-      console.error(calcErr);
-      return NextResponse.json({ error: "상담 신청 요청 중 오류가 발생했습니다." }, { status: 500 });
-    }
-
-    // requestData = {
-    //   headers: {
-    //     "content-type": "application/json",
-    //   },
-    //   body: {
-    //     tpl_code:    "UA_8332",
-    //     sender:      "010-8897-7486",
-    //     receiver_1:  phone,
-    //     subject_1:   "계산디비 - 관리자전송",
-    //     message_1:   `
-    //     [상담/설계요청]
-    //     ${counselData.product.category.name}
-    //     ${user.birth}
-    //     ${user.name}
-    //     ${user.gender}
-    //     ${user.phone}
-    //     `, // 본문
-    //     testMode: "Y",
-    //   },
-    // };
+  if (productErr || !product) {
+    console.error('상품 조회 실패', productErr)
+    throw new Error('상품 조회 실패')
   }
 
-  const result = await alimtalkSend(requestData, aligoAuth);
+  const { data: company, error: companyErr } = await supabase
+    .from('company')
+    .select('name')
+    .eq('id', companyId)
+    .single()
+
+  if (companyErr || !company) {
+    console.error('회사 조회 실패', companyErr)
+    throw new Error('회사 조회 실패')
+  }
+
+  if (counselType === 1 || counselType === 2) {
+    const tplCode = counselType === 1 ? "UA_8331" : "UA_8332";
+    const subject = counselType === 1
+      ? "보험료계산 - 관리자전송"
+      : "상담/설계요청 - 관리자전송";
+
+    const { error: calcErr } = await supabase
+      .from("counsel")
+      .insert({
+        user_id: user.id,
+        company_id: companyId,
+        product_id: productId,
+        counsel_type_id: counselType,
+        counsel_time: counselTime
+      })
+      .single();
+
+    if (calcErr) {
+      console.error(calcErr);
+      return NextResponse.json(
+        { error: "상담 요청 중 오류" },
+        { status: 500 }
+      );
+    }
+
+    const toAdminReq = {
+      headers: { "content-type": "application/json" },
+      body: {
+        tpl_code:   tplCode,
+        sender:     "010-8897-7486",
+        receiver_1: "010-8897-7486",
+        subject_1:  subject,
+        message_1:  counselType === 1
+          // 보험료계산 포맷
+          ? `[보험료계산]\n${company.name}\n${product.name}\n${birth}\n${name}\n${gender}\n${phone}`
+          // 상담/설계요청 포맷
+          : `[상담/설계요청]\n${counselTime}\n${product.name}\n${birth}\n${name}\n${gender}\n${phone}`,
+        testMode: "N",
+      },
+    };
+
+    const toClientReq = {
+      headers: { "content-type": "application/json" },
+      body: {
+        tpl_code:   counselType === 1 ? "UA_7918" : "UA_7919", // 본인 확인 템플릿
+        sender:     "010-8897-7486",
+        receiver_1: phone,
+        subject_1:  subject,
+        message_1:  counselType === 1
+          // 보험료계산 포맷
+          ? `▣ ${user.name}님 계산 결과입니다.\n⊙ 보험사: ${company.name}\n⊙ 상품명: ${product.name}\n⊙ 납입기간: ${paymentPeriod}\n⊙ 월보험료: ${mounthlyPremium}\n\n▼ 10년시점 ▼\n· 환급률: ${tenYearReturnRate}%\n· 확정이자: ${tenYearReturnRate / 10}%\n· 예상해약환급금: ${(parseFloat(mounthlyPremium) * 12 * 10 * (tenYearReturnRate / 100)).toLocaleString()}원`
+          // 상담/설계요청 포맷
+          : `▼ ${user.name}님\n\n▣ 보험종류: [ ${product.name} ]\n▣ 상담시간: [ ${counselTime} ]\n\n상담 신청해 주셔서 감사합니다!`,
+        button_1: {
+          button: [{
+            name: "채널추가",
+            linkType: "AC"
+          }]
+        },
+        testMode: "N",
+      },
+    }
+
+    try {
+      const resultToAdmin = await alimtalkSend(toAdminReq, aligoAuth);
+      const resultToClient = await alimtalkSend(toClientReq, aligoAuth);
+      console.log(toAdminReq.body);
+      console.log("관리자 알림톡 전송 결과:", resultToAdmin);
+      console.log("고객 알림톡 전송 결과:", resultToClient);
+    } catch (err) {
+      console.error("알림톡 전송 실패:", err);
+      return NextResponse.json({ error: "알림톡 전송 실패" }, { status: 502 });
+    }
+  }
 
   return NextResponse.json({ success: true, userId: user.id });
 }
