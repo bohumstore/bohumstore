@@ -31,31 +31,29 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   const [isVerified, setIsVerified] = useState(false);
 
   const [showConsultModal, setShowConsultModal] = useState(false);
-  const [consultOtpCode, setConsultOtpCode] = useState("");
-  const [consultOtpTimer, setConsultOtpTimer] = useState(0);
+  const [consultOtpCode, setConsultOtpCode] = useState('');
+  const [consultOtpTimer, setConsultOtpTimer] = useState(180);
   const [consultOtpResendAvailable, setConsultOtpResendAvailable] = useState(true);
   const [consultIsVerified, setConsultIsVerified] = useState(false);
-  const [consultOtpSent, setConsultOtpSent] = useState(false);
 
+  const [showConsultTypeDropdown, setShowConsultTypeDropdown] = useState(false);
+  const [showConsultTimeDropdown, setShowConsultTimeDropdown] = useState(false);
   const [consultType, setConsultType] = useState('연금보험');
   const [consultTime, setConsultTime] = useState('아무때나');
   const consultTypeOptions = ['연금보험'];
   const consultTimeOptions = [
     '아무때나',
-    '오전 9시~오전 10시',
-    '오전 10시~오전 11시',
-    '오전 11시~오전 12시',
-    '오후 12시~오후 1시',
-    '오후 1시~오후 2시',
-    '오후 2시~오후 3시',
-    '오후 3시~오후 4시',
-    '오후 4시~오후 5시',
-    '오후 5시~오후 6시',
-    '오후 6시이후',
+    '오전 09:00 ~ 10:00',
+    '오전 10:00 ~ 11:00',
+    '오전 11:00 ~ 12:00',
+    '오후 12:00 ~ 01:00',
+    '오후 01:00 ~ 02:00',
+    '오후 02:00 ~ 03:00',
+    '오후 03:00 ~ 04:00',
+    '오후 04:00 ~ 05:00',
+    '오후 05:00 ~ 06:00'
   ];
 
-  const [showConsultTypeDropdown, setShowConsultTypeDropdown] = useState(false);
-  const [showConsultTimeDropdown, setShowConsultTimeDropdown] = useState(false);
 
   // 타이머 효과
   useEffect(() => {
@@ -191,8 +189,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       gender,
       code: otpCode,
       counselType: counselType,
-      INSURANCE_COMPANY_ID,
-      INSURANCE_PRODUCT_ID,
+      companyId: INSURANCE_COMPANY_ID,
+      productId: INSURANCE_PRODUCT_ID,
+      counselTime: consultTime,
+      mounthlyPremium: "30만원",
+      paymentPeriod: "5년",
+      tenYearReturnRate: rate ? Math.round(rate * 100) : '-'
     });
     if (res.data.success) {
       setIsVerified(true);
@@ -273,31 +275,48 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setConsultOtpTimer(0);
     setConsultOtpResendAvailable(true);
     setShowConsultModal(true);
-    setConsultOtpSent(false);
   };
   const handleCloseConsultModal = () => {
     setConsultIsVerified(false);
     setShowConsultModal(false);
-    setConsultOtpSent(false);
     setConsultOtpTimer(0);
     setConsultOtpResendAvailable(true);
   };
-  const handleConsultSendOTP = () => {
+  const handleConsultSendOTP = async () => {
     setConsultOtpTimer(180);
     setConsultOtpResendAvailable(false);
-    setConsultOtpSent(true);
+    await handlePostOTP()
   };
-  const handleConsultVerify = () => {
-    if (!consultOtpSent) {
-      alert('인증번호를 먼저 전송해 주세요.');
+
+  const handleConsultVerifyOTP = async () => {
+    if (consultOtpCode.length !== 6) {
+      alert("6자리 인증번호를 입력해주세요.");
       return;
     }
-    if (!consultOtpCode || consultOtpCode.length !== 6) {
-      alert('6자리 인증번호를 입력해주세요.');
-      return;
+    setVerifying(true);
+    try {
+      const res = await request.post("/api/verifyOTP", {
+        phone,
+        name,
+        birth,
+        code: consultOtpCode,
+        counselType: 2,
+        companyId: INSURANCE_COMPANY_ID,
+        productId: INSURANCE_PRODUCT_ID,
+        consultType,
+        counselTime: consultTime
+      });
+      if (res.data.success) {
+        setConsultIsVerified(true);
+        alert("상담신청이 접수되었습니다!");
+      } else {
+        alert("인증에 실패했습니다.");
+      }
+    } catch (e: any) {
+      alert(e.error || "인증에 실패했습니다.");
+    } finally {
+      setVerifying(false);
     }
-    setConsultIsVerified(true);
-    alert('인증이 완료되었습니다.');
   };
 
   // 보험연령 계산 함수
@@ -984,7 +1003,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               </div>
               <button
                 type="button"
-                onClick={handleConsultVerify}
+                onClick={handleConsultVerifyOTP}
                 className="w-full px-2 py-2.5 bg-[#3a8094] text-white rounded-md text-base font-semibold hover:bg-[#2c6070] transition-colors mt-1"
               >
                 인증 및 상담신청

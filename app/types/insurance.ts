@@ -13,4 +13,4 @@ export interface CoverageCategory {
 export interface InsuranceCoverage {
   basic: CoverageCategory;
   optional: CoverageCategory;
-} 
+}

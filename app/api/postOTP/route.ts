@@ -6,7 +6,7 @@ import aligoAuth from "../utils/aligoAuth";
 export async function POST(req: Request) {
   const { phone, templateId } = await req.json();
   const code = Math.floor(100000 + Math.random() * 900000).toString();
-
+  console.log("인증번호:", code);
   const { error: dbErr } = await supabase
     .from("otp")
     .insert({ phone, code });
@@ -24,13 +24,14 @@ export async function POST(req: Request) {
         tpl_code:    templateId,   // ex) "UA_7754"
         sender:      "010-8897-7486",   // ex) "021112222"
         receiver_1:  phone,                              // 수신자
-        subject_1:   "인증번호 발송",                     // 알림톡 제목
-        message_1:   `인증번호 [${code}]를 입력해주세요.`, // 본문
-        testMode:    "Y",                                 // 테스트 모드
+        subject_1:   "[보험스토어] 본인 확인",                     // 알림톡 제목
+        message_1:   `[보험스토어] 본인 확인\n인증번호[${code}]를 입력해주세요.`, // 본문
+        testMode:    "N",                                 // 테스트 모드
       },
     };
 
     const result = await alimtalkSend(requestData, aligoAuth);
+    console.log(result);
   } catch (err: any) {
     console.error("알림톡 전송 에러:", err);
     return NextResponse.json({ error: "알림톡 전송 실패" }, { status: 502 });
