@@ -16,7 +16,7 @@ export default function Surrender() {
       </div>
       {/* 표 */}
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse min-w-[1100px] text-center text-xs md:text-sm">
+        <table className="w-full text-center text-xs md:text-sm">
           <thead>
             <tr className="bg-[#1e3a8a] text-white align-middle">
               <th className="border border-gray-300 p-2" rowSpan={2}>경과기간</th>
@@ -61,12 +61,12 @@ export default function Surrender() {
             </tr>
             <tr><td className="border border-gray-300 p-2">11년</td><td className="border border-gray-300 p-2">51</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,858</td><td className="border border-gray-300 p-2">128.6%</td><td className="border border-gray-300 p-2">3,935</td><td className="border border-gray-300 p-2">131.2%</td><td className="border border-gray-300 p-2">3,935</td><td className="border border-gray-300 p-2">131.2%</td></tr>
             <tr><td className="border border-gray-300 p-2">12년</td><td className="border border-gray-300 p-2">52</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,817</td><td className="border border-gray-300 p-2">127.2%</td><td className="border border-gray-300 p-2">3,970</td><td className="border border-gray-300 p-2">132.4%</td><td className="border border-gray-300 p-2">3,970</td><td className="border border-gray-300 p-2">132.4%</td></tr>
-            <tr><td className="border border-gray-300 p-2">13년</td><td className="border border-gray-300 p-2">53</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,736</td><td className="border border-gray-300 p-2">124.5%</td><td className="border border-gray-300 p-2">4,006</td><td className="border border-gray-300 p-2">133.6%</td><td className="border border-gray-300 p-2">4,006</td><td className="border border-gray-300 p-2">133.6%</td></tr>
+            <tr><td className="border border-gray-300 p-2">13년</td><td className="border border-gray-300 p-2">53</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,776</td><td className="border border-gray-300 p-2">125.9%</td><td className="border border-gray-300 p-2">4,006</td><td className="border border-gray-300 p-2">133.6%</td><td className="border border-gray-300 p-2">4,006</td><td className="border border-gray-300 p-2">133.6%</td></tr>
             <tr><td className="border border-gray-300 p-2">14년</td><td className="border border-gray-300 p-2">54</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,736</td><td className="border border-gray-300 p-2">124.5%</td><td className="border border-gray-300 p-2">4,043</td><td className="border border-gray-300 p-2">134.8%</td><td className="border border-gray-300 p-2">4,043</td><td className="border border-gray-300 p-2">134.8%</td></tr>
             <tr><td className="border border-gray-300 p-2">15년</td><td className="border border-gray-300 p-2">55</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,696</td><td className="border border-gray-300 p-2">123.2%</td><td className="border border-gray-300 p-2">4,079</td><td className="border border-gray-300 p-2">136.0%</td><td className="border border-gray-300 p-2">4,079</td><td className="border border-gray-300 p-2">136.0%</td></tr>
             <tr><td className="border border-gray-300 p-2">16년</td><td className="border border-gray-300 p-2">56</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,656</td><td className="border border-gray-300 p-2">121.9%</td><td className="border border-gray-300 p-2">4,116</td><td className="border border-gray-300 p-2">137.2%</td><td className="border border-gray-300 p-2">4,116</td><td className="border border-gray-300 p-2">137.2%</td></tr>
-            <tr><td className="border border-gray-300 p-2">17년</td><td className="border border-gray-300 p-2">57</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,614</td><td className="border border-gray-300 p-2">120.5%</td><td className="border border-gray-300 p-2">4,154</td><td className="border border-gray-300 p-2">138.5%</td><td className="border border-gray-300 p-2">4,154</td><td className="border border-gray-300 p-2">138.5%</td></tr>
-            <tr><td className="border border-gray-300 p-2">18년</td><td className="border border-gray-300 p-2">58</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,578</td><td className="border border-gray-300 p-2">119.9%</td><td className="border border-gray-300 p-2">4,191</td><td className="border border-gray-300 p-2">139.7%</td><td className="border border-gray-300 p-2">4,191</td><td className="border border-gray-300 p-2">139.7%</td></tr>
+            <tr><td className="border border-gray-300 p-2">17년</td><td className="border border-gray-300 p-2">57</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,617</td><td className="border border-gray-300 p-2">120.6%</td><td className="border border-gray-300 p-2">4,154</td><td className="border border-gray-300 p-2">138.5%</td><td className="border border-gray-300 p-2">4,154</td><td className="border border-gray-300 p-2">138.5%</td></tr>
+            <tr><td className="border border-gray-300 p-2">18년</td><td className="border border-gray-300 p-2">58</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,578</td><td className="border border-gray-300 p-2">119.3%</td><td className="border border-gray-300 p-2">4,191</td><td className="border border-gray-300 p-2">139.7%</td><td className="border border-gray-300 p-2">4,191</td><td className="border border-gray-300 p-2">139.7%</td></tr>
             <tr><td className="border border-gray-300 p-2">19년</td><td className="border border-gray-300 p-2">59</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,539</td><td className="border border-gray-300 p-2">118.0%</td><td className="border border-gray-300 p-2">4,229</td><td className="border border-gray-300 p-2">141.0%</td><td className="border border-gray-300 p-2">4,229</td><td className="border border-gray-300 p-2">141.0%</td></tr>
             <tr><td className="border border-gray-300 p-2">20년</td><td className="border border-gray-300 p-2">60</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,501</td><td className="border border-gray-300 p-2">116.7%</td><td className="border border-gray-300 p-2">4,268</td><td className="border border-gray-300 p-2">142.3%</td><td className="border border-gray-300 p-2">4,268</td><td className="border border-gray-300 p-2">142.3%</td></tr>
           </tbody>
@@ -83,7 +83,7 @@ export default function Surrender() {
         <li>상기 예시된 금액 및 환급률은 세금을 공제하지 않은 금액입니다.</li>
         <li>상기 예시된 금액 및 환급률 등이 미래의 수익을 보장하는 것은 아닙니다.</li>
         <li>평균공시이율(감독규정 제1-2조 제13호)은 감독규정이 정하는 바에 따라 산정한 전체 보험회사의 공시이율의 평균으로, 2025년07월 현재 2.75%입니다.</li>
-        <li>상기 예시된 금액 및 환급률은 <span className='text-[#e11d48]'>7년 및 10년 경과 시점의 트리플 레벨업 보증을 반영한 금액</span>이며, <span className='text-[#e11d48]'>계약해당일이 도래하기 이전에 해지 시 예시된 금액과 다를 수 있습니다.</span><br/>다만, 연금개시시점 트리플 레벨업 보증은 연금을 개시하는 경우에 한하여 보증해드리므로, <span className='text-[#e11d48]'>연금개시전 트리플 레벨업 보증은 반영하기 전 금액</span>입니다.</li>
+        <li>상기 예시된 금액 및 환급률은 <span className='text-[#e11d48]'>7년 및 10년 경과 시점의 트리플 레벨업 보증을 반영한 금액</span>이며, <span className='text-[#e11d48]'>계약해당일이 도래하기 이전에 해지 시 예시된 금액과 다를 수 있습니다.</span><br/>다만, 연금개시시점 트리플 레벨업 보증은 연금을 개시하는 경우에 한하여 보증해드리므로, <span className='text-[#e11d48]'>연금개시시점 트리플 레벨업 보증은 반영하기 전 금액</span>입니다.</li>
         <li>트리플 레벨업 보증은 감액 또는 중도인출이 발생한 경우 <span className='text-[#e11d48]'>기본보험료 계약자적립액에 비례하여 감소</span>하며, <span className='text-[#e11d48]'>중도인출금액을 재납입하더라도 원복되지 않습니다.</span></li>
       </ol>
       {/* 두 번째 해약환급금 예시표 헤더 */}
@@ -100,7 +100,7 @@ export default function Surrender() {
       </div>
       {/* 연금지급액 예시표 표 */}
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse min-w-[900px] text-center text-xs md:text-sm mt-2">
+        <table className="w-full text-center text-xs md:text-sm">
           <thead>
             <tr className="bg-[#1e3a8a] text-white">
               <th className="border border-gray-300 p-2" colSpan={2}>구분</th>
@@ -173,9 +173,9 @@ export default function Surrender() {
       <ol className="text-xs md:text-sm text-gray-800 space-y-1 pl-4 list-decimal mt-2">
         <li>상기 예시금액은 최저보증이율, 평균공시이율을 2.75%(현재공시이율 상한) 및 현재 <span className='text-[#e11d48]'>2025년07월</span>의 공시이율 <span className='text-[#e11d48]'>2.5%</span>를 기준으로 계산한 금액입니다.</li>
         <li>실제 연금액은 공시이율을 적용하여 계산되며, 공시이율 변동시 연금액도 변경됩니다.</li>
-        <li>연금은 매월, 3개월, 6개월로 분할하여 지급할 경우 생존연금금은 공시이율로, 부리한 금액을 더하여 드립니다.</li>
+        <li>연금은 매월, 3개월, 6개월로 분할하여 지급할 경우 생존연금은 "공시이율"로, 부리한 금액을 더하여 드립니다.</li>
         <li>공시이율은 매월마다 변동될 수 있으며, 최저보증이율은 경과기간 5년 미만은 연복리 1.0%, 경과기간 5년 이상 10년미만은 연복리 0.75%, 경과기간 10년이상은 연복리 0.5% 입니다.</li>
-        <li>계약해지시 연금지급형에는 '종신연금형'이 적용되지 않으며, 계약자는 연금개시전에 연금지급시점에 연금지급방식 및 연금개시 시기를 변경할 수 있습니다.</li>
+        <li>계약체결시 연금지급형태는 '종신연금형'으로 정해지고, 계약자는 연금개시전에 연금지급방법 및 연금개시 시기를 변경할 수 있습니다.</li>
         <li>상기 연금개시시점 계약자적립액은 <span className='text-[#e11d48]'>연금개시시점 트리플 레벨업 보증을 반영하여 예시한 금액</span>입니다.</li>
         <li>연금개시점의 트리플 레벨업 보증은 연금을 개시할 경우에만 적용되며, <span className='text-[#e11d48]'>연금을 개시하지 않을 경우 보증되지 않습니다.</span></li>
         <li>상기 연금액이 미래의 수익을 보장하는 것은 아니며, 향후 공시이율의 변경, 연금지급 개시 당시 연금사망률 적용 등에 따라 변동될 수 있습니다.</li>
