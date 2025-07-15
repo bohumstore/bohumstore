@@ -380,15 +380,15 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               </li>
               <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
                 <span className="text-xl mr-2 text-[#ff8c1a]">✔</span>
-                병력 무심사 / 무사망 보장 / 전건 가입 가능
-              </li>
-              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
-                <span className="text-xl mr-2 text-[#ff8c1a]">✔</span>
                 가입 0~70세 / 연금개시 45~85세
               </li>
               <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
                 <span className="text-xl mr-2 text-[#ff8c1a]">✔</span>
                 비과세 <span className="text-xs align-baseline">(월 150만원 한도, 10년유지 세법요건 충족시)</span>
+              </li>
+              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
+                <span className="text-xl mr-2 text-[#ff8c1a]">✔</span>
+                병력 무심사 / 무사망 보장 / 전건 가입 가능
               </li>
             </ul>
               {/* 환급률/적립액 안내 UI */}
