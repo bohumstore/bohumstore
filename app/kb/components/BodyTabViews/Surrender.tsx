@@ -92,7 +92,7 @@ export default function Surrender() {
         <div className="w-full h-1 bg-[#1e3a8a] mb-3" />
         <div className="flex flex-col gap-0.5 mt-2">
           <span className="text-[#222] text-lg md:text-xl font-bold leading-tight">연금개시후 보험기간</span>
-          <span className="text-[#1e3a8a] text-lg md:text-xl font-bold leading-tight">보증형</span>
+          <span className="text-[#ff8c1a] text-lg md:text-xl font-bold leading-tight">보증형</span>
         </div>
         <div className="text-xs text-gray-600 text-right ml-2 pb-0.5 mt-2">
           기준 : 주계약, 남자 40세, 보증형, 5년납, 60세 연금개시, 월보험료 50만원, 단위 : 만원
