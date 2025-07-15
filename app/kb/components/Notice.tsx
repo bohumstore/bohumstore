@@ -8,7 +8,7 @@ interface NoticeProps {
 
 export default function Notice({ open, onClose }: NoticeProps) {
   return (
-    <Modal title="꼭 알아두실 사항" open={open} onClose={onClose}>
+    <Modal title="상품가입전 알아두실 사항" open={open} onClose={onClose}>
       <div className="overflow-y-auto px-6 py-4 text-[15px] leading-relaxed" style={{maxHeight:'60vh'}}>
         <div className="mb-4">
           <div className="text-[#d32f2f]">보험계약자는 회사 등으로부터 상품에 대해 충분한 설명을 받을 권리가 있으며, 가입에 앞서 그 설명을 이해한 후 거래하시기 바랍니다.</div>
