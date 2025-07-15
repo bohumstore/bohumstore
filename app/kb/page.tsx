@@ -74,7 +74,6 @@ export default function KBTripleLevelupAnnuityPage() {
         <div className="w-full flex justify-center">
           <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mb-2 md:mb-4 lg:mb-6 mt-6 md:mt-8 lg:mt-10 px-6 py-0 text-xs md:text-sm text-gray-800">
             <div className="mb-1 font-bold">[ 필수안내사항 ]</div>
-            <div>보험대리점 : ㈜메타리치 (등록번호 : 제2023070016호)</div>
             <div>※ 본 광고는 심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.</div>
             <div className="text-red-500">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
             <div className="text-red-500">① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.</div>

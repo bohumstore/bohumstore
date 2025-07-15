@@ -192,9 +192,11 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       companyId: INSURANCE_COMPANY_ID,
       productId: INSURANCE_PRODUCT_ID,
       counselTime: consultTime,
-      mounthlyPremium: "30만원",
-      paymentPeriod: "5년",
-      tenYearReturnRate: rate ? Math.round(rate * 100) : '-'
+      mounthlyPremium: paymentAmount, // 실제 선택값
+      paymentPeriod: paymentPeriod,   // 실제 선택값
+      tenYearReturnRate: rate ? Math.round(rate * 100) : '-', // 환급률
+      interestValue, // 확정이자(실제 값)
+      refundValue    // 예상해약환급금(실제 값)
     });
     if (res.data.success) {
       setIsVerified(true);
@@ -299,18 +301,48 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         phone,
         name,
         birth,
+        gender, // 추가: 성별도 함께 전달
         code: consultOtpCode,
         counselType: 2,
         companyId: INSURANCE_COMPANY_ID,
         productId: INSURANCE_PRODUCT_ID,
         consultType,
-        counselTime: consultTime
+        counselTime: consultTime,
+        mounthlyPremium: paymentAmount,
+        paymentPeriod: paymentPeriod,
+        tenYearReturnRate: rate ? Math.round(rate * 100) : '-',
+        interestValue,
+        refundValue
       });
       if (res.data.success) {
+        alert("인증이 완료되었습니다!");
         setConsultIsVerified(true);
-        alert("상담신청이 접수되었습니다!");
+        try {
+          await request.post("/api/verifyOTP", {
+            phone,
+            name,
+            birth,
+            gender,
+            code: '', // 인증번호는 빈 값으로
+            counselType: 2,
+            companyId: INSURANCE_COMPANY_ID,
+            productId: INSURANCE_PRODUCT_ID,
+            consultType,
+            counselTime: consultTime,
+            mounthlyPremium: paymentAmount,
+            paymentPeriod: paymentPeriod,
+            tenYearReturnRate: rate ? Math.round(rate * 100) : '-',
+            interestValue,
+            refundValue,
+            onlyClient: true
+          });
+          alert("상담신청이 접수되었습니다!");
+        } catch (e) {
+          // 알림톡 발송 실패 시 사용자에게 별도 안내하지 않음 (조용히 무시)
+        }
       } else {
         alert("인증에 실패했습니다.");
+        return;
       }
     } catch (e: any) {
       alert(e.error || "인증에 실패했습니다.");
@@ -845,7 +877,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 </div>
                 <button
                   type="button"
-                  onClick={handleVerifyAndShowInfo}
+                  onClick={handleVerifyOTP}
                   className="w-full px-2 py-2.5 bg-[#3a8094] text-white rounded-md text-base font-semibold hover:bg-[#2c6070] transition-colors mt-1"
                 >
                   인증 및 보험료 계산
