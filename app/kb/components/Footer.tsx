@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="w-full bg-[#f8f8f8] border-t border-gray-200 py-8 mt-4">
       <div className="max-w-5xl mx-auto px-4 text-center text-gray-500 text-sm flex flex-col gap-2">
         <div className="flex justify-center items-center gap-6 mb-2">
-          <Image src="/메타리치 로고1.png" alt="MetaRich 로고" width={120} height={40} style={{objectFit:'contain',height:'40px'}} />
+          <Image src="/metarich-logo1.png" alt="MetaRich 로고" width={120} height={40} style={{objectFit:'contain',height:'40px'}} />
           <span className="h-8 w-px bg-gray-300 mx-2 inline-block" />
           <Image src="/bohumstore-logo.png" alt="보험스토어 로고" width={120} height={40} style={{objectFit:'contain',height:'40px'}} />
         </div>
