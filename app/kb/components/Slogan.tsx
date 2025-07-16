@@ -698,7 +698,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
-                    <span className="font-bold text-[#3a8094]">KB생명</span>
+                    <span className="font-bold text-[#3a8094]">KB라이프</span>
                   </div>
                 </div>
                 <div className="bg-white p-2 rounded border border-gray-200">
@@ -775,7 +775,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
-                    <span className="font-bold text-[#3a8094]">KB생명</span>
+                    <span className="font-bold text-[#3a8094]">KB라이프</span>
                   </div>
                 </div>
                 <div className="bg-white p-2 rounded border border-gray-200">
@@ -807,7 +807,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 환급률</span>
                     <span className="font-bold">
-                      <span className="text-[#7c3aed]">{rate ? Math.round(rate * 100) : '-'}</span>{' '}<span className="text-[#3a8094]">%</span>
+                      <span className="text-[#7c3aed]">?</span>{' '}<span className="text-[#3a8094]">%</span>
                     </span>
                   </div>
                 </div>
@@ -816,7 +816,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 확정이자</span>
                     <span className="font-bold">
-                      <span className="text-[#3b82f6]">{interestValue}</span>{' '}<span className="text-[#3a8094]">원</span>
+                      <span className="text-[#3b82f6]">?</span>{' '}<span className="text-[#3a8094]">원</span>
                     </span>
                   </div>
                 </div>
@@ -824,7 +824,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 예상 해약환급금</span>
                     <span className="font-bold">
-                      <span className="text-[#ef4444]">{refundValue}</span>{' '}<span className="text-[#3a8094]">원</span>
+                      <span className="text-[#ef4444]">?</span>{' '}<span className="text-[#3a8094]">원</span>
                     </span>
                   </div>
                 </div>
