@@ -1,19 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
 import React from "react";
-import Header from "./components/Header";
+import Header from "../../../../components/Header";
 import Slogan from "./components/Slogan";
 import Footer from "./components/Footer";
-import PrivacyConsent from "../components/PrivacyConsent";
-import Modal from "../components/Modal";
+import PrivacyConsent from "../../../../components/PrivacyConsent";
+import Modal from "../../../../components/Modal";
 import Notice from "./components/Notice";
-import Tabs from "../components/Tabs";
+import Tabs from "../../../../components/Tabs";
 import ProductInfo from "./components/BodyTabViews/ProductInfo";
 import CoverageDetails from "./components/BodyTabViews/CoverageDetails";
 import Surrender from "./components/BodyTabViews/Surrender";
-import { supabase } from "../api/supabase";
+import { supabase } from "../../../../api/supabase";
 
-export default function KBTripleLevelupAnnuityPage() {
+export default function DongyangTestWholeLifePage() {
   const tabs = [
     { label: '상품 정보',      content: <ProductInfo /> },
     { label: '보장 내용',      content: <CoverageDetails /> },
@@ -58,12 +58,6 @@ export default function KBTripleLevelupAnnuityPage() {
             <Tabs tabs={tabs} />
             {/* 하단 버튼 */}
             <div className="flex flex-col md:flex-row gap-4 justify-center mt-10">
-                <a href="/kb-guide.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
-                상품안내장
-              </a>
-                <a href="/kb-guide2.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
-                약관
-              </a>
               <button type="button" onClick={() => setShowNotice(true)} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
                 상품가입전 알아두실 사항
               </button>

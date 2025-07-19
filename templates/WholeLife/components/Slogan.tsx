@@ -6,6 +6,8 @@ import FireworksEffect from './FireworksEffect';
 
 const INSURANCE_COMPANY_ID = 1; // KB 손해보험
 const INSURANCE_PRODUCT_ID = 1; // KB 트리플 레벨업 연금보험 무배당 id 코드값
+const OTP_TIMER_DURATION = 180; // 3분
+const OTP_CODE_LENGTH = 6;
 
 type SloganProps = {
   onOpenPrivacy: () => void
@@ -17,22 +19,20 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   const [gender, setGender] = useState("");
   const [birth, setBirth] = useState("");
   const [phone, setPhone] = useState("");
-  const [paymentPeriod, setPaymentPeriod] = useState("");
-  const [paymentAmount, setPaymentAmount] = useState("");
+  const [paymentPeriod, setPaymentPeriod] = useState("5년납");
+  const [paymentAmount, setPaymentAmount] = useState("30만원");
   const [isChecked, setIsChecked] = useState(true);
 
   const [showResultModal, setShowResultModal] = useState(false)
-  const [otpSent, setOtpSent]   = useState(false)
-  const [otpCode, setOtpCode]   = useState("")
+  const [otpCode, setOtpCode] = useState("")
   const [verifying, setVerifying] = useState(false)
-  const [errorMsg, setErrorMsg]  = useState("")
   const [otpTimer, setOtpTimer] = useState(0);
   const [otpResendAvailable, setOtpResendAvailable] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
 
   const [showConsultModal, setShowConsultModal] = useState(false);
   const [consultOtpCode, setConsultOtpCode] = useState('');
-  const [consultOtpTimer, setConsultOtpTimer] = useState(180);
+  const [consultOtpTimer, setConsultOtpTimer] = useState(OTP_TIMER_DURATION);
   const [consultOtpResendAvailable, setConsultOtpResendAvailable] = useState(true);
   const [consultIsVerified, setConsultIsVerified] = useState(false);
 
@@ -131,14 +131,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       return false;
     }
 
-    if (!paymentPeriod) {
-      alert('납입기간을 선택해주세요.');
-      return false;
-    }
-    if (!paymentAmount) {
-      alert('월 납입금액을 선택해주세요.');
-      return false;
-    }
+
     return true;
   }
 
@@ -146,7 +139,6 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     const templateId = "UA_7754"
     try {
       await request.post('/api/postOTP', { phone, templateId })
-      setOtpSent(true)
     } catch (e: any) {
       console.error(e)
       alert('인증번호 전송에 실패했습니다.')
@@ -161,22 +153,11 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   }
 
 
-  const handleVerifyAndShowInfo = () => {
-    // if (!otpSent) {
-    //   alert('인증번호를 먼저 전송해 주세요.');
-    //   return;
-    // }
-    if (otpCode.length !== 6) {
-      alert('6자리 인증번호를 입력해주세요.');
-      return;
-    }
-    setIsVerified(true);
-    alert('인증이 완료되었습니다.');
-  };
+
 
   const handleVerifyOTP = async () => {
-  if (otpCode.length !== 6) {
-    alert("6자리 인증번호를 입력해주세요.");
+  if (otpCode.length !== OTP_CODE_LENGTH) {
+    alert(`${OTP_CODE_LENGTH}자리 인증번호를 입력해주세요.`);
     return;
   }
 
@@ -200,7 +181,6 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     });
     if (res.data.success) {
       setIsVerified(true);
-      setOtpSent(false);
       alert("인증이 완료되었습니다!");
     } else {
       alert("인증에 실패했습니다.");
@@ -230,9 +210,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleSendOTP = async () => {
-    setOtpTimer(180); // 3분
+    setOtpTimer(OTP_TIMER_DURATION);
     setOtpResendAvailable(false);
-    await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
+    await handlePostOTP();
   };
 
   const formatTime = (sec: number) => {
@@ -247,6 +227,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setShowResultModal(false);
     setOtpTimer(0);
     setOtpResendAvailable(true);
+    setOtpCode("");
   };
 
   // 입력값 변경 시 인증상태 초기화
@@ -258,14 +239,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setName(e.target.value);
     setIsVerified(false);
   };
-  const handlePaymentPeriodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPaymentPeriod(e.target.value);
-    setIsVerified(false);
-  };
-  const handlePaymentAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPaymentAmount(e.target.value);
-    setIsVerified(false);
-  };
+
 
   const handleOpenConsultModal = () => {
     if (!gender || !name || !birth || !phone) {
@@ -283,18 +257,19 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setShowConsultModal(false);
     setConsultOtpTimer(0);
     setConsultOtpResendAvailable(true);
+    setConsultOtpCode("");
   };
   const handleConsultSendOTP = async () => {
-    setConsultOtpTimer(180);
+    setConsultOtpTimer(OTP_TIMER_DURATION);
     setConsultOtpResendAvailable(false);
     await handlePostOTP()
   };
 
   const handleConsultVerifyOTP = async () => {
-    if (consultOtpCode.length !== 6) {
-      alert("6자리 인증번호를 입력해주세요.");
-      return;
-    }
+      if (consultOtpCode.length !== OTP_CODE_LENGTH) {
+    alert(`${OTP_CODE_LENGTH}자리 인증번호를 입력해주세요.`);
+    return;
+  }
     setVerifying(true);
     try {
       const res = await request.post("/api/verifyOTP", {
@@ -371,22 +346,30 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   // 보험연령 계산
   const insuranceAge = getInsuranceAge(birth);
 
-  // 총 납입액, 환급률, 확정이자, 해약환급금 계산
-  let amount = 0;
-  if (paymentAmount.includes('만원')) {
-    const num = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
-    amount = num * 10000;
-  } else {
-    amount = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
-  }
-  const months = parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12;
-  const total = (!isNaN(amount) && !isNaN(months) && amount > 0 && months > 0) ? amount * months : 0;
-  let rate = 1.3, interestRate = 0.3;
-  if (paymentPeriod.includes('5')) { rate = 1.3; interestRate = 0.3; }
-  else if (paymentPeriod.includes('7')) { rate = 1.25; interestRate = 0.25; }
-  else if (paymentPeriod.includes('10')) { rate = 1.2; interestRate = 0.2; }
-  const interestValue = total ? (total * interestRate).toLocaleString('en-US') : '-';
-  const refundValue = total ? (total * rate).toLocaleString('en-US') : '-';
+  // 보험료 계산 함수
+  const calculateInsuranceValues = () => {
+    let amount = 0;
+    if (paymentAmount.includes('만원')) {
+      const num = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+      amount = num * 10000;
+    } else {
+      amount = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+    }
+    const months = parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12;
+    const total = (!isNaN(amount) && !isNaN(months) && amount > 0 && months > 0) ? amount * months : 0;
+    
+    let rate = 1.3, interestRate = 0.3;
+    if (paymentPeriod.includes('5')) { rate = 1.3; interestRate = 0.3; }
+    else if (paymentPeriod.includes('7')) { rate = 1.25; interestRate = 0.25; }
+    else if (paymentPeriod.includes('10')) { rate = 1.2; interestRate = 0.2; }
+    
+    const interestValue = total ? (total * interestRate).toLocaleString('en-US') : '-';
+    const refundValue = total ? (total * rate).toLocaleString('en-US') : '-';
+    
+    return { total, rate, interestValue, refundValue };
+  };
+
+  const { total, rate, interestValue, refundValue } = calculateInsuranceValues();
 
   return (
     <>
@@ -423,42 +406,6 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 병력 무심사 / 무사망 보장 / 전건 가입 가능
               </li>
             </ul>
-              {/* 환급률/적립액 안내 UI */}
-              <div className="w-full max-w-full md:max-w-lg mx-auto bg-white rounded-xl shadow-md mb-6 p-4 px-2 md:px-0 md:py-8">
-                <div className="flex flex-row justify-between items-stretch md:items-end gap-4 md:gap-0 mb-2">
-                  <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
-                    <div className="inline-block bg-[#ff8c1a] text-white text-xs font-bold px-4 py-1 rounded-full mb-2">7년 시점</div>
-                    <div className="flex flex-col items-center">
-                      <span className="text-2xl md:text-5xl mb-1">💰</span>
-                      <div className="font-bold text-xs md:text-xl">환급률</div>
-                      <div className="text-xl md:text-4xl font-extrabold text-[#ff8c1a]">100%</div>
-                      <div className="text-xs text-gray-500 mt-1">* 5년납</div>
-                    </div>
-                  </div>
-                  <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
-                    <div className="inline-block bg-[#3a80e0] text-white text-xs font-bold px-4 py-1 rounded-full mb-2">10년 시점</div>
-                    <div className="flex flex-col items-center">
-                      <span className="text-2xl md:text-5xl mb-1">💰</span>
-                      <div className="font-bold text-xs md:text-xl">환급률</div>
-                      <div className="text-xl md:text-4xl font-extrabold text-[#3a80e0] animate-[jump-glow_1.2s_ease-in-out_infinite]">130%</div>
-                      <div className="text-xs text-gray-500 mt-1 whitespace-nowrap">* 5년납</div>
-                    </div>
-                  </div>
-                  <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
-                    <div className="inline-block bg-[#e23c3c] text-white text-xs font-bold px-4 py-1 rounded-full mb-2">연금개시 시점</div>
-                    <div className="flex flex-col items-center">
-                      <span className="text-2xl md:text-5xl mb-1">🐷</span>
-                      <div className="font-bold text-xs md:text-xl">계약자적립액</div>
-                      <div className="text-lg md:text-4xl font-extrabold text-[#e23c3c]">2.0%</div>
-                      <div className="text-xs text-gray-500 mt-1">(연금을 개시하는 경우에 한함)</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="text-xs text-gray-500 text-center mt-4">
-                  <p>* 환급률은 트리플 레벨업 보증률 반영한 금액 입니다.</p>
-                  <p>(부분 보증형에 한함)</p>
-                </div>
-            </div>
             <div className="text-xs text-gray-400 mt-4">준법감시인 심의필 제2025-광고-1168호(2025.06.05~2026.06.04)</div>
           </div>
           {/* 오른쪽: 보험료 확인 카드 */}
@@ -538,67 +485,6 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                     </div>
                   </div>
                 </div>
-
-                {/* 납입 정보 선택 */}
-                <div className="space-y-4 mb-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">납입기간</label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {['5년', '7년', '10년'].map((period) => (
-                        <label key={period} className="relative flex items-center justify-center cursor-pointer">
-                          {/* 추천 배지 */}
-                          {period === '5년' && (
-                            <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#ff8c1a] text-white text-xs font-bold px-2 py-0.5 rounded-full animate-bounce shadow z-10">
-                              추천
-                            </span>
-                          )}
-                          <input
-                            type="radio"
-                            name="paymentPeriod"
-                            value={period}
-                            checked={paymentPeriod === period}
-                            onChange={handlePaymentPeriodChange}
-                            className="peer sr-only cursor-pointer"
-                          />
-                          <div className="w-full text-center px-2 py-2 text-sm border-2 rounded-lg cursor-pointer
-                                      transition-all duration-200 ease-in-out
-                                      peer-checked:border-[#3a8094] peer-checked:bg-[#f0f9ff] peer-checked:text-[#3a8094] peer-checked:font-bold
-                                      peer-checked:shadow-[0_0_10px_rgba(58,128,148,0.1)]
-                                      hover:border-[#3a8094] hover:bg-gray-50
-                                      border-gray-200">
-                            {period}
-                          </div>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">월 납입금액</label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {['30만원', '50만원', '100만원'].map((amount) => (
-                        <label key={amount} className="relative flex items-center justify-center cursor-pointer">
-                          <input
-                            type="radio"
-                            name="paymentAmount"
-                            value={amount}
-                            checked={paymentAmount === amount}
-                            onChange={handlePaymentAmountChange}
-                            className="peer sr-only cursor-pointer"
-                          />
-                          <div className="w-full text-center px-2 py-2 text-sm border-2 rounded-lg cursor-pointer
-                                      transition-all duration-200 ease-in-out
-                                      peer-checked:border-[#3a8094] peer-checked:bg-[#f0f9ff] peer-checked:text-[#3a8094] peer-checked:font-bold
-                                      peer-checked:shadow-[0_0_10px_rgba(58,128,148,0.1)]
-                                      hover:border-[#3a8094] hover:bg-gray-50
-                                      border-gray-200">
-                            {amount}
-                          </div>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
                 {/* 개인정보 동의 */}
                 <div className="flex items-start gap-2 mb-6 justify-end">
                   <input 
@@ -709,42 +595,6 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 </div>
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
-                    <span className="font-bold text-[#3a8094]">
-                      {paymentPeriod && paymentAmount ? `${paymentPeriod} / ${paymentAmount}` : '-'}
-                    </span>
-                  </div>
-                </div>
-                {/* 총 납입액 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
-                    <span className="font-bold">
-                      <span className="text-[#3a8094]">{total ? total.toLocaleString('en-US') : '-'}</span>
-                      <span className="text-[#3a8094]"> 원</span>
-                    </span>
-                  </div>
-                </div>
-                {/* 10년 시점 환급률 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 환급률</span>
-                    <span className="font-bold">
-                      <span className="text-[#7c3aed]">{rate ? Math.round(rate * 100) : '-'}</span>{' '}<span className="text-[#3a8094]">%</span>
-                    </span>
-                  </div>
-                </div>
-                {/* 10년 확정이자 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 확정이자</span>
-                    <span className="font-bold">
-                      <span className="text-[#3b82f6]">{interestValue}</span>{' '}<span className="text-[#3a8094]">원</span>
-                    </span>
-                  </div>
-                </div>
-                <div className="bg-white p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 예상 해약환급금</span>
                     <span className="font-bold">
                       <span className="text-[#ef4444]">{refundValue}</span>{' '}<span className="text-[#3a8094]">원</span>
@@ -782,50 +632,6 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
                     <span className="font-bold text-[#3a8094]">KB트리플레벨업연금보험</span>
-                  </div>
-                </div>
-                <div className="bg-white p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
-                    <span className="font-bold text-[#3a8094]">
-                      {paymentPeriod && paymentAmount ? `${paymentPeriod} / ${paymentAmount}` : '-'}
-                    </span>
-                  </div>
-                </div>
-                {/* 총 납입액 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
-                    <span className="font-bold">
-                      <span className="text-[#3a8094]">{total ? total.toLocaleString('en-US') : '-'}</span>
-                      <span className="text-[#3a8094]"> 원</span>
-                    </span>
-                  </div>
-                </div>
-                {/* 10년 시점 환급률 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 환급률</span>
-                    <span className="font-bold">
-                      <span className="text-[#7c3aed]">?</span>{' '}<span className="text-[#3a8094]">%</span>
-                    </span>
-                  </div>
-                </div>
-                {/* 10년 확정이자 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 확정이자</span>
-                    <span className="font-bold">
-                      <span className="text-[#3b82f6]">?</span>{' '}<span className="text-[#3a8094]">원</span>
-                    </span>
-                  </div>
-                </div>
-                <div className="bg-white p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 예상 해약환급금</span>
-                    <span className="font-bold">
-                      <span className="text-[#ef4444]">?</span>{' '}<span className="text-[#3a8094]">원</span>
-                    </span>
                   </div>
                 </div>
                 <div className="text-xs text-gray-500 text-center mt-4">
