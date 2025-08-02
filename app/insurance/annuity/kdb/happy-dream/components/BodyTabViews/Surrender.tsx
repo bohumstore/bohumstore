@@ -45,9 +45,9 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 품질보증제도 */}
+      {/* 품질보증해지제도 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">품질보증제도</h3>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">품질보증해지제도</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <p className="text-gray-700">보험계약을 체결할 때 청약서에 자필서명(전자서명 포함)을 하지 않았거나 청약할 때 약관과 계약자 보관용 청약서를 전달받지 못한 경우 또는 약관의 중요한 내용을 설명받지 못한 경우에는 계약자는 계약이 성립한 날부터 3개월 이내에 계약을 취소할 수 있으며, 납입한 보험료 전액과 정해진 이자를 지급합니다.</p>
         </div>
@@ -77,16 +77,27 @@ export default function JoinNotice() {
         </div>
       </div>
 
+      {/* 실적배당형 상품에 대한 안내 */}
+      <div className="space-y-4">
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">실적배당형 상품에 대한 안내</h3>
+        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+          <p className="text-red-600">이 상품은 실적배당형 상품이므로 보험금 및 해약환급금이 특별계정의 운용실적에 따라 변동됩니다. 운용결과에 따라 납입원금의 손실이 발생할 수 있으며, 그 손실은 모두 계약자에게 귀속됩니다. 중도해지시 해약환급금에 대한 최저보증이 없으므로 원금손실이 발생할 수 있으며, 그 손실은 모두 계약자에게 귀속됩니다.</p>
+        </div>
+      </div>
+
+      {/* 중도해지시 손실안내 */}
+      <div className="space-y-4">
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">중도해지시 손실안내</h3>
+        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+          <p className="text-red-600">중도해지시 해약환급금에 대한 최저보증이 없으므로 원금손실이 발생할 수 있으며, 그 손실은 모두 계약자에게 귀속됩니다.</p>
+        </div>
+      </div>
+
       {/* 예금자보호안내 */}
       <div className="space-y-4">
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">예금자보호안내</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-          <div className="space-y-2">
-            <p className="text-gray-700"><span className="text-red-600">이 보험계약은 예금자보호법에 의해 보호되지 않습니다.</span></p>
-            <p className="text-gray-700">이 보험계약은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금)에 기타지급금을 합한 금액이 1인당 "5천만원까지"(본 보험회사의 여타 보험상품과 합산) 보호됩니다.</p>
-            <p className="text-gray-700">이와 별도로 본 보험회사 보호상품의 사고보험금을 합산한 금액이 1인당 "5천만원까지" 보호됩니다.</p>
-            <p className="text-gray-700">다만, 보험계약자 및 보험료 납부자가 법인인 보험 계약은 「예금자보호법」에 따라 보호되지 않습니다.</p>
-          </div>
+          <p className="text-gray-700"><span className="text-red-600">이 보험계약은 예금자보호법에 의해 보호되지 않습니다.</span> 다만, 약관에서 보험회사가 최저보증하는 보험금 및 특약에 한하여 예금자보호법에 따라 보호됩니다. 보호한도는 해약환급금(또는 만기 시 보험금)에 기타지급금을 합하여 1인당 "5천만원까지"(본 보험회사의 여타 보호상품과 합산)이며, 이와 별도로 본 보험회사 보호상품의 사고보험금을 합산하여 1인당 "5천만원까지" 입니다. 다만, 보험계약자 및 보험료 납부자가 법인인 보험 계약은 「예금자보호법」에 따라 보호되지 않습니다.</p>
         </div>
       </div>
 

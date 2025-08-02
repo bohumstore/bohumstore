@@ -11,22 +11,24 @@ export default function CoverageDetails() {
         <div className="text-sm text-gray-600 mb-2 whitespace-nowrap text-right">(기준 : 1구좌)</div>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
+            <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-[#1e3a8a] text-white">
-                  <th className="border border-gray-300 p-3 w-[180px]">급부명칭</th>
-                  <th className="border border-gray-300 p-3">지급사유</th>
-                  <th className="border border-gray-300 p-3 w-[120px] whitespace-nowrap">지급금액</th>
+                    <th className="border border-gray-300 p-2 sm:p-3 w-[140px] sm:w-[180px] text-xs sm:text-sm">급부명칭</th>
+                    <th className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">지급사유</th>
+                    <th className="border border-gray-300 p-2 sm:p-3 w-[100px] sm:w-[120px] whitespace-nowrap text-xs sm:text-sm">지급금액</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="border border-gray-300 p-3 text-[#1e3a8a]">고도후유장해보험금</td>
-                  <td className="border border-gray-300 p-3">연금개시 전 보험기간 중 피보험자가 장해분류표 중 동일한 재해로 여러 신체부위의 장해지급률을 더하여 80% 이상인 장해상태가 되었을 때 (최초1회한)</td>
-                  <td className="border border-gray-300 p-3 text-[#1e3a8a] whitespace-nowrap">1,000만원</td>
+                    <td className="border border-gray-300 p-2 sm:p-3 text-[#1e3a8a] text-xs sm:text-sm text-center">고도후유장해보험금</td>
+                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm leading-relaxed">연금개시 전 보험기간 중 피보험자가 장해분류표 중 동일한 재해로 여러 신체부위의 장해지급률을 더하여 80% 이상인 장해상태가 되었을 때 (최초1회한)</td>
+                    <td className="border border-gray-300 p-2 sm:p-3 text-[#1e3a8a] whitespace-nowrap text-xs sm:text-sm text-center">1,000만원</td>
                 </tr>
               </tbody>
             </table>
+            </div>
             <div className="text-sm text-gray-600">
               ※ 사망하였을 경우에는 계약자적립액과 최저사망적립액 중 큰 금액을 지급합니다.
             </div>
@@ -39,22 +41,24 @@ export default function CoverageDetails() {
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">연금개시 후 보험기간</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
+            <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-[#1e3a8a] text-white">
-                  <th className="border border-gray-300 p-3 w-[180px]">급부명칭</th>
-                  <th className="border border-gray-300 p-3">지급사유</th>
-                  <th className="border border-gray-300 p-3">지급금액</th>
+                    <th className="border border-gray-300 p-2 sm:p-3 w-[140px] sm:w-[180px] text-xs sm:text-sm">급부명칭</th>
+                    <th className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">지급사유</th>
+                    <th className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">지급금액</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="border border-gray-300 p-3 text-[#1e3a8a]">금액보증연금</td>
-                  <td className="border border-gray-300 p-3">연금개시 후 보험기간 중 피보험자가 매년 계약해당일에 살아있을 때</td>
-                  <td className="border border-gray-300 p-3">연금기준금액(다만, 연계약해당일의 계약자적립액이 더 클 경우에는 계약자적립액)을 기준으로 금액보증연금 지급률을 적용하여 계산한 금액보증연금 연지급액을 피보험자가 연계약해당일에 살아 있을 경우 지급</td>
+                    <td className="border border-gray-300 p-2 sm:p-3 text-[#1e3a8a] text-xs sm:text-sm text-center">금액보증연금</td>
+                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm leading-relaxed">연금개시 후 보험기간 중 피보험자가 매년 계약해당일에 살아있을 때</td>
+                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm leading-relaxed">연금기준금액(다만, 연계약해당일의 계약자적립액이 더 클 경우에는 계약자적립액)을 기준으로 금액보증연금 지급률을 적용하여 계산한 금액보증연금 연지급액을 피보험자가 연계약해당일에 살아 있을 경우 지급</td>
                 </tr>
               </tbody>
             </table>
+            </div>
             <div className="space-y-2">
               <div className="text-sm text-gray-600">
                 ※ 사망하였을 경우에는 계약자적립액과 최저사망적립액 중 큰 금액을 지급합니다.
@@ -80,13 +84,15 @@ export default function CoverageDetails() {
       <div className="space-y-4">
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
+            <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <tbody>
                 <tr>
-                  <td className="border border-gray-300 p-3">(무)신보험료납입면제특약(3대질병형)</td>
+                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">(무)신보험료납입면제특약(3대질병형)</td>
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
       </div>
