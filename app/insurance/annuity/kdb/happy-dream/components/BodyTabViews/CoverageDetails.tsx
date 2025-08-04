@@ -2,14 +2,14 @@ import React from 'react'
 
 export default function CoverageDetails() {
   return (
-    <div className="space-y-8 px-2 sm:px-4 md:px-8 py-4 md:py-6">
+    <div className="space-y-6 px-2 sm:px-4 md:px-8 py-3 md:py-4">
       <h2 className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2">주계약</h2>
 
       {/* 연금개시 전 보험기간 */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">연금개시 전 보험기간</h3>
         <div className="text-sm text-gray-600 mb-2 whitespace-nowrap text-right">(기준 : 1구좌)</div>
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <div className="overflow-x-auto">
             <table className="w-full border-collapse">
@@ -37,9 +37,9 @@ export default function CoverageDetails() {
       </div>
 
       {/* 연금개시 후 보험기간 */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">연금개시 후 보험기간</h3>
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <div className="overflow-x-auto">
             <table className="w-full border-collapse">
@@ -72,7 +72,7 @@ export default function CoverageDetails() {
       </div>
 
       {/* 기본 설명들 */}
-      <div className="space-y-4 text-sm text-gray-600">
+      <div className="space-y-3 text-sm text-gray-600">
         <p>· 보험기간 중 피보험자의 사망으로 인하여 이 약관에서 규정하는 보험금 지급사유가 더 이상 발생할 수 없는 경우에는 "산출방법서"에서 정하는 바에 따라 회사가 적립한 사망당시의 계약자적립액과 최저사망적립액 중 큰 금액을 계약자에게 지급하고 이 계약은 더 이상 효력이 없습니다. 다만, 선지급행복자금 계약자적립액이 있는 경우 가산하여 드립니다.</p>
         <p>· 고도후유장해보험금의 경우 지급사유 발생 최초 1회에 한하여 지급하여 드리며, "산출방법서"에서 정한 바에 따라 계약자적립액 계산시 고도후유장해보험금 지급사유 발생일 이후 최초 도래하는 월계약해당일부터 고도후유장해보험금에 해당하는 위험보험료를 차감하지 않습니다.</p>
         <p>· 「최저사망적립액」이라 함은, 특별계정의 운용실적과 관계 없이 피보험자가 사망하는 경우 보장하는 최저한도의 계약자적립액으로서 사망시점의 "최저연금기준금액"을 말합니다. 다만, 연금개시 후 보험기간에는 사망시점의 "연금기준금액"에서 연금개시 후 보험기간 중 발생한 실적배당 종신연금 연지급액의 합계를 차감한 금액을 말하며, 이 금액이 '0'보다 적은 경우 '0'으로 합니다.</p>
@@ -98,18 +98,18 @@ export default function CoverageDetails() {
       </div>
 
       {/* 실적배당종신연금 연지급액 예시표 */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">실적배당종신연금 연지급액 예시표</h3>
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-          <div className="space-y-4">
+        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+          <div className="space-y-3">
             <div className="text-xs text-gray-600 text-right">
               예시기준 : 남자 40세, 60세 연금개시, 기본보험료 30만원, 10년납, 채권형100% (단위: 만원)
             </div>
             <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
+            <table className="w-full border-collapse text-xs">
               <thead>
                 <tr className="bg-gray-100 text-gray-700">
-                    <th className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm" rowSpan={4}>나이</th>
+                    <th className="border border-gray-300 p-1 text-xs" rowSpan={4}>나이</th>
                     <th className="border border-gray-300 p-1 text-xs" colSpan={4}>투자수익률 -1.0% 가정시</th>
                     <th className="border border-gray-300 p-1 text-xs" colSpan={4}>투자수익률 2.75% 가정시</th>
                     <th className="border border-gray-300 p-1 text-xs" colSpan={4}>투자수익률 4.125% 가정시</th>
@@ -141,259 +141,259 @@ export default function CoverageDetails() {
               </thead>
               <tbody>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">60세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">7,029</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">793</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">7,029</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1,505</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">7,029</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">60세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">7,029</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">793</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">7,029</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1,505</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">7,029</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">61세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">721</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">6,668</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">721</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">302</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">6,668</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">721</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1,054</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">6,668</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">61세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">721</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">6,668</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">721</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">302</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">6,668</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">721</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1,054</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">6,668</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">62세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1,082</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">6,307</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1,082</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">6,307</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1,082</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">584</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">6,307</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">62세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1,082</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">6,307</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1,082</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">6,307</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1,082</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">584</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">6,307</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">63세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1,443</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">5,947</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1,443</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">5,947</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1,443</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">95</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">5,947</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">63세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1,443</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">5,947</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1,443</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">5,947</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1,443</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">95</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">5,947</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">64세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1,804</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">5,586</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1,804</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">5,586</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1,804</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">5,586</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">64세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1,804</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">5,586</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1,804</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">5,586</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1,804</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">5,586</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">65세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">2,165</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">5,225</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">2,165</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">5,225</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">2,165</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">5,225</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">65세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">2,165</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">5,225</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">2,165</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">5,225</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">2,165</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">5,225</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">66세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">2,525</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">4,864</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">2,525</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">4,864</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">2,525</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">4,864</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">66세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">2,525</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">4,864</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">2,525</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">4,864</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">2,525</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">4,864</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">67세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">2,886</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">4,503</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">2,886</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">4,503</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">2,886</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">4,503</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">67세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">2,886</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">4,503</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">2,886</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">4,503</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">2,886</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">4,503</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">68세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,247</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">4,142</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,247</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">4,142</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,247</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">4,142</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">68세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,247</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">4,142</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,247</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">4,142</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,247</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">4,142</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">69세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,608</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,782</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,608</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,782</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,608</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,782</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">69세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,608</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,782</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,608</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,782</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,608</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,782</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">70세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,969</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,421</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,969</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,421</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,969</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,421</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">70세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,969</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,421</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,969</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,421</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,969</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,421</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">75세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">5,773</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1,617</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">5,773</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1,617</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">5,773</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1,617</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">75세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">5,773</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1,617</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">5,773</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1,617</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">5,773</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1,617</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">80세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">7,577</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">7,577</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">7,577</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">80세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">7,577</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">7,577</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">7,577</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">85세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">9,381</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">9,381</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">9,381</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">85세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">9,381</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">9,381</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">9,381</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">90세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">11,186</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">11,186</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">11,186</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">90세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">11,186</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">11,186</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">11,186</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">95세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">12,990</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">12,990</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">12,990</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">95세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">12,990</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">12,990</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">12,990</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">100세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">14,794</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">14,794</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">14,794</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">100세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">14,794</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">14,794</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">14,794</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
                 </tr>
               </tbody>
             </table>
@@ -425,13 +425,13 @@ export default function CoverageDetails() {
       {/* 해약환급금 예시표 */}
       <div className="space-y-4">
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">해약환급금 예시표</h3>
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-          <div className="space-y-4">
+        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+          <div className="space-y-3">
             <div className="text-xs text-gray-600 text-right">
               예시기준 : 남자 40세, 60세 연금개시, 기본보험료 30만원, 10년납, 채권형100% (단위: 원)
             </div>
             <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
+            <table className="w-full border-collapse text-xs">
               <thead>
                 <tr className="bg-gray-100 text-gray-700">
                     <th className="border border-gray-300 p-1 text-xs" rowSpan={3}>경과년수</th>
@@ -459,95 +459,95 @@ export default function CoverageDetails() {
               </thead>
               <tbody>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">1년</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">41세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,600,000</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,287,736</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">2,505,532</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">69.6%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">2,571,299</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">71.4%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">2,595,231</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">72.1%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3,736,500</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">1년</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">41세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,600,000</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,287,736</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">2,505,532</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">69.6%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">2,571,299</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">71.4%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">2,595,231</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">72.1%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3,736,500</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">3년</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">43세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">10,800,000</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">9,863,208</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">8,625,561</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">79.9%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">9,177,129</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">85.0%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">9,384,825</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">86.9%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">11,965,500</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">3년</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">43세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">10,800,000</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">9,863,208</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">8,625,561</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">79.9%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">9,177,129</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">85.0%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">9,384,825</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">86.9%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">11,965,500</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">5년</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">45세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">18,000,000</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">16,438,680</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">13,990,349</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">77.7%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">15,475,328</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">86.0%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">16,054,338</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">89.2%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">21,202,500</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">5년</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">45세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">18,000,000</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">16,438,680</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">13,990,349</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">77.7%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">15,475,328</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">86.0%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">16,054,338</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">89.2%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">21,202,500</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">7년</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">47세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">25,200,000</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">23,014,152</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">18,541,110</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">73.6%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">21,372,003</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">84.8%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">22,515,838</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">89.3%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">31,447,500</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">7년</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">47세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">25,200,000</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">23,014,152</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">18,541,110</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">73.6%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">21,372,003</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">84.8%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">22,515,838</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">89.3%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">31,447,500</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">10년</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">50세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">36,000,000</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">32,877,360</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">23,364,227</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">64.9%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">28,894,817</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">80.3%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">31,256,339</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">86.8%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">48,705,000</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">10년</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">50세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">36,000,000</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">32,877,360</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">23,364,227</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">64.9%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">28,894,817</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">80.3%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">31,256,339</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">86.8%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">48,705,000</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">15년</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">55세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">36,000,000</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">32,635,440</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">12,072,407</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">33.5%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">21,971,449</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">61.0%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">26,757,571</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">74.3%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">61,305,000</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">15년</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">55세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">36,000,000</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">32,635,440</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">12,072,407</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">33.5%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">21,971,449</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">61.0%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">26,757,571</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">74.3%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">61,305,000</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">20년</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">60세</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">36,000,000</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">32,393,520</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">-</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">0.0%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">11,542,988</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">32.1%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">18,663,542</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">51.8%</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-center text-xs sm:text-sm">73,905,000</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">20년</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">60세</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">36,000,000</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">32,393,520</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">-</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">0.0%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">11,542,988</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">32.1%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">18,663,542</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">51.8%</td>
+                    <td className="border border-gray-300 p-1 text-center text-xs">73,905,000</td>
                 </tr>
               </tbody>
             </table>
@@ -581,8 +581,8 @@ export default function CoverageDetails() {
 
       {/* 부가가능특약 */}
       <h2 className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2">부가가능특약</h2>
-      <div className="space-y-4">
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+      <div className="space-y-3">
+        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <div className="overflow-x-auto">
             <table className="w-full border-collapse">

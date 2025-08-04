@@ -84,9 +84,25 @@ export function postRequest(data: Record<string, any>): Promise<any> {
     }
   }
 
+  console.log(`[ALIGO API] 요청 시작: ${new Date().toISOString()}`);
+  console.log(`[ALIGO API] 요청 URI: ${uri}`);
+  console.log(`[ALIGO API] 요청 데이터:`, data);
+
   return axios
-    .post(uri, form, { headers: form.getHeaders() })
-    .then(res => res.data)
+    .post(uri, form, { 
+      headers: form.getHeaders(),
+      timeout: 10000 // 10초 타임아웃 추가
+    })
+    .then(res => {
+      console.log(`[ALIGO API] 응답 성공: ${new Date().toISOString()}`);
+      console.log(`[ALIGO API] 응답 데이터:`, res.data);
+      return res.data;
+    })
+    .catch(err => {
+      console.error(`[ALIGO API] 요청 실패: ${new Date().toISOString()}`);
+      console.error(`[ALIGO API] 에러 상세:`, err.response?.data || err.message);
+      throw err;
+    });
 }
 
 // 3) 알림톡 전송용

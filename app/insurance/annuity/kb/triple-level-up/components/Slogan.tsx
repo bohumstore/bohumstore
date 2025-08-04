@@ -144,12 +144,26 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
 
   const handlePostOTP = async () => {
     const templateId = "UA_7754"
+    const clientStartTime = Date.now();
+    console.log(`[CLIENT] 인증번호 전송 시작: ${new Date().toISOString()}`);
     try {
-      await request.post('/api/postOTP', { phone, templateId })
+      const response = await request.post('/api/postOTP', { phone, templateId })
+      const clientEndTime = Date.now();
+      console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
+      console.log(`[CLIENT] 클라이언트 측 총 소요 시간: ${clientEndTime - clientStartTime}ms`);
       setOtpSent(true)
+      alert('인증번호가 전송되었습니다. 카카오톡을 확인해주세요. (최대 10초 소요될 수 있습니다)')
     } catch (e: any) {
-      console.error(e)
-      alert('인증번호 전송에 실패했습니다.')
+      const clientEndTime = Date.now();
+      console.error(`[CLIENT] 인증번호 전송 실패:`, e);
+      console.log(`[CLIENT] 클라이언트 측 총 소요 시간: ${clientEndTime - clientStartTime}ms`);
+      if (e.code === 'ECONNABORTED') {
+        alert('인증번호 전송 시간이 초과되었습니다. 다시 시도해주세요.');
+      } else if (e.response?.status === 502) {
+        alert('알림톡 전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      } else {
+        alert('인증번호 전송에 실패했습니다.');
+      }
     }
   }
 

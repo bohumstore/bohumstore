@@ -82,7 +82,6 @@ export default function JoinNotice() {
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">예금자보호안내</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-2">
-            <p className="text-gray-700"><span className="text-red-600">이 보험계약은 예금자보호법에 의해 보호되지 않습니다.</span></p>
             <p className="text-gray-700">이 보험계약은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금)에 기타지급금을 합한 금액이 1인당 "5천만원까지"(본 보험회사의 여타 보험상품과 합산) 보호됩니다.</p>
             <p className="text-gray-700">이와 별도로 본 보험회사 보호상품의 사고보험금을 합산한 금액이 1인당 "5천만원까지" 보호됩니다.</p>
             <p className="text-gray-700">다만, 보험계약자 및 보험료 납부자가 법인인 보험 계약은 「예금자보호법」에 따라 보호되지 않습니다.</p>

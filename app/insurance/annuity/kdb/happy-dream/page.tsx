@@ -49,7 +49,7 @@ export default function KDBHappyPlusAnnuityPage() {
       <Modal title="개인정보 수집 및 이용 동의" open={showPrivacy} onClose={() => setShowPrivacy(false)}>
         <PrivacyConsent />
       </Modal>
-      <div className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full">
+      <div className="font-sans bg-[#f8f8f8] flex flex-col items-center w-full">
         <Header />
         <Slogan onOpenPrivacy={() => setShowPrivacy(true)} />
         {/* 상품 상세 영역 (탭/강조타이틀/설명/특약/일러스트/하단버튼) */}
