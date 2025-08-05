@@ -57,14 +57,14 @@ export default function KDBHappyPlusAnnuityPage() {
           <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 md:px-10 lg:px-16">
             <Tabs tabs={tabs} />
             {/* 하단 버튼 */}
-            <div className="flex flex-col md:flex-row gap-4 justify-center mt-8">
+            {/* <div className="flex flex-col md:flex-row gap-4 justify-center mt-8">
                 <a href="/kdb-happydream-guide.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
                 상품요약서
               </a>
                 <a href="/kdb-happydream-guide2.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
                 상품약관
               </a>
-            </div>
+            </div> */}
           </div>
         </section>
         {/* 필수안내사항 박스 */}

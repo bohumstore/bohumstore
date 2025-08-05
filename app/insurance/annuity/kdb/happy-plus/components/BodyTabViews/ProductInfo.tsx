@@ -277,7 +277,7 @@ export default function ProductInfo() {
                 <tbody>
                   <tr>
                     <td className="border border-gray-300 p-2 sm:p-3 font-bold text-xs sm:text-sm">보험종류</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">(무)더! 행복플러스연금보험(보증형)</td>
+                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">보증형 연금보험</td>
                   </tr>
                   <tr>
                     <td className="border border-gray-300 p-2 sm:p-3 font-bold text-xs sm:text-sm">부가가능 특약</td>

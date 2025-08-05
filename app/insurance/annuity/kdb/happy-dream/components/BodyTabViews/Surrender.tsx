@@ -110,7 +110,7 @@ export default function JoinNotice() {
       </div>
 
       {/* 보험상담 및 분쟁조정 안내 */}
-      <div className="space-y-4">
+      {/* <div className="space-y-4">
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">보험상담 및 분쟁조정 안내</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
@@ -133,7 +133,7 @@ export default function JoinNotice() {
             </table>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="text-sm text-red-600 mt-8">
         이 상품에 대한 보다 자세한 사항은 계약 체결 전에 보험약관 및 상품설명서를 반드시 확인하시기 바랍니다.

@@ -212,7 +212,7 @@ export default function ProductInfo() {
               <tbody>
                 <tr>
                     <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm font-semibold">보험종류</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">(무)더! 행복드림 변액연금보험 : 실적배당 종신연금형</td>
+                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">변액연금보험</td>
                 </tr>
                 <tr>
                     <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm font-semibold">부가가능 특약</td>
