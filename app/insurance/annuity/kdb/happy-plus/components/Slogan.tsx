@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react'
 import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
+import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/insurance';
 import FireworksEffect from './FireworksEffect';
 
+// 현재 경로에 맞는 상품 정보 가져오기
+const currentPath = '/insurance/annuity/kdb/happy-plus';
+const productConfig = getProductConfigByPath(currentPath);
+
 const INSURANCE_COMPANY_ID = 2; // KDB 생명보험
-const INSURANCE_PRODUCT_ID = 2; // KDB 더!행복플러스연금보험(보증형) id 코드값
+const INSURANCE_PRODUCT_ID = 3; // KDB 더!행복플러스연금보험(보증형) id 코드값
 
 type SloganProps = {
   onOpenPrivacy: () => void
@@ -149,10 +154,15 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   }
 
   const handlePostOTP = async () => {
-    const templateId = "UA_7754"
+    const templateId = getTemplateIdByPath(currentPath)
     console.log(`[CLIENT] 인증번호 전송 시작: ${new Date().toISOString()}`);
     try {
-      const response = await request.post('/api/postOTP', { phone, templateId })
+      const response = await request.post('/api/postOTP', { 
+        phone, 
+        templateId,
+        companyName: "KDB생명",
+        productName: "더!행복플러스연금보험(보증형)"
+      })
       console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
       setOtpSent(true)
       alert('인증번호가 전송되었습니다. 카카오톡을 확인해주세요. (최대 10초 소요될 수 있습니다)')
@@ -324,9 +334,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         counselTime: consultTime,
         mounthlyPremium: paymentAmount,
         paymentPeriod: paymentPeriod,
-        tenYearReturnRate: rate ? Math.round(rate * 100) : '-',
-        interestValue,
-        refundValue
+        monthlyPension: pensionAmounts.monthly,
+        guaranteedPension: pensionAmounts.guaranteed
       });
       if (res.data.success) {
         alert("인증이 완료되었습니다!");
@@ -345,9 +354,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             counselTime: consultTime,
             mounthlyPremium: paymentAmount,
             paymentPeriod: paymentPeriod,
-            tenYearReturnRate: rate ? Math.round(rate * 100) : '-',
-            interestValue,
-            refundValue,
+            monthlyPension: pensionAmounts.monthly,
+            guaranteedPension: pensionAmounts.guaranteed,
             onlyClient: true
           });
           alert("상담신청이 접수되었습니다!");
@@ -878,7 +886,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
                     <span className="font-bold">
-                      <span className="text-[#10b981]">{isVerified ? pensionAmounts.totalUntil100.toLocaleString('en-US') : "인증 후 확인가능"}</span>
+                      <span className="text-[#10b981]">{isVerified ? (pensionAmounts.totalUntil100 || 0).toLocaleString('en-US') : "인증 후 확인가능"}</span>
                       {isVerified && <span className="text-[#3a8094]"> 원</span>}
                     </span>
                   </div>
@@ -984,10 +992,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <button
                     type="button"
                     onClick={handleSendOTP}
-                    disabled={!otpResendAvailable}
                     className="px-2 py-1 bg-[#3a8094] text-white rounded-md text-sm font-medium 
-                             hover:bg-[#2c6070] disabled:bg-gray-400 disabled:cursor-not-allowed 
-                             transition-colors min-w-[80px]"
+                             hover:bg-[#2c6070] transition-colors min-w-[80px]"
                   >
                     {otpResendAvailable ? '인증번호 전송' : '재발송'}
                   </button>
@@ -1154,10 +1160,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <button
                   type="button"
                   onClick={handleConsultSendOTP}
-                  disabled={!consultOtpResendAvailable}
                   className="px-2 py-1 bg-[#3a8094] text-white rounded-md text-sm font-medium 
-                           hover:bg-[#2c6070] disabled:bg-gray-400 disabled:cursor-not-allowed 
-                           transition-colors min-w-[80px]"
+                           hover:bg-[#2c6070] transition-colors min-w-[80px]"
                 >
                   {consultOtpResendAvailable ? '인증번호 전송' : '재발송'}
                 </button>

@@ -34,3 +34,47 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Supabase MCP (Model Context Protocol) Setup
+
+This project includes Supabase MCP server configuration for AI model integration.
+
+### Setup Instructions
+
+1. **Environment Variables**: Create a `.env.local` file with your Supabase credentials:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url_here
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
+   ```
+
+2. **Supabase Data Setup**: Run the following command to set up product data:
+   ```bash
+   npm run setup-supabase
+   ```
+
+3. **Check Supabase Data**: Verify the data setup:
+   ```bash
+   npm run check-supabase
+   ```
+
+2. **MCP Server**: The MCP server is configured in `mcp-server-supabase.js` and provides the following tools:
+   - `query_users`: Query users from the database
+   - `create_user`: Create a new user
+   - `query_counsel`: Query counsel records
+   - `create_counsel`: Create a new counsel record
+
+3. **Running MCP Server**: 
+   ```bash
+   npm run mcp-server
+   ```
+
+4. **MCP Client Configuration**: Update `mcp-client-config.json` with your Supabase credentials.
+
+### Available MCP Tools
+
+- **query_users**: Retrieve users with optional filtering
+- **create_user**: Create new user records
+- **query_counsel**: Retrieve counsel records
+- **create_counsel**: Create new counsel records
+
+The MCP server enables AI models to interact with your Supabase database through a standardized protocol.

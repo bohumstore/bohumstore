@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react'
 import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
+import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/insurance';
 import FireworksEffect from './FireworksEffect';
 
-const INSURANCE_COMPANY_ID = 1; // KB 손해보험
-const INSURANCE_PRODUCT_ID = 1; // KB 트리플 레벨업 연금보험 무배당 id 코드값
+// 현재 경로에 맞는 상품 정보 가져오기
+const currentPath = '/insurance/annuity/kb/triple-level-up';
+const productConfig = getProductConfigByPath(currentPath);
+
+const INSURANCE_COMPANY_ID = 1; // KB라이프
+const INSURANCE_PRODUCT_ID = 1; // KB 트리플 레벨업 연금보험 id 코드값
 
 type SloganProps = {
   onOpenPrivacy: () => void
@@ -143,20 +148,20 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   }
 
   const handlePostOTP = async () => {
-    const templateId = "UA_7754"
-    const clientStartTime = Date.now();
+    const templateId = getTemplateIdByPath(currentPath)
     console.log(`[CLIENT] 인증번호 전송 시작: ${new Date().toISOString()}`);
     try {
-      const response = await request.post('/api/postOTP', { phone, templateId })
-      const clientEndTime = Date.now();
+      const response = await request.post('/api/postOTP', { 
+        phone, 
+        templateId,
+        companyName: "KB라이프",
+        productName: "트리플 레벨업 연금보험"
+      })
       console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
-      console.log(`[CLIENT] 클라이언트 측 총 소요 시간: ${clientEndTime - clientStartTime}ms`);
       setOtpSent(true)
       alert('인증번호가 전송되었습니다. 카카오톡을 확인해주세요. (최대 10초 소요될 수 있습니다)')
     } catch (e: any) {
-      const clientEndTime = Date.now();
       console.error(`[CLIENT] 인증번호 전송 실패:`, e);
-      console.log(`[CLIENT] 클라이언트 측 총 소요 시간: ${clientEndTime - clientStartTime}ms`);
       if (e.code === 'ECONNABORTED') {
         alert('인증번호 전송 시간이 초과되었습니다. 다시 시도해주세요.');
       } else if (e.response?.status === 502) {
@@ -767,6 +772,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 </div>
                 <div className="text-xs text-gray-500 text-center mt-4">
                   * 실제 보험료 및 해약환급금은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
+                  <br />
+                  * 본 계산 결과는 참고용이며, 실제 계약 시 보험사 약관 및 상품설명서를 확인 바랍니다.
                 </div>
               </div>
             </>
@@ -863,10 +870,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <button
                     type="button"
                     onClick={handleSendOTP}
-                    disabled={!otpResendAvailable}
                     className="px-2 py-1 bg-[#3a8094] text-white rounded-md text-sm font-medium 
-                             hover:bg-[#2c6070] disabled:bg-gray-400 disabled:cursor-not-allowed 
-                             transition-colors min-w-[80px]"
+                             hover:bg-[#2c6070] transition-colors min-w-[80px]"
                   >
                     {otpResendAvailable ? '인증번호 전송' : '재발송'}
                   </button>
@@ -1033,10 +1038,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <button
                   type="button"
                   onClick={handleConsultSendOTP}
-                  disabled={!consultOtpResendAvailable}
                   className="px-2 py-1 bg-[#3a8094] text-white rounded-md text-sm font-medium 
-                           hover:bg-[#2c6070] disabled:bg-gray-400 disabled:cursor-not-allowed 
-                           transition-colors min-w-[80px]"
+                           hover:bg-[#2c6070] transition-colors min-w-[80px]"
                 >
                   {consultOtpResendAvailable ? '인증번호 전송' : '재발송'}
                 </button>

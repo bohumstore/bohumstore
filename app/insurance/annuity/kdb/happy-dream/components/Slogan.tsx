@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
+import { supabase } from '@/app/api/supabase';
+import { queryUsers, createUser, queryCounsel, createCounsel } from '@/app/utils/mcpClient';
+import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/insurance';
 import FireworksEffect from './FireworksEffect';
+
+// 현재 경로에 맞는 상품 정보 가져오기
+const currentPath = '/insurance/annuity/kdb/happy-dream';
+const productConfig = getProductConfigByPath(currentPath);
 
 const INSURANCE_COMPANY_ID = 2; // KDB 생명보험
 const INSURANCE_PRODUCT_ID = 2; // KDB 더!행복드림변액연금보험 id 코드값
@@ -149,10 +156,15 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   }
 
   const handlePostOTP = async () => {
-    const templateId = "UA_7754"
+    const templateId = getTemplateIdByPath(currentPath)
     console.log(`[CLIENT] 인증번호 전송 시작: ${new Date().toISOString()}`);
     try {
-      const response = await request.post('/api/postOTP', { phone, templateId })
+      const response = await request.post('/api/postOTP', { 
+        phone, 
+        templateId,
+        companyName: "KDB생명",
+        productName: "더!행복드림변액연금보험"
+      })
       console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
       setOtpSent(true)
       alert('인증번호가 전송되었습니다. 카카오톡을 확인해주세요. (최대 10초 소요될 수 있습니다)')
@@ -213,6 +225,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       performancePension: pensionAmounts.performance // 실적배당 연금액
     });
     if (res.data.success) {
+      // Supabase에 데이터 저장 (보험료 확인: counselType = 1)
+      const supabaseResult = await saveToSupabase(1);
+      
       setIsVerified(true);
       setOtpSent(false);
       alert("인증이 완료되었습니다!");
@@ -304,6 +319,92 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     await handlePostOTP()
   };
 
+  // Supabase에 사용자 생성 및 상담 기록 저장
+  const saveToSupabase = async (counselType: number) => {
+    try {
+      // 1. 사용자 생성 또는 조회
+      let userId: number;
+      
+      // 기존 사용자 조회
+      const { data: existingUser, error: userError } = await supabase
+        .from('user')
+        .select('id')
+        .eq('phone', phone)
+        .single();
+      
+      if (existingUser) {
+        userId = existingUser.id;
+        console.log('기존 사용자 발견:', userId);
+      } else {
+        // 새 사용자 생성
+        const { data: newUser, error: createError } = await supabase
+          .from('user')
+          .insert({
+            name,
+            phone,
+            birth,
+            gender
+          })
+          .select('id')
+          .single();
+        
+        if (createError) {
+          console.error('사용자 생성 오류:', createError);
+          return;
+        }
+        
+        userId = newUser.id;
+        console.log('새 사용자 생성:', userId);
+      }
+      
+      // 2. 상담 기록 생성
+      const { data: counselRecord, error: counselError } = await supabase
+        .from('counsel')
+        .insert({
+          user_id: userId,
+          company_id: INSURANCE_COMPANY_ID,
+          product_id: INSURANCE_PRODUCT_ID,
+          counsel_type_id: counselType
+        })
+        .select()
+        .single();
+      
+      if (counselError) {
+        console.error('상담 기록 생성 오류:', counselError);
+        return;
+      }
+      
+      console.log('상담 기록 생성 완료:', counselRecord);
+      return { userId, counselId: counselRecord.id };
+      
+    } catch (error) {
+      console.error('Supabase 저장 오류:', error);
+    }
+  };
+
+  // MCP를 사용한 데이터 조회 함수들
+  const handleQueryUsers = async () => {
+    try {
+      const result = await queryUsers(10);
+      console.log('MCP 사용자 조회 결과:', result);
+      alert(`사용자 조회 완료: ${JSON.stringify(result, null, 2)}`);
+    } catch (error) {
+      console.error('MCP 사용자 조회 오류:', error);
+      alert('사용자 조회에 실패했습니다.');
+    }
+  };
+
+  const handleQueryCounsel = async () => {
+    try {
+      const result = await queryCounsel(10);
+      console.log('MCP 상담 조회 결과:', result);
+      alert(`상담 조회 완료: ${JSON.stringify(result, null, 2)}`);
+    } catch (error) {
+      console.error('MCP 상담 조회 오류:', error);
+      alert('상담 조회에 실패했습니다.');
+    }
+  };
+
   const handleConsultVerifyOTP = async () => {
     if (consultOtpCode.length !== 6) {
       alert("6자리 인증번호를 입력해주세요.");
@@ -324,11 +425,13 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         counselTime: consultTime,
         mounthlyPremium: paymentAmount,
         paymentPeriod: paymentPeriod,
-        tenYearReturnRate: rate ? Math.round(rate * 100) : '-',
-        interestValue,
-        refundValue
+        monthlyPension: pensionAmounts.monthly, // 월 연금액
+        performancePension: pensionAmounts.performance // 실적배당 연금액
       });
       if (res.data.success) {
+        // Supabase에 데이터 저장
+        const supabaseResult = await saveToSupabase(2); // 2: 상담신청
+        
         alert("인증이 완료되었습니다!");
         setConsultIsVerified(true);
         try {
@@ -345,9 +448,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             counselTime: consultTime,
             mounthlyPremium: paymentAmount,
             paymentPeriod: paymentPeriod,
-            tenYearReturnRate: rate ? Math.round(rate * 100) : '-',
-            interestValue,
-            refundValue,
+            monthlyPension: pensionAmounts.monthly, // 월 연금액
+            performancePension: pensionAmounts.performance, // 실적배당 연금액
             onlyClient: true
           });
           alert("상담신청이 접수되었습니다!");
@@ -985,10 +1087,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <button
                     type="button"
                     onClick={handleSendOTP}
-                    disabled={!otpResendAvailable}
                     className="px-2 py-1 bg-[#3a8094] text-white rounded-md text-sm font-medium 
-                             hover:bg-[#2c6070] disabled:bg-gray-400 disabled:cursor-not-allowed 
-                             transition-colors min-w-[80px]"
+                             hover:bg-[#2c6070] transition-colors min-w-[80px]"
                   >
                     {otpResendAvailable ? '인증번호 전송' : '재발송'}
                   </button>
@@ -1155,10 +1255,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <button
                   type="button"
                   onClick={handleConsultSendOTP}
-                  disabled={!consultOtpResendAvailable}
                   className="px-2 py-1 bg-[#3a8094] text-white rounded-md text-sm font-medium 
-                           hover:bg-[#2c6070] disabled:bg-gray-400 disabled:cursor-not-allowed 
-                           transition-colors min-w-[80px]"
+                           hover:bg-[#2c6070] transition-colors min-w-[80px]"
                 >
                   {consultOtpResendAvailable ? '인증번호 전송' : '재발송'}
                 </button>

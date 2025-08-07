@@ -100,8 +100,8 @@ export async function POST(req: Request) {
 
   if (onlyClient) {
     // 고객용 알림톡만 발송 (인증번호 검증 및 DB 작업 생략)
-    // 보험사명 강제 변경
-    const companyName = 'KB라이프';
+    // 실제 보험사명 사용
+    const companyName = company.name;
     // 성별 한글 변환
     const genderKor = gender === 'M' ? '남' : gender === 'F' ? '여' : gender;
     const toClientReq = {
@@ -165,8 +165,8 @@ export async function POST(req: Request) {
     }
     console.log("[DEBUG] DB insert success");
 
-    // 보험사명 강제 변경
-    const companyName = 'KB라이프';
+    // 실제 보험사명 사용
+    const companyName = company.name;
     // 성별 한글 변환
     const genderKor = gender === 'M' ? '남' : gender === 'F' ? '여' : gender;
 
