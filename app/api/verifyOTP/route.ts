@@ -22,6 +22,9 @@ export async function POST(req: Request) {
     tenYearReturnRate = null,
     interestValue = null,
     refundValue = null,
+    monthlyPension = null,
+    guaranteedPension = null,
+    performancePension = null,
     onlyClient = false // 추가: 오직 고객용만 보낼지 여부
   } = await req.json();
 
@@ -97,8 +100,8 @@ export async function POST(req: Request) {
 
   if (onlyClient) {
     // 고객용 알림톡만 발송 (인증번호 검증 및 DB 작업 생략)
-    // 보험사명 강제 변경
-    const companyName = 'KB라이프';
+    // 실제 보험사명 사용
+    const companyName = company.name;
     // 성별 한글 변환
     const genderKor = gender === 'M' ? '남' : gender === 'F' ? '여' : gender;
     const toClientReq = {
@@ -162,8 +165,8 @@ export async function POST(req: Request) {
     }
     console.log("[DEBUG] DB insert success");
 
-    // 보험사명 강제 변경
-    const companyName = 'KB라이프';
+    // 실제 보험사명 사용
+    const companyName = company.name;
     // 성별 한글 변환
     const genderKor = gender === 'M' ? '남' : gender === 'F' ? '여' : gender;
 
@@ -201,7 +204,7 @@ export async function POST(req: Request) {
         receiver_1: phone,
         subject_1: subject,
         message_1: counselType === 1
-          ? `▣ ${user.name}님 계산 결과입니다.\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간: ${paymentPeriod}\n⊙ 월보험료: ${mounthlyPremium}\n\n▼ 10년시점 ▼\n· 환급률: ${tenYearReturnRate}%\n· 확정이자: ${interestValue}원\n· 예상해약환급금: ${refundValue}원`
+          ? `▣ ${user.name}님 계산 결과입니다.\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간: ${paymentPeriod}\n⊙ 월보험료: ${mounthlyPremium}\n\n▼ 연금액 계산 결과 ▼\n· 월 연금액: ${monthlyPension ? monthlyPension.toLocaleString() : '-'}원\n· 20년 보증기간 연금액: ${guaranteedPension ? guaranteedPension.toLocaleString() : '-'}원\n· 실적배당 연금액: ${performancePension ? performancePension.toLocaleString() : '-'}원`
           : `▼ ${user.name}님\n\n▣ 보험종류: [ ${product.name} ]\n▣ 상담시간: [ ${counselTime} ]\n\n상담 신청해 주셔서 감사합니다!`,
         button_1: {
           button: [{

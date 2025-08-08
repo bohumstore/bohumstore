@@ -1,5 +1,4 @@
 import React from 'react'
-import Modal from '../../../components/Modal';
 import { useState } from 'react';
 
 export default function ProductInfo() {
