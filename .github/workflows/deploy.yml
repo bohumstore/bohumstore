@@ -1,4 +1,6 @@
 name: Deploy to EC2
+env:
+  AWS_DEFAULT_REGION: ap-northeast-2
 
 on:
   push:
