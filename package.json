@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "mcp-server": "node mcp-server-supabase.js",
+    "mcp-playwright": "node mcp-server-playwright.js",
     "setup-supabase": "node setup-supabase-data.js",
     "check-supabase": "node setup-supabase-data.js check"
   },
@@ -19,6 +20,7 @@
     "fireworks": "^2.2.7",
     "multiparty": "^4.2.3",
     "next": "15.3.3",
+    "playwright": "^1.54.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
