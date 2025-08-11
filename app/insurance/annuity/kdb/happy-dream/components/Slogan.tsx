@@ -961,7 +961,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>월 연금액</span>
                     <span className="font-bold">
-                      <span className="text-[#3b82f6]">{isVerified ? pensionAmounts.monthly.toLocaleString('en-US') : "인증 후 확인가능"}</span>
+                      <span className="text-[#3b82f6]">{isVerified ? `약 ${pensionAmounts.monthly.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
                       {isVerified && <span className="text-[#3a8094]"> 원</span>}
                     </span>
                   </div>
@@ -971,7 +971,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>실적배당 연금액</span>
                     <span className="font-bold">
-                      <span className="text-[#ef4444]">{isVerified ? pensionAmounts.performance.toLocaleString('en-US') : "인증 후 확인가능"}</span>
+                      <span className="text-[#ef4444]">{isVerified ? `약 ${pensionAmounts.performance.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
                       {isVerified && <span className="text-[#3a8094]"> 원</span>}
                     </span>
                   </div>
@@ -981,7 +981,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
                     <span className="font-bold">
-                      <span className="text-[#10b981]">{isVerified ? pensionAmounts.totalUntil100?.toLocaleString('en-US') : "인증 후 확인가능"}</span>
+                      <span className="text-[#10b981]">{isVerified ? `약 ${pensionAmounts.totalUntil100?.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
                       {isVerified && <span className="text-[#3a8094]"> 원</span>}
                     </span>
                   </div>
