@@ -209,7 +209,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
 
   setVerifying(true);
   try {
-    const res = await request.post("/api/verifyOTP", {
+    // 연금액 계산
+    const pensionAmounts = calculatePensionAmount(Number(insuranceAge), paymentPeriod, paymentAmount);
+    
+    const requestData = {
       phone,
       name,
       birth,
@@ -222,8 +225,14 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       mounthlyPremium: paymentAmount, // 실제 선택값
       paymentPeriod: paymentPeriod,   // 실제 선택값
       monthlyPension: pensionAmounts.monthly, // 월 연금액
-      performancePension: pensionAmounts.performance // 실적배당 연금액
-    });
+      performancePension: pensionAmounts.performance, // 실적배당 연금액
+      templateId: "UB_6018", // 고객용 연금액 계산 결과 전송용 템플릿
+      adminTemplateId: "UA_8331" // 관리자용 연금액 계산 결과 전송용 템플릿
+    };
+    
+    console.log("[CLIENT] API 요청 데이터:", requestData);
+    
+    const res = await request.post("/api/verifyOTP", requestData);
     if (res.data.success) {
       // Supabase에 데이터 저장 (보험료 확인: counselType = 1)
       const supabaseResult = await saveToSupabase(1);
@@ -412,6 +421,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     }
     setVerifying(true);
     try {
+      // 연금액 계산
+      const pensionAmounts = calculatePensionAmount(Number(insuranceAge), paymentPeriod, paymentAmount);
+      
       const res = await request.post("/api/verifyOTP", {
         phone,
         name,
@@ -426,7 +438,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         mounthlyPremium: paymentAmount,
         paymentPeriod: paymentPeriod,
         monthlyPension: pensionAmounts.monthly, // 월 연금액
-        performancePension: pensionAmounts.performance // 실적배당 연금액
+        performancePension: pensionAmounts.performance, // 실적배당 연금액
+        templateId: "UA_7919", // 고객용 상담신청 완료 전송용 템플릿
+        adminTemplateId: "UA_8332" // 관리자용 상담신청 접수 전송용 템플릿
       });
       if (res.data.success) {
         // Supabase에 데이터 저장
@@ -601,7 +615,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             <ul className="mb-8 space-y-2">
               <li className="flex items-center text-lg text-white justify-center md:justify-start">
                 <span className="text-xl mr-2 text-[#ffd700]">✔</span>
-                7% 최저연금기준금액 보증 <span className="text-xs align-baseline">(20년까지)</span>
+                연단리 7% 최저연금기준금액 보증 <span className="text-xs align-baseline">(20년까지)</span>
               </li>
               <li className="flex items-center text-lg text-white justify-center md:justify-start">
                 <span className="text-xl mr-2 text-[#ffd700]">✔</span>
@@ -902,7 +916,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             <>
               <FireworksEffect show={true} />
               <div className="bg-[#f8f8ff] rounded p-3 mb-2 text-center">
-                <div className="text-lg text-black font-bold">보험료 산출이 완료되었습니다.</div>
+                <div className="text-lg text-black font-bold">연금액 산출이 완료되었습니다.</div>
               </div>
               {/* 보험료 결과값 UI (상세 정보) */}
               <div className="bg-gray-50 rounded-lg p-2">

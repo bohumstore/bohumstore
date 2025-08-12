@@ -203,11 +203,16 @@ export async function POST(req: Request) {
       }
     }
 
-    // 고객용 템플릿 ID 결정 (counselType: 1일 때는 UB_5797 템플릿 사용)
+    // 고객용 템플릿 ID 결정 (counselType: 1일 때는 performancePension 여부에 따라 템플릿 선택)
     let clientTemplateId;
     if (counselType === 1) {
-      clientTemplateId = "UB_5797"; // 연금액 계산 결과용 템플릿 (정확한 형식)
-      console.log("[DEBUG] counselType이 1이므로 UB_5797 템플릿 사용");
+      if (performancePension) {
+        clientTemplateId = "UB_6018"; // 변액연금용 템플릿 (실적배당 포함)
+        console.log("[DEBUG] counselType이 1이고 performancePension이 있으므로 UB_6018 템플릿 사용");
+      } else {
+        clientTemplateId = "UB_5797"; // 일반 연금용 템플릿
+        console.log("[DEBUG] counselType이 1이므로 UB_5797 템플릿 사용");
+      }
     } else {
       clientTemplateId = templateId || "UA_7919"; // 상담신청용 템플릿
       console.log("[DEBUG] counselType이 2이므로 상담신청용 템플릿 사용:", clientTemplateId);
@@ -224,7 +229,11 @@ export async function POST(req: Request) {
         receiver_1: phone,
         subject_1: subject,
         message_1: counselType === 1
-          ? `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간 / 월보험료: ${paymentPeriod} / ${mounthlyPremium}\n⊙ 총 납입액: ${mounthlyPremium ? (parseInt(mounthlyPremium.replace(/[^0-9]/g, '')) * 10000 * parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12).toLocaleString() : '-'}원\n⊙ 연금개시연령: ${paymentPeriod ? (paymentPeriod.includes('10') ? '65' : paymentPeriod.includes('15') ? '70' : paymentPeriod.includes('20') ? '75' : '80') : '-'}세\n\n▼ 예상 연금 수령 ▼\n· 월 연금액: ${monthlyPension ? monthlyPension.toLocaleString() : '-'}원\n· 20년 보증기간 총액: ${guaranteedPension ? guaranteedPension.toLocaleString() : '-'}원\n· 100세까지 총 수령액: ${monthlyPension && guaranteedPension ? (monthlyPension * 12 * 35).toLocaleString() : '-'}원\n\n※ 위 금액은 예시이며, 실제 수령액은 가입 시 조건, 이율, 보험사 정책 등에 따라 달라질 수 있습니다.`
+          ? clientTemplateId === "UB_6018"
+            // UB_6018 템플릿 (변액연금용 - 실적배당 포함)
+            ? `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간 / 월보험료: ${paymentPeriod} / ${mounthlyPremium}\n⊙ 총 납입액: ${mounthlyPremium ? (parseInt(mounthlyPremium.replace(/[^0-9]/g, '')) * 10000 * parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12).toLocaleString() : '-'}원\n⊙ 연금개시연령: ${paymentPeriod ? (paymentPeriod.includes('10') ? '65' : paymentPeriod.includes('15') ? '70' : paymentPeriod.includes('20') ? '75' : '80') : '-'}세\n\n▼ 예상 연금 수령 ▼\n· 월 연금액: ${monthlyPension ? monthlyPension.toLocaleString() : '-'}원\n· 실적배당 연금액: ${performancePension ? performancePension.toLocaleString() : '-'}원\n· 100세까지 총 수령액: ${monthlyPension ? (monthlyPension * 12 * 35).toLocaleString() : '-'}원\n\n※ 위 금액은 예시이며, 실제 수령액은 가입 시 조건, 이율, 보험사 정책 및 운용 실적 등에 따라 달라질 수 있습니다.`
+            // UB_5797 템플릿 (일반 연금용)
+            : `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간 / 월보험료: ${paymentPeriod} / ${mounthlyPremium}\n⊙ 총 납입액: ${mounthlyPremium ? (parseInt(mounthlyPremium.replace(/[^0-9]/g, '')) * 10000 * parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12).toLocaleString() : '-'}원\n⊙ 연금개시연령: ${paymentPeriod ? (paymentPeriod.includes('10') ? '65' : paymentPeriod.includes('15') ? '70' : paymentPeriod.includes('20') ? '75' : '80') : '-'}세\n\n▼ 예상 연금 수령 ▼\n· 월 연금액: ${monthlyPension ? monthlyPension.toLocaleString() : '-'}원\n· 20년 보증기간 총액: ${guaranteedPension ? guaranteedPension.toLocaleString() : '-'}원\n· 100세까지 총 수령액: ${monthlyPension && guaranteedPension ? (monthlyPension * 12 * 35).toLocaleString() : '-'}원\n\n※ 위 금액은 예시이며, 실제 수령액은 가입 시 조건, 이율, 보험사 정책 등에 따라 달라질 수 있습니다.`
           : `▼ ${user.name}님\n\n▣ 보험종류: [ ${product.name} ]\n▣ 상담시간: [ ${counselTime} ]\n\n상담 신청해 주셔서 감사합니다!`,
         button_1: {
           button: [{

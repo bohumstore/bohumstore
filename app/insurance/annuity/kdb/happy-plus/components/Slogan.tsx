@@ -601,7 +601,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             <ul className="mb-8 space-y-2">
               <li className="flex items-center text-lg text-white justify-center md:justify-start">
                 <span className="text-xl mr-2 text-[#ffd700]">✔</span>
-                7% 최저연금기준금액 보증 <span className="text-xs align-baseline">(20년까지)</span>
+                연단리 7% 최저연금기준금액 보증 <span className="text-xs align-baseline">(20년까지)</span>
               </li>
               <li className="flex items-center text-lg text-white justify-center md:justify-start">
                 <span className="text-xl mr-2 text-[#ffd700]">✔</span>
@@ -902,7 +902,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             <>
               <FireworksEffect show={true} />
               <div className="bg-[#f8f8ff] rounded p-3 mb-2 text-center">
-                <div className="text-lg text-black font-bold">보험료 산출이 완료되었습니다.</div>
+                <div className="text-lg text-black font-bold">연금액 산출이 완료되었습니다.</div>
               </div>
               {/* 보험료 결과값 UI (상세 정보) */}
               <div className="bg-gray-50 rounded-lg p-2">
