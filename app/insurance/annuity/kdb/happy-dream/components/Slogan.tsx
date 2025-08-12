@@ -595,7 +595,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               {/* <img src="/kdb-logo.png" alt="KDB 로고" className="h-6 w-auto" style={{minWidth:'24px'}} /> */}
             </div>
             <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
-              20년까지 7%!<br />
+              20년까지 연단리 7%!<br />
               변액연금보험!
             </h1>
             <ul className="mb-8 space-y-2">
@@ -655,7 +655,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   {/* 3. 사망 시에도 보장 */}
                   <div className="text-center p-3 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-xl shadow-lg border border-indigo-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
                     <div>
-                                              <div className="inline-block bg-gradient-to-r from-indigo-600 to-indigo-700 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md whitespace-nowrap">사망시에도 보장</div>
+                                              <div className="inline-block bg-gradient-to-r from-indigo-600 to-indigo-700 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md break-words">사망시에도<br />보장</div>
                     </div>
                     <div className="flex-1 flex items-center justify-center">
                       <div className="text-xs font-bold text-gray-800 leading-tight">
@@ -682,7 +682,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
                   </svg>
-                  보험료 계산하기
+                  연금액 계산하기
                 </h3>
                 <p className="text-gray-500 text-sm mt-1">간단한 정보 입력으로 예상 보험료를 확인하세요</p>
               </div>
@@ -848,7 +848,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                     className="w-full bg-[#3a8094] text-white font-bold rounded-xl py-4 text-lg hover:opacity-90 transition flex items-center justify-center gap-2 cursor-pointer"
                   >
                   <CalculatorIcon className="w-6 h-6" />
-                  보험료 확인하기
+                  연금액 확인하기
                 </button>
                   <div className="flex flex-row gap-2">
                   <button 
@@ -882,7 +882,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
           counselType === 1 ? (
             <span className="flex items-center gap-2">
               <CalculatorIcon className="w-6 h-6 text-[#3a8094]" />
-              보험료 확인하기
+              연금액 확인하기
             </span>
           ) : (
             <span className="flex items-center gap-2">
@@ -1116,7 +1116,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   onClick={handleVerifyOTP}
                   className="w-full px-2 py-2.5 bg-[#3a8094] text-white rounded-md text-base font-semibold hover:bg-[#2c6070] transition-colors mt-1"
                 >
-                  인증 및 보험료 계산
+                  인증 및 연금액 계산
                 </button>
               </div>
             </>
