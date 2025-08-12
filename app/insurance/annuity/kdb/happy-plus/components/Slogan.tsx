@@ -207,6 +207,13 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
 
   setVerifying(true);
   try {
+    console.log("[CLIENT] 연금액 계산 인증 시작:", {
+      phone,
+      name,
+      templateId: "UB_5797",
+      adminTemplateId: "UA_8331"
+    });
+
     const res = await request.post("/api/verifyOTP", {
       phone,
       name,
@@ -220,17 +227,31 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       mounthlyPremium: paymentAmount, // 실제 선택값
       paymentPeriod: paymentPeriod,   // 실제 선택값
       monthlyPension: pensionAmounts.monthly, // 월 연금액
-      guaranteedPension: pensionAmounts.guaranteed // 20년 보증기간 연금액
+      guaranteedPension: pensionAmounts.guaranteed, // 20년 보증기간 연금액
+      templateId: "UB_5797", // 고객용 연금액 계산 결과 전송용 템플릿
+      adminTemplateId: "UA_8331" // 관리자용 연금액 계산 결과 전송용 템플릿
     });
+    
+    console.log("[CLIENT] 연금액 계산 인증 응답:", res.data);
+    
     if (res.data.success) {
       setIsVerified(true);
       setOtpSent(false);
-      alert("인증이 완료되었습니다!");
+      alert("인증이 완료되었습니다! 연금액 계산 결과가 카카오톡으로 전송됩니다.");
     } else {
       alert("인증에 실패했습니다.");
     }
   } catch (e: any) {
-    alert(e.error || "인증에 실패했습니다.");
+    console.error("[CLIENT] 연금액 계산 인증 에러:", e);
+    if (e.response?.data?.error) {
+      alert(`인증 에러: ${e.response.data.error}`);
+    } else if (e.response?.status === 400) {
+      alert("잘못된 요청입니다. 입력 정보를 확인해주세요.");
+    } else if (e.response?.status === 500) {
+      alert("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    } else {
+      alert("인증에 실패했습니다. 다시 시도해주세요.");
+    }
   } finally {
     setVerifying(false);
   }
@@ -319,13 +340,20 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       alert("6자리 인증번호를 입력해주세요.");
       return;
     }
+    
+    // 필수 데이터 확인
+    if (!name || !birth || !gender || !phone || !paymentPeriod || !paymentAmount) {
+      alert("필수 정보가 누락되었습니다. 모든 정보를 입력해주세요.");
+      return;
+    }
+    
     setVerifying(true);
     try {
       const res = await request.post("/api/verifyOTP", {
         phone,
         name,
         birth,
-        gender, // 추가: 성별도 함께 전달
+        gender,
         code: consultOtpCode,
         counselType: 2,
         companyId: INSURANCE_COMPANY_ID,
@@ -334,40 +362,29 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         counselTime: consultTime,
         mounthlyPremium: paymentAmount,
         paymentPeriod: paymentPeriod,
-        monthlyPension: pensionAmounts.monthly,
-        guaranteedPension: pensionAmounts.guaranteed
+        monthlyPension: pensionAmounts.monthly || 0,
+        guaranteedPension: pensionAmounts.guaranteed || 0,
+        templateId: "UA_7919", // 고객용 상담신청 완료 전송용 템플릿
+        adminTemplateId: "UA_8332" // 관리자용 상담신청 접수 전송용 템플릿
       });
+      
       if (res.data.success) {
-        alert("인증이 완료되었습니다!");
         setConsultIsVerified(true);
-        try {
-          await request.post("/api/verifyOTP", {
-            phone,
-            name,
-            birth,
-            gender,
-            code: '', // 인증번호는 빈 값으로
-            counselType: 2,
-            companyId: INSURANCE_COMPANY_ID,
-            productId: INSURANCE_PRODUCT_ID,
-            consultType,
-            counselTime: consultTime,
-            mounthlyPremium: paymentAmount,
-            paymentPeriod: paymentPeriod,
-            monthlyPension: pensionAmounts.monthly,
-            guaranteedPension: pensionAmounts.guaranteed,
-            onlyClient: true
-          });
-          alert("상담신청이 접수되었습니다!");
-        } catch (e) {
-          // 알림톡 발송 실패 시 사용자에게 별도 안내하지 않음 (조용히 무시)
-        }
+        alert("상담신청이 접수되었습니다!");
       } else {
         alert("인증에 실패했습니다.");
-        return;
       }
     } catch (e: any) {
-      alert(e.error || "인증에 실패했습니다.");
+      console.error("상담신청 인증 에러:", e);
+      if (e.response?.data?.error) {
+        alert(e.response.data.error);
+      } else if (e.response?.status === 400) {
+        alert("잘못된 요청입니다. 입력 정보를 확인해주세요.");
+      } else if (e.response?.status === 500) {
+        alert("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+      } else {
+        alert("인증에 실패했습니다. 다시 시도해주세요.");
+      }
     } finally {
       setVerifying(false);
     }
@@ -563,7 +580,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               {/* <img src="/kdb-logo.png" alt="KDB 로고" className="h-6 w-auto" style={{minWidth:'24px'}} /> */}
             </div>
             <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
-              20년까지 7%!<br />
+              20년까지 연단리 7%!<br />
               보증형 연금보험!
             </h1>
             <ul className="mb-8 space-y-2">
@@ -623,7 +640,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   {/* 3. 사망 시에도 보장 */}
                   <div className="text-center p-3 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl shadow-lg border border-blue-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
                     <div>
-                      <div className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md whitespace-nowrap">사망시에도 보장</div>
+                      <div className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md break-words">사망시에도<br />보장</div>
                     </div>
                     <div className="flex-1 flex items-center justify-center">
                       <div className="text-xs font-bold text-gray-800 leading-tight">
@@ -650,7 +667,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
                   </svg>
-                  보험료 계산하기
+                  연금액 계산하기
                 </h3>
                 <p className="text-gray-500 text-sm mt-1">간단한 정보 입력으로 예상 보험료를 확인하세요</p>
               </div>
@@ -816,7 +833,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                     className="w-full bg-[#3a8094] text-white font-bold rounded-xl py-4 text-lg hover:opacity-90 transition flex items-center justify-center gap-2 cursor-pointer"
                   >
                   <CalculatorIcon className="w-6 h-6" />
-                  보험료 확인하기
+                  연금액 확인하기
                 </button>
                   <div className="flex flex-row gap-2">
                   <button 
@@ -850,7 +867,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
           counselType === 1 ? (
             <span className="flex items-center gap-2">
               <CalculatorIcon className="w-6 h-6 text-[#3a8094]" />
-              보험료 확인하기
+              연금액 확인하기
             </span>
           ) : (
             <span className="flex items-center gap-2">
@@ -1084,7 +1101,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   onClick={handleVerifyOTP}
                   className="w-full px-2 py-2.5 bg-[#3a8094] text-white rounded-md text-base font-semibold hover:bg-[#2c6070] transition-colors mt-1"
                 >
-                  인증 및 보험료 계산
+                  인증 및 연금액 계산
                 </button>
               </div>
             </>
