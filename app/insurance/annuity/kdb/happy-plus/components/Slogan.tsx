@@ -213,8 +213,16 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       templateId: "UB_5797",
       adminTemplateId: "UA_8331"
     });
+    console.log("[CLIENT] counselType:", counselType);
+    console.log("[CLIENT] counselType 타입:", typeof counselType);
+    console.log("[CLIENT] counselType === 1:", counselType === 1);
+    console.log("[CLIENT] INSURANCE_COMPANY_ID:", INSURANCE_COMPANY_ID);
+    console.log("[CLIENT] INSURANCE_PRODUCT_ID:", INSURANCE_PRODUCT_ID);
 
-    const res = await request.post("/api/verifyOTP", {
+    // 연금액 계산
+    const pensionAmounts = calculatePensionAmount(Number(insuranceAge), paymentPeriod, paymentAmount, gender);
+
+    const requestData = {
       phone,
       name,
       birth,
@@ -230,7 +238,11 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       guaranteedPension: pensionAmounts.guaranteed, // 20년 보증기간 연금액
       templateId: "UB_5797", // 고객용 연금액 계산 결과 전송용 템플릿
       adminTemplateId: "UA_8331" // 관리자용 연금액 계산 결과 전송용 템플릿
-    });
+    };
+    
+    console.log("[CLIENT] API 요청 데이터:", requestData);
+    
+    const res = await request.post("/api/verifyOTP", requestData);
     
     console.log("[CLIENT] 연금액 계산 인증 응답:", res.data);
     
@@ -349,6 +361,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     
     setVerifying(true);
     try {
+      // 연금액 계산
+      const pensionAmounts = calculatePensionAmount(Number(insuranceAge), paymentPeriod, paymentAmount, gender);
+      
       const res = await request.post("/api/verifyOTP", {
         phone,
         name,
