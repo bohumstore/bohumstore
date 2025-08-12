@@ -6,6 +6,9 @@ import { link } from "fs";
 import { use } from "react";
 
 export async function POST(req: Request) {
+  const requestBody = await req.json();
+  console.log("[API] 받은 요청 데이터:", requestBody);
+  
   const {
     phone,
     name,
@@ -25,8 +28,10 @@ export async function POST(req: Request) {
     monthlyPension = null,
     guaranteedPension = null,
     performancePension = null,
+    templateId = null, // 고객용 템플릿 ID
+    adminTemplateId = null, // 관리자용 템플릿 ID
     onlyClient = false // 추가: 오직 고객용만 보낼지 여부
-  } = await req.json();
+  } = requestBody;
 
   const { data, error } = await supabase
     .from("otp")
@@ -140,7 +145,9 @@ export async function POST(req: Request) {
   if (counselType === 1 || counselType === 2) {
     console.log("[DEBUG] counselType:", counselType);
     console.log("[DEBUG] user:", user);
-    const tplCode = counselType === 1 ? "UA_8331" : "UA_8332";
+    console.log("[DEBUG] templateId:", templateId);
+    console.log("[DEBUG] adminTemplateId:", adminTemplateId);
+    const tplCode = adminTemplateId || (counselType === 1 ? "UA_8331" : "UA_8332");
     const subject = counselType === 1
       ? "보험료계산 - 관리자전송"
       : "상담/설계요청 - 관리자전송";
@@ -196,15 +203,28 @@ export async function POST(req: Request) {
       }
     }
 
+    // 고객용 템플릿 ID 결정 (counselType: 1일 때는 UB_5797 템플릿 사용)
+    let clientTemplateId;
+    if (counselType === 1) {
+      clientTemplateId = "UB_5797"; // 연금액 계산 결과용 템플릿 (정확한 형식)
+      console.log("[DEBUG] counselType이 1이므로 UB_5797 템플릿 사용");
+    } else {
+      clientTemplateId = templateId || "UA_7919"; // 상담신청용 템플릿
+      console.log("[DEBUG] counselType이 2이므로 상담신청용 템플릿 사용:", clientTemplateId);
+    }
+    console.log("[DEBUG] 최종 고객용 템플릿 ID:", clientTemplateId);
+    console.log("[DEBUG] 클라이언트에서 전송한 templateId:", templateId);
+    console.log("[DEBUG] counselType:", counselType);
+    
     const toClientReq = {
       headers: { "content-type": "application/json" },
       body: {
-        tpl_code: counselType === 1 ? "UA_7918" : "UA_7919",
+        tpl_code: clientTemplateId,
         sender: "010-8897-7486",
         receiver_1: phone,
         subject_1: subject,
         message_1: counselType === 1
-          ? `▣ ${user.name}님 계산 결과입니다.\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간: ${paymentPeriod}\n⊙ 월보험료: ${mounthlyPremium}\n\n▼ 연금액 계산 결과 ▼\n· 월 연금액: ${monthlyPension ? monthlyPension.toLocaleString() : '-'}원\n· 20년 보증기간 연금액: ${guaranteedPension ? guaranteedPension.toLocaleString() : '-'}원\n· 실적배당 연금액: ${performancePension ? performancePension.toLocaleString() : '-'}원`
+          ? `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간 / 월보험료: ${paymentPeriod} / ${mounthlyPremium}\n⊙ 총 납입액: ${mounthlyPremium ? (parseInt(mounthlyPremium.replace(/[^0-9]/g, '')) * 10000 * parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12).toLocaleString() : '-'}원\n⊙ 연금개시연령: ${paymentPeriod ? (paymentPeriod.includes('10') ? '65' : paymentPeriod.includes('15') ? '70' : paymentPeriod.includes('20') ? '75' : '80') : '-'}세\n\n▼ 예상 연금 수령 ▼\n· 월 연금액: ${monthlyPension ? monthlyPension.toLocaleString() : '-'}원\n· 20년 보증기간 총액: ${guaranteedPension ? guaranteedPension.toLocaleString() : '-'}원\n· 100세까지 총 수령액: ${monthlyPension && guaranteedPension ? (monthlyPension * 12 * 35).toLocaleString() : '-'}원\n\n※ 위 금액은 예시이며, 실제 수령액은 가입 시 조건, 이율, 보험사 정책 등에 따라 달라질 수 있습니다.`
           : `▼ ${user.name}님\n\n▣ 보험종류: [ ${product.name} ]\n▣ 상담시간: [ ${counselTime} ]\n\n상담 신청해 주셔서 감사합니다!`,
         button_1: {
           button: [{
@@ -215,6 +235,9 @@ export async function POST(req: Request) {
         testMode: "N",
       },
     }
+    
+    console.log("[DEBUG] 고객용 알림톡 요청 데이터:", toClientReq.body);
+    
     try {
       const resultToClient = await alimtalkSend(toClientReq, aligoAuth);
       console.log("고객 알림톡 전송 결과:", resultToClient);
