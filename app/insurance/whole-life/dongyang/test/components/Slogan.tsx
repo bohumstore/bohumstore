@@ -380,29 +380,29 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
           backgroundSize: '20px 20px',
         }}
       >
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-8 md:gap-12 px-4 md:py-4">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-4 md:gap-8 lg:gap-12 px-4 md:px-6 lg:px-4 md:py-4 lg:py-4">
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
               <img src="/KB라이프.png" alt="KB라이프 로고" className="h-6 w-auto" style={{minWidth:'24px'}} />
               <span>KB라이프생명</span>
             </div>
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">KB 트리플 레벨업<br />연금보험 (보증형)</h1>
-            <ul className="mb-8 space-y-2">
-              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
-                <span className="text-xl mr-2 text-[#ff8c1a]">✔</span>
-                10년시점 130% 해약환급률 보증 <span className="text-xs align-baseline">(5년납)</span>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6 lg:mb-4 leading-tight">KB 트리플 레벨업<br />연금보험 (보증형)</h1>
+            <ul className="mb-8 md:mb-10 lg:mb-8 space-y-2 md:space-y-3 lg:space-y-2">
+              <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
+                10년시점 130% 해약환급률 보증 <span className="text-xs md:text-sm lg:text-xs align-baseline">(5년납)</span>
               </li>
-              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
-                <span className="text-xl mr-2 text-[#ff8c1a]">✔</span>
+              <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
                 가입 0~70세 / 연금개시 45~85세
               </li>
-              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
-                <span className="text-xl mr-2 text-[#ff8c1a]">✔</span>
-                비과세 <span className="text-xs align-baseline">(월 150만원 한도, 10년유지 세법요건 충족시)</span>
+              <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
+                비과세 <span className="text-xs md:text-sm lg:text-xs align-baseline">(월 150만원 한도, 10년유지 세법요건 충족시)</span>
               </li>
-              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
-                <span className="text-xl mr-2 text-[#ff8c1a]">✔</span>
+              <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
                 병력 무심사 / 무사망 보장 / 전건 가입 가능
               </li>
             </ul>
@@ -410,7 +410,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
           </div>
           {/* 오른쪽: 보험료 확인 카드 */}
           <div className="flex-1 flex justify-center md:justify-end w-full md:ml-8 md:self-end">
-            <div className="w-full max-w-md bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-8 relative flex flex-col">
+            <div className="w-full max-w-md bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-8 md:p-10 lg:p-8 relative flex flex-col">
               {/* 새로운 헤더 디자인 */}
               <div className="mb-6">
                 <h3 className="text-2xl font-bold text-[#3a8094] flex items-center gap-2">

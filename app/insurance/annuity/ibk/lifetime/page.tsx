@@ -13,7 +13,7 @@ import CoverageDetails from "./components/BodyTabViews/CoverageDetails";
 import Surrender from "./components/BodyTabViews/Surrender";
 import { supabase } from "../../../../api/supabase";
 
-export default function KDBHappyPlusAnnuityPage() {
+export default function IBKLifetimeAnnuityPage() {
   const tabs = [
     { label: '상품 정보',      content: <ProductInfo /> },
     { label: '보장 내용',      content: <CoverageDetails /> },
@@ -41,9 +41,9 @@ export default function KDBHappyPlusAnnuityPage() {
     <>
       <style jsx global>{`
         @keyframes jump-glow {
-          0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 #3a80e0); }
-          30% { transform: scale(1.18) translateY(-6px); filter: drop-shadow(0 0 8px #87b7f0); }
-          60% { transform: scale(0.95) translateY(2px); filter: drop-shadow(0 0 0 #3a80e0); }
+          0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 #ea580c); }
+          30% { transform: scale(1.18) translateY(-6px); filter: drop-shadow(0 0 8px #fb923c); }
+          60% { transform: scale(0.95) translateY(2px); filter: drop-shadow(0 0 0 #ea580c); }
         }`}</style>
       <Notice open={showNotice} onClose={() => setShowNotice(false)} />
       <Modal title="개인정보 수집 및 이용 동의" open={showPrivacy} onClose={() => setShowPrivacy(false)}>
@@ -58,10 +58,10 @@ export default function KDBHappyPlusAnnuityPage() {
             <Tabs tabs={tabs} />
             {/* 하단 버튼 */}
             {/* <div className="flex flex-col md:flex-row gap-4 justify-center mt-8">
-                <a href="/kdb-happydream-guide.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
+                <a href="/ibk-pension-guide.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
                 상품요약서
               </a>
-                <a href="/kdb-happydream-guide2.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
+                <a href="/ibk-pension-contract.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
                 상품약관
               </a>
             </div> */}
@@ -86,11 +86,11 @@ export default function KDBHappyPlusAnnuityPage() {
         <div className="w-full flex justify-center">
           <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mb-2 md:mb-4 lg:mb-6 mt-6 md:mt-8 lg:mt-10 px-6 py-0 text-xs md:text-sm text-gray-800">
             <div className="mb-1 font-bold">[ 필수안내사항 ]</div>
+            <div>※ 준법감시인 심의필 제2025-0131호(2025.03.21~2026.03.20)</div>
             <div>※ 본 광고는 심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.</div>
             <div className="text-red-500">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
             <div className="text-red-500">① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.</div>
             <div className="text-red-500">② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</div>
-            <div>※ ㈜메타리치 심의필 25080085호 (2025/08/13~2026/08/12)</div>
           </div>
         </div>
         <Footer />

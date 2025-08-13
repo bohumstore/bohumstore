@@ -439,34 +439,34 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         <div className="absolute top-60 right-12 w-24 h-24 bg-gradient-to-br from-yellow-300/65 to-yellow-400/25 rounded-full animate-pulse hidden md:block" style={{animationDelay: '1.8s'}}></div>
         <div className="absolute top-80 right-8 w-16 h-16 bg-gradient-to-br from-orange-300/55 to-orange-400/15 rounded-full animate-pulse hidden md:block" style={{animationDelay: '0.3s'}}></div>
         <div className="absolute top-100 right-16 w-28 h-28 bg-gradient-to-br from-pink-400/50 to-pink-500/10 rounded-full animate-pulse hidden md:block" style={{animationDelay: '2.2s'}}></div>
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-8 md:gap-12 px-4 md:py-4">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-4 md:gap-8 lg:gap-12 px-4 md:px-6 lg:px-4 md:py-4 lg:py-4">
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
               <img src="/shinhan-life-logo.png" alt="신한라이프 로고" className="h-6 w-auto" style={{minWidth:'24px'}} />
               <span>신한라이프생명</span>
             </div>
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">모아더드림Plus종신보험<br />(해약환급금 일부지급형)</h1>
-            <ul className="mb-8 space-y-2">
-              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
-                <span className="text-xl mr-2 text-[#0066cc]">✔</span>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6 lg:mb-4 leading-tight">모아더드림Plus종신보험<br />(해약환급금 일부지급형)</h1>
+            <ul className="mb-8 md:mb-10 lg:mb-8 space-y-2 md:space-y-3 lg:space-y-2">
+              <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
                 종신보장으로 평생 안전한 보장
               </li>
-              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
-                <span className="text-xl mr-2 text-[#0066cc]">✔</span>
+              <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
                 가입 0~70세 / 보장 100세까지
               </li>
-              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
-                <span className="text-xl mr-2 text-[#0066cc]">✔</span>
+              <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
                 사망보장금 최대 1억원
               </li>
-              <li className="flex items-center text-lg text-gray-800 justify-center md:justify-start">
-                <span className="text-xl mr-2 text-[#0066cc]">✔</span>
+              <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
                 병력 무심사 / 전건 가입 가능
               </li>
             </ul>
               {/* 환급률/적립액 안내 UI */}
-              <div className="w-full max-w-full md:max-w-lg mx-auto bg-white rounded-xl shadow-md mb-6 p-4 px-2 md:px-0 md:py-8">
+              <div className="w-full max-w-full md:max-w-lg mx-auto bg-white rounded-xl shadow-md mb-6 p-4 md:p-6 lg:p-4 px-2 md:px-0 md:py-8">
                 <div className="flex flex-row justify-between items-stretch md:items-end gap-4 md:gap-0 mb-2">
                   <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
                     <div className="inline-block bg-[#ff8c1a] text-white text-xs font-bold px-4 py-1 rounded-full mb-2">7년 시점</div>
@@ -505,7 +505,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
           </div>
           {/* 오른쪽: 보험료 확인 카드 */}
           <div className="flex-1 flex justify-center md:justify-end w-full md:ml-8 md:self-end">
-            <div className="w-full max-w-md bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-8 relative flex flex-col">
+            <div className="w-full max-w-md bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-8 md:p-10 lg:p-8 relative flex flex-col">
               {/* 새로운 헤더 디자인 */}
               <div className="mb-6">
                 <h3 className="text-2xl font-bold text-[#3a8094] flex items-center gap-2">

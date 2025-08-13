@@ -8,11 +8,11 @@ import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/ins
 import FireworksEffect from './FireworksEffect';
 
 // 현재 경로에 맞는 상품 정보 가져오기
-const currentPath = '/insurance/annuity/kdb/happy-dream';
+const currentPath = '/insurance/annuity/ibk/lifetime';
 const productConfig = getProductConfigByPath(currentPath);
 
-const INSURANCE_COMPANY_ID = 2; // KDB 생명보험
-const INSURANCE_PRODUCT_ID = 2; // KDB 더!행복드림변액연금보험 id 코드값
+const INSURANCE_COMPANY_ID = 3; // IBK 연금보험
+const INSURANCE_PRODUCT_ID = 3; // IBK연금액 평생보증받는변액연금보험 id 코드값
 
 type SloganProps = {
   onOpenPrivacy: () => void
@@ -162,8 +162,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       const response = await request.post('/api/postOTP', { 
         phone, 
         templateId,
-        companyName: "KDB생명",
-        productName: "더!행복드림변액연금보험"
+        companyName: "IBK연금보험",
+        productName: "IBK연금액 평생보증받는변액연금보험"
       })
       console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
       setOtpSent(true)
@@ -596,30 +596,38 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   return (
     <>
       <section
-        className="w-full bg-purple-600 py-2 md:py-3"
+        className="w-full bg-[#1e293b] py-2 md:py-3"
         style={{
           backgroundImage: 'radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px)',
           backgroundSize: '20px 20px',
         }}
       >
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-4 md:gap-8 lg:gap-12 px-4 md:px-6 lg:px-4 md:py-4 lg:py-4">
-          {/* 왼쪽: 상품 설명/이미지 */}
+          {/* 왼쪽: 간단한 슬로건 디자인 */}
           <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
-            <div className="flex items-center gap-2 text-sm text-white mb-2">
-              {/* <img src="/kdb-logo.png" alt="KDB 로고" className="h-6 w-auto" style={{minWidth:'24px'}} /> */}
+            {/* IBK 로고 및 보험사명 */}
+            <div className="flex items-center gap-2 mb-4 md:mb-6 lg:mb-4">
+              <div className="bg-white rounded-md p-1 shadow-md">
+                <img src="/IBK-logo.png" alt="IBK 로고" className="h-6 md:h-8 w-auto" />
+              </div>
+              <span className="text-white text-sm md:text-base font-medium">IBK연금보험</span>
             </div>
+            
+            {/* 메인 슬로건 */}
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 lg:mb-4 leading-tight">
-              20년까지 연단리 7%!<br />
-              변액연금보험!
+              (무)IBK연금액<br />
+              평생보증 변액연금보험
             </h1>
+            
+            {/* 간단한 특징 설명 */}
             <ul className="mb-8 md:mb-10 lg:mb-8 space-y-2 md:space-y-3 lg:space-y-2">
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
-                연단리 7% 최저연금기준금액 보증 <span className="text-xs md:text-sm lg:text-xs align-baseline">(20년까지)</span>
+                최대 20년동안 연단리 8%!
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
-                가입 15~70세 / 연금개시 55~80세
+                가입 0~68세 / 연금개시 30~80세
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
@@ -627,63 +635,116 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
-                최저사망적립액 보증 / 선지급행복자금
+                최저사망계약자적립액 보증
               </li>
             </ul>
-              {/* 보증 내용 박스 */}
-              <div className="w-full max-w-full md:max-w-4xl mx-auto bg-white rounded-xl shadow-md mb-4 md:mb-6 p-6 md:p-8 lg:p-6">
-                <div className="grid grid-cols-3 gap-2 md:gap-3 lg:gap-4">
-                  {/* 1. 생존 시 최대 100세까지 */}
-                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl shadow-lg border border-purple-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
-                    <div>
-                      <div className="inline-block bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">생존 시 최대 100세까지</div>
-                    </div>
-                    <div className="flex-1 flex items-center justify-center">
-                      <div className="text-xs text-gray-700 leading-tight font-medium">
-                        (예시) 100세<br />최종연금지급일
+            
+            {/* 간단한 보증 내용 박스 */}
+            <div className="w-full max-w-full md:max-w-4xl mx-auto bg-white rounded-xl shadow-md mb-4 md:mb-6 p-6 md:p-8 lg:p-6">
+              <div className="grid grid-cols-3 gap-2 md:gap-3 lg:gap-4">
+                {/* 1. 높은 보증이율 */}
+                <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-orange-100 to-orange-200 rounded-xl shadow-lg border border-orange-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full relative overflow-hidden">
+                  {/* 유리 반사 효과 1 */}
+                  <div 
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent transform -skew-x-12 -translate-x-full pointer-events-none"
+                    style={{
+                      animation: 'shine1 4s ease-in-out infinite'
+                    }}
+                  ></div>
+                  
+                  <div className="relative z-10">
+                    <div className="inline-block bg-gradient-to-r from-orange-600 to-orange-700 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">높은 보증이율</div>
                   </div>
+                  <div className="flex items-center justify-center mb-2 relative z-10">
+                    <div className="text-xs text-gray-700 mr-3 font-semibold leading-tight">
+                      최대<br />연단리
                     </div>
-                    <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2">
-                      = 피보험자의 99세<br />계약 해당일
+                    <div className="text-3xl md:text-4xl font-extrabold text-orange-600 animate-[jump-glow_1.2s_ease-in-out_infinite]">8%</div>
                   </div>
-                    </div>
-
-                  {/* 2. 보증금리 Top */}
-                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-pink-100 to-pink-200 rounded-xl shadow-lg border border-pink-200 hover:shadow-xl transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-full">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent animate-shine-strong"></div>
-                    <div className="relative z-10">
-                                              <div className="inline-block bg-gradient-to-r from-pink-600 to-pink-700 text-white text-sm font-bold px-4 py-2 rounded-full mb-2 shadow-md">보증금리 Top</div>
-                      <div className="flex items-center justify-center mb-2">
-                        <div className="text-xs text-gray-700 mr-3 font-semibold leading-tight">
-                          최대<br />연단리
-                        </div>
-                        <div className="text-4xl font-black text-orange-600 drop-shadow-2xl animate-bounce">7%</div>
-                      </div>
-                    </div>
-                                          <div className="text-xs text-gray-600 space-y-1.5 leading-tight relative z-10 mt-auto">
-                        <div className="bg-white/60 rounded-lg p-1.5 font-medium">계약일로부터<br />20년: 7%</div>
-                        <div className="bg-white/60 rounded-lg p-1.5 font-medium">20년~연금개시까지: <span className="text-blue-600 font-bold">6%</span></div>
-                      </div>
-                  </div>
-
-                  {/* 3. 사망 시에도 보장 */}
-                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-xl shadow-lg border border-indigo-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
-                    <div>
-                                              <div className="inline-block bg-gradient-to-r from-indigo-600 to-indigo-700 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">사망시에도<br />보장</div>
-                    </div>
-                    <div className="flex-1 flex items-center justify-center">
-                      <div className="text-xs font-bold text-gray-800 leading-tight">
-                        최저 사망적립액<br />보장
-                      </div>
-                    </div>
-                    <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2">
-                      장래 공시이율과<br />관계없이
-                    </div>
+                  <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2 relative z-10">
+                    20년까지 연단리 8%<br />이후 5% 보증
                   </div>
                 </div>
-                <div className="text-xs text-gray-500 text-center mt-4">
-                  <p>※ 대표계약기준(40세 남자, 10년납, 연금개시 나이 65세), 복리이자율로 환산시 4.32%</p>
+
+                {/* 2. 무심사 가입 */}
+                <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-green-100 to-green-200 rounded-xl shadow-lg border border-green-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full relative overflow-hidden">
+                  {/* 유리 반사 효과 2 */}
+                  <div 
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent transform -skew-x-12 -translate-x-full pointer-events-none"
+                    style={{
+                      animation: 'shine2 4s ease-in-out infinite'
+                    }}
+                  ></div>
+                  
+                  <div className="relative z-10">
+                    <div className="inline-block bg-gradient-to-r from-green-600 to-green-700 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">무심사 가입</div>
+                  </div>
+                  <div className="flex-1 flex items-center justify-center relative z-10">
+                    <div className="text-xs text-gray-700 leading-tight font-medium">
+                      질병여부 상관없이<br />무진단·무심사
+                    </div>
+                  </div>
+                  <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2 relative z-10">
+                    당뇨, 암, 고혈압 등<br />가입제한 없음
+                  </div>
                 </div>
+
+                {/* 3. 조기연금개시 */}
+                <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl shadow-lg border border-blue-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full relative overflow-hidden">
+                  {/* 유리 반사 효과 3 */}
+                  <div 
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent transform -skew-x-12 -translate-x-full pointer-events-none"
+                    style={{
+                      animation: 'shine3 4s ease-in-out infinite'
+                    }}
+                  ></div>
+                  
+                  <div className="relative z-10">
+                    <div className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">조기연금개시</div>
+                  </div>
+                  <div className="flex-1 flex items-center justify-center relative z-10">
+                    <div className="text-xs text-gray-700 leading-tight font-medium">
+                      30세부터<br />연금개시 가능
+                    </div>
+                  </div>
+                  <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2 relative z-10">
+                    미보증형은<br />45세부터 가능
+                  </div>
+                </div>
+              </div>
+              <div className="text-xs text-gray-500 text-center mt-4">
+                <p>※ 대표계약기준(40세, 10년납, 65세 연금개시), 복리이자율로 환산시 연복리 4.5%</p>
+              </div>
+              
+              {/* CSS 애니메이션 스타일 */}
+              <style jsx>{`
+                @keyframes shine1 {
+                  0% { transform: translateX(-100%) skewX(-12deg); }
+                  25% { transform: translateX(100%) skewX(-12deg); }
+                  100% { transform: translateX(100%) skewX(-12deg); }
+                }
+                
+                @keyframes shine2 {
+                  0% { transform: translateX(-100%) skewX(-12deg); }
+                  25% { transform: translateX(100%) skewX(-12deg); }
+                  100% { transform: translateX(100%) skewX(-12deg); }
+                }
+                
+                @keyframes shine3 {
+                  0% { transform: translateX(-100%) skewX(-12deg); }
+                  25% { transform: translateX(100%) skewX(-12deg); }
+                  100% { transform: translateX(100%) skewX(-12deg); }
+                }
+                
+                /* 1→2→3 순서로 이어지는 효과 */
+                .shine2 {
+                  animation-delay: 1.33s;
+                }
+                
+                .shine3 {
+                  animation-delay: 2.66s;
+                }
+              `}</style>
             </div>
           </div>
           {/* 오른쪽: 보험료 확인 카드 */}
@@ -933,13 +994,13 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
-                    <span className="font-bold text-[#3a8094]">KDB생명</span>
+                    <span className="font-bold text-[#3a8094]">IBK연금보험</span>
                   </div>
                 </div>
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
-                    <span className="font-bold text-[#3a8094]">더!행복드림변액연금보험</span>
+                    <span className="font-bold text-[#3a8094]">IBK연금액 평생보증받는변액연금보험</span>
                   </div>
                 </div>
                 <div className="bg-white p-2 rounded border border-gray-200">
@@ -1025,7 +1086,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
-                    <span className="font-bold text-[#3a8094]">{isVerified ? "KDB생명" : "인증 후 확인가능"}</span>
+                    <span className="font-bold text-[#3a8094]">{isVerified ? "IBK연금보험" : "인증 후 확인가능"}</span>
                   </div>
                 </div>
                 <div className="bg-white p-2 rounded border border-gray-200">
@@ -1300,6 +1361,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
           )}
         </div>
       </Modal>
+      
+
     </>
   );
 }
