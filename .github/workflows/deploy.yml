@@ -1,28 +1,101 @@
+# name: Deploy to EC2
+# env:
+#   AWS_DEFAULT_REGION: ap-northeast-2
+
+# on:
+#   push:
+#     branches:
+#       - master
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+
+#       - name: Install SSH key
+#         run: |
+#           echo "${{ secrets.EC2_PEM_KEY }}" | tr -d '\r' > bohumstore.pem
+#           chmod 400 bohumstore.pem
+
+#       - name: Verify SSH key creation
+#         run: ls -l bohumstore.pem
+
+#       - name: Deploy to EC2
+#         run: |
+#           ssh -i bohumstore.pem -o StrictHostKeyChecking=no ubuntu@3.37.112.222 'cd bohumstore && git pull && npm install && npm run build && pm2 restart bohumstore'
+
+
 name: Deploy to EC2
-env:
-  AWS_DEFAULT_REGION: ap-northeast-2
 
 on:
   push:
     branches:
       - master
 
+concurrency:
+  group: deploy-ec2
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Install SSH key
+      - name: Write SSH key
         run: |
-          echo "${{ secrets.EC2_PEM_KEY }}" | tr -d '\r' > bohumstore.pem
-          chmod 400 bohumstore.pem
+          echo "${{ secrets.EC2_PEM_KEY }}" > ./ec2.pem
+          chmod 400 ./ec2.pem
 
-      - name: Verify SSH key creation
-        run: ls -l bohumstore.pem
-
-      - name: Deploy to EC2
+      - name: Add EC2 to known_hosts
         run: |
-          ssh -i bohumstore.pem -o StrictHostKeyChecking=no ubuntu@3.37.112.222 'cd bohumstore && git pull && npm install && npm run build && pm2 restart bohumstore'
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy on EC2
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_PATH: ${{ secrets.EC2_PATH }}
+          PM2_APP: ${{ secrets.PM2_APP }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          ssh -i ./ec2.pem ${EC2_USER}@${EC2_HOST} << 'EOSSH'
+            set -e
+            cd "${EC2_PATH}"
+
+            # (비공개 레포이고 EC2에서 git 인증이 필요하면 아래 주석 해제 후 ORG/REPO 교체)
+            # if [ -n "${GH_PAT}" ]; then
+            #   git remote set-url origin "https://${GH_PAT}@github.com/<ORG_OR_USER>/<REPO>.git"
+            # fi
+
+            echo "[1/5] Git sync..."
+            git fetch --all --prune
+            git reset --hard origin/master
+
+            echo "[2/5] Check Node/npm"
+            node -v
+            npm -v
+
+            echo "[3/5] Install deps"
+            npm ci --quiet || npm install --quiet
+
+            echo "[4/5] Build"
+            NODE_ENV=${NODE_ENV:-production} npm run build
+
+            echo "[5/5] PM2 reload/start"
+            APP_NAME=${PM2_APP:-bohumstore}
+            if pm2 describe "$APP_NAME" >/dev/null 2>&1; then
+              pm2 reload "$APP_NAME" --update-env
+            else
+              pm2 start npm --name "$APP_NAME" -- run start
+            fi
+
+            pm2 save
+          EOSSH
