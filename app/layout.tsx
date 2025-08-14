@@ -13,22 +13,58 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "보험스토어 | BohumStore",
-  description: "보험 비교, 상담, 연금보험 안내 플랫폼",
-  openGraph: {
-    title: "보험스토어 | BohumStore",
-    description: "보험 비교, 상담, 연금보험 안내 플랫폼",
+  title: "보험스토어 | 연금보험, 종신보험, 저축보험 비교 및 상담",
+  description: "연금보험, 종신보험, 저축보험 등 다양한 보험상품을 비교하고 전문 상담을 받을 수 있는 보험 비교 플랫폼입니다. 보험료 계산, 보장내용 비교, 전문가 상담까지 한 번에!",
+  keywords: "보험, 보험비교, 보험상담, 맞춤형보험, 온라인보험, 보험가입, 보험추천, 연금보험, 변액연금보험, 확정형연금보험, 보증형연금보험, 8%연금보험, 7%연금보험, 고이율연금보험, 세제혜택연금보험, 단기납연금보험, 종신보험, 고환급종신보험, 저해지환급형종신보험, 간편가입종신보험, 단기납종신보험, 10년환급형종신보험, 15년환급형종신보험, 저축보험, 고이율저축보험, 세제혜택저축보험, 변액저축보험, 해약환급금, 환급률, 보험환급률, 납입기간, 납입완료보너스, 장기유지보너스, 암보험, 유사암보험, 고진단비암보험, 무해지암보험, 치매보험, 간병보험, 노후간병보험, 어린이보험, 태아보험, 자녀보험, 생명보험, 손해보험, 변액보험, 재테크보험, 노후대비보험, 절세보험",
+  authors: [{ name: "보험스토어" }],
+  creator: "보험스토어",
+  publisher: "보험스토어",
+  robots: "index, follow",
+      openGraph: {
+      title: "보험스토어 | 연금보험, 종신보험, 저축보험 비교 및 상담",
+      description: "연금보험, 종신보험, 저축보험 등 다양한 보험상품을 비교하고 전문 상담을 받을 수 있는 보험 비교 플랫폼입니다.",
     url: "https://bohumstore.net",
-    images: [
-      {
-        url: "https://bohumstore.net/og-logo.png",
-        width: 1200,
-        height: 630,
-        alt: "보험스토어 로고",
-      },
-    ],
+    siteName: "보험스토어",
+          images: [
+        {
+          url: "/kakao-img.png",
+          width: 1000,
+          height: 500,
+          alt: "보험스토어 - 연금보험, 종신보험, 저축보험 비교 및 상담",
+        },
+      ],
     type: "website",
+    locale: "ko_KR",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "보험스토어 | 연금보험, 종신보험, 저축보험 비교 및 상담",
+    description: "연금보험, 종신보험, 저축보험 등 다양한 보험상품을 비교하고 전문 상담을 받을 수 있는 보험 비교 플랫폼입니다.",
+    images: ["/kakao-img.png"],
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
+  themeColor: "#ffffff",
+  manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  alternates: {
+    canonical: "https://bohumstore.net",
+  },
+  category: "insurance",
+  classification: "insurance comparison platform",
 };
 
 export default function RootLayout({
@@ -37,7 +73,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
+      <head>
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="보험스토어" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

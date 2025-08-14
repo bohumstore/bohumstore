@@ -1,0 +1,48 @@
+{
+  "name": "보험스토어 - 연금보험, 종신보험, 저축보험 비교 및 상담",
+  "short_name": "보험스토어",
+  "description": "연금보험, 종신보험, 저축보험 등 다양한 보험상품을 비교하고 전문 상담을 받을 수 있는 보험 비교 플랫폼",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "ko",
+  "categories": ["insurance", "finance", "business"],
+  "icons": [
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/kakao-img.png",
+      "sizes": "1000x500",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}
