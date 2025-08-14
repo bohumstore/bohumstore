@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: "보험스토어",
           images: [
         {
-          url: "/kakao-img.png",
+          url: "https://bohumstore.net/kakao-img.png",
           width: 1000,
           height: 500,
           alt: "보험스토어 - 연금보험, 종신보험, 저축보험 비교 및 상담",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "보험스토어 | 연금보험, 종신보험, 저축보험 비교 및 상담",
     description: "연금보험, 종신보험, 저축보험 등 다양한 보험상품을 비교하고 전문 상담을 받을 수 있는 보험 비교 플랫폼입니다.",
-    images: ["/kakao-img.png"],
+    images: ["https://bohumstore.net/kakao-img.png"],
   },
   viewport: {
     width: "device-width",
