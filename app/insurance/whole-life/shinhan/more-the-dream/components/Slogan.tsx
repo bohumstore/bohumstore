@@ -410,35 +410,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   return (
     <>
       <section
-        className="w-full bg-gradient-to-br from-pink-100 via-yellow-100 to-orange-100 py-2 md:py-3 relative overflow-hidden"
+        className="w-full bg-[#fce7f3] py-2 md:py-3"
         style={{
-          backgroundImage: 'radial-gradient(circle at 20% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.15) 0%, transparent 50%)',
-          backgroundSize: '100% 100%'
+          backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(249, 168, 212, 0.1) 10px, rgba(249, 168, 212, 0.1) 12px)',
+          backgroundSize: '24px 24px',
         }}
       >
-        {/* 비눗방울 효과 - 모바일용 작은 것들 */}
-        <div className="absolute top-10 left-4 w-16 h-16 bg-gradient-to-br from-pink-300/50 to-pink-400/10 rounded-full animate-pulse md:hidden" style={{animationDelay: '0s'}}></div>
-        <div className="absolute top-20 left-8 w-12 h-12 bg-gradient-to-br from-yellow-300/55 to-yellow-400/15 rounded-full animate-pulse md:hidden" style={{animationDelay: '1s'}}></div>
-        <div className="absolute top-30 left-6 w-14 h-14 bg-gradient-to-br from-orange-300/50 to-orange-400/10 rounded-full animate-pulse md:hidden" style={{animationDelay: '2s'}}></div>
-        <div className="absolute top-40 left-4 w-10 h-10 bg-gradient-to-br from-pink-400/50 to-pink-500/10 rounded-full animate-pulse md:hidden" style={{animationDelay: '0.5s'}}></div>
-        <div className="absolute top-50 left-8 w-16 h-16 bg-gradient-to-br from-yellow-400/60 to-yellow-500/20 rounded-full animate-pulse md:hidden" style={{animationDelay: '1.5s'}}></div>
-        <div className="absolute top-10 right-4 w-14 h-14 bg-gradient-to-br from-orange-400/55 to-orange-500/15 rounded-full animate-pulse md:hidden" style={{animationDelay: '2.5s'}}></div>
-        <div className="absolute top-20 right-8 w-10 h-10 bg-gradient-to-br from-pink-300/50 to-pink-400/10 rounded-full animate-pulse md:hidden" style={{animationDelay: '0.8s'}}></div>
-        <div className="absolute top-30 right-6 w-16 h-16 bg-gradient-to-br from-yellow-300/65 to-yellow-400/25 rounded-full animate-pulse md:hidden" style={{animationDelay: '1.8s'}}></div>
-        <div className="absolute top-40 right-4 w-12 h-12 bg-gradient-to-br from-orange-300/55 to-orange-400/15 rounded-full animate-pulse md:hidden" style={{animationDelay: '0.3s'}}></div>
-        <div className="absolute top-50 right-8 w-14 h-14 bg-gradient-to-br from-pink-400/50 to-pink-500/10 rounded-full animate-pulse md:hidden" style={{animationDelay: '2.2s'}}></div>
-        
-        {/* 비눗방울 효과 - 웹용 큰 것들 */}
-        <div className="absolute top-20 left-8 w-24 h-24 bg-gradient-to-br from-pink-300/50 to-pink-400/10 rounded-full animate-pulse hidden md:block" style={{animationDelay: '0s'}}></div>
-        <div className="absolute top-40 left-16 w-20 h-20 bg-gradient-to-br from-yellow-300/55 to-yellow-400/15 rounded-full animate-pulse hidden md:block" style={{animationDelay: '1s'}}></div>
-        <div className="absolute top-60 left-12 w-28 h-28 bg-gradient-to-br from-orange-300/50 to-orange-400/10 rounded-full animate-pulse hidden md:block" style={{animationDelay: '2s'}}></div>
-        <div className="absolute top-80 left-8 w-16 h-16 bg-gradient-to-br from-pink-400/50 to-pink-500/10 rounded-full animate-pulse hidden md:block" style={{animationDelay: '0.5s'}}></div>
-        <div className="absolute top-100 left-16 w-24 h-24 bg-gradient-to-br from-yellow-400/60 to-yellow-500/20 rounded-full animate-pulse hidden md:block" style={{animationDelay: '1.5s'}}></div>
-        <div className="absolute top-20 right-8 w-28 h-28 bg-gradient-to-br from-orange-400/55 to-orange-500/15 rounded-full animate-pulse hidden md:block" style={{animationDelay: '2.5s'}}></div>
-        <div className="absolute top-40 right-16 w-20 h-20 bg-gradient-to-br from-pink-300/50 to-pink-400/10 rounded-full animate-pulse hidden md:block" style={{animationDelay: '0.8s'}}></div>
-        <div className="absolute top-60 right-12 w-24 h-24 bg-gradient-to-br from-yellow-300/65 to-yellow-400/25 rounded-full animate-pulse hidden md:block" style={{animationDelay: '1.8s'}}></div>
-        <div className="absolute top-80 right-8 w-16 h-16 bg-gradient-to-br from-orange-300/55 to-orange-400/15 rounded-full animate-pulse hidden md:block" style={{animationDelay: '0.3s'}}></div>
-        <div className="absolute top-100 right-16 w-28 h-28 bg-gradient-to-br from-pink-400/50 to-pink-500/10 rounded-full animate-pulse hidden md:block" style={{animationDelay: '2.2s'}}></div>
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-4 md:gap-8 lg:gap-12 px-4 md:px-6 lg:px-4 md:py-4 lg:py-4">
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
@@ -454,7 +431,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
-                가입 0~70세 / 보장 100세까지
+                가입 15세~70세 전연령 / 보장 100세까지
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
@@ -462,46 +439,72 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
+                납입완료보너스 및 장기유지보너스 지급
+              </li>
+              <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
                 병력 무심사 / 전건 가입 가능
               </li>
             </ul>
-              {/* 환급률/적립액 안내 UI */}
-              <div className="w-full max-w-full md:max-w-lg mx-auto bg-white rounded-xl shadow-md mb-6 p-4 md:p-6 lg:p-4 px-2 md:px-0 md:py-8">
-                <div className="flex flex-row justify-between items-stretch md:items-end gap-4 md:gap-0 mb-2">
-                  <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
-                    <div className="inline-block bg-[#ff8c1a] text-white text-xs font-bold px-4 py-1 rounded-full mb-2">7년 시점</div>
-                    <div className="flex flex-col items-center">
-                      <span className="text-2xl md:text-5xl mb-1">💰</span>
-                      <div className="font-bold text-xs md:text-xl">환급률</div>
-                      <div className="text-xl md:text-4xl font-extrabold text-[#ff8c1a]">100%</div>
-                      <div className="text-xs text-gray-500 mt-1">* 5년납</div>
+              {/* 환급률/보너스 안내 UI */}
+              <div className="w-full max-w-full md:max-w-4xl mx-auto bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30 rounded-2xl shadow-2xl mb-4 md:mb-6 p-6 md:p-8 lg:p-6 border border-white/50 backdrop-blur-sm relative overflow-hidden"
+                style={{
+                  backgroundImage: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(147,197,253,0.1) 50%, rgba(196,181,253,0.1) 100%)',
+                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+                }}
+              >
+                {/* 유리반사 효과 */}
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-transparent opacity-60"></div>
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+                
+                <div className="grid grid-cols-3 gap-2 md:gap-3 lg:gap-4 relative z-10">
+                  {/* 1. 7년 시점 */}
+                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl shadow-lg border border-amber-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
+                    <div>
+                      <div className="inline-block bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">7년 시점</div>
+                    </div>
+                    <div className="flex-1 flex items-center justify-center">
+                      <div className="text-2xl md:text-3xl font-black text-amber-600 drop-shadow-lg">100%</div>
+                    </div>
+                    <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2">
+                      환급률<br />* 5년납
                     </div>
                   </div>
-                  <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
-                    <div className="inline-block bg-[#3a80e0] text-white text-xs font-bold px-4 py-1 rounded-full mb-2">10년 시점</div>
-                    <div className="flex flex-col items-center">
-                      <span className="text-2xl md:text-5xl mb-1">💰</span>
-                      <div className="font-bold text-xs md:text-xl">환급률</div>
-                      <div className="text-xl md:text-4xl font-extrabold text-[#3a80e0] animate-[jump-glow_1.2s_ease-in-out_infinite]">130%</div>
-                      <div className="text-xs text-gray-500 mt-1 whitespace-nowrap">* 5년납</div>
+
+                  {/* 2. 10년 시점 */}
+                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl shadow-lg border border-blue-200 hover:shadow-xl transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-full">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent animate-pulse"></div>
+                    <div className="relative z-10">
+                      <div className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-2 shadow-md">10년 시점</div>
+                      <div className="flex items-center justify-center mb-2">
+                        <div className="text-2xl md:text-3xl font-black text-blue-600 drop-shadow-lg animate-[jump-glow_1.2s_ease-in-out_infinite]">122.7%</div>
+                      </div>
+                    </div>
+                    <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2 relative z-10 mt-auto">
+                      환급률<br />* 5년납
                     </div>
                   </div>
-                  <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
-                    <div className="inline-block bg-[#e23c3c] text-white text-xs font-bold px-4 py-1 rounded-full mb-2">연금개시 시점</div>
-                    <div className="flex flex-col items-center">
-                      <span className="text-2xl md:text-5xl mb-1">🐷</span>
-                      <div className="font-bold text-xs md:text-xl">계약자적립액</div>
-                      <div className="text-lg md:text-4xl font-extrabold text-[#e23c3c]">2.0%</div>
-                      <div className="text-xs text-gray-500 mt-1">(연금을 개시하는 경우에 한함)</div>
+
+                  {/* 3. 보너스 */}
+                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-pink-100 to-rose-100 rounded-xl shadow-lg border border-pink-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
+                    <div>
+                      <div className="inline-block bg-gradient-to-r from-pink-500 to-rose-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">보너스</div>
+                    </div>
+                    <div className="flex-1 flex items-center justify-center">
+                      <div className="text-xs font-bold text-gray-800 leading-tight">
+                        납입완료보너스<br />지급
+                      </div>
+                    </div>
+                    <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2">
+                      장기유지보너스<br />포함
                     </div>
                   </div>
                 </div>
-                <div className="text-xs text-gray-500 text-center mt-4">
-                  <p>* 환급률은 트리플 레벨업 보증률 반영한 금액 입니다.</p>
-                  <p>(부분 보증형에 한함)</p>
+                <div className="text-xs text-gray-600 text-center mt-4 relative z-10">
+                  <p className="font-medium">* 환급률은 신한라이프 모아더드림Plus종신보험 기준입니다.</p>
+                  <p className="text-gray-500">(해약환급금 일부지급형)</p>
                 </div>
             </div>
-            <div className="text-xs text-gray-400 mt-4">준법감시인 심의필 제2025-광고-1168호(2025.06.05~2026.06.04)</div>
           </div>
           {/* 오른쪽: 보험료 확인 카드 */}
           <div className="flex-1 flex justify-center md:justify-end w-full md:ml-8 md:self-end">

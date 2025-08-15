@@ -12,7 +12,10 @@
       "command": "npx",
       "args": [
         "cursor-talk-to-figma-mcp@latest"
-      ]
+      ],
+      "env": {
+        "FIGMA_PORT": "3055"
+      }
     }
   }
 } 

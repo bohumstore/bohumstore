@@ -4,182 +4,106 @@ export default function Surrender() {
   return (
     <div className="space-y-8 px-2 sm:px-4 md:px-8 py-4 md:py-6">
       <div className="mb-2">
-        <div className="text-[#1e3a8a] text-2xl md:text-3xl font-extrabold mb-1">해약환급금 예시표</div>
-        <div className="w-full h-1 bg-[#1e3a8a] mb-3" />
-        <div className="flex flex-col gap-0.5 mt-2">
-          <span className="text-[#1e3a8a] text-lg md:text-xl font-bold leading-tight">연금개시전 보험기간</span>
-          <span className="text-[#ff8c1a] text-lg md:text-xl font-bold leading-tight">보증형</span>
-        </div>
-        <div className="text-xs text-gray-600 text-right ml-2 pb-0.5 mt-2">
-          기준 : 주계약, 남자 40세, 보증형, 5년납, 60세 연금개시, 월보험료 50만원, 단위 : 만원
+        <div className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2">해약환급금 예시표</div>
+        <div className="text-xs text-gray-600 text-right ml-2 pb-0 mt-4">
+          기준: 남자 40세, 일반심사형, 보험료형, 종신, 5년납, 월납, 30만원 (단위: 원, %)
         </div>
       </div>
       {/* 표 */}
       <div className="overflow-x-auto">
         <table className="w-full text-center text-xs md:text-sm">
           <thead>
-            <tr className="bg-[#1e3a8a] text-white align-middle">
-              <th className="border border-gray-300 p-2" rowSpan={2}>경과기간</th>
-              <th className="border border-gray-300 p-2" rowSpan={2}>나이(세)</th>
-              <th className="border border-gray-300 p-2" rowSpan={2}>납입보험료 누계<br/>(A)</th>
-              <th className="border border-gray-300 p-2" colSpan={2}>최저보증이율 가정시</th>
-              <th className="border border-gray-300 p-2" colSpan={2}>2025년07월 현재<br/>평균공시이율(2.75%) 가정<br/><span className='font-normal'>[공시이율(2.5%)을 상한으로 함]</span></th>
-              <th className="border border-gray-300 p-2" colSpan={2}>2025년07월 현재<br/>공시이율(2.5%) 가정</th>
-            </tr>
             <tr className="bg-[#1e3a8a] text-white">
-              <th className="border border-gray-300 p-2">해약환급금(B)</th>
-              <th className="border border-gray-300 p-2">환급률(B/A)</th>
-              <th className="border border-gray-300 p-2">해약환급금(C)</th>
-              <th className="border border-gray-300 p-2">환급률(C/A)</th>
-              <th className="border border-gray-300 p-2">해약환급금(D)</th>
-              <th className="border border-gray-300 p-2">환급률(D/A)</th>
+              <th className="border border-gray-300 p-2">경과기간</th>
+              <th className="border border-gray-300 p-2">나이</th>
+              <th className="border border-gray-300 p-2">납입보험료누계</th>
+              <th className="border border-gray-300 p-2">해약환급금</th>
+              <th className="border border-gray-300 p-2">환급률</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td className="border border-gray-300 p-2">3개월</td><td className="border border-gray-300 p-2">40</td><td className="border border-gray-300 p-2">150</td><td className="border border-gray-300 p-2">0</td><td className="border border-gray-300 p-2">0.0%</td><td className="border border-gray-300 p-2">0</td><td className="border border-gray-300 p-2">0.0%</td><td className="border border-gray-300 p-2">0</td><td className="border border-gray-300 p-2">0.0%</td></tr>
-            <tr><td className="border border-gray-300 p-2">6개월</td><td className="border border-gray-300 p-2">40</td><td className="border border-gray-300 p-2">300</td><td className="border border-gray-300 p-2">52</td><td className="border border-gray-300 p-2">17.4%</td><td className="border border-gray-300 p-2">52</td><td className="border border-gray-300 p-2">17.6%</td><td className="border border-gray-300 p-2">52</td><td className="border border-gray-300 p-2">17.6%</td></tr>
-            <tr><td className="border border-gray-300 p-2">9개월</td><td className="border border-gray-300 p-2">40</td><td className="border border-gray-300 p-2">450</td><td className="border border-gray-300 p-2">120</td><td className="border border-gray-300 p-2">26.8%</td><td className="border border-gray-300 p-2">122</td><td className="border border-gray-300 p-2">27.1%</td><td className="border border-gray-300 p-2">122</td><td className="border border-gray-300 p-2">27.1%</td></tr>
-            <tr><td className="border border-gray-300 p-2">1년</td><td className="border border-gray-300 p-2">41</td><td className="border border-gray-300 p-2">600</td><td className="border border-gray-300 p-2">188</td><td className="border border-gray-300 p-2">31.5%</td><td className="border border-gray-300 p-2">191</td><td className="border border-gray-300 p-2">31.9%</td><td className="border border-gray-300 p-2">191</td><td className="border border-gray-300 p-2">31.9%</td></tr>
-            <tr><td className="border border-gray-300 p-2">2년</td><td className="border border-gray-300 p-2">42</td><td className="border border-gray-300 p-2">1,200</td><td className="border border-gray-300 p-2">461</td><td className="border border-gray-300 p-2">38.5%</td><td className="border border-gray-300 p-2">470</td><td className="border border-gray-300 p-2">39.2%</td><td className="border border-gray-300 p-2">470</td><td className="border border-gray-300 p-2">39.2%</td></tr>
-            <tr><td className="border border-gray-300 p-2">3년</td><td className="border border-gray-300 p-2">43</td><td className="border border-gray-300 p-2">1,800</td><td className="border border-gray-300 p-2">733</td><td className="border border-gray-300 p-2">40.7%</td><td className="border border-gray-300 p-2">751</td><td className="border border-gray-300 p-2">41.8%</td><td className="border border-gray-300 p-2">751</td><td className="border border-gray-300 p-2">41.8%</td></tr>
-            <tr><td className="border border-gray-300 p-2">4년</td><td className="border border-gray-300 p-2">44</td><td className="border border-gray-300 p-2">2,400</td><td className="border border-gray-300 p-2">1,003</td><td className="border border-gray-300 p-2">41.8%</td><td className="border border-gray-300 p-2">1,036</td><td className="border border-gray-300 p-2">43.2%</td><td className="border border-gray-300 p-2">1,036</td><td className="border border-gray-300 p-2">43.2%</td></tr>
-            <tr><td className="border border-gray-300 p-2">5년</td><td className="border border-gray-300 p-2">45</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">1,272</td><td className="border border-gray-300 p-2">42.4%</td><td className="border border-gray-300 p-2">1,323</td><td className="border border-gray-300 p-2">44.1%</td><td className="border border-gray-300 p-2">1,323</td><td className="border border-gray-300 p-2">44.1%</td></tr>
-            <tr><td className="border border-gray-300 p-2">6년</td><td className="border border-gray-300 p-2">46</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">1,259</td><td className="border border-gray-300 p-2">42.0%</td><td className="border border-gray-300 p-2">1,332</td><td className="border border-gray-300 p-2">44.4%</td><td className="border border-gray-300 p-2">1,332</td><td className="border border-gray-300 p-2">44.4%</td></tr>
-            <tr><td className="border border-gray-300 p-2">7년</td><td className="border border-gray-300 p-2">47</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">100.0%</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">100.0%</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">100.0%</td></tr>
-            <tr><td className="border border-gray-300 p-2">8년</td><td className="border border-gray-300 p-2">48</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">2,974</td><td className="border border-gray-300 p-2">99.2%</td><td className="border border-gray-300 p-2">3,026</td><td className="border border-gray-300 p-2">100.9%</td><td className="border border-gray-300 p-2">3,026</td><td className="border border-gray-300 p-2">100.9%</td></tr>
-            <tr><td className="border border-gray-300 p-2">9년</td><td className="border border-gray-300 p-2">49</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">2,949</td><td className="border border-gray-300 p-2">98.3%</td><td className="border border-gray-300 p-2">3,052</td><td className="border border-gray-300 p-2">101.8%</td><td className="border border-gray-300 p-2">3,052</td><td className="border border-gray-300 p-2">101.8%</td></tr>
+            <tr><td className="border border-gray-300 p-2">3개월</td><td className="border border-gray-300 p-2">40세</td><td className="border border-gray-300 p-2">900,000</td><td className="border border-gray-300 p-2">29,407</td><td className="border border-gray-300 p-2">3.2</td></tr>
+            <tr><td className="border border-gray-300 p-2">6개월</td><td className="border border-gray-300 p-2">40세</td><td className="border border-gray-300 p-2">1,800,000</td><td className="border border-gray-300 p-2">407,675</td><td className="border border-gray-300 p-2">22.6</td></tr>
+            <tr><td className="border border-gray-300 p-2">9개월</td><td className="border border-gray-300 p-2">40세</td><td className="border border-gray-300 p-2">2,700,000</td><td className="border border-gray-300 p-2">785,944</td><td className="border border-gray-300 p-2">29.1</td></tr>
+            <tr><td className="border border-gray-300 p-2">1년</td><td className="border border-gray-300 p-2">41세</td><td className="border border-gray-300 p-2">3,600,000</td><td className="border border-gray-300 p-2">1,164,212</td><td className="border border-gray-300 p-2">32.3</td></tr>
+            <tr><td className="border border-gray-300 p-2">2년</td><td className="border border-gray-300 p-2">42세</td><td className="border border-gray-300 p-2">7,200,000</td><td className="border border-gray-300 p-2">2,717,795</td><td className="border border-gray-300 p-2">37.7</td></tr>
+            <tr><td className="border border-gray-300 p-2">3년</td><td className="border border-gray-300 p-2">43세</td><td className="border border-gray-300 p-2">10,800,000</td><td className="border border-gray-300 p-2">4,313,103</td><td className="border border-gray-300 p-2">39.9</td></tr>
+            <tr><td className="border border-gray-300 p-2">4년</td><td className="border border-gray-300 p-2">44세</td><td className="border border-gray-300 p-2">14,400,000</td><td className="border border-gray-300 p-2">5,951,474</td><td className="border border-gray-300 p-2">41.3</td></tr>
+            <tr><td className="border border-gray-300 p-2">5년</td><td className="border border-gray-300 p-2">45세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">16,200,000</td><td className="border border-gray-300 p-2">90.0</td></tr>
+            <tr><td className="border border-gray-300 p-2">6년</td><td className="border border-gray-300 p-2">46세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">16,486,799</td><td className="border border-gray-300 p-2">91.5</td></tr>
+            <tr><td className="border border-gray-300 p-2">7년</td><td className="border border-gray-300 p-2">47세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">16,781,659</td><td className="border border-gray-300 p-2">93.2</td></tr>
+            <tr><td className="border border-gray-300 p-2">8년</td><td className="border border-gray-300 p-2">48세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">17,084,856</td><td className="border border-gray-300 p-2">94.9</td></tr>
+            <tr><td className="border border-gray-300 p-2">9년</td><td className="border border-gray-300 p-2">49세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">17,396,679</td><td className="border border-gray-300 p-2">96.6</td></tr>
             <tr className="bg-red-50">
               <td className="border border-gray-300 p-2 bg-red-50">10년</td>
-              <td className="border border-gray-300 p-2 bg-red-50">50</td>
-              <td className="border border-gray-300 p-2 bg-red-50">3,000</td>
-              <td className="border border-gray-300 p-2 bg-red-50">3,900</td>
-              <td className="border border-gray-300 p-2 bg-red-50">130.0%</td>
-              <td className="border border-gray-300 p-2 bg-red-50">3,900</td>
-              <td className="border border-gray-300 p-2 bg-red-50">130.0%</td>
-              <td className="border border-gray-300 p-2 bg-red-50">3,900</td>
-              <td className="border border-gray-300 p-2 bg-red-50">130.0%</td>
+              <td className="border border-gray-300 p-2 bg-red-50">50세</td>
+              <td className="border border-gray-300 p-2 bg-red-50">18,000,000</td>
+              <td className="border border-gray-300 p-2 bg-red-50">22,086,001</td>
+              <td className="border border-gray-300 p-2 bg-red-50">122.7</td>
             </tr>
-            <tr><td className="border border-gray-300 p-2">11년</td><td className="border border-gray-300 p-2">51</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,858</td><td className="border border-gray-300 p-2">128.6%</td><td className="border border-gray-300 p-2">3,935</td><td className="border border-gray-300 p-2">131.2%</td><td className="border border-gray-300 p-2">3,935</td><td className="border border-gray-300 p-2">131.2%</td></tr>
-            <tr><td className="border border-gray-300 p-2">12년</td><td className="border border-gray-300 p-2">52</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,817</td><td className="border border-gray-300 p-2">127.2%</td><td className="border border-gray-300 p-2">3,970</td><td className="border border-gray-300 p-2">132.4%</td><td className="border border-gray-300 p-2">3,970</td><td className="border border-gray-300 p-2">132.4%</td></tr>
-            <tr><td className="border border-gray-300 p-2">13년</td><td className="border border-gray-300 p-2">53</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,776</td><td className="border border-gray-300 p-2">125.9%</td><td className="border border-gray-300 p-2">4,006</td><td className="border border-gray-300 p-2">133.6%</td><td className="border border-gray-300 p-2">4,006</td><td className="border border-gray-300 p-2">133.6%</td></tr>
-            <tr><td className="border border-gray-300 p-2">14년</td><td className="border border-gray-300 p-2">54</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,736</td><td className="border border-gray-300 p-2">124.5%</td><td className="border border-gray-300 p-2">4,043</td><td className="border border-gray-300 p-2">134.8%</td><td className="border border-gray-300 p-2">4,043</td><td className="border border-gray-300 p-2">134.8%</td></tr>
-            <tr><td className="border border-gray-300 p-2">15년</td><td className="border border-gray-300 p-2">55</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,696</td><td className="border border-gray-300 p-2">123.2%</td><td className="border border-gray-300 p-2">4,079</td><td className="border border-gray-300 p-2">136.0%</td><td className="border border-gray-300 p-2">4,079</td><td className="border border-gray-300 p-2">136.0%</td></tr>
-            <tr><td className="border border-gray-300 p-2">16년</td><td className="border border-gray-300 p-2">56</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,656</td><td className="border border-gray-300 p-2">121.9%</td><td className="border border-gray-300 p-2">4,116</td><td className="border border-gray-300 p-2">137.2%</td><td className="border border-gray-300 p-2">4,116</td><td className="border border-gray-300 p-2">137.2%</td></tr>
-            <tr><td className="border border-gray-300 p-2">17년</td><td className="border border-gray-300 p-2">57</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,617</td><td className="border border-gray-300 p-2">120.6%</td><td className="border border-gray-300 p-2">4,154</td><td className="border border-gray-300 p-2">138.5%</td><td className="border border-gray-300 p-2">4,154</td><td className="border border-gray-300 p-2">138.5%</td></tr>
-            <tr><td className="border border-gray-300 p-2">18년</td><td className="border border-gray-300 p-2">58</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,578</td><td className="border border-gray-300 p-2">119.3%</td><td className="border border-gray-300 p-2">4,191</td><td className="border border-gray-300 p-2">139.7%</td><td className="border border-gray-300 p-2">4,191</td><td className="border border-gray-300 p-2">139.7%</td></tr>
-            <tr><td className="border border-gray-300 p-2">19년</td><td className="border border-gray-300 p-2">59</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,539</td><td className="border border-gray-300 p-2">118.0%</td><td className="border border-gray-300 p-2">4,229</td><td className="border border-gray-300 p-2">141.0%</td><td className="border border-gray-300 p-2">4,229</td><td className="border border-gray-300 p-2">141.0%</td></tr>
-            <tr><td className="border border-gray-300 p-2">20년</td><td className="border border-gray-300 p-2">60</td><td className="border border-gray-300 p-2">3,000</td><td className="border border-gray-300 p-2">3,501</td><td className="border border-gray-300 p-2">116.7%</td><td className="border border-gray-300 p-2">4,268</td><td className="border border-gray-300 p-2">142.3%</td><td className="border border-gray-300 p-2">4,268</td><td className="border border-gray-300 p-2">142.3%</td></tr>
+            <tr><td className="border border-gray-300 p-2">11년</td><td className="border border-gray-300 p-2">51세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">22,261,007</td><td className="border border-gray-300 p-2">123.6</td></tr>
+            <tr><td className="border border-gray-300 p-2">12년</td><td className="border border-gray-300 p-2">52세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">22,438,607</td><td className="border border-gray-300 p-2">124.6</td></tr>
+            <tr><td className="border border-gray-300 p-2">13년</td><td className="border border-gray-300 p-2">53세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">22,618,835</td><td className="border border-gray-300 p-2">125.6</td></tr>
+            <tr><td className="border border-gray-300 p-2">14년</td><td className="border border-gray-300 p-2">54세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">22,801,728</td><td className="border border-gray-300 p-2">126.6</td></tr>
+            <tr><td className="border border-gray-300 p-2">15년</td><td className="border border-gray-300 p-2">55세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">22,987,322</td><td className="border border-gray-300 p-2">127.7</td></tr>
+            <tr><td className="border border-gray-300 p-2">16년</td><td className="border border-gray-300 p-2">56세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">23,175,657</td><td className="border border-gray-300 p-2">128.7</td></tr>
+            <tr><td className="border border-gray-300 p-2">17년</td><td className="border border-gray-300 p-2">57세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">23,366,769</td><td className="border border-gray-300 p-2">129.8</td></tr>
+            <tr><td className="border border-gray-300 p-2">18년</td><td className="border border-gray-300 p-2">58세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">23,560,694</td><td className="border border-gray-300 p-2">130.8</td></tr>
+            <tr><td className="border border-gray-300 p-2">19년</td><td className="border border-gray-300 p-2">59세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">23,757,461</td><td className="border border-gray-300 p-2">131.9</td></tr>
+            <tr><td className="border border-gray-300 p-2">20년</td><td className="border border-gray-300 p-2">60세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">24,777,267</td><td className="border border-gray-300 p-2">137.6</td></tr>
+            <tr><td className="border border-gray-300 p-2">21년</td><td className="border border-gray-300 p-2">61세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">24,992,107</td><td className="border border-gray-300 p-2">138.8</td></tr>
+            <tr><td className="border border-gray-300 p-2">22년</td><td className="border border-gray-300 p-2">62세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">25,210,084</td><td className="border border-gray-300 p-2">140.0</td></tr>
+            <tr><td className="border border-gray-300 p-2">23년</td><td className="border border-gray-300 p-2">63세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">25,431,228</td><td className="border border-gray-300 p-2">141.2</td></tr>
+            <tr><td className="border border-gray-300 p-2">24년</td><td className="border border-gray-300 p-2">64세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">25,655,565</td><td className="border border-gray-300 p-2">142.5</td></tr>
+            <tr><td className="border border-gray-300 p-2">25년</td><td className="border border-gray-300 p-2">65세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">25,883,129</td><td className="border border-gray-300 p-2">143.7</td></tr>
+            <tr><td className="border border-gray-300 p-2">26년</td><td className="border border-gray-300 p-2">66세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">26,113,959</td><td className="border border-gray-300 p-2">145.0</td></tr>
+            <tr><td className="border border-gray-300 p-2">27년</td><td className="border border-gray-300 p-2">67세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">26,348,092</td><td className="border border-gray-300 p-2">146.3</td></tr>
+            <tr><td className="border border-gray-300 p-2">28년</td><td className="border border-gray-300 p-2">68세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">26,585,553</td><td className="border border-gray-300 p-2">147.6</td></tr>
+            <tr><td className="border border-gray-300 p-2">29년</td><td className="border border-gray-300 p-2">69세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">26,826,361</td><td className="border border-gray-300 p-2">149.0</td></tr>
+            <tr><td className="border border-gray-300 p-2">30년</td><td className="border border-gray-300 p-2">70세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">27,070,549</td><td className="border border-gray-300 p-2">150.3</td></tr>
+            <tr><td className="border border-gray-300 p-2">31년</td><td className="border border-gray-300 p-2">71세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">27,318,156</td><td className="border border-gray-300 p-2">151.7</td></tr>
+            <tr><td className="border border-gray-300 p-2">32년</td><td className="border border-gray-300 p-2">72세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">27,569,195</td><td className="border border-gray-300 p-2">153.1</td></tr>
+            <tr><td className="border border-gray-300 p-2">33년</td><td className="border border-gray-300 p-2">73세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">27,823,633</td><td className="border border-gray-300 p-2">154.5</td></tr>
+            <tr><td className="border border-gray-300 p-2">34년</td><td className="border border-gray-300 p-2">74세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">28,081,413</td><td className="border border-gray-300 p-2">156.0</td></tr>
+            <tr><td className="border border-gray-300 p-2">35년</td><td className="border border-gray-300 p-2">75세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">28,342,505</td><td className="border border-gray-300 p-2">157.4</td></tr>
+            <tr><td className="border border-gray-300 p-2">36년</td><td className="border border-gray-300 p-2">76세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">28,606,916</td><td className="border border-gray-300 p-2">158.9</td></tr>
+            <tr><td className="border border-gray-300 p-2">37년</td><td className="border border-gray-300 p-2">77세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">28,874,649</td><td className="border border-gray-300 p-2">160.4</td></tr>
+            <tr><td className="border border-gray-300 p-2">38년</td><td className="border border-gray-300 p-2">78세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">29,145,670</td><td className="border border-gray-300 p-2">161.9</td></tr>
+            <tr><td className="border border-gray-300 p-2">39년</td><td className="border border-gray-300 p-2">79세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">29,419,910</td><td className="border border-gray-300 p-2">163.4</td></tr>
+            <tr><td className="border border-gray-300 p-2">40년</td><td className="border border-gray-300 p-2">80세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">29,697,335</td><td className="border border-gray-300 p-2">164.9</td></tr>
+            <tr><td className="border border-gray-300 p-2">41년</td><td className="border border-gray-300 p-2">81세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">29,977,941</td><td className="border border-gray-300 p-2">166.5</td></tr>
+            <tr><td className="border border-gray-300 p-2">42년</td><td className="border border-gray-300 p-2">82세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">30,261,702</td><td className="border border-gray-300 p-2">168.1</td></tr>
+            <tr><td className="border border-gray-300 p-2">43년</td><td className="border border-gray-300 p-2">83세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">30,548,526</td><td className="border border-gray-300 p-2">169.7</td></tr>
+            <tr><td className="border border-gray-300 p-2">44년</td><td className="border border-gray-300 p-2">84세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">30,838,266</td><td className="border border-gray-300 p-2">171.3</td></tr>
+            <tr><td className="border border-gray-300 p-2">45년</td><td className="border border-gray-300 p-2">85세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">31,130,838</td><td className="border border-gray-300 p-2">172.9</td></tr>
+            <tr><td className="border border-gray-300 p-2">46년</td><td className="border border-gray-300 p-2">86세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">31,426,202</td><td className="border border-gray-300 p-2">174.5</td></tr>
+            <tr><td className="border border-gray-300 p-2">47년</td><td className="border border-gray-300 p-2">87세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">31,724,281</td><td className="border border-gray-300 p-2">176.2</td></tr>
+            <tr><td className="border border-gray-300 p-2">48년</td><td className="border border-gray-300 p-2">88세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">32,024,884</td><td className="border border-gray-300 p-2">177.9</td></tr>
+            <tr><td className="border border-gray-300 p-2">49년</td><td className="border border-gray-300 p-2">89세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">32,327,740</td><td className="border border-gray-300 p-2">179.5</td></tr>
+            <tr><td className="border border-gray-300 p-2">50년</td><td className="border border-gray-300 p-2">90세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">32,632,659</td><td className="border border-gray-300 p-2">181.2</td></tr>
+            <tr><td className="border border-gray-300 p-2">51년</td><td className="border border-gray-300 p-2">91세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">32,939,537</td><td className="border border-gray-300 p-2">182.9</td></tr>
+            <tr><td className="border border-gray-300 p-2">52년</td><td className="border border-gray-300 p-2">92세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">33,248,244</td><td className="border border-gray-300 p-2">184.7</td></tr>
+            <tr><td className="border border-gray-300 p-2">53년</td><td className="border border-gray-300 p-2">93세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">33,558,523</td><td className="border border-gray-300 p-2">186.4</td></tr>
+            <tr><td className="border border-gray-300 p-2">54년</td><td className="border border-gray-300 p-2">94세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">33,869,998</td><td className="border border-gray-300 p-2">188.1</td></tr>
+            <tr><td className="border border-gray-300 p-2">55년</td><td className="border border-gray-300 p-2">95세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">34,182,420</td><td className="border border-gray-300 p-2">189.9</td></tr>
+            <tr><td className="border border-gray-300 p-2">56년</td><td className="border border-gray-300 p-2">96세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">34,495,630</td><td className="border border-gray-300 p-2">191.6</td></tr>
+            <tr><td className="border border-gray-300 p-2">57년</td><td className="border border-gray-300 p-2">97세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">34,809,384</td><td className="border border-gray-300 p-2">193.3</td></tr>
+            <tr><td className="border border-gray-300 p-2">58년</td><td className="border border-gray-300 p-2">98세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">35,123,202</td><td className="border border-gray-300 p-2">195.1</td></tr>
+            <tr><td className="border border-gray-300 p-2">59년</td><td className="border border-gray-300 p-2">99세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">35,436,436</td><td className="border border-gray-300 p-2">196.8</td></tr>
+            <tr><td className="border border-gray-300 p-2">60년</td><td className="border border-gray-300 p-2">100세</td><td className="border border-gray-300 p-2">18,000,000</td><td className="border border-gray-300 p-2">35,748,615</td><td className="border border-gray-300 p-2">198.6</td></tr>
           </tbody>
         </table>
       </div>
       {/* 주석 */}
-      <ol className="text-xs md:text-sm text-gray-800 space-y-1 pl-4 list-decimal">
-        <li>계약일부터 경과기간이 지난 말 시점의 예시이며 나이는 경과기간에 따른 주계약 피보험자의 나이로 보험나이와 차이가 있습니다.</li>
-        <li>상기 예시금액은 감독규정 제 1-2조 제13호에 따른 현재 평균공시이율 2.75%, 현재(2025년07월)의 공시이율 2.5%를 기준으로 계산한 금액입니다.</li>
-        <li>실제 해약환급금은 공시이율을 적용하여 계산되며, 공시이율 변동시 해약환급금도 변동됩니다.</li>
-        <li>이 보험계약을 중도해지할 경우 해약환급금은 납입한 보험료에서 경과된 기간의 위험보험료, 사업비(해약공제금액 포함), 최저사망적립액 보증비용, 트리플 레벨업 보증비용 등의 차감되므로 납입한 보험료보다 적거나 없을 수도 있습니다.</li>
-        <li>공시이율은 매1개월마다 변동될 수 있으며 최저보증이율은 계약 후 경과기간 5년 미만은 연복리 1.0%, 5년 이상 10년 미만은 연복리 0.75%, 10년 이상은 연복리 0.5% 입니다.</li>
-        <li>상기 환급률은 최저보증이율 및 현재 적용이율이 경과기간동안 유지된다고 가정하였을 때 계약자가 납입한 보험료 대비 해약환급금의 비율입니다.</li>
-        <li>상기 예시된 금액 및 환급률은 세금을 공제하지 않은 금액입니다.</li>
-        <li>상기 예시된 금액 및 환급률 등이 미래의 수익을 보장하는 것은 아닙니다.</li>
-        <li>평균공시이율(감독규정 제1-2조 제13호)은 감독규정이 정하는 바에 따라 산정한 전체 보험회사의 공시이율의 평균으로, 2025년07월 현재 2.75%입니다.</li>
-        <li>상기 예시된 금액 및 환급률은 <span className='text-[#e11d48]'>7년 및 10년 경과 시점의 트리플 레벨업 보증을 반영한 금액</span>이며, <span className='text-[#e11d48]'>계약해당일이 도래하기 이전에 해지 시 예시된 금액과 다를 수 있습니다.</span><br/>다만, 연금개시시점 트리플 레벨업 보증은 연금을 개시하는 경우에 한하여 보증해드리므로, <span className='text-[#e11d48]'>연금개시시점 트리플 레벨업 보증은 반영하기 전 금액</span>입니다.</li>
-        <li>트리플 레벨업 보증은 감액 또는 중도인출이 발생한 경우 <span className='text-[#e11d48]'>기본보험료 계약자적립액에 비례하여 감소</span>하며, <span className='text-[#e11d48]'>중도인출금액을 재납입하더라도 원복되지 않습니다.</span></li>
-      </ol>
-      {/* 두 번째 해약환급금 예시표 헤더 */}
-      <div className="mt-16 mb-2">
-        <div className="text-[#1e3a8a] text-2xl md:text-3xl font-extrabold mb-1">연금지급액 예시표</div>
-        <div className="w-full h-1 bg-[#1e3a8a] mb-3" />
-        <div className="flex flex-col gap-0.5 mt-2">
-          <span className="text-[#222] text-lg md:text-xl font-bold leading-tight">연금개시후 보험기간</span>
-          <span className="text-[#ff8c1a] text-lg md:text-xl font-bold leading-tight">보증형</span>
-        </div>
-        <div className="text-xs text-gray-600 text-right ml-2 pb-0.5 mt-2">
-          기준 : 주계약, 남자 40세, 보증형, 5년납, 60세 연금개시, 월보험료 50만원, 단위 : 만원
-        </div>
+      <div className="space-y-2 text-sm text-gray-600">
+        <p>※ 이 보험계약을 중도 해지할 경우 해약환급금은 납입한 보험료에서 경과된 기간의 위험보험료, 계약체결비용(해약공제액 포함) 및 계약관리비용 등이 차감되므로 납입보험료보다 적거나 없을 수도 있습니다.</p>
+        <p>※ 위 해약환급금 예시는 가입금액의 감액, 특약의 해지, 계약내용의 변경 또는 보험금 지급사유 발생 등에 따라 금액이 달라지거나 감소할 수 있습니다.</p>
+        <p>※ 위 예시표는 경과년도 계약해당일 직후 기준이며, 납입완료보너스 및 장기유지보너스가 반영된 예시입니다. 보너스 관련 자세한 사항은 상품설명서 |가입시 알아두실 사항| 의 '보너스에 관한 사항'을 참조하여 주시기 바랍니다.</p>
+        <p>※ 위 예시된 해약환급금은 세전 기준 금액입니다.</p>
+        <br />
+        <p className="text-red-600">- 상기 보험상품 관련 내용은 요약된 자료이므로 단순 안내자료로 참고하시기 바라며, 보다 자세한 사항은 약관 및 설명서를 참조하시기 바랍니다.</p>
+        <p className="text-red-600">- 이 화면은 가입자의 이해를 돕기 위한 단순 안내자료이므로 실제 보험가입시 발생되는 상품설명서와 내용이 다를 수 있으며 보험금 지급을 위한 근거서류가 될 수 없습니다.</p>
       </div>
-      {/* 연금지급액 예시표 표 */}
-      <div className="overflow-x-auto">
-        <table className="w-full text-center text-xs md:text-sm">
-          <thead>
-            <tr className="bg-[#1e3a8a] text-white">
-              <th className="border border-gray-300 p-2" colSpan={2}>구분</th>
-              <th className="border border-gray-300 p-2">최저보증이율</th>
-              <th className="border border-gray-300 p-2">2025년07월<br/>평균공시이율2.75%가정<br/><span className='font-normal'>[공시이율(<span className='text-white'>2.5%</span>)을 상한으로 함]</span></th>
-              <th className="border border-gray-300 p-2">2025년07월<br/>현재공시이율(<span className='text-white'>2.5%</span>)</th>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 p-2" colSpan={2}>연금개시시점 계약자적립액</td>
-              <td className="border border-gray-300 p-2">45,000,000</td>
-              <td className="border border-gray-300 p-2">45,000,000</td>
-              <td className="border border-gray-300 p-2">45,000,000</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="border border-gray-300 p-2 font-bold" rowSpan={3}>종신연금형</td>
-              <td className="border border-gray-300 p-2">20년 보증</td>
-              <td className="border border-gray-300 p-2">1,350,092</td>
-              <td className="border border-gray-300 p-2">1,869,610</td>
-              <td className="border border-gray-300 p-2">1,869,610</td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 p-2">100세 보증</td>
-              <td className="border border-gray-300 p-2">1,181,618</td>
-              <td className="border border-gray-300 p-2">1,693,287</td>
-              <td className="border border-gray-300 p-2">1,693,287</td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 p-2">기대여명보증</td>
-              <td className="border border-gray-300 p-2">1,340,697</td>
-              <td className="border border-gray-300 p-2">1,857,710</td>
-              <td className="border border-gray-300 p-2">1,857,710</td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 p-2 font-bold" rowSpan={4}>확정연금형</td>
-              <td className="border border-gray-300 p-2">5년 확정</td>
-              <td className="border border-gray-300 p-2">8,999,999</td>
-              <td className="border border-gray-300 p-2">9,356,299</td>
-              <td className="border border-gray-300 p-2">9,356,299</td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 p-2">10년 확정</td>
-              <td className="border border-gray-300 p-2">4,556,106</td>
-              <td className="border border-gray-300 p-2">4,966,573</td>
-              <td className="border border-gray-300 p-2">4,966,573</td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 p-2">15년 확정</td>
-              <td className="border border-gray-300 p-2">3,075,116</td>
-              <td className="border border-gray-300 p-2">3,510,737</td>
-              <td className="border border-gray-300 p-2">3,510,737</td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 p-2">20년 확정</td>
-              <td className="border border-gray-300 p-2">2,334,851</td>
-              <td className="border border-gray-300 p-2">2,788,332</td>
-              <td className="border border-gray-300 p-2">2,788,332</td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 p-2 font-bold" colSpan={2}>상속연금형</td>
-              <td className="border border-gray-300 p-2">221,664</td>
-              <td className="border border-gray-300 p-2">1,086,694</td>
-              <td className="border border-gray-300 p-2">1,086,694</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      {/* 연금지급액 예시표 주석 */}
-      <ol className="text-xs md:text-sm text-gray-800 space-y-1 pl-4 list-decimal mt-2">
-        <li>상기 예시금액은 최저보증이율, 평균공시이율을 2.75%(현재공시이율 상한) 및 현재 <span className='text-[#e11d48]'>2025년07월</span>의 공시이율 <span className='text-[#e11d48]'>2.5%</span>를 기준으로 계산한 금액입니다.</li>
-        <li>실제 연금액은 공시이율을 적용하여 계산되며, 공시이율 변동시 연금액도 변경됩니다.</li>
-        <li>연금은 매월, 3개월, 6개월로 분할하여 지급할 경우 생존연금은 "공시이율"로, 부리한 금액을 더하여 드립니다.</li>
-        <li>공시이율은 매월마다 변동될 수 있으며, 최저보증이율은 경과기간 5년 미만은 연복리 1.0%, 경과기간 5년 이상 10년미만은 연복리 0.75%, 경과기간 10년이상은 연복리 0.5% 입니다.</li>
-        <li>계약체결시 연금지급형태는 '종신연금형'으로 정해지고, 계약자는 연금개시전에 연금지급방법 및 연금개시 시기를 변경할 수 있습니다.</li>
-        <li>상기 연금개시시점 계약자적립액은 <span className='text-[#e11d48]'>연금개시시점 트리플 레벨업 보증을 반영하여 예시한 금액</span>입니다.</li>
-        <li>연금개시점의 트리플 레벨업 보증은 연금을 개시할 경우에만 적용되며, <span className='text-[#e11d48]'>연금을 개시하지 않을 경우 보증되지 않습니다.</span></li>
-        <li>상기 연금액이 미래의 수익을 보장하는 것은 아니며, 향후 공시이율의 변경, 연금지급 개시 당시 연금사망률 적용 등에 따라 변동될 수 있습니다.</li>
-      </ol>
     </div>
   )
 }

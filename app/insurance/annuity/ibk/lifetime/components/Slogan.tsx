@@ -5,6 +5,7 @@ import request from '@/app/api/request';
 import { supabase } from '@/app/api/supabase';
 import { queryUsers, createUser, queryCounsel, createCounsel } from '@/app/utils/mcpClient';
 import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/insurance';
+import { calculateAnnuityStartAge } from '@/app/utils/annuityCalculator';
 import FireworksEffect from './FireworksEffect';
 
 // 현재 경로에 맞는 상품 정보 가져오기
@@ -501,34 +502,31 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   // 보험연령 계산
   const insuranceAge = getInsuranceAge(birth);
 
-  // 연금개시연령 계산 함수
+  // 연금개시연령 계산 함수 (정확한 로직)
   const getPensionStartAge = (age: number, paymentPeriod: string) => {
-    if (age <= 55) {
-      if (paymentPeriod.includes('10')) return 65;
-      if (paymentPeriod.includes('15')) return 70;
-      if (paymentPeriod.includes('20')) return 75;
-    } else if (age >= 56 && age <= 60) {
-      if (paymentPeriod.includes('10')) return 70;
-      if (paymentPeriod.includes('15')) return 75;
-      if (paymentPeriod.includes('20')) return 80;
-    } else if (age >= 61 && age <= 65) {
-      if (paymentPeriod.includes('10')) return 75;
-      if (paymentPeriod.includes('15')) return 80;
-      if (paymentPeriod.includes('20')) return 80;
-    } else if (age >= 66 && age <= 70) {
-      if (paymentPeriod.includes('10')) return 80;
-      // 66세 이상은 15년/20년납 불가
-      return null;
-    }
-    return null;
+    // 납입기간에서 년수 추출
+    const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+    
+    // 고객 연령 + 납입기간 = 납입완료 시점
+    const completionAge = age + years;
+    
+    // 최소 연금개시연령 (65세, 70세, 75세, 80세 중 선택)
+    let minStartAge = 65;
+    if (completionAge >= 80) minStartAge = 80;
+    else if (completionAge >= 75) minStartAge = 75;
+    else if (completionAge >= 70) minStartAge = 70;
+    else if (completionAge >= 65) minStartAge = 65;
+    
+    // 최종 연금개시연령: 납입완료 시점과 최소 연금개시연령 중 더 늦은 시점
+    return Math.max(completionAge, minStartAge);
   };
 
   // 현재 선택된 납입기간에 대한 연금개시연령
   const currentPensionStartAge = paymentPeriod ? getPensionStartAge(Number(insuranceAge), paymentPeriod) : null;
 
   // 납입기간 버튼 비활성화 여부 확인 (연금개시연령이 80세를 초과하는 경우)
-  const is15YearDisabled = Number(insuranceAge) >= 66 || (Number(insuranceAge) + 15 > 80);
-  const is20YearDisabled = Number(insuranceAge) >= 66 || (Number(insuranceAge) + 20 > 80);
+  const is15YearDisabled = Number(insuranceAge) + 15 > 80;
+  const is20YearDisabled = Number(insuranceAge) + 20 > 80;
 
   // 연금액 계산 함수 (변액연금용 - 실적배당 포함)
   const calculatePensionAmount = (age: number, paymentPeriod: string, paymentAmount: string) => {

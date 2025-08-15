@@ -1,17 +1,15 @@
 import React from 'react'
-import { useState } from 'react';
 
 export default function ProductInfo() {
-  const [showResultModal, setShowResultModal] = useState(false);
 
   return (
     <div className="space-y-8 px-2 sm:px-4 md:px-8 py-4 md:py-6">
       {/* 상품특징 제목 */}
       <h2 className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2">상품특징</h2>
 
-      {/* 01 최저연금기준금액 보증 */}
+      {/* 최저연금기준금액 보증 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">01 최저연금기준금액 보증</h3>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">최저연금기준금액 보증</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <p className="text-base leading-relaxed">
@@ -44,9 +42,9 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 02 금액보증연금 보증 */}
+      {/* 금액보증연금 보증 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">02 금액보증연금 보증</h3>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">금액보증연금 보증</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <p className="text-base leading-relaxed">
@@ -154,9 +152,9 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 03 최저사망적립액 보증 */}
+      {/* 최저사망적립액 보증 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">03 최저사망적립액 보증</h3>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">최저사망적립액 보증</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <p className="text-base leading-relaxed">
@@ -190,9 +188,9 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 04 보험료 납입면제 */}
+      {/* 보험료 납입면제 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">04 보험료 납입면제 [(무)신보험료납입면제특약 (3대질병형) 선택시]</h3>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">보험료 납입면제 [(무)신보험료납입면제특약 (3대질병형) 선택시]</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <p className="text-base leading-relaxed">
@@ -205,9 +203,9 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 05 보험차익 비과세 혜택 */}
+      {/* 보험차익 비과세 혜택 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">05 보험차익 비과세 혜택</h3>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">보험차익 비과세 혜택</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <p className="text-base leading-relaxed">
@@ -217,9 +215,9 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 06 선지급행복자금 */}
+      {/* 선지급행복자금 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">06 선지급행복자금</h3>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">선지급행복자금</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <div className="overflow-x-auto">
@@ -321,6 +319,8 @@ export default function ProductInfo() {
           </div>
         </div>
       </div>
+
+
     </div>
   )
 } 

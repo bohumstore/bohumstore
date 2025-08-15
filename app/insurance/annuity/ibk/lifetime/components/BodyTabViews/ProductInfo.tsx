@@ -3,9 +3,9 @@ import React from 'react'
 export default function ProductInfo() {
   return (
     <div className="space-y-6 px-2 sm:px-4 md:px-8 py-3 md:py-4">
-      {/* 01 연단리 8% 연금기준금액 */}
+      {/* 연단리 8% 연금기준금액 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">01 연단리 8% 연금기준금액</h3>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">연단리 8% 연금기준금액</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <p className="text-sm">펀드운용 성과에 상관없이 최대 20년동안 연단리 8%로 부리된 연금액 보증</p>
@@ -30,9 +30,9 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 02 실적배당종신연금보증형 보장 */}
+      {/* 실적배당종신연금보증형 보장 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">02 실적배당종신연금보증형 보장</h3>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">실적배당종신연금보증형 보장</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <div className="overflow-x-auto">
@@ -63,9 +63,9 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 03 최저사망계약자적립액 보증 */}
+      {/* 최저사망계약자적립액 보증 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">03 최저사망계약자적립액 보증</h3>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">최저사망계약자적립액 보증</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <p className="text-sm">사망시 최저사망계약자적립액까지 보증</p>
@@ -102,9 +102,9 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 04 유연한 자금운용 */}
+      {/* 유연한 자금운용 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">04 유연한 자금운용</h3>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">유연한 자금운용</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <div>
@@ -132,9 +132,9 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 05 무심사 가입 및 조기연금개시 */}
+      {/* 무심사 가입 및 조기연금개시 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">05 무심사 가입 및 조기연금개시</h3>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">무심사 가입 및 조기연금개시</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <div className="space-y-2 text-sm">
@@ -206,6 +206,8 @@ export default function ProductInfo() {
           </div>
         </div>
       </div>
+
+
     </div>
   )
 } 

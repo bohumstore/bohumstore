@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -11,6 +11,14 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: "#ffffff",
+};
 
 export const metadata: Metadata = {
   title: "보험스토어 | 연금보험, 종신보험, 저축보험 비교 및 상담",
@@ -42,22 +50,12 @@ export const metadata: Metadata = {
     description: "연금보험, 종신보험, 저축보험 비교 및 전문 상담 플랫폼",
     images: ["https://bohumstore.net/kakao-img.png"],
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
-  themeColor: "#ffffff",
   manifest: "/manifest.json",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-    ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
   alternates: {
