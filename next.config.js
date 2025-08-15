@@ -11,6 +11,20 @@ const nextConfig = {
       },
     ],
   },
+  // Playwright 설정 파일을 빌드에서 제외
+  experimental: {
+    excludeDefaultMomentLocales: false,
+  },
+  // 특정 파일들을 빌드에서 제외
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+      };
+    }
+    return config;
+  },
 };
 
 module.exports = nextConfig;
