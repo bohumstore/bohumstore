@@ -427,16 +427,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 유의사항 박스 - KDB 해피플러스와 동일한 스타일 */}
-      <div className="w-full flex justify-center">
-        <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mb-2 md:mb-4 lg:mb-6 mt-6 md:mt-8 lg:mt-10 px-6 py-0 text-xs md:text-sm text-gray-800">
-          <div className="mb-1 font-bold">[ 유의사항 ]</div>
-          <div>- 보험사 및 상품별로 상이할 수 있으므로, 관련한 세부사항은 반드시 해당 약관을 참조하시기 바랍니다.</div>
-          <div>- 위는 예시일 뿐 해당 납입기간이 끝나기 전에 해지를 할경우 해당 표와 실지급금액이 차이가 발생할수 있습니다.</div>
-          <div>- 최저보증연금은 연금개시 이전 중도해지시에는 최저보증이 되지 않아 운용결과에 따라 해지환급금에 손실이 발생할 수 있습니다.</div>
-        </div>
-      </div>
-
       {/* 구분선 */}
       <div className="w-full flex justify-center">
         <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl px-6">
@@ -452,7 +442,6 @@ export default function HomePage() {
           <div className="text-red-500">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
           <div className="text-red-500">① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.</div>
           <div className="text-red-500">② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</div>
-          <div>※ ㈜메타리치 심의필 25080086호 (2025/08/13~2026/08/12)</div>
         </div>
       </div>
 

@@ -362,17 +362,20 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       return;
     }
     
-    // 필수 데이터 확인
-    if (!name || !birth || !gender || !phone || !paymentPeriod || !paymentAmount) {
+    // 기본 필수 데이터만 확인 (납입기간, 월납입금액 제외)
+    if (!name || !birth || !gender || !phone) {
       alert("필수 정보가 누락되었습니다. 모든 정보를 입력해주세요.");
       return;
     }
     
     setVerifying(true);
     try {
-      // 연금액 계산 (비동기)
-      const calculatedPensionAmounts = await calculatePensionAmount(Number(insuranceAge), paymentPeriod, paymentAmount, gender);
-      setPensionAmounts(calculatedPensionAmounts);
+      // 납입기간과 월납입금액이 있는 경우에만 연금액 계산
+      let calculatedPensionAmounts = { monthly: 0, guaranteed: 0, totalUntil100: 0, pensionStartAge: 0, notice: '' };
+      if (paymentPeriod && paymentAmount) {
+        calculatedPensionAmounts = await calculatePensionAmount(Number(insuranceAge), paymentPeriod, paymentAmount, gender);
+        setPensionAmounts(calculatedPensionAmounts);
+      }
       
       const res = await request.post("/api/verifyOTP", {
         phone,
@@ -385,8 +388,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         productId: INSURANCE_PRODUCT_ID,
         consultType,
         counselTime: consultTime,
-        mounthlyPremium: paymentAmount,
-        paymentPeriod: paymentPeriod,
+        mounthlyPremium: paymentAmount || '',
+        paymentPeriod: paymentPeriod || '',
         monthlyPension: calculatedPensionAmounts.monthly || 0,
         guaranteedPension: calculatedPensionAmounts.guaranteed || 0,
         templateId: "UA_7919", // 고객용 상담신청 완료 전송용 템플릿

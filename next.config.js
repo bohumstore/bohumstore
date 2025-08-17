@@ -10,11 +10,10 @@ const nextConfig = {
         pathname: '/**' // 모든 경로 허용
       },
     ],
+    // 로컬 이미지 최적화 설정
+    unoptimized: false,
   },
   // Playwright 설정 파일을 빌드에서 제외
-  experimental: {
-    excludeDefaultMomentLocales: false,
-  },
   // 특정 파일들을 빌드에서 제외
   webpack: (config, { isServer }) => {
     if (!isServer) {

@@ -93,32 +93,452 @@ if (paymentCompletionAge <= 65) {
 - **음수/NaN 체크**: 부족 ❌
 - **공백 처리**: 부족 ❌
 
-## 4. 이슈 테이블
+## 4. 상품별 계산 모달 P0/P1 이슈 점검
+
+### 4.1 IBK 평생연금 (연금보험)
+
+#### 입력 검증 이슈
+**P1** - `app/insurance/annuity/ibk/lifetime/components/Slogan.tsx:507-543`
+- **증상**: 연금개시연령 80세 초과 시 잘못된 계산
+- **근본 원인**: 경계값 처리 로직 불완전
+- **패치 제안**:
+```typescript:app/insurance/annuity/ibk/lifetime/components/Slogan.tsx:507-543
+// 현재 코드
+const getPensionStartAge = (age: number, paymentPeriod: string) => {
+  const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+  const completionAge = age + years;
+  let minStartAge = 65;
+  if (completionAge >= 80) minStartAge = 80;
+  else if (completionAge >= 75) minStartAge = 75;
+  else if (completionAge >= 70) minStartAge = 70;
+  else if (completionAge >= 65) minStartAge = 65;
+  return Math.max(completionAge, minStartAge);
+};
+
+// 수정된 코드
+const getPensionStartAge = (age: number, paymentPeriod: string) => {
+  const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+  const completionAge = age + years;
+  
+  // 80세 초과 시 가입 불가 처리
+  if (completionAge > 80) {
+    throw new Error('가입 불가: 연금개시연령이 80세를 초과합니다');
+  }
+  
+  let minStartAge = 65;
+  if (completionAge >= 80) minStartAge = 80;
+  else if (completionAge >= 75) minStartAge = 75;
+  else if (completionAge >= 70) minStartAge = 70;
+  else if (completionAge >= 65) minStartAge = 65;
+  
+  return Math.max(completionAge, minStartAge);
+};
+```
+- **테스트 스텝**: 61세 가입자 + 20년 납입 시 81세 초과로 가입 불가 메시지 표시 확인
+
+#### 보안 이슈
+**P0** - `app/insurance/annuity/ibk/lifetime/components/Slogan.tsx:1016,1035,1045,1055,1108`
+- **증상**: `toLocaleString('en-US')` 사용으로 일관성 없는 로케일
+- **근본 원인**: 한국어 로케일 미사용
+- **패치 제안**:
+```typescript:app/insurance/annuity/ibk/lifetime/components/Slogan.tsx:1016,1035,1045,1055,1108
+// 현재 코드
+{total ? total.toLocaleString('en-US') : '-'}
+
+// 수정된 코드
+{total ? total.toLocaleString('ko-KR') : '-'}
+```
+- **테스트 스텝**: 모든 금액이 한국어 형식(1,234,567)으로 표시되는지 확인
+
+### 4.2 KDB 행복플러스 (연금보험)
+
+#### 입력 검증 이슈
+**P1** - `app/insurance/annuity/kdb/happy-plus/components/Slogan.tsx:440-456,504-511,552-559`
+- **증상**: 연금개시연령 80세 초과 시 잘못된 계산
+- **근본 원인**: 경계값 처리 로직 불완전
+- **패치 제안**:
+```typescript:app/insurance/annuity/kdb/happy-plus/components/Slogan.tsx:440-456,504-511,552-559
+// 현재 코드
+const getPensionStartAge = (age: number, paymentPeriod: string) => {
+  const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+  const completionAge = age + years;
+  let minStartAge = 65;
+  if (completionAge >= 80) minStartAge = 80;
+  else if (completionAge >= 75) minStartAge = 75;
+  else if (completionAge >= 70) minStartAge = 70;
+  else if (completionAge >= 65) minStartAge = 65;
+  return Math.max(completionAge, minStartAge);
+};
+
+// 수정된 코드
+const getPensionStartAge = (age: number, paymentPeriod: string) => {
+  const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+  const completionAge = age + years;
+  
+  // 80세 초과 시 가입 불가 처리
+  if (completionAge > 80) {
+    throw new Error('가입 불가: 연금개시연령이 80세를 초과합니다');
+  }
+  
+  let minStartAge = 65;
+  if (completionAge >= 80) minStartAge = 80;
+  else if (completionAge >= 75) minStartAge = 75;
+  else if (completionAge >= 70) minStartAge = 70;
+  else if (completionAge >= 65) minStartAge = 65;
+  
+  return Math.max(completionAge, minStartAge);
+};
+```
+- **테스트 스텝**: 61세 가입자 + 20년 납입 시 81세 초과로 가입 불가 메시지 표시 확인
+
+#### 보안 이슈
+**P0** - `app/insurance/annuity/kdb/happy-plus/components/Slogan.tsx:988,1010,1025,1040,1103`
+- **증상**: `toLocaleString('en-US')` 사용으로 일관성 없는 로케일
+- **근본 원인**: 한국어 로케일 미사용
+- **패치 제안**:
+```typescript:app/insurance/annuity/kdb/happy-plus/components/Slogan.tsx:988,1010,1025,1040,1103
+// 현재 코드
+{total ? total.toLocaleString('en-US') : '-'}
+
+// 수정된 코드
+{total ? total.toLocaleString('ko-KR') : '-'}
+```
+- **테스트 스텝**: 모든 금액이 한국어 형식(1,234,567)으로 표시되는지 확인
+
+### 4.3 KDB 행복드림 (연금보험)
+
+#### 입력 검증 이슈
+**P1** - `app/insurance/annuity/kdb/happy-dream/components/Slogan.tsx:507-543,582-587`
+- **증상**: 연금개시연령 80세 초과 시 잘못된 계산
+- **근본 원인**: 경계값 처리 로직 불완전
+- **패치 제안**:
+```typescript:app/insurance/annuity/kdb/happy-dream/components/Slogan.tsx:507-543,582-587
+// 현재 코드
+const getPensionStartAge = (age: number, paymentPeriod: string) => {
+  const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+  const completionAge = age + years;
+  let minStartAge = 65;
+  if (completionAge >= 80) minStartAge = 80;
+  else if (completionAge >= 75) minStartAge = 75;
+  else if (completionAge >= 70) minStartAge = 70;
+  else if (completionAge >= 65) minStartAge = 65;
+  return Math.max(completionAge, minStartAge);
+};
+
+// 수정된 코드
+const getPensionStartAge = (age: number, paymentPeriod: string) => {
+  const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+  const completionAge = age + years;
+  
+  // 80세 초과 시 가입 불가 처리
+  if (completionAge > 80) {
+    throw new Error('가입 불가: 연금개시연령이 80세를 초과합니다');
+  }
+  
+  let minStartAge = 65;
+  if (completionAge >= 80) minStartAge = 80;
+  else if (completionAge >= 75) minStartAge = 75;
+  else if (completionAge >= 70) minStartAge = 70;
+  else if (completionAge >= 65) minStartAge = 65;
+  
+  return Math.max(completionAge, minStartAge);
+};
+```
+- **테스트 스텝**: 61세 가입자 + 20년 납입 시 81세 초과로 가입 불가 메시지 표시 확인
+
+#### 보안 이슈
+**P0** - `app/insurance/annuity/kdb/happy-dream/components/Slogan.tsx:955,974,984,994,1047`
+- **증상**: `toLocaleString('en-US')` 사용으로 일관성 없는 로케일
+- **근본 원인**: 한국어 로케일 미사용
+- **패치 제안**:
+```typescript:app/insurance/annuity/kdb/happy-dream/components/Slogan.tsx:955,974,984,994,1047
+// 현재 코드
+{total ? total.toLocaleString('en-US') : '-'}
+
+// 수정된 코드
+{total ? total.toLocaleString('ko-KR') : '-'}
+```
+- **테스트 스텝**: 모든 금액이 한국어 형식(1,234,567)으로 표시되는지 확인
+
+### 4.4 KB 트리플레벨업 (연금보험)
+
+#### 입력 검증 이슈
+**P1** - `app/insurance/annuity/kb/triple-level-up/components/Slogan.tsx:395-400,582-587`
+- **증상**: 연금개시연령 80세 초과 시 잘못된 계산
+- **근본 원인**: 경계값 처리 로직 불완전
+- **패치 제안**:
+```typescript:app/insurance/annuity/kb/triple-level-up/components/Slogan.tsx:395-400,582-587
+// 현재 코드
+const getPensionStartAge = (age: number, paymentPeriod: string) => {
+  const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+  const completionAge = age + years;
+  let minStartAge = 65;
+  if (completionAge >= 80) minStartAge = 80;
+  else if (completionAge >= 75) minStartAge = 75;
+  else if (completionAge >= 70) minStartAge = 70;
+  else if (completionAge >= 65) minStartAge = 65;
+  return Math.max(completionAge, minStartAge);
+};
+
+// 수정된 코드
+const getPensionStartAge = (age: number, paymentPeriod: string) => {
+  const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+  const completionAge = age + years;
+  
+  // 80세 초과 시 가입 불가 처리
+  if (completionAge > 80) {
+    throw new Error('가입 불가: 연금개시연령이 80세를 초과합니다');
+  }
+  
+  let minStartAge = 65;
+  if (completionAge >= 80) minStartAge = 80;
+  else if (completionAge >= 75) minStartAge = 75;
+  else if (completionAge >= 70) minStartAge = 70;
+  else if (completionAge >= 65) minStartAge = 65;
+  
+  return Math.max(completionAge, minStartAge);
+};
+```
+- **테스트 스텝**: 61세 가입자 + 20년 납입 시 81세 초과로 가입 불가 메시지 표시 확인
+
+#### 보안 이슈
+**P0** - `app/insurance/annuity/kb/triple-level-up/components/Slogan.tsx:406-407,741,820`
+- **증상**: `toLocaleString('en-US')` 사용으로 일관성 없는 로케일
+- **근본 원인**: 한국어 로케일 미사용
+- **패치 제안**:
+```typescript:app/insurance/annuity/kb/triple-level-up/components/Slogan.tsx:406-407,741,820
+// 현재 코드
+const interestValue = total ? (total * interestRate).toLocaleString('en-US') : '-';
+const refundValue = total ? (total * rate).toLocaleString('en-US') : '-';
+
+// 수정된 코드
+const interestValue = total ? (total * interestRate).toLocaleString('ko-KR') : '-';
+const refundValue = total ? (total * rate).toLocaleString('ko-KR') : '-';
+```
+- **테스트 스텝**: 모든 금액이 한국어 형식(1,234,567)으로 표시되는지 확인
+
+### 4.5 신한 더더꿈 (종신보험)
+
+#### 입력 검증 이슈
+**P1** - `app/insurance/whole-life/shinhan/more-the-dream/components/Slogan.tsx:395-400,582-587`
+- **증상**: 연금개시연령 80세 초과 시 잘못된 계산
+- **근본 원인**: 경계값 처리 로직 불완전
+- **패치 제안**:
+```typescript:app/insurance/whole-life/shinhan/more-the-dream/components/Slogan.tsx:395-400,582-587
+// 현재 코드
+const getPensionStartAge = (age: number, paymentPeriod: string) => {
+  const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+  const completionAge = age + years;
+  let minStartAge = 65;
+  if (completionAge >= 80) minStartAge = 80;
+  else if (completionAge >= 75) minStartAge = 75;
+  else if (completionAge >= 70) minStartAge = 70;
+  else if (completionAge >= 65) minStartAge = 65;
+  return Math.max(completionAge, minStartAge);
+};
+
+// 수정된 코드
+const getPensionStartAge = (age: number, paymentPeriod: string) => {
+  const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+  const completionAge = age + years;
+  
+  // 80세 초과 시 가입 불가 처리
+  if (completionAge > 80) {
+    throw new Error('가입 불가: 연금개시연령이 80세를 초과합니다');
+  }
+  
+  let minStartAge = 65;
+  if (completionAge >= 80) minStartAge = 80;
+  else if (completionAge >= 75) minStartAge = 75;
+  else if (completionAge >= 70) minStartAge = 70;
+  else if (completionAge >= 65) minStartAge = 65;
+  
+  return Math.max(completionAge, minStartAge);
+};
+```
+- **테스트 스텝**: 61세 가입자 + 20년 납입 시 81세 초과로 가입 불가 메시지 표시 확인
+
+#### 보안 이슈
+**P0** - `app/insurance/whole-life/shinhan/more-the-dream/components/Slogan.tsx:406-407,767,846`
+- **증상**: `toLocaleString('en-US')` 사용으로 일관성 없는 로케일
+- **근본 원인**: 한국어 로케일 미사용
+- **패치 제안**:
+```typescript:app/insurance/whole-life/shinhan/more-the-dream/components/Slogan.tsx:406-407,767,846
+// 현재 코드
+const interestValue = total ? (total * interestRate).toLocaleString('en-US') : '-';
+const refundValue = total ? (total * rate).toLocaleString('en-US') : '-';
+
+// 수정된 코드
+const interestValue = total ? (total * interestRate).toLocaleString('ko-KR') : '-';
+const refundValue = total ? (total * rate).toLocaleString('ko-KR') : '-';
+```
+- **테스트 스텝**: 모든 금액이 한국어 형식(1,234,567)으로 표시되는지 확인
+
+### 4.6 동양생명 테스트 (종신보험)
+
+#### 입력 검증 이슈
+**P1** - `app/insurance/whole-life/dongyang/test/components/Slogan.tsx:352-357,582-587`
+- **증상**: 연금개시연령 80세 초과 시 잘못된 계산
+- **근본 원인**: 경계값 처리 로직 불완전
+- **패치 제안**:
+```typescript:app/insurance/whole-life/dongyang/test/components/Slogan.tsx:352-357,582-587
+// 현재 코드
+const getPensionStartAge = (age: number, paymentPeriod: string) => {
+  const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+  const completionAge = age + years;
+  let minStartAge = 65;
+  if (completionAge >= 80) minStartAge = 80;
+  else if (completionAge >= 75) minStartAge = 75;
+  else if (completionAge >= 70) minStartAge = 70;
+  else if (completionAge >= 65) minStartAge = 65;
+  return Math.max(completionAge, minStartAge);
+};
+
+// 수정된 코드
+const getPensionStartAge = (age: number, paymentPeriod: string) => {
+  const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+  const completionAge = age + years;
+  
+  // 80세 초과 시 가입 불가 처리
+  if (completionAge > 80) {
+    throw new Error('가입 불가: 연금개시연령이 80세를 초과합니다');
+  }
+  
+  let minStartAge = 65;
+  if (completionAge >= 80) minStartAge = 80;
+  else if (completionAge >= 75) minStartAge = 75;
+  else if (completionAge >= 70) minStartAge = 70;
+  else if (completionAge >= 65) minStartAge = 65;
+  
+  return Math.max(completionAge, minStartAge);
+};
+```
+- **테스트 스텝**: 61세 가입자 + 20년 납입 시 81세 초과로 가입 불가 메시지 표시 확인
+
+#### 보안 이슈
+**P0** - `app/insurance/whole-life/dongyang/test/components/Slogan.tsx:365-366,767,846`
+- **증상**: `toLocaleString('en-US')` 사용으로 일관성 없는 로케일
+- **근본 원인**: 한국어 로케일 미사용
+- **패치 제안**:
+```typescript:app/insurance/whole-life/dongyang/test/components/Slogan.tsx:365-366,767,846
+// 현재 코드
+const interestValue = total ? (total * interestRate).toLocaleString('en-US') : '-';
+const refundValue = total ? (total * rate).toLocaleString('en-US') : '-';
+
+// 수정된 코드
+const interestValue = total ? (total * interestRate).toLocaleString('ko-KR') : '-';
+const refundValue = total ? (total * rate).toLocaleString('ko-KR') : '-';
+```
+- **테스트 스텝**: 모든 금액이 한국어 형식(1,234,567)으로 표시되는지 확인
+
+## 5. 보안 노출 이슈 (P0)
+
+### 5.1 환경변수 노출
+**P0** - `app/api/utils/aligoAuth.ts:3-5`
+- **증상**: SMS API 키가 클라이언트 번들에 노출
+- **근본 원인**: `NEXT_PUBLIC_` 접두사 사용
+- **패치 제안**:
+```typescript:app/api/utils/aligoAuth.ts:3-5
+// 현재 코드
+apikey:    process.env.NEXT_PUBLIC_ALIGO_API_KEY!,
+userid:    process.env.NEXT_PUBLIC_ALIGO_USER_ID!,
+senderkey: process.env.NEXT_PUBLIC_ALIGO_SENDER_KEY!,
+
+// 수정된 코드
+apikey:    process.env.ALIGO_API_KEY!,
+userid:    process.env.ALIGO_USER_ID!,
+senderkey: process.env.ALIGO_SENDER_KEY!,
+```
+- **테스트 스텝**: 빌드 후 번들에서 API 키가 노출되지 않는지 확인
+
+### 5.2 Supabase 키 노출
+**P0** - `app/api/supabase.ts:3-4`
+- **증상**: Supabase 키가 클라이언트 번들에 노출
+- **근본 원인**: `NEXT_PUBLIC_` 접두사 사용
+- **패치 제안**:
+```typescript:app/api/supabase.ts:3-4
+// 현재 코드
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
+
+// 수정된 코드
+const supabaseUrl = process.env.SUPABASE_URL as string;
+const supabaseKey = process.env.SUPABASE_ANON_KEY as string;
+```
+- **테스트 스텝**: 빌드 후 번들에서 Supabase 키가 노출되지 않는지 확인
+
+### 5.3 카카오 API 키 노출
+**P0** - `app/api/postCounsel/route.ts:15-28,40-53`
+- **증상**: 카카오 API 키가 클라이언트 번들에 노출
+- **근본 원인**: `NEXT_PUBLIC_` 접두사 사용
+- **패치 제안**:
+```typescript:app/api/postCounsel/route.ts:15-28,40-53
+// 현재 코드
+sender_key:    process.env.KAKAO_SENDER_KEY,
+cid:           process.env.KAKAO_CID,
+template_code: process.env.KAKAO_TEMPLATE_CODE,
+sender_no:     process.env.KAKAO_SENDER_NO,
+'Authorization': `Bearer ${process.env.KAKAO_ACCESS_TOKEN}`,
+
+// 수정된 코드
+sender_key:    process.env.KAKAO_SENDER_KEY,
+cid:           process.env.KAKAO_CID,
+template_code: process.env.KAKAO_TEMPLATE_CODE,
+sender_no:     process.env.KAKAO_SENDER_NO,
+'Authorization': `Bearer ${process.env.KAKAO_ACCESS_TOKEN}`,
+```
+- **테스트 스텝**: 빌드 후 번들에서 카카오 API 키가 노출되지 않는지 확인
+
+### 5.4 XSS 공격 벡터
+**P0** - `app/page.tsx:211`
+- **증상**: `dangerouslySetInnerHTML` 사용으로 XSS 공격 위험
+- **근본 원인**: CSS 인라인 주입
+- **패치 제안**:
+```typescript:app/page.tsx:211
+// 현재 코드
+<style dangerouslySetInnerHTML={{ __html: animationStyles }} />
+
+// 수정된 코드
+// CSS 모듈 또는 스타일드 컴포넌트로 변경
+// app/styles/animations.module.css 파일 생성
+```
+- **테스트 스텝**: XSS 공격 벡터가 제거되었는지 확인
+
+## 6. 이슈 테이블
 
 ### 보안 및 안정성 이슈
 
 | Severity | Page/Path | Lines | Symptom | Root cause | Fix proposal | Test steps |
 |-----------|------------|-------|---------|------------|--------------|------------|
-| **P0** | `app/api/postCounsel/route.ts` | 15-28, 40-53 | API 키 노출 위험 | 환경변수가 클라이언트 번들에 포함 | 환경변수를 서버 전용으로 변경 | 빌드 후 번들 분석 |
-| **P0** | `app/api/utils/aligoAuth.ts` | 3-5 | SMS API 키 노출 | NEXT_PUBLIC_ 접두사 사용 | 서버 전용 환경변수로 변경 | 클라이언트에서 접근 불가 확인 |
+| **P0** | `app/api/utils/aligoAuth.ts` | 3-5 | SMS API 키 노출 | NEXT_PUBLIC_ 접두사 사용 | 환경변수를 서버 전용으로 변경 | 빌드 후 번들 분석 |
+| **P0** | `app/api/supabase.ts` | 3-4 | Supabase 키 노출 | NEXT_PUBLIC_ 접두사 사용 | 환경변수를 서버 전용으로 변경 | 빌드 후 번들 분석 |
+| **P0** | `app/api/postCounsel/route.ts` | 15-28, 40-53 | 카카오 API 키 노출 | NEXT_PUBLIC_ 접두사 사용 | 환경변수를 서버 전용으로 변경 | 빌드 후 번들 분석 |
+| **P0** | `app/page.tsx` | 211 | XSS 공격 벡터 | dangerouslySetInnerHTML 사용 | CSS 모듈로 변경 | XSS 공격 벡터 제거 확인 |
 | **P1** | `app/utils/annuityCalculator.ts` | 32-42 | 80세 초과 가입자 처리 누락 | 경계값 로직 불완전 | 80세 초과 시 예외 처리 추가 | 81세 가입자 테스트 |
 
 ### 기능 및 사용성 이슈
 
 | Severity | Page/Path | Lines | Symptom | Root cause | Fix proposal | Test steps |
 |-----------|------------|-------|---------|------------|--------------|------------|
-| **P2** | `app/api/calculate-pension/route.ts` | 199-200 | 포맷팅 함수 중복 | 각 API마다 개별 구현 | 공통 유틸리티로 통합 | 모든 API에서 동일 함수 사용 확인 |
-| **P2** | `app/page.tsx` | 211 | CSS 인라인 주입 | dangerouslySetInnerHTML 사용 | CSS 모듈 또는 스타일드 컴포넌트로 변경 | XSS 공격 벡터 제거 확인 |
-| **P2** | 전체 컴포넌트 | 다수 | 입력값 검증 중복 | 동일한 replace 로직 반복 | 공통 검증 함수로 통합 | 모든 입력 필드에서 동일 함수 사용 |
+| **P1** | `app/insurance/annuity/ibk/lifetime/components/Slogan.tsx` | 507-543 | 80세 초과 계산 오류 | 경계값 처리 로직 불완전 | 80세 초과 시 예외 처리 추가 | 81세 가입자 테스트 |
+| **P1** | `app/insurance/annuity/kdb/happy-plus/components/Slogan.tsx` | 440-456, 504-511, 552-559 | 80세 초과 계산 오류 | 경계값 처리 로직 불완전 | 80세 초과 시 예외 처리 추가 | 81세 가입자 테스트 |
+| **P1** | `app/insurance/annuity/kdb/happy-dream/components/Slogan.tsx` | 507-543, 582-587 | 80세 초과 계산 오류 | 경계값 처리 로직 불완전 | 80세 초과 시 예외 처리 추가 | 81세 가입자 테스트 |
+| **P1** | `app/insurance/annuity/kb/triple-level-up/components/Slogan.tsx` | 395-400, 582-587 | 80세 초과 계산 오류 | 경계값 처리 로직 불완전 | 80세 초과 시 예외 처리 추가 | 81세 가입자 테스트 |
+| **P1** | `app/insurance/whole-life/shinhan/more-the-dream/components/Slogan.tsx` | 395-400, 582-587 | 80세 초과 계산 오류 | 경계값 처리 로직 불완전 | 80세 초과 시 예외 처리 추가 | 81세 가입자 테스트 |
+| **P1** | `app/insurance/whole-life/dongyang/test/components/Slogan.tsx` | 352-357, 582-587 | 80세 초과 계산 오류 | 경계값 처리 로직 불완전 | 80세 초과 시 예외 처리 추가 | 81세 가입자 테스트 |
 
 ### 코드 품질 이슈
 
 | Severity | Page/Path | Lines | Symptom | Root cause | Fix proposal | Test steps |
 |-----------|------------|-------|---------|------------|--------------|------------|
-| **P3** | `app/insurance/annuity/kdb/happy-plus/components/Slogan.tsx` | 440, 456, 504, 507, 511, 552, 555, 559, 616, 619, 621 | parseInt().replace() 반복 | 코드 중복 | 공통 유틸리티 함수 생성 | 중복 코드 제거 후 기능 정상 동작 확인 |
-| **P3** | `app/insurance/annuity/kdb/happy-plus/components/Slogan.tsx` | 988, 1010, 1025, 1040, 1103 | toLocaleString('en-US') 사용 | 일관성 없는 로케일 | 한국어 로케일로 통일 | 모든 금액 표시가 한국어 형식으로 표시되는지 확인 |
+| **P1** | `app/insurance/annuity/ibk/lifetime/components/Slogan.tsx` | 1016, 1035, 1045, 1055, 1108 | 로케일 불일치 | en-US 로케일 사용 | ko-KR 로케일로 통일 | 한국어 형식 표시 확인 |
+| **P1** | `app/insurance/annuity/kdb/happy-plus/components/Slogan.tsx` | 988, 1010, 1025, 1040, 1103 | 로케일 불일치 | en-US 로케일 사용 | ko-KR 로케일로 통일 | 한국어 형식 표시 확인 |
+| **P1** | `app/insurance/annuity/kdb/happy-dream/components/Slogan.tsx` | 955, 974, 984, 994, 1047 | 로케일 불일치 | en-US 로케일 사용 | ko-KR 로케일로 통일 | 한국어 형식 표시 확인 |
+| **P1** | `app/insurance/annuity/kb/triple-level-up/components/Slogan.tsx` | 406-407, 741, 820 | 로케일 불일치 | en-US 로케일 사용 | ko-KR 로케일로 통일 | 한국어 형식 표시 확인 |
+| **P1** | `app/insurance/whole-life/shinhan/more-the-dream/components/Slogan.tsx` | 406-407, 767, 846 | 로케일 불일치 | en-US 로케일 사용 | ko-KR 로케일로 통일 | 한국어 형식 표시 확인 |
+| **P1** | `app/insurance/whole-life/dongyang/test/components/Slogan.tsx` | 365-366, 767, 846 | 로케일 불일치 | en-US 로케일 사용 | ko-KR 로케일로 통일 | 한국어 형식 표시 확인 |
 
-## 5. 중복/미사용 코드 목록과 정리 제안
+## 7. 중복/미사용 코드 목록과 정리 제안
 
 ### 중복 코드 패턴
 1. **parseInt().replace() 패턴** (15+ 파일에서 반복)
@@ -157,7 +577,7 @@ if (paymentCompletionAge <= 65) {
 2. **`app/index.tsx`** - 11줄로 최소한의 내용만 포함
 3. **`templates/` 폴더** - 템플릿 파일들이 실제 구현과 중복
 
-## 6. 성능/번들 최적화 제안
+## 8. 성능/번들 최적화 제안
 
 ### 코드 스플리팅
 ```typescript
@@ -184,7 +604,7 @@ const ProductPage = dynamic(() => import('./ProductPage'), {
 npm install --save-dev @next/bundle-analyzer
 ```
 
-## 7. 오픈 질문 (의사결정 필요 항목)
+## 9. 오픈 질문 (의사결정 필요 항목)
 
 1. **환경변수 관리 전략**
    - 클라이언트에서 필요한 환경변수와 서버 전용 변수를 어떻게 구분할 것인가?
@@ -235,5 +655,5 @@ npm install --save-dev @next/bundle-analyzer
 
 **감사 완료일**: 2024년 12월 19일  
 **감사자**: 코드 감사 봇  
-**버전**: 1.0  
+**버전**: 2.0 (P0/P1 이슈 집중 분석)  
 **주의사항**: 이 보고서는 읽기 전용 감사 결과이며, 실제 코드 수정은 별도 검토 후 진행해야 합니다.

@@ -29,8 +29,8 @@ export const metadata: Metadata = {
   publisher: "보험스토어",
   robots: "index, follow",
       openGraph: {
-      title: "보험스토어 | 연금보험, 종신보험, 저축보험 비교 및 상담",
-      description: "연금보험, 종신보험, 저축보험 비교 및 전문 상담 플랫폼",
+      title: "보험스토어 | Bohumstore",
+      description: "연금보험, 종신보험, 저축보험 비교 및 상담",
     url: "https://bohumstore.net",
     siteName: "보험스토어",
           images: [
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "보험스토어 | 연금보험, 종신보험, 저축보험 비교 및 상담",
-    description: "연금보험, 종신보험, 저축보험 비교 및 전문 상담 플랫폼",
+    title: "보험스토어 | Bohumstore",
+    description: "연금보험, 종신보험, 저축보험 비교 및 상담",
     images: ["https://bohumstore.net/kakao-img.png"],
   },
   manifest: "/manifest.json",

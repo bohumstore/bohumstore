@@ -4,8 +4,8 @@ import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
 import FireworksEffect from './FireworksEffect';
 
-const INSURANCE_COMPANY_ID = 1; // KB 손해보험
-const INSURANCE_PRODUCT_ID = 1; // KB 트리플 레벨업 연금보험 무배당 id 코드값
+const INSURANCE_COMPANY_ID = 5; // 동양생명
+const INSURANCE_PRODUCT_ID = 6; // 동양생명 테스트 상품 id 코드값
 const OTP_TIMER_DURATION = 180; // 3분
 const OTP_CODE_LENGTH = 6;
 
@@ -272,6 +272,17 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   }
     setVerifying(true);
     try {
+      // 납입기간과 월납입금액이 있는 경우에만 계산값 사용
+      let tenYearReturnRate = '-';
+      let interestValue = '-';
+      let refundValue = '-';
+      
+      if (paymentPeriod && paymentAmount) {
+        tenYearReturnRate = rate ? Math.round(rate * 100).toString() : '-';
+        interestValue = total ? (total * 0.3).toLocaleString('ko-KR') : '-';
+        refundValue = total ? (total * rate).toLocaleString('ko-KR') : '-';
+      }
+      
       const res = await request.post("/api/verifyOTP", {
         phone,
         name,
@@ -283,9 +294,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         productId: INSURANCE_PRODUCT_ID,
         consultType,
         counselTime: consultTime,
-        mounthlyPremium: paymentAmount,
-        paymentPeriod: paymentPeriod,
-        tenYearReturnRate: rate ? Math.round(rate * 100) : '-',
+        mounthlyPremium: paymentAmount || '',
+        paymentPeriod: paymentPeriod || '',
+        tenYearReturnRate,
         interestValue,
         refundValue
       });
@@ -304,9 +315,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             productId: INSURANCE_PRODUCT_ID,
             consultType,
             counselTime: consultTime,
-            mounthlyPremium: paymentAmount,
-            paymentPeriod: paymentPeriod,
-            tenYearReturnRate: rate ? Math.round(rate * 100) : '-',
+            mounthlyPremium: paymentAmount || '',
+            paymentPeriod: paymentPeriod || '',
+            tenYearReturnRate,
             interestValue,
             refundValue,
             onlyClient: true

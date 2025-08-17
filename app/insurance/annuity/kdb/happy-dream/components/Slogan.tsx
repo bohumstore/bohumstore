@@ -422,8 +422,11 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     }
     setVerifying(true);
     try {
-      // 연금액 계산
-      const pensionAmounts = calculatePensionAmount(Number(insuranceAge), paymentPeriod, paymentAmount);
+      // 납입기간과 월납입금액이 있는 경우에만 연금액 계산
+      let pensionAmounts = { monthly: 0, performance: 0, totalUntil100: 0 };
+      if (paymentPeriod && paymentAmount) {
+        pensionAmounts = calculatePensionAmount(Number(insuranceAge), paymentPeriod, paymentAmount);
+      }
       
       const res = await request.post("/api/verifyOTP", {
         phone,
@@ -436,8 +439,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         productId: INSURANCE_PRODUCT_ID,
         consultType,
         counselTime: consultTime,
-        mounthlyPremium: paymentAmount,
-        paymentPeriod: paymentPeriod,
+        mounthlyPremium: paymentAmount || '',
+        paymentPeriod: paymentPeriod || '',
         monthlyPension: pensionAmounts.monthly, // 월 연금액
         performancePension: pensionAmounts.performance, // 실적배당 연금액
         templateId: "UA_7919", // 고객용 상담신청 완료 전송용 템플릿
@@ -461,8 +464,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             productId: INSURANCE_PRODUCT_ID,
             consultType,
             counselTime: consultTime,
-            mounthlyPremium: paymentAmount,
-            paymentPeriod: paymentPeriod,
+            mounthlyPremium: paymentAmount || '',
+            paymentPeriod: paymentPeriod || '',
             monthlyPension: pensionAmounts.monthly, // 월 연금액
             performancePension: pensionAmounts.performance, // 실적배당 연금액
             onlyClient: true
@@ -529,8 +532,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   const is20YearDisabled = Number(insuranceAge) + 20 > 80;
 
   // 연금액 계산 함수 (변액연금용 - 실적배당 포함)
-  const calculatePensionAmount = (age: number, paymentPeriod: string, paymentAmount: string) => {
-    if (!age || !paymentPeriod || !paymentAmount) return { monthly: 0, performance: 0 };
+  const calculatePensionAmount = (age: number, paymentPeriod: string, paymentAmount: string): { monthly: number; performance: number; totalUntil100: number } => {
+    if (!age || !paymentPeriod || !paymentAmount) return { monthly: 0, performance: 0, totalUntil100: 0 };
     
     // 월 납입액 계산 (만원 단위 처리)
     let monthlyPayment = 0;
@@ -544,7 +547,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     const paymentYears = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
     const pensionStartAge = getPensionStartAge(age, paymentPeriod);
     
-    if (!pensionStartAge) return { monthly: 0, performance: 0 };
+    if (!pensionStartAge) return { monthly: 0, performance: 0, totalUntil100: 0 };
     
     // 총 납입액
     const totalPayment = monthlyPayment * 12 * paymentYears;

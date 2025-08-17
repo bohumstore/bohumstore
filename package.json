@@ -17,12 +17,14 @@
     "@modelcontextprotocol/sdk": "^1.17.1",
     "@supabase/supabase-js": "^2.50.2",
     "axios": "^1.10.0",
+    "dotenv": "^17.2.1",
     "fireworks": "^2.2.7",
     "multiparty": "^4.2.3",
     "next": "15.3.3",
     "playwright": "^1.54.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "swiper": "^11.2.10",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

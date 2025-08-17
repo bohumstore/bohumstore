@@ -9,8 +9,8 @@ import FireworksEffect from './FireworksEffect';
 const currentPath = '/insurance/annuity/kb/triple-level-up';
 const productConfig = getProductConfigByPath(currentPath);
 
-const INSURANCE_COMPANY_ID = 1; // KB라이프
-const INSURANCE_PRODUCT_ID = 1; // KB 트리플 레벨업 연금보험 id 코드값
+const INSURANCE_COMPANY_ID = 4; // 신한라이프
+const INSURANCE_PRODUCT_ID = 5; // 신한 모아더드림 Plus 종신보험 id 코드값
 
 type SloganProps = {
   onOpenPrivacy: () => void
@@ -316,6 +316,17 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     }
     setVerifying(true);
     try {
+      // 납입기간과 월납입금액이 있는 경우에만 계산값 사용
+      let tenYearReturnRate = '-';
+      let interestValue = '-';
+      let refundValue = '-';
+      
+      if (paymentPeriod && paymentAmount) {
+        tenYearReturnRate = rate ? Math.round(rate * 100).toString() : '-';
+        interestValue = total ? (total * interestRate).toLocaleString('ko-KR') : '-';
+        refundValue = total ? (total * rate).toLocaleString('ko-KR') : '-';
+      }
+      
       const res = await request.post("/api/verifyOTP", {
         phone,
         name,
@@ -327,9 +338,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         productId: INSURANCE_PRODUCT_ID,
         consultType,
         counselTime: consultTime,
-        mounthlyPremium: paymentAmount,
-        paymentPeriod: paymentPeriod,
-        tenYearReturnRate: rate ? Math.round(rate * 100) : '-',
+        mounthlyPremium: paymentAmount || '',
+        paymentPeriod: paymentPeriod || '',
+        tenYearReturnRate,
         interestValue,
         refundValue
       });
@@ -348,9 +359,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             productId: INSURANCE_PRODUCT_ID,
             consultType,
             counselTime: consultTime,
-            mounthlyPremium: paymentAmount,
-            paymentPeriod: paymentPeriod,
-            tenYearReturnRate: rate ? Math.round(rate * 100) : '-',
+            mounthlyPremium: paymentAmount || '',
+            paymentPeriod: paymentPeriod || '',
+            tenYearReturnRate,
             interestValue,
             refundValue,
             onlyClient: true
