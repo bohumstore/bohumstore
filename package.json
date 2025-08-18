@@ -20,7 +20,7 @@
     "dotenv": "^17.2.1",
     "fireworks": "^2.2.7",
     "multiparty": "^4.2.3",
-    "next": "15.3.3",
+    "next": "^15.4.6",
     "playwright": "^1.54.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
