@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import { trackPageVisit } from "@/app/utils/visitorTracking";
 
 // Swiper CSS
 import "swiper/css";
@@ -94,18 +95,31 @@ const recommendedProducts = [
 ];
 
 export default function HomePage() {
+  // 페이지 방문 시 추적
+  useEffect(() => {
+    trackPageVisit();
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#F8F8F8]">
       {/* 헤더 */}
       <header className="w-full flex justify-center items-center py-6 px-4 bg-[#F8F8F8] border-b border-gray-200">
-        <div className="w-full max-w-[1920px] flex justify-center items-center h-[84px]">
+        <div className="flex items-center gap-4">
           <Image
             src="/bohumstore-logo.png"
-            alt="보험스토어 로고"
-            width={220}
-            height={52}
-            priority
+            alt="보험스토어"
+            width={180}
+            height={60}
+            className="object-contain"
+            unoptimized
           />
+          <div className="w-px h-8 bg-[#D1D5DC]" />
+          <Link
+            href="/admin/visitor-tracking"
+            className="text-sm text-blue-600 hover:text-blue-800 underline"
+          >
+            방문자 추적 관리
+          </Link>
         </div>
       </header>
 

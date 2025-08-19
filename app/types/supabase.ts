@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export type Database = {
+export interface Database {
   graphql_public: {
     Tables: {
       [_ in never]: never
@@ -236,6 +236,77 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      visitor_tracking: {
+        Row: {
+          id: string
+          created_at: string
+          ip_address: string | null
+          carrier: string | null
+          session_count: number | null
+          page_url: string | null
+          device_model: string | null
+          device_type: string | null
+          browser: string | null
+          os: string | null
+          traffic_source: string | null
+          referrer: string | null
+          search_keyword: string | null
+          search_engine: string | null
+          counsel_type_id: number | null
+          name: string | null
+          phone: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          id?: string
+          created_at?: string
+          ip_address?: string | null
+          carrier?: string | null
+          session_count?: number | null
+          page_url?: string | null
+          device_model?: string | null
+          device_type?: string | null
+          browser?: string | null
+          os?: string | null
+          traffic_source?: string | null
+          referrer?: string | null
+          search_keyword?: string | null
+          search_engine?: string | null
+          counsel_type_id?: number | null
+          name?: string | null
+          phone?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          id?: string
+          created_at?: string
+          ip_address?: string | null
+          carrier?: string | null
+          session_count?: number | null
+          page_url?: string | null
+          device_model?: string | null
+          device_type?: string | null
+          browser?: string | null
+          os?: string | null
+          traffic_source?: string | null
+          referrer?: string | null
+          search_keyword?: string | null
+          search_engine?: string | null
+          counsel_type_id?: number | null
+          name?: string | null
+          phone?: string | null
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "visitor_tracking_counsel_type_id_fkey"
+            columns: ["counsel_type_id"]
+            isOneToOne: false
+            referencedRelation: "counsel_type"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {

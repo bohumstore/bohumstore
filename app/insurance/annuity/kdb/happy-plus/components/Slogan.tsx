@@ -4,6 +4,7 @@ import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
 import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/insurance';
 import { calculateAnnuityStartAge } from '@/app/utils/annuityCalculator';
+import { trackPremiumCheck, trackCounselRequest } from "@/app/utils/visitorTracking";
 
 import FireworksEffect from './FireworksEffect';
 
@@ -204,7 +205,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
 
   const handleVerifyOTP = async () => {
   if (otpCode.length !== 6) {
-    alert("6자리 인증번호를 입력해주세요.");
+    alert("6자리 인증번호를 입력해 주세요.");
     return;
   }
 
@@ -251,6 +252,20 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     console.log("[CLIENT] 연금액 계산 인증 응답:", res.data);
     
     if (res.data.success) {
+      // 방문자 추적: 보험료 확인
+      try {
+        await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
+          phone,
+          name,
+          counsel_type_id: 1, // 보험료 확인
+          utm_source: 'direct',
+          utm_campaign: 'premium_calculation'
+        });
+        console.log("[CLIENT] 방문자 추적 성공: 보험료 확인");
+      } catch (trackingError) {
+        console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
+      }
+      
       setIsVerified(true);
       setOtpSent(false);
       alert("인증이 완료되었습니다! 연금액 계산 결과가 카카오톡으로 전송됩니다.");
@@ -397,6 +412,20 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       });
       
       if (res.data.success) {
+        // 방문자 추적: 상담 신청
+        try {
+          await trackCounselRequest(2, phone, name, {
+            product_id: INSURANCE_PRODUCT_ID,
+            company_id: INSURANCE_COMPANY_ID,
+            counsel_type_id: 2, // 상담 신청
+            utm_source: 'direct',
+            utm_campaign: 'consultation_request'
+          });
+          console.log("[CLIENT] 방문자 추적 성공: 상담 신청");
+        } catch (trackingError) {
+          console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
+        }
+        
         setConsultIsVerified(true);
         alert("상담신청이 접수되었습니다!");
       } else {

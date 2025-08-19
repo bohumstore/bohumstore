@@ -7,6 +7,7 @@ import { queryUsers, createUser, queryCounsel, createCounsel } from '@/app/utils
 import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/insurance';
 import { calculateAnnuityStartAge } from '@/app/utils/annuityCalculator';
 import FireworksEffect from './FireworksEffect';
+import { trackPremiumCheck } from "@/app/utils/visitorTracking";
 
 // 현재 경로에 맞는 상품 정보 가져오기
 const currentPath = '/insurance/annuity/kdb/happy-dream';
@@ -335,6 +336,20 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     
     const res = await request.post("/api/verifyOTP", requestData);
     if (res.data.success) {
+      // 방문자 추적: 보험료 확인
+      try {
+        await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
+          phone,
+          name,
+          counsel_type_id: 1, // 보험료 확인
+          utm_source: 'direct',
+          utm_campaign: 'premium_calculation'
+        });
+        console.log("[CLIENT] 방문자 추적 성공: 보험료 확인");
+      } catch (trackingError) {
+        console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
+      }
+      
       // Supabase에 데이터 저장 (보험료 확인: counselType = 1)
       const supabaseResult = await saveToSupabase(1);
       setIsVerified(true);

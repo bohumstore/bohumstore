@@ -1,29 +1,32 @@
 "use client";
 import { useEffect, useState } from "react";
 import React from "react";
-import Header from "../../../../components/Header";
+import Header from "./components/Header";
 import Slogan from "./components/Slogan";
 import Footer from "./components/Footer";
-import PrivacyConsent from "../../../../components/PrivacyConsent";
-import Modal from "../../../../components/Modal";
+import PrivacyConsent from "@/app/components/PrivacyConsent";
+import Modal from "@/app/components/Modal";
 import Notice from "./components/Notice";
-import Tabs from "../../../../components/Tabs";
+import Tabs from "@/app/components/Tabs";
 import ProductInfo from "./components/BodyTabViews/ProductInfo";
 import CoverageDetails from "./components/BodyTabViews/CoverageDetails";
 import Surrender from "./components/BodyTabViews/Surrender";
-import { supabase } from "../../../../api/supabase";
+import { supabase } from "@/app/api/supabase";
+import { trackSimplifiedVisitor } from "@/app/utils/visitorTracking";
 
-export default function DongyangTestWholeLifePage() {
+export default function DongyangTestPage() {
   const tabs = [
     { label: '상품 정보',      content: <ProductInfo /> },
     { label: '보장 내용',      content: <CoverageDetails /> },
-    { label: '해약환급금 예시표', content: <Surrender /> },
+    { label: '가입시 알아두실 사항', content: <Surrender /> },
   ];
 
   const [showNotice, setShowNotice] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
 
   useEffect(() => {
+    // 페이지 방문 시 자동 추적
+    trackSimplifiedVisitor();
     // getProduct()
   }, []);
 

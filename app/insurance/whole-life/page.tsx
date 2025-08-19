@@ -1,8 +1,10 @@
 "use client";
-import React from "react";
+
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeftIcon, ArrowRightIcon, StarIcon, ShieldCheckIcon, HeartIcon, UserIcon } from "@heroicons/react/24/outline";
+import { trackPageVisit } from "../../utils/visitorTracking";
 
 // 종신보험 상품 데이터
 const wholeLifeProducts = [
@@ -47,6 +49,11 @@ const wholeLifeFeatures = [
 ];
 
 export default function WholeLifePage() {
+  useEffect(() => {
+    // 페이지 방문 시 자동 추적
+    trackPageVisit();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* 헤더 */}

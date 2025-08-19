@@ -12,6 +12,7 @@ import ProductInfo from "./components/BodyTabViews/ProductInfo";
 import CoverageDetails from "./components/BodyTabViews/CoverageDetails";
 import Surrender from "./components/BodyTabViews/Surrender";
 import { supabase } from "../../../../api/supabase";
+import { trackPageVisit } from "../../../../utils/visitorTracking";
 
 export default function KDBHappyPlusAnnuityPage() {
   const tabs = [
@@ -24,6 +25,8 @@ export default function KDBHappyPlusAnnuityPage() {
   const [showPrivacy, setShowPrivacy] = useState(false);
 
   useEffect(() => {
+    // 페이지 방문 시 자동 추적
+    trackPageVisit();
     // getProduct()
   }, []);
 

@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
-import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/insurance';
+import { getProductConfigByPath, getTemplateIdByPath, INSURANCE_COMPANIES, INSURANCE_PRODUCTS } from '@/app/constants/insurance';
 import FireworksEffect from './FireworksEffect';
+import { trackPremiumCheck } from "@/app/utils/visitorTracking";
 
 // 현재 경로에 맞는 상품 정보 가져오기
-const currentPath = '/insurance/annuity/kb/triple-level-up';
+const currentPath = '/insurance/whole-life/shinhan/more-the-dream';
 const productConfig = getProductConfigByPath(currentPath);
 
-const INSURANCE_COMPANY_ID = 4; // 신한라이프
-const INSURANCE_PRODUCT_ID = 5; // 신한 모아더드림 Plus 종신보험 id 코드값
+const INSURANCE_COMPANY_ID = INSURANCE_COMPANIES.SHINHAN_LIFE; // 신한라이프
+const INSURANCE_PRODUCT_ID = INSURANCE_PRODUCTS.SHINHAN_MORE_THE_DREAM; // 신한 모아더드림 Plus 종신보험
 
 type SloganProps = {
   onOpenPrivacy: () => void
@@ -43,9 +44,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
 
   const [showConsultTypeDropdown, setShowConsultTypeDropdown] = useState(false);
   const [showConsultTimeDropdown, setShowConsultTimeDropdown] = useState(false);
-  const [consultType, setConsultType] = useState('연금보험');
+  const [consultType, setConsultType] = useState('종신보험');
   const [consultTime, setConsultTime] = useState('아무때나');
-  const consultTypeOptions = ['연금보험'];
+  const consultTypeOptions = ['종신보험'];
   const consultTimeOptions = [
     '아무때나',
     '오전 09:00 ~ 10:00',
@@ -114,10 +115,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       return false;
     }
 
-    // 보험연령 체크 (0~70세만 가입 가능)
+    // 보험연령 체크 (15~70세만 가입 가능)
     const formInsuranceAge = Number(getInsuranceAge(birth));
-    if (isNaN(formInsuranceAge) || formInsuranceAge < 0 || formInsuranceAge > 70) {
-      alert('이 상품은 0~70세까지만 가입이 가능합니다.');
+    if (isNaN(formInsuranceAge) || formInsuranceAge < 15 || formInsuranceAge > 70) {
+      alert('이 상품은 15~70세까지만 가입이 가능합니다.');
       return false;
     }
 
@@ -148,14 +149,14 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   }
 
   const handlePostOTP = async () => {
-    const templateId = getTemplateIdByPath(currentPath)
+    const templateId = 'UA_7754'; // 임시로 기존 작동하는 템플릿 사용
     console.log(`[CLIENT] 인증번호 전송 시작: ${new Date().toISOString()}`);
     try {
       const response = await request.post('/api/postOTP', { 
         phone, 
         templateId,
-        companyName: "KB라이프",
-        productName: "트리플 레벨업 연금보험"
+        companyName: productConfig?.config.companyName || "신한라이프생명",
+        productName: productConfig?.config.name || "모아더드림Plus종신보험"
       })
       console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
       setOtpSent(true)
@@ -213,14 +214,28 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       counselTime: consultTime,
       mounthlyPremium: paymentAmount, // 실제 선택값
       paymentPeriod: paymentPeriod,   // 실제 선택값
-      tenYearReturnRate: rate ? Math.round(rate * 100) : '-', // 환급률
+      tenYearReturnRate: rate ? (rate * 100).toFixed(1) : '-', // 환급률 (소수점 첫째 자리까지)
       interestValue, // 확정이자(실제 값)
       refundValue    // 예상해약환급금(실제 값)
     });
     if (res.data.success) {
+      // 방문자 추적: 보험료 확인
+      try {
+        await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
+          phone,
+          name,
+          counsel_type_id: 1, // 보험료 확인
+          utm_source: 'direct',
+          utm_campaign: 'premium_calculation'
+        });
+        console.log("[CLIENT] 방문자 추적 성공: 보험료 확인");
+      } catch (trackingError) {
+        console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
+      }
+      
       setIsVerified(true);
       setOtpSent(false);
-      alert("인증이 완료되었습니다!");
+      alert("인증이 완료되었습니다! 보험료 계산 결과가 카카오톡으로 전송됩니다.");
     } else {
       alert("인증에 실패했습니다.");
     }
@@ -322,7 +337,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       let refundValue = '-';
       
       if (paymentPeriod && paymentAmount) {
-        tenYearReturnRate = rate ? Math.round(rate * 100).toString() : '-';
+        tenYearReturnRate = rate ? (rate * 100).toFixed(1) : '-';
         interestValue = total ? (total * interestRate).toLocaleString('ko-KR') : '-';
         refundValue = total ? (total * rate).toLocaleString('ko-KR') : '-';
       }
@@ -411,10 +426,22 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   }
   const months = parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12;
   const total = (!isNaN(amount) && !isNaN(months) && amount > 0 && months > 0) ? amount * months : 0;
-  let rate = 1.3, interestRate = 0.3;
-  if (paymentPeriod.includes('5')) { rate = 1.3; interestRate = 0.3; }
-  else if (paymentPeriod.includes('7')) { rate = 1.25; interestRate = 0.25; }
-  else if (paymentPeriod.includes('10')) { rate = 1.2; interestRate = 0.2; }
+  
+  // 환급률 계산 (요구사항에 맞게 수정)
+  let rate = 1.227, interestRate = 0.227; // 기본값: 5년납
+  if (paymentPeriod.includes('5')) { 
+    rate = 1.227; // 122.7%
+    interestRate = 0.227; // 22.7%
+  }
+  else if (paymentPeriod.includes('7')) { 
+    rate = 1.195; // 119.5%
+    interestRate = 0.195; // 19.5%
+  }
+  else if (paymentPeriod.includes('10')) { 
+    rate = 1.15; // 115%
+    interestRate = 0.15; // 15%
+  }
+  
   const interestValue = total ? (total * interestRate).toLocaleString('en-US') : '-';
   const refundValue = total ? (total * rate).toLocaleString('en-US') : '-';
 
@@ -488,7 +515,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                     <div className="relative z-10">
                       <div className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-2 shadow-md">10년 시점</div>
                       <div className="flex items-center justify-center mb-2">
-                        <div className="text-2xl md:text-3xl font-black text-blue-600 drop-shadow-lg animate-[jump-glow_1.2s_ease-in-out_infinite]">122.7%</div>
+                        <div className="text-2xl md:text-3xl font-black text-blue-600 drop-shadow-lg animate-jump-glow">122.7%</div>
                       </div>
                     </div>
                     <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2 relative z-10 mt-auto">
@@ -514,6 +541,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <div className="text-xs text-gray-600 text-center mt-4 relative z-10">
                   <p className="font-medium">* 환급률은 신한라이프 모아더드림Plus종신보험 기준입니다.</p>
                   <p className="text-gray-500">(해약환급금 일부지급형)</p>
+                  <p className="text-gray-500 mt-1">* 5년납: 122.7%, 7년납: 119.5%, 10년납: 115%</p>
                 </div>
             </div>
           </div>
@@ -754,13 +782,13 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
-                    <span className="font-bold text-[#3a8094]">KB라이프</span>
+                    <span className="font-bold text-[#3a8094]">신한라이프생명</span>
                   </div>
                 </div>
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
-                    <span className="font-bold text-[#3a8094]">KB트리플레벨업연금보험</span>
+                    <span className="font-bold text-[#3a8094]">모아더드림Plus종신보험</span>
                   </div>
                 </div>
                 <div className="bg-white p-2 rounded border border-gray-200">
@@ -786,14 +814,14 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 환급률</span>
                     <span className="font-bold">
-                      <span className="text-[#7c3aed]">{rate ? Math.round(rate * 100) : '-'}</span>{' '}<span className="text-[#3a8094]">%</span>
+                      <span className="text-[#7c3aed]">{rate ? (rate * 100).toFixed(1) : '-'}</span>{' '}<span className="text-[#3a8094]">%</span>
                     </span>
                   </div>
                 </div>
-                {/* 10년 확정이자 */}
+                {/* 10년 시점 이자 (총납입액과 해약환급금 차액) */}
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 확정이자</span>
+                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 이자</span>
                     <span className="font-bold">
                       <span className="text-[#3b82f6]">{interestValue}</span>{' '}<span className="text-[#3a8094]">원</span>
                     </span>
@@ -833,13 +861,13 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
-                    <span className="font-bold text-[#3a8094]">KB라이프</span>
+                    <span className="font-bold text-[#3a8094]">신한라이프생명</span>
                   </div>
                 </div>
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
-                    <span className="font-bold text-[#3a8094]">KB트리플레벨업연금보험</span>
+                    <span className="font-bold text-[#3a8094]">모아더드림Plus종신보험</span>
                   </div>
                 </div>
                 <div className="bg-white p-2 rounded border border-gray-200">
@@ -869,10 +897,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                     </span>
                   </div>
                 </div>
-                {/* 10년 확정이자 */}
+                {/* 10년 시점 이자 (총납입액과 해약환급금 차액) */}
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 확정이자</span>
+                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 이자</span>
                     <span className="font-bold">
                       <span className="text-[#3b82f6]">?</span>{' '}<span className="text-[#3a8094]">원</span>
                     </span>

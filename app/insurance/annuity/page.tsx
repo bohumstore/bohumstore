@@ -1,8 +1,10 @@
 "use client";
-import React from "react";
+
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeftIcon, ArrowRightIcon, StarIcon, ShieldCheckIcon, CurrencyDollarIcon, ChartBarIcon } from "@heroicons/react/24/outline";
+import { trackPageVisit } from "../../utils/visitorTracking";
 
 // 연금보험 상품 데이터
 const annuityProducts = [
@@ -85,6 +87,11 @@ const annuityFeatures = [
 ];
 
 export default function AnnuityPage() {
+  useEffect(() => {
+    // 페이지 방문 시 자동 추적
+    trackPageVisit();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* 헤더 */}

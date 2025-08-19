@@ -2,6 +2,7 @@
 export const INSURANCE_COMPANIES = {
   KB_LIFE: 1,
   KDB_LIFE: 2,
+  SHINHAN_LIFE: 4, // 신한라이프생명 추가
 } as const;
 
 // 상품 ID
@@ -9,6 +10,7 @@ export const INSURANCE_PRODUCTS = {
   KB_TRIPLE_LEVEL_UP: 1,  // KB라이프 트리플 레벨업 연금보험
   KDB_HAPPY_DREAM: 2,    // KDB 더!행복드림변액연금보험
   KDB_HAPPY_PLUS_GUARANTEED: 3, // KDB 더!행복플러스연금보험(보증형)
+  SHINHAN_MORE_THE_DREAM: 5, // 신한라이프 모아더드림Plus종신보험 추가
 } as const;
 
 // 상담 타입 ID
@@ -57,6 +59,20 @@ export const PRODUCT_CONFIGS = {
       '보증 연금 지급',
       '최저사망적립액 보증'
     ]
+  },
+  
+  [INSURANCE_PRODUCTS.SHINHAN_MORE_THE_DREAM]: {
+    name: '신한라이프 모아더드림Plus종신보험',
+    companyId: INSURANCE_COMPANIES.SHINHAN_LIFE,
+    companyName: '신한라이프생명',
+    category: '종신보험',
+    features: [
+      '종신보장으로 평생 안전한 보장',
+      '가입 15~70세 / 보장 100세까지',
+      '사망보장금 최대 1억원',
+      '납입완료보너스 및 장기유지보너스 지급',
+      '병력 무심사 / 전건 가입 가능'
+    ]
   }
 } as const;
 
@@ -73,6 +89,10 @@ export const PRODUCT_PATH_CONFIGS = {
   '/insurance/annuity/kdb/happy-plus': {
     productId: INSURANCE_PRODUCTS.KDB_HAPPY_PLUS_GUARANTEED,
     config: PRODUCT_CONFIGS[INSURANCE_PRODUCTS.KDB_HAPPY_PLUS_GUARANTEED]
+  },
+  '/insurance/whole-life/shinhan/more-the-dream': {
+    productId: INSURANCE_PRODUCTS.SHINHAN_MORE_THE_DREAM,
+    config: PRODUCT_CONFIGS[INSURANCE_PRODUCTS.SHINHAN_MORE_THE_DREAM]
   }
 } as const;
 
@@ -86,6 +106,7 @@ export const ALIGO_TEMPLATE_IDS = {
   KB_TRIPLE_LEVEL_UP: 'UA_7754',      // KB라이프 트리플 레벨업 연금보험
   KDB_HAPPY_DREAM: 'UA_7754',         // KDB 더!행복드림변액연금보험
   KDB_HAPPY_PLUS_GUARANTEED: 'UA_7754', // KDB 더!행복플러스연금보험(보증형)
+  SHINHAN_MORE_THE_DREAM: 'UA_7918', // 신한라이프 모아더드림Plus종신보험
 } as const;
 
 // 경로별 상품 정보 조회 함수
@@ -102,6 +123,7 @@ export const getTemplateIdByPath = (path: string) => {
     case 1: return ALIGO_TEMPLATE_IDS.KB_TRIPLE_LEVEL_UP;
     case 2: return ALIGO_TEMPLATE_IDS.KDB_HAPPY_DREAM;
     case 3: return ALIGO_TEMPLATE_IDS.KDB_HAPPY_PLUS_GUARANTEED;
+    case 5: return ALIGO_TEMPLATE_IDS.SHINHAN_MORE_THE_DREAM; // 신한라이프 모아더드림Plus종신보험
     default: return 'UA_7754';
   }
 }; 

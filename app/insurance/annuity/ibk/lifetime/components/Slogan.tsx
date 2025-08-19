@@ -7,6 +7,7 @@ import { queryUsers, createUser, queryCounsel, createCounsel } from '@/app/utils
 import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/insurance';
 import { calculateAnnuityStartAge } from '@/app/utils/annuityCalculator';
 import FireworksEffect from './FireworksEffect';
+import { trackSimplifiedVisitor } from "@/app/utils/visitorTracking";
 
 // 현재 경로에 맞는 상품 정보 가져오기
 const currentPath = '/insurance/annuity/ibk/lifetime';
@@ -235,12 +236,21 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     
     const res = await request.post("/api/verifyOTP", requestData);
     if (res.data.success) {
-      // Supabase에 데이터 저장 (보험료 확인: counselType = 1)
-      const supabaseResult = await saveToSupabase(1);
+      // 방문자 추적: 보험료 확인
+      try {
+        await trackSimplifiedVisitor({
+          phone,
+          name,
+          counsel_type_id: 1 // 보험료 확인
+        });
+        console.log("[CLIENT] 방문자 추적 성공: 보험료 확인");
+      } catch (trackingError) {
+        console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
+      }
       
       setIsVerified(true);
       setOtpSent(false);
-      alert("인증이 완료되었습니다!");
+      alert("인증이 완료되었습니다! 연금액 계산 결과가 카카오톡으로 전송됩니다.");
     } else {
       alert("인증에 실패했습니다.");
     }

@@ -4,6 +4,7 @@ import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
 import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/insurance';
 import FireworksEffect from './FireworksEffect';
+import { trackPremiumCheck } from "@/app/utils/visitorTracking";
 
 // 현재 경로에 맞는 상품 정보 가져오기
 const currentPath = '/insurance/annuity/kb/triple-level-up';
@@ -218,9 +219,23 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       refundValue    // 예상해약환급금(실제 값)
     });
     if (res.data.success) {
+      // 방문자 추적: 보험료 확인
+      try {
+        await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
+          phone,
+          name,
+          counsel_type_id: 1, // 보험료 확인
+          utm_source: 'direct',
+          utm_campaign: 'premium_calculation'
+        });
+        console.log("[CLIENT] 방문자 추적 성공: 보험료 확인");
+      } catch (trackingError) {
+        console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
+      }
+      
       setIsVerified(true);
       setOtpSent(false);
-      alert("인증이 완료되었습니다!");
+      alert("인증이 완료되었습니다! 연금액 계산 결과가 카카오톡으로 전송됩니다.");
     } else {
       alert("인증에 실패했습니다.");
     }

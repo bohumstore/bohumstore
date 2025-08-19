@@ -12,8 +12,9 @@ import ProductInfo from "./components/BodyTabViews/ProductInfo";
 import CoverageDetails from "./components/BodyTabViews/CoverageDetails";
 import Surrender from "./components/BodyTabViews/Surrender";
 import { supabase } from "../../../../api/supabase";
+import { trackPageVisit } from "../../../../utils/visitorTracking";
 
-export default function KBTripleLevelupAnnuityPage() {
+export default function ShinhanMoreTheDreamPage() {
   const tabs = [
     { label: '상품 정보',      content: <ProductInfo /> },
     { label: '보장 내용',      content: <CoverageDetails /> },
@@ -24,6 +25,8 @@ export default function KBTripleLevelupAnnuityPage() {
   const [showPrivacy, setShowPrivacy] = useState(false);
 
   useEffect(() => {
+    // 페이지 방문 시 자동 추적
+    trackPageVisit();
     // getProduct()
   }, []);
 

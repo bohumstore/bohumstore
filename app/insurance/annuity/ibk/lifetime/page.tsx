@@ -12,18 +12,21 @@ import ProductInfo from "./components/BodyTabViews/ProductInfo";
 import CoverageDetails from "./components/BodyTabViews/CoverageDetails";
 import Surrender from "./components/BodyTabViews/Surrender";
 import { supabase } from "../../../../api/supabase";
+import { trackPageVisit } from "../../../../utils/visitorTracking";
 
 export default function IBKLifetimeAnnuityPage() {
   const tabs = [
     { label: '상품 정보',      content: <ProductInfo /> },
     { label: '보장 내용',      content: <CoverageDetails /> },
-    { label: '가입시 알아두실 사항', content: <Surrender /> },
+    { label: '해약환급금 예시표', content: <Surrender /> },
   ];
 
   const [showNotice, setShowNotice] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
 
   useEffect(() => {
+    // 페이지 방문 시 자동 추적
+    trackPageVisit();
     // getProduct()
   }, []);
 

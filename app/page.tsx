@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRightIcon, ChevronLeftIcon, ShieldCheckIcon, CurrencyDollarIcon, ChartBarIcon } from "@heroicons/react/24/outline";
+import { trackPageVisit } from "./utils/visitorTracking";
 
 // CSS 애니메이션 스타일
 const animationStyles = `
@@ -188,14 +189,23 @@ const insuranceFeatures = [
 
 export default function HomePage() {
   const [currentSloganIndex, setCurrentSloganIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSloganIndex((prev) => (prev + 1) % slogans.length);
-    }, 5000);
+    // 페이지 방문 시 자동 추적
+    trackPageVisit();
+    
+    // 자동 슬라이드 기능
+    if (isAutoPlaying) {
+      const interval = setInterval(() => {
+        setCurrentSloganIndex((prevIndex) => 
+          prevIndex === slogans.length - 1 ? 0 : prevIndex + 1
+        );
+      }, 5000);
 
-    return () => clearInterval(interval);
-  }, []);
+      return () => clearInterval(interval);
+    }
+  }, [isAutoPlaying]);
 
   const goToPrevious = () => {
     setCurrentSloganIndex((prev) => (prev - 1 + slogans.length) % slogans.length);
