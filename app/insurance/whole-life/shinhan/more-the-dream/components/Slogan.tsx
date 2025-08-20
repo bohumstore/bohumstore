@@ -465,23 +465,23 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             <ul className="mb-8 md:mb-10 lg:mb-8 space-y-2 md:space-y-3 lg:space-y-2">
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
-                종신보장으로 평생 안전한 보장
+                평생 든든한 종신보장
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
-                가입 15세~70세 전연령 / 보장 100세까지
+                10년시점 해약환급금 122.7% <span className="text-xs text-gray-500"> (일반심사형 기준)</span>
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
-                사망보장금 최대 1억원
+                설계·심사에 따라 가입금액 선택 가능
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
-                납입완료보너스 및 장기유지보너스 지급
+                납입완료보너스·장기유지보너스 제공 <span className="text-xs text-gray-500"> (약관 기준)</span>
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
-                병력 무심사 / 전건 가입 가능
+                일반심사형: 만 15~70세 / 간편심사형: 만 30~70세
               </li>
             </ul>
               {/* 환급률/보너스 안내 UI */}
@@ -497,36 +497,36 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 
                 <div className="grid grid-cols-3 gap-2 md:gap-3 lg:gap-4 relative z-10">
                   {/* 1. 7년 시점 */}
-                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl shadow-lg border border-amber-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
+                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl shadow-lg border border-blue-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
                     <div>
-                      <div className="inline-block bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">7년 시점</div>
+                      <div className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">7년 시점</div>
                     </div>
                     <div className="flex-1 flex items-center justify-center">
-                      <div className="text-2xl md:text-3xl font-black text-amber-600 drop-shadow-lg">100%</div>
+                      <div className="text-2xl md:text-3xl font-black text-blue-600 drop-shadow-lg">90%대</div>
                     </div>
                     <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2">
-                      환급률<br />* 5년납
+                      * 5년납 기준
                     </div>
                   </div>
 
                   {/* 2. 10년 시점 */}
-                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl shadow-lg border border-blue-200 hover:shadow-xl transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-full">
+                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-red-100 to-rose-100 rounded-xl shadow-lg border border-red-200 hover:shadow-xl transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-full">
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent animate-pulse"></div>
                     <div className="relative z-10">
-                      <div className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-2 shadow-md">10년 시점</div>
+                      <div className="inline-block bg-gradient-to-r from-red-500 to-rose-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-2 shadow-md">10년 시점</div>
                       <div className="flex items-center justify-center mb-2">
-                        <div className="text-2xl md:text-3xl font-black text-blue-600 drop-shadow-lg animate-jump-glow">122.7%</div>
+                        <div className="text-2xl md:text-3xl font-black text-red-600 drop-shadow-lg animate-jump-glow">122.7%</div>
                       </div>
                     </div>
                     <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2 relative z-10 mt-auto">
-                      환급률<br />* 5년납
+                      * 5년납 기준
                     </div>
                   </div>
 
                   {/* 3. 보너스 */}
-                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-pink-100 to-rose-100 rounded-xl shadow-lg border border-pink-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
+                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-xl shadow-lg border border-emerald-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
                     <div>
-                      <div className="inline-block bg-gradient-to-r from-pink-500 to-rose-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">보너스</div>
+                      <div className="inline-block bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">보너스</div>
                     </div>
                     <div className="flex-1 flex items-center justify-center">
                       <div className="text-xs font-bold text-gray-800 leading-tight">
@@ -539,8 +539,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   </div>
                 </div>
                 <div className="text-xs text-gray-600 text-center mt-4 relative z-10">
-                  <p className="font-medium">* 환급률은 신한라이프 모아더드림Plus종신보험 기준입니다.</p>
-                  <p className="text-gray-500">(해약환급금 일부지급형)</p>
+                  <p className="font-medium">* 환급률은 가입 후 10년시점 기준입니다.</p>
+                  <p className="text-gray-500">(일반심사형 기준)</p>
                   <p className="text-gray-500 mt-1">* 5년납: 122.7%, 7년납: 119.5%, 10년납: 115%</p>
                 </div>
             </div>

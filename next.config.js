@@ -1,5 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
+  },
   images: {
     // deprecated: domains: ['via.placeholder.com'],
     remotePatterns: [
@@ -15,15 +25,6 @@ const nextConfig = {
   },
   // Playwright 설정 파일을 빌드에서 제외
   // 특정 파일들을 빌드에서 제외
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-      };
-    }
-    return config;
-  },
 };
 
 module.exports = nextConfig;
