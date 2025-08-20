@@ -616,18 +616,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-4 md:gap-8 lg:gap-12 px-4 md:px-6 lg:px-4 md:py-4 lg:py-4">
           {/* 왼쪽: 간단한 슬로건 디자인 */}
           <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
-            {/* IBK 로고 및 보험사명 */}
-            <div className="flex items-center gap-2 mb-4 md:mb-6 lg:mb-4">
-              <div className="bg-white rounded-md p-1 shadow-md">
-                <img src="/IBK-logo.png" alt="IBK 로고" className="h-6 md:h-8 w-auto" />
-              </div>
-              <span className="text-white text-sm md:text-base font-medium">IBK연금보험</span>
-            </div>
-            
             {/* 메인 슬로건 */}
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 lg:mb-4 leading-tight">
-              (무)IBK연금액<br />
-              평생보증 변액연금보험
+              20년까지 연단리 8%!<br />
+              보증되는 변액연금보험!
             </h1>
             
             {/* 간단한 특징 설명 */}
