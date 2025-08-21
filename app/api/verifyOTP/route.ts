@@ -79,11 +79,20 @@ export async function POST(req: Request) {
     user = newUser;
   }
 
-  const { data: product, error: productErr } = await supabase
-    .from('product')
-    .select('name')
-    .eq('id', productId)
-    .single()
+  const [productResult, companyResult] = await Promise.all([
+    supabase
+      .from('product')
+      .select('name')
+      .eq('id', productId)
+      .single(),
+    supabase
+      .from('company')
+      .select('name')
+      .eq('id', companyId)
+      .single()
+  ])
+
+  const { data: product, error: productErr } = productResult
 
   if (productErr || !product) {
     console.error('상품 조회 실패', productErr)
@@ -91,11 +100,7 @@ export async function POST(req: Request) {
   }
   console.log("[DEBUG] product:", product);
 
-  const { data: company, error: companyErr } = await supabase
-    .from('company')
-    .select('name')
-    .eq('id', companyId)
-    .single()
+  const { data: company, error: companyErr } = companyResult
 
   if (companyErr || !company) {
     console.error('회사 조회 실패', companyErr)
@@ -177,7 +182,9 @@ export async function POST(req: Request) {
     // 성별 한글 변환
     const genderKor = gender === 'M' ? '남' : gender === 'F' ? '여' : gender;
 
-    if (!onlyClient) {
+    // 관리자/고객 발송을 병렬 처리하여 전체 대기시간을 단축
+    const adminSendPromise = ((): Promise<any> | null => {
+      if (onlyClient) return null;
       const toAdminReq = {
         headers: { "content-type": "application/json" },
         body: {
@@ -186,22 +193,14 @@ export async function POST(req: Request) {
           receiver_1: "010-8897-7486",
           subject_1:  subject,
           message_1:  counselType === 1
-            // 보험료계산 포맷
             ? `[보험료계산]\n${companyName}\n${product.name}\n${birth}\n${name}\n${genderKor}\n${phone}`
-            // 상담/설계요청 포맷
             : `[상담/설계요청]\n${counselTime}\n${product.name}\n${birth}\n${name}\n${genderKor}\n${phone}`,
           testMode: "N",
         },
       };
-      try {
-        const resultToAdmin = await alimtalkSend(toAdminReq, aligoAuth);
-        console.log(toAdminReq.body);
-        console.log("관리자 알림톡 전송 결과:", resultToAdmin);
-      } catch (err) {
-        console.error("알림톡 전송 실패:", err);
-        return NextResponse.json({ error: "알림톡 전송 실패" }, { status: 502 });
-      }
-    }
+      console.log("[DEBUG] 관리자 알림톡 요청 데이터:", toAdminReq.body);
+      return alimtalkSend(toAdminReq, aligoAuth);
+    })();
 
     // 고객용 템플릿 ID 결정 (counselType: 1일 때는 performancePension 여부에 따라 템플릿 선택)
     let clientTemplateId;
@@ -255,10 +254,13 @@ export async function POST(req: Request) {
     console.log("[DEBUG] 고객용 알림톡 요청 데이터:", toClientReq.body);
     
     try {
-      const resultToClient = await alimtalkSend(toClientReq, aligoAuth);
-      console.log("고객 알림톡 전송 결과:", resultToClient);
+      const sendPromises: Promise<any>[] = [];
+      if (adminSendPromise) sendPromises.push(adminSendPromise);
+      sendPromises.push(alimtalkSend(toClientReq, aligoAuth));
+      const results = await Promise.all(sendPromises);
+      console.log("알림톡 전송 결과(병렬):", results);
     } catch (err) {
-      console.error("알림톡 전송 실패:", err);
+      console.error("알림톡 전송 실패(병렬):", err);
       return NextResponse.json({ error: "알림톡 전송 실패" }, { status: 502 });
     }
   }

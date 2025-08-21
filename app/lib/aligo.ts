@@ -2,6 +2,8 @@ import axios from 'axios'
 import fs from 'fs'
 import FormData from 'form-data'
 import multiparty from 'multiparty'
+import http from 'http'
+import https from 'https'
 
 export interface AuthData {
   apikey: string
@@ -88,10 +90,15 @@ export function postRequest(data: Record<string, any>): Promise<any> {
   console.log(`[ALIGO API] 요청 URI: ${uri}`);
   console.log(`[ALIGO API] 요청 데이터:`, data);
 
-  return axios
-    .post(uri, form, { 
-      headers: form.getHeaders(),
-      timeout: 10000 // 10초 타임아웃 추가
+  const axiosClient = axios.create({
+    httpAgent: new http.Agent({ keepAlive: true, maxSockets: 50 }),
+    httpsAgent: new https.Agent({ keepAlive: true, maxSockets: 50 }),
+    timeout: 7000
+  })
+
+  return axiosClient
+    .post(uri, form, {
+      headers: form.getHeaders()
     })
     .then(res => {
       console.log(`[ALIGO API] 응답 성공: ${new Date().toISOString()}`);
