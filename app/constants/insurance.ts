@@ -3,6 +3,7 @@ export const INSURANCE_COMPANIES = {
   KB_LIFE: 1,
   KDB_LIFE: 2,
   SHINHAN_LIFE: 4, // 신한라이프생명 추가
+  DONGYANG_LIFE: 5, // 동양생명 추가
 } as const;
 
 // 상품 ID
@@ -11,6 +12,7 @@ export const INSURANCE_PRODUCTS = {
   KDB_HAPPY_DREAM: 2,    // KDB 더!행복드림변액연금보험
   KDB_HAPPY_PLUS_GUARANTEED: 3, // KDB 더!행복플러스연금보험(보증형)
   SHINHAN_MORE_THE_DREAM: 5, // 신한라이프 모아더드림Plus종신보험 추가
+  DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE: 6, // 동양생명 new알뜰플러스종신보험
 } as const;
 
 // 상담 타입 ID
@@ -73,6 +75,19 @@ export const PRODUCT_CONFIGS = {
       '납입완료보너스 및 장기유지보너스 지급',
       '병력 무심사 / 전건 가입 가능'
     ]
+  },
+
+  [INSURANCE_PRODUCTS.DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE]: {
+    name: '동양생명 new알뜰플러스종신보험',
+    companyId: INSURANCE_COMPANIES.DONGYANG_LIFE,
+    companyName: '동양생명',
+    category: '종신보험',
+    features: [
+      '해약환급금 일부지급형으로 보험료 부담 경감',
+      '종신 사망보장 중심 설계',
+      '일반심사형/간편심사형 선택 가능',
+      '납입면제 등 보장 기능(약관 기준)'
+    ]
   }
 } as const;
 
@@ -93,6 +108,10 @@ export const PRODUCT_PATH_CONFIGS = {
   '/insurance/whole-life/shinhan/more-the-dream': {
     productId: INSURANCE_PRODUCTS.SHINHAN_MORE_THE_DREAM,
     config: PRODUCT_CONFIGS[INSURANCE_PRODUCTS.SHINHAN_MORE_THE_DREAM]
+  },
+  '/insurance/whole-life/dongyang/new-life': {
+    productId: INSURANCE_PRODUCTS.DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE,
+    config: PRODUCT_CONFIGS[INSURANCE_PRODUCTS.DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE]
   }
 } as const;
 
@@ -107,6 +126,7 @@ export const ALIGO_TEMPLATE_IDS = {
   KDB_HAPPY_DREAM: 'UA_7754',         // KDB 더!행복드림변액연금보험
   KDB_HAPPY_PLUS_GUARANTEED: 'UA_7754', // KDB 더!행복플러스연금보험(보증형)
   SHINHAN_MORE_THE_DREAM: 'UA_7918', // 신한라이프 모아더드림Plus종신보험
+  DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE: 'UA_7754', // 동양생명 new알뜰플러스종신보험 (기본 템플릿 사용)
 } as const;
 
 // 경로별 상품 정보 조회 함수
@@ -124,6 +144,7 @@ export const getTemplateIdByPath = (path: string) => {
     case 2: return ALIGO_TEMPLATE_IDS.KDB_HAPPY_DREAM;
     case 3: return ALIGO_TEMPLATE_IDS.KDB_HAPPY_PLUS_GUARANTEED;
     case 5: return ALIGO_TEMPLATE_IDS.SHINHAN_MORE_THE_DREAM; // 신한라이프 모아더드림Plus종신보험
+    case 6: return ALIGO_TEMPLATE_IDS.DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE; // 동양생명 new알뜰플러스종신보험
     default: return 'UA_7754';
   }
 }; 

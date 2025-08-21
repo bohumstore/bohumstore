@@ -14,7 +14,7 @@ import Surrender from "./components/BodyTabViews/Surrender";
 import { supabase } from "../../../../api/supabase";
 import { trackPageVisit } from "../../../../utils/visitorTracking";
 
-export default function IBKLifetimeAnnuityPage() {
+export default function DongyangNewAlddulPlusWholeLifePage() {
   const tabs = [
     { label: '상품 정보',      content: <ProductInfo /> },
     { label: '보장 내용',      content: <CoverageDetails /> },
@@ -44,15 +44,15 @@ export default function IBKLifetimeAnnuityPage() {
     <>
       <style jsx global>{`
         @keyframes jump-glow {
-          0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 #ea580c); }
-          30% { transform: scale(1.18) translateY(-6px); filter: drop-shadow(0 0 8px #fb923c); }
-          60% { transform: scale(0.95) translateY(2px); filter: drop-shadow(0 0 0 #ea580c); }
+          0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 #dc2626); }
+          30% { transform: scale(1.18) translateY(-6px); filter: drop-shadow(0 0 8px #fca5a5); }
+          60% { transform: scale(0.95) translateY(2px); filter: drop-shadow(0 0 0 #dc2626); }
         }`}</style>
       <Notice open={showNotice} onClose={() => setShowNotice(false)} />
       <Modal title="개인정보 수집 및 이용 동의" open={showPrivacy} onClose={() => setShowPrivacy(false)}>
         <PrivacyConsent />
       </Modal>
-      <div className="font-sans bg-[#f8f8f8] flex flex-col items-center w-full">
+      <div className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full">
         <Header />
         <Slogan onOpenPrivacy={() => setShowPrivacy(true)} />
         {/* 상품 상세 영역 (탭/강조타이틀/설명/특약/일러스트/하단버튼) */}
@@ -60,23 +60,40 @@ export default function IBKLifetimeAnnuityPage() {
           <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 md:px-10 lg:px-16">
             <Tabs tabs={tabs} />
             {/* 하단 버튼 */}
-            {/* <div className="flex flex-col md:flex-row gap-4 justify-center mt-8">
-                <a href="/ibk-pension-guide.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
-                상품요약서
+            <div className="flex flex-col md:flex-row gap-4 justify-center mt-10">
+              <a 
+                href="#" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer"
+              >
+                상품설명서
               </a>
-                <a href="/ibk-pension-contract.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
-                상품약관
+              <a 
+                href="#" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer"
+              >
+                약관
               </a>
-            </div> */}
+              <button type="button" onClick={() => setShowNotice(true)} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
+                가입시 알아두실 사항
+              </button>
+            </div>
           </div>
         </section>
         {/* 유의사항 박스 */}
         <div className="w-full flex justify-center">
           <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mb-2 md:mb-4 lg:mb-6 mt-6 md:mt-8 lg:mt-10 px-6 py-0 text-xs md:text-sm text-gray-800">
             <div className="mb-1 font-bold">[ 유의사항 ]</div>
-            <div>- 보험사 및 상품별로 상이할 수 있으므로, 관련한 세부사항은 반드시 해당 약관을 참조하시기 바랍니다.</div>
-            <div>- 위는 예시일 뿐 해당 납입기간이 끝나기 전에 해지를 할경우 해당 표와 실지급금액이 차이가 발생할수 있습니다.</div>
-            <div>- 최저보증연금은 연금개시 이전 중도해지시에는 최저보증이 되지 않아 운용결과에 따라 해지환급금에 손실이 발생할 수 있습니다.</div>
+            <div>※ 가입 시 보험계약의 기본사항(보험 상품명, 보험기간, 보험료, 보험료 납입기간 등)을 반드시 확인하시기 바랍니다.</div>
+            <div>※ 피보험자의 과거 건강상태, 직업 등 계약 전 알릴 의무를 사실대로 고지하지 않으면 보험금 지급이 제한되거나 계약이 해지될 수 있습니다.</div>
+            <div>※ 일반사망보험금은 고의적 사고 및 가입 후 2년 이내 자살의 경우 지급이 제한됩니다.</div>
+            <div>※ 본 상품은 사망보험금을 지급하는 보장성보험으로, 저축성보험과 비교하여 위험보험료(사망 등 보장) 및 사업비가 더 많이 차감되므로 저축 목적에는 적합하지 않습니다.</div>
+            <div>※ 해약환급금은 경과기간 및 해약공제에 따라 납입보험료보다 적거나 없을 수 있습니다.</div>
+            <div>※ 해약환급금 일부지급형 상품이므로, 중도 해지 시 일반형보다 해약환급금이 적게 지급됩니다.</div>
+            <div>※ 본 상품은 무배당 상품으로, 배당금이 지급되지 않습니다.</div>
           </div>
         </div>
         {/* 구분선 */}
@@ -93,7 +110,7 @@ export default function IBKLifetimeAnnuityPage() {
             <div className="text-red-500">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
             <div className="text-red-500">① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.</div>
             <div className="text-red-500">② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</div>
-            <div>※ ㈜메타리치 심의필 25080166호 (2025/08/21~2026/08/20)</div>
+            <div>※ 준법감시인 심의필 제XXXX-광고-XXXX호(XXXX.XX.XX~XXXX.XX.XX)</div>
           </div>
         </div>
         <Footer />
@@ -111,4 +128,4 @@ export default function IBKLifetimeAnnuityPage() {
       </div>
     </>
   );
-} 
+}
