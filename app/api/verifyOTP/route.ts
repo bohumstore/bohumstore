@@ -202,19 +202,18 @@ export async function POST(req: Request) {
       return alimtalkSend(toAdminReq, aligoAuth);
     })();
 
-    // 고객용 템플릿 ID 결정 (counselType: 1일 때는 performancePension 여부에 따라 템플릿 선택)
+    // 고객용 템플릿 ID 결정 (counselType: 1일 때도 클라이언트 지정 템플릿 우선 적용)
     let clientTemplateId;
     if (counselType === 1) {
-      // 신한라이프 모아더드림Plus종신보험(상품ID 5)일 때 UA_7918 템플릿 사용
-      if (productId === 5) {
-        clientTemplateId = "UA_7918"; // 신한라이프 모아더드림Plus종신보험 전용 템플릿
+      if (templateId) {
+        clientTemplateId = templateId;
+        console.log("[DEBUG] 클라이언트 지정 템플릿 사용:", clientTemplateId);
+      } else if (productId === 5) {
+        clientTemplateId = "UA_7918";
         console.log("[DEBUG] 신한라이프 모아더드림Plus종신보험이므로 UA_7918 템플릿 사용");
-      } else if (performancePension) {
-        clientTemplateId = "UB_6018"; // 변액연금용 템플릿 (실적배당 포함)
-        console.log("[DEBUG] counselType이 1이고 performancePension이 있으므로 UB_6018 템플릿 사용");
       } else {
-        clientTemplateId = "UB_5797"; // 일반 연금용 템플릿
-        console.log("[DEBUG] counselType이 1이므로 UB_5797 템플릿 사용");
+        clientTemplateId = "UB_5797";
+        console.log("[DEBUG] 기본 템플릿 UB_5797 사용");
       }
     } else {
       clientTemplateId = templateId || "UA_7919"; // 상담신청용 템플릿
@@ -223,7 +222,24 @@ export async function POST(req: Request) {
     console.log("[DEBUG] 최종 고객용 템플릿 ID:", clientTemplateId);
     console.log("[DEBUG] 클라이언트에서 전송한 templateId:", templateId);
     console.log("[DEBUG] counselType:", counselType);
-    
+    // 숫자 가공: 전달되지 않으면 안전한 기본/계산값으로 대체
+    const monthlyPensionNum = typeof monthlyPension === 'number' ? monthlyPension : parseInt(String(monthlyPension || '0').replace(/[^0-9]/g, '')) || 0;
+    const pensionStartAgeNum = (() => {
+      const v = typeof (requestBody as any).pensionStartAge === 'number' ? (requestBody as any).pensionStartAge : parseInt(String((requestBody as any).pensionStartAge || '0').replace(/[^0-9]/g, '')) || 0;
+      return v;
+    })();
+    const guaranteedPensionNum = (() => {
+      const raw = typeof guaranteedPension === 'number' ? guaranteedPension : parseInt(String(guaranteedPension || '0').replace(/[^0-9]/g, ''));
+      if (!isNaN(raw) && raw > 0) return raw;
+      return monthlyPensionNum > 0 ? monthlyPensionNum * 12 * 20 : 0; // 기본 20년 보증 총액
+    })();
+    const totalUntil100Num = (() => {
+      const raw = typeof (requestBody as any).totalUntil100 === 'number' ? (requestBody as any).totalUntil100 : parseInt(String((requestBody as any).totalUntil100 || '0').replace(/[^0-9]/g, ''));
+      if (!isNaN(raw) && raw > 0) return raw;
+      if (monthlyPensionNum > 0 && pensionStartAgeNum > 0) return monthlyPensionNum * 12 * Math.max(0, 100 - pensionStartAgeNum);
+      return 0;
+    })();
+
     const toClientReq = {
       headers: { "content-type": "application/json" },
       body: {
@@ -237,9 +253,9 @@ export async function POST(req: Request) {
             ? `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간: ${paymentPeriod}\n⊙ 월보험료: ${mounthlyPremium}\n\n▼ 10년시점 ▼\n· 환급률: ${tenYearReturnRate}%\n· 확정이자: ${interestValue}원\n· 예상해약환급금: ${refundValue}원`
             : clientTemplateId === "UB_6018"
             // UB_6018 템플릿 (변액연금용 - 실적배당 포함)
-            ? `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간 / 월보험료: ${paymentPeriod} / ${mounthlyPremium}\n⊙ 총 납입액: ${mounthlyPremium ? (parseInt(mounthlyPremium.replace(/[^0-9]/g, '')) * 10000 * parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12).toLocaleString() : '-'}원\n⊙ 연금개시연령: ${paymentPeriod ? (paymentPeriod.includes('10') ? '65' : paymentPeriod.includes('15') ? '70' : paymentPeriod.includes('20') ? '75' : '80') : '-'}세\n\n▼ 예상 연금 수령 ▼\n· 월 연금액: ${monthlyPension ? monthlyPension.toLocaleString() : '-'}원\n· 실적배당 연금액: ${performancePension ? performancePension.toLocaleString() : '-'}원\n· 100세까지 총 수령액: ${monthlyPension ? (monthlyPension * 12 * 35).toLocaleString() : '-'}원\n\n※ 위 금액은 예시이며, 실제 수령액은 가입 시 조건, 이율, 보험사 정책 및 운용 실적 등에 따라 달라질 수 있습니다.`
+            ? `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간 / 월보험료: ${paymentPeriod} / ${mounthlyPremium}\n⊙ 총 납입액: ${mounthlyPremium && paymentPeriod ? (parseInt(String(mounthlyPremium).replace(/[^0-9]/g, '')) * 10000 * parseInt(String(paymentPeriod).replace(/[^0-9]/g, '')) * 12).toLocaleString() : '-'}원\n⊙ 연금개시연령: ${pensionStartAgeNum || '-'}세\n\n▼ 예상 연금 수령 ▼\n· 월 연금액: ${monthlyPensionNum ? monthlyPensionNum.toLocaleString() : '-'}원\n· 실적배당 연금액: ${performancePension ? Number(performancePension).toLocaleString() : '-'}원\n· 100세까지 총 수령액: ${totalUntil100Num ? totalUntil100Num.toLocaleString() : '-'}원\n\n※ 위 금액은 예시이며, 실제 수령액은 가입 시 조건, 이율, 보험사 정책 및 운용 실적 등에 따라 달라질 수 있습니다.`
             // UB_5797 템플릿 (일반 연금용)
-            : `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간 / 월보험료: ${paymentPeriod} / ${mounthlyPremium}\n⊙ 총 납입액: ${mounthlyPremium ? (parseInt(mounthlyPremium.replace(/[^0-9]/g, '')) * 10000 * parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12).toLocaleString() : '-'}원\n⊙ 연금개시연령: ${paymentPeriod ? (paymentPeriod.includes('10') ? '65' : paymentPeriod.includes('15') ? '70' : paymentPeriod.includes('20') ? '75' : '80') : '-'}세\n\n▼ 예상 연금 수령 ▼\n· 월 연금액: ${monthlyPension ? monthlyPension.toLocaleString() : '-'}원\n· 20년 보증기간 총액: ${guaranteedPension ? guaranteedPension.toLocaleString() : '-'}원\n· 100세까지 총 수령액: ${monthlyPension && guaranteedPension ? (monthlyPension * 12 * 35).toLocaleString() : '-'}원\n\n※ 위 금액은 예시이며, 실제 수령액은 가입 시 조건, 이율, 보험사 정책 등에 따라 달라질 수 있습니다.`
+            : `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간 / 월보험료: ${paymentPeriod} / ${mounthlyPremium}\n⊙ 총 납입액: ${mounthlyPremium && paymentPeriod ? (parseInt(String(mounthlyPremium).replace(/[^0-9]/g, '')) * 10000 * parseInt(String(paymentPeriod).replace(/[^0-9]/g, '')) * 12).toLocaleString() : '-'}원\n⊙ 연금개시연령: ${pensionStartAgeNum || '-'}세\n\n▼ 예상 연금 수령 ▼\n· 월 연금액: ${monthlyPensionNum ? monthlyPensionNum.toLocaleString() : '-'}원\n· 20년 보증기간 총액: ${guaranteedPensionNum ? guaranteedPensionNum.toLocaleString() : '-'}원\n· 100세까지 총 수령액: ${totalUntil100Num ? totalUntil100Num.toLocaleString() : '-'}원\n\n※ 위 금액은 예시이며, 실제 수령액은 가입 시 조건, 이율, 보험사 정책 등에 따라 달라질 수 있습니다.`
           : `▼ ${user.name}님\n\n▣ 보험종류: [ ${product.name} ]\n▣ 상담시간: [ ${counselTime} ]\n\n상담 신청해 주셔서 감사합니다!`,
         button_1: {
           button: [{

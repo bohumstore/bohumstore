@@ -228,7 +228,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       paymentPeriod: paymentPeriod,   // 실제 선택값
       monthlyPension: pensionAmounts.monthly, // 월 연금액
       performancePension: pensionAmounts.performance, // 실적배당 연금액
-      templateId: "UB_6018", // 고객용 연금액 계산 결과 전송용 템플릿
+      guaranteedPension: pensionAmounts.monthly * 12 * 20,
+      pensionStartAge: getPensionStartAge(Number(insuranceAge), paymentPeriod),
+      totalUntil100: pensionAmounts.monthly * 12 * Math.max(0, 100 - getPensionStartAge(Number(insuranceAge), paymentPeriod)),
+      templateId: "UB_5797", // 고객용 연금액 계산 결과 전송용 템플릿
       adminTemplateId: "UA_8331" // 관리자용 연금액 계산 결과 전송용 템플릿
     };
     
@@ -1043,12 +1046,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                     </span>
                   </div>
                 </div>
-                {/* 실적배당 연금액 */}
+                {/* 20년 보증기간 연금액 */}
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>실적배당 연금액</span>
+                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
                     <span className="font-bold">
-                      <span className="text-[#ef4444]">{isVerified ? `약 ${pensionAmounts.performance.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
+                      <span className="text-[#ef4444]">{isVerified ? `약 ${(pensionAmounts.monthly * 12 * 20).toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
                       {isVerified && <span className="text-[#3a8094]"> 원</span>}
                     </span>
                   </div>
@@ -1134,12 +1137,19 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                     </span>
                   </div>
                 </div>
-                {/* 실적배당 연금액 */}
+                {/* 20년 보증기간 연금액 */}
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>실적배당 연금액</span>
+                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
+                    <span className="font-bold"><span className="text-[#ef4444]">인증 후 확인가능</span></span>
+                  </div>
+                </div>
+                {/* 100세까지 생존 시 총 받는 금액 */}
+                <div className="bg-white p-2 rounded border border-gray-200">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
                     <span className="font-bold">
-                      <span className="text-[#ef4444]">인증 후 확인가능</span>
+                      <span className="text-[#10b981]">인증 후 확인가능</span>
                     </span>
                   </div>
                 </div>

@@ -52,6 +52,15 @@ export function formParse(
 }
 
 // 2) formParse 결과를 POST form-data 로 변환해서 실제로 전송합니다.
+// 모듈 전역에 Keep-Alive 에이전트 및 axios 인스턴스를 유지하여 연결 설정 지연을 최소화
+const httpAgent = new http.Agent({ keepAlive: true, maxSockets: 100 })
+const httpsAgent = new https.Agent({ keepAlive: true, maxSockets: 100 })
+const axiosClient = axios.create({
+  httpAgent,
+  httpsAgent,
+  timeout: 12000,
+})
+
 export function postRequest(data: Record<string, any>): Promise<any> {
   const uri = data.uri
   const form = new FormData()
@@ -86,28 +95,28 @@ export function postRequest(data: Record<string, any>): Promise<any> {
     }
   }
 
-  console.log(`[ALIGO API] 요청 시작: ${new Date().toISOString()}`);
-  console.log(`[ALIGO API] 요청 URI: ${uri}`);
-  console.log(`[ALIGO API] 요청 데이터:`, data);
-
-  const axiosClient = axios.create({
-    httpAgent: new http.Agent({ keepAlive: true, maxSockets: 50 }),
-    httpsAgent: new https.Agent({ keepAlive: true, maxSockets: 50 }),
-    timeout: 7000
-  })
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`[ALIGO API] 요청 시작: ${new Date().toISOString()}`);
+    console.log(`[ALIGO API] 요청 URI: ${uri}`);
+    console.log(`[ALIGO API] 요청 데이터:`, data);
+  }
 
   return axiosClient
     .post(uri, form, {
       headers: form.getHeaders()
     })
     .then(res => {
-      console.log(`[ALIGO API] 응답 성공: ${new Date().toISOString()}`);
-      console.log(`[ALIGO API] 응답 데이터:`, res.data);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(`[ALIGO API] 응답 성공: ${new Date().toISOString()}`);
+        console.log(`[ALIGO API] 응답 데이터:`, res.data);
+      }
       return res.data;
     })
     .catch(err => {
-      console.error(`[ALIGO API] 요청 실패: ${new Date().toISOString()}`);
-      console.error(`[ALIGO API] 에러 상세:`, err.response?.data || err.message);
+      if (process.env.NODE_ENV !== 'production') {
+        console.error(`[ALIGO API] 요청 실패: ${new Date().toISOString()}`);
+        console.error(`[ALIGO API] 에러 상세:`, err.response?.data || err.message);
+      }
       throw err;
     });
 }

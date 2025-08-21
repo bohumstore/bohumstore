@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { supabase } from '@/app/api/supabase';
 
 interface VisitorData {
   id: string;
@@ -49,6 +50,8 @@ export default function VisitorTrackingPage() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [autoRefresh, setAutoRefresh] = useState(false);
+  const lastRefreshRef = useRef<number>(0);
   const [filters, setFilters] = useState({
     counsel_type_id: '',
     date_from: '',
@@ -64,6 +67,38 @@ export default function VisitorTrackingPage() {
     fetchVisitors();
     fetchStats();
   }, [currentPage, filters]);
+
+  const safeRefresh = () => {
+    const now = Date.now();
+    if (now - lastRefreshRef.current < 5000) return; // 5초 이내 중복 요청 방지
+    lastRefreshRef.current = now;
+    fetchVisitors();
+    fetchStats();
+  };
+
+  // 실시간 업데이트
+  useEffect(() => {
+    const channel = supabase
+      .channel('realtime:visitor_tracking')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'visitor_tracking' }, () => {
+        safeRefresh();
+      })
+      .subscribe();
+
+    return () => {
+      try { supabase.removeChannel(channel); } catch {}
+    };
+  }, []);
+
+  // 선택적 자동 새로고침 (기본 OFF)
+  useEffect(() => {
+    if (!autoRefresh) return;
+    const interval = setInterval(() => {
+      if (typeof document === 'undefined' || document.visibilityState !== 'visible') return;
+      safeRefresh();
+    }, 60000); // 60초
+    return () => clearInterval(interval);
+  }, [autoRefresh]);
 
   const fetchVisitors = async () => {
     try {
@@ -155,6 +190,24 @@ export default function VisitorTrackingPage() {
     setCurrentPage(1);
   };
 
+  const formatKST = (isoString: string): string => {
+    try {
+      const d = new Date(isoString);
+      return d.toLocaleString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        timeZone: 'Asia/Seoul'
+      });
+    } catch {
+      return isoString;
+    }
+  };
+
   const exportToCSV = () => {
     if (!visitors.length) return;
 
@@ -165,7 +218,7 @@ export default function VisitorTrackingPage() {
 
     // CSV 데이터 생성 (한글 깨짐 방지)
     const csvData = visitors.map(visitor => [
-      format(new Date(visitor.created_at), 'yyyy-MM-dd HH:mm:ss'),
+      formatKST(visitor.created_at),
       visitor.ip_address || '',
       visitor.carrier || '',
       visitor.session_count || 1,
@@ -228,20 +281,7 @@ export default function VisitorTrackingPage() {
     {
       header: '방문시간',
       accessorKey: 'created_at',
-      cell: ({ row }: any) => {
-        const date = new Date(row.original.created_at);
-        // UTC 시간을 한국 시간(KST)으로 변환 (+9시간)
-        const kstDate = new Date(date.getTime() + (9 * 60 * 60 * 1000));
-        return kstDate.toLocaleString('ko-KR', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          timeZone: 'Asia/Seoul'
-        });
-      }
+      cell: ({ row }: any) => formatKST(row.original.created_at)
     },
     {
       header: 'IP주소',
@@ -511,6 +551,20 @@ export default function VisitorTrackingPage() {
             >
               CSV 다운로드
             </button>
+            <div className="flex items-center space-x-2">
+              <label className="text-sm text-gray-600">자동 새로고침(60초)</label>
+              <input
+                type="checkbox"
+                checked={autoRefresh}
+                onChange={(e) => setAutoRefresh(e.target.checked)}
+              />
+              <button
+                onClick={safeRefresh}
+                className="ml-2 px-3 py-2 border border-gray-300 rounded-md"
+              >
+                새로고침
+              </button>
+            </div>
           </div>
           
           <div className="overflow-x-auto">
@@ -537,16 +591,8 @@ export default function VisitorTrackingPage() {
                 {visitors.map((visitor) => (
                   <tr key={visitor.id} className="hover:bg-gray-50">
                     <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                       {(() => {
-                         try {
-                           const date = new Date(visitor.created_at);
-                           return format(date, 'MM/dd HH:mm');
-                         } catch (error) {
-                           console.warn('Date parsing error:', error);
-                           return 'Invalid Date';
-                         }
-                       })()}
-                     </td>
+                      {formatKST(visitor.created_at)}
+                    </td>
                     <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
                       {visitor.ip_address || '-'}
                     </td>

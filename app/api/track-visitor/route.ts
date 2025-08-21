@@ -55,9 +55,11 @@ export async function POST(request: NextRequest) {
       user_agent: user_agent || request.headers.get('user-agent'),
     };
 
-    console.log('[TRACK-VISITOR] Supabase에 삽입할 데이터:', trackingData);
-    console.log('[TRACK-VISITOR] 현재 시간:', new Date().toISOString());
-    console.log('[TRACK-VISITOR] 한국 시간:', new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }));
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[TRACK-VISITOR] Supabase에 삽입할 데이터:', trackingData);
+      console.log('[TRACK-VISITOR] 현재 시간:', new Date().toISOString());
+      console.log('[TRACK-VISITOR] 한국 시간:', new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }));
+    }
     
     const { data, error } = await supabase
       .from('visitor_tracking')
@@ -279,13 +281,15 @@ export async function GET(request: NextRequest) {
 
     const totalPages = Math.ceil((totalCount || 0) / limit);
 
-    console.log('[TRACK-VISITOR] 데이터 조회 완료:', {
-      totalCount,
-      currentPage: page,
-      limit,
-      totalPages,
-      dataCount: data?.length || 0
-    });
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[TRACK-VISITOR] 데이터 조회 완료:', {
+        totalCount,
+        currentPage: page,
+        limit,
+        totalPages,
+        dataCount: data?.length || 0
+      });
+    }
 
     const responseData = {
       data: data || [],
@@ -297,8 +301,10 @@ export async function GET(request: NextRequest) {
       },
     };
     
-    console.log('[TRACK-VISITOR] 최종 응답 데이터:', responseData);
-    console.log('[TRACK-VISITOR] 응답 데이터 타입:', typeof responseData.data, Array.isArray(responseData.data));
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[TRACK-VISITOR] 최종 응답 데이터:', responseData);
+      console.log('[TRACK-VISITOR] 응답 데이터 타입:', typeof responseData.data, Array.isArray(responseData.data));
+    }
     
     return NextResponse.json(responseData);
 

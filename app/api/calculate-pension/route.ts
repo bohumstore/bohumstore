@@ -65,7 +65,15 @@ export async function POST(request: NextRequest) {
 			// 드림: 월 연금액과 실적배당 연금액을 분리
 			monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금'];
 			performancePensionHeaderCandidates = ['실적배당 연금액', '실적배당연금액'];
-			guaranteedAmountHeaderCandidates = ['20년 보증기간 총액', '20년 보증 총액', '보증기간 총액'];
+			guaranteedAmountHeaderCandidates = [
+				'20년 보증기간 총액',
+				'20년 보증 총액',
+				'보증기간 총액',
+				'20년 보증기간 연금액',
+				'보증기간 연금액',
+				'20년보증기간총액',
+				'20년보증기간연금액'
+			];
 		} else {
 			candidatePaths = [
 				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'kdb', 'happy-plus', 'kdb_plus_15-70.xlsx'),
@@ -124,8 +132,8 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		// 워크시트를 JSON으로 변환
-		const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+		// 워크시트를 JSON으로 변환 (defval로 빈 셀도 보존하여 열 길이 유지)
+		const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
 
 		// 헤더 탐지 로직 (최대 10행 스캔)
 		const normalize = (v: any) => String(v ?? '').replace(/\s+/g, '').trim();
@@ -160,10 +168,20 @@ export async function POST(request: NextRequest) {
 		}
 
 		// 인덱스 매핑 도우미 (정규화 + 유사어)
+		// 헤더가 바로 한 행에 없을 수 있어 상단 10행을 스캔하여 컬럼 위치를 탐색
 		const findIndexBySynonyms = (synonyms: string[]) => {
-			const norm = headerRow.map(x => normalize(x));
+			const maxScan = Math.min(jsonData.length, 10);
+			for (let r = 0; r < maxScan; r++) {
+				const normRow = (jsonData[r] as any[]).map(x => normalize(x));
+				for (const key of synonyms) {
+					const idx = normRow.indexOf(normalize(key));
+					if (idx !== -1) return idx;
+				}
+			}
+			// 마지막으로 헤더 행만 한 번 더 확인
+			const normHeader = headerRow.map(x => normalize(x));
 			for (const key of synonyms) {
-				const idx = norm.indexOf(normalize(key));
+				const idx = normHeader.indexOf(normalize(key));
 				if (idx !== -1) return idx;
 			}
 			return -1;
@@ -232,12 +250,19 @@ export async function POST(request: NextRequest) {
 			);
 		}
 		
-		// 결과 데이터 추출 (헤더가 없으면 0 또는 빈 값 처리)
-		const pensionStartAge = pensionStartAgeIndex !== -1 ? (matchedRow[pensionStartAgeIndex] || '') : '';
-		const monthlyPension = monthlyPensionIndex !== -1 ? (matchedRow[monthlyPensionIndex] || 0) : 0;
-		const performancePension = performancePensionIndex !== -1 ? (matchedRow[performancePensionIndex] || 0) : 0;
-		const guaranteedAmount = guaranteedAmountIndex !== -1 ? (matchedRow[guaranteedAmountIndex] || 0) : 0;
-		const totalUntil100 = totalUntil100Index !== -1 ? (matchedRow[totalUntil100Index] || 0) : 0;
+		// 결과 데이터 추출 (숫자 정규화 파서 적용)
+		const parseNumber = (v: any): number => {
+			if (v === null || v === undefined) return 0;
+			if (typeof v === 'number') return isFinite(v) ? v : 0;
+			const s = String(v).replace(/[^0-9.-]/g, '');
+			const n = parseFloat(s);
+			return isNaN(n) ? 0 : Math.round(n);
+		};
+		const pensionStartAge = pensionStartAgeIndex !== -1 ? parseNumber(matchedRow[pensionStartAgeIndex]) : 0;
+		const monthlyPension = monthlyPensionIndex !== -1 ? parseNumber(matchedRow[monthlyPensionIndex]) : 0;
+		const performancePension = performancePensionIndex !== -1 ? parseNumber(matchedRow[performancePensionIndex]) : 0;
+		const guaranteedAmount = guaranteedAmountIndex !== -1 ? parseNumber(matchedRow[guaranteedAmountIndex]) : 0;
+		const totalUntil100 = totalUntil100Index !== -1 ? parseNumber(matchedRow[totalUntil100Index]) : 0;
 		const notice = noticeIndex !== -1 ? (matchedRow[noticeIndex] || '') : '';
 
 		// 숫자 포맷팅 (3자리 콤마 + 원)

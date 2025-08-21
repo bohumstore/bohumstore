@@ -15,7 +15,9 @@ export async function GET(request: NextRequest) {
     const endDate = date_to || new Date().toISOString().split('T')[0];
 
     // 1. 전체 방문자 수
-    console.log('[STATS] 전체 방문자 수 조회 시작...');
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[STATS] 전체 방문자 수 조회 시작...');
+    }
     const { count: totalVisitors, error: totalError } = await supabase
       .from('visitor_tracking')
       .select('*', { count: 'exact', head: true });
@@ -23,7 +25,9 @@ export async function GET(request: NextRequest) {
     if (totalError) {
       console.error('[STATS] 전체 방문자 수 조회 오류:', totalError);
     } else {
-      console.log('[STATS] 전체 방문자 수 조회 성공:', totalVisitors);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('[STATS] 전체 방문자 수 조회 성공:', totalVisitors);
+      }
     }
 
     // 2. 상담 유형별 방문자 수
@@ -92,8 +96,10 @@ export async function GET(request: NextRequest) {
       osStats: osCounts,
     };
     
-    console.log('[STATS] 최종 응답 데이터:', responseData);
-    console.log('[STATS] totalVisitors 값:', responseData.totalVisitors);
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[STATS] 최종 응답 데이터:', responseData);
+      console.log('[STATS] totalVisitors 값:', responseData.totalVisitors);
+    }
     
     return NextResponse.json(responseData);
 

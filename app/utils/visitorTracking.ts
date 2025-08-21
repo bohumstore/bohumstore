@@ -128,17 +128,18 @@ function extractSearchKeyword(referrer: string | null): {
 // 방문자 추적 데이터 타입 정의 (간소화된 15개 핵심 필드)
 interface SimplifiedVisitorTrackingData {
   // 핵심 방문 정보 (5개)
-  created_at: string;           // 방문시간
-  ip_address: string | null;    // IP 주소
-  carrier: string | null;       // 통신사 (SKT, KT, LG U+)
-  session_count: number;        // 방문수 (세션별)
-  page_url: string;             // 페이지 URL
+  // created_at 은 DB 기본값(UTC now()) 사용. 클라이언트에서 설정하지 않음
+  created_at?: string;              // 방문시간 (선택: 로컬 로깅용)
+  ip_address: string | null;        // IP 주소
+  carrier: string | null;           // 통신사 (SKT, KT, LG U+)
+  session_count: number;            // 방문수 (세션별)
+  page_url: string;                 // 페이지 URL
   
   // 디바이스 정보 (4개)
-  device_model: string | null;  // 모바일기종 (iPhone 15+, Android 14+ 등)
-  device_type: string | null;   // 디바이스 (desktop, mobile, tablet)
-  browser: string | null;       // 브라우저 (Chrome, Safari 등)
-  os: string | null;            // OS (Windows, macOS, iOS, Android)
+  device_model: string | null;      // 모바일기종 (iPhone 15+, Android 14+ 등)
+  device_type: string | null;       // 디바이스 (desktop, mobile, tablet)
+  browser: string | null;           // 브라우저 (Chrome, Safari 등)
+  os: string | null;                // OS (Windows, macOS, iOS, Android)
   
   // 유입 정보 (4개)
   traffic_source: string | null;    // 유입종류 (네이버-PC, 모바일, Google 등)
@@ -232,6 +233,29 @@ function getTrafficSource(): string {
   return deviceType === 'mobile' ? 'Mobile' : 'PC';
 }
 
+// 현재 페이지 URL 파라미터에서 키워드 및 검색엔진 유추 (광고 파라미터 포함)
+function extractKeywordFromUrlParams(): { search_keyword: string | null; search_engine: string | null } {
+  if (typeof window === 'undefined') return { search_keyword: null, search_engine: null };
+
+  const params = new URLSearchParams(window.location.search || '');
+  const utmSource = params.get('utm_source');
+  const utmTerm = params.get('utm_term');
+  const keyword = params.get('keyword') || params.get('k_keyword') || params.get('n_keyword') || params.get('inkeyword');
+  const qParam = params.get('q') || params.get('query');
+
+  let search_engine: string | null = null;
+  if (utmSource) {
+    if (/google/i.test(utmSource)) search_engine = 'Google';
+    else if (/naver/i.test(utmSource)) search_engine = 'Naver';
+    else if (/kakao|daum/i.test(utmSource)) search_engine = 'Kakao';
+    else if (/bing/i.test(utmSource)) search_engine = 'Bing';
+    else search_engine = utmSource;
+  }
+
+  const search_keyword = utmTerm || keyword || qParam;
+  return { search_keyword: search_keyword || null, search_engine };
+}
+
 // 모바일 디바이스 모델 정보 추출 (간소화)
 function getSimplifiedDeviceModel(): string | null {
   if (typeof window === 'undefined') return null;
@@ -320,10 +344,6 @@ export async function trackSimplifiedVisitor(data: {
       hasInsert: !!supabase?.from?.('visitor_tracking')?.insert
     });
 
-    // 현재 시간 (한국 시간을 UTC로 변환하여 전송)
-    const now = new Date();
-    const utcTime = new Date(now.getTime() - (9 * 60 * 60 * 1000));
-    
     // IP 주소 가져오기
     const ipAddress = await getClientIP();
     
@@ -331,9 +351,13 @@ export async function trackSimplifiedVisitor(data: {
     const sessionCount = await getSessionCount(ipAddress || 'client-side');
     
     // 간소화된 방문자 데이터 수집
+    // 키워드: URL 파라미터 우선, 없으면 referrer 분석
+    const fromUrl = extractKeywordFromUrlParams();
+    const fromRef = extractSearchKeyword(document.referrer);
+
     const visitorData: SimplifiedVisitorTrackingData = {
       // 핵심 방문 정보 (5개)
-      created_at: utcTime.toISOString(),
+      // created_at 은 DB 기본값 사용
       ip_address: ipAddress,
       carrier: getCarrierInfo(),
       session_count: sessionCount,
@@ -348,8 +372,8 @@ export async function trackSimplifiedVisitor(data: {
       // 유입 정보 (4개)
       traffic_source: getTrafficSource(),
       referrer: document.referrer || null,
-      search_keyword: extractSearchKeyword(document.referrer).search_keyword,
-      search_engine: extractSearchKeyword(document.referrer).search_engine,
+      search_keyword: fromUrl.search_keyword || fromRef.search_keyword,
+      search_engine: fromUrl.search_engine || fromRef.search_engine,
       
       // 상담 정보 (2개)
       counsel_type_id: data.counsel_type_id || null,

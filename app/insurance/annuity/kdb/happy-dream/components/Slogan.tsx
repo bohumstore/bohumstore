@@ -328,7 +328,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       paymentPeriod: paymentPeriod,
       monthlyPension: pension.monthly,
       performancePension: pension.performance,
-      templateId: "UB_6018",
+      guaranteedPension: pension.guaranteed,
+      totalUntil100: pension.totalUntil100,
+      pensionStartAge: pension.pensionStartAge,
+      templateId: "UB_5797",
       adminTemplateId: "UA_8331"
     };
     
@@ -352,6 +355,22 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       
       // Supabase에 데이터 저장 (보험료 확인: counselType = 1)
       const supabaseResult = await saveToSupabase(1);
+      // 인증 직후 모달 표시용 결과 최신화 (엑셀 기반 값 반영)
+      setServerPension({
+        monthly: pension.monthly,
+        performance: pension.performance,
+        guaranteed: pension.guaranteed,
+        totalUntil100: pension.totalUntil100,
+        pensionStartAge: pension.pensionStartAge,
+        notice: pension.notice
+      });
+      setVerifiedPension({
+        monthly: pension.monthly,
+        performance: pension.performance,
+        guaranteed: pension.guaranteed,
+        totalUntil100: pension.totalUntil100,
+        pensionStartAge: pension.pensionStartAge,
+      });
       setIsVerified(true);
       setOtpSent(false);
       alert("인증이 완료되었습니다!");
@@ -397,24 +416,29 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setShowResultModal(false);
     setOtpTimer(0);
     setOtpResendAvailable(true);
+    setVerifiedPension(null);
   };
 
   // 입력값 변경 시 인증상태 초기화
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGender(e.target.value);
     setIsVerified(false);
+    setVerifiedPension(null);
   };
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
     setIsVerified(false);
+    setVerifiedPension(null);
   };
   const handlePaymentPeriodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentPeriod(e.target.value);
     setIsVerified(false);
+    setVerifiedPension(null);
   };
   const handlePaymentAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentAmount(e.target.value);
     setIsVerified(false);
+    setVerifiedPension(null);
   };
 
   const handleOpenConsultModal = () => {
@@ -560,6 +584,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   
   // 연금액 계산 (미리 표시용 - 기본 로직 제거, 서버 값 도착 후 표시)
   const [serverPension, setServerPension] = useState<{ monthly: number; performance: number; guaranteed: number; totalUntil100: number; pensionStartAge: number | null; notice?: string } | null>(null);
+  // 인증 직후 확정된 값(카톡에 사용한 것과 동일)을 별도로 보관하여 프리페치 레이스에 영향받지 않도록 함
+  const [verifiedPension, setVerifiedPension] = useState<{ monthly: number; performance: number; guaranteed: number; totalUntil100: number; pensionStartAge: number | null } | null>(null);
 
   useEffect(() => {
     const prefetch = async () => {
@@ -986,12 +1012,21 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                     </span>
                   </div>
                 </div>
-                {/* 실적배당 연금액 */}
+                {/* 20년 보증기간 연금액 */}
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>실적배당 연금액</span>
+                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
                     <span className="font-bold">
-                      <span className="text-[#ef4444]">{isVerified ? `약 ${serverPension?.performance.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
+                      <span className="text-[#ef4444]">
+                        {isVerified
+                          ? (() => {
+                              const g = Number((verifiedPension?.guaranteed ?? serverPension?.guaranteed) || 0);
+                              const m = Number((verifiedPension?.monthly ?? serverPension?.monthly) || 0);
+                              const value = g > 0 ? g : (m > 0 ? m * 12 * 20 : 0);
+                              return value > 0 ? `약 ${value.toLocaleString('en-US')}` : '가입 불가';
+                            })()
+                          : '인증 후 확인가능'}
+                      </span>
                       {isVerified && <span className="text-[#3a8094]"> 원</span>}
                     </span>
                   </div>
@@ -1077,12 +1112,21 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                     </span>
                   </div>
                 </div>
-                {/* 실적배당 연금액 */}
+                {/* 20년 보증기간 연금액 */}
                 <div className="bg-white p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>실적배당 연금액</span>
+                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#ef4444]">인증 후 확인가능</span>
+                    </span>
+                  </div>
+                </div>
+                {/* 100세까지 생존 시 총 받는 금액 */}
+                <div className="bg-white p-2 rounded border border-gray-200">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
+                    <span className="font-bold">
+                      <span className="text-[#10b981]">인증 후 확인가능</span>
                     </span>
                   </div>
                 </div>
