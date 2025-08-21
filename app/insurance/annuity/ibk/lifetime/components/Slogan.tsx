@@ -60,7 +60,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     '오후 02:00 ~ 03:00',
     '오후 03:00 ~ 04:00',
     '오후 04:00 ~ 05:00',
-    '오후 05:00 ~ 06:00'
+    '오후 05:00 ~ 06:00',
+    '오후 06:00 이후'
   ];
 
 
@@ -85,6 +86,17 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     }
     return () => clearTimeout(timer);
   }, [consultOtpTimer, consultOtpResendAvailable]);
+
+  // ====== 엑셀 기반 계산/적격성 상태 ======
+  const [excelResult, setExcelResult] = useState<{
+    pensionStartAge: number;
+    monthlyPension: number;
+    performancePension: number;
+    guaranteedAmount: number;
+    totalUntil100: number;
+    notice?: string;
+  } | null>(null);
+  const [eligibility, setEligibility] = useState<{ [key: string]: boolean }>({});
 
   const validateForm = () => {
     if (!gender) { 
@@ -118,18 +130,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       return false;
     }
 
-    // 보험연령 체크 (15~70세만 가입 가능)
+    // 보험연령 안내는 모달에서 처리 (이 상품: 0~68세)
+    // 여기서는 형식 검증까지만 수행하고 나이로 차단하지 않음
     const formInsuranceAge = Number(getInsuranceAge(birth));
-    if (isNaN(formInsuranceAge) || formInsuranceAge < 15 || formInsuranceAge > 70) {
-      if (formInsuranceAge < 15) {
-        alert('이 상품은 15세 이상부터 가입이 가능합니다.\n\n0~14세 고객님은 다른 상품을 추천드립니다.');
-      } else if (formInsuranceAge > 70) {
-        alert('이 상품은 70세까지 가입이 가능합니다.\n\n71세 이상 고객님은 다른 상품을 추천드립니다.');
-      } else {
-        alert('이 상품은 15~70세까지만 가입이 가능합니다.');
-      }
-      return false;
-    }
 
     if (!phone) { 
       alert('연락처를 입력해주세요.'); 
@@ -204,6 +207,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleVerifyOTP = async () => {
+  // 연령(0~68) 외는 계산 차단
+  const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
+  if (isNaN(ageForVerify) || ageForVerify < 0 || ageForVerify > 68) return;
   if (otpCode.length !== 6) {
     alert("6자리 인증번호를 입력해주세요.");
     return;
@@ -211,9 +217,47 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
 
   setVerifying(true);
   try {
-    // 연금액 계산
-    const pensionAmounts = calculatePensionAmount(Number(insuranceAge), paymentPeriod, paymentAmount);
-    
+    // 엑셀 기반 연금액 계산 (서버 API) - 항상 최신 입력값으로 재조회
+    let currentExcel = null as typeof excelResult;
+    try {
+      let monthlyPayment = 0;
+      if (paymentAmount.includes('만원')) {
+        const num = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+        monthlyPayment = num * 10000;
+      } else {
+        monthlyPayment = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+      }
+      const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+      const resp = await fetch('/api/calculate-pension/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: name,
+          gender,
+          age: Number(insuranceAge),
+          paymentPeriod: years,
+          monthlyPayment,
+          productType: 'ibk-lifetime'
+        })
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data.success) {
+          currentExcel = {
+            pensionStartAge: data.data.pensionStartAge || 0,
+            monthlyPension: data.data.monthlyPension || 0,
+            performancePension: data.data.performancePension || 0,
+            guaranteedAmount: data.data.guaranteedAmount || 0,
+            totalUntil100: data.data.totalUntil100 || 0,
+            notice: data.data.notice || ''
+          };
+          setExcelResult(currentExcel);
+        }
+      }
+    } catch (e) {
+      // ignore
+    }
+
     const requestData = {
       phone,
       name,
@@ -226,12 +270,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       counselTime: consultTime,
       mounthlyPremium: paymentAmount, // 실제 선택값
       paymentPeriod: paymentPeriod,   // 실제 선택값
-      monthlyPension: pensionAmounts.monthly, // 월 연금액
-      performancePension: pensionAmounts.performance, // 실적배당 연금액
-      guaranteedPension: pensionAmounts.monthly * 12 * 20,
-      pensionStartAge: getPensionStartAge(Number(insuranceAge), paymentPeriod),
-      totalUntil100: pensionAmounts.monthly * 12 * Math.max(0, 100 - getPensionStartAge(Number(insuranceAge), paymentPeriod)),
-      templateId: "UB_5797", // 고객용 연금액 계산 결과 전송용 템플릿
+      monthlyPension: currentExcel?.monthlyPension || 0,
+      performancePension: currentExcel?.performancePension || 0,
+      guaranteedPension: currentExcel?.guaranteedAmount || 0,
+      pensionStartAge: currentExcel?.pensionStartAge || getPensionStartAge(Number(insuranceAge), paymentPeriod),
+      totalUntil100: currentExcel?.totalUntil100 || 0,
+      templateId: "UB_5797", // 고객용 연금액 계산 결과 전송용 템플릿 (요청에 따라 고정)
       adminTemplateId: "UA_8331" // 관리자용 연금액 계산 결과 전송용 템플릿
     };
     
@@ -271,6 +315,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     const numbers = value.replace(/[^0-9]/g, '').slice(0, 8);
     setBirth(numbers);
     setIsVerified(false);
+    setExcelResult(null);
   }
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -282,6 +327,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleSendOTP = async () => {
+    // 연령(0~68) 외는 OTP 전송 차단
+    const ageForOtp = insuranceAge !== '' ? Number(insuranceAge) : NaN;
+    if (isNaN(ageForOtp) || ageForOtp < 0 || ageForOtp > 68) return;
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
@@ -299,24 +347,30 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setShowResultModal(false);
     setOtpTimer(0);
     setOtpResendAvailable(true);
+    // 입력 재계산 시 이전 엑셀 결과 잔존 방지
+    setExcelResult(null);
   };
 
   // 입력값 변경 시 인증상태 초기화
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGender(e.target.value);
     setIsVerified(false);
+    setExcelResult(null);
   };
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
     setIsVerified(false);
+    setExcelResult(null);
   };
   const handlePaymentPeriodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentPeriod(e.target.value);
     setIsVerified(false);
+    setExcelResult(null);
   };
   const handlePaymentAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentAmount(e.target.value);
     setIsVerified(false);
+    setExcelResult(null);
   };
 
   const handleOpenConsultModal = () => {
@@ -441,7 +495,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         pensionAmounts = calculatePensionAmount(Number(insuranceAge), paymentPeriod, paymentAmount);
       }
       
-      const res = await request.post("/api/verifyOTP", {
+      const payload = {
         phone,
         name,
         birth,
@@ -458,41 +512,28 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         performancePension: pensionAmounts.performance, // 실적배당 연금액
         templateId: "UA_7919", // 고객용 상담신청 완료 전송용 템플릿
         adminTemplateId: "UA_8332" // 관리자용 상담신청 접수 전송용 템플릿
-      });
+      };
+      console.log('[IBK][CONSULT] verifyOTP payload', payload);
+      
+      const res = await request.post("/api/verifyOTP", payload);
       if (res.data.success) {
         // Supabase에 데이터 저장
         const supabaseResult = await saveToSupabase(2); // 2: 상담신청
         
-        alert("인증이 완료되었습니다!");
+        alert("인증이 완료되었습니다! 상담신청이 접수되었습니다.");
         setConsultIsVerified(true);
-        try {
-          await request.post("/api/verifyOTP", {
-            phone,
-            name,
-            birth,
-            gender,
-            code: '', // 인증번호는 빈 값으로
-            counselType: 2,
-            companyId: INSURANCE_COMPANY_ID,
-            productId: INSURANCE_PRODUCT_ID,
-            consultType,
-            counselTime: consultTime,
-            mounthlyPremium: paymentAmount || '',
-            paymentPeriod: paymentPeriod || '',
-            monthlyPension: pensionAmounts.monthly, // 월 연금액
-            performancePension: pensionAmounts.performance, // 실적배당 연금액
-            onlyClient: true
-          });
-          alert("상담신청이 접수되었습니다!");
-        } catch (e) {
-          // 알림톡 발송 실패 시 사용자에게 별도 안내하지 않음 (조용히 무시)
-        }
       } else {
         alert("인증에 실패했습니다.");
         return;
       }
     } catch (e: any) {
-      alert(e.error || "인증에 실패했습니다.");
+      console.error('[IBK][CONSULT] verifyOTP error', {
+        message: e?.message,
+        status: e?.response?.status,
+        data: e?.response?.data
+      });
+      const apiMsg = e?.response?.data?.error || e?.message || '인증에 실패했습니다.';
+      alert(apiMsg);
     } finally {
       setVerifying(false);
     }
@@ -517,6 +558,48 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
 
   // 보험연령 계산
   const insuranceAge = getInsuranceAge(birth);
+  // 연령 적합성 (0~68세)
+  const isAgeKnown = insuranceAge !== '';
+  const numericInsuranceAge = isAgeKnown ? Number(insuranceAge) : NaN;
+  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 0 && numericInsuranceAge <= 68;
+
+  // 엑셀 적격성 조회: 성별/연령 입력 시 호출
+  useEffect(() => {
+    const fetchEligibility = async () => {
+      if (!gender || !isAgeEligible) {
+        setEligibility({});
+        return;
+      }
+      try {
+        const resp = await fetch('/api/calculate-pension/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            customerName: name || '-',
+            gender,
+            age: Number(insuranceAge),
+            paymentPeriod: 10, // dummy
+            monthlyPayment: 300000, // 적격성 모드에서는 30만원 시트를 기준으로 판정
+            productType: 'ibk-lifetime',
+            mode: 'eligibility'
+          })
+        });
+        if (!resp.ok) {
+          setEligibility({});
+          return;
+        }
+        const data = await resp.json();
+        if (data.success && data.eligibility) {
+          setEligibility(data.eligibility);
+        } else {
+          setEligibility({});
+        }
+      } catch (e) {
+        setEligibility({});
+      }
+    };
+    fetchEligibility();
+  }, [gender, insuranceAge, isAgeEligible, name]);
 
   // 연금개시연령 계산 함수 (정확한 로직)
   const getPensionStartAge = (age: number, paymentPeriod: string) => {
@@ -538,11 +621,11 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   // 현재 선택된 납입기간에 대한 연금개시연령
-  const currentPensionStartAge = paymentPeriod ? getPensionStartAge(Number(insuranceAge), paymentPeriod) : null;
+  const currentPensionStartAge = paymentPeriod ? (excelResult?.pensionStartAge || getPensionStartAge(Number(insuranceAge), paymentPeriod)) : null;
 
   // 납입기간 버튼 비활성화 여부 확인 (연금개시연령이 80세를 초과하는 경우)
-  const is15YearDisabled = Number(insuranceAge) + 15 > 80;
-  const is20YearDisabled = Number(insuranceAge) + 20 > 80;
+  const ageLimit15 = Number(insuranceAge) + 15 > 80;
+  const ageLimit20 = Number(insuranceAge) + 20 > 80;
 
   // 연금액 계산 함수 (변액연금용 - 실적배당 포함)
   const calculatePensionAmount = (age: number, paymentPeriod: string, paymentAmount: string): { monthly: number; performance: number; totalUntil100: number } => {
@@ -605,7 +688,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   const total = (!isNaN(amount) && !isNaN(months) && amount > 0 && months > 0) ? amount * months : 0;
   
   // 연금액 계산
-  const pensionAmounts = calculatePensionAmount(Number(insuranceAge), paymentPeriod, paymentAmount);
+  const pensionAmounts = {
+    monthly: excelResult?.monthlyPension || 0,
+    performance: excelResult?.performancePension || 0,
+    totalUntil100: excelResult?.totalUntil100 || 0
+  };
+  const guaranteedAmount = excelResult?.guaranteedAmount || (pensionAmounts.monthly ? pensionAmounts.monthly * 12 * 20 : 0);
 
   return (
     <>
@@ -837,7 +925,11 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                     <label className="block text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">납입기간</label>
                     <div className="grid grid-cols-3 gap-2">
                       {['10년', '15년', '20년'].map((period) => {
-                        const isDisabled = (period === '15년' && is15YearDisabled) || (period === '20년' && is20YearDisabled);
+                        const years = parseInt(period.replace(/[^0-9]/g, ''));
+                        const disabledByAge = years === 15 ? ageLimit15 : years === 20 ? ageLimit20 : false;
+                        const eligible = eligibility[String(years)];
+                        const disabledByExcel = eligible === false; // 엑셀에 값이 비어 있는 연령/납입기간 조합
+                        const isDisabled = disabledByAge || disabledByExcel;
                         return (
                           <label key={period} className={`relative flex items-center justify-center ${isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
                             {/* 추천 배지 */}
@@ -863,9 +955,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                               {period}
                               {isDisabled && (
                                 <div className="text-xs text-red-500 mt-1">
-                                  {Number(insuranceAge) >= 66 ? '가입불가' : 
-                                   (period === '15년' && Number(insuranceAge) + 15 > 80) ? '개시연령초과' :
-                                   (period === '20년' && Number(insuranceAge) + 20 > 80) ? '개시연령초과' : '가입불가'}
+                                  {disabledByExcel ? '가입불가' : '개시연령초과'}
                                 </div>
                               )}
                             </div>
@@ -977,6 +1067,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         onClose={handleCloseModal}
       >
         <div className="space-y-4">
+          {isAgeKnown && !isAgeEligible && (
+            <div className="bg-red-50 border border-red-200 text-red-700 rounded p-2 text-sm">
+              이 상품은 0세~68세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
+              계산 기능은 이용하실 수 없습니다.
+            </div>
+          )}
           {/* 보험료 산출 완료 안내 박스 (인증 후) */}
           {isVerified && (
             <>
@@ -1051,7 +1147,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
                     <span className="font-bold">
-                      <span className="text-[#ef4444]">{isVerified ? `약 ${(pensionAmounts.monthly * 12 * 20).toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
+                      <span className="text-[#ef4444]">{isVerified ? `약 ${guaranteedAmount.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
                       {isVerified && <span className="text-[#3a8094]"> 원</span>}
                     </span>
                   </div>
@@ -1174,8 +1270,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <button
                     type="button"
                     onClick={handleSendOTP}
-                    className="px-2 py-1 bg-[#3a8094] text-white rounded-md text-sm font-medium 
-                             hover:bg-[#2c6070] transition-colors min-w-[80px]"
+                    disabled={!isAgeEligible}
+                    className={`${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'} px-2 py-1 rounded-md text-sm font-medium transition-colors min-w-[80px]`}
                   >
                     {otpResendAvailable ? '인증번호 전송' : '재발송'}
                   </button>
@@ -1201,7 +1297,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <button
                   type="button"
                   onClick={handleVerifyOTP}
-                  className="w-full px-2 py-2.5 bg-[#3a8094] text-white rounded-md text-base font-semibold hover:bg-[#2c6070] transition-colors mt-1"
+                  disabled={!isAgeEligible}
+                  className={`w-full px-2 py-2.5 rounded-md text-base font-semibold transition-colors mt-1 ${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
                 >
                   인증 및 연금액 계산
                 </button>
@@ -1308,7 +1405,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   </span>
                 </div>
                 {!consultIsVerified && showConsultTimeDropdown && (
-                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto">
+                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto overscroll-contain">
                     {consultTimeOptions.map(opt => (
                       <div
                         key={opt}

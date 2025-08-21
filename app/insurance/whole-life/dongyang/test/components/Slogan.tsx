@@ -51,7 +51,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     '오후 02:00 ~ 03:00',
     '오후 03:00 ~ 04:00',
     '오후 04:00 ~ 05:00',
-    '오후 05:00 ~ 06:00'
+    '오후 05:00 ~ 06:00',
+    '오후 06:00 이후'
   ];
 
 
@@ -109,12 +110,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       return false;
     }
 
-    // 보험연령 체크 (0~70세만 가입 가능)
+    // 보험연령 안내는 모달에서 처리 (이 상품: 15~70세)
     const formInsuranceAge = Number(getInsuranceAge(birth));
-    if (isNaN(formInsuranceAge) || formInsuranceAge < 0 || formInsuranceAge > 70) {
-      alert('이 상품은 0~70세까지만 가입이 가능합니다.');
-      return false;
-    }
 
     if (!phone) { 
       alert('연락처를 입력해주세요.'); 
@@ -156,6 +153,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
 
 
   const handleVerifyOTP = async () => {
+  const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
+  if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 70) return;
   if (otpCode.length !== OTP_CODE_LENGTH) {
     alert(`${OTP_CODE_LENGTH}자리 인증번호를 입력해주세요.`);
     return;
@@ -210,6 +209,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleSendOTP = async () => {
+    const ageForOtp = insuranceAge !== '' ? Number(insuranceAge) : NaN;
+    if (isNaN(ageForOtp) || ageForOtp < 15 || ageForOtp > 70) return;
     setOtpTimer(OTP_TIMER_DURATION);
     setOtpResendAvailable(false);
     await handlePostOTP();
@@ -356,6 +357,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
 
   // 보험연령 계산
   const insuranceAge = getInsuranceAge(birth);
+  const isAgeKnown = insuranceAge !== '';
+  const numericInsuranceAge = isAgeKnown ? Number(insuranceAge) : NaN;
+  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 15 && numericInsuranceAge <= 70;
 
   // 보험료 계산 함수
   const calculateInsuranceValues = () => {
@@ -652,6 +656,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               </div>
               {/* 휴대폰 인증 안내 및 인증번호 입력란을 항상 노출 */}
               <div className="bg-gray-50 rounded-lg p-2 mt-0">
+                {isAgeKnown && !isAgeEligible && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 rounded p-2 text-sm mb-1">
+                    이 상품은 15세~70세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
+                    계산 기능은 이용하실 수 없습니다.
+                  </div>
+                )}
                 <h3 className="text-base font-bold text-gray-900 mb-1">휴대폰 인증</h3>
                 <p className="text-sm text-gray-600 mb-1">
                   정확한 보험료 확인을 위해 휴대폰 인증이 필요합니다.
@@ -666,10 +676,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <button
                     type="button"
                     onClick={handleSendOTP}
-                    disabled={!otpResendAvailable}
-                    className="px-2 py-1 bg-[#3a8094] text-white rounded-md text-sm font-medium 
-                             hover:bg-[#2c6070] disabled:bg-gray-400 disabled:cursor-not-allowed 
-                             transition-colors min-w-[80px]"
+                    disabled={!otpResendAvailable || !isAgeEligible}
+                    className={`${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'} px-2 py-1 rounded-md text-sm font-medium transition-colors min-w-[80px]`}
                   >
                     {otpResendAvailable ? '인증번호 전송' : '재발송'}
                   </button>
@@ -695,7 +703,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <button
                   type="button"
                   onClick={handleVerifyOTP}
-                  className="w-full px-2 py-2.5 bg-[#3a8094] text-white rounded-md text-base font-semibold hover:bg-[#2c6070] transition-colors mt-1"
+                  disabled={!isAgeEligible}
+                  className={`w-full px-2 py-2.5 rounded-md text-base font-semibold transition-colors mt-1 ${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
                 >
                   인증 및 보험료 계산
                 </button>
@@ -802,7 +811,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   </span>
                 </div>
                 {!consultIsVerified && showConsultTimeDropdown && (
-                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto">
+                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto overscroll-contain">
                     {consultTimeOptions.map(opt => (
                       <div
                         key={opt}

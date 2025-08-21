@@ -8,17 +8,27 @@ export async function POST(request: NextRequest) {
 	try {
 		console.log('[API] 연금액 계산 요청 시작');
 		
-		const { customerName, gender, age, paymentPeriod, monthlyPayment, productType } = await request.json();
-		console.log('[API] 요청 데이터:', { customerName, gender, age, paymentPeriod, monthlyPayment, productType });
+		const { customerName, gender, age, paymentPeriod, monthlyPayment, productType, mode } = await request.json();
+		console.log('[API] 요청 데이터:', { customerName, gender, age, paymentPeriod, monthlyPayment, productType, mode });
 
-			 // 입력값 검증
-		 if (!customerName || !gender || !age || !paymentPeriod || !monthlyPayment) {
-			 console.log('[API] 필수 입력값 누락:', { customerName, gender, age, paymentPeriod, monthlyPayment });
-			 return NextResponse.json(
-				 { error: '모든 필수 입력값이 필요합니다.' },
-				 { status: 400 }
-			 );
-		 }
+			// 입력값 검증
+		if (mode === 'eligibility') {
+			if (!gender || !age) {
+				console.log('[API] 적격성 모드 필수 입력값 누락:', { gender, age });
+				return NextResponse.json(
+					{ error: '성별과 연령이 필요합니다.' },
+					{ status: 400 }
+				);
+			}
+		} else {
+			if (!customerName || !gender || !age || !paymentPeriod || !monthlyPayment) {
+				console.log('[API] 필수 입력값 누락:', { customerName, gender, age, paymentPeriod, monthlyPayment });
+				return NextResponse.json(
+					{ error: '모든 필수 입력값이 필요합니다.' },
+					{ status: 400 }
+				);
+			}
+		}
 
 		 // 성별 매핑 (M -> 남, F -> 여)
 		 const mappedGender = mapGender(gender);
@@ -28,17 +38,22 @@ export async function POST(request: NextRequest) {
 		
 		// 시트 선택 로직
 		let sheetName = '';
-		if (cleanMonthlyPayment === 300000) {
+		if (mode === 'eligibility') {
+			// 적격성 확인은 30만원 시트를 기본으로 사용 (없으면 첫 시트로 대체)
 			sheetName = '30k';
-		} else if (cleanMonthlyPayment === 500000) {
-			sheetName = '50k';
-		} else if (cleanMonthlyPayment === 1000000) {
-			sheetName = '100k';
 		} else {
-			return NextResponse.json(
-				{ error: '지원하지 않는 월납입액입니다. (30만원, 50만원, 100만원만 지원)' },
-				{ status: 400 }
-			);
+			if (cleanMonthlyPayment === 300000) {
+				sheetName = '30k';
+			} else if (cleanMonthlyPayment === 500000) {
+				sheetName = '50k';
+			} else if (cleanMonthlyPayment === 1000000) {
+				sheetName = '100k';
+			} else {
+				return NextResponse.json(
+					{ error: '지원하지 않는 월납입액입니다. (30만원, 50만원, 100만원만 지원)' },
+					{ status: 400 }
+				);
+			}
 		}
 
 		// 제품 유형별 엑셀 파일 경로 결정 및 컬럼 헤더 매핑
@@ -65,6 +80,22 @@ export async function POST(request: NextRequest) {
 			// 드림: 월 연금액과 실적배당 연금액을 분리
 			monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금'];
 			performancePensionHeaderCandidates = ['실적배당 연금액', '실적배당연금액'];
+			guaranteedAmountHeaderCandidates = [
+				'20년 보증기간 총액',
+				'20년 보증 총액',
+				'보증기간 총액',
+				'20년 보증기간 연금액',
+				'보증기간 연금액',
+				'20년보증기간총액',
+				'20년보증기간연금액'
+			];
+		} else if (resolvedProductType === 'ibk-lifetime') {
+			candidatePaths = [
+				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'ibk', 'lifetime', 'ibk_lifetime_0-68.xlsx'),
+				path.join(process.cwd(), 'public', 'ibk_lifetime_0-68.xlsx')
+			];
+			monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금'];
+			performancePensionHeaderCandidates = ['실적배당 연금액', '실적배당연금액', '실적배당'];
 			guaranteedAmountHeaderCandidates = [
 				'20년 보증기간 총액',
 				'20년 보증 총액',
@@ -205,6 +236,47 @@ export async function POST(request: NextRequest) {
 				{ error: '필수 컬럼을 찾을 수 없습니다.' },
 				{ status: 500 }
 			);
+		}
+
+		// 적격성 확인 모드: 각 납입기간별(10/15/20)로 해당 연령/성별 데이터가 비어있지 않은지 반환
+		if (mode === 'eligibility') {
+			const periodsToCheck = [10, 15, 20];
+			const mapped = mapGender(gender);
+			const ageInt = parseInt(age.toString());
+			const isNonEmpty = (v: any) => {
+				if (v === null || v === undefined) return false;
+				if (typeof v === 'number') return isFinite(v) && v !== 0;
+				const s = String(v).trim();
+				if (s === '') return false;
+				const n = parseInt(s.replace(/[^0-9.-]/g, ''));
+				return !isNaN(n) && n !== 0;
+			};
+
+			const eligibility: Record<string, boolean> = {};
+			for (const p of periodsToCheck) {
+				let found = false;
+				for (let i = headerRowIndex + 1; i < jsonData.length; i++) {
+					const row = jsonData[i] as any[];
+					if (row.length <= Math.max(genderIndex, ageIndex, periodIndex)) continue;
+					const rawGender = String(row[genderIndex] ?? '').trim();
+					const rowGender = rawGender.startsWith('남') ? '남' : rawGender.startsWith('여') ? '여' : rawGender;
+					const rowAge = parseInt(row[ageIndex]);
+					const rowPeriod = parseInt(row[periodIndex]);
+					if (rowGender === mapped && rowAge === ageInt && rowPeriod === p) {
+						const v1 = monthlyPensionIndex !== -1 ? row[monthlyPensionIndex] : null;
+						const v2 = performancePensionIndex !== -1 ? row[performancePensionIndex] : null;
+						const v3 = guaranteedAmountIndex !== -1 ? row[guaranteedAmountIndex] : null;
+						const v4 = totalUntil100Index !== -1 ? row[totalUntil100Index] : null;
+						if (isNonEmpty(v1) || isNonEmpty(v2) || isNonEmpty(v3) || isNonEmpty(v4)) {
+							found = true;
+						}
+						break;
+					}
+				}
+				eligibility[String(p)] = found;
+			}
+
+			return NextResponse.json({ success: true, eligibility });
 		}
 
 			 // 데이터 행에서 일치하는 행 찾기

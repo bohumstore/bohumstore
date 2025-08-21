@@ -51,7 +51,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     '오후 02:00 ~ 03:00',
     '오후 03:00 ~ 04:00',
     '오후 04:00 ~ 05:00',
-    '오후 05:00 ~ 06:00'
+    '오후 05:00 ~ 06:00',
+    '오후 06:00 이후'
   ];
 
 
@@ -985,7 +986,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   </span>
                 </div>
                 {!consultIsVerified && showConsultTimeDropdown && (
-                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto">
+                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto overscroll-contain">
                     {consultTimeOptions.map(opt => (
                       <div
                         key={opt}

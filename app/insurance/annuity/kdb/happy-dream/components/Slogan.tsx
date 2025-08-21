@@ -60,7 +60,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     '오후 02:00 ~ 03:00',
     '오후 03:00 ~ 04:00',
     '오후 04:00 ~ 05:00',
-    '오후 05:00 ~ 06:00'
+    '오후 05:00 ~ 06:00',
+    '오후 06:00 이후'
   ];
 
   // 보험연령 계산 함수
@@ -82,6 +83,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
 
   // 보험연령 계산
   const insuranceAge = getInsuranceAge(birth);
+  // 연령 적합성 (15~70세)
+  const isAgeKnown = insuranceAge !== '';
+  const numericInsuranceAge = isAgeKnown ? Number(insuranceAge) : NaN;
+  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 15 && numericInsuranceAge <= 70;
 
   // 연금개시연령 계산 함수 (기본 로직)
   const getPensionStartAge = (age: number, paymentPeriod: string) => {
@@ -180,8 +185,13 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       });
       if (!response.ok) {
         const t = await response.text();
-        console.error('[DEBUG] API 오류 응답:', t);
-        throw new Error('API 실패');
+        // 404(일치 데이터 없음)는 정상적인 케이스로 간주하고 조용히 기본값 반환
+        if (response.status === 404) {
+          return { monthly: 0, performance: 0, guaranteed: 0, totalUntil100: 0, pensionStartAge: 0, notice: '' };
+        }
+        // 기타 오류만 경고로 남기고 기본값 반환
+        console.warn('[DEBUG] API 오류 응답 (무시 가능):', t);
+        return { monthly: 0, performance: 0, guaranteed: 0, totalUntil100: 0, pensionStartAge: 0, notice: '' };
       }
       const result = await response.json();
       if (result.success) {
@@ -194,7 +204,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
           notice: result.data.notice
         };
       }
-      throw new Error(result.error || '연금액 계산 실패');
+      // success=false 이거나 에러 메시지가 있는 경우도 기본값 반환
+      console.warn('[DEBUG] API 비정상 응답(무시):', result.error);
+      return { monthly: 0, performance: 0, guaranteed: 0, totalUntil100: 0, pensionStartAge: 0, notice: '' };
     } catch (e) {
       return { monthly: 0, performance: 0, guaranteed: 0, totalUntil100: 0, pensionStartAge: 0, notice: '' };
     }
@@ -232,18 +244,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       return false;
     }
 
-    // 보험연령 체크 (15~70세만 가입 가능)
+    // 보험연령 안내는 모달에서 처리 (이 상품: 15~70세)
     const formInsuranceAge = Number(getInsuranceAge(birth));
-    if (isNaN(formInsuranceAge) || formInsuranceAge < 15 || formInsuranceAge > 70) {
-      if (formInsuranceAge < 15) {
-        alert('이 상품은 15세 이상부터 가입이 가능합니다.\n\n0~14세 고객님은 다른 상품을 추천드립니다.');
-      } else if (formInsuranceAge > 70) {
-        alert('이 상품은 70세까지 가입이 가능합니다.\n\n71세 이상 고객님은 다른 상품을 추천드립니다.');
-      } else {
-        alert('이 상품은 15~70세까지만 가입이 가능합니다.');
-      }
-      return false;
-    }
 
     if (!phone) { 
       alert('연락처를 입력해주세요.'); 
@@ -304,6 +306,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   }
 
   const handleVerifyOTP = async () => {
+  const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
+  if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 70) return;
   if (otpCode.length !== 6) {
     alert("6자리 인증번호를 입력해주세요.");
     return;
@@ -389,6 +393,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     const numbers = value.replace(/[^0-9]/g, '').slice(0, 8);
     setBirth(numbers);
     setIsVerified(false);
+    setVerifiedPension(null);
+    setServerPension(null);
   }
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -399,6 +405,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleSendOTP = async () => {
+    const ageForOtp = insuranceAge !== '' ? Number(insuranceAge) : NaN;
+    if (isNaN(ageForOtp) || ageForOtp < 15 || ageForOtp > 70) return;
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
@@ -417,6 +425,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setOtpTimer(0);
     setOtpResendAvailable(true);
     setVerifiedPension(null);
+    setServerPension(null);
   };
 
   // 입력값 변경 시 인증상태 초기화
@@ -424,21 +433,25 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setGender(e.target.value);
     setIsVerified(false);
     setVerifiedPension(null);
+    setServerPension(null);
   };
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
     setIsVerified(false);
     setVerifiedPension(null);
+    setServerPension(null);
   };
   const handlePaymentPeriodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentPeriod(e.target.value);
     setIsVerified(false);
     setVerifiedPension(null);
+    setServerPension(null);
   };
   const handlePaymentAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentAmount(e.target.value);
     setIsVerified(false);
     setVerifiedPension(null);
+    setServerPension(null);
   };
 
   const handleOpenConsultModal = () => {
@@ -537,29 +550,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       });
       if (res.data.success) {
         const supabaseResult = await saveToSupabase(2); // 2: 상담신청
-        alert("인증이 완료되었습니다!");
+        alert("인증이 완료되었습니다! 상담신청이 접수되었습니다.");
         setConsultIsVerified(true);
-        try {
-          await request.post("/api/verifyOTP", {
-            phone,
-            name,
-            birth,
-            gender,
-            code: '',
-            counselType: 2,
-            companyId: INSURANCE_COMPANY_ID,
-            productId: INSURANCE_PRODUCT_ID,
-            consultType,
-            counselTime: consultTime,
-            mounthlyPremium: paymentAmount || '',
-            paymentPeriod: paymentPeriod || '',
-            monthlyPension: pensionAmounts.monthly,
-            performancePension: pensionAmounts.performance,
-            onlyClient: true
-          });
-          alert("상담신청이 접수되었습니다!");
-        } catch (e) {
-        }
       } else {
         alert("인증에 실패했습니다.");
         return;
@@ -943,6 +935,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         onClose={handleCloseModal}
       >
         <div className="space-y-4">
+          {isAgeKnown && !isAgeEligible && (
+            <div className="bg-red-50 border border-red-200 text-red-700 rounded p-2 text-sm">
+              이 상품은 15세~70세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
+              계산 기능은 이용하실 수 없습니다.
+            </div>
+          )}
           {/* 보험료 산출 완료 안내 박스 (인증 후) */}
           {isVerified && (
             <>
@@ -1151,8 +1149,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <button
                     type="button"
                     onClick={handleSendOTP}
-                    className="px-2 py-1 bg-[#3a8094] text-white rounded-md text-sm font-medium 
-                             hover:bg-[#2c6070] transition-colors min-w-[80px]"
+                    disabled={!isAgeEligible}
+                    className={`${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'} px-2 py-1 rounded-md text-sm font-medium transition-colors min-w-[80px]`}
                   >
                     {otpResendAvailable ? '인증번호 전송' : '재발송'}
                   </button>
@@ -1178,7 +1176,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <button
                   type="button"
                   onClick={handleVerifyOTP}
-                  className="w-full px-2 py-2.5 bg-[#3a8094] text-white rounded-md text-base font-semibold hover:bg-[#2c6070] transition-colors mt-1"
+                  disabled={!isAgeEligible}
+                  className={`w-full px-2 py-2.5 rounded-md text-base font-semibold transition-colors mt-1 ${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
                 >
                   인증 및 연금액 계산
                 </button>
@@ -1285,7 +1284,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   </span>
                 </div>
                 {!consultIsVerified && showConsultTimeDropdown && (
-                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto">
+                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto overscroll-contain">
                     {consultTimeOptions.map(opt => (
                       <div
                         key={opt}

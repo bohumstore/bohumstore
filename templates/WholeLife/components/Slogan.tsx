@@ -51,7 +51,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     '오후 02:00 ~ 03:00',
     '오후 03:00 ~ 04:00',
     '오후 04:00 ~ 05:00',
-    '오후 05:00 ~ 06:00'
+    '오후 05:00 ~ 06:00',
+    '오후 06:00 이후'
   ];
 
 
@@ -290,31 +291,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         refundValue
       });
       if (res.data.success) {
-        alert("인증이 완료되었습니다!");
+        alert("인증이 완료되었습니다! 상담신청이 접수되었습니다.");
         setConsultIsVerified(true);
-        try {
-          await request.post("/api/verifyOTP", {
-            phone,
-            name,
-            birth,
-            gender,
-            code: '', // 인증번호는 빈 값으로
-            counselType: 2,
-            companyId: INSURANCE_COMPANY_ID,
-            productId: INSURANCE_PRODUCT_ID,
-            consultType,
-            counselTime: consultTime,
-            mounthlyPremium: paymentAmount,
-            paymentPeriod: paymentPeriod,
-            tenYearReturnRate: rate ? Math.round(rate * 100) : '-',
-            interestValue,
-            refundValue,
-            onlyClient: true
-          });
-          alert("상담신청이 접수되었습니다!");
-        } catch (e) {
-          // 알림톡 발송 실패 시 사용자에게 별도 안내하지 않음 (조용히 무시)
-        }
       } else {
         alert("인증에 실패했습니다.");
         return;
@@ -791,7 +769,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   </span>
                 </div>
                 {!consultIsVerified && showConsultTimeDropdown && (
-                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto">
+                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto overscroll-contain">
                     {consultTimeOptions.map(opt => (
                       <div
                         key={opt}

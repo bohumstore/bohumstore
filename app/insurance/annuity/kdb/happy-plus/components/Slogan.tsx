@@ -60,7 +60,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     '오후 02:00 ~ 03:00',
     '오후 03:00 ~ 04:00',
     '오후 04:00 ~ 05:00',
-    '오후 05:00 ~ 06:00'
+    '오후 05:00 ~ 06:00',
+    '오후 06:00 이후'
   ];
 
 
@@ -118,18 +119,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       return false;
     }
 
-    // 보험연령 체크 (15~70세만 가입 가능)
+    // 보험연령 안내는 모달에서 처리 (이 상품: 15~70세)
     const formInsuranceAge = Number(getInsuranceAge(birth));
-    if (isNaN(formInsuranceAge) || formInsuranceAge < 15 || formInsuranceAge > 70) {
-      if (formInsuranceAge < 15) {
-        alert('이 상품은 15세 이상부터 가입이 가능합니다.\n\n0~14세 고객님은 다른 상품을 추천드립니다.');
-      } else if (formInsuranceAge > 70) {
-        alert('이 상품은 70세까지 가입이 가능합니다.\n\n71세 이상 고객님은 다른 상품을 추천드립니다.');
-      } else {
-        alert('이 상품은 15~70세까지만 가입이 가능합니다.');
-      }
-      return false;
-    }
 
     if (!phone) { 
       alert('연락처를 입력해주세요.'); 
@@ -204,6 +195,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleVerifyOTP = async () => {
+  const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
+  if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 70) return;
   if (otpCode.length !== 6) {
     alert("6자리 인증번호를 입력해 주세요.");
     return;
@@ -241,6 +234,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       paymentPeriod: paymentPeriod,   // 실제 선택값
       monthlyPension: calculatedPensionAmounts.monthly, // 월 연금액
       guaranteedPension: calculatedPensionAmounts.guaranteed, // 20년 보증기간 연금액
+      pensionStartAge: calculatedPensionAmounts.pensionStartAge, // 연금개시연령 (카카오 메시지용)
+      totalUntil100: calculatedPensionAmounts.totalUntil100,     // 100세까지 총 수령액 (카카오 메시지용)
       templateId: "UB_5797", // 고객용 연금액 계산 결과 전송용 템플릿
       adminTemplateId: "UA_8331" // 관리자용 연금액 계산 결과 전송용 템플릿
     };
@@ -306,6 +301,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleSendOTP = async () => {
+    const ageForOtp = insuranceAge !== '' ? Number(insuranceAge) : NaN;
+    if (isNaN(ageForOtp) || ageForOtp < 15 || ageForOtp > 70) return;
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
@@ -466,6 +463,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
 
   // 보험연령 계산
   const insuranceAge = getInsuranceAge(birth);
+  // 연령 적합성 (15~70세)
+  const isAgeKnown = insuranceAge !== '';
+  const numericInsuranceAge = isAgeKnown ? Number(insuranceAge) : NaN;
+  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 15 && numericInsuranceAge <= 70;
 
   // 연금개시연령 계산 함수 (기본 로직)
   const getPensionStartAge = (age: number, paymentPeriod: string) => {
@@ -973,6 +974,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         onClose={handleCloseModal}
       >
         <div className="space-y-4">
+          {isAgeKnown && !isAgeEligible && (
+            <div className="bg-red-50 border border-red-200 text-red-700 rounded p-2 text-sm">
+              이 상품은 15세~70세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
+              계산 기능은 이용하실 수 없습니다.
+            </div>
+          )}
           {/* 보험료 산출 완료 안내 박스 (인증 후) */}
           {isVerified && (
             <>
@@ -1187,7 +1194,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <div className="mt-0.5 text-[#3a8094]">* 휴대폰 인증 완료 후 상세 정보를 확인하실 수 있습니다.</div>
                 </div>
               </div>
-              {/* 휴대폰 인증 안내 및 인증번호 입력란을 항상 노출 */}
+              {/* 휴대폰 인증 안내 및 인증번호 입력란 */}
               <div className="bg-gray-50 rounded-lg p-2 mt-0">
                 <h3 className="text-base font-bold text-gray-900 mb-1">휴대폰 인증</h3>
                 <p className="text-sm text-gray-600 mb-1">
@@ -1203,8 +1210,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <button
                     type="button"
                     onClick={handleSendOTP}
-                    className="px-2 py-1 bg-[#3a8094] text-white rounded-md text-sm font-medium 
-                             hover:bg-[#2c6070] transition-colors min-w-[80px]"
+                    disabled={!isAgeEligible}
+                    className={`${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'} px-2 py-1 rounded-md text-sm font-medium transition-colors min-w-[80px]`}
                   >
                     {otpResendAvailable ? '인증번호 전송' : '재발송'}
                   </button>
@@ -1230,7 +1237,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <button
                   type="button"
                   onClick={handleVerifyOTP}
-                  className="w-full px-2 py-2.5 bg-[#3a8094] text-white rounded-md text-base font-semibold hover:bg-[#2c6070] transition-colors mt-1"
+                  disabled={!isAgeEligible}
+                  className={`w-full px-2 py-2.5 rounded-md text-base font-semibold transition-colors mt-1 ${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
                 >
                   인증 및 연금액 계산
                 </button>
@@ -1337,7 +1345,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   </span>
                 </div>
                 {!consultIsVerified && showConsultTimeDropdown && (
-                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto">
+                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto overscroll-contain">
                     {consultTimeOptions.map(opt => (
                       <div
                         key={opt}
