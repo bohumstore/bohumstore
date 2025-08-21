@@ -2,37 +2,27 @@ import { NextResponse } from "next/server";
 import { supabase } from "../supabase";
 import { alimtalkSend } from "@/app/lib/aligo";
 import aligoAuth from "../utils/aligoAuth";
+import logger from "@/app/lib/logger";
 
 export async function POST(req: Request) {
   const startTime = Date.now();
-  if (process.env.NODE_ENV !== 'production') {
-    console.log(`[POST OTP] 요청 시작: ${new Date().toISOString()}`);
-  }
+  logger.info('POST_OTP', '요청 시작');
   
   try {
     // 환경 변수 확인
-    if (process.env.NODE_ENV !== 'production') {
-      console.log(`[POST OTP] 환경 변수 확인:`);
-      console.log(`- API_KEY: ${process.env.NEXT_PUBLIC_ALIGO_API_KEY ? '설정됨' : '설정되지 않음'}`);
-      console.log(`- USER_ID: ${process.env.NEXT_PUBLIC_ALIGO_USER_ID ? '설정됨' : '설정되지 않음'}`);
-      console.log(`- SENDER_KEY: ${process.env.NEXT_PUBLIC_ALIGO_SENDER_KEY ? '설정됨' : '설정되지 않음'}`);
-    }
+    logger.debug('POST_OTP', '환경 변수 확인', {
+      apiKey: !!process.env.NEXT_PUBLIC_ALIGO_API_KEY,
+      userId: !!process.env.NEXT_PUBLIC_ALIGO_USER_ID,
+      senderKey: !!process.env.NEXT_PUBLIC_ALIGO_SENDER_KEY,
+    });
     
     const { phone, templateId, companyName, productName } = await req.json();
-    if (process.env.NODE_ENV !== 'production') {
-      console.log(`[POST OTP] 요청 데이터:`, { phone, templateId, companyName, productName });
-    }
+    logger.debug('POST_OTP', '요청 데이터', { phone, templateId, companyName, productName });
     
     const code = Math.floor(100000 + Math.random() * 900000).toString();
-    if (process.env.NODE_ENV !== 'production') {
-      console.log(`[POST OTP] 인증번호 생성: ${code}`);
-      console.log(`[POST OTP] 전화번호: ${phone}`);
-      console.log(`[POST OTP] 템플릿 ID: ${templateId}`);
-    }
+    logger.debug('POST_OTP', '코드 생성', { code, phone, templateId });
     
-    if (process.env.NODE_ENV !== 'production') {
-      console.log(`[POST OTP] Aligo API 호출 준비`);
-    }
+    logger.debug('POST_OTP', 'Aligo API 호출 준비');
     const requestData = {
       headers: {
         "content-type": "application/json",
@@ -56,25 +46,20 @@ export async function POST(req: Request) {
       const sendPromise = alimtalkSend(requestData, aligoAuth);
       const [{ error: dbErr }, result] = await Promise.all([insertPromise, sendPromise]);
 
-      if (process.env.NODE_ENV !== 'production') {
-        console.log(`[POST OTP] Aligo API 응답:`, result);
-      }
+      logger.debug('POST_OTP', 'Aligo API 응답', result);
       if (dbErr) {
-        console.error(`[POST OTP] DB 저장 실패:`, dbErr);
+        logger.error('POST_OTP', 'DB 저장 실패', dbErr);
         return NextResponse.json({ error: "DB 저장 실패" }, { status: 500 });
       }
-      if (process.env.NODE_ENV !== 'production') {
-        const endTime = Date.now();
-        console.log(`[POST OTP] 전체 처리 시간: ${endTime - startTime}ms`);
-        console.log(`[POST OTP] 요청 완료: ${new Date().toISOString()}`);
-      }
+      const endTime = Date.now();
+      logger.info('POST_OTP', `전체 처리 시간: ${endTime - startTime}ms`, '요청 완료');
 
       // Aligo API 응답 확인
       if (result.code === -99) {
-        console.error(`[POST OTP] IP 인증 에러: ${result.message}`);
+        logger.error('POST_OTP', 'IP 인증 에러', result.message);
         return NextResponse.json({ error: "IP 인증이 필요합니다. 관리자에게 문의하세요." }, { status: 403 });
       } else if (result.code !== 0) { // 0이 성공 코드
-        console.error(`[POST OTP] Aligo API 에러: ${result.message}`);
+        logger.error('POST_OTP', 'Aligo API 에러', result.message);
         return NextResponse.json({ error: `알림톡 전송 실패: ${result.message}` }, { status: 502 });
       }
 

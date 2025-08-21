@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../supabase';
+import logger from '@/app/lib/logger';
 
 export async function POST(request: NextRequest) {
   try {
@@ -55,11 +56,7 @@ export async function POST(request: NextRequest) {
       user_agent: user_agent || request.headers.get('user-agent'),
     };
 
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('[TRACK-VISITOR] Supabase에 삽입할 데이터:', trackingData);
-      console.log('[TRACK-VISITOR] 현재 시간:', new Date().toISOString());
-      console.log('[TRACK-VISITOR] 한국 시간:', new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }));
-    }
+    logger.debug('TRACK_VISITOR', '삽입할 데이터', trackingData);
     
     const { data, error } = await supabase
       .from('visitor_tracking')
@@ -67,7 +64,7 @@ export async function POST(request: NextRequest) {
       .select();
 
     if (error) {
-      console.error('Visitor tracking error:', error);
+      logger.error('TRACK_VISITOR', 'insert error', error);
       return NextResponse.json(
         { 
           error: 'Failed to track visitor',
@@ -85,7 +82,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Visitor tracking API error:', error);
+    logger.error('TRACK_VISITOR', 'API error', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -226,7 +223,7 @@ export async function GET(request: NextRequest) {
       .select('*', { count: 'exact', head: true });
 
     if (countError) {
-      console.error('Count query error:', countError);
+      logger.error('TRACK_VISITOR', 'count query error', countError);
       return NextResponse.json(
         { error: 'Failed to get total count' },
         { status: 500 }
@@ -272,7 +269,7 @@ export async function GET(request: NextRequest) {
     const { data, error } = await query;
 
     if (error) {
-      console.error('Failed to fetch visitor tracking data:', error);
+      logger.error('TRACK_VISITOR', 'fetch data error', error);
       return NextResponse.json(
         { error: 'Failed to fetch data' },
         { status: 500 }
@@ -281,15 +278,7 @@ export async function GET(request: NextRequest) {
 
     const totalPages = Math.ceil((totalCount || 0) / limit);
 
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('[TRACK-VISITOR] 데이터 조회 완료:', {
-        totalCount,
-        currentPage: page,
-        limit,
-        totalPages,
-        dataCount: data?.length || 0
-      });
-    }
+    logger.debug('TRACK_VISITOR', '데이터 조회', { totalCount, currentPage: page, limit, totalPages, dataCount: data?.length || 0 });
 
     const responseData = {
       data: data || [],
@@ -301,15 +290,12 @@ export async function GET(request: NextRequest) {
       },
     };
     
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('[TRACK-VISITOR] 최종 응답 데이터:', responseData);
-      console.log('[TRACK-VISITOR] 응답 데이터 타입:', typeof responseData.data, Array.isArray(responseData.data));
-    }
+    logger.debug('TRACK_VISITOR', '응답 데이터 타입', { isArray: Array.isArray(responseData.data) });
     
     return NextResponse.json(responseData);
 
   } catch (error) {
-    console.error('Visitor tracking GET API error:', error);
+    logger.error('TRACK_VISITOR', 'GET API error', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

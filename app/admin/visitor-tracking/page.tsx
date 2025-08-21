@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { supabase } from '@/app/api/supabase';
+import { toKSTString } from '@/app/lib/time';
+import logger from '@/app/lib/logger';
 
 interface VisitorData {
   id: string;
@@ -109,15 +111,14 @@ export default function VisitorTrackingPage() {
         ...filters,
       });
 
-      console.log('[ADMIN] 방문자 데이터 요청 시작...');
-      console.log('[ADMIN] 요청 파라미터:', params.toString());
-      console.log('[ADMIN] 요청 URL:', `/api/track-visitor?${params}`);
+      logger.debug('ADMIN', '방문자 데이터 요청 시작...');
+      logger.debug('ADMIN', '요청 파라미터:', params.toString(), 'URL:', `/api/track-visitor?${params}`);
 
       const response = await fetch(`/api/track-visitor?${params}`);
-      console.log('[ADMIN] API 응답 상태:', response.status, response.statusText);
+      logger.debug('ADMIN', 'API 응답 상태:', response.status, response.statusText);
       
       const data = await response.json();
-      console.log('[ADMIN] 방문자 데이터 응답:', data);
+      logger.debug('ADMIN', '방문자 데이터 응답 길이:', Array.isArray(data?.data) ? data.data.length : 'N/A');
 
       console.log('[ADMIN] 응답 데이터 구조:', {
         hasData: !!data.data,
@@ -131,8 +132,7 @@ export default function VisitorTrackingPage() {
       if (data.data && Array.isArray(data.data)) {
         setVisitors(data.data);
         setTotalPages(data.pagination?.totalPages || 1);
-        console.log('[ADMIN] 방문자 데이터 설정 완료:', data.data.length, '개');
-        console.log('[ADMIN] 첫 번째 방문자 데이터:', data.data[0]);
+        logger.debug('ADMIN', '방문자 데이터 설정 완료:', data.data.length, '개');
       } else if (data.data && typeof data.data === 'object') {
         // 데이터가 객체인 경우 배열로 변환 시도
         const dataArray = Object.values(data.data);
@@ -140,19 +140,19 @@ export default function VisitorTrackingPage() {
           // 타입 안전성을 위해 VisitorData[]로 캐스팅
           setVisitors(dataArray as VisitorData[]);
           setTotalPages(data.pagination?.totalPages || 1);
-          console.log('[ADMIN] 객체를 배열로 변환하여 설정:', dataArray.length, '개');
+          logger.debug('ADMIN', '객체를 배열로 변환하여 설정:', dataArray.length, '개');
         } else {
-          console.warn('[ADMIN] 데이터를 배열로 변환할 수 없음:', dataArray);
+          logger.warn('ADMIN', '데이터를 배열로 변환할 수 없음');
           setVisitors([]);
           setTotalPages(1);
         }
       } else {
-        console.warn('[ADMIN] 방문자 데이터 형식 오류:', data);
+        logger.warn('ADMIN', '방문자 데이터 형식 오류');
         setVisitors([]);
         setTotalPages(1);
       }
     } catch (error) {
-      console.error('[ADMIN] 방문자 데이터 조회 실패:', error);
+      logger.error('ADMIN', '방문자 데이터 조회 실패:', error);
       setVisitors([]);
       setTotalPages(1);
     } finally {
@@ -170,17 +170,17 @@ export default function VisitorTrackingPage() {
       const response = await fetch(`/api/visitor-stats?${params}`);
       const data = await response.json();
       
-      console.log('[ADMIN] 통계 데이터 응답:', data);
+      logger.debug('ADMIN', '통계 데이터 응답');
       
       if (data && typeof data.totalVisitors === 'number') {
         setStats(data);
-        console.log('[ADMIN] 통계 데이터 설정 완료');
+        logger.debug('ADMIN', '통계 데이터 설정 완료');
       } else {
         console.warn('[ADMIN] 통계 데이터 형식 오류:', data);
         setStats(null);
       }
     } catch (error) {
-      console.error('[ADMIN] 통계 데이터 조회 실패:', error);
+      logger.error('ADMIN', '통계 데이터 조회 실패:', error);
       setStats(null);
     }
   };
@@ -190,23 +190,7 @@ export default function VisitorTrackingPage() {
     setCurrentPage(1);
   };
 
-  const formatKST = (isoString: string): string => {
-    try {
-      const d = new Date(isoString);
-      return d.toLocaleString('ko-KR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false,
-        timeZone: 'Asia/Seoul'
-      });
-    } catch {
-      return isoString;
-    }
-  };
+  const formatKST = (isoString: string): string => toKSTString(isoString);
 
   const exportToCSV = () => {
     if (!visitors.length) return;
