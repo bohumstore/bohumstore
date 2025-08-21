@@ -10,9 +10,9 @@ export async function POST(req: Request) {
   try {
     // 환경 변수 확인
     console.log(`[POST OTP] 환경 변수 확인:`);
-    console.log(`- API_KEY: ${process.env.ALIGO_API_KEY ? '설정됨' : '설정되지 않음'}`);
-    console.log(`- USER_ID: ${process.env.ALIGO_USER_ID ? '설정됨' : '설정되지 않음'}`);
-    console.log(`- SENDER_KEY: ${process.env.ALIGO_SENDER_KEY ? '설정됨' : '설정되지 않음'}`);
+    console.log(`- API_KEY: ${process.env.NEXT_PUBLIC_ALIGO_API_KEY ? '설정됨' : '설정되지 않음'}`);
+    console.log(`- USER_ID: ${process.env.NEXT_PUBLIC_ALIGO_USER_ID ? '설정됨' : '설정되지 않음'}`);
+    console.log(`- SENDER_KEY: ${process.env.NEXT_PUBLIC_ALIGO_SENDER_KEY ? '설정됨' : '설정되지 않음'}`);
     
     const { phone, templateId, companyName, productName } = await req.json();
     console.log(`[POST OTP] 요청 데이터:`, { phone, templateId, companyName, productName });
