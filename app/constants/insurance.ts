@@ -2,6 +2,7 @@
 export const INSURANCE_COMPANIES = {
   KB_LIFE: 1,
   KDB_LIFE: 2,
+  IBK_LIFE: 3, // IBK연금보험 추가
   SHINHAN_LIFE: 4, // 신한라이프생명 추가
   DONGYANG_LIFE: 5, // 동양생명 추가
 } as const;
@@ -11,6 +12,7 @@ export const INSURANCE_PRODUCTS = {
   KB_TRIPLE_LEVEL_UP: 1,  // KB라이프 트리플 레벨업 연금보험
   KDB_HAPPY_DREAM: 2,    // KDB 더!행복드림변액연금보험
   KDB_HAPPY_PLUS_GUARANTEED: 3, // KDB 더!행복플러스연금보험(보증형)
+  IBK_LIFETIME_ANNUITY: 4, // IBK 평생보증받는 변액연금보험
   SHINHAN_MORE_THE_DREAM: 5, // 신한라이프 모아더드림Plus종신보험 추가
   DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE: 6, // 동양생명 new알뜰플러스종신보험
 } as const;
@@ -33,6 +35,18 @@ export const PRODUCT_CONFIGS = {
       '가입 15~70세 / 연금개시 55~80세',
       '실적배당 종신연금 보증지급',
       '최저사망적립액 보증'
+    ]
+  },
+  [INSURANCE_PRODUCTS.IBK_LIFETIME_ANNUITY]: {
+    name: 'IBK 평생보증받는 변액연금보험',
+    companyId: INSURANCE_COMPANIES.IBK_LIFE,
+    companyName: 'IBK연금보험',
+    category: '연금보험',
+    features: [
+      '보증형 변액연금',
+      '가입 0~68세 / 연금개시 30~80세',
+      '실적배당 종신연금 보증지급',
+      '최저사망계약자적립액 보증'
     ]
   },
   [INSURANCE_PRODUCTS.KDB_HAPPY_DREAM]: {
@@ -97,6 +111,10 @@ export const PRODUCT_PATH_CONFIGS = {
     productId: INSURANCE_PRODUCTS.KB_TRIPLE_LEVEL_UP,
     config: PRODUCT_CONFIGS[INSURANCE_PRODUCTS.KB_TRIPLE_LEVEL_UP]
   },
+  '/insurance/annuity/ibk/lifetime': {
+    productId: INSURANCE_PRODUCTS.IBK_LIFETIME_ANNUITY,
+    config: PRODUCT_CONFIGS[INSURANCE_PRODUCTS.IBK_LIFETIME_ANNUITY]
+  },
   '/insurance/annuity/kdb/happy-dream': {
     productId: INSURANCE_PRODUCTS.KDB_HAPPY_DREAM,
     config: PRODUCT_CONFIGS[INSURANCE_PRODUCTS.KDB_HAPPY_DREAM]
@@ -125,6 +143,7 @@ export const ALIGO_TEMPLATE_IDS = {
   KB_TRIPLE_LEVEL_UP: 'UA_7754',      // KB라이프 트리플 레벨업 연금보험
   KDB_HAPPY_DREAM: 'UA_7754',         // KDB 더!행복드림변액연금보험
   KDB_HAPPY_PLUS_GUARANTEED: 'UA_7754', // KDB 더!행복플러스연금보험(보증형)
+  IBK_LIFETIME_ANNUITY: 'UA_7754', // IBK 평생보증받는 변액연금보험 - OTP 전송 템플릿
   SHINHAN_MORE_THE_DREAM: 'UA_7918', // 신한라이프 모아더드림Plus종신보험
   DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE: 'UA_7754', // 동양생명 new알뜰플러스종신보험 (기본 템플릿 사용)
 } as const;
@@ -143,6 +162,7 @@ export const getTemplateIdByPath = (path: string) => {
     case 1: return ALIGO_TEMPLATE_IDS.KB_TRIPLE_LEVEL_UP;
     case 2: return ALIGO_TEMPLATE_IDS.KDB_HAPPY_DREAM;
     case 3: return ALIGO_TEMPLATE_IDS.KDB_HAPPY_PLUS_GUARANTEED;
+    case 4: return ALIGO_TEMPLATE_IDS.IBK_LIFETIME_ANNUITY; // IBK 평생보증받는 변액연금보험
     case 5: return ALIGO_TEMPLATE_IDS.SHINHAN_MORE_THE_DREAM; // 신한라이프 모아더드림Plus종신보험
     case 6: return ALIGO_TEMPLATE_IDS.DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE; // 동양생명 new알뜰플러스종신보험
     default: return 'UA_7754';

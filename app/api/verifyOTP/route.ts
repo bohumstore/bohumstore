@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { supabase } from "../supabase";
 import { alimtalkSend } from "@/app/lib/aligo";
 import aligoAuth from "../utils/aligoAuth";
+import { getCachedAligoToken } from "@/app/lib/aligoTokenCache";
 import { link } from "fs";
 import { use } from "react";
 
@@ -108,6 +109,18 @@ export async function POST(req: Request) {
   }
   console.log("[DEBUG] company:", company);
 
+  // 상품명은 DB 표기를 그대로 사용
+  const productDisplayName = product.name;
+
+  // Aligo 토큰(가능 시) 획득 후 인증 정보 구성
+  let authForSend = aligoAuth as any;
+  try {
+    const token = await getCachedAligoToken(aligoAuth);
+    if (token) authForSend = { ...aligoAuth, token };
+  } catch {
+    // 토큰 획득 실패 시 기본 키로 전송 계속
+  }
+  
   if (onlyClient) {
     // 고객용 알림톡만 발송 (인증번호 검증 및 DB 작업 생략)
     // 실제 보험사명 사용
@@ -123,7 +136,7 @@ export async function POST(req: Request) {
         subject_1: "상담/설계요청 - 고객전송",
         message_1: `▼ ${name}님
 
-▣ 보험종류: [ ${product.name} ]
+▣ 보험종류: [ ${productDisplayName} ]
 ▣ 상담시간: [ ${counselTime} ]
 
 상담 신청해 주셔서 감사합니다!`,
@@ -138,8 +151,12 @@ export async function POST(req: Request) {
       },
     }
     try {
-      const resultToClient = await alimtalkSend(toClientReq, aligoAuth);
+      const resultToClient = await alimtalkSend(toClientReq, authForSend);
       console.log("고객 알림톡 전송 결과 (onlyClient):", resultToClient);
+      if (!resultToClient || typeof resultToClient.code !== 'number' || resultToClient.code !== 0) {
+        console.error('[ALIMTALK][onlyClient] 실패 응답:', resultToClient);
+        return NextResponse.json({ error: "알림톡 전송 실패" }, { status: 502 });
+      }
     } catch (err) {
       console.error("알림톡 전송 실패 (onlyClient):", err);
       return NextResponse.json({ error: "알림톡 전송 실패" }, { status: 502 });
@@ -193,13 +210,13 @@ export async function POST(req: Request) {
           receiver_1: "010-8897-7486",
           subject_1:  subject,
           message_1:  counselType === 1
-            ? `[보험료계산]\n${companyName}\n${product.name}\n${birth}\n${name}\n${genderKor}\n${phone}`
-            : `[상담/설계요청]\n${counselTime}\n${product.name}\n${birth}\n${name}\n${genderKor}\n${phone}`,
+            ? `[보험료계산]\n${companyName}\n${productDisplayName}\n${birth}\n${name}\n${genderKor}\n${phone}`
+            : `[상담/설계요청]\n${counselTime}\n${productDisplayName}\n${birth}\n${name}\n${genderKor}\n${phone}`,
           testMode: "N",
         },
       };
       console.log("[DEBUG] 관리자 알림톡 요청 데이터:", toAdminReq.body);
-      return alimtalkSend(toAdminReq, aligoAuth);
+      return alimtalkSend(toAdminReq, authForSend);
     })();
 
     // 고객용 템플릿 ID 결정 (counselType: 1일 때도 클라이언트 지정 템플릿 우선 적용)
@@ -240,6 +257,26 @@ export async function POST(req: Request) {
       return 0;
     })();
 
+    // 총 납입액 계산 (문자열 입력 대응)
+    const totalPaymentStr = (() => {
+      const monthly = (() => {
+        const str = String(mounthlyPremium || '').trim();
+        if (!str) return 0;
+        if (str.includes('만원')) {
+          const n = parseInt(str.replace(/[^0-9]/g, ''));
+          return isNaN(n) ? 0 : n * 10000;
+        }
+        const n = parseInt(str.replace(/[^0-9]/g, ''));
+        return isNaN(n) ? 0 : n;
+      })();
+      const years = (() => {
+        const n = parseInt(String(paymentPeriod || '').replace(/[^0-9]/g, ''));
+        return isNaN(n) ? 0 : n;
+      })();
+      const total = monthly > 0 && years > 0 ? monthly * 12 * years : 0;
+      return total > 0 ? `${total.toLocaleString()} 원` : '-';
+    })();
+
     const toClientReq = {
       headers: { "content-type": "application/json" },
       body: {
@@ -249,32 +286,54 @@ export async function POST(req: Request) {
         subject_1: subject,
         message_1: counselType === 1
           ? clientTemplateId === "UA_7918"
-            // UA_7918 템플릿 (신한라이프 모아더드림Plus종신보험 전용)
-            ? `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간: ${paymentPeriod}\n⊙ 월보험료: ${mounthlyPremium}\n\n▼ 10년시점 ▼\n· 환급률: ${tenYearReturnRate}%\n· 확정이자: ${interestValue}원\n· 예상해약환급금: ${refundValue}원`
+            // UA_7918 템플릿 (whole-life)
+            ? `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${productDisplayName}\n⊙ 납입기간: ${paymentPeriod}\n⊙ 월보험료: ${mounthlyPremium}\n\n▼ 10년시점 ▼\n· 환급률: ${tenYearReturnRate != null ? tenYearReturnRate + ' %' : '-'}\n· 확정이자: ${interestValue != null ? interestValue + ' 원' : '-'}\n· 예상해약환급금: ${refundValue != null ? refundValue + ' 원' : '-'}`
             : clientTemplateId === "UB_6018"
             // UB_6018 템플릿 (변액연금용 - 실적배당 포함)
-            ? `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간 / 월보험료: ${paymentPeriod} / ${mounthlyPremium}\n⊙ 총 납입액: ${mounthlyPremium && paymentPeriod ? (parseInt(String(mounthlyPremium).replace(/[^0-9]/g, '')) * 10000 * parseInt(String(paymentPeriod).replace(/[^0-9]/g, '')) * 12).toLocaleString() : '-'}원\n⊙ 연금개시연령: ${pensionStartAgeNum || '-'}세\n\n▼ 예상 연금 수령 ▼\n· 월 연금액: ${monthlyPensionNum ? monthlyPensionNum.toLocaleString() : '-'}원\n· 실적배당 연금액: ${performancePension ? Number(performancePension).toLocaleString() : '-'}원\n· 100세까지 총 수령액: ${totalUntil100Num ? totalUntil100Num.toLocaleString() : '-'}원\n\n※ 위 금액은 예시이며, 실제 수령액은 가입 시 조건, 이율, 보험사 정책 및 운용 실적 등에 따라 달라질 수 있습니다.`
-            // UB_5797 템플릿 (일반 연금용)
-            : `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${product.name}\n⊙ 납입기간 / 월보험료: ${paymentPeriod} / ${mounthlyPremium}\n⊙ 총 납입액: ${mounthlyPremium && paymentPeriod ? (parseInt(String(mounthlyPremium).replace(/[^0-9]/g, '')) * 10000 * parseInt(String(paymentPeriod).replace(/[^0-9]/g, '')) * 12).toLocaleString() : '-'}원\n⊙ 연금개시연령: ${pensionStartAgeNum || '-'}세\n\n▼ 예상 연금 수령 ▼\n· 월 연금액: ${monthlyPensionNum ? monthlyPensionNum.toLocaleString() : '-'}원\n· 20년 보증기간 총액: ${guaranteedPensionNum ? guaranteedPensionNum.toLocaleString() : '-'}원\n· 100세까지 총 수령액: ${totalUntil100Num ? totalUntil100Num.toLocaleString() : '-'}원\n\n※ 위 금액은 예시이며, 실제 수령액은 가입 시 조건, 이율, 보험사 정책 등에 따라 달라질 수 있습니다.`
-          : `▼ ${user.name}님\n\n▣ 보험종류: [ ${product.name} ]\n▣ 상담시간: [ ${counselTime} ]\n\n상담 신청해 주셔서 감사합니다!`,
-        button_1: {
-          button: [{
-            name: "채널 추가",
-            linkType: "AC"
-          }]
-        },
-        testMode: "N",
+            ? `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${productDisplayName}\n⊙ 납입기간 / 월보험료: ${paymentPeriod} / ${mounthlyPremium}\n⊙ 총 납입액: ${totalPaymentStr}\n⊙ 연금개시연령: ${pensionStartAgeNum || '-'}\n\n▼ 예상 연금 수령 ▼\n· 월 연금액: ${monthlyPensionNum ? monthlyPensionNum.toLocaleString() + ' 원' : '-'}\n· 실적배당 연금액: ${performancePension ? Number(performancePension).toLocaleString() + ' 원' : '-'}\n· 100세까지 총 수령액: ${totalUntil100Num ? totalUntil100Num.toLocaleString() + ' 원' : '-'}\n\n※ 위 금액은 예시이며, 실제 수령액은 가입 시 조건, 이율, 보험사 정책 및 운용 실적 등에 따라 달라질 수 있습니다.`
+            // UB_5797 템플릿 (annuity)
+            : `▣ ${user.name}님 계산 결과입니다.\n\n⊙ 보험사: ${companyName}\n⊙ 상품명: ${productDisplayName}\n⊙ 납입기간 / 월보험료: ${paymentPeriod} / ${mounthlyPremium}\n⊙ 총 납입액: ${totalPaymentStr}\n⊙ 연금개시연령: ${pensionStartAgeNum ? pensionStartAgeNum + ' 세' : '-'}\n\n▼ 예상 연금 수령 ▼\n· 월 연금액: ${monthlyPensionNum ? monthlyPensionNum.toLocaleString() + ' 원' : '-'}\n· 20년 보증기간 총액: ${guaranteedPensionNum ? guaranteedPensionNum.toLocaleString() + ' 원' : '-'}\n· 100세까지 총 수령액: ${totalUntil100Num ? totalUntil100Num.toLocaleString() + ' 원' : '-'}\n\n※ 위 금액은 예시이며, 실제 수령액은 가입 시 조건, 이율, 보험사 정책 등에 따라 달라질 수 있습니다.`
+          : `▼ ${user.name}님\n\n▣ 보험종류: [ ${productDisplayName} ]\n▣ 상담시간: [ ${counselTime} ]\n\n상담 신청해 주셔서 감사합니다!`,
+        // 템플릿 변수 매핑 (알리고 var1~) — 템플릿 승인된 변수 순서에 맞게 전달
+        var1: user.name,                       // 고객명
+        var2: companyName,                     // 회사명
+        var3: productDisplayName,              // 상품명
+        var4: String(paymentPeriod || ''),     // 납입기간
+        var5: String(mounthlyPremium || ''),   // 월보험료
+        // annuity용 변수들
+        var6: totalPaymentStr,                 // 총납입액 (단위 포함: ' 원')
+        var7: pensionStartAgeNum ? `${pensionStartAgeNum} 세` : '-', // 연금개시연령 (단위 포함)
+        var8: monthlyPensionNum ? `${monthlyPensionNum.toLocaleString()} 원` : '-', // 월 연금액 (단위 포함)
+        var9: guaranteedPensionNum ? `${guaranteedPensionNum.toLocaleString()} 원` : '-', // 보증기간총액 (단위 포함)
+        var10: totalUntil100Num ? `${totalUntil100Num.toLocaleString()} 원` : '-', // 총수령액 (단위 포함)
+        // whole-life용 변수들
+        var11: tenYearReturnRate != null ? `${tenYearReturnRate} %` : '-', // 환급률 (단위 포함)
+        var12: interestValue != null ? `${interestValue} 원` : '-',       // 확정이자 (단위 포함)
+        var13: refundValue != null ? `${refundValue} 원` : '-',           // 해약환급금 (단위 포함)
+      button_1: {
+        button: [{
+          name: "채널 추가",
+          linkType: "AC"
+        }]
       },
-    }
+      testMode: "N",
+    },
+  }
     
     console.log("[DEBUG] 고객용 알림톡 요청 데이터:", toClientReq.body);
     
     try {
       const sendPromises: Promise<any>[] = [];
       if (adminSendPromise) sendPromises.push(adminSendPromise);
-      sendPromises.push(alimtalkSend(toClientReq, aligoAuth));
+      sendPromises.push(alimtalkSend(toClientReq, authForSend));
       const results = await Promise.all(sendPromises);
       console.log("알림톡 전송 결과(병렬):", results);
+      const nonNull = results.filter((r: any) => !!r);
+      const anyFail = nonNull.some((r: any) => typeof r?.code !== 'number' || r.code !== 0);
+      if (anyFail) {
+        console.error('[ALIMTALK] 일부/전체 전송 실패:', nonNull);
+        return NextResponse.json({ error: "알림톡 전송 실패" }, { status: 502 });
+      }
     } catch (err) {
       console.error("알림톡 전송 실패(병렬):", err);
       return NextResponse.json({ error: "알림톡 전송 실패" }, { status: 502 });
