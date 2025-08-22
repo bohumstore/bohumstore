@@ -230,13 +230,10 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // 필터링된 데이터 조회
+    // 필터링된 데이터 조회 (단일 테이블 셀렉트로 안정화)
     let query = supabase
       .from('visitor_tracking')
-      .select(`
-        *,
-        counsel_type:visitor_tracking_counsel_type_id_fkey(name)
-      `)
+      .select('*')
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1);
 

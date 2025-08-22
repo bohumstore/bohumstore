@@ -78,27 +78,85 @@ export default function VisitorTrackingPage() {
     fetchStats();
   };
 
+  const getFullReferrer = (ref: string | null): string => ref || '-';
+
+  const getDomainFromUrl = (ref: string | null): string => {
+    if (!ref) return '-';
+    try {
+      const u = new URL(ref);
+      return u.hostname.replace(/^www\./, '') || ref;
+    } catch {
+      return ref;
+    }
+  };
+
+  const getQueryFromRef = (ref: string | null): string | null => {
+    if (!ref) return null;
+    try {
+      const u = new URL(ref);
+      return u.searchParams.get('query') || u.searchParams.get('q') || u.searchParams.get('keyword') || null;
+    } catch {
+      return null;
+    }
+  };
+
+  const formatReferrerForDisplay = (ref: string | null, keyword?: string | null): string => {
+    const domain = getDomainFromUrl(ref);
+    const q = (keyword && keyword.trim()) || getQueryFromRef(ref);
+    return q ? `${domain} - '${q}'` : domain;
+  };
+
   // 실시간 업데이트
   useEffect(() => {
+    let pollingTimer: any = null;
+    let subscribed = false;
+
+    const startFallbackPolling = () => {
+      if (pollingTimer) return;
+      pollingTimer = setInterval(() => {
+        if (typeof document === 'undefined' || document.visibilityState !== 'visible') return;
+        safeRefresh();
+      }, 5000); // 5초 주기 폴링
+    };
+
+    const stopFallbackPolling = () => {
+      if (pollingTimer) {
+        clearInterval(pollingTimer);
+        pollingTimer = null;
+      }
+    };
+
     const channel = supabase
       .channel('realtime:visitor_tracking')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'visitor_tracking' }, () => {
         safeRefresh();
       })
-      .subscribe();
+      .subscribe((status) => {
+        if (status === 'SUBSCRIBED') {
+          subscribed = true;
+          stopFallbackPolling();
+        }
+      });
+
+    // 4초 안에 구독이 안되면 폴링 백업 가동
+    const subscribeTimeout = setTimeout(() => {
+      if (!subscribed) startFallbackPolling();
+    }, 4000);
 
     return () => {
+      clearTimeout(subscribeTimeout);
+      stopFallbackPolling();
       try { supabase.removeChannel(channel); } catch {}
     };
   }, []);
 
-  // 선택적 자동 새로고침 (기본 OFF)
+  // 선택적 자동 새로고침 (기본 OFF, 5초)
   useEffect(() => {
     if (!autoRefresh) return;
     const interval = setInterval(() => {
       if (typeof document === 'undefined' || document.visibilityState !== 'visible') return;
       safeRefresh();
-    }, 60000); // 60초
+    }, 5000); // 5초
     return () => clearInterval(interval);
   }, [autoRefresh]);
 
@@ -114,7 +172,7 @@ export default function VisitorTrackingPage() {
       logger.debug('ADMIN', '방문자 데이터 요청 시작...');
       logger.debug('ADMIN', '요청 파라미터:', params.toString(), 'URL:', `/api/track-visitor?${params}`);
 
-      const response = await fetch(`/api/track-visitor?${params}`);
+      const response = await fetch(`/api/track-visitor?${params}`, { cache: 'no-store', headers: { 'cache-control': 'no-cache' } });
       logger.debug('ADMIN', 'API 응답 상태:', response.status, response.statusText);
       
       const data = await response.json();
@@ -167,7 +225,7 @@ export default function VisitorTrackingPage() {
         date_to: filters.date_to,
       });
 
-      const response = await fetch(`/api/visitor-stats?${params}`);
+      const response = await fetch(`/api/visitor-stats?${params}`, { cache: 'no-store', headers: { 'cache-control': 'no-cache' } });
       const data = await response.json();
       
       logger.debug('ADMIN', '통계 데이터 응답');
@@ -196,24 +254,17 @@ export default function VisitorTrackingPage() {
     if (!visitors.length) return;
 
     const headers = [
-      '방문시간', 'IP주소', '통신사', '방문수', '페이지URL', '모바일기종', '유입종류', '유입사이트', '키워드',
-      '디바이스', '브라우저', 'OS', '상담유형', '이름', '전화번호'
+      '방문시간', '방문수', '유입사이트', '키워드', '모바일기종', '브라우저', '상담유형', '이름', '전화번호'
     ];
 
     // CSV 데이터 생성 (한글 깨짐 방지)
     const csvData = visitors.map(visitor => [
       formatKST(visitor.created_at),
-      visitor.ip_address || '',
-      visitor.carrier || '',
       visitor.session_count || 1,
-      visitor.page_url || '',
-      visitor.device_model || '',
-      visitor.traffic_source || '',
       visitor.referrer || '',
       visitor.search_keyword || '',
-      visitor.device_type || '',
+      visitor.device_model || '',
       visitor.browser || '',
-      visitor.os || '',
       visitor.counsel_type_id === 1 ? '보험료 확인' : visitor.counsel_type_id === 2 ? '상담신청' : '',
       visitor.name || '',
       visitor.phone || ''
@@ -260,7 +311,7 @@ export default function VisitorTrackingPage() {
     );
   }
 
-  // 방문자 데이터 테이블 컬럼 정의 (간소화된 15개 필드)
+  // 방문자 데이터 테이블 컬럼 정의 (요청에 맞게 간소화)
   const columns = [
     {
       header: '방문시간',
@@ -268,48 +319,30 @@ export default function VisitorTrackingPage() {
       cell: ({ row }: any) => formatKST(row.original.created_at)
     },
     {
-      header: 'IP주소',
-      accessorKey: 'ip_address',
-      cell: ({ row }: any) => row.original.ip_address || '-'
-    },
-    {
-      header: '통신사',
-      accessorKey: 'carrier',
-      cell: ({ row }: any) => row.original.carrier || '-'
-    },
-    {
       header: '방문수',
       accessorKey: 'session_count',
       cell: ({ row }: any) => row.original.session_count || 1
     },
     {
-      header: '페이지',
-      accessorKey: 'page_url',
+      header: '유입사이트',
+      accessorKey: 'referrer',
       cell: ({ row }: any) => (
-        <a 
-          href={row.original.page_url} 
+        <a
+          href={row.original.referrer || '#'}
           target="_blank" 
           rel="noopener noreferrer"
-          className="text-blue-600 hover:underline"
+          className="text-blue-600 hover:underline break-all"
+          title={getFullReferrer(row.original.referrer)}
         >
-          {row.original.page_url}
+          {formatReferrerForDisplay(row.original.referrer, row.original.search_keyword)}
         </a>
       )
     },
     {
-      header: '유입종류',
-      accessorKey: 'traffic_source',
-      cell: ({ row }: any) => row.original.traffic_source || '-'
-    },
-    {
       header: '키워드',
       accessorKey: 'search_keyword',
-      cell: ({ row }: any) => row.original.search_keyword || '-'
-    },
-    {
-      header: '디바이스',
-      accessorKey: 'device_type',
-      cell: ({ row }: any) => row.original.device_type || '-'
+      cell: ({ row }: any) => row.original.search_keyword || '-',
+      className: 'min-w-[200px]'
     },
     {
       header: '모바일기종',
@@ -320,11 +353,6 @@ export default function VisitorTrackingPage() {
       header: '브라우저',
       accessorKey: 'browser',
       cell: ({ row }: any) => row.original.browser || '-'
-    },
-    {
-      header: 'OS',
-      accessorKey: 'os',
-      cell: ({ row }: any) => row.original.os || '-'
     },
     {
       header: '상담유형',
@@ -555,17 +583,12 @@ export default function VisitorTrackingPage() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">방문시간</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">IP주소</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">통신사</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">방문시간</th>
                   <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-16">방문수</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-48">페이지</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">유입종류</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">키워드</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">디바이스</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-64">유입사이트</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[240px]">키워드</th>
                   <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">모바일기종</th>
                   <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">브라우저</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">OS</th>
                   <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">상담유형</th>
                   <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">이름</th>
                   <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">전화번호</th>
@@ -577,43 +600,28 @@ export default function VisitorTrackingPage() {
                     <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
                       {formatKST(visitor.created_at)}
                     </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {visitor.ip_address || '-'}
-                    </td>
-                    <td className="px-3 py-4 text-sm text-gray-900">
-                      {visitor.carrier || '-'}
-                    </td>
                     <td className="px-3 py-4 text-sm text-gray-900">
                       {visitor.session_count || 1}
                     </td>
                     <td className="px-3 py-4 text-sm text-gray-900 max-w-xs truncate">
                       <a 
-                        href={visitor.page_url || '#'} 
+                        href={visitor.referrer || '#'} 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="text-blue-600 hover:underline"
-                        title={visitor.page_url || undefined}
+                        title={visitor.referrer || undefined}
                       >
-                        {visitor.page_url}
+                        {getFullReferrer(visitor.referrer)}
                       </a>
                     </td>
-                    <td className="px-3 py-4 text-sm text-gray-900">
-                      {visitor.traffic_source || '-'}
-                    </td>
-                    <td className="px-3 py-4 text-sm text-gray-900">
+                    <td className="px-3 py-4 text-sm text-gray-900 max-w-[320px]">
                       {visitor.search_keyword || '-'}
-                    </td>
-                    <td className="px-3 py-4 text-sm text-gray-900">
-                      {visitor.device_type || '-'}
                     </td>
                     <td className="px-3 py-4 text-sm text-gray-900">
                       {visitor.device_model || '-'}
                     </td>
                     <td className="px-3 py-4 text-sm text-gray-900">
                       {visitor.browser || '-'}
-                    </td>
-                    <td className="px-3 py-4 text-sm text-gray-900">
-                      {visitor.os || '-'}
                     </td>
                     <td className="px-3 py-4 text-sm text-gray-900">
                       {visitor.counsel_type_id === 1 ? '보험료 확인' : 

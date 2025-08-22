@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRightIcon, ChevronLeftIcon, ShieldCheckIcon, CurrencyDollarIcon, ChartBarIcon } from "@heroicons/react/24/outline";
@@ -146,7 +146,7 @@ const mainProducts = [
   },
   {
     id: 'ibk-lifetime',
-    name: 'IBK 평생연금받는 변액연금보험',
+    name: 'IBK 평생보증받는 변액연금보험',
     company: 'IBK연금보험',
     logo: '/IBK-logo.png',
     path: '/insurance/annuity/ibk/lifetime',
@@ -190,6 +190,10 @@ const insuranceFeatures = [
 export default function HomePage() {
   const [currentSloganIndex, setCurrentSloganIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const dragStartXRef = useRef<number | null>(null);
+  const lastXRef = useRef<number | null>(null);
+  const draggingRef = useRef(false);
+  const resumeTimerRef = useRef<any>(null);
 
   useEffect(() => {
     // 페이지 방문 시 자동 추적
@@ -215,6 +219,38 @@ export default function HomePage() {
     setCurrentSloganIndex((prev) => (prev + 1) % slogans.length);
   };
 
+  // Swipe / Drag support
+  const startDrag = (x: number) => {
+    draggingRef.current = true;
+    dragStartXRef.current = x;
+    lastXRef.current = x;
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    setIsAutoPlaying(false);
+  };
+
+  const moveDrag = (x: number) => {
+    if (!draggingRef.current) return;
+    lastXRef.current = x;
+  };
+
+  const endDrag = () => {
+    if (!draggingRef.current) return;
+    const startX = dragStartXRef.current;
+    const lastX = lastXRef.current;
+    draggingRef.current = false;
+    dragStartXRef.current = null;
+    lastXRef.current = null;
+    if (startX == null || lastX == null) return;
+    const dx = lastX - startX;
+    const threshold = 40; // px
+    if (Math.abs(dx) >= threshold) {
+      if (dx < 0) goToNext();
+      else goToPrevious();
+    }
+    // resume autoplay after short delay
+    resumeTimerRef.current = setTimeout(() => setIsAutoPlaying(true), 2000);
+  };
+
   const currentSlogan = slogans[currentSloganIndex];
 
   return (
@@ -227,7 +263,16 @@ export default function HomePage() {
       </header>
 
       {/* 슬로건 캐러셀 섹션 - 화면 전체를 채우는 히어로 배너 */}
-      <section className="w-full relative overflow-hidden">
+      <section
+        className="w-full relative overflow-hidden"
+        onTouchStart={(e) => startDrag(e.touches[0].clientX)}
+        onTouchMove={(e) => moveDrag(e.touches[0].clientX)}
+        onTouchEnd={endDrag}
+        onMouseDown={(e) => startDrag(e.clientX)}
+        onMouseMove={(e) => moveDrag(e.clientX)}
+        onMouseUp={endDrag}
+        onMouseLeave={endDrag}
+      >
         {/* 슬로건 캐러셀 */}
         <div className="relative w-full">
           {/* 메인 슬로건 카드 */}
