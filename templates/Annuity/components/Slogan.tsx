@@ -396,7 +396,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
           backgroundSize: '20px 20px',
         }}
       >
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-8 md:gap-12 px-4 md:py-4">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-col lg:flex-row items-center md:items-start justify-center lg:justify-between gap-8 md:gap-12 px-4 md:py-4">
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">

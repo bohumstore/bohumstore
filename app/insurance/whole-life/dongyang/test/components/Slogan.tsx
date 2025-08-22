@@ -398,7 +398,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
           backgroundSize: '20px 20px',
         }}
       >
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-center lg:items-start justify-center md:justify-between gap-4 md:gap-8 lg:gap-12 px-4 md:px-6 lg:px-4 md:py-4 lg:py-4">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-col lg:flex-row items-center md:items-center lg:items-start justify-center lg:justify-between gap-4 md:gap-8 lg:gap-12 px-4 md:px-6 lg:px-4 md:py-4 lg:py-4">
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
@@ -427,7 +427,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             <div className="text-xs text-gray-400 mt-4">준법감시인 심의필 제2025-광고-1168호(2025.06.05~2026.06.04)</div>
           </div>
           {/* 오른쪽: 보험료 확인 카드 */}
-          <div className="flex-1 flex justify-center md:justify-end w-full md:ml-8 md:self-end">
+          <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-end">
             <div className="w-full max-w-md bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-8 md:p-10 lg:p-8 relative flex flex-col">
               {/* 새로운 헤더 디자인 */}
               <div className="mb-6">
