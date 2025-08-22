@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { supabase } from "../supabase";
 import { alimtalkSend } from "@/app/lib/aligo";
 import aligoAuth from "../utils/aligoAuth";
+import { getCachedAligoToken } from "@/app/lib/aligoTokenCache";
 import logger from "@/app/lib/logger";
 
 export async function POST(req: Request) {
@@ -40,40 +41,44 @@ export async function POST(req: Request) {
       },
     };
 
-    try {
-      // DB 저장과 알림톡 전송을 병렬로 처리하여 총 지연시간 단축
-      const insertPromise = supabase.from("otp").insert({ phone, code });
-      const sendPromise = alimtalkSend(requestData, aligoAuth);
-      const [{ error: dbErr }, result] = await Promise.all([insertPromise, sendPromise]);
-
-      logger.debug('POST_OTP', 'Aligo API 응답', result);
-      if (dbErr) {
-        logger.error('POST_OTP', 'DB 저장 실패', dbErr);
-        return NextResponse.json({ error: "DB 저장 실패" }, { status: 500 });
-      }
-      const endTime = Date.now();
-      logger.info('POST_OTP', `전체 처리 시간: ${endTime - startTime}ms`, '요청 완료');
-
-      // Aligo API 응답 확인
-      if (result.code === -99) {
-        logger.error('POST_OTP', 'IP 인증 에러', result.message);
-        return NextResponse.json({ error: "IP 인증이 필요합니다. 관리자에게 문의하세요." }, { status: 403 });
-      } else if (result.code !== 0) { // 0이 성공 코드
-        logger.error('POST_OTP', 'Aligo API 에러', result.message);
-        return NextResponse.json({ error: `알림톡 전송 실패: ${result.message}` }, { status: 502 });
-      }
-
-      return NextResponse.json({ success: true });
-    } catch (err: any) {
-      // 타임아웃(ECONNABORTED) 등 네트워크 지연은 '전송 요청됨'으로 처리하여 사용자에게 실패로 보이지 않게 함
-      const isTimeout = err?.code === 'ECONNABORTED' || /timeout/i.test(err?.message || '');
-      if (isTimeout) {
-        console.warn(`[POST OTP] Aligo 응답 지연(타임아웃 추정). 전송 요청으로 처리합니다.`);
-        return NextResponse.json({ success: true, queued: true });
-      }
-      console.error(`[POST OTP] Aligo 호출 예외:`, err.response?.data || err.message);
-      return NextResponse.json({ error: "알림톡 전송 실패" }, { status: 502 });
+    // 1) 먼저 DB에 OTP 저장 (필수)
+    const { error: dbErr } = await supabase.from("otp").insert({ phone, code });
+    if (dbErr) {
+      logger.error('POST_OTP', 'DB 저장 실패', dbErr);
+      return NextResponse.json({ error: "DB 저장 실패" }, { status: 500 });
     }
+
+    // 2) 알림톡 전송은 백그라운드 처리
+    //    - 토큰은 비차단으로 갱신 시도하되, 150ms 내 도착한 경우만 사용
+    const tokenPromise = getCachedAligoToken(aligoAuth).catch(() => undefined)
+    const tokenOrUndefined = await Promise.race<undefined | string>([
+      tokenPromise,
+      new Promise<undefined>((resolve) => setTimeout(() => resolve(undefined), 150)),
+    ])
+    const authWithToken = tokenOrUndefined ? { ...aligoAuth, token: tokenOrUndefined } : aligoAuth
+    const sendPromise = alimtalkSend(requestData, authWithToken)
+      .then((result) => {
+        logger.debug('POST_OTP', 'Aligo API 응답', result);
+        if (result?.code === -99) {
+          logger.error('POST_OTP', 'IP 인증 에러', result.message);
+        } else if (result?.code !== 0) {
+          logger.error('POST_OTP', 'Aligo API 에러', result.message);
+        }
+      })
+      .catch((err: any) => {
+        logger.error('POST_OTP', 'Aligo 호출 예외(백그라운드)', err.response?.data || err.message);
+      });
+
+    // 2-a) 소프트 타임아웃(최대 800ms) 동안만 대기 후 즉시 성공 응답
+    const softTimeoutMs = 800;
+    await Promise.race([
+      sendPromise,
+      new Promise((resolve) => setTimeout(resolve, softTimeoutMs))
+    ]);
+
+    const endTime = Date.now();
+    logger.info('POST_OTP', `즉시 응답 처리 시간: ${endTime - startTime}ms`, '요청 수락');
+    return NextResponse.json({ success: true, queued: true });
   } catch (err: any) {
     console.error(`[POST OTP] 전체 처리 에러:`, err);
     console.error(`[POST OTP] 에러 상세:`, err.response?.data || err.message);
