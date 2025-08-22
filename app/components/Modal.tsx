@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 
 interface ModalProps {
@@ -9,6 +9,49 @@ interface ModalProps {
 }
 
 export default function Modal({ title, open, onClose, children }: ModalProps) {
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const container = contentRef.current;
+    if (!container) return;
+
+    // 플랫폼 탐지 및 지연 시간/오프셋 튜닝
+    const ua = (typeof navigator !== 'undefined' ? navigator.userAgent || '' : '').toLowerCase();
+    const isIOS = /iphone|ipad|ipod/.test(ua) && !/windows/.test(ua);
+    const isAndroid = /android/.test(ua);
+    const focusDelayMs = isIOS ? 120 : isAndroid ? 60 : 40;
+    const extraOffsetPx = isIOS ? 64 : 24; // iOS는 주소/바텀바 변동 고려해 더 크게 보정
+
+    const handleFocusIn = (e: Event) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+      const tag = target.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.getAttribute('contenteditable') === 'true') {
+        // 약간의 지연 후 스크롤(키패드가 열리면서 레이아웃 변동 고려)
+        setTimeout(() => {
+          try {
+            // 1차: 중앙 정렬
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // 2차: 플랫폼별 추가 오프셋 보정(컨테이너 기준 상단으로 조금 더 끌어올림)
+            const scrollBy = () => {
+              try {
+                container.scrollBy({ top: -extraOffsetPx, left: 0, behavior: 'smooth' });
+              } catch {}
+            };
+            // iOS는 키패드 전환이 더 늦게 반영되어 한 번 더 보정
+            setTimeout(scrollBy, isIOS ? 140 : 80);
+          } catch {}
+        }, focusDelayMs);
+      }
+    };
+
+    container.addEventListener('focusin', handleFocusIn);
+    return () => {
+      container.removeEventListener('focusin', handleFocusIn);
+    };
+  }, [open]);
+
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
@@ -19,7 +62,7 @@ export default function Modal({ title, open, onClose, children }: ModalProps) {
             <XMarkIcon className="w-7 h-7" />
           </button>
         </div>
-        <div className="px-6 py-4">
+        <div ref={contentRef} className="px-6 py-4 pb-24 md:pb-6 scroll-smooth">
           {children}
         </div>
         <div className="flex border-t border-gray-200">

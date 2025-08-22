@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
@@ -63,6 +63,13 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     '오후 05:00 ~ 06:00',
     '오후 06:00 이후'
   ];
+
+  // 입력 포커스 제어용 Ref
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const birthInputRef = useRef<HTMLInputElement>(null);
+  const phoneInputRef = useRef<HTMLInputElement>(null);
+  const otpInputRef = useRef<HTMLInputElement>(null);
+  const consultOtpInputRef = useRef<HTMLInputElement>(null);
 
 
   // 타이머 효과
@@ -130,10 +137,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       alert('연락처를 11자리 숫자로 입력해주세요. (예: 01012345678)');
       return false;
     }
-    if (!phone.startsWith('010') && !phone.startsWith('011') && 
-        !phone.startsWith('016') && !phone.startsWith('017') && 
-        !phone.startsWith('018') && !phone.startsWith('019')) {
-      alert('올바른 휴대폰 번호를 입력해주세요.\n(010, 011, 016, 017, 018, 019로 시작)');
+    if (!phone.startsWith('010')) {
+      alert('올바른 휴대폰 번호를 입력해주세요. (010으로 시작)');
       return false;
     }
 
@@ -290,6 +295,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     const numbers = value.replace(/[^0-9]/g, '').slice(0, 8);
     setBirth(numbers);
     setIsVerified(false);
+    if (numbers.length === 8) {
+      setTimeout(() => phoneInputRef.current?.focus(), 0);
+    }
   }
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -306,6 +314,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
+    setTimeout(() => otpInputRef.current?.focus(), 0);
   };
 
   const formatTime = (sec: number) => {
@@ -328,6 +337,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setGender(e.target.value);
     setIsVerified(false);
     setPensionAmounts({ monthly: 0, guaranteed: 0, totalUntil100: 0, pensionStartAge: 0, notice: '' });
+    setTimeout(() => nameInputRef.current?.focus(), 0);
   };
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -365,7 +375,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   const handleConsultSendOTP = async () => {
     setConsultOtpTimer(180);
     setConsultOtpResendAvailable(false);
-    await handlePostOTP()
+    await handlePostOTP();
+    // 전송 후 상담 OTP 입력칸으로 포커스 이동
+    setTimeout(() => consultOtpInputRef.current?.focus(), 0);
   };
 
   const handleConsultVerifyOTP = async () => {
@@ -660,15 +672,15 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   return (
     <>
       <section
-        className="w-full bg-green-600 py-2 md:py-3"
+        className="w-full bg-green-600 py-6 md:py-10 lg:py-3"
         style={{
           backgroundImage: 'radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px)',
           backgroundSize: '20px 20px',
         }}
       >
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-4 md:gap-8 lg:gap-12 px-4 md:px-6 lg:px-4 md:py-4 lg:py-4">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-center lg:items-start justify-center md:justify-between gap-4 md:gap-8 lg:gap-12 px-4 md:px-6 lg:px-4 md:py-4 lg:py-4">
           {/* 왼쪽: 상품 설명/이미지 */}
-          <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
+          <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
             <div className="flex items-center gap-2 text-sm text-white mb-2">
               {/* <img src="/kdb-logo.png" alt="KDB 로고" className="h-6 w-auto" style={{minWidth:'24px'}} /> */}
             </div>
@@ -677,26 +689,26 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               보증형 연금보험!
             </h1>
             <ul className="mb-8 md:mb-10 lg:mb-8 space-y-2 md:space-y-3 lg:space-y-2">
-              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-start">
+              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
                 연단리 7% 최저연금기준금액 보증 <span className="text-xs md:text-sm lg:text-xs align-baseline">(20년까지)</span>
               </li>
-              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-start">
+              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
                 가입 15~70세 / 연금개시 55~80세
               </li>
-              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-start">
+              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
                 비과세 <span className="text-xs md:text-sm lg:text-xs align-baseline">(월 150만원 한도, 10년유지 세법요건 충족시)</span>
               </li>
-              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-start">
+              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
                 금액보증연금 보증 / 최저사망적립액 보증
               </li>
             </ul>
               {/* 보증 내용 박스 */}
               <div className="w-full max-w-full md:max-w-4xl mx-auto bg-white rounded-xl shadow-md mb-4 md:mb-6 p-6 md:p-8 lg:p-6">
-                <div className="grid grid-cols-3 gap-2 md:gap-3 lg:gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-3 lg:gap-4">
                   {/* 1. 생존 시 최대 100세까지 */}
                   <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl shadow-lg border border-purple-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
                     <div>
@@ -798,8 +810,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                       <label className="block text-sm font-medium text-gray-600 mb-1 cursor-pointer">이름</label>
                   <input 
                     type="text" 
+                    inputMode="text"
+                    ref={nameInputRef}
                     value={name}
                         onChange={handleNameChange}
+                        onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }}
+                        onBlur={() => { if (name.trim()) { birthInputRef.current?.focus(); } }}
                         className="w-full px-2.5 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="홍길동"
                   />
@@ -808,6 +824,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                       <label className="block text-sm font-medium text-gray-600 mb-1 cursor-pointer">생년월일</label>
                   <input 
                     type="text" 
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    ref={birthInputRef}
                     value={birth}
                         onChange={handleBirthChange}
                         className="w-full px-2.5 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
@@ -819,6 +838,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                       <label className="block text-sm font-medium text-gray-600 mb-1 cursor-pointer">연락처</label>
                   <input 
                     type="text" 
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    ref={phoneInputRef}
                     value={phone}
                     onChange={handlePhoneChange}
                         className="w-full px-2.5 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
@@ -1200,7 +1222,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <p className="text-sm text-gray-600 mb-1">
                   정확한 보험료 확인을 위해 휴대폰 인증이 필요합니다.
                 </p>
-                <div className="flex gap-1 mb-1 items-center">
+                <div className="flex flex-col sm:flex-row gap-1 mb-1 items-stretch sm:items-center">
                   <input
                     type="text"
                     value={phone}
@@ -1211,7 +1233,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                     type="button"
                     onClick={handleSendOTP}
                     disabled={!isAgeEligible}
-                    className={`${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'} px-2 py-1 rounded-md text-sm font-medium transition-colors min-w-[80px]`}
+                    className={`${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#f97316] text-white hover:bg-[#ea580c]'} w-full sm:w-auto px-2 py-1 rounded-md text-sm font-medium transition-colors min-w-[80px]`}
                   >
                     {otpResendAvailable ? '인증번호 전송' : '재발송'}
                   </button>
@@ -1224,6 +1246,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <div className="flex gap-1 mb-1">
                   <input
                     type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    ref={otpInputRef}
                     value={otpCode}
                     onChange={(e) => {
                       const val = e.target.value.replace(/[^0-9]/g, '').slice(0, 6);
@@ -1369,7 +1394,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             <div className="bg-gray-50 rounded-lg p-2 mt-0">
               <h3 className="text-base font-bold text-gray-900 mb-1">휴대폰 인증</h3>
               <p className="text-sm text-gray-600 mb-1">상담신청을 위해 휴대폰 인증이 필요합니다.</p>
-              <div className="flex gap-1 mb-1 items-center">
+              <div className="flex flex-col sm:flex-row gap-1 mb-1 items-stretch sm:items-center">
                 <input
                   type="text"
                   value={phone}
@@ -1379,8 +1404,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <button
                   type="button"
                   onClick={handleConsultSendOTP}
-                  className="px-2 py-1 bg-[#3a8094] text-white rounded-md text-sm font-medium 
-                           hover:bg-[#2c6070] transition-colors min-w-[80px]"
+                  className="w-full sm:w-auto px-2 py-1 bg-[#f97316] text-white rounded-md text-sm font-medium 
+                           hover:bg-[#ea580c] transition-colors min-w-[80px]"
                 >
                   {consultOtpResendAvailable ? '인증번호 전송' : '재발송'}
                 </button>
@@ -1393,6 +1418,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               <div className="flex gap-1 mb-1">
                 <input
                   type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  ref={consultOtpInputRef}
                   value={consultOtpCode}
                   onChange={e => setConsultOtpCode(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
                   maxLength={6}

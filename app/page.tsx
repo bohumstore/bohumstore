@@ -232,7 +232,7 @@ export default function HomePage() {
         <div className="relative w-full">
           {/* 메인 슬로건 카드 */}
           <div className="relative w-full">
-            <div className={`w-full h-[600px] md:h-[750px] lg:h-[450px] ${currentSlogan.id === 'ibk-lifetime' ? 'bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50' : 
+            <div className={`w-full min-h-[560px] md:min-h-[680px] lg:h-[450px] ${currentSlogan.id === 'ibk-lifetime' ? 'bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50' : 
                                                            currentSlogan.id === 'kdb-happy-plus' ? 'bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50' : 
                                                            currentSlogan.id === 'kdb-happy-dream' ? 'bg-gradient-to-br from-blue-50 via-sky-50 to-cyan-50' : 
                                                            'bg-gradient-to-br from-red-50 via-pink-50 to-purple-50'} relative overflow-hidden`} 

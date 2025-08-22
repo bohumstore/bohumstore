@@ -125,10 +125,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       alert('연락처를 11자리 숫자로 입력해주세요. (예: 01012345678)');
       return false;
     }
-    if (!phone.startsWith('010') && !phone.startsWith('011') && 
-        !phone.startsWith('016') && !phone.startsWith('017') && 
-        !phone.startsWith('018') && !phone.startsWith('019')) {
-      alert('올바른 휴대폰 번호를 입력해주세요.\n(010, 011, 016, 017, 018, 019로 시작)');
+    if (!phone.startsWith('010')) {
+      alert('올바른 휴대폰 번호를 입력해주세요. (010으로 시작)');
       return false;
     }
 
