@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase } from "../supabase";
-import { alimtalkSend } from "@/app/lib/aligo";
+import { alimtalkSend, smsSend } from "@/app/lib/aligo";
 import aligoAuth from "../utils/aligoAuth";
 import { getCachedAligoToken } from "@/app/lib/aligoTokenCache";
 import { link } from "fs";
@@ -174,6 +174,16 @@ export async function POST(req: Request) {
       ? "보험료계산 - 관리자전송"
       : "상담/설계요청 - 관리자전송";
 
+    // 중복 신청 확인
+    const { data: existingCounsel } = await supabase
+      .from("counsel")
+      .select("created_at")
+      .eq("user_id", user.id)
+      .eq("counsel_type_id", counselType)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .single();
+
     const { error: calcErr } = await supabase
       .from("counsel")
       .insert({
@@ -198,6 +208,45 @@ export async function POST(req: Request) {
     const companyName = company.name;
     // 성별 한글 변환
     const genderKor = gender === 'M' ? '남' : gender === 'F' ? '여' : gender;
+
+    // 중복 표시를 위한 날짜 정보
+    let duplicateLabel = "";
+    if (existingCounsel) {
+      const lastDate = new Date(existingCounsel.created_at);
+      const month = String(lastDate.getMonth() + 1).padStart(2, '0');
+      const day = String(lastDate.getDate()).padStart(2, '0');
+      duplicateLabel = `[${month}-${day} 중복]`;
+      console.log("[DEBUG] 중복 신청 감지:", duplicateLabel);
+      
+      // 중복 신청 시 SMS 알림 발송
+      try {
+        const duplicateSmsReq = {
+          headers: { "content-type": "application/json" },
+          body: {
+            key: authForSend.apikey,
+            userid: authForSend.userid,
+            sender: "010-8897-7486",
+            receiver: "010-8897-7486",
+            msg: counselType === 1 
+              ? `🔄 중복신청 알림\n[보험료계산] ${duplicateLabel}\n${name}(${phone})\n${companyName} ${productDisplayName}`
+              : `🔄 중복신청 알림\n[상담신청] ${duplicateLabel}\n${name}(${phone})\n${counselTime}\n${companyName} ${productDisplayName}`,
+            testmode_yn: "N"
+          }
+        };
+        console.log("[DEBUG] 중복 SMS 발송 요청:", duplicateSmsReq.body);
+        
+        // SMS는 비동기로 발송 (실패해도 메인 로직에 영향 없음)
+        smsSend(duplicateSmsReq, authForSend)
+          .then((result) => {
+            console.log("[DEBUG] 중복 SMS 발송 성공:", result);
+          })
+          .catch((err) => {
+            console.error("[DEBUG] 중복 SMS 발송 실패:", err);
+          });
+      } catch (smsErr) {
+        console.error("[DEBUG] 중복 SMS 발송 오류:", smsErr);
+      }
+    }
 
     // 관리자/고객 발송을 병렬 처리하여 전체 대기시간을 단축
     const adminSendPromise = ((): Promise<any> | null => {

@@ -127,7 +127,13 @@ export function alimtalkSend(req: any, auth: AuthData) {
   return formParse(req, auth, uri).then(postRequest)
 }
 
-// 4) Token 생성용
+// 4) SMS 전송용
+export function smsSend(req: any, auth: AuthData) {
+  const uri = 'https://apis.aligo.in/send/'
+  return formParse(req, auth, uri).then(postRequest)
+}
+
+// 5) Token 생성용
 export function getToken(req: any, auth: AuthData) {
   const uri = 'https://kakaoapi.aligo.in/akv10/token/create/'
   return formParse(req, auth, uri).then(postRequest)
