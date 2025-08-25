@@ -92,6 +92,19 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        {/* Smartlog */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "var hpt_info={'_account':'UHPT-72306', '_server': 'a72'};",
+          }}
+        />
+        <script src="//cdn.smlog.co.kr/core/smart.js" charSet="utf-8" />
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html:
+              '<img src="//a72.smlog.co.kr/smart_bda.php?_account=72306" style="display:none;width:0;height:0;" border="0"/>',
+          }}
+        />
       </body>
     </html>
   );
