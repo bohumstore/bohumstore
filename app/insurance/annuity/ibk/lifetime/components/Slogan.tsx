@@ -176,7 +176,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       })
       console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
       setOtpSent(true)
-      alert('인증번호가 전송되었습니다. 카카오톡을 확인해주세요. (최대 10초 소요될 수 있습니다)')
+      alert('인증번호가 전송되었습니다.')
     } catch (e: any) {
       console.error(`[CLIENT] 인증번호 전송 실패:`, e);
       if (e.code === 'ECONNABORTED') {
@@ -211,106 +211,107 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleVerifyOTP = async () => {
-  // 연령(0~68) 외는 계산 차단
-  const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-  if (isNaN(ageForVerify) || ageForVerify < 0 || ageForVerify > 68) return;
-  if (otpCode.length !== 6) {
-    alert("6자리 인증번호를 입력해주세요.");
-    return;
-  }
+    // 연령(0~68) 외는 계산 차단
+    if (verifying) return;
+    const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
+    if (isNaN(ageForVerify) || ageForVerify < 0 || ageForVerify > 68) return;
+    if (otpCode.length !== 6) {
+      alert("6자리 인증번호를 입력해주세요.");
+      return;
+    }
 
-  setVerifying(true);
-  try {
-    // 엑셀 기반 연금액 계산 (서버 API) - 항상 최신 입력값으로 재조회
-    let currentExcel = null as typeof excelResult;
+    setVerifying(true);
     try {
-      let monthlyPayment = 0;
-      if (paymentAmount.includes('만원')) {
-        const num = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
-        monthlyPayment = num * 10000;
-      } else {
-        monthlyPayment = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
-      }
-      const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
-      const resp = await fetch('/api/calculate-pension/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          customerName: name,
-          gender,
-          age: Number(insuranceAge),
-          paymentPeriod: years,
-          monthlyPayment,
-          productType: 'ibk-lifetime'
-        })
-      });
-      if (resp.ok) {
-        const data = await resp.json();
-        if (data.success) {
-          currentExcel = {
-            pensionStartAge: data.data.pensionStartAge || 0,
-            monthlyPension: data.data.monthlyPension || 0,
-            performancePension: data.data.performancePension || 0,
-            guaranteedAmount: data.data.guaranteedAmount || 0,
-            totalUntil100: data.data.totalUntil100 || 0,
-            notice: data.data.notice || ''
-          };
-          setExcelResult(currentExcel);
-        }
-      }
-    } catch (e) {
-      // ignore
-    }
-
-    const requestData = {
-      phone,
-      name,
-      birth,
-      gender,
-      code: otpCode,
-      counselType: counselType,
-      companyId: INSURANCE_COMPANY_ID,
-      productId: INSURANCE_PRODUCT_ID,
-      counselTime: consultTime,
-      mounthlyPremium: paymentAmount, // 실제 선택값
-      paymentPeriod: paymentPeriod,   // 실제 선택값
-      monthlyPension: currentExcel?.monthlyPension || 0,
-      performancePension: currentExcel?.performancePension || 0,
-      guaranteedPension: currentExcel?.guaranteedAmount || 0,
-      pensionStartAge: currentExcel?.pensionStartAge || getPensionStartAge(Number(insuranceAge), paymentPeriod),
-      totalUntil100: currentExcel?.totalUntil100 || 0,
-      templateId: "UB_5797", // 고객용 연금액 계산 결과 전송용 템플릿 (요청에 따라 고정)
-      adminTemplateId: "UA_8331" // 관리자용 연금액 계산 결과 전송용 템플릿
-    };
-    
-    console.log("[CLIENT] API 요청 데이터:", requestData);
-    
-    const res = await request.post("/api/verifyOTP", requestData);
-    if (res.data.success) {
-      // 방문자 추적: 보험료 확인
+      // 엑셀 기반 연금액 계산 (서버 API) - 항상 최신 입력값으로 재조회
+      let currentExcel = null as typeof excelResult;
       try {
-        await trackSimplifiedVisitor({
-          phone,
-          name,
-          counsel_type_id: 1 // 보험료 확인
+        let monthlyPayment = 0;
+        if (paymentAmount.includes('만원')) {
+          const num = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+          monthlyPayment = num * 10000;
+        } else {
+          monthlyPayment = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+        }
+        const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+        const resp = await fetch('/api/calculate-pension/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            customerName: name,
+            gender,
+            age: Number(insuranceAge),
+            paymentPeriod: years,
+            monthlyPayment,
+            productType: 'ibk-lifetime'
+          })
         });
-        console.log("[CLIENT] 방문자 추적 성공: 보험료 확인");
-      } catch (trackingError) {
-        console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data.success) {
+            currentExcel = {
+              pensionStartAge: data.data.pensionStartAge || 0,
+              monthlyPension: data.data.monthlyPension || 0,
+              performancePension: data.data.performancePension || 0,
+              guaranteedAmount: data.data.guaranteedAmount || 0,
+              totalUntil100: data.data.totalUntil100 || 0,
+              notice: data.data.notice || ''
+            };
+            setExcelResult(currentExcel);
+          }
+        }
+      } catch (e) {
+        // ignore
       }
+
+      const requestData = {
+        phone,
+        name,
+        birth,
+        gender,
+        code: otpCode,
+        counselType: counselType,
+        companyId: INSURANCE_COMPANY_ID,
+        productId: INSURANCE_PRODUCT_ID,
+        counselTime: consultTime,
+        mounthlyPremium: paymentAmount, // 실제 선택값
+        paymentPeriod: paymentPeriod,   // 실제 선택값
+        monthlyPension: currentExcel?.monthlyPension || 0,
+        performancePension: currentExcel?.performancePension || 0,
+        guaranteedPension: currentExcel?.guaranteedAmount || 0,
+        pensionStartAge: currentExcel?.pensionStartAge || getPensionStartAge(Number(insuranceAge), paymentPeriod),
+        totalUntil100: currentExcel?.totalUntil100 || 0,
+        templateId: "UB_8165", // 고객용 연금액 계산 결과 전송용 템플릿 (요청에 따라 고정)
+        adminTemplateId: "UA_8331" // 관리자용 연금액 계산 결과 전송용 템플릿
+      };
       
-      setIsVerified(true);
-      setOtpSent(false);
-      alert("인증이 완료되었습니다! 연금액 계산 결과가 카카오톡으로 전송됩니다.");
-    } else {
-      alert("인증에 실패했습니다.");
+      console.log("[CLIENT] API 요청 데이터:", requestData);
+      
+      const res = await request.post("/api/verifyOTP", requestData);
+      if (res.data.success) {
+        // 방문자 추적: 보험료 확인
+        try {
+          await trackSimplifiedVisitor({
+            phone,
+            name,
+            counsel_type_id: 1 // 보험료 확인
+          });
+          console.log("[CLIENT] 방문자 추적 성공: 보험료 확인");
+        } catch (trackingError) {
+          console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
+        }
+        
+        setIsVerified(true);
+        setOtpSent(false);
+        alert("인증이 완료되었습니다.");
+      } else {
+        alert("인증에 실패했습니다.");
+      }
+    } catch (e: any) {
+      alert(e.error || "인증에 실패했습니다.");
+    } finally {
+      setVerifying(false);
     }
-  } catch (e: any) {
-    alert(e.error || "인증에 실패했습니다.");
-  } finally {
-    setVerifying(false);
-  }
-};
+  };
 
 
   const handleBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -495,23 +496,30 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleConsultVerifyOTP = async () => {
+    if (verifying) return;
     if (consultOtpCode.length !== 6) {
       alert("6자리 인증번호를 입력해주세요.");
       return;
     }
+    
+    // 기본 필수 데이터만 확인 (납입기간, 월납입금액 제외)
+    if (!name || !birth || !gender || !phone) {
+      alert("필수 정보가 누락되었습니다. 모든 정보를 입력해주세요.");
+      return;
+    }
+    
     setVerifying(true);
     try {
       // 납입기간과 월납입금액이 있는 경우에만 연금액 계산
-      let pensionAmounts: { monthly: number; performance: number; totalUntil100: number } = { monthly: 0, performance: 0, totalUntil100: 0 };
+      let pensionAmounts = { monthly: 0, performance: 0 } as any;
       if (paymentPeriod && paymentAmount) {
         pensionAmounts = calculatePensionAmount(Number(insuranceAge), paymentPeriod, paymentAmount);
       }
-      
       const payload = {
         phone,
         name,
         birth,
-        gender, // 추가: 성별도 함께 전달
+        gender,
         code: consultOtpCode,
         counselType: 2,
         companyId: INSURANCE_COMPANY_ID,
@@ -522,7 +530,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         paymentPeriod: paymentPeriod || '',
         monthlyPension: pensionAmounts.monthly, // 월 연금액
         performancePension: pensionAmounts.performance, // 실적배당 연금액
-        templateId: "UA_7919", // 고객용 상담신청 완료 전송용 템플릿
+        templateId: "UB_8166", // 고객용 상담신청 완료 전송용 템플릿
         adminTemplateId: "UA_8332" // 관리자용 상담신청 접수 전송용 템플릿
       };
       console.log('[IBK][CONSULT] verifyOTP payload', payload);
@@ -532,24 +540,18 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         // Supabase에 데이터 저장
         const supabaseResult = await saveToSupabase(2); // 2: 상담신청
         
-        alert("인증이 완료되었습니다! 상담신청이 접수되었습니다.");
+        alert("인증이 완료되었습니다.");
         setConsultIsVerified(true);
       } else {
         alert("인증에 실패했습니다.");
         return;
       }
     } catch (e: any) {
-      console.error('[IBK][CONSULT] verifyOTP error', {
-        message: e?.message,
-        status: e?.response?.status,
-        data: e?.response?.data
-      });
-      const apiMsg = e?.response?.data?.error || e?.message || '인증에 실패했습니다.';
-      alert(apiMsg);
+      alert(e.error || "인증에 실패했습니다.");
     } finally {
       setVerifying(false);
     }
-  };
+  }
 
   // 보험연령 계산 함수
   const getInsuranceAge = (birth: string) => {
@@ -632,8 +634,63 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     return Math.max(completionAge, minStartAge);
   };
 
-  // 현재 선택된 납입기간에 대한 연금개시연령
-  const currentPensionStartAge = paymentPeriod ? (excelResult?.pensionStartAge || getPensionStartAge(Number(insuranceAge), paymentPeriod)) : null;
+  // 현재 선택된 납입기간에 대한 연금개시연령 (우선순위: Excel > 계산식)
+  const currentPensionStartAge = paymentPeriod
+    ? (excelResult && typeof excelResult.pensionStartAge === 'number' && excelResult.pensionStartAge > 0
+        ? excelResult.pensionStartAge
+        : getPensionStartAge(Number(insuranceAge), paymentPeriod))
+    : null;
+
+  // 입력 완료 시(성별/생년월일/납입기간/월납입) Excel 기반 연금개시연령을 선반영
+  useEffect(() => {
+    let canceled = false;
+    const prefetchExcel = async () => {
+      if (!gender || !/^\d{8}$/.test(birth) || !paymentPeriod || !paymentAmount) return;
+      const age = Number(getInsuranceAge(birth));
+      if (isNaN(age)) return;
+      try {
+        // 월 납입액 계산 (만원 처리)
+        let monthlyPayment = 0;
+        if (paymentAmount.includes('만원')) {
+          const num = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+          monthlyPayment = isNaN(num) ? 0 : num * 10000;
+        } else {
+          monthlyPayment = parseInt(paymentAmount.replace(/[^0-9]/g, '')) || 0;
+        }
+        const years = parseInt(paymentPeriod.replace(/[^0-9]/g, '')) || 0;
+        if (age < 0 || age > 68 || years <= 0 || monthlyPayment <= 0) return;
+
+        const resp = await fetch('/api/calculate-pension/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            customerName: name,
+            gender,
+            age,
+            paymentPeriod: years,
+            monthlyPayment,
+            productType: 'ibk-lifetime'
+          })
+        });
+        if (!resp.ok) return;
+        const data = await resp.json();
+        if (!canceled && data?.success && data?.data?.pensionStartAge) {
+          setExcelResult(prev => ({
+            pensionStartAge: data.data.pensionStartAge || 0,
+            monthlyPension: data.data.monthlyPension || 0,
+            performancePension: data.data.performancePension || 0,
+            guaranteedAmount: data.data.guaranteedAmount || 0,
+            totalUntil100: data.data.totalUntil100 || 0,
+            notice: data.data.notice || ''
+          }));
+        }
+      } catch (e) {
+        // ignore
+      }
+    };
+    prefetchExcel();
+    return () => { canceled = true; };
+  }, [gender, birth, paymentPeriod, paymentAmount]);
 
   // 납입기간 버튼 비활성화 여부 확인 (연금개시연령이 80세를 초과하는 경우)
   const ageLimit15 = Number(insuranceAge) + 15 > 80;

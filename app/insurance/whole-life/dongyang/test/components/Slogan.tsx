@@ -177,7 +177,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       paymentPeriod: paymentPeriod,   // 실제 선택값
       tenYearReturnRate: rate ? Math.round(rate * 100) : '-', // 환급률
       interestValue, // 확정이자(실제 값)
-      refundValue    // 예상해약환급금(실제 값)
+      refundValue,   // 예상해약환급금(실제 값)
+      templateId: "UB_8164"
     });
     if (res.data.success) {
       setIsVerified(true);

@@ -161,7 +161,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       })
       console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
       setOtpSent(true)
-      alert('인증번호가 전송되었습니다. 카카오톡을 확인해주세요. (최대 10초 소요될 수 있습니다)')
+      alert('인증번호가 전송되었습니다.')
     } catch (e: any) {
       console.error(`[CLIENT] 인증번호 전송 실패:`, e);
       if (e.code === 'ECONNABORTED') {
@@ -219,7 +219,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       paymentPeriod: paymentPeriod,   // 실제 선택값
       tenYearReturnRate: rate ? (rate * 100).toFixed(1) : '-', // 환급률 (소수점 첫째 자리까지)
       interestValue, // 확정이자(실제 값)
-      refundValue    // 예상해약환급금(실제 값)
+      refundValue,   // 예상해약환급금(실제 값)
+      templateId: "UB_8164"
     });
     if (res.data.success) {
       // 방문자 추적: 보험료 확인
@@ -335,10 +336,18 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleConsultVerifyOTP = async () => {
+    if (verifying) return;
     if (consultOtpCode.length !== 6) {
       alert("6자리 인증번호를 입력해주세요.");
       return;
     }
+    
+    // 기본 필수 데이터만 확인 (납입기간, 월납입금액 제외)
+    if (!name || !birth || !gender || !phone) {
+      alert("필수 정보가 누락되었습니다. 모든 정보를 입력해주세요.");
+      return;
+    }
+    
     setVerifying(true);
     try {
       // 납입기간과 월납입금액이 있는 경우에만 계산값 사용
@@ -356,7 +365,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         phone,
         name,
         birth,
-        gender, // 추가: 성별도 함께 전달
+        gender,
         code: consultOtpCode,
         counselType: 2,
         companyId: INSURANCE_COMPANY_ID,
@@ -367,12 +376,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         paymentPeriod: paymentPeriod || '',
         tenYearReturnRate,
         interestValue,
-        refundValue
+        refundValue,
+        templateId: "UB_8166"
       });
       if (res.data.success) {
-        alert("인증이 완료되었습니다!");
+        alert("인증이 완료되었습니다.");
         setConsultIsVerified(true);
-        alert("상담신청이 접수되었습니다!");
       } else {
         alert("인증에 실패했습니다.");
         return;

@@ -161,7 +161,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       })
       console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
       setOtpSent(true)
-      alert('인증번호가 전송되었습니다. 카카오톡을 확인해주세요. (최대 10초 소요될 수 있습니다)')
+      alert('인증번호가 전송되었습니다.')
     } catch (e: any) {
       console.error(`[CLIENT] 인증번호 전송 실패:`, e);
       if (e.code === 'ECONNABORTED') {
@@ -367,7 +367,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         paymentPeriod: paymentPeriod || '',
         tenYearReturnRate,
         interestValue,
-        refundValue
+        refundValue,
+        templateId: "UB_8166"
       });
       if (res.data.success) {
         alert("인증이 완료되었습니다!");

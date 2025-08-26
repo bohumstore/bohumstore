@@ -165,7 +165,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       })
       console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
       setOtpSent(true)
-      alert('인증번호가 전송되었습니다. 카카오톡을 확인해주세요. (최대 10초 소요될 수 있습니다)')
+      alert('인증번호가 전송되었습니다.')
     } catch (e: any) {
       console.error(`[CLIENT] 인증번호 전송 실패:`, e);
       if (e.code === 'ECONNABORTED') {
@@ -212,7 +212,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     console.log("[CLIENT] 연금액 계산 인증 시작:", {
       phone,
       name,
-      templateId: "UB_5797",
+      templateId: "UB_8165",
       adminTemplateId: "UA_8331"
     });
     console.log("[CLIENT] counselType:", counselType);
@@ -241,7 +241,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       guaranteedPension: calculatedPensionAmounts.guaranteed, // 20년 보증기간 연금액
       pensionStartAge: calculatedPensionAmounts.pensionStartAge, // 연금개시연령 (카카오 메시지용)
       totalUntil100: calculatedPensionAmounts.totalUntil100,     // 100세까지 총 수령액 (카카오 메시지용)
-      templateId: "UB_5797", // 고객용 연금액 계산 결과 전송용 템플릿
+      templateId: "UB_8165", // 고객용 연금액 계산 결과 전송용 템플릿
       adminTemplateId: "UA_8331" // 관리자용 연금액 계산 결과 전송용 템플릿
     };
     
@@ -381,6 +381,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleConsultVerifyOTP = async () => {
+    if (verifying) return;
     if (consultOtpCode.length !== 6) {
       alert("6자리 인증번호를 입력해주세요.");
       return;
@@ -416,45 +417,23 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         paymentPeriod: paymentPeriod || '',
         monthlyPension: calculatedPensionAmounts.monthly || 0,
         guaranteedPension: calculatedPensionAmounts.guaranteed || 0,
-        templateId: "UA_7919", // 고객용 상담신청 완료 전송용 템플릿
+        templateId: "UB_8166", // 고객용 상담신청 완료 전송용 템플릿
         adminTemplateId: "UA_8332" // 관리자용 상담신청 접수 전송용 템플릿
       });
       
       if (res.data.success) {
-        // 방문자 추적: 상담 신청
-        try {
-          await trackCounselRequest(2, phone, name, {
-            product_id: INSURANCE_PRODUCT_ID,
-            company_id: INSURANCE_COMPANY_ID,
-            counsel_type_id: 2, // 상담 신청
-            utm_source: 'direct',
-            utm_campaign: 'consultation_request'
-          });
-          console.log("[CLIENT] 방문자 추적 성공: 상담 신청");
-        } catch (trackingError) {
-          console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
-        }
-        
+        alert("인증이 완료되었습니다.");
         setConsultIsVerified(true);
-        alert("상담신청이 접수되었습니다!");
       } else {
         alert("인증에 실패했습니다.");
+        return;
       }
     } catch (e: any) {
-      console.error("상담신청 인증 에러:", e);
-      if (e.response?.data?.error) {
-        alert(e.response.data.error);
-      } else if (e.response?.status === 400) {
-        alert("잘못된 요청입니다. 입력 정보를 확인해주세요.");
-      } else if (e.response?.status === 500) {
-        alert("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-      } else {
-        alert("인증에 실패했습니다. 다시 시도해주세요.");
-      }
+      alert(e.error || "인증에 실패했습니다.");
     } finally {
       setVerifying(false);
     }
-  };
+  }
 
   // 보험연령 계산 함수
   const getInsuranceAge = (birth: string) => {

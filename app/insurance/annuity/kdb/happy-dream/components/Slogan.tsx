@@ -289,7 +289,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       })
       console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
       setOtpSent(true)
-      alert('인증번호가 전송되었습니다. 카카오톡을 확인해주세요. (최대 10초 소요될 수 있습니다)')
+      alert('인증번호가 전송되었습니다.')
     } catch (e: any) {
       console.error(`[CLIENT] 인증번호 전송 실패:`, e);
       if (e.code === 'ECONNABORTED') {
@@ -339,7 +339,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       guaranteedPension: pension.guaranteed,
       totalUntil100: pension.totalUntil100,
       pensionStartAge: pension.pensionStartAge,
-      templateId: "UB_5797",
+      templateId: "UB_8165",
       adminTemplateId: "UA_8331"
     };
     
@@ -528,22 +528,32 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleConsultVerifyOTP = async () => {
+    if (verifying) return;
     if (consultOtpCode.length !== 6) {
       alert("6자리 인증번호를 입력해주세요.");
       return;
     }
+    
+    // 기본 필수 데이터만 확인 (납입기간, 월납입금액 제외)
+    if (!name || !birth || !gender || !phone) {
+      alert("필수 정보가 누락되었습니다. 모든 정보를 입력해주세요.");
+      return;
+    }
+    
     setVerifying(true);
     try {
-      let pensionAmounts = { monthly: 0, performance: 0, totalUntil100: 0 } as any;
+      // 납입기간과 월납입금액이 있는 경우에만 연금액 계산
+      let calculatedPensionAmounts = { monthly: 0, performance: 0, totalUntil100: 0, pensionStartAge: 0, notice: '' };
       if (paymentPeriod && paymentAmount) {
         const p = await fetchExcelPension(Number(insuranceAge), paymentPeriod, paymentAmount, gender);
-        pensionAmounts = { monthly: p.monthly, performance: p.performance, totalUntil100: p.totalUntil100 };
+        calculatedPensionAmounts = { monthly: p.monthly, performance: p.performance, totalUntil100: p.totalUntil100, pensionStartAge: p.pensionStartAge, notice: p.notice } as any;
       }
+      
       const res = await request.post("/api/verifyOTP", {
         phone,
         name,
         birth,
-        gender, // 추가: 성별도 함께 전달
+        gender,
         code: consultOtpCode,
         counselType: 2,
         companyId: INSURANCE_COMPANY_ID,
@@ -552,14 +562,13 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         counselTime: consultTime,
         mounthlyPremium: paymentAmount || '',
         paymentPeriod: paymentPeriod || '',
-        monthlyPension: pensionAmounts.monthly,
-        performancePension: pensionAmounts.performance,
-        templateId: "UA_7919",
+        monthlyPension: calculatedPensionAmounts.monthly,
+        performancePension: calculatedPensionAmounts.performance,
+        templateId: "UB_8166",
         adminTemplateId: "UA_8332"
       });
       if (res.data.success) {
-        const supabaseResult = await saveToSupabase(2); // 2: 상담신청
-        alert("인증이 완료되었습니다! 상담신청이 접수되었습니다.");
+        alert("인증이 완료되었습니다.");
         setConsultIsVerified(true);
       } else {
         alert("인증에 실패했습니다.");
@@ -570,7 +579,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     } finally {
       setVerifying(false);
     }
-  };
+  }
 
   // 총 납입액 계산
   let amount = 0;

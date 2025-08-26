@@ -161,7 +161,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       })
       console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
       setOtpSent(true)
-      alert('인증번호가 전송되었습니다. 카카오톡을 확인해주세요. (최대 10초 소요될 수 있습니다)')
+      alert('인증번호가 전송되었습니다.')
     } catch (e: any) {
       console.error(`[CLIENT] 인증번호 전송 실패:`, e);
       if (e.code === 'ECONNABORTED') {
@@ -219,7 +219,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       paymentPeriod: paymentPeriod,   // 실제 선택값
       tenYearReturnRate: rate ? (rate * 100).toFixed(1) : '-', // 환급률 (소수점 첫째 자리까지)
       interestValue, // 확정이자(실제 값)
-      refundValue    // 예상해약환급금(실제 값)
+      refundValue,   // 예상해약환급금(실제 값)
+      templateId: "UB_8164"
     });
     if (res.data.success) {
       // 방문자 추적: 보험료 확인
@@ -335,6 +336,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleConsultVerifyOTP = async () => {
+    if (verifying) return;
     if (consultOtpCode.length !== 6) {
       alert("6자리 인증번호를 입력해주세요.");
       return;
@@ -356,7 +358,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         phone,
         name,
         birth,
-        gender, // 추가: 성별도 함께 전달
+        gender,
         code: consultOtpCode,
         counselType: 2,
         companyId: INSURANCE_COMPANY_ID,
@@ -367,10 +369,11 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         paymentPeriod: paymentPeriod || '',
         tenYearReturnRate,
         interestValue,
-        refundValue
+        refundValue,
+        templateId: "UB_8166"
       });
       if (res.data.success) {
-        alert("인증이 완료되었습니다!");
+        alert("인증이 완료되었습니다.");
         setConsultIsVerified(true);
         try {
           await request.post("/api/verifyOTP", {
@@ -389,11 +392,11 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             tenYearReturnRate,
             interestValue,
             refundValue,
+            templateId: "UB_8166",
             onlyClient: true
           });
-          alert("상담신청이 접수되었습니다!");
         } catch (e) {
-          // 알림톡 발송 실패 시 사용자에게 별도 안내하지 않음 (조용히 무시)
+          // 조용히 무시
         }
       } else {
         alert("인증에 실패했습니다.");
@@ -483,7 +486,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
-                10년시점 해약환급금 122.7% <span className="text-xs text-gray-500"> (일반심사형 기준)</span>
+                10년시점 해약환급금 122.7% <span className="text-[13px] text-gray-500"> (일반심사형 기준)</span>
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
@@ -491,74 +494,74 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
-                납입완료보너스·장기유지보너스 제공 <span className="text-xs text-gray-500"> (약관 기준)</span>
+                납입완료보너스·장기유지보너스 제공 <span className="text-[13px] text-gray-500"> (약관 기준)</span>
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#0066cc]">✔</span>
-                일반심사형: 만 15~70세 / 간편심사형: 만 30~70세
+                <span className="flex flex-col leading-tight">
+                  <span>일반심사형: 만 15~70세 / 간편심사형: 만 30~69세</span>
+                  <span className="text-[13px] text-gray-500"> (단, 성별 및 납입기간별 가입나이 상이)</span>
+                </span>
               </li>
             </ul>
-              {/* 환급률/보너스 안내 UI */}
-              <div className="w-full max-w-full md:max-w-4xl mx-auto bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30 rounded-2xl shadow-2xl mb-4 md:mb-6 p-6 md:p-8 lg:p-6 border border-white/50 backdrop-blur-sm relative overflow-hidden"
-                style={{
-                  backgroundImage: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(147,197,253,0.1) 50%, rgba(196,181,253,0.1) 100%)',
-                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
-                }}
-              >
+            {/* 환급률/보너스 안내 UI */}
+            <div className="w-full max-w-full md:max-w-4xl mx-auto bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30 rounded-2xl shadow-2xl mb-4 md:mb-6 p-6 md:p-8 lg:p-6 pt-12 md:pt-14 lg:pt-12 border border-white/50 backdrop-blur-sm relative overflow-hidden"
+              style={{
+                backgroundImage: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(147,197,253,0.1) 50%, rgba(196,181,253,0.1) 100%)',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+              }}
+            >
+                {/* 상단 중앙 가이드 문구 */}
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20">
+                  <span className="text-xs text-gray-500 font-medium whitespace-nowrap px-2 py-0.5 rounded">
+                    [50세 남자 일반심사형, 5년납, 1억원 기준]
+                  </span>
+                </div>
                 {/* 유리반사 효과 */}
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-transparent opacity-60"></div>
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-3 lg:gap-4 relative z-10">
-                  {/* 1. 7년 시점 */}
-                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl shadow-lg border border-blue-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
-                    <div>
-                      <div className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">7년 시점</div>
-                    </div>
-                    <div className="flex-1 flex items-center justify-center">
-                      <div className="text-2xl md:text-3xl font-black text-blue-600 drop-shadow-lg">90%대</div>
-                    </div>
-                    <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2">
-                      * 5년납 기준
-                    </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-3 lg:gap-4 relative z-10">
+                {/* 1. 7년 시점 */}
+                <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl shadow-lg border border-blue-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
+                  <div>
+                    <div className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">7년 시점</div>
                   </div>
-
-                  {/* 2. 10년 시점 */}
-                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-red-100 to-rose-100 rounded-xl shadow-lg border border-red-200 hover:shadow-xl transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-full">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent animate-pulse"></div>
-                    <div className="relative z-10">
-                      <div className="inline-block bg-gradient-to-r from-red-500 to-rose-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-2 shadow-md">10년 시점</div>
-                      <div className="flex items-center justify-center mb-2">
-                        <div className="text-2xl md:text-3xl font-black text-red-600 drop-shadow-lg animate-jump-glow">122.7%</div>
-                      </div>
-                    </div>
-                    <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2 relative z-10 mt-auto">
-                      * 5년납 기준
-                    </div>
+                  <div className="flex-1 flex items-center justify-center">
+                    <div className="text-2xl md:text-3xl font-black text-blue-600 drop-shadow-lg">93.2%</div>
                   </div>
-
-                  {/* 3. 보너스 */}
-                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-xl shadow-lg border border-emerald-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
-                    <div>
-                      <div className="inline-block bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">보너스</div>
-                    </div>
-                    <div className="flex-1 flex items-center justify-center">
-                      <div className="text-xs font-bold text-gray-800 leading-tight">
-                        납입완료보너스<br />지급
-                      </div>
-                    </div>
-                    <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2">
-                      장기유지보너스<br />포함
-                    </div>
-                  </div>
+                  
                 </div>
-                <div className="text-xs text-gray-600 text-center mt-4 relative z-10">
-                  <p className="font-medium">* 환급률은 가입 후 10년시점 기준입니다.</p>
-                  <p className="text-gray-500">(일반심사형 기준)</p>
-                  <p className="text-gray-500 mt-1">* 5년납: 122.7%, 7년납: 119.5%, 10년납: 115%</p>
+
+                {/* 2. 10년 시점 */}
+                <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-red-100 to-rose-100 rounded-xl shadow-lg border border-red-200 hover:shadow-xl transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-full">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent animate-pulse"></div>
+                  <div className="relative z-10">
+                    <div className="inline-block bg-gradient-to-r from-red-500 to-rose-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-2 shadow-md">10년 시점</div>
+                    <div className="flex items-center justify-center mb-2">
+                      <div className="text-2xl md:text-3xl font-black text-red-600 drop-shadow-lg animate-jump-glow">122.7%</div>
+                    </div>
+                  </div>
+                  
                 </div>
-            </div>
+
+                {/* 3. 보너스 */}
+                <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-xl shadow-lg border border-emerald-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
+                  <div>
+                    <div className="inline-block bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">보너스</div>
+                  </div>
+                  <div className="flex-1 flex items-center justify-center">
+                      <div className="text-sm md:text-base font-bold leading-tight">
+                        <span className="text-emerald-700">납입완료보너스</span><br />
+                        <span className="text-teal-700">장기유지보너스</span>
+                      </div>
+                       </div>
+                  
+                </div>
+              </div>
+              
           </div>
+        </div>
           {/* 오른쪽: 보험료 확인 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-end">
             <div className="w-full max-w-md bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-8 md:p-10 lg:p-8 relative flex flex-col">

@@ -290,6 +290,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleConsultVerifyOTP = async () => {
+    if (verifying) return;
     if (consultOtpCode.length !== 6) {
       alert("6자리 인증번호를 입력해주세요.");
       return;
@@ -300,7 +301,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         phone,
         name,
         birth,
-        gender, // 추가: 성별도 함께 전달
+        gender,
         code: consultOtpCode,
         counselType: 2,
         companyId: INSURANCE_COMPANY_ID,
@@ -314,7 +315,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         refundValue
       });
       if (res.data.success) {
-        alert("인증이 완료되었습니다!");
+        alert("인증이 완료되었습니다.");
         setConsultIsVerified(true);
         try {
           await request.post("/api/verifyOTP", {
@@ -335,10 +336,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             refundValue,
             onlyClient: true
           });
-          alert("상담신청이 접수되었습니다!");
-        } catch (e) {
-          // 알림톡 발송 실패 시 사용자에게 별도 안내하지 않음 (조용히 무시)
-        }
+        } catch (e) {}
       } else {
         alert("인증에 실패했습니다.");
         return;
