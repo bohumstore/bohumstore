@@ -110,7 +110,7 @@ export default function ShinhanMoreTheDreamPage() {
             <div className="text-red-500">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
             <div className="text-red-500">① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.</div>
             <div className="text-red-500">② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</div>
-            <div>※ 준법감시인 심의필 제XXXX-광고-XXXX호(XXXX.XX.XX~XXXX.XX.XX)</div>
+            <div>※ 준법감시인 심의필 43149호 (2025.08.26~2026.08.25)</div>
           </div>
         </div>
         <Footer />
