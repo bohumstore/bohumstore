@@ -283,14 +283,15 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         consultType,
         counselTime: consultTime,
         mounthlyPremium: paymentAmount,
-        templateId: "UB_8166",
+        templateId: "UB_8715",
+        adminTemplateId: "UA_8332",
         paymentPeriod: paymentPeriod,
         tenYearReturnRate: rate ? Math.round(rate * 100) : '-',
         interestValue,
         refundValue
       });
       if (res.data.success) {
-        alert("인증이 완료되었습니다.");
+        alert("인증이 완료되었습니다!");
         setConsultIsVerified(true);
       } else {
         alert("인증에 실패했습니다.");

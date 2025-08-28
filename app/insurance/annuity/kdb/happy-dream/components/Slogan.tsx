@@ -339,7 +339,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       guaranteedPension: pension.guaranteed,
       totalUntil100: pension.totalUntil100,
       pensionStartAge: pension.pensionStartAge,
-      templateId: "UB_8165",
+      templateId: "UB_8705",
       adminTemplateId: "UA_8331"
     };
     
@@ -564,11 +564,11 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         paymentPeriod: paymentPeriod || '',
         monthlyPension: calculatedPensionAmounts.monthly,
         performancePension: calculatedPensionAmounts.performance,
-        templateId: "UB_8166",
+        templateId: "UB_8715",
         adminTemplateId: "UA_8332"
       });
       if (res.data.success) {
-        alert("인증이 완료되었습니다.");
+        alert("인증이 완료되었습니다!");
         setConsultIsVerified(true);
       } else {
         alert("인증에 실패했습니다.");

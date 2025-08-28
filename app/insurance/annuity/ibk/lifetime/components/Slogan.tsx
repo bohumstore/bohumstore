@@ -207,7 +207,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       return;
     }
     setIsVerified(true);
-    alert('인증이 완료되었습니다.');
+    alert('인증이 완료되었습니다!');
   };
 
   const handleVerifyOTP = async () => {
@@ -280,7 +280,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         guaranteedPension: currentExcel?.guaranteedAmount || 0,
         pensionStartAge: currentExcel?.pensionStartAge || getPensionStartAge(Number(insuranceAge), paymentPeriod),
         totalUntil100: currentExcel?.totalUntil100 || 0,
-        templateId: "UB_8165", // 고객용 연금액 계산 결과 전송용 템플릿 (요청에 따라 고정)
+        templateId: "UB_8705", // 고객용 연금액 계산 결과 전송용 템플릿 (요청에 따라 고정)
         adminTemplateId: "UA_8331" // 관리자용 연금액 계산 결과 전송용 템플릿
       };
       
@@ -302,7 +302,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         
         setIsVerified(true);
         setOtpSent(false);
-        alert("인증이 완료되었습니다.");
+        alert("인증이 완료되었습니다!");
       } else {
         alert("인증에 실패했습니다.");
       }
@@ -530,7 +530,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         paymentPeriod: paymentPeriod || '',
         monthlyPension: pensionAmounts.monthly, // 월 연금액
         performancePension: pensionAmounts.performance, // 실적배당 연금액
-        templateId: "UB_8166", // 고객용 상담신청 완료 전송용 템플릿
+        templateId: "UB_8715", // 고객용 상담신청 완료 전송용 템플릿
         adminTemplateId: "UA_8332" // 관리자용 상담신청 접수 전송용 템플릿
       };
       console.log('[IBK][CONSULT] verifyOTP payload', payload);
@@ -540,7 +540,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         // Supabase에 데이터 저장
         const supabaseResult = await saveToSupabase(2); // 2: 상담신청
         
-        alert("인증이 완료되었습니다.");
+        alert("인증이 완료되었습니다!");
         setConsultIsVerified(true);
       } else {
         alert("인증에 실패했습니다.");

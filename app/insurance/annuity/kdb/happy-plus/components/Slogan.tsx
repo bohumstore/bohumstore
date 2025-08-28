@@ -196,7 +196,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       return;
     }
     setIsVerified(true);
-    alert('인증이 완료되었습니다.');
+    alert('인증이 완료되었습니다!');
   };
 
   const handleVerifyOTP = async () => {
@@ -212,7 +212,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     console.log("[CLIENT] 연금액 계산 인증 시작:", {
       phone,
       name,
-      templateId: "UB_8165",
+      templateId: "UB_8705",
       adminTemplateId: "UA_8331"
     });
     console.log("[CLIENT] counselType:", counselType);
@@ -241,7 +241,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       guaranteedPension: calculatedPensionAmounts.guaranteed, // 20년 보증기간 연금액
       pensionStartAge: calculatedPensionAmounts.pensionStartAge, // 연금개시연령 (카카오 메시지용)
       totalUntil100: calculatedPensionAmounts.totalUntil100,     // 100세까지 총 수령액 (카카오 메시지용)
-      templateId: "UB_8165", // 고객용 연금액 계산 결과 전송용 템플릿
+      templateId: "UB_8705", // 고객용 연금액 계산 결과 전송용 템플릿
       adminTemplateId: "UA_8331" // 관리자용 연금액 계산 결과 전송용 템플릿
     };
     
@@ -268,7 +268,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       
       setIsVerified(true);
       setOtpSent(false);
-      alert("인증이 완료되었습니다! 연금액 계산 결과가 카카오톡으로 전송됩니다.");
+      alert("인증이 완료되었습니다!");
     } else {
       alert("인증에 실패했습니다.");
     }
@@ -417,12 +417,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         paymentPeriod: paymentPeriod || '',
         monthlyPension: calculatedPensionAmounts.monthly || 0,
         guaranteedPension: calculatedPensionAmounts.guaranteed || 0,
-        templateId: "UB_8166", // 고객용 상담신청 완료 전송용 템플릿
+        templateId: "UB_8715", // 고객용 상담신청 완료 전송용 템플릿
         adminTemplateId: "UA_8332" // 관리자용 상담신청 접수 전송용 템플릿
       });
       
       if (res.data.success) {
-        alert("인증이 완료되었습니다.");
+        alert("인증이 완료되었습니다!");
         setConsultIsVerified(true);
       } else {
         alert("인증에 실패했습니다.");

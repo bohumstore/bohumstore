@@ -56,13 +56,12 @@ export async function POST(req: Request) {
       const toClientReq = {
         headers: { 'content-type': 'application/json' },
         body: {
-          tpl_code: templateId || 'UB_8166',
+          tpl_code: templateId || 'UB_8715',
           sender: '010-8897-7486',
           receiver_1: phone,
           subject_1: '상담/설계요청 - 고객전송',
           message_1:
-`[고객정보]
-고객명: ${name}
+`고객명: ${name}
 성별: ${genderKor}
 생년월일: ${birth}
 
@@ -74,7 +73,7 @@ export async function POST(req: Request) {
 담당자가 확인 후 연락드리겠습니다.`,
           button_1: { button: [{ name: '채널 추가', linkType: 'AC' }] },
           testMode: 'N',
-          // UB_8166 var order: 고객명, 성별, 생년월일, 보험종류, 상담시간
+          // UB_8715 var order: 고객명, 성별, 생년월일, 보험종류, 상담시간
           var1: name,
           var2: genderKor || '',
           var3: String(birth || ''),
@@ -324,14 +323,14 @@ export async function POST(req: Request) {
         clientTemplateId = templateId;
         console.log("[DEBUG] 클라이언트 지정 템플릿 사용:", clientTemplateId);
       } else if (productId === 5) {
-        clientTemplateId = "UB_8164";
-        console.log("[DEBUG] 신한라이프 모아더드림Plus종신보험이므로 UB_8164 템플릿 사용");
+        clientTemplateId = "UB_8712";
+        console.log("[DEBUG] 신한라이프 모아더드림Plus종신보험이므로 UB_8712 템플릿 사용");
       } else {
-        clientTemplateId = "UB_8165";
-        console.log("[DEBUG] 기본 템플릿 UB_8165 사용");
+        clientTemplateId = "UB_8705";
+        console.log("[DEBUG] 기본 템플릿 UB_8705 사용");
       }
     } else {
-      clientTemplateId = templateId || "UB_8166"; // 상담신청용 템플릿
+      clientTemplateId = templateId || "UB_8715"; // 상담신청용 템플릿
       console.log("[DEBUG] counselType이 2이므로 상담신청용 템플릿 사용:", clientTemplateId);
     }
     console.log("[DEBUG] 최종 고객용 템플릿 ID:", clientTemplateId);
@@ -384,10 +383,9 @@ export async function POST(req: Request) {
           receiver_1: phone,
           subject_1: subject,
           message_1: (() => {
-            if (counselType === 2 || clientTemplateId === "UB_8166") {
+            if (counselType === 2 || clientTemplateId === "UB_8715") {
               return (
-`[고객정보]
-고객명: ${displayName}
+`고객명: ${displayName}
 성별: ${displayGenderKor}
 생년월일: ${displayBirth}
 
@@ -402,10 +400,9 @@ export async function POST(req: Request) {
 `
               );
             }
-            if (clientTemplateId === "UB_8164") {
+            if (clientTemplateId === "UB_8712") {
               return (
-`[고객정보]
-고객명: ${displayName}
+`고객명: ${displayName}
 성별: ${displayGenderKor}
 생년월일: ${displayBirth}
 
@@ -424,10 +421,9 @@ export async function POST(req: Request) {
 `
               );
             }
-            // UB_8165
+            // UB_8705
             return (
-`[고객정보]
-고객명: ${displayName}
+`고객명: ${displayName}
 성별: ${displayGenderKor}
 생년월일: ${displayBirth}
 
@@ -451,8 +447,8 @@ export async function POST(req: Request) {
           testMode: "N",
         };
         // Template-specific var order mapping
-        if (clientTemplateId === "UB_8165") {
-          // UB_8165 order: 고객명, 성별, 생년월일, 회사명, 상품명, 납입기간, 월보험료, 총납입액, 연금개시연령, 월연금액, 보증기간총액, 총수령액
+        if (clientTemplateId === "UB_8705") {
+          // UB_8705 order: 고객명, 성별, 생년월일, 회사명, 상품명, 납입기간, 월보험료, 총납입액, 연금개시연령, 월연금액, 보증기간총액, 총수령액
           base.var1 = displayName;
           base.var2 = displayGenderKor || '';
           base.var3 = String(displayBirth || '');
@@ -465,8 +461,8 @@ export async function POST(req: Request) {
           base.var10 = monthlyPensionNum ? `${monthlyPensionNum.toLocaleString()} 원` : '-';
           base.var11 = guaranteedPensionNum ? `${guaranteedPensionNum.toLocaleString()} 원` : '-';
           base.var12 = totalUntil100Num ? `${totalUntil100Num.toLocaleString()} 원` : '-';
-        } else if (clientTemplateId === "UB_8164") {
-          // UB_8164 order: 고객명, 성별, 생년월일, 회사명, 상품명, 납입기간, 월보험료, 환급률, 확정이자, 해약환급금
+        } else if (clientTemplateId === "UB_8712") {
+          // UB_8712 order: 고객명, 성별, 생년월일, 회사명, 상품명, 납입기간, 월보험료, 환급률, 확정이자, 해약환급금
           base.var1 = displayName;
           base.var2 = displayGenderKor || '';
           base.var3 = String(displayBirth || '');
@@ -477,8 +473,8 @@ export async function POST(req: Request) {
           base.var8 = tenYearReturnRate != null ? `${tenYearReturnRate} %` : '-';
           base.var9 = interestValue != null ? `${interestValue} 원` : '-';
           base.var10 = refundValue != null ? `${refundValue} 원` : '-';
-        } else if (clientTemplateId === "UB_8166") {
-          // UB_8166 order: 고객명, 성별, 생년월일, 보험종류, 상담시간
+        } else if (clientTemplateId === "UB_8715") {
+          // UB_8715 order: 고객명, 성별, 생년월일, 보험종류, 상담시간
           base.var1 = displayName;
           base.var2 = displayGenderKor || '';
           base.var3 = String(displayBirth || '');

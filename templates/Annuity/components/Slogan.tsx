@@ -170,7 +170,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       return;
     }
     setIsVerified(true);
-    alert('인증이 완료되었습니다.');
+    alert('인증이 완료되었습니다!');
   };
 
   const handleVerifyOTP = async () => {
@@ -200,7 +200,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     if (res.data.success) {
       setIsVerified(true);
       setOtpSent(false);
-      alert("인증이 완료되었습니다!");
+      alert('인증이 완료되었습니다!');
     } else {
       alert("인증에 실패했습니다.");
     }
@@ -315,28 +315,9 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         refundValue
       });
       if (res.data.success) {
-        alert("인증이 완료되었습니다.");
+        alert("인증이 완료되었습니다!");
         setConsultIsVerified(true);
-        try {
-          await request.post("/api/verifyOTP", {
-            phone,
-            name,
-            birth,
-            gender,
-            code: '', // 인증번호는 빈 값으로
-            counselType: 2,
-            companyId: INSURANCE_COMPANY_ID,
-            productId: INSURANCE_PRODUCT_ID,
-            consultType,
-            counselTime: consultTime,
-            mounthlyPremium: paymentAmount,
-            paymentPeriod: paymentPeriod,
-            tenYearReturnRate: rate ? Math.round(rate * 100) : '-',
-            interestValue,
-            refundValue,
-            onlyClient: true
-          });
-        } catch (e) {}
+        // 중복 발송 방지를 위해 onlyClient 후속 발송 제거
       } else {
         alert("인증에 실패했습니다.");
         return;

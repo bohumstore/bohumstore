@@ -192,7 +192,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       return;
     }
     setIsVerified(true);
-    alert('인증이 완료되었습니다.');
+    alert('인증이 완료되었습니다!');
   };
 
   const handleVerifyOTP = async () => {
@@ -238,7 +238,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       
       setIsVerified(true);
       setOtpSent(false);
-      alert("인증이 완료되었습니다! 연금액 계산 결과가 카카오톡으로 전송됩니다.");
+      alert("인증이 완료되었습니다!");
     } else {
       alert("인증에 실패했습니다.");
     }
@@ -368,7 +368,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         tenYearReturnRate,
         interestValue,
         refundValue,
-        templateId: "UB_8166"
+        templateId: "UB_8715"
       });
       if (res.data.success) {
         alert("인증이 완료되었습니다!");

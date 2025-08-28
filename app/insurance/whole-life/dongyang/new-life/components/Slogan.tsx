@@ -192,7 +192,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       return;
     }
     setIsVerified(true);
-    alert('인증이 완료되었습니다.');
+    alert('인증이 완료되었습니다!');
   };
 
   const handleVerifyOTP = async () => {
@@ -220,7 +220,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       tenYearReturnRate: rate ? (rate * 100).toFixed(1) : '-', // 환급률 (소수점 첫째 자리까지)
       interestValue, // 확정이자(실제 값)
       refundValue,   // 예상해약환급금(실제 값)
-      templateId: "UB_8164"
+      templateId: "UB_8712",
+      adminTemplateId: "UA_8331"
     });
     if (res.data.success) {
       // 방문자 추적: 보험료 확인
@@ -239,7 +240,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       
       setIsVerified(true);
       setOtpSent(false);
-      alert("인증이 완료되었습니다! 보험료 계산 결과가 카카오톡으로 전송됩니다.");
+      alert("인증이 완료되었습니다!");
     } else {
       alert("인증에 실패했습니다.");
     }
@@ -377,10 +378,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
         tenYearReturnRate,
         interestValue,
         refundValue,
-        templateId: "UB_8166"
+        templateId: "UB_8715"
       });
       if (res.data.success) {
-        alert("인증이 완료되었습니다.");
+        alert("인증이 완료되었습니다!");
         setConsultIsVerified(true);
       } else {
         alert("인증에 실패했습니다.");
