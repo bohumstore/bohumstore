@@ -140,12 +140,12 @@ export const getProductConfig = (productId: number) => {
 
 // 알림톡 템플릿 ID
 export const ALIGO_TEMPLATE_IDS = {
-  KB_TRIPLE_LEVEL_UP: 'UA_7754',      // KB라이프 트리플 레벨업 연금보험
-  KDB_HAPPY_DREAM: 'UA_7754',         // KDB 더!행복드림변액연금보험
-  KDB_HAPPY_PLUS_GUARANTEED: 'UA_7754', // KDB 더!행복플러스연금보험(보증형)
-  IBK_LIFETIME_ANNUITY: 'UA_7754', // IBK 평생보증받는 변액연금보험 - OTP 전송 템플릿
-  SHINHAN_MORE_THE_DREAM: 'UA_7918', // 신한라이프 모아더드림Plus종신보험
-  DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE: 'UA_7754', // 동양생명 new알뜰플러스종신보험 (기본 템플릿 사용)
+  KB_TRIPLE_LEVEL_UP: 'UB_8712',      // KB라이프 트리플 레벨업 연금보험 (연금보험 중 유일하게 UB_8712)
+  KDB_HAPPY_DREAM: 'UB_8705',         // KDB 더!행복드림변액연금보험 (연금보험 기본값)
+  KDB_HAPPY_PLUS_GUARANTEED: 'UB_8705', // KDB 더!행복플러스연금보험(보증형) (연금보험 기본값)
+  IBK_LIFETIME_ANNUITY: 'UB_8705', // IBK 평생보증받는 변액연금보험 (연금보험 기본값)
+  SHINHAN_MORE_THE_DREAM: 'UB_8712', // 신한라이프 모아더드림Plus종신보험 (종신보험 기본값)
+  DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE: 'UB_8712', // 동양생명 new알뜰플러스종신보험 (종신보험 기본값)
 } as const;
 
 // 경로별 상품 정보 조회 함수
@@ -156,7 +156,7 @@ export const getProductConfigByPath = (path: string) => {
 // 경로별 템플릿 ID 조회 함수
 export const getTemplateIdByPath = (path: string) => {
   const productConfig = getProductConfigByPath(path);
-  if (!productConfig) return 'UA_7754'; // 기본값
+  if (!productConfig) return 'UB_8705'; // 기본값 (연금보험 기본값)
   
   switch (productConfig.productId) {
     case 1: return ALIGO_TEMPLATE_IDS.KB_TRIPLE_LEVEL_UP;
@@ -165,6 +165,6 @@ export const getTemplateIdByPath = (path: string) => {
     case 4: return ALIGO_TEMPLATE_IDS.IBK_LIFETIME_ANNUITY; // IBK 평생보증받는 변액연금보험
     case 5: return ALIGO_TEMPLATE_IDS.SHINHAN_MORE_THE_DREAM; // 신한라이프 모아더드림Plus종신보험
     case 6: return ALIGO_TEMPLATE_IDS.DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE; // 동양생명 new알뜰플러스종신보험
-    default: return 'UA_7754';
+    default: return 'UB_8705'; // 기본값 (연금보험 기본값)
   }
 }; 

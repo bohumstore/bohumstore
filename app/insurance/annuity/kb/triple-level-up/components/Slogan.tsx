@@ -219,7 +219,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       paymentPeriod: paymentPeriod,   // 실제 선택값
       tenYearReturnRate: rate ? Math.round(rate * 100) : '-', // 환급률
       interestValue, // 확정이자(실제 값)
-      refundValue    // 예상해약환급금(실제 값)
+      refundValue,    // 예상해약환급금(실제 값)
+      templateId: "UB_8712"
     });
     if (res.data.success) {
       // 방문자 추적: 보험료 확인
@@ -373,7 +374,6 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
       if (res.data.success) {
         alert("인증이 완료되었습니다!");
         setConsultIsVerified(true);
-        alert("상담신청이 접수되었습니다!");
       } else {
         alert("인증에 실패했습니다.");
         return;
@@ -439,7 +439,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-              <img src="/KB라이프.png" alt="KB라이프 로고" className="h-6 w-auto" style={{minWidth:'24px'}} />
+              <img src="/KB라이프.png" alt="KB라이프 로고" className="h-6 w-auto bg-white rounded-md shadow-sm border border-gray-100" style={{minWidth:'24px'}} />
               <span>KB라이프생명</span>
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6 lg:mb-4 leading-tight">KB 트리플 레벨업<br />연금보험 (보증형)</h1>
@@ -462,32 +462,43 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               </li>
             </ul>
               {/* 환급률/적립액 안내 UI */}
-              <div className="w-full max-w-full md:max-w-lg mx-auto bg-white rounded-xl shadow-md mb-6 p-4 md:p-6 lg:p-4 px-2 md:px-0 md:py-8">
-                <div className="flex flex-row justify-between items-stretch md:items-end gap-4 md:gap-0 mb-2">
+              <div className="w-full max-w-full md:max-w-lg mx-auto bg-white rounded-xl shadow-md mb-6 p-4 md:p-6 lg:p-4 px-2 md:px-0 pt-6 md:pt-8 lg:pt-8 pb-6 md:pb-8 lg:pb-8">
+                <div className="flex flex-row justify-between items-start gap-4 md:gap-0 mb-2">
                   <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
-                    <div className="inline-block bg-[#ff8c1a] text-white text-xs font-bold px-4 py-1 rounded-full mb-2">7년 시점</div>
+                    <div className="text-orange-600 text-sm font-bold mb-4 tracking-wide relative">
+                      <span className="border-b-2 border-orange-200 pb-1">보증 1</span>
+                    </div>
+                    <div className="inline-block bg-[#ff8c1a] text-white text-sm md:text-base font-bold px-4 py-1 rounded-full mb-2">7년 시점</div>
                     <div className="flex flex-col items-center">
-                      <span className="text-2xl md:text-5xl mb-1">💰</span>
-                      <div className="font-bold text-xs md:text-xl">환급률</div>
+                      <img src="/images/Piggy_bank_perspective_matte.png" alt="저금통" className="w-12 h-12 md:w-16 md:h-16 mb-3 mx-auto" />
+                      <div className="font-bold text-xs md:text-sm">환급률</div>
                       <div className="text-xl md:text-4xl font-extrabold text-[#ff8c1a]">100%</div>
                       <div className="text-xs text-gray-500 mt-1">* 5년납</div>
                     </div>
                   </div>
                   <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
-                    <div className="inline-block bg-[#3a80e0] text-white text-xs font-bold px-4 py-1 rounded-full mb-2">10년 시점</div>
+                    <div className="text-pink-600 text-sm font-bold mb-4 tracking-wide relative">
+                      <span className="border-b-2 border-pink-200 pb-1">보증 2</span>
+                    </div>
+                    <div className="inline-block bg-[#e23c3c] text-white text-sm md:text-base font-bold px-4 py-1 rounded-full mb-2">10년 시점</div>
                     <div className="flex flex-col items-center">
-                      <span className="text-2xl md:text-5xl mb-1">💰</span>
-                      <div className="font-bold text-xs md:text-xl">환급률</div>
-                      <div className="text-xl md:text-4xl font-extrabold text-[#3a80e0] animate-[jump-glow_1.2s_ease-in-out_infinite]">130%</div>
+                      <div className="relative overflow-hidden rounded-full w-12 h-12 md:w-16 md:h-16 mb-3 mx-auto before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:animate-[shine_1.5s_linear_infinite] before:skew-x-12">
+                        <img src="/images/Money_bag_perspective_matte.png" alt="돈자루" className="w-full h-full object-contain" />
+                      </div>
+                      <div className="font-bold text-xs md:text-sm">환급률</div>
+                      <div className="text-xl md:text-4xl font-extrabold text-[#e23c3c] animate-[jump-glow_1.2s_ease-in-out_infinite]">130%</div>
                       <div className="text-xs text-gray-500 mt-1 whitespace-nowrap">* 5년납</div>
                     </div>
                   </div>
                   <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
-                    <div className="inline-block bg-[#e23c3c] text-white text-xs font-bold px-4 py-1 rounded-full mb-2">연금개시 시점</div>
+                    <div className="text-blue-600 text-sm font-bold mb-4 tracking-wide relative">
+                      <span className="border-b-2 border-blue-200 pb-1">보증 3</span>
+                    </div>
+                    <div className="inline-block bg-[#3a80e0] text-white text-sm md:text-base font-bold px-4 py-1 rounded-full mb-2">연금개시 시점</div>
                     <div className="flex flex-col items-center">
-                      <span className="text-2xl md:text-5xl mb-1">🐷</span>
-                      <div className="font-bold text-xs md:text-xl">계약자적립액</div>
-                      <div className="text-lg md:text-4xl font-extrabold text-[#e23c3c]">2.0%</div>
+                      <img src="/images/Clock_perspective_matte.png" alt="시계" className="w-12 h-12 md:w-16 md:h-16 mb-3 mx-auto" />
+                      <div className="font-bold text-xs md:text-sm">계약자적립액</div>
+                      <div className="text-lg md:text-4xl font-extrabold text-[#3a80e0]">2.0%</div>
                       <div className="text-xs text-gray-500 mt-1">(연금을 개시하는 경우에 한함)</div>
                     </div>
                   </div>
@@ -497,7 +508,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <p>(부분 보증형에 한함)</p>
                 </div>
             </div>
-            <div className="text-xs text-gray-400 mt-4">준법감시인 심의필 제2025-광고-1168호(2025.06.05~2026.06.04)</div>
+
           </div>
           {/* 오른쪽: 보험료 확인 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-end">

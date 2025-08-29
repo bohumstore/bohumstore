@@ -5,18 +5,18 @@ export default function CoverageDetails() {
   <div className="space-y-8 px-2 sm:px-4 md:px-8 py-4 md:py-6">
     {/* 연금개시전 보험기간 */}
     <div className="space-y-4">
-      <h2 className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2 hover:cursor-pointer">1. 연금개시전 보험기간</h2>
+      <h2 className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2 ">1. 연금개시전 보험기간</h2>
       <div className="overflow-x-auto hidden md:block">
-        <table className="w-full border-collapse min-w-[600px]">
+        <table className="w-full border-collapse min-w-[600px] text-xs md:text-sm">
           <thead>
-            <tr className="bg-[#1e3a8a] hover:cursor-pointer">
+            <tr className="bg-[#1e3a8a] ">
               <th className="border border-gray-300 p-3 text-white">급부명</th>
               <th className="border border-gray-300 p-3 text-white">지급사유</th>
               <th className="border border-gray-300 p-3 text-white">지급금액</th>
             </tr>
           </thead>
           <tbody>
-            <tr className="hover:cursor-pointer">
+            <tr className="">
               <td className="border border-gray-300 p-3">고도재해장해 급여금</td>
               <td className="border border-gray-300 p-3">"연금개시전 보험기간" 중 피보험자가 장해분류표 중 동일한 재해로 여러 신체부위의 장해지급률을 더하여 80% 이상인 장해상태가 되었을 경우(다만, 최초 1회에 한하여 지급)</td>
               <td className="border border-gray-300 p-3 text-center">매월 <span className="font-bold text-[#1e3a8a]">40</span>만원(36회 지급)</td>
@@ -43,34 +43,34 @@ export default function CoverageDetails() {
 
     {/* 연금개시후 보험기간 */}
     <div className="space-y-4">
-      <h2 className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2 hover:cursor-pointer">2. 연금개시후 보험기간</h2>
+      <h2 className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2 ">2. 연금개시후 보험기간</h2>
       <p className="text-gray-600 mb-4">- 계약자는 해당 약관에 따라 연금지급개시전에 연금지급형태 및 연금지급형태의 구성비율, 생활설계자금선택비율을 변경할 수 있습니다.</p>
       <div className="overflow-x-auto hidden md:block">
-        <table className="w-full border-collapse min-w-[600px]">
+        <table className="w-full border-collapse min-w-[600px] text-xs md:text-sm">
           <thead>
-            <tr className="bg-[#1e3a8a] hover:cursor-pointer">
+            <tr className="bg-[#1e3a8a] ">
               <th className="border border-gray-300 p-3 text-white">급부명</th>
               <th className="border border-gray-300 p-3 text-white">지급사유</th>
               <th className="border border-gray-300 p-3 text-white">지급금액</th>
             </tr>
           </thead>
           <tbody>
-            <tr className="hover:cursor-pointer">
+            <tr className="">
               <td className="border border-gray-300 p-3">생활설계자금</td>
               <td className="border border-gray-300 p-3">피보험자가 연금지급개시일에 살아 있을 때</td>
               <td className="border border-gray-300 p-3">연금지급개시시점의 연금계약 계약자적립액에 "생활설계자금 선택비율"을 곱한 금액을 기준으로 계산한 금액</td>
             </tr>
-            <tr className="hover:cursor-pointer">
+            <tr className="">
               <td className="border border-gray-300 p-3">종신연금형</td>
               <td className="border border-gray-300 p-3">피보험자가 매년 보험계약해당일에 살아 있을 때 (20년보증, 100세보증 또는 기대여명보증시)</td>
               <td className="border border-gray-300 p-3">연금지급개시시점의 연금계약 계약자적립액에 (1-생활설계자금 선택비율)을 곱한 금액을 기준으로 계산한 연금액 지급</td>
             </tr>
-            <tr className="hover:cursor-pointer">
+            <tr className="">
               <td className="border border-gray-300 p-3">확정연금형</td>
               <td className="border border-gray-300 p-3">"연금개시후 보험기간" 중 매년 보험계약 해당일</td>
               <td className="border border-gray-300 p-3">연금지급개시시점의 연금계약 계약자적립액에 (1-생활설계자금 선택비율)을 곱한 금액을 기준으로 계산한 연금액을 확정 연금지급기간 (5년, 10년, 15년, 20년) 동안 지급</td>
             </tr>
-            <tr className="hover:cursor-pointer">
+            <tr className="">
               <td className="border border-gray-300 p-3">상속연금형</td>
               <td className="border border-gray-300 p-3">"연금개시후 보험기간" 중 피보험자가 매년 보험계약해당일에 살아있을 때</td>
               <td className="border border-gray-300 p-3">연금지급개시시점의 연금계약 계약자적립액에 (1-생활설계자금 선택비율)을 곱한 금액을 기준으로 공시이율에 의하여 계산한 연금액을 지급 (다만, 피보험자 사망시에는 사망시점의 연금계약 계약자적립액을 연금수익자에게 지급)</td>

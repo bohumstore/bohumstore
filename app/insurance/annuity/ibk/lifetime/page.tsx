@@ -18,7 +18,7 @@ export default function IBKLifetimeAnnuityPage() {
   const tabs = [
     { label: '상품 정보',      content: <ProductInfo /> },
     { label: '보장 내용',      content: <CoverageDetails /> },
-    { label: '해약환급금 예시표', content: <Surrender /> },
+    { label: '가입시 알아두실 사항', content: <Surrender /> },
   ];
 
   const [showNotice, setShowNotice] = useState(false);
