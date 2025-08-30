@@ -429,7 +429,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   return (
     <>
       <section
-        className="w-full bg-[#ffe15a] py-6 md:py-10 lg:py-3"
+        className="w-full bg-[#ffe15a] py-6 md:py-6 lg:py-3"
         style={{
           backgroundImage: 'radial-gradient(#f8d34a 2px, transparent 2px)',
           backgroundSize: '20px 20px',
@@ -458,48 +458,73 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
-                병력 무심사 / 무사망 보장 / 전건 가입 가능
+                전건 병력 무심사 / 전건 가입 가능
               </li>
             </ul>
               {/* 환급률/적립액 안내 UI */}
-              <div className="w-full max-w-full md:max-w-lg mx-auto bg-white rounded-xl shadow-md mb-6 p-4 md:p-6 lg:p-4 px-2 md:px-0 pt-6 md:pt-8 lg:pt-8 pb-6 md:pb-8 lg:pb-8">
-                <div className="flex flex-row justify-between items-start gap-4 md:gap-0 mb-2">
-                  <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
+              <div className="relative">
+                {/* KB 상품 이미지 - 설명박스 위에 떠있게 배치 */}
+                <img 
+                  src="/kb-9-1.png" 
+                  alt="KB 트리플 레벨업 상품 안내" 
+                  className="absolute -top-14 right-0 md:-top-12 md:right-1 lg:-top-16 lg:right-2 h-auto z-20 rounded-lg w-[85px] md:w-[95px] lg:w-[100px]"
+                />
+                <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-md mb-6 p-4 md:p-6 lg:p-4 px-4 md:px-6 lg:px-4 pt-6 md:pt-8 lg:pt-8 pb-6 md:pb-8 lg:pb-8">
+                <div className="grid grid-cols-3 gap-4 md:gap-2 mb-2">
+                  <div className="text-center px-2">
                     <div className="text-orange-600 text-sm font-bold mb-4 tracking-wide relative">
-                      <span className="border-b-2 border-orange-200 pb-1">보증 1</span>
+                      <span className="relative inline-block px-1" style={{
+                        background: 'linear-gradient(transparent 70%, #fef3cd 70%, #fef3cd 100%, transparent 100%)'
+                      }}>
+                        보증 1
+                      </span>
                     </div>
-                    <div className="inline-block bg-[#ff8c1a] text-white text-sm md:text-base font-bold px-4 py-1 rounded-full mb-2">7년 시점</div>
+                    <div className="inline-block bg-gradient-to-b from-[#ff8c1a] via-[#f97316] to-[#ea580c] text-white text-sm md:text-base font-bold px-4 py-2 rounded-lg mb-2 transform translate-y-0 hover:translate-y-[-2px] transition-transform" style={{
+                      boxShadow: '0 6px 12px rgba(234, 88, 12, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
+                    }}>7년 시점</div>
                     <div className="flex flex-col items-center">
                       <img src="/images/Piggy_bank_perspective_matte.png" alt="저금통" className="w-12 h-12 md:w-16 md:h-16 mb-3 mx-auto" />
                       <div className="font-bold text-xs md:text-sm">환급률</div>
-                      <div className="text-xl md:text-4xl font-extrabold text-[#ff8c1a]">100%</div>
+                      <div className="text-2xl md:text-4xl font-extrabold text-[#ff8c1a]">100%</div>
                       <div className="text-xs text-gray-500 mt-1">* 5년납</div>
                     </div>
                   </div>
-                  <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
+                  <div className="text-center px-2">
                     <div className="text-pink-600 text-sm font-bold mb-4 tracking-wide relative">
-                      <span className="border-b-2 border-pink-200 pb-1">보증 2</span>
+                      <span className="relative inline-block px-1" style={{
+                        background: 'linear-gradient(transparent 70%, #fdf2f8 70%, #fdf2f8 100%, transparent 100%)'
+                      }}>
+                        보증 2
+                      </span>
                     </div>
-                    <div className="inline-block bg-[#e23c3c] text-white text-sm md:text-base font-bold px-4 py-1 rounded-full mb-2">10년 시점</div>
+                    <div className="inline-block bg-gradient-to-b from-[#e23c3c] via-[#dc2626] to-[#b91c1c] text-white text-sm md:text-base font-bold px-4 py-2 rounded-lg mb-2 transform translate-y-0 hover:translate-y-[-2px] transition-transform" style={{
+                      boxShadow: '0 6px 12px rgba(185, 28, 28, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
+                    }}>10년 시점</div>
                     <div className="flex flex-col items-center">
                       <div className="relative overflow-hidden rounded-full w-12 h-12 md:w-16 md:h-16 mb-3 mx-auto before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:animate-[shine_1.5s_linear_infinite] before:skew-x-12">
                         <img src="/images/Money_bag_perspective_matte.png" alt="돈자루" className="w-full h-full object-contain" />
                       </div>
                       <div className="font-bold text-xs md:text-sm">환급률</div>
-                      <div className="text-xl md:text-4xl font-extrabold text-[#e23c3c] animate-[jump-glow_1.2s_ease-in-out_infinite]">130%</div>
+                      <div className="text-2xl md:text-4xl font-extrabold text-[#e23c3c] animate-[jump-glow_1.2s_ease-in-out_infinite]">130%</div>
                       <div className="text-xs text-gray-500 mt-1 whitespace-nowrap">* 5년납</div>
                     </div>
                   </div>
-                  <div className="flex-1 text-center min-w-[110px] md:min-w-[160px]">
+                  <div className="text-center px-2">
                     <div className="text-blue-600 text-sm font-bold mb-4 tracking-wide relative">
-                      <span className="border-b-2 border-blue-200 pb-1">보증 3</span>
+                      <span className="relative inline-block px-1" style={{
+                        background: 'linear-gradient(transparent 70%, #dbeafe 70%, #dbeafe 100%, transparent 100%)'
+                      }}>
+                        보증 3
+                      </span>
                     </div>
-                    <div className="inline-block bg-[#3a80e0] text-white text-sm md:text-base font-bold px-4 py-1 rounded-full mb-2">연금개시 시점</div>
+                    <div className="inline-block bg-gradient-to-b from-[#3a80e0] via-[#2563eb] to-[#1d4ed8] text-white text-sm md:text-base font-bold px-4 py-2 rounded-lg mb-2 transform translate-y-0 hover:translate-y-[-2px] transition-transform" style={{
+                      boxShadow: '0 6px 12px rgba(29, 78, 216, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
+                    }}>연금개시 시점</div>
                     <div className="flex flex-col items-center">
                       <img src="/images/Clock_perspective_matte.png" alt="시계" className="w-12 h-12 md:w-16 md:h-16 mb-3 mx-auto" />
                       <div className="font-bold text-xs md:text-sm">계약자적립액</div>
-                      <div className="text-lg md:text-4xl font-extrabold text-[#3a80e0]">2.0%</div>
-                      <div className="text-xs text-gray-500 mt-1">(연금을 개시하는 경우에 한함)</div>
+                      <div className="text-xl md:text-4xl font-extrabold text-[#3a80e0]">2.0%</div>
+                      <div className="text-xs text-gray-500 mt-1 lg:whitespace-nowrap">(연금을 개시하는 경우에 한함)</div>
                     </div>
                   </div>
                 </div>
@@ -507,6 +532,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   <p>* 환급률은 트리플 레벨업 보증률 반영한 금액 입니다.</p>
                   <p>(부분 보증형에 한함)</p>
                 </div>
+              </div>
             </div>
 
           </div>
