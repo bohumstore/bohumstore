@@ -51,6 +51,20 @@ export default function KBTripleLevelUpAnnuityPage() {
         @keyframes shine {
           0% { left: -100%; }
           100% { left: 100%; }
+        }
+        @keyframes wobble-shake {
+          0% { 
+            transform: translateX(-8px) rotate(-2deg);
+            filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.12));
+          }
+          50% { 
+            transform: translateX(8px) rotate(2deg);
+            filter: drop-shadow(-2px 4px 8px rgba(0, 0, 0, 0.12));
+          }
+          100% { 
+            transform: translateX(-8px) rotate(-2deg);
+            filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.12));
+          }
         }`}</style>
       <Notice open={showNotice} onClose={() => setShowNotice(false)} />
       <Modal title="개인정보 수집 및 이용 동의" open={showPrivacy} onClose={() => setShowPrivacy(false)}>

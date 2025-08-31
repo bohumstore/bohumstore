@@ -51,6 +51,40 @@ const animationStyles = `
 // 슬로건 데이터
 const slogans = [
   {
+    id: 'kb-triple-level-up',
+    title: '트리플 레벨업 보장',
+    subtitle: '10년시점 130% 해약환급률 보증',
+    description: 'KB 트리플 레벨업 연금보험으로 단기간에 높은 보장을 받으세요.',
+    path: '/insurance/annuity/kb/triple-level-up',
+    color: 'from-yellow-500 to-yellow-600',
+    bgColor: 'bg-yellow-50',
+    features: [
+      '10년시점 130% 해약환급률 보증 (5년납)',
+      '가입 0~70세 / 연금개시 45~85세',
+      '비과세 혜택 (월 150만원 한도)',
+      '병력 무심사 / 전건 가입가능'
+    ],
+    company: 'KB라이프생명',
+    logo: '/KB라이프.png'
+  },
+  {
+    id: 'ibk-lifetime',
+    title: '평생 연금 보장',
+    subtitle: '연단리 8% 보증으로 끝없는 보장',
+    description: 'IBK 평생연금받는 변액연금보험으로 평생 동안 안정적인 연금을 받으세요.',
+    path: '/insurance/annuity/ibk/lifetime',
+    color: 'from-orange-500 to-orange-600',
+    bgColor: 'bg-orange-50',
+    features: [
+      '연단리 8% 보증으로 높은 보장',
+      '평생 연금으로 지속적인 수입',
+      '변액형 연금의 수익성',
+      'IBK연금보험의 전문성'
+    ],
+    company: 'IBK연금보험',
+    logo: '/IBK-logo.png'
+  },
+  {
     id: 'kdb-happy-plus',
     title: '안정적인 노후 준비',
     subtitle: '연단리 7% 보증으로 확실한 보장',
@@ -85,23 +119,6 @@ const slogans = [
     logo: '/kdb-logo.png'
   },
   {
-    id: 'ibk-lifetime',
-    title: '평생 연금 보장',
-    subtitle: '연단리 8% 보증으로 끝없는 보장',
-    description: 'IBK 평생연금받는 변액연금보험으로 평생 동안 안정적인 연금을 받으세요.',
-    path: '/insurance/annuity/ibk/lifetime',
-    color: 'from-orange-500 to-orange-600',
-    bgColor: 'bg-orange-50',
-    features: [
-      '연단리 8% 보증으로 높은 보장',
-      '평생 연금으로 지속적인 수입',
-      '변액형 연금의 수익성',
-      'IBK연금보험의 전문성'
-    ],
-    company: 'IBK연금보험',
-    logo: '/IBK-logo.png'
-  },
-  {
     id: 'shinhan-more-the-dream',
     title: '단기납 완료 후 높은 환급률',
     subtitle: '10년시점 122.7%로 빠른 완납',
@@ -115,7 +132,7 @@ const slogans = [
       '단기납으로 빠른 완납',
       '종신보장으로 평생 보호'
     ],
-    company: '신한라이프',
+    company: '신한라이프생명',
     logo: '/shinhan-life-logo.png'
   }
 ];
@@ -123,26 +140,15 @@ const slogans = [
 // 메인 상품 데이터
 const mainProducts = [
   {
-    id: 'kdb-happy-plus',
-    name: 'KDB 행복플러스 연금보험(보증형)',
-    company: 'KDB생명',
-    logo: '/kdb-logo.png',
-    path: '/insurance/annuity/kdb/happy-plus',
-    description: '연단리 7% 보증으로 안정적인 노후 준비',
+    id: 'kb-triple-level-up',
+    name: 'KB 트리플 레벨업 연금보험(보증형)',
+    company: 'KB라이프생명',
+    logo: '/KB라이프.png',
+    path: '/insurance/annuity/kb/triple-level-up',
+    description: '10년시점 130% 해약환급률 보증으로 단기간 높은 보장',
     badge: 'BEST',
     category: '연금보험',
-    highlight: '연단리 7% 보증'
-  },
-  {
-    id: 'kdb-happy-dream',
-    name: 'KDB 행복드림 변액연금보험',
-    company: 'KDB생명',
-    logo: '/kdb-logo.png',
-    path: '/insurance/annuity/kdb/happy-dream',
-    description: '연단리 7% 보증으로 안정성과 수익성 동시 확보',
-    badge: 'NEW',
-    category: '변액연금',
-    highlight: '연단리 7% 보증'
+    highlight: '10년시점 130% 보증'
   },
   {
     id: 'ibk-lifetime',
@@ -156,13 +162,35 @@ const mainProducts = [
     highlight: '연단리 8% 보증'
   },
   {
+    id: 'kdb-happy-plus',
+    name: 'KDB 행복플러스 연금보험(보증형)',
+    company: 'KDB생명',
+    logo: '/kdb-logo.png',
+    path: '/insurance/annuity/kdb/happy-plus',
+    description: '연단리 7% 보증으로 안정적인 노후 준비',
+    badge: '',
+    category: '연금보험',
+    highlight: '연단리 7% 보증'
+  },
+  {
+    id: 'kdb-happy-dream',
+    name: 'KDB 행복드림 변액연금보험',
+    company: 'KDB생명',
+    logo: '/kdb-logo.png',
+    path: '/insurance/annuity/kdb/happy-dream',
+    description: '연단리 7% 보증으로 안정성과 수익성 동시 확보',
+    badge: '추천',
+    category: '변액연금',
+    highlight: '연단리 7% 보증'
+  },
+  {
     id: 'shinhan-more-the-dream',
     name: '신한 모아더드림 Plus 종신보험',
-    company: '신한라이프',
+    company: '신한라이프생명',
     logo: '/shinhan-life-logo.png',
     path: '/insurance/whole-life/shinhan/more-the-dream',
     description: '15~70세 전연령 10년시점 122.7%로 단기납 완료 후 높은 환급률',
-    badge: '추천',
+    badge: '',
     category: '종신보험',
     highlight: '10년시점 122.7%'
   }
@@ -277,12 +305,16 @@ export default function HomePage() {
         <div className="relative w-full">
           {/* 메인 슬로건 카드 */}
           <div className="relative w-full">
-            <div className={`w-full min-h-[560px] md:min-h-[680px] lg:h-[450px] ${currentSlogan.id === 'ibk-lifetime' ? 'bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50' : 
+            <div className={`w-full min-h-[560px] md:min-h-[680px] lg:h-[450px] ${currentSlogan.id === 'kb-triple-level-up' ? 'bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50' :
+                                                           currentSlogan.id === 'ibk-lifetime' ? 'bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50' : 
                                                            currentSlogan.id === 'kdb-happy-plus' ? 'bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50' : 
                                                            currentSlogan.id === 'kdb-happy-dream' ? 'bg-gradient-to-br from-blue-50 via-sky-50 to-cyan-50' : 
                                                            'bg-gradient-to-br from-red-50 via-pink-50 to-purple-50'} relative overflow-hidden`} 
                  style={{
-                   backgroundImage: currentSlogan.id === 'ibk-lifetime' ? 
+                   backgroundImage: currentSlogan.id === 'kb-triple-level-up' ? 
+                     `radial-gradient(circle at 20% 80%, rgba(251, 191, 36, 0.15) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 50%)` :
+                     currentSlogan.id === 'ibk-lifetime' ? 
                      `radial-gradient(circle at 20% 80%, rgba(251, 191, 36, 0.15) 0%, transparent 50%),
                       radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 50%)` :
                      currentSlogan.id === 'kdb-happy-plus' ? 
@@ -418,14 +450,16 @@ export default function HomePage() {
                         </span>
                       </div>
                     </div>
-                    <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
-                      product.badge === 'BEST' ? 'bg-yellow-100 text-yellow-800' :
-                      product.badge === 'NEW' ? 'bg-green-100 text-green-800' :
-                      product.badge === 'HOT' ? 'bg-red-100 text-red-800' :
-                      'bg-blue-100 text-blue-800'
-                    }`}>
-                      {product.badge}
-                    </span>
+                    {product.badge && (
+                      <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                        product.badge === 'BEST' ? 'bg-yellow-100 text-yellow-800' :
+                        product.badge === 'NEW' ? 'bg-green-100 text-green-800' :
+                        product.badge === 'HOT' ? 'bg-red-100 text-red-800' :
+                        'bg-blue-100 text-blue-800'
+                      }`}>
+                        {product.badge}
+                      </span>
+                    )}
                   </div>
                   
                   {/* 상품 정보 */}
@@ -434,6 +468,7 @@ export default function HomePage() {
                     <p className="text-sm text-gray-600 mb-3 leading-relaxed">{product.description}</p>
                     <div className="flex items-center gap-2 mb-3">
                       <span className={`text-xs font-medium px-2 py-1 rounded ${
+                        product.id === 'kb-triple-level-up' ? 'text-yellow-600 bg-yellow-50' :
                         product.id === 'kdb-happy-plus' ? 'text-green-600 bg-green-50' :
                         product.id === 'kdb-happy-dream' ? 'text-purple-600 bg-purple-50' :
                         product.id === 'ibk-lifetime' ? 'text-orange-600 bg-orange-50' :
