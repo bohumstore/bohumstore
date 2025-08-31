@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     description: "연금보험, 종신보험, 저축보험 비교 및 상담",
     images: ["https://bohumstore.net/kakao-img.png"],
   },
-  manifest: "/manifest.json",
+  // manifest: "/manifest.json", // PWA 앱 설치 버튼 비활성화
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -76,10 +76,11 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         <meta name="format-detection" content="telephone=no" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="보험스토어" />
+        {/* PWA 관련 메타태그들 - 앱 설치 버튼 비활성화를 위해 주석처리 */}
+        {/* <meta name="mobile-web-app-capable" content="yes" /> */}
+        {/* <meta name="apple-mobile-web-app-capable" content="yes" /> */}
+        {/* <meta name="apple-mobile-web-app-status-bar-style" content="default" /> */}
+        {/* <meta name="apple-mobile-web-app-title" content="보험스토어" /> */}
         
         {/* 파비콘 설정 - 네이버 파워링크 광고용 */}
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />

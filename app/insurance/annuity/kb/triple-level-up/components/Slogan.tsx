@@ -501,7 +501,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                       boxShadow: '0 6px 12px rgba(185, 28, 28, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
                     }}>10년 시점</div>
                     <div className="flex flex-col items-center">
-                      <div className="relative overflow-hidden rounded-full w-12 h-12 md:w-16 md:h-16 mb-3 mx-auto before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:animate-[shine_1.5s_linear_infinite] before:skew-x-12">
+                      <div className="relative overflow-hidden rounded-full w-12 h-12 md:w-16 md:h-16 mb-3 mx-auto before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:animate-[shine-inline_1.5s_linear_infinite] before:skew-x-12">
                         <img src="/images/Money_bag_perspective_matte.png" alt="돈자루" className="w-full h-full object-contain" />
                       </div>
                       <div className="font-bold text-xs md:text-sm">환급률</div>
