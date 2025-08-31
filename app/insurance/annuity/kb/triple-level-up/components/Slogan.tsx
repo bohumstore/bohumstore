@@ -517,7 +517,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                         보증 3
                       </span>
                     </div>
-                    <div className="inline-block bg-gradient-to-b from-[#3a80e0] via-[#2563eb] to-[#1d4ed8] text-white text-xs md:text-base font-bold px-4 py-2 rounded-lg mb-2 transform translate-y-0 hover:translate-y-[-2px] transition-transform" style={{
+                    <div className="inline-block bg-gradient-to-b from-[#3a80e0] via-[#2563eb] to-[#1d4ed8] text-white text-xs md:text-base font-bold px-2 py-2 rounded-lg mb-2 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
                       boxShadow: '0 6px 12px rgba(29, 78, 216, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
                     }}>연금개시 시점</div>
                     <div className="flex flex-col items-center">
