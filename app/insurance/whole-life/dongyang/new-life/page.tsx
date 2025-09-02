@@ -115,16 +115,33 @@ export default function DongyangNewAlddulPlusWholeLifePage() {
         </div>
         <Footer />
         
-        {/* 맨 위로 버튼 */}
-        <button 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 z-50 bg-white text-gray-600 rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200"
-          aria-label="맨 위로"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-          </svg>
-        </button>
+        {/* 오른쪽 하단 플로팅 액션 버튼들 */}
+        <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+          {/* 계산하기 버튼 */}
+          <button
+            onClick={() => {
+              const calculatorBox = document.getElementById('calculator-box');
+              if (calculatorBox) {
+                calculatorBox.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="bg-white text-gray-600 rounded-2xl px-3 py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
+            aria-label="계산하기"
+          >
+            <span className="text-xs font-semibold">계산</span>
+            <img src="/Calculator.png" alt="계산하기" className="w-6 h-6" />
+          </button>
+          {/* 맨 위로 버튼 */}
+          <button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="bg-white text-gray-600 rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200"
+            aria-label="맨 위로"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+            </svg>
+          </button>
+        </div>
       </div>
     </>
   );
