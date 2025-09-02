@@ -18,19 +18,19 @@ export default function Surrender() {
       <div className="overflow-x-auto">
         <table className="w-full text-center text-xs md:text-sm table-fixed">
           <colgroup>
-            <col className="w-[10%]" />
-            <col className="w-[8%]" />
-            <col className="w-[12%]" />
-            <col className="w-[12%]" />
             <col className="w-[9%]" />
-            <col className="w-[15%]" />
+            <col className="w-[7%]" />
+            <col className="w-[11%]" />
+            <col className="w-[11%]" />
+            <col className="w-[11%]" />
+            <col className="w-[14%]" />
             <col className="w-[12%]" />
+            <col className="w-[11%]" />
             <col className="w-[12%]" />
-            <col className="w-[10%]" />
           </colgroup>
           <thead>
             <tr className="bg-[#1e3a8a] text-white align-middle">
-              <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={2}>경과기간</th>
+              <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={2}>경과<br className="md:hidden" />기간</th>
               <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={2}>나이</th>
               <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={2}>납입보험료<br/>누계 (A)</th>
               <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>최저보증이율</th>
