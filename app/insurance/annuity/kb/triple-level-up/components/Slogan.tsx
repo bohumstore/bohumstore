@@ -429,7 +429,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   return (
     <>
       <section
-        className="w-full bg-[#ffe15a] py-6 md:py-6 lg:py-3"
+        className="w-full bg-[#ffe15a] py-6 md:py-6 lg:py-3 lg:min-h-[600px] lg:flex lg:items-center"
         style={{
           backgroundImage: 'radial-gradient(#f8d34a 2px, transparent 2px)',
           backgroundSize: '20px 20px',
@@ -439,14 +439,17 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-              <img src="/KB라이프.png" alt="KB라이프 로고" className="h-6 w-auto bg-white rounded-md shadow-sm border border-gray-100" style={{minWidth:'24px'}} />
               <span>KB라이프생명</span>
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6 lg:mb-4 leading-tight">KB 트리플 레벨업<br />연금보험 (보증형)</h1>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6 lg:mb-4 leading-tight">KB 트리플 레벨업<br />연금보험 무배당(보증형)</h1>
             <ul className="mb-8 md:mb-10 lg:mb-8 space-y-2 md:space-y-3 lg:space-y-2">
-              <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
-                10년시점 130% 해약환급률 보증 <span className="text-xs md:text-sm lg:text-xs align-baseline">(5년납)</span>
+              <li className="flex items-start text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a] mt-1">✔</span>
+                <div className="text-center md:text-center lg:text-left">
+                  트리플 레벨업 보증으로<br />
+                  7년/10년/연금개시시점 적립액 보증<br />
+                  <span className="text-xs md:text-sm lg:text-xs align-baseline">(보증형에 한함)</span>
+                </div>
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
@@ -537,8 +540,8 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
 
           </div>
           {/* 오른쪽: 보험료 확인 카드 */}
-          <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-end">
-            <div className="w-full max-w-md bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-8 md:p-10 lg:p-8 relative flex flex-col">
+          <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
+            <div id="calculator-box" className="w-full max-w-md bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-8 md:p-10 lg:p-8 relative flex flex-col">
               {/* 새로운 헤더 디자인 */}
               <div className="mb-6">
                 <h3 className="text-2xl font-bold text-[#3a8094] flex items-center gap-2">

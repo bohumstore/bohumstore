@@ -54,7 +54,7 @@ export default function ProductInfo() {
                 </div>
                 <div>
                   <div className="font-bold">연금개시후 보험기간</div>
-                  <div>연금지급개시 계약해당일로부터 최종연금지급일까지</div>
+                  <div>연금지급개시 계약해당일부터 종신까지 (확정연금형의 경우 최종연금지급일까지)</div>
                 </div>
               </div>
             </div>
@@ -165,7 +165,7 @@ export default function ProductInfo() {
         <div className="space-y-4">
           <h4 className="text-lg font-bold text-[#1e3a8a] border-b border-[#1e3a8a] pb-2 ">중도인출에 관한 사항</h4>
           <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 space-y-4">
-            <p>(1) 연금개시전 보험기간 중 보험년도 기준 년12회(일 또는 월 횟수 제한 없음)에 한하여 1회당 인출신청시점 해약환급금(보험계약대출원금과 이자를 차감한 금액)의 80%범위 이내에서 연금계약 계약자적립액의 일부를 인출할 수 있습니다. 단, 인출금액은 10만원 이상 만원단위로 인출할 수 있습니다.</p>
+            <p>(1) 연금개시전 보험기간 중 보험년도 기준 년12회(일 또는 월 횟수 제한 없음)에 한하여 1회당 인출신청시점 해약환급금(보험계약대출원금과 이자를 차감한 금액)의 80%범위 이내에서 연금계약 계약자적립액의 일부를 인출할 수 있습니다. 단, 인출금액은 10만원 이상 만원 단위로 인출할 수 있습니다.</p>
             <p>(2) 연금계약 계약자적립액의 일부를 인출하기 위해서는 인출후 연금계약 계약자적립액(보험계약대출원금과 이자를 차감한 금액)이 1구좌당 300만원 이상이어야 합니다.</p>
             <p>(3) 계약일로부터 10년 이내에 연금계약 계약자적립액의 일부를 인출하는 경우 각 인출시점까지의 인출금액 총합계는 이미 납입한 보험료를 초과할 수 없습니다.</p>
             <p>(4) 중도인출은 추가납입보험료 계약자적립액에서 우선적으로 가능하며, 추가납입보험료 계약자적립액이 부족한 경우에 한하여 기본보험료 계약자적립액에서 인출할 수 있습니다.</p>
@@ -175,9 +175,9 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 최저사망적립금에 관한 사항 */}
+      {/* 최저사망적립액에 관한 사항 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3 ">최저사망적립금에 관한 사항</h3>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3 ">최저사망적립액에 관한 사항</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <p>최저사망적립액이라 함은 「연금개시전 보험기간」 동안 피보험자 사망시 공시이율로 부리한 계약자적립액과 관계없이 보장하는 최저한도의 계약자적립액으로서 사망시점의 이미 납입한 보험료를 말합니다.</p>
         </div>
@@ -208,7 +208,7 @@ export default function ProductInfo() {
               <tbody>
                 <tr className="">
                   <td className="border border-gray-300 p-2">계약일부터 7년<br />경과시점의 연계약해당일</td>
-                  <td className="border border-gray-300 p-3" rowSpan={2}>보증시점 전일까지의<br />"기초 기본보험료"</td>
+                  <td className="border border-gray-300 p-3" rowSpan={2}>보증시점 전일까지의<br />"기준 기본보험료"</td>
                   <td className="border border-gray-300 p-2 text-center">100%</td>
                   <td className="border border-gray-300 p-2 text-center">100%</td>
                   <td className="border border-gray-300 p-2 text-center">100%</td>
@@ -238,9 +238,9 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 연금지급개시시점의 연금계약 계약자적립금에 관한 사항 */}
+      {/* 연금지급개시시점의 연금계약 계약자적립액에 관한 사항 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3 ">연금지급개시시점의 연금계약 계약자적립금에 관한 사항</h3>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3 ">연금지급개시시점의 연금계약 계약자적립액에 관한 사항</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 space-y-4">
           <p>(1) 보증형 : 연금지급개시시점의 기본보험료 계약자적립액이 트리플 레벨업 보증에 관한 사항(보증형에 한함)에 의한 연금개시시점 트리플 레벨업 보증금액 이하일 경우 연금개시시점 트리플 레벨업 보증금액을 기본보험료 계약자적립액의 최저한도로 하여 연금계약 계약자적립액을 구합니다.</p>
           <p>(2) 미보증형 : 연금지급개시시점의 연금계약 계약자적립액이 「이미 납입한 보험료(연금계약 계약자적립액의 인출이 있었을 때에는 이를 차감한 금액) + 1,000원」이하일 경우 「이미 납입한 보험료(연금계약 계약자적립액의 인출이 있었을 때에는 이를 차감한 금액) + 1,000원」으로 합니다.</p>

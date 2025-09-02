@@ -56,6 +56,12 @@ export default function KBTripleLevelUpAnnuityPage() {
             <Tabs tabs={tabs} />
             {/* 하단 버튼 */}
             <div className="flex flex-col md:flex-row gap-4 justify-center mt-10">
+              <button type="button" onClick={() => window.open('/kb-guide.pdf', '_blank')} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
+                상품설명서
+              </button>
+              <button type="button" onClick={() => window.open('/kb-guide2.pdf', '_blank')} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
+                약관
+              </button>
               <button type="button" onClick={() => setShowNotice(true)} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
                 가입시 알아두실 사항
               </button>
@@ -66,7 +72,7 @@ export default function KBTripleLevelUpAnnuityPage() {
         <div className="w-full flex justify-center">
           <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mb-2 md:mb-4 lg:mb-6 mt-6 md:mt-8 lg:mt-10 px-6 py-0 text-xs md:text-sm text-gray-800">
             <div className="mb-1 font-bold">[ 유의사항 ]</div>
-            <div>- 보험사 및 상품별로 상이할 수 있으므로, 관련한 세부사항은 반드시 해당 약관을 참조하시기 바랍니다.</div>
+            <div>- 보험사 및 상품별로 상이할 수 있으므로, 관련한 세부사항은 반드시 해당 약관 및 상품설명서를 참조하시기 바랍니다.</div>
             <div>- 위는 예시일 뿐 해당 납입기간이 끝나기 전에 해지를 할경우 해당 표와 실지급금액이 차이가 발생할수 있습니다.</div>
             <div>- 최저보증연금은 연금개시 이전 중도해지시에는 최저보증이 되지 않아 운용결과에 따라 해지환급금에 손실이 발생할 수 있습니다.</div>
           </div>
@@ -90,16 +96,34 @@ export default function KBTripleLevelUpAnnuityPage() {
         </div>
         <Footer />
         
-        {/* 맨 위로 버튼 */}
-        <button 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 z-50 bg-white text-gray-600 rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200"
-          aria-label="맨 위로"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-          </svg>
-        </button>
+        {/* 맨 위로 & 계산하기 버튼 */}
+        <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+          {/* 계산하기 버튼 */}
+          <button 
+            onClick={() => {
+              const calculatorBox = document.getElementById('calculator-box');
+              if (calculatorBox) {
+                calculatorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }}
+            className="bg-white text-gray-600 rounded-2xl px-3 py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
+            aria-label="계산하기"
+          >
+            <span className="text-xs font-semibold">계산</span>
+            <img src="/Calculator.png" alt="계산하기" className="w-6 h-6" />
+          </button>
+          
+          {/* 맨 위로 버튼 */}
+          <button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="bg-white text-gray-600 rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200"
+            aria-label="맨 위로"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+            </svg>
+          </button>
+        </div>
       </div>
     </>
   );
