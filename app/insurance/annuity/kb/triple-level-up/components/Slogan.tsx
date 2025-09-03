@@ -452,11 +452,11 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 </div>
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="hidden lg:block text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
                 가입 0~70세 / 연금개시 45~85세
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="hidden lg:block text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
                 비과세 <span className="text-xs md:text-sm lg:text-xs align-baseline">(월 150만원 한도, 10년유지 세법요건 충족시)</span>
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
