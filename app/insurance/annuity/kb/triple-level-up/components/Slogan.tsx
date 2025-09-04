@@ -533,7 +533,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 </div>
                 <div className="text-xs text-gray-500 text-center mt-4">
                   <p>* 환급률은 트리플 레벨업 보증률 반영한 금액 입니다.</p>
-                  <p>(부분 보증형에 한함)</p>
+                  <p>(보증형에 한함)</p>
                 </div>
               </div>
             </div>
