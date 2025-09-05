@@ -91,7 +91,7 @@ export default function KBTripleLevelUpAnnuityPage() {
             <div className="text-red-500">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
             <div className="text-red-500">① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.</div>
             <div className="text-red-500">② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</div>
-            <div>※ 준법감시인 심의필 OOOOO호 (2025.00.00~2026.00.00)</div>
+            <div>※ 준법감시인확인필-SM-2509006(2025.09.05~2026.09.04)</div>
           </div>
         </div>
         <Footer />
