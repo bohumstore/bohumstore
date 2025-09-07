@@ -450,17 +450,17 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <span className="hidden lg:block text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#22c55e] mt-1">✔</span>
                 <div className="text-center md:text-center lg:text-left">
                   <span className="text-[#e23c3c] font-semibold">트리플 레벨업 보증</span>으로<br />
-                  <span className="text-[#3a8094] font-semibold">7년/10년/연금개시시점</span> 적립액 보증<br />
+                  <span className="text-[#3a4ca8] font-semibold">7년/10년/연금개시시점</span> 적립액 보증<br />
                   <span className="text-xs md:text-sm lg:text-xs align-baseline text-gray-600">(보증형에 한함)</span>
                 </div>
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
-                가입&nbsp;<span className="text-[#3a8094] font-semibold">0~70세</span>&nbsp;/&nbsp;연금개시&nbsp;<span className="text-[#3a8094] font-semibold">45~85세</span>
+                가입&nbsp;<span className="text-[#3a4ca8] font-semibold">0~70세</span>&nbsp;/&nbsp;연금개시&nbsp;<span className="text-[#3a4ca8] font-semibold">45~85세</span>
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
-                <span className="text-[#3a8094] font-semibold">비과세</span>&nbsp;<span className="text-xs md:text-sm lg:text-xs align-baseline text-gray-600">(월 150만원 한도, 10년유지 세법요건 충족시)</span>
+                <span className="text-[#3a4ca8] font-semibold">비과세</span>&nbsp;<span className="text-xs md:text-sm lg:text-xs align-baseline text-gray-600">(월 150만원 한도, 10년유지 세법요건 충족시)</span>
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
