@@ -439,29 +439,32 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-              <span>KB라이프생명</span>
+              <span className="font-semibold">KB라이프생명</span>
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6 lg:mb-4 leading-tight">KB 트리플 레벨업<br />연금보험 무배당(보증형)</h1>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 lg:mb-4 leading-tight">
+              KB 트리플 레벨업<br />
+              연금보험 무배당(보증형)
+            </h1>
             <ul className="mb-8 md:mb-10 lg:mb-8 space-y-2 md:space-y-3 lg:space-y-2">
               <li className="flex items-start text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="hidden lg:block text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a] mt-1">✔</span>
+                <span className="hidden lg:block text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#22c55e] mt-1">✔</span>
                 <div className="text-center md:text-center lg:text-left">
-                  트리플 레벨업 보증으로<br />
-                  7년/10년/연금개시시점 적립액 보증<br />
-                  <span className="text-xs md:text-sm lg:text-xs align-baseline">(보증형에 한함)</span>
+                  <span className="text-[#e23c3c] font-semibold">트리플 레벨업 보증</span>으로<br />
+                  <span className="text-[#3a8094] font-semibold">7년/10년/연금개시시점</span> 적립액 보증<br />
+                  <span className="text-xs md:text-sm lg:text-xs align-baseline text-gray-600">(보증형에 한함)</span>
                 </div>
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
-                가입 0~70세 / 연금개시 45~85세
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
+                가입&nbsp;<span className="text-[#3a8094] font-semibold">0~70세</span>&nbsp;/&nbsp;연금개시&nbsp;<span className="text-[#3a8094] font-semibold">45~85세</span>
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
-                비과세 <span className="text-xs md:text-sm lg:text-xs align-baseline">(월 150만원 한도, 10년유지 세법요건 충족시)</span>
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
+                <span className="text-[#3a8094] font-semibold">비과세</span>&nbsp;<span className="text-xs md:text-sm lg:text-xs align-baseline text-gray-600">(월 150만원 한도, 10년유지 세법요건 충족시)</span>
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
-                병력 무심사 / 전건 가입가능!
+                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
+                <span className="text-[#e23c3c] font-semibold">병력 무심사</span>&nbsp;/&nbsp;<span className="text-[#e23c3c] font-semibold">전건 가입가능!</span>
               </li>
             </ul>
               {/* 환급률/적립액 안내 UI */}
@@ -472,7 +475,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   alt="KB 트리플 레벨업 상품 안내" 
                   className="absolute -top-14 right-0 md:-top-12 md:right-1 lg:-top-16 lg:right-2 h-auto z-20 rounded-lg w-[85px] md:w-[95px] lg:w-[100px] animate-[wobble-shake_2s_ease-in-out_infinite]"
                 />
-                <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-md mb-6 p-4 md:p-6 lg:p-4 px-4 md:px-6 lg:px-4 pt-6 md:pt-8 lg:pt-8 pb-6 md:pb-8 lg:pb-8">
+                <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-6 p-4 md:p-6 lg:p-4 px-4 md:px-6 lg:px-4 pt-6 md:pt-8 lg:pt-8 pb-6 md:pb-8 lg:pb-8">
                 <div className="grid grid-cols-3 gap-4 md:gap-2 mb-2">
                   <div className="text-center px-2">
                     <div className="text-orange-600 text-base md:text-base font-bold mb-4 tracking-wide relative">
