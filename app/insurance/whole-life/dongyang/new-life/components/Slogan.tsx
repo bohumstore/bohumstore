@@ -15,9 +15,10 @@ const INSURANCE_PRODUCT_ID = INSURANCE_PRODUCTS.DONGYANG_NEW_ALDDUL_PLUS_WHOLE_L
 
 type SloganProps = {
   onOpenPrivacy: () => void
+  onModalStateChange?: (isOpen: boolean) => void
 }
 
-export default function Slogan({ onOpenPrivacy }: SloganProps) {
+export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProps) {
   const [counselType, setCounselType] = useState(1); // 1: 보험료 확인, 2: 상담신청
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
@@ -89,6 +90,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     }
     return () => clearTimeout(timer);
   }, [consultOtpTimer, consultOtpResendAvailable]);
+
+  // 모달 상태 변경 시 부모에게 알림
+  useEffect(() => {
+    const isAnyModalOpen = showResultModal || showConsultModal;
+    onModalStateChange?.(isAnyModalOpen);
+  }, [showResultModal, showConsultModal, onModalStateChange]);
 
   const validateForm = () => {
     if (!gender) { 
@@ -962,7 +969,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                     </div>
                   )}
                 </div>
-                <div className="flex gap-1 mb-1">
+                <div className="flex gap-2 mb-4">
                   <input
                     type="text"
                     value={otpCode}
@@ -971,7 +978,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                       setOtpCode(val);
                     }}
                     maxLength={6}
-                    className="flex-1 px-2 py-2 border border-gray-300 rounded-md text-sm focus:ring-[#3a8094] focus:border-[#3a8094]"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-md text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
                     placeholder="6자리 인증번호 입력"
                   />
                 </div>
@@ -1131,13 +1138,13 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   </div>
                 )}
               </div>
-              <div className="flex gap-1 mb-1">
+              <div className="flex gap-2 mb-4">
                 <input
                   type="text"
                   value={consultOtpCode}
                   onChange={e => setConsultOtpCode(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
                   maxLength={6}
-                  className="flex-1 px-2 py-2 border border-gray-300 rounded-md text-sm focus:ring-[#3a8094] focus:border-[#3a8094]"
+                  className="flex-1 px-4 py-3 border border-gray-300 rounded-md text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
                   placeholder="6자리 인증번호 입력"
                 />
               </div>

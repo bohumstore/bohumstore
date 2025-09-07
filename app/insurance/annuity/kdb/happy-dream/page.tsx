@@ -23,6 +23,7 @@ export default function KDBHappyPlusAnnuityPage() {
 
   const [showNotice, setShowNotice] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // 페이지 방문 시 자동 추적
@@ -54,7 +55,7 @@ export default function KDBHappyPlusAnnuityPage() {
       </Modal>
       <div className="font-sans bg-[#f8f8f8] flex flex-col items-center w-full">
         <Header />
-        <Slogan onOpenPrivacy={() => setShowPrivacy(true)} />
+        <Slogan onOpenPrivacy={() => setShowPrivacy(true)} onModalStateChange={setIsModalOpen} />
         {/* 상품 상세 영역 (탭/강조타이틀/설명/특약/일러스트/하단버튼) */}
         <section className="w-full bg-white py-8 sm:py-6 md:py-8 lg:py-10">
           <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 md:px-10 lg:px-16">
@@ -98,7 +99,8 @@ export default function KDBHappyPlusAnnuityPage() {
         </div>
         <Footer />
         
-        {/* 오른쪽 하단 플로팅 액션 버튼들 */}
+        {/* 오른쪽 하단 플로팅 액션 버튼들 - 모달이 열렸을 때는 숨김 */}
+        {!isModalOpen && !showPrivacy && !showNotice && (
         <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
           {/* 계산하기 버튼 */}
           <button
@@ -125,6 +127,7 @@ export default function KDBHappyPlusAnnuityPage() {
             </svg>
           </button>
         </div>
+        )}
       </div>
     </>
   );

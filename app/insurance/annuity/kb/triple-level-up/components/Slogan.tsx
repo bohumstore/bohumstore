@@ -15,9 +15,10 @@ const INSURANCE_PRODUCT_ID = 1; // KB 트리플 레벨업 연금보험 id 코드
 
 type SloganProps = {
   onOpenPrivacy: () => void
+  onModalStateChange?: (isOpen: boolean) => void
 }
 
-export default function Slogan({ onOpenPrivacy }: SloganProps) {
+export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProps) {
   const [counselType, setCounselType] = useState(1); // 1: 보험료 확인, 2: 상담신청
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
@@ -89,6 +90,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     }
     return () => clearTimeout(timer);
   }, [consultOtpTimer, consultOtpResendAvailable]);
+
+  // 모달 상태 변경 시 부모에게 알림
+  useEffect(() => {
+    const isAnyModalOpen = showResultModal || showConsultModal;
+    onModalStateChange?.(isAnyModalOpen);
+  }, [showResultModal, showConsultModal, onModalStateChange]);
 
   const validateForm = () => {
     if (!gender) { 
@@ -938,28 +945,28 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                 <p className="text-sm text-gray-600 mb-1">
                   정확한 보험료 확인을 위해 휴대폰 인증이 필요합니다.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-1 mb-1 items-stretch sm:items-center">
+                <div className="flex flex-col sm:flex-row gap-2 mb-3 items-stretch sm:items-center">
                   <input
                     type="text"
                     value={phone}
                     readOnly
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-base bg-gray-100"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-md text-base bg-gray-100"
                   />
                   <button
                     type="button"
                     onClick={handleSendOTP}
                     disabled={!isAgeEligible}
-                    className={`${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#f97316] text-white hover:bg-[#ea580c]'} w-full sm:w-auto px-2 py-1 rounded-md text-sm font-medium transition-colors min-w-[80px]`}
+                    className={`${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#f97316] text-white hover:bg-[#ea580c]'} w-full sm:w-auto px-4 py-3 rounded-md text-base font-medium transition-colors min-w-[120px]`}
                   >
                     {otpResendAvailable ? '인증번호 전송' : '재발송'}
                   </button>
                   {!otpResendAvailable && (
-                    <div className="min-w-[60px] flex items-center justify-center text-[#3a8094] font-medium text-xs">
+                    <div className="min-w-[60px] flex items-center justify-center text-[#3a8094] font-medium text-sm">
                       {formatTime(otpTimer)}
                     </div>
                   )}
                 </div>
-                <div className="flex gap-1 mb-1">
+                <div className="flex gap-2 mb-4">
                   <input
                     type="text"
                     inputMode="numeric"
@@ -971,7 +978,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                       setOtpCode(val);
                     }}
                     maxLength={6}
-                    className="flex-1 px-2 py-2 border border-gray-300 rounded-md text-sm focus:ring-[#3a8094] focus:border-[#3a8094]"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-md text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
                     placeholder="6자리 인증번호 입력"
                   />
                 </div>
@@ -979,7 +986,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                   type="button"
                   onClick={handleVerifyOTP}
                   disabled={!isAgeEligible}
-                  className={`w-full px-2 py-2.5 rounded-md text-base font-semibold transition-colors mt-1 ${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                  className={`w-full px-4 py-4 rounded-md text-lg font-semibold transition-colors mt-2 ${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
                 >
                   인증 및 보험료 계산
                 </button>
@@ -1110,41 +1117,41 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
             <div className="bg-gray-50 rounded-lg p-2 mt-0">
               <h3 className="text-base font-bold text-gray-900 mb-1">휴대폰 인증</h3>
               <p className="text-sm text-gray-600 mb-1">상담신청을 위해 휴대폰 인증이 필요합니다.</p>
-              <div className="flex flex-col sm:flex-row gap-1 mb-1 items-stretch sm:items-center">
+              <div className="flex flex-col sm:flex-row gap-2 mb-3 items-stretch sm:items-center">
                 <input
                   type="text"
                   value={phone}
                   readOnly
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-base bg-gray-100"
+                  className="flex-1 px-4 py-3 border border-gray-300 rounded-md text-base bg-gray-100"
                 />
                 <button
                   type="button"
                   onClick={handleConsultSendOTP}
-                  className="px-2 py-1 bg-[#f97316] text-white rounded-md text-sm font-medium 
-                           hover:bg-[#ea580c] transition-colors min-w-[80px]"
+                  className="px-4 py-3 bg-[#f97316] text-white rounded-md text-base font-medium 
+                           hover:bg-[#ea580c] transition-colors min-w-[120px]"
                 >
                   {consultOtpResendAvailable ? '인증번호 전송' : '재발송'}
                 </button>
                 {!consultOtpResendAvailable && (
-                  <div className="min-w-[60px] flex items-center justify-center text-[#3a8094] font-medium text-xs">
+                  <div className="min-w-[60px] flex items-center justify-center text-[#3a8094] font-medium text-sm">
                     {formatTime(consultOtpTimer)}
                   </div>
                 )}
               </div>
-              <div className="flex gap-1 mb-1">
+              <div className="flex gap-2 mb-4">
                 <input
                   type="text"
                   value={consultOtpCode}
                   onChange={e => setConsultOtpCode(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
                   maxLength={6}
-                  className="flex-1 px-2 py-2 border border-gray-300 rounded-md text-sm focus:ring-[#3a8094] focus:border-[#3a8094]"
+                  className="flex-1 px-4 py-3 border border-gray-300 rounded-md text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
                   placeholder="6자리 인증번호 입력"
                 />
               </div>
               <button
                 type="button"
                 onClick={handleConsultVerifyOTP}
-                className="w-full px-2 py-2.5 bg-[#3a8094] text-white rounded-md text-base font-semibold hover:bg-[#2c6070] transition-colors mt-1"
+                className="w-full px-4 py-4 bg-[#3a8094] text-white rounded-md text-lg font-semibold hover:bg-[#2c6070] transition-colors mt-2"
               >
                 인증 및 상담신청
               </button>

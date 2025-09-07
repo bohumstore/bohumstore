@@ -11,6 +11,20 @@ interface ModalProps {
 export default function Modal({ title, open, onClose, children }: ModalProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
+  // 모달이 열릴 때 배경 스크롤 방지
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    // 컴포넌트 언마운트 시 스크롤 복원
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [open]);
+
   useEffect(() => {
     if (!open) return;
     const container = contentRef.current;
@@ -62,12 +76,12 @@ export default function Modal({ title, open, onClose, children }: ModalProps) {
             <XMarkIcon className="w-7 h-7" />
           </button>
         </div>
-        <div ref={contentRef} className="px-6 py-4 pb-24 md:pb-6 scroll-smooth">
+        <div ref={contentRef} className="px-6 py-4 pb-4 md:pb-6 scroll-smooth">
           {children}
         </div>
         <div className="flex border-t border-gray-200">
           <button onClick={onClose} className="flex-1 py-4 text-lg font-bold bg-[#ffe15a] text-gray-900 border-r border-gray-200 hover:bg-yellow-200 transition">
-            확인
+            닫기
           </button>
         </div>
       </div>

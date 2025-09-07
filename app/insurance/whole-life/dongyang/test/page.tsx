@@ -23,6 +23,7 @@ export default function DongyangTestPage() {
 
   const [showNotice, setShowNotice] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // 페이지 방문 시 자동 추적
@@ -54,7 +55,7 @@ export default function DongyangTestPage() {
       </Modal>
       <div className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full">
         <Header />
-        <Slogan onOpenPrivacy={() => setShowPrivacy(true)} />
+        <Slogan onOpenPrivacy={() => setShowPrivacy(true)} onModalStateChange={setIsModalOpen} />
         {/* 상품 상세 영역 (탭/강조타이틀/설명/특약/일러스트/하단버튼) */}
         <section className="w-full bg-white py-8 sm:py-12 md:py-16 lg:py-20">
           <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 md:px-10 lg:px-16">
@@ -63,9 +64,10 @@ export default function DongyangTestPage() {
             <div className="flex flex-col md:flex-row gap-4 justify-center mt-10">
               <button type="button" onClick={() => setShowNotice(true)} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
                 상품가입전 알아두실 사항
-              </button>
-            </div>
-          </div>
+          </button>
+        </div>
+        )}
+      </div>
         </section>
         {/* 필수안내사항 박스 */}
         <div className="w-full flex justify-center">
@@ -77,7 +79,8 @@ export default function DongyangTestPage() {
             <div className="text-red-500">② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</div>
           </div>
         </div>
-        {/* 오른쪽 하단 플로팅 액션 버튼들 */}
+        {/* 오른쪽 하단 플로팅 액션 버튼들 - 모달이 열렸을 때는 숨김 */}
+        {!isModalOpen && !showPrivacy && !showNotice && (
         <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
           {/* 계산하기 버튼 */}
           <button

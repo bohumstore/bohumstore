@@ -11,9 +11,10 @@ const OTP_CODE_LENGTH = 6;
 
 type SloganProps = {
   onOpenPrivacy: () => void
+  onModalStateChange?: (isOpen: boolean) => void
 }
 
-export default function Slogan({ onOpenPrivacy }: SloganProps) {
+export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProps) {
   const [counselType, setCounselType] = useState(1); // 1: 보험료 확인, 2: 상담신청
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
@@ -80,6 +81,12 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     }
     return () => clearTimeout(timer);
   }, [consultOtpTimer, consultOtpResendAvailable]);
+
+  // 모달 상태 변경 시 부모에게 알림
+  useEffect(() => {
+    const isAnyModalOpen = showResultModal || showConsultModal;
+    onModalStateChange?.(isAnyModalOpen);
+  }, [showResultModal, showConsultModal, onModalStateChange]);
 
   const validateForm = () => {
     if (!gender) { 
