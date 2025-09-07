@@ -64,10 +64,9 @@ export default function DongyangTestPage() {
             <div className="flex flex-col md:flex-row gap-4 justify-center mt-10">
               <button type="button" onClick={() => setShowNotice(true)} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
                 상품가입전 알아두실 사항
-          </button>
-        </div>
-        )}
-      </div>
+              </button>
+            </div>
+          </div>
         </section>
         {/* 필수안내사항 박스 */}
         <div className="w-full flex justify-center">
@@ -107,6 +106,7 @@ export default function DongyangTestPage() {
             </svg>
           </button>
         </div>
+        )}
         <Footer />
       </div>
     </>
