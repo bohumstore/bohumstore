@@ -112,6 +112,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const [eligibility, setEligibility] = useState<{ [key: string]: boolean }>({});
 
   const validateForm = () => {
+    if (!isChecked) {
+      alert('개인정보 수집 및 이용에 동의해주세요.');
+      return false;
+    }
     if (!gender) { 
       alert('성별을 선택해주세요.'); 
       return false;
