@@ -1386,10 +1386,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <button
                   type="button"
                   onClick={handleVerifyOTP}
-                  disabled={!isAgeEligible}
-                  className={`w-full px-4 py-4 rounded-md text-lg font-semibold transition-colors mt-2 ${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                  disabled={!isAgeEligible || verifying}
+                  className={`w-full px-4 py-4 rounded-md text-lg font-semibold transition-colors mt-2 ${(!isAgeEligible || verifying) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
                 >
-                  인증 및 연금액 계산
+                  {verifying ? '인증 처리중...' : '인증 및 연금액 계산'}
                 </button>
               </div>
             </>
@@ -1552,9 +1552,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <button
                 type="button"
                 onClick={handleConsultVerifyOTP}
-                className="w-full px-4 py-4 bg-[#3a8094] text-white rounded-md text-lg font-semibold hover:bg-[#2c6070] transition-colors mt-2"
+                disabled={verifying}
+                className={`w-full px-4 py-4 rounded-md text-lg font-semibold transition-colors mt-2 ${verifying ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
               >
-                인증 및 상담신청
+                {verifying ? '인증 처리중...' : '인증 및 상담신청'}
               </button>
             </div>
           )}
