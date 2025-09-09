@@ -47,7 +47,6 @@ body {
 
 /* WebView 텍스트 자동 확대/굵기 방지 */
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-body { font-synthesis: none; }
 
 /* 네이버 앱 웹뷰에서만 적용되는 시스템 폰트 스타일 (JavaScript에서 동적으로 처리) */
 
