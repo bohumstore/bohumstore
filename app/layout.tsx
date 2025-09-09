@@ -77,104 +77,94 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         
-        {/* 네이버 파워링크 강제 폰트 로딩 - 다중 CDN 및 로컬 폴백 */}
+        {/* Pretendard 폰트 로딩 */}
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
-        {/* 1차: Pretendard via jsDelivr */}
         <link 
           rel="stylesheet" 
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
           media="all"
         />
         
-        {/* 2차: Google Fonts 폴백 */}
-        <link 
-          rel="stylesheet" 
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
-          media="all"
-        />
-        
-        {/* 모바일 네이버 파워링크 전용 강력 대응 */}
+        {/* 네이버 앱 웹뷰 전용 해결책 */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                // 모바일 네이버 환경 정밀 감지
-                var isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                var isNaver = /naver/i.test(navigator.userAgent) || 
-                             /NAVER/i.test(navigator.userAgent) ||
-                             /naver/i.test(document.referrer) ||
-                             window.location.search.includes('naver') ||
-                             document.referrer.includes('naver.com') ||
-                             document.referrer.includes('m.naver.com');
+                // 네이버 앱 웹뷰만 간단히 감지
+                var isNaverApp = /NAVER/i.test(navigator.userAgent) || 
+                                navigator.userAgent.includes('NAVER(inapp');
                 
-                var isMobileNaver = isMobile && isNaver;
-                
-                if (isMobileNaver) {
-                  console.log('[FONT] 모바일 네이버 환경 감지 - 강제 폰트 적용');
+                if (isNaverApp) {
+                  // 네이버 앱 웹뷰에서 시스템 폰트 강제 적용
                   
-                  // 1. 즉시 스타일 강제 적용
-                  var style = document.createElement('style');
-                  style.textContent = \`
-                    * {
-                      font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif !important;
-                      font-weight: inherit !important;
+                  // 1. 네이버 앱 웹뷰 전용 극강 스타일 적용
+                  var naverAppStyle = document.createElement('style');
+                  naverAppStyle.id = 'naver-app-font-override';
+                  naverAppStyle.textContent = \`
+                    /* 네이버 앱 웹뷰 전용 폰트 강제 적용 */
+                    *, *::before, *::after {
+                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif !important;
+                      -webkit-font-smoothing: antialiased !important;
+                      -moz-osx-font-smoothing: grayscale !important;
                     }
-                    body, html {
-                      font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif !important;
+                    
+                    body, html, div, span, p, a, button, input, textarea, select, h1, h2, h3, h4, h5, h6 {
+                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif !important;
                     }
-                    h1, h2, h3, h4, h5, h6 {
-                      font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif !important;
+                    
+                    .font-bold, strong, b {
                       font-weight: 700 !important;
                     }
-                    .font-bold {
-                      font-weight: 700 !important;
-                    }
+                    
                     .font-semibold {
                       font-weight: 600 !important;
                     }
+                    
                     .font-medium {
                       font-weight: 500 !important;
                     }
+                    
+                    /* 텍스트 크기별 굵기 강제 적용 */
+                    .text-3xl, .text-4xl, .text-5xl {
+                      font-weight: 700 !important;
+                    }
+                    
+                    .text-2xl {
+                      font-weight: 600 !important;
+                    }
+                    
+                    .text-lg, .text-xl {
+                      font-weight: 500 !important;
+                    }
                   \`;
-                  document.head.appendChild(style);
+                  document.head.appendChild(naverAppStyle);
                   
-                  // 2. 폰트 다중 로딩
-                  var fonts = [
-                    'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css',
-                    'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap'
-                  ];
+                  // 2. 네이버 앱에서는 외부 폰트 차단되므로 시스템 폰트만 사용
+                  // (외부 폰트 로딩 시도하지 않음)
                   
-                  fonts.forEach(function(url) {
-                    var link = document.createElement('link');
-                    link.rel = 'stylesheet';
-                    link.href = url;
-                    link.type = 'text/css';
-                    link.media = 'all';
-                    document.head.appendChild(link);
-                  });
-                  
-                  // 3. DOM 로드 후 재적용
+                  // 3. DOM 로드 후 한 번만 적용 (성능 최적화)
                   document.addEventListener('DOMContentLoaded', function() {
                     setTimeout(function() {
-                      document.body.style.cssText += 'font-family: Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif !important;';
+                      // body 스타일 적용
+                      document.body.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif';
                       
-                      // 모든 요소에 강제 적용
+                      // 한 번만 모든 요소에 적용
                       var allElements = document.querySelectorAll('*');
                       for (var i = 0; i < allElements.length; i++) {
-                        allElements[i].style.fontFamily = 'Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif';
+                        var element = allElements[i];
+                        element.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif';
+                        
+                        // 굵기 적용
+                        if (element.classList.contains('font-bold') || element.tagName.match(/^H[1-6]$/)) {
+                          element.style.fontWeight = '700';
+                        } else if (element.classList.contains('font-semibold')) {
+                          element.style.fontWeight = '600';
+                        } else if (element.classList.contains('font-medium')) {
+                          element.style.fontWeight = '500';
+                        }
                       }
                     }, 200);
                   });
-                  
-                  // 4. 지속적인 감시 및 재적용
-                  setInterval(function() {
-                    if (document.body && document.body.style.fontFamily.indexOf('Pretendard') === -1) {
-                      document.body.style.fontFamily = 'Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif';
-                    }
-                  }, 1000);
                 }
               })();
             `
@@ -202,3 +192,4 @@ export default function RootLayout({
     </html>
   );
 }
+
