@@ -1,4 +1,25 @@
-/* Pretendard 폰트는 layout.tsx에서 최적화된 방식으로 로딩 */
+/* Self-hosted Pretendard font-face */
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,11 +39,15 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif !important;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-display: swap;
 }
+
+/* WebView 텍스트 자동 확대/굵기 방지 */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { font-synthesis: none; }
 
 /* 네이버 앱 웹뷰에서만 적용되는 시스템 폰트 스타일 (JavaScript에서 동적으로 처리) */
 

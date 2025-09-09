@@ -77,19 +77,16 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         
-        {/* Pretendard 폰트 로딩 */}
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-        <link 
-          rel="stylesheet" 
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
-          media="all"
-        />
+        {/* Self-hosted Pretendard preload */}
+        <link rel="preload" href="/fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/Pretendard-Medium.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/Pretendard-Bold.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         
-        {/* 네이버 앱 웹뷰 전용 해결책 */}
+        {/* 네이버 앱 웹뷰 보정 (경량) */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              (function() {
+              (function() { return; /* disabled heavy override; using self-hosted fonts and CSS fixes */
                 // 네이버 앱 웹뷰만 간단히 감지
                 var isNaverApp = /NAVER/i.test(navigator.userAgent) || 
                                 navigator.userAgent.includes('NAVER(inapp');
