@@ -29,6 +29,11 @@
   --foreground: #171717;
 }
 
+/* 숫자 가독성 보강 */
+.num-strong { font-variant-numeric: lining-nums; font-weight: 700; }
+.num-semibold { font-variant-numeric: lining-nums; font-weight: 600; }
+.num-medium { font-variant-numeric: lining-nums; font-weight: 500; }
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

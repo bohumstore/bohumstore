@@ -454,6 +454,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   return (
     <>
       <section
+        id="slogan-section"
         className="w-full bg-[#fce7f3] py-6 md:py-10 lg:py-3"
         style={{
           backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(249, 168, 212, 0.1) 10px, rgba(249, 168, 212, 0.1) 12px)',

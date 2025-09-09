@@ -86,7 +86,27 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              (function() { return; /* disabled heavy override; using self-hosted fonts and CSS fixes */
+              (function() {
+                var isNaverApp = /NAVER/i.test(navigator.userAgent) || navigator.userAgent.includes('NAVER(inapp');
+                if (!isNaverApp) return;
+                try {
+                  // 슬로건 영역 내 숫자 가독성 보강: 숫자에 굵기 클래스 래핑
+                  document.addEventListener('DOMContentLoaded', function() {
+                    var root = document.getElementById('slogan-section');
+                    if (!root) return;
+                    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+                    var nodes = [];
+                    while (walker.nextNode()) nodes.push(walker.currentNode);
+                    nodes.forEach(function(node){
+                      var text = node.nodeValue;
+                      if (!text || !/[0-9]/.test(text)) return;
+                      var span = document.createElement('span');
+                      span.innerHTML = text.replace(/([0-9]+[%]?)/g, '<span class="num-strong">$1<\/span>');
+                      node.parentNode.replaceChild(span, node);
+                    });
+                  });
+                } catch(e) {}
+              })();
                 // 네이버 앱 웹뷰만 간단히 감지
                 var isNaverApp = /NAVER/i.test(navigator.userAgent) || 
                                 navigator.userAgent.includes('NAVER(inapp');
