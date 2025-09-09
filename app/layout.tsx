@@ -77,13 +77,60 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         
-        {/* Pretendard 폰트 최적화 로딩 - 네이버 파워링크 환경 대응 */}
+        {/* 네이버 파워링크 강제 폰트 로딩 - 다중 CDN 및 로컬 폴백 */}
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* 1차: Pretendard via jsDelivr */}
         <link 
           rel="stylesheet" 
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
           media="all"
+        />
+        
+        {/* 2차: Google Fonts 폴백 */}
+        <link 
+          rel="stylesheet" 
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+          media="all"
+        />
+        
+        {/* 네이버 환경 전용 강제 로딩 스크립트 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                // 네이버 환경 감지
+                var isNaver = /naver/i.test(navigator.userAgent) || 
+                             /naver/i.test(document.referrer) ||
+                             window.location.search.includes('naver') ||
+                             document.referrer.includes('naver.com');
+                
+                if (isNaver) {
+                  // 강제 폰트 로딩
+                  var fonts = [
+                    'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css',
+                    'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap'
+                  ];
+                  
+                  fonts.forEach(function(url, index) {
+                    var link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = url;
+                    link.type = 'text/css';
+                    link.media = 'all';
+                    document.head.appendChild(link);
+                  });
+                  
+                  // 폰트 강제 적용
+                  setTimeout(function() {
+                    document.body.style.fontFamily = 'Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif';
+                  }, 100);
+                }
+              })();
+            `
+          }}
         />
       </head>
       <body className="antialiased">
