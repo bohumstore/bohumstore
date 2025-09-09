@@ -96,25 +96,58 @@ export default function RootLayout({
           media="all"
         />
         
-        {/* 네이버 환경 전용 강제 로딩 스크립트 */}
+        {/* 모바일 네이버 파워링크 전용 강력 대응 */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                // 네이버 환경 감지
+                // 모바일 네이버 환경 정밀 감지
+                var isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
                 var isNaver = /naver/i.test(navigator.userAgent) || 
+                             /NAVER/i.test(navigator.userAgent) ||
                              /naver/i.test(document.referrer) ||
                              window.location.search.includes('naver') ||
-                             document.referrer.includes('naver.com');
+                             document.referrer.includes('naver.com') ||
+                             document.referrer.includes('m.naver.com');
                 
-                if (isNaver) {
-                  // 강제 폰트 로딩
+                var isMobileNaver = isMobile && isNaver;
+                
+                if (isMobileNaver) {
+                  console.log('[FONT] 모바일 네이버 환경 감지 - 강제 폰트 적용');
+                  
+                  // 1. 즉시 스타일 강제 적용
+                  var style = document.createElement('style');
+                  style.textContent = \`
+                    * {
+                      font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif !important;
+                      font-weight: inherit !important;
+                    }
+                    body, html {
+                      font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif !important;
+                    }
+                    h1, h2, h3, h4, h5, h6 {
+                      font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif !important;
+                      font-weight: 700 !important;
+                    }
+                    .font-bold {
+                      font-weight: 700 !important;
+                    }
+                    .font-semibold {
+                      font-weight: 600 !important;
+                    }
+                    .font-medium {
+                      font-weight: 500 !important;
+                    }
+                  \`;
+                  document.head.appendChild(style);
+                  
+                  // 2. 폰트 다중 로딩
                   var fonts = [
                     'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css',
                     'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap'
                   ];
                   
-                  fonts.forEach(function(url, index) {
+                  fonts.forEach(function(url) {
                     var link = document.createElement('link');
                     link.rel = 'stylesheet';
                     link.href = url;
@@ -123,10 +156,25 @@ export default function RootLayout({
                     document.head.appendChild(link);
                   });
                   
-                  // 폰트 강제 적용
-                  setTimeout(function() {
-                    document.body.style.fontFamily = 'Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif';
-                  }, 100);
+                  // 3. DOM 로드 후 재적용
+                  document.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(function() {
+                      document.body.style.cssText += 'font-family: Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif !important;';
+                      
+                      // 모든 요소에 강제 적용
+                      var allElements = document.querySelectorAll('*');
+                      for (var i = 0; i < allElements.length; i++) {
+                        allElements[i].style.fontFamily = 'Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif';
+                      }
+                    }, 200);
+                  });
+                  
+                  // 4. 지속적인 감시 및 재적용
+                  setInterval(function() {
+                    if (document.body && document.body.style.fontFamily.indexOf('Pretendard') === -1) {
+                      document.body.style.fontFamily = 'Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif';
+                    }
+                  }, 1000);
                 }
               })();
             `
