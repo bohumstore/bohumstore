@@ -624,7 +624,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
                       className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-4 text-lg flex items-center justify-center gap-2 hover:opacity-90 transition cursor-pointer"
                     >
                     <ChatBubbleLeftRightIcon className="w-6 h-6" />
-                    채팅 상담하기
+                    채팅상담
                     </a>
                   </div>
                 </div>

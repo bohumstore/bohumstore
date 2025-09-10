@@ -788,33 +788,33 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           {/* 왼쪽: 간단한 슬로건 디자인 */}
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
             {/* 메인 슬로건 */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 lg:mb-4 leading-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 md:mb-6 lg:mb-4 leading-tight">
               20년까지 연단리 8%!<br />
               보증되는 변액연금보험!
             </h1>
             
             {/* 간단한 특징 설명 */}
-            <ul className="mb-8 md:mb-10 lg:mb-8 space-y-2 md:space-y-3 lg:space-y-2">
-              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
-                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
+            <ul className="mb-6 sm:mb-8 md:mb-10 lg:mb-8 space-y-1.5 sm:space-y-2 md:space-y-3 lg:space-y-2">
+              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
                 최대 20년동안 연단리 8%!
               </li>
-              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
-                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
+              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
                 가입 0~68세 / 연금개시 30~80세
               </li>
-              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
-                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
+              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
                 실적배당 종신연금 보증지급
               </li>
-              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
-                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
+              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
                 최저사망계약자적립액 보증
               </li>
             </ul>
             
             {/* 간단한 보증 내용 박스 */}
-            <div className="w-full max-w-full md:max-w-4xl mx-auto bg-white rounded-xl shadow-md mb-4 md:mb-6 p-6 md:p-8 lg:p-6">
+            <div className="w-full max-w-full md:max-w-4xl mx-auto bg-white rounded-xl shadow-md mb-3 sm:mb-4 md:mb-6 p-3 sm:p-6 md:p-8 lg:p-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-3 lg:gap-4">
                 {/* 1. 높은 보증이율 */}
                 <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-orange-100 to-orange-200 rounded-xl shadow-lg border border-orange-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full relative overflow-hidden">
@@ -922,51 +922,51 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             </div>
           </div>
           {/* 오른쪽: 보험료 확인 카드 */}
-          <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-end">
-            <div id="calculator-box" className="w-full max-w-md bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-8 md:p-10 lg:p-8 relative flex flex-col">
+          <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
+            <div id="calculator-box" className="w-full max-w-sm sm:max-w-md bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-4 sm:p-6 md:p-8 lg:p-8 relative flex flex-col">
               {/* 새로운 헤더 디자인 */}
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold text-[#3a8094] flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#3a8094] flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
                   </svg>
-                  연금액 계산하기
+                  보험료 계산하기
                 </h3>
-                <p className="text-gray-500 text-sm mt-1">간단한 정보 입력으로 예상 연금액을 확인하세요</p>
+                <p className="text-gray-500 text-xs sm:text-sm mt-1">간단한 정보 입력으로 예상 보험료를 확인하세요</p>
               </div>
-              <form className="flex flex-col gap-4" onSubmit={handleInsuranceCostCalculate}>
+              <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 가입 정보 입력 */}
-                <div className="space-y-4 mb-6">
-                  <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3">
                     <div>
-                      <label className="block text-sm font-medium text-gray-600 mb-1 cursor-pointer">성별</label>
-                      <div className="flex gap-6">
-                        <label className="flex items-center gap-2.5 cursor-pointer">
+                      <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 cursor-pointer">성별</label>
+                      <div className="flex gap-3 sm:gap-6">
+                        <label className="flex items-center gap-1.5 sm:gap-2.5 cursor-pointer">
                     <input 
                       type="radio" 
                       name="gender" 
                             value="M"
                             checked={gender === "M"}
                             onChange={handleGenderChange}
-                            className="w-5 h-5 text-blue-600 cursor-pointer"
+                            className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 cursor-pointer flex-shrink-0"
                           />
-                          <span className="text-base">남자</span>
+                          <span className="text-base sm:text-lg whitespace-nowrap">남자</span>
                   </label>
-                        <label className="flex items-center gap-2.5 cursor-pointer">
+                        <label className="flex items-center gap-1.5 sm:gap-2.5 cursor-pointer">
                     <input 
                       type="radio" 
                       name="gender" 
                             value="F"
                             checked={gender === "F"}
                             onChange={handleGenderChange}
-                            className="w-5 h-5 text-blue-600 cursor-pointer"
+                            className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 cursor-pointer flex-shrink-0"
                           />
-                          <span className="text-base">여자</span>
+                          <span className="text-base sm:text-lg whitespace-nowrap">여자</span>
                   </label>
                 </div>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-600 mb-1 cursor-pointer">이름</label>
+                      <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 cursor-pointer">이름</label>
                   <input 
                     type="text" 
                     inputMode="text"
@@ -975,12 +975,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                         onChange={handleNameChange}
                         onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }}
                         onBlur={() => { if (name.trim()) { birthInputRef.current?.focus(); } }}
-                        className="w-full px-2.5 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-2 sm:px-2.5 py-1.5 sm:py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="홍길동"
                   />
                 </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-600 mb-1 cursor-pointer">생년월일</label>
+                      <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 cursor-pointer">생년월일</label>
                   <input 
                     type="text" 
                     inputMode="numeric"
@@ -988,13 +988,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     ref={birthInputRef}
                     value={birth}
                         onChange={handleBirthChange}
-                        className="w-full px-2.5 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-2 sm:px-2.5 py-1.5 sm:py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="19880818"
                         maxLength={8}
                   />
                 </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-600 mb-1 cursor-pointer">연락처</label>
+                      <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 cursor-pointer">연락처</label>
                   <input 
                     type="text" 
                     inputMode="numeric"
@@ -1002,7 +1002,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     ref={phoneInputRef}
                     value={phone}
                     onChange={handlePhoneChange}
-                        className="w-full px-2.5 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-2 sm:px-2.5 py-1.5 sm:py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="01012345678"
                       />
                     </div>
@@ -1010,53 +1010,41 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 </div>
 
                 {/* 납입 정보 선택 */}
-                <div className="space-y-4 mb-6">
+                <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">납입기간</label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {['10년', '15년', '20년'].map((period) => {
-                        const years = parseInt(period.replace(/[^0-9]/g, ''));
-                        const disabledByAge = years === 15 ? ageLimit15 : years === 20 ? ageLimit20 : false;
-                        const eligible = eligibility[String(years)];
-                        const disabledByExcel = eligible === false; // 엑셀에 값이 비어 있는 연령/납입기간 조합
-                        const isDisabled = disabledByAge || disabledByExcel;
-                        return (
-                          <label key={period} className={`relative flex items-center justify-center ${isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
-                            {/* 추천 배지 */}
-                            {period === '10년' && (
-                              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#ff8c1a] text-white text-xs font-bold px-2 py-0.5 rounded-full animate-bounce shadow z-10">
-                                추천
-                              </span>
-                            )}
-                            <input
-                              type="radio"
-                              name="paymentPeriod"
-                              value={period}
-                              checked={paymentPeriod === period}
-                              onChange={handlePaymentPeriodChange}
-                              disabled={isDisabled}
-                              className="peer sr-only cursor-pointer"
-                            />
-                            <div className={`w-full text-center px-2 py-2 text-sm border-2 rounded-lg transition-all duration-200 ease-in-out
-                                        ${isDisabled 
-                                          ? 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed' 
-                                          : 'cursor-pointer peer-checked:border-[#3a8094] peer-checked:bg-[#f0f9ff] peer-checked:text-[#3a8094] peer-checked:font-bold peer-checked:shadow-[0_0_10px_rgba(58,128,148,0.1)] hover:border-[#3a8094] hover:bg-gray-50 border-gray-200'
-                                        }`}>
-                              {period}
-                              {isDisabled && (
-                                <div className="text-xs text-red-500 mt-1">
-                                  {disabledByExcel ? '가입불가' : '개시연령초과'}
-                                </div>
-                              )}
-                            </div>
-                          </label>
-                        );
-                      })}
+                    <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">납입기간</label>
+                    <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                      {['5년', '7년', '10년'].map((period) => (
+                        <label key={period} className="relative flex items-center justify-center cursor-pointer">
+                          {/* 추천 배지 */}
+                          {period === '5년' && (
+                            <span className="absolute -top-2.5 sm:-top-3 left-1/2 -translate-x-1/2 bg-[#ff8c1a] text-white text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full animate-bounce shadow z-10">
+                              추천
+                            </span>
+                          )}
+                          <input
+                            type="radio"
+                            name="paymentPeriod"
+                            value={period}
+                            checked={paymentPeriod === period}
+                            onChange={handlePaymentPeriodChange}
+                            className="peer sr-only cursor-pointer"
+                          />
+                          <div className="w-full text-center px-1.5 sm:px-2 py-2 text-xs sm:text-sm border-2 rounded-lg cursor-pointer
+                                      transition-all duration-200 ease-in-out
+                                      peer-checked:border-[#3a8094] peer-checked:bg-[#f0f9ff] peer-checked:text-[#3a8094] peer-checked:font-bold
+                                      peer-checked:shadow-[0_0_10px_rgba(58,128,148,0.1)]
+                                      hover:border-[#3a8094] hover:bg-gray-50
+                                      border-gray-200">
+                            {period}
+                          </div>
+                        </label>
+                      ))}
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">월 납입금액</label>
-                    <div className="grid grid-cols-3 gap-2">
+                    <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">월 납입금액</label>
+                    <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                       {['30만원', '50만원', '100만원'].map((amount) => (
                         <label key={amount} className="relative flex items-center justify-center cursor-pointer">
                           <input
@@ -1067,7 +1055,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                             onChange={handlePaymentAmountChange}
                             className="peer sr-only cursor-pointer"
                           />
-                          <div className="w-full text-center px-2 py-2 text-sm border-2 rounded-lg cursor-pointer
+                          <div className="w-full text-center px-1.5 sm:px-2 py-2 text-xs sm:text-sm border-2 rounded-lg cursor-pointer
                                       transition-all duration-200 ease-in-out
                                       peer-checked:border-[#3a8094] peer-checked:bg-[#f0f9ff] peer-checked:text-[#3a8094] peer-checked:font-bold
                                       peer-checked:shadow-[0_0_10px_rgba(58,128,148,0.1)]
@@ -1082,12 +1070,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 </div>
 
                 {/* 개인정보 동의 */}
-                <div className="flex items-start gap-2 mb-6 justify-end">
+                <div className="flex items-start gap-2 mb-4 sm:mb-6 justify-end">
                   <input 
                     type="checkbox" 
                     checked={isChecked}
                     onChange={(e) => setIsChecked(e.target.checked)}
-                    className="mt-0.5 w-3.5 h-3.5 text-blue-600 rounded border-gray-300 cursor-pointer"
+                    className="mt-0.5 w-3 h-3 sm:w-3.5 sm:h-3.5 text-blue-600 rounded border-gray-300 cursor-pointer"
                   />
                   <div className="text-xs text-gray-600">
                     <span>개인정보 수집 및 이용에 동의합니다. </span>
@@ -1105,30 +1093,30 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="flex flex-col gap-2">
                   <button
                     type="submit"
-                    className="w-full bg-[#3a8094] text-white font-bold rounded-xl py-4 text-lg hover:opacity-90 transition flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full bg-[#3a8094] text-white font-bold rounded-xl py-3 sm:py-4 text-base sm:text-lg hover:opacity-90 transition flex items-center justify-center gap-2 cursor-pointer"
                   >
-                  <CalculatorIcon className="w-6 h-6" />
-                  연금액 확인하기
+                  <CalculatorIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+                  보험료 확인하기
                 </button>
                   <div className="flex flex-row gap-2">
                   <button 
                     type="button" 
                     onClick={handleOpenConsultModal}
-                    className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-4 text-lg flex items-center justify-center gap-2 hover:opacity-90 transition cursor-pointer"
+                    className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-3 sm:py-4 text-base sm:text-lg flex items-center justify-center gap-1 sm:gap-2 hover:opacity-90 transition cursor-pointer min-w-0"
                   >
-                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
+                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0'>
                         <path strokeLinecap='round' strokeLinejoin='round' d='M2.25 12a9.75 9.75 0 1 1 19.5 0v3.375a2.625 2.625 0 0 1-2.625 2.625h-1.125a.375.375 0 0 1-.375-.375V15a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 0 .75-.75V12a8.25 8.25 0 1 0-16.5 0v1.5a.75.75 0 0 0 .75.75h.75A.75.75 0 0 1 6 15v2.625a.375.375 0 0 1-.375.375H4.5A2.625 2.625 0 0 1 1.875 15.375V12Z' />
                       </svg>
-                    상담신청
+                    <span className="whitespace-nowrap text-sm sm:text-base">상담신청</span>
                   </button>
                     <a 
                       href="http://pf.kakao.com/_lrubxb/chat" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-4 text-lg flex items-center justify-center gap-2 hover:opacity-90 transition cursor-pointer"
+                      className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-3 sm:py-4 text-base sm:text-lg flex items-center justify-center gap-1 sm:gap-2 hover:opacity-90 transition cursor-pointer min-w-0"
                     >
-                    <ChatBubbleLeftRightIcon className="w-6 h-6" />
-                    채팅 상담하기
+                    <ChatBubbleLeftRightIcon className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
+                    <span className="whitespace-nowrap text-sm sm:text-base">채팅상담</span>
                     </a>
                   </div>
                 </div>
@@ -1406,7 +1394,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           <span className="flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-[#fa5a5a]">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z"/>
-            </svg>
+          </svg>
             상담 신청하기
           </span>
         }

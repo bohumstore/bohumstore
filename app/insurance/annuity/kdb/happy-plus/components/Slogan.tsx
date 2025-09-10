@@ -674,125 +674,125 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <div className="flex items-center gap-2 text-sm text-white mb-2">
               {/* <img src="/kdb-logo.png" alt="KDB 로고" className="h-6 w-auto" style={{minWidth:'24px'}} /> */}
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 lg:mb-4 leading-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 md:mb-6 lg:mb-4 leading-tight">
               20년까지 연단리 7%!<br />
               보증형 연금보험!
             </h1>
-            <ul className="mb-8 md:mb-10 lg:mb-8 space-y-2 md:space-y-3 lg:space-y-2">
-              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
-                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
-                연단리 7% 최저연금기준금액 보증 <span className="text-xs md:text-sm lg:text-xs align-baseline">(20년까지)</span>
+            <ul className="mb-6 sm:mb-8 md:mb-10 lg:mb-8 space-y-1.5 sm:space-y-2 md:space-y-3 lg:space-y-2">
+              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
+                <span><span className="whitespace-nowrap">연단리 7% 최저연금기준금액 보증</span>&nbsp;<span className="text-xs sm:text-xs md:text-sm lg:text-xs align-baseline whitespace-nowrap">(20년까지)</span></span>
               </li>
-              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
-                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
+              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
                 가입 15~70세 / 연금개시 55~80세
               </li>
-              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
-                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
-                비과세 <span className="text-xs md:text-sm lg:text-xs align-baseline">(월 150만원 한도, 10년유지 세법요건 충족시)</span>
+              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
+                비과세 <span className="text-xs sm:text-xs md:text-sm lg:text-xs align-baseline">(월 150만원 한도, 10년유지 세법요건 충족시)</span>
               </li>
-              <li className="flex items-center text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
-                <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
+              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#ffd700]">✔</span>
                 금액보증연금 보증 / 최저사망적립액 보증
               </li>
             </ul>
               {/* 보증 내용 박스 */}
-              <div className="w-full max-w-full md:max-w-4xl mx-auto bg-white rounded-xl shadow-md mb-4 md:mb-6 p-6 md:p-8 lg:p-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-3 lg:gap-4">
+              <div className="w-full max-w-full md:max-w-4xl mx-auto bg-white rounded-xl shadow-md mb-3 sm:mb-4 md:mb-6 p-3 sm:p-6 md:p-8 lg:p-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-2 md:gap-3 lg:gap-4">
                   {/* 1. 생존 시 최대 100세까지 */}
-                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl shadow-lg border border-purple-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
+                  <div className="text-center p-2 sm:p-3 md:p-4 lg:p-3 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl shadow-lg border border-purple-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
                     <div>
-                      <div className="inline-block bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">생존 시 최대 100세까지</div>
+                      <div className="inline-block bg-gradient-to-r from-purple-600 to-purple-700 text-white text-xs sm:text-sm font-bold px-2 sm:px-4 py-1.5 sm:py-2 rounded-full mb-2 sm:mb-3 shadow-md">생존 시 최대 100세까지</div>
                     </div>
                     <div className="flex-1 flex items-center justify-center">
                       <div className="text-xs text-gray-700 leading-tight font-medium">
                         (예시) 100세<br />최종연금지급일
                   </div>
                     </div>
-                    <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2">
+                    <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-1.5 sm:p-2">
                       = 피보험자의 99세<br />계약 해당일
                   </div>
                     </div>
 
                   {/* 2. 보증금리 Top */}
-                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-orange-100 to-orange-200 rounded-xl shadow-lg border border-orange-200 hover:shadow-xl transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-full">
+                  <div className="text-center p-2 sm:p-3 md:p-4 lg:p-3 bg-gradient-to-br from-orange-100 to-orange-200 rounded-xl shadow-lg border border-orange-200 hover:shadow-xl transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-full">
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent animate-shine-strong"></div>
                     <div className="relative z-10">
-                      <div className="inline-block bg-gradient-to-r from-orange-600 to-orange-700 text-white text-sm font-bold px-4 py-2 rounded-full mb-2 shadow-md">보증금리 Top</div>
+                      <div className="inline-block bg-gradient-to-r from-orange-600 to-orange-700 text-white text-xs sm:text-sm font-bold px-2 sm:px-4 py-1.5 sm:py-2 rounded-full mb-2 shadow-md">보증금리 Top</div>
                       <div className="flex items-center justify-center mb-2">
-                        <div className="text-xs text-gray-700 mr-3 font-semibold leading-tight">
+                        <div className="text-xs text-gray-700 mr-2 sm:mr-3 font-semibold leading-tight">
                           최대<br />연단리
                         </div>
-                        <div className="text-4xl font-black text-orange-600 drop-shadow-2xl animate-bounce">7%</div>
+                        <div className="text-3xl sm:text-4xl font-black text-orange-600 drop-shadow-2xl animate-bounce">7%</div>
                       </div>
                     </div>
-                                          <div className="text-xs text-gray-600 space-y-1.5 leading-tight relative z-10 mt-auto">
-                        <div className="bg-white/60 rounded-lg p-1.5 font-medium">계약일로부터<br />20년: 7%</div>
-                        <div className="bg-white/60 rounded-lg p-1.5 font-medium">20년~연금개시까지: <span className="text-blue-600 font-bold">5%</span></div>
+                    <div className="text-xs text-gray-600 space-y-1 sm:space-y-1.5 leading-tight relative z-10 mt-auto">
+                        <div className="bg-white/60 rounded-lg p-1 sm:p-1.5 font-medium">계약일로부터<br />20년: 7%</div>
+                        <div className="bg-white/60 rounded-lg p-1 sm:p-1.5 font-medium">20년~연금개시까지: <span className="text-blue-600 font-bold">5%</span></div>
                       </div>
                   </div>
 
                   {/* 3. 사망 시에도 보장 */}
-                  <div className="text-center p-3 md:p-4 lg:p-3 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl shadow-lg border border-blue-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
+                  <div className="text-center p-2 sm:p-3 md:p-4 lg:p-3 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl shadow-lg border border-blue-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
                     <div>
-                      <div className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-bold px-4 py-2 rounded-full mb-3 shadow-md">사망시에도<br />보장</div>
+                      <div className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 text-white text-xs sm:text-sm font-bold px-2 sm:px-4 py-1.5 sm:py-2 rounded-full mb-2 sm:mb-3 shadow-md">사망시에도<br />보장</div>
                     </div>
                     <div className="flex-1 flex items-center justify-center">
                       <div className="text-xs font-bold text-gray-800 leading-tight">
                         최저 사망적립액<br />보장
                       </div>
                     </div>
-                    <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-2">
+                    <div className="text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-1.5 sm:p-2">
                       장래 공시이율과<br />관계없이
                     </div>
                   </div>
                 </div>
-                <div className="text-xs text-gray-500 text-center mt-4">
+                <div className="text-xs text-gray-500 text-center mt-2 sm:mt-4">
                   <p>※ 대표계약기준(40세 남자, 10년납, 연금개시 나이 65세), 복리이자율로 환산시 4.21%</p>
                 </div>
             </div>
           </div>
           {/* 오른쪽: 보험료 확인 카드 */}
-          <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-end">
-            <div id="calculator-box" className="w-full max-w-md bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-8 md:p-10 lg:p-8 relative flex flex-col">
+          <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
+            <div id="calculator-box" className="w-full max-w-sm sm:max-w-md bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-4 sm:p-6 md:p-8 lg:p-8 relative flex flex-col">
               {/* 새로운 헤더 디자인 */}
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold text-[#3a8094] flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#3a8094] flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
                   </svg>
                   연금액 계산하기
                 </h3>
-                <p className="text-gray-500 text-sm mt-1">간단한 정보 입력으로 예상 연금액을 확인하세요</p>
+                <p className="text-gray-500 text-xs sm:text-sm mt-1">간단한 정보 입력으로 예상 연금액을 확인하세요</p>
               </div>
-              <form className="flex flex-col gap-4" onSubmit={handleInsuranceCostCalculate}>
+              <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 가입 정보 입력 */}
-                <div className="space-y-4 mb-6">
+                <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-sm font-medium text-gray-600 mb-1 cursor-pointer">성별</label>
-                      <div className="flex gap-6">
-                        <label className="flex items-center gap-2.5 cursor-pointer">
+                      <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 cursor-pointer">성별</label>
+                      <div className="flex gap-3 sm:gap-6">
+                        <label className="flex items-center gap-1.5 sm:gap-2.5 cursor-pointer">
                     <input 
                       type="radio" 
                       name="gender" 
                             value="M"
                             checked={gender === "M"}
                             onChange={handleGenderChange}
-                            className="w-5 h-5 text-blue-600 cursor-pointer"
+                            className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 cursor-pointer flex-shrink-0"
                           />
-                          <span className="text-base">남자</span>
+                          <span className="text-base sm:text-lg whitespace-nowrap">남자</span>
                   </label>
-                        <label className="flex items-center gap-2.5 cursor-pointer">
+                        <label className="flex items-center gap-1.5 sm:gap-2.5 cursor-pointer">
                     <input 
                       type="radio" 
                       name="gender" 
                             value="F"
                             checked={gender === "F"}
                             onChange={handleGenderChange}
-                            className="w-5 h-5 text-blue-600 cursor-pointer"
+                            className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 cursor-pointer flex-shrink-0"
                           />
-                          <span className="text-base">여자</span>
+                          <span className="text-base sm:text-lg whitespace-nowrap">여자</span>
                   </label>
                 </div>
                     </div>
@@ -943,21 +943,21 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <button 
                     type="button" 
                     onClick={handleOpenConsultModal}
-                    className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-4 text-lg flex items-center justify-center gap-2 hover:opacity-90 transition cursor-pointer"
+                    className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-3 sm:py-4 text-base sm:text-lg flex items-center justify-center gap-1 sm:gap-2 hover:opacity-90 transition cursor-pointer min-w-0"
                   >
-                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
+                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0'>
                         <path strokeLinecap='round' strokeLinejoin='round' d='M2.25 12a9.75 9.75 0 1 1 19.5 0v3.375a2.625 2.625 0 0 1-2.625 2.625h-1.125a.375.375 0 0 1-.375-.375V15a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 0 .75-.75V12a8.25 8.25 0 1 0-16.5 0v1.5a.75.75 0 0 0 .75.75h.75A.75.75 0 0 1 6 15v2.625a.375.375 0 0 1-.375.375H4.5A2.625 2.625 0 0 1 1.875 15.375V12Z' />
                       </svg>
-                    상담신청
+                    <span className="whitespace-nowrap text-sm sm:text-base">상담신청</span>
                   </button>
                     <a 
                       href="http://pf.kakao.com/_lrubxb/chat" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-4 text-lg flex items-center justify-center gap-2 hover:opacity-90 transition cursor-pointer"
+                      className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-3 sm:py-4 text-base sm:text-lg flex items-center justify-center gap-1 sm:gap-2 hover:opacity-90 transition cursor-pointer min-w-0"
                     >
-                    <ChatBubbleLeftRightIcon className="w-6 h-6" />
-                    채팅 상담하기
+                    <ChatBubbleLeftRightIcon className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
+                    <span className="whitespace-nowrap text-sm sm:text-base">채팅상담</span>
                     </a>
                   </div>
                 </div>

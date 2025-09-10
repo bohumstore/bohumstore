@@ -187,51 +187,51 @@ export default function ProductInfo() {
       {/* 트리플 레벨업 보증에 관한 사항 */}
       <div className="space-y-4">
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3 ">트리플 레벨업 보증에 관한 사항(보증형에 한함)</h3>
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-          <p className="mb-6">트리플 레벨업 보증이라 함은 공시이율로 부리한 계약자적립액과 관계없이 트리플 레벨업 보증시점에 보장하는 최저한도의 기본보험료 계약자적립액 보증으로서, 이 보험의 「보험료 및 해약환급금 산출방법서」에서 정한 방법에 따라 계산한 금액으로 합니다.</p>
+        <div className="bg-gray-50 p-3 sm:p-6 rounded-lg border border-gray-200">
+          <p className="mb-4 sm:mb-6 text-sm sm:text-base leading-tight sm:leading-relaxed">트리플 레벨업 보증이라 함은 공시이율로 부리한 계약자적립액과 관계없이 트리플 레벨업 보증시점에 보장하는 최저한도의 기본보험료 계약자적립액 보증으로서, 이 보험의 「보험료 및 해약환급금 산출방법서」에서 정한 방법에 따라 계산한 금액으로 합니다.</p>
         
-          <div className="bg-blue-50 p-6 rounded-lg">
-            <div className="text-center font-bold mb-4 text-[#1e3a8a]">트리플 레벨업 보증금액 = 트리플 레벨업 보증 기준금액 X 트리플 레벨업 보증비율</div>
-            <table className="w-full border-collapse text-xs md:text-sm">
-              <thead>
-                <tr className="bg-[#1e3a8a] text-white ">
-                  <th className="border border-gray-300 p-2">트리플 레벨업<br />보증시점</th>
-                  <th className="border border-gray-300 p-2">트리플 레벨업<br />보증 기준금액</th>
-                  <th className="border border-gray-300 p-2" colSpan={3}>트리플 레벨업 보증비율</th>
-                </tr>
-                <tr className="bg-[#1e3a8a] text-white ">
-                  <th className="border border-gray-300 p-2" colSpan={2}></th>
-                  <th className="border border-gray-300 p-2">5년납</th>
-                  <th className="border border-gray-300 p-2">7년납</th>
-                  <th className="border border-gray-300 p-2">10년납</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="">
-                  <td className="border border-gray-300 p-2">계약일부터 7년<br />경과시점의 연계약해당일</td>
-                  <td className="border border-gray-300 p-3" rowSpan={2}>보증시점 전일까지의<br />"기준 기본보험료"</td>
-                  <td className="border border-gray-300 p-2 text-center">100%</td>
-                  <td className="border border-gray-300 p-2 text-center">100%</td>
-                  <td className="border border-gray-300 p-2 text-center">100%</td>
-                </tr>
-                <tr className="">
-                  <td className="border border-gray-300 p-2">계약일부터 10년<br />경과시점의 연계약해당일</td>
-                  <td className="border border-gray-300 p-2 text-center">130%</td>
-                  <td className="border border-gray-300 p-2 text-center">125%</td>
-                  <td className="border border-gray-300 p-2 text-center">120%</td>
-                </tr>
-                <tr className="">
-                  <td className="border border-gray-300 p-2">연금개시시점</td>
-                  <td className="border border-gray-300 p-3 text-center" colSpan={4}>
-                    계약일부터 10년 경과시점의 트리플 레벨업 보증비율<br />
-                    + ("연금개시전 보험기간" - 10(년)) × 2%
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div className="bg-blue-50 p-3 sm:p-6 rounded-lg">
+            <div className="text-center font-bold mb-3 sm:mb-4 text-[#1e3a8a] text-sm sm:text-base leading-tight sm:leading-normal">트리플 레벨업 보증금액 = 트리플 레벨업 보증 기준금액 X 트리플 레벨업 보증비율</div>
+              <table className="w-full border-collapse text-xs sm:text-sm md:text-base">
+                <thead>
+                  <tr className="bg-[#1e3a8a] text-white">
+                    <th className="border border-gray-300 p-1 sm:p-2 md:p-2 leading-tight w-[22%] sm:w-[20%]">트리플 레벨업<br />보증시점</th>
+                    <th className="border border-gray-300 p-1 sm:p-2 md:p-2 leading-tight w-[23%] sm:w-[25%]">트리플 레벨업<br />보증 기준금액</th>
+                    <th className="border border-gray-300 p-1 sm:p-2 md:p-2" colSpan={3}>트리플 레벨업 보증비율</th>
+                  </tr>
+                  <tr className="bg-[#1e3a8a] text-white">
+                    <th className="border border-gray-300 p-1 sm:p-2 md:p-2" colSpan={2}></th>
+                    <th className="border border-gray-300 p-1 sm:p-2 md:p-2 w-[18%] sm:w-[18%]">5년납</th>
+                    <th className="border border-gray-300 p-1 sm:p-2 md:p-2 w-[18%] sm:w-[18%]">7년납</th>
+                    <th className="border border-gray-300 p-1 sm:p-2 md:p-2 w-[19%] sm:w-[19%]">10년납</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-2 leading-tight text-xs sm:text-sm">계약일부터 7년<br />경과시점의 연계약해당일</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 leading-tight text-center text-xs sm:text-sm" rowSpan={2}>보증시점 전일까지의<br />"기준 기본보험료"</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-center font-bold text-sm sm:text-base">100%</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-center font-bold text-sm sm:text-base">100%</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-center font-bold text-sm sm:text-base">100%</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-2 leading-tight text-xs sm:text-sm">계약일부터 10년<br />경과시점의 연계약해당일</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-center font-bold text-red-600 text-sm sm:text-base">130%</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-center font-bold text-red-600 text-sm sm:text-base">125%</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-center font-bold text-red-600 text-sm sm:text-base">120%</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-xs sm:text-sm">연금개시시점</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-center leading-tight text-xs sm:text-sm" colSpan={4}>
+                      계약일부터 10년 경과시점의 트리플 레벨업 보증비율<br />
+                      + ("연금개시전 보험기간" - 10(년)) × 2%
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
           </div>
 
-          <div className="mt-4 space-y-2 text-sm">
+          <div className="mt-3 sm:mt-4 space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
             <p>단, “트리플 레벨업 보증시점” 마다 각 시점까지 납입하기로 약정한 기본보험료 납입이 완료되지 않은 경우, “트리플 레벨업 보증시점”은 해당 기본보험료의 납입이 완료된 날로 하며, “트리플 레벨업 보증 기준금액”은 해당 기본보험료의 납입이 완료된 날까지의 “기준 기본보험료”를 말합니다.</p>
             <p className="text-red-500">※ 트리플 레벨업 보증 기준금액은 감액 또는 중도인출이 발생한 경우 기본보험료 계약자적립액에 비례하여 감소하며, 중도인출금액을 재납입하더라도 원복되지 않습니다.</p>
             <p className="text-red-600">※ 연금개시시점의 트리플 레벨업 보증은 연금을 개시할 경우에만 적용되며, 연금을 개시하지 않을 경우 보증되지 않습니다.</p>
@@ -241,10 +241,10 @@ export default function ProductInfo() {
 
       {/* 연금지급개시시점의 연금계약 계약자적립액에 관한 사항 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3 ">연금지급개시시점의 연금계약 계약자적립액에 관한 사항</h3>
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 space-y-4">
-          <p>(1) 보증형 : 연금지급개시시점의 기본보험료 계약자적립액이 트리플 레벨업 보증에 관한 사항(보증형에 한함)에 의한 연금개시시점 트리플 레벨업 보증금액 이하일 경우 연금개시시점 트리플 레벨업 보증금액을 기본보험료 계약자적립액으로 합니다.</p>
-          <p>(2) 미보증형 : 연금지급개시시점의 연금계약 계약자적립액이 「이미 납입한 보험료(연금계약 계약자적립액의 인출이 있었을 때에는 이를 차감한 금액) + 1,000원」이하일 경우 「이미 납입한 보험료(연금계약 계약자적립액의 인출이 있었을 때에는 이를 차감한 금액) + 1,000원」으로 합니다.</p>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">연금지급개시시점의 연금계약 계약자적립액에 관한 사항</h3>
+        <div className="bg-gray-50 p-3 sm:p-6 rounded-lg border border-gray-200 space-y-3 sm:space-y-4">
+          <p className="text-sm sm:text-base leading-tight sm:leading-relaxed">(1) 보증형 : 연금지급개시시점의 기본보험료 계약자적립액이 트리플 레벨업 보증에 관한 사항(보증형에 한함)에 의한 연금개시시점 트리플 레벨업 보증금액 이하일 경우 연금개시시점 트리플 레벨업 보증금액을 기본보험료 계약자적립액으로 합니다.</p>
+          <p className="text-sm sm:text-base leading-tight sm:leading-relaxed">(2) 미보증형 : 연금지급개시시점의 연금계약 계약자적립액이 「이미 납입한 보험료(연금계약 계약자적립액의 인출이 있었을 때에는 이를 차감한 금액) + 1,000원」이하일 경우 「이미 납입한 보험료(연금계약 계약자적립액의 인출이 있었을 때에는 이를 차감한 금액) + 1,000원」으로 합니다.</p>
         </div>
       </div>
     </div>

@@ -16,9 +16,9 @@ import { trackPageVisit } from "../../../../utils/visitorTracking";
 
 export default function KBTripleLevelUpAnnuityPage() {
   const tabs = [
-    { label: '상품 정보',      content: <ProductInfo /> },
-    { label: '보장 내용',      content: <CoverageDetails /> },
-    { label: '해약환급금 예시표', content: <Surrender /> },
+    { label: '상품 정보', content: <ProductInfo /> },
+    { label: '보장 내용', content: <CoverageDetails /> },
+    { label: '해약환급금 예시표', content: <Surrender /> }
   ];
 
   const [showNotice, setShowNotice] = useState(false);
@@ -31,10 +31,14 @@ export default function KBTripleLevelUpAnnuityPage() {
     // getProduct()
   }, []);
 
+  const trackPageVisit = async () => {
+    // 방문 추적 로직
+  };
+
   const getProduct = async () => {
     const { data, error } = await supabase.from('product').select('*');
     if (error) {
-      console.error("Error fetching product data:", error);
+      console.error('Error fetching product:', error);
       return null;
     }
     console.log(data);
@@ -52,18 +56,18 @@ export default function KBTripleLevelUpAnnuityPage() {
         <Header />
         <Slogan onOpenPrivacy={() => setShowPrivacy(true)} onModalStateChange={setIsModalOpen} />
         {/* 상품 상세 영역 (탭/강조타이틀/설명/특약/일러스트/하단버튼) */}
-        <section className="w-full bg-white py-8 sm:py-6 md:py-8 lg:py-10">
-          <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 md:px-10 lg:px-16">
+        <section className="w-full bg-white py-6 sm:py-8 lg:py-10">
+          <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
             <Tabs tabs={tabs} />
             {/* 하단 버튼 */}
-            <div className="flex flex-col md:flex-row gap-4 justify-center mt-0">
-              <button type="button" onClick={() => window.open('/kb-guide.pdf', '_blank')} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center mt-4 sm:mt-6">
+              <button type="button" onClick={() => window.open('/kb-guide.pdf', '_blank')} className="flex-1 sm:flex-none border border-[#e0e0e0] rounded-md px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-sm sm:text-base lg:text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
                 상품설명서
               </button>
-              <button type="button" onClick={() => window.open('/kb-guide2.pdf', '_blank')} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
+              <button type="button" onClick={() => window.open('/kb-guide2.pdf', '_blank')} className="flex-1 sm:flex-none border border-[#e0e0e0] rounded-md px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-sm sm:text-base lg:text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
                 약관
               </button>
-              <button type="button" onClick={() => setShowNotice(true)} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
+              <button type="button" onClick={() => setShowNotice(true)} className="flex-1 sm:flex-none border border-[#e0e0e0] rounded-md px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-sm sm:text-base lg:text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
                 가입시 알아두실 사항
               </button>
             </div>
@@ -71,11 +75,17 @@ export default function KBTripleLevelUpAnnuityPage() {
         </section>
         {/* 유의사항 박스 */}
         <div className="w-full flex justify-center">
-          <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mb-2 md:mb-4 lg:mb-6 mt-6 md:mt-8 lg:mt-10 px-6 py-0 text-xs md:text-sm text-gray-800">
-            <div className="mb-1 font-bold">[ 유의사항 ]</div>
-            <div>- 보험사 및 상품별로 상이할 수 있으므로, 관련한 세부사항은 반드시 해당 약관 및 상품설명서를 참조하시기 바랍니다.</div>
-            <div>- 위는 예시일 뿐 해당 납입기간이 끝나기 전에 해지를 할경우 해당 표와 실지급금액이 차이가 발생할수 있습니다.</div>
-            <div>- 최저보증연금은 연금개시 이전 중도해지시에는 최저보증이 되지 않아 운용결과에 따라 해지환급금에 손실이 발생할 수 있습니다.</div>
+          <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mb-2 md:mb-4 lg:mb-6 mt-4 sm:mt-6 md:mt-8 lg:mt-10 px-3 sm:px-4 md:px-6 lg:px-8 py-0 text-xs md:text-sm text-gray-800
+                      leading-5 md:leading-6 bg-white border border-gray-300 rounded-lg shadow-sm">
+            <div className="px-2 sm:px-4 py-3 sm:py-4">
+              <div className="font-bold mb-2 sm:mb-3 text-center text-gray-800 text-sm sm:text-base">유의사항</div>
+              <div className="space-y-1 sm:space-y-2">
+                <div>• 상기 내용은 KB트리플레벨업연금보험 무배당(보증형) 상품의 주요 내용을 요약한 것이므로 반드시 상품설명서, 약관을 참조하시기 바랍니다.</div>
+                <div>• 보험계약 체결 전에 상품설명서 및 약관을 읽어보시기 바랍니다.</div>
+                <div>• 이 보험계약은 예금자보호법에 따라 예금보험공사가 보호하되, 보호 한도는 본 보험회사에 있는 귀하의 모든 예금보호 대상 금융상품의 해약환급금(또는 만기시 보험금이나 사고보험금)에 기타지급금을 합하여 1인당 "최고 5천만원"이고, 5천만원을 초과하는 나머지 금액은 보호하지 않습니다.</div>
+                <div>• 만기시 환급금은 납입한 보험료보다 적을 수 있습니다.</div>
+              </div>
+            </div>
           </div>
         </div>
         {/* 구분선 */}

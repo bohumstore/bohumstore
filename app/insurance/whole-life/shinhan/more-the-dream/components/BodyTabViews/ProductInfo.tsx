@@ -16,16 +16,16 @@ export default function ProductInfo() {
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-[#1e3a8a] text-white">
-                <th className="border border-gray-300 p-3 text-sm md:text-base">구분</th>
-                <th className="border border-gray-300 p-3 text-sm md:text-base">명칭</th>
-                <th className="border border-gray-300 p-3 text-sm md:text-base">보험종목</th>
+                <th className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm md:text-base">구분</th>
+                <th className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm md:text-base">명칭</th>
+                <th className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm md:text-base">보험종목</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border border-gray-300 p-3 text-center text-sm md:text-base">주계약</td>
-                <td className="border border-gray-300 p-3 text-center text-sm md:text-base">신한(간편가입)모아더드림Plus종신보험<br />(무배당, 해약환급금 일부지급형) / <br />신한(간편가입)모아더드림Plus종신보험(무배당)</td>
-                <td className="border border-gray-300 p-3 text-center text-sm md:text-base">해약환급금 일부지급형/일반형<br />일반심사형/간편심사형</td>
+                <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-center text-xs sm:text-sm md:text-base">주계약</td>
+                <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-center text-xs sm:text-sm md:text-base leading-tight sm:leading-relaxed">신한(간편가입)모아더드림Plus종신보험<br />(무배당, 해약환급금 일부지급형) / <br />신한(간편가입)모아더드림Plus종신보험(무배당)</td>
+                <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-center text-xs sm:text-sm md:text-base leading-tight sm:leading-relaxed">해약환급금 일부지급형/일반형<br />일반심사형/간편심사형</td>
               </tr>
             </tbody>
           </table>
@@ -43,30 +43,26 @@ export default function ProductInfo() {
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-[#1e3a8a] text-white">
-                <th className="border border-gray-300 p-3 text-sm md:text-base" colSpan={3}>구 분</th>
-                <th className="border border-gray-300 p-3 text-sm md:text-base">보험기간</th>
-                <th className="border border-gray-300 p-3 text-sm md:text-base">납입기간</th>
-                <th className="border border-gray-300 p-3 text-sm md:text-base">가입나이</th>
+                <th className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm md:text-base">구분</th>
+                <th className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm md:text-base">내용</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border border-gray-300 p-3 text-center text-sm md:text-base" rowSpan={2}>주계약</td>
-                <td className="border border-gray-300 p-3 text-center text-sm md:text-base">신한모아더드림Plus종신보험<br />(무배당, 해약환급금 일부지급형)</td>
-                <td className="border border-gray-300 p-3 text-center text-sm md:text-base">일반심사형</td>
-                <td className="border border-gray-300 p-3 text-center text-sm md:text-base" rowSpan={2}>종신</td>
-                <td className="border border-gray-300 p-3 text-center text-sm md:text-base" rowSpan={2}>5/7/10년납</td>
-                <td className="border border-gray-300 p-3 text-center text-sm md:text-base">만15세~70세</td>
+                <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-center text-xs sm:text-sm md:text-base font-semibold">보험기간</td>
+                <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm md:text-base leading-tight sm:leading-relaxed">종신</td>
               </tr>
               <tr>
-                <td className="border border-gray-300 p-3 text-center text-sm md:text-base">신한(간편가입)모아더드림Plus종신보험<br />(무배당, 해약환급금 일부지급형)</td>
-                <td className="border border-gray-300 p-3 text-center text-sm md:text-base">간편심사형</td>
-                <td className="border border-gray-300 p-3 text-center text-sm md:text-base">30세~70세</td>
+                <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-center text-xs sm:text-sm md:text-base font-semibold">납입기간</td>
+                <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm md:text-base leading-tight sm:leading-relaxed">5년, 10년, 15년, 20년, 25년, 30년, 전기납(종신납)</td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-center text-xs sm:text-sm md:text-base font-semibold">피보험자 가입나이</td>
+                <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm md:text-base leading-tight sm:leading-relaxed">만 20세 ~ 만 75세<br />(간편심사형: 만 40세 ~ 만 75세)</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p className="text-sm text-gray-600">* 만나이가 아닌 나이는 보험나이를 말합니다. 보험나이에 대한 설명은 약관을 참고하시기 바랍니다.</p>
       </div>
 
       {/* 보험료 납입주기 */}

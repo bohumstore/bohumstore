@@ -12,23 +12,24 @@ export default function CoverageDetails() {
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="bg-[#1e3a8a]">
-              <th className="border border-gray-300 p-3 text-white w-1/4 text-sm md:text-base">구분</th>
-              <th className="border border-gray-300 p-3 text-white w-1/3 text-sm md:text-base">지급사유</th>
-              <th className="border border-gray-300 p-3 text-white w-5/12 text-sm md:text-base">지급금액</th>
+            <tr className="bg-[#1e3a8a] text-white">
+              <th className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm md:text-base">급부명칭</th>
+              <th className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm md:text-base">지급사유</th>
+              <th className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm md:text-base">지급금액</th>
             </tr>
           </thead>
+
           <tbody>
             <tr>
-              <td className="border border-gray-300 p-3 text-center text-sm md:text-base" rowSpan={3}>사망보험금</td>
-              <td className="border border-gray-300 p-3 text-center text-sm md:text-base" rowSpan={3}>보험기간 중 피보험자가 사망하였을 때</td>
-              <td className="border border-gray-300 p-3 text-center text-sm md:text-base">기본보험료 납입중<br />: (기준사망보험금, 이미 납입한 보험료) 중 큰 금액</td>
+              <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-center text-xs sm:text-sm md:text-base" rowSpan={3}>사망보험금</td>
+              <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-center text-xs sm:text-sm md:text-base" rowSpan={3}>보험기간 중 피보험자가 사망하였을 때</td>
+              <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-center text-xs sm:text-sm md:text-base leading-tight sm:leading-relaxed">기본보험료 납입중<br />: (기준사망보험금, 이미 납입한 보험료) 중 큰 금액</td>
             </tr>
             <tr>
-              <td className="border border-gray-300 p-3 text-center text-sm md:text-base">기본보험료 총액을 납입하고 보험료 납입기간 이후<br />: (기준사망보험금, 계약자적립액의 101%, 이미 납입한 보험료) 중 가장 큰 금액</td>
+              <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-center text-xs sm:text-sm md:text-base leading-tight sm:leading-relaxed">기본보험료 총액을 납입하고 보험료 납입기간 이후<br />: (기준사망보험금, 계약자적립액의 101%, 이미 납입한 보험료) 중 가장 큰 금액</td>
             </tr>
             <tr>
-              <td className="border border-gray-300 p-3 text-center text-sm md:text-base">※ 기준사망보험금<br />
+              <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-center text-xs sm:text-sm md:text-base leading-tight sm:leading-relaxed">※ 기준사망보험금<br />
                 - 사망시점 7년미만 : 1,066만8,564원<br />
                 (보험가입금액의 100%)<br />
                 - 사망시점 7년이상 27년미만<br />

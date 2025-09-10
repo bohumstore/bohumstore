@@ -301,7 +301,7 @@ export default function HomePage() {
                                   type="button"
                                   className="flex-1 h-[48px] rounded-xl bg-[#FEE500] text-[#3D1E1E] font-bold text-[16px] flex items-center justify-center gap-2 hover:scale-[1.02] hover:shadow transition"
                                 >
-                                  채팅 상담하기
+                                  채팅상담
                                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                                     <path d="M5 12h14M13 5l7 7-7 7" stroke="#3D1E1E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                   </svg>

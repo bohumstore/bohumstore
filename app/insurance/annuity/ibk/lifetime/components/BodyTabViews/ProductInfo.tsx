@@ -10,7 +10,7 @@ export default function ProductInfo() {
           <div className="space-y-4">
             <p className="text-sm">펀드운용 성과에 상관없이 최대 20년동안 연단리 8%로 부리된 연금액 보증</p>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse text-xs">
+              <table className="w-full border-collapse text-xs sm:text-sm">
                 <thead>
                   <tr className="bg-gray-200">
                     <th className="border border-gray-300 p-2">구분</th>
@@ -36,7 +36,7 @@ export default function ProductInfo() {
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse text-xs">
+              <table className="w-full border-collapse text-xs sm:text-sm">
                 <thead>
                   <tr className="bg-gray-200">
                     <th className="border border-gray-300 p-2">구분</th>
@@ -75,7 +75,7 @@ export default function ProductInfo() {
             </div>
             <div className="text-sm text-red-600">※ 피보험자가 만 15세 이전에 사망한 경우의 최저사망적립액은 기납입 보험료</div>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse text-xs">
+              <table className="w-full border-collapse text-xs sm:text-sm">
                 <thead>
                   <tr className="bg-gray-200">
                     <th className="border border-gray-300 p-2">구분</th>
@@ -157,45 +157,45 @@ export default function ProductInfo() {
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
+            <table className="w-full border-collapse text-xs sm:text-sm">
               <thead>
                 <tr className="bg-[#1e3a8a] text-white">
-                    <th className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">구분</th>
-                    <th className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">내용</th>
+                    <th className="border border-gray-300 p-2">구분</th>
+                    <th className="border border-gray-300 p-2">내용</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm font-semibold">보험종류</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">변액연금보험</td>
+                    <td className="border border-gray-300 p-2 font-semibold">보험종류</td>
+                    <td className="border border-gray-300 p-2">변액연금보험</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm font-semibold">부가가능 특약</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">해당 없음</td>
+                    <td className="border border-gray-300 p-2 font-semibold">부가가능 특약</td>
+                    <td className="border border-gray-300 p-2">해당 없음</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm font-semibold">가입나이</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">0세~최대68세(미보증형: 최대75세)</td>
+                    <td className="border border-gray-300 p-2 font-semibold">가입나이</td>
+                    <td className="border border-gray-300 p-2">0세~최대68세(미보증형: 최대75세)</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm font-semibold">연금개시나이</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">30세~80세(미보증형: 45~80세)</td>
+                    <td className="border border-gray-300 p-2 font-semibold">연금개시나이</td>
+                    <td className="border border-gray-300 p-2">30세~80세(미보증형: 45~80세)</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm font-semibold">납입기간</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">5,7,10년납이상 (30년이하)</td>
+                    <td className="border border-gray-300 p-2 font-semibold">납입기간</td>
+                    <td className="border border-gray-300 p-2">5,7,10년납이상 (30년이하)</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm font-semibold">납입주기</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">월납</td>
+                    <td className="border border-gray-300 p-2 font-semibold">납입주기</td>
+                    <td className="border border-gray-300 p-2">월납</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm font-semibold">최소거치기간</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">5년납은 7년 / 7년납이상은 5년(미보증형: 없음)</td>
+                    <td className="border border-gray-300 p-2 font-semibold">최소거치기간</td>
+                    <td className="border border-gray-300 p-2">5년납은 7년 / 7년납이상은 5년(미보증형: 없음)</td>
                 </tr>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm font-semibold">최소보험료</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">5/7년납은 30만원이상, 10년납이상은 20만원이상</td>
+                    <td className="border border-gray-300 p-2 font-semibold">최소보험료</td>
+                    <td className="border border-gray-300 p-2">5/7년납은 30만원이상, 10년납이상은 20만원이상</td>
                 </tr>
               </tbody>
             </table>

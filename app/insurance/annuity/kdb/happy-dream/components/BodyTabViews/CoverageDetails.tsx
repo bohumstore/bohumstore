@@ -6,65 +6,67 @@ export default function CoverageDetails() {
       <h2 className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2">주계약</h2>
 
       {/* 연금개시 전 보험기간 */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">연금개시 전 보험기간</h3>
         <div className="text-sm text-gray-600 mb-2 whitespace-nowrap text-right">(기준 : 1구좌)</div>
-        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-[#1e3a8a] text-white">
-                    <th className="border border-gray-300 p-2 sm:p-3 w-[140px] sm:w-[180px] text-xs sm:text-sm">급부명칭</th>
-                    <th className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">지급사유</th>
-                    <th className="border border-gray-300 p-2 sm:p-3 w-[100px] sm:w-[120px] whitespace-nowrap text-xs sm:text-sm">지급금액</th>
+                    <th className="border border-gray-300 p-1 sm:p-2 md:p-3 w-[80px] sm:w-[120px] md:w-[150px] text-xs sm:text-sm">급부명칭</th>
+                    <th className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm">지급사유</th>
+                    <th className="border border-gray-300 p-1 sm:p-2 md:p-3 w-[70px] sm:w-[100px] md:w-[120px] text-xs sm:text-sm">지급금액</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-[#1e3a8a] text-xs sm:text-sm text-center">고도후유장해보험금</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm leading-relaxed">연금개시 전 보험기간 중 피보험자가 장해분류표 중 동일한 재해로 여러 신체부위의 장해지급률을 더하여 80% 이상인 장해상태가 되었을 때 (최초1회한)</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-[#1e3a8a] whitespace-nowrap text-xs sm:text-sm text-center">1,000만원</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-[#1e3a8a] text-xs sm:text-sm text-center">고도후유장해보험금</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm leading-tight sm:leading-relaxed">연금개시 전 보험기간 중 피보험자가 장해분류표 중 동일한 재해로 여러 신체부위의 장해지급률을 더하여 80% 이상인 장해상태가 되었을 때 (최초1회한)</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-[#1e3a8a] text-xs sm:text-sm text-center">1,000만원</td>
                 </tr>
               </tbody>
             </table>
             </div>
+            
             <div className="text-sm text-gray-600">
-              ※ 다만, 사망하였을 경우에는 계약자적립액과 최저사망적립액 중 큰 금액을 지급
+              ※ 사망하였을 경우에는 계약자적립액과 최저사망적립액 중 큰 금액을 지급합니다.
             </div>
           </div>
         </div>
       </div>
 
       {/* 연금개시 후 보험기간 */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">연금개시 후 보험기간</h3>
-        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-[#1e3a8a] text-white">
-                    <th className="border border-gray-300 p-2 sm:p-3 w-[140px] sm:w-[180px] text-xs sm:text-sm">급부명칭</th>
-                    <th className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">지급사유</th>
-                    <th className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">지급금액</th>
+                    <th className="border border-gray-300 p-1 sm:p-2 md:p-3 w-[80px] sm:w-[120px] md:w-[150px] text-xs sm:text-sm">급부명칭</th>
+                    <th className="border border-gray-300 p-1 sm:p-2 md:p-3 w-[90px] sm:w-[140px] md:w-[200px] text-xs sm:text-sm">지급사유</th>
+                    <th className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm">지급금액</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-[#1e3a8a] text-xs sm:text-sm text-center">실적배당 종신연금</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm leading-relaxed">연금개시 후 보험기간 중 피보험자가 매년 계약해당일에 살아있을 때</td>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm leading-relaxed">연금기준금액(다만, 연계약해당일의 계약자적립액이 더 클 경우에는 계약자적립액)을 기준으로 실적배당 종신연금지급률을 적용하여 계산한 실적배당 종신연금 연지급액을 피보험자가 연계약해당일에 살아있을 경우 지급</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-[#1e3a8a] text-xs sm:text-sm text-center">금액보증연금</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm leading-tight sm:leading-relaxed">연금개시 후 보험기간 중 피보험자가 매년 계약해당일에 살아있을 때</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm leading-tight sm:leading-relaxed">연금기준금액(다만, 연계약해당일의 계약자적립액이 더 클 경우에는 계약자적립액)을 기준으로 금액보증연금 지급률을 적용하여 계산한 금액보증연금 연지급액을 피보험자가 연계약해당일에 살아 있을 경우 지급</td>
                 </tr>
               </tbody>
             </table>
             </div>
+            
             <div className="space-y-2">
               <div className="text-sm text-gray-600">
-                ※ 다만, 사망하였을 경우에는 계약자적립액과 최저사망적립액 중 큰 금액을 지급
+                ※ 사망하였을 경우에는 계약자적립액과 최저사망적립액 중 큰 금액을 지급합니다.
               </div>
               <div className="text-sm text-gray-600">
-                ※ 다만, 선지급행복자금 계약자 적립액이 있는 경우 가산하여 지급하여 드립니다.
+                다만 선지급행복자금 계약자적립액이 있는 경우 가산하여 지급하여 드립니다.
               </div>
             </div>
           </div>
@@ -425,7 +427,7 @@ export default function CoverageDetails() {
       {/* 해약환급금 예시표 */}
       <div className="space-y-4">
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">해약환급금 예시표</h3>
-        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-3">
             <div className="text-xs text-gray-600 text-right">
               예시기준 : 남자 40세, 60세 연금개시, 기본보험료 30만원, 10년납, 채권형100% (단위: 원)
@@ -434,6 +436,7 @@ export default function CoverageDetails() {
             <table className="w-full border-collapse text-xs">
               <thead>
                 <tr className="bg-gray-100 text-gray-700">
+                    <th className="border border-gray-300 p-1 sm:p-2 md:p-3 w-[80px] sm:w-[120px] md:w-[150px] text-xs sm:text-sm">경과년수</th>
                     <th className="border border-gray-300 p-1 text-xs" rowSpan={3}>경과년수</th>
                     <th className="border border-gray-300 p-1 text-xs" rowSpan={3}>나이</th>
                     <th className="border border-gray-300 p-1 text-xs" rowSpan={3}>납입보험료</th>
