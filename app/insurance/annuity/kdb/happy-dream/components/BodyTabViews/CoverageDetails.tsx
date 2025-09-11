@@ -436,7 +436,6 @@ export default function CoverageDetails() {
             <table className="w-full border-collapse text-xs">
               <thead>
                 <tr className="bg-gray-100 text-gray-700">
-                    <th className="border border-gray-300 p-1 sm:p-2 md:p-3 w-[80px] sm:w-[120px] md:w-[150px] text-xs sm:text-sm">경과년수</th>
                     <th className="border border-gray-300 p-1 text-xs" rowSpan={3}>경과년수</th>
                     <th className="border border-gray-300 p-1 text-xs" rowSpan={3}>나이</th>
                     <th className="border border-gray-300 p-1 text-xs" rowSpan={3}>납입보험료</th>

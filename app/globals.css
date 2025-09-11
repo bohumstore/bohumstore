@@ -34,6 +34,30 @@
 .num-semibold { font-variant-numeric: lining-nums; font-weight: 600; }
 .num-medium { font-variant-numeric: lining-nums; font-weight: 500; }
 
+/* 테이블 스크롤바 항상 표시 (모바일에서 스크롤 가능 여부 인지) */
+.overflow-x-auto {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.overflow-x-auto::-webkit-scrollbar {
+  height: 8px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

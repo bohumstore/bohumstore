@@ -484,7 +484,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <img 
                   src="/kb-9-1.png" 
                   alt="KB 트리플 레벨업 상품 안내" 
-                  className="absolute -top-14 right-0 md:-top-12 md:right-1 lg:-top-16 lg:right-2 h-auto z-20 rounded-lg w-[85px] sm:w-[90px] md:w-[100px] lg:w-[110px] xl:w-[120px] animate-[wobble-shake_2s_ease-in-out_infinite]"
+                  className="absolute -top-14 right-0 md:-top-12 md:right-1 lg:-top-20 lg:right-2 h-auto z-20 rounded-lg w-[85px] sm:w-[90px] md:w-[100px] lg:w-[110px] xl:w-[120px] animate-[wobble-shake_2s_ease-in-out_infinite]"
                 />
                 <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-4 sm:mb-6 p-3 sm:p-4 md:p-6 lg:p-4 px-3 sm:px-4 md:px-6 lg:px-4 pt-4 sm:pt-6 md:pt-8 lg:pt-8 pb-4 sm:pb-6 md:pb-8 lg:pb-8">
                 <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-2 mb-2">
@@ -555,7 +555,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           </div>
           {/* 오른쪽: 보험료 확인 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
-            <div id="calculator-box" className="w-full max-w-sm sm:max-w-md bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-4 sm:p-6 md:p-8 lg:p-8 relative flex flex-col">
+            <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-6 sm:p-6 md:p-8 lg:p-8 relative flex flex-col">
               {/* 새로운 헤더 디자인 */}
               <div className="mb-4 sm:mb-6">
                 <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#3a8094] flex items-center gap-2">
