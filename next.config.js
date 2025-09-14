@@ -21,6 +21,16 @@ const nextConfig = {
     // 로컬 이미지 최적화 설정
     unoptimized: false,
   },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'Permissions-Policy', value: 'geolocation=()' },
+        ],
+      },
+    ];
+  },
   // Playwright 설정 파일을 빌드에서 제외
   // 특정 파일들을 빌드에서 제외
 };
