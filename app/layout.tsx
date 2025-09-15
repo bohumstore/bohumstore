@@ -65,6 +65,8 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         <meta name="format-detection" content="telephone=no" />
+        {/* 네이버 웹마스터도구 사이트 소유확인 */}
+        <meta name="naver-site-verification" content="d3676ef8463ebb0a8a442021ba5e3ad7705a62be" />
         {/* PWA 관련 메타태그들 - 앱 설치 버튼 비활성화를 위해 주석처리 */}
         {/* <meta name="mobile-web-app-capable" content="yes" /> */}
         {/* <meta name="apple-mobile-web-app-capable" content="yes" /> */}
