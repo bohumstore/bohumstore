@@ -1,10 +1,28 @@
 User-agent: *
 Allow: /
 
+# 네이버 검색로봇 특별 허용
+User-agent: Yeti
+Allow: /
+
+User-agent: NaverBot
+Allow: /
+
+# 구글 검색로봇
+User-agent: Googlebot
+Allow: /
+
 # Sitemap
 Sitemap: https://bohumstore.net/sitemap.xml
 
-# Crawl-delay
+# Crawl-delay (네이버 검색로봇은 더 빠르게)
+User-agent: Yeti
+Crawl-delay: 0.5
+
+User-agent: NaverBot  
+Crawl-delay: 0.5
+
+User-agent: *
 Crawl-delay: 1
 
 # Disallow admin and API routes

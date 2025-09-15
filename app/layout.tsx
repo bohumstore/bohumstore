@@ -18,7 +18,17 @@ export const metadata: Metadata = {
   authors: [{ name: "보험스토어" }],
   creator: "보험스토어",
   publisher: "보험스토어",
-  robots: "index, follow",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
       openGraph: {
       title: "보험스토어 | Bohumstore",
       description: "연금보험, 종신보험, 저축보험 비교 및 상담",

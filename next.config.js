@@ -27,6 +27,26 @@ const nextConfig = {
         source: '/:path*',
         headers: [
           { key: 'Permissions-Policy', value: 'geolocation=()' },
+          // 네이버 검색로봇 접근 허용을 위한 헤더 설정
+          { key: 'X-Robots-Tag', value: 'index, follow' },
+          // 캐시 설정으로 응답 속도 개선
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      // robots.txt 파일에 대한 특별 헤더
+      {
+        source: '/robots.txt',
+        headers: [
+          { key: 'Content-Type', value: 'text/plain' },
+          { key: 'Cache-Control', value: 'public, max-age=86400' },
+        ],
+      },
+      // 사이트맵에 대한 특별 헤더
+      {
+        source: '/sitemap.xml',
+        headers: [
+          { key: 'Content-Type', value: 'application/xml' },
+          { key: 'Cache-Control', value: 'public, max-age=86400' },
         ],
       },
     ];
