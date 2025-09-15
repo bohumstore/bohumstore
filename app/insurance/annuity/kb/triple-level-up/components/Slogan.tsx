@@ -19,7 +19,7 @@ type SloganProps = {
 }
 
 export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProps) {
-  const [counselType, setCounselType] = useState(1); // 1: 보험료 확인, 2: 상담신청
+  const [counselType, setCounselType] = useState(1); // 1: 환급금 확인, 2: 상담신청
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [birth, setBirth] = useState("");
@@ -234,16 +234,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       templateId: "UB_8712"
     });
     if (res.data.success) {
-      // 방문자 추적: 보험료 확인
+      // 방문자 추적: 환급금 확인
       try {
         await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
           phone,
           name,
-          counsel_type_id: 1, // 보험료 확인
+          counsel_type_id: 1, // 환급금 확인
           utm_source: 'direct',
           utm_campaign: 'premium_calculation'
         });
-        console.log("[CLIENT] 방문자 추적 성공: 보험료 확인");
+        console.log("[CLIENT] 방문자 추적 성공: 환급금 확인");
       } catch (trackingError) {
         console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
       }
@@ -557,7 +557,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             </div>
 
           </div>
-          {/* 오른쪽: 보험료 확인 카드 */}
+          {/* 오른쪽: 환급금 확인 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
             <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-6 sm:p-6 md:p-8 lg:p-8 relative flex flex-col">
               {/* 새로운 헤더 디자인 */}
@@ -566,9 +566,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
                   </svg>
-                  보험료 계산하기
+                  환급금 계산하기
                 </h3>
-                <p className="text-gray-500 text-xs sm:text-sm mt-1">간단한 정보 입력으로 예상 보험료를 확인하세요</p>
+                <p className="text-gray-500 text-xs sm:text-sm mt-1">간단한 정보 입력으로 예상 환급금을 확인하세요</p>
               </div>
               <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 가입 정보 입력 */}
@@ -732,7 +732,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     className="w-full bg-[#3a8094] text-white font-bold rounded-xl py-3 sm:py-4 text-base sm:text-lg hover:opacity-90 transition flex items-center justify-center gap-2 cursor-pointer"
                   >
                   <CalculatorIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-                  보험료 확인하기
+                  환급금 확인하기
                 </button>
                   <div className="flex flex-row gap-2">
                   <button 
@@ -766,7 +766,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           counselType === 1 ? (
             <span className="flex items-center gap-2">
               <CalculatorIcon className="w-6 h-6 text-[#3a8094]" />
-              보험료 확인하기
+              환급금 확인하기
             </span>
           ) : (
             <span className="flex items-center gap-2">
@@ -787,14 +787,14 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               계산 기능은 이용하실 수 없습니다.
             </div>
           )}
-          {/* 보험료 산출 완료 안내 박스 (인증 후) */}
+          {/* 환급금 산출 완료 안내 박스 (인증 후) */}
           {isVerified && (
             <>
               <FireworksEffect show={true} />
               <div className="bg-[#f8f8ff] rounded p-3 mb-2 text-center">
-                <div className="text-lg text-black font-bold">보험료 산출이 완료되었습니다.</div>
+                <div className="text-lg text-black font-bold">환급금 산출이 완료되었습니다.</div>
               </div>
-              {/* 보험료 결과값 UI (상세 정보) */}
+              {/* 환급금 결과값 UI (상세 정보) */}
               <div className="bg-gray-50 rounded-lg p-2">
                 <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center">
                   <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name}</span>
@@ -873,7 +873,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           )}
           {!isVerified && (
             <>
-              {/* 보험료 계산 결과 */}
+              {/* 환급금 계산 결과 */}
               <div className="bg-gray-50 rounded-lg p-2">
                 <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center">
                   <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name}</span>
@@ -951,7 +951,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <div className="bg-gray-50 rounded-lg p-2 mt-0">
                 <h3 className="text-base font-bold text-gray-900 mb-1">휴대폰 인증</h3>
                 <p className="text-sm text-gray-600 mb-1">
-                  정확한 보험료 확인을 위해 휴대폰 인증이 필요합니다.
+                  정확한 환급금 확인을 위해 휴대폰 인증이 필요합니다.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-2 mb-3 items-stretch sm:items-center">
                   <input
@@ -996,7 +996,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   disabled={!isAgeEligible || verifying}
                   className={`w-full px-4 py-4 rounded-md text-lg font-semibold transition-colors mt-2 ${(!isAgeEligible || verifying) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
                 >
-                  {verifying ? '인증 처리중...' : '인증 및 보험료 계산'}
+                  {verifying ? '인증 처리중...' : '인증 및 환급금 계산'}
                 </button>
               </div>
             </>
