@@ -649,10 +649,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div>
                     <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">납입기간</label>
                     <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                      {['10년', '15년', '20년'].map((period) => (
+                      {['5년', '7년', '10년'].map((period) => (
                         <label key={period} className="relative flex items-center justify-center cursor-pointer">
                           {/* 추천 배지 */}
-                          {period === '10년' && (
+                          {period === '5년' && (
                             <span className="absolute -top-2.5 sm:-top-3 left-1/2 -translate-x-1/2 bg-[#ff8c1a] text-white text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full animate-bounce shadow z-10">
                               추천
                             </span>

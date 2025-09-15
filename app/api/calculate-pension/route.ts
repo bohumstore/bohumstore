@@ -65,21 +65,18 @@ export async function POST(request: NextRequest) {
 		const totalUntil100HeaderCandidates: string[] = [
 			'100세까지 총 수령액',
 			'100세총수령액',
-			'총 수령액(100세)',
-			'99세까지 총 수령액',
-			'99세총수령액',
-			'총 수령액(99세)'
+			'총 수령액(100세)'
 		];
-		const pensionStartAgeHeaderCandidates: string[] = ['연금개시연령', '연금개시나이', '연금개시연령(세)'];
+		const pensionStartAgeHeaderCandidates: string[] = ['연금개시연령', '연금개시연령(세)'];
 
 		if (resolvedProductType === 'happy-dream') {
 			candidatePaths = [
 				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'kdb', 'happy-dream', 'kdb_dream_15-70.xlsx'),
 				path.join(process.cwd(), 'public', 'kdb_dream_15-70.xlsx')
 			];
-			// 드림: 월 연금액과 실적배당 연금액을 분리
+			// 드림: 엑셀에서 월 연금액만 가져오고, 실적배당은 계산으로 처리
 			monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금'];
-			performancePensionHeaderCandidates = ['실적배당 연금액', '실적배당연금액'];
+			performancePensionHeaderCandidates = []; // 엑셀에 없음 - 계산으로 처리
 			guaranteedAmountHeaderCandidates = [
 				'20년 보증기간 총액',
 				'20년 보증 총액',
@@ -95,7 +92,7 @@ export async function POST(request: NextRequest) {
 				path.join(process.cwd(), 'public', 'ibk_lifetime_0-68.xlsx')
 			];
 			monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금'];
-			performancePensionHeaderCandidates = ['실적배당 연금액', '실적배당연금액', '실적배당'];
+			performancePensionHeaderCandidates = []; // 엑셀에 없음 - 계산으로 처리
 			guaranteedAmountHeaderCandidates = [
 				'20년 보증기간 총액',
 				'20년 보증 총액',
@@ -111,6 +108,7 @@ export async function POST(request: NextRequest) {
 				path.join(process.cwd(), 'public', 'kdb_plus_15-70.xlsx')
 			];
 			monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금'];
+			performancePensionHeaderCandidates = []; // 엑셀에 없음 - 계산으로 처리
 			guaranteedAmountHeaderCandidates = ['20년 보증기간 총액', '20년 보증 총액', '보증기간 총액'];
 		}
 
@@ -264,10 +262,9 @@ export async function POST(request: NextRequest) {
 					const rowPeriod = parseInt(row[periodIndex]);
 					if (rowGender === mapped && rowAge === ageInt && rowPeriod === p) {
 						const v1 = monthlyPensionIndex !== -1 ? row[monthlyPensionIndex] : null;
-						const v2 = performancePensionIndex !== -1 ? row[performancePensionIndex] : null;
 						const v3 = guaranteedAmountIndex !== -1 ? row[guaranteedAmountIndex] : null;
 						const v4 = totalUntil100Index !== -1 ? row[totalUntil100Index] : null;
-						if (isNonEmpty(v1) || isNonEmpty(v2) || isNonEmpty(v3) || isNonEmpty(v4)) {
+						if (isNonEmpty(v1) || isNonEmpty(v3) || isNonEmpty(v4)) {
 							found = true;
 						}
 						break;
@@ -332,7 +329,8 @@ export async function POST(request: NextRequest) {
 		};
 		const pensionStartAge = pensionStartAgeIndex !== -1 ? parseNumber(matchedRow[pensionStartAgeIndex]) : 0;
 		const monthlyPension = monthlyPensionIndex !== -1 ? parseNumber(matchedRow[monthlyPensionIndex]) : 0;
-		const performancePension = performancePensionIndex !== -1 ? parseNumber(matchedRow[performancePensionIndex]) : 0;
+		// 실적배당 연금액은 엑셀에 없으므로 계산으로 처리 (월 연금액의 15% 가정)
+		const performancePension = monthlyPension > 0 ? Math.round(monthlyPension * 1.15) : 0;
 		const guaranteedAmount = guaranteedAmountIndex !== -1 ? parseNumber(matchedRow[guaranteedAmountIndex]) : 0;
 		const totalUntil100 = totalUntil100Index !== -1 ? parseNumber(matchedRow[totalUntil100Index]) : 0;
 		const notice = noticeIndex !== -1 ? (matchedRow[noticeIndex] || '') : '';
@@ -346,6 +344,9 @@ export async function POST(request: NextRequest) {
 		let resultMessage = `${customerName}님의 연금액 계산 결과입니다.\n\n`;
 		resultMessage += `연금개시연령: ${pensionStartAge}세\n`;
 		resultMessage += `월 연금액: ${formatCurrency(monthlyPension)}\n`;
+		if (performancePension > monthlyPension) {
+			resultMessage += `실적배당 연금액: ${formatCurrency(performancePension)}\n`;
+		}
 		if (guaranteedAmountIndex !== -1) {
 			resultMessage += `20년 보증기간 총액: ${formatCurrency(guaranteedAmount)}\n`;
 		}

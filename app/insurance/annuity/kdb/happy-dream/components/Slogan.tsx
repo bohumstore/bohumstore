@@ -161,6 +161,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   }, [paymentPeriod, paymentAmount, gender, insuranceAge]);
 
   // 납입기간 버튼 비활성화 여부
+  const is10YearDisabled = Number(insuranceAge) + 10 > 80;
   const is15YearDisabled = Number(insuranceAge) + 15 > 80;
   const is20YearDisabled = Number(insuranceAge) + 20 > 80;
 
@@ -837,10 +838,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div>
                     <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">납입기간</label>
                     <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                      {['5년', '7년', '10년'].map((period) => (
+                      {['10년', '15년', '20년'].map((period) => (
                         <label key={period} className="relative flex items-center justify-center cursor-pointer">
                           {/* 추천 배지 */}
-                          {period === '5년' && (
+                          {period === '10년' && (
                             <span className="absolute -top-2.5 sm:-top-3 left-1/2 -translate-x-1/2 bg-[#ff8c1a] text-white text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full animate-bounce shadow z-10">
                               추천
                             </span>
@@ -1049,14 +1050,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#ef4444]">
-                        {isVerified
-                          ? (() => {
-                              const g = Number((verifiedPension?.guaranteed ?? serverPension?.guaranteed) || 0);
-                              const m = Number((verifiedPension?.monthly ?? serverPension?.monthly) || 0);
-                              const value = g > 0 ? g : (m > 0 ? m * 12 * 20 : 0);
-                              return value > 0 ? `약 ${value.toLocaleString('en-US')}` : '가입 불가';
-                            })()
-                          : '인증 후 확인가능'}
+                        {isVerified ? (
+                          serverPension?.guaranteed > 0 ? 
+                            `약 ${serverPension.guaranteed.toLocaleString('en-US')}` : 
+                            '별도 상담 문의'
+                        ) : "인증 후 확인가능"}
                       </span>
                       {isVerified && <span className="text-[#3a8094]"> 원</span>}
                     </span>

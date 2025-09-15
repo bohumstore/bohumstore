@@ -708,6 +708,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   }, [gender, birth, paymentPeriod, paymentAmount]);
 
   // 납입기간 버튼 비활성화 여부 확인 (연금개시연령이 80세를 초과하는 경우)
+  const ageLimit10 = Number(insuranceAge) + 10 > 80;
   const ageLimit15 = Number(insuranceAge) + 15 > 80;
   const ageLimit20 = Number(insuranceAge) + 20 > 80;
 
@@ -934,9 +935,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
                   </svg>
-                  보험료 계산하기
+                  연금액 계산하기
                 </h3>
-                <p className="text-gray-500 text-xs sm:text-sm mt-1">간단한 정보 입력으로 예상 보험료를 확인하세요</p>
+                <p className="text-gray-500 text-xs sm:text-sm mt-1">간단한 정보 입력으로 예상 연금액을 확인하세요</p>
               </div>
               <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 가입 정보 입력 */}
@@ -1018,10 +1019,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div>
                     <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">납입기간</label>
                     <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                      {['5년', '7년', '10년'].map((period) => (
+                      {['10년', '15년', '20년'].map((period) => (
                         <label key={period} className="relative flex items-center justify-center cursor-pointer">
                           {/* 추천 배지 */}
-                          {period === '5년' && (
+                          {period === '10년' && (
                             <span className="absolute -top-2.5 sm:-top-3 left-1/2 -translate-x-1/2 bg-[#ff8c1a] text-white text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full animate-bounce shadow z-10">
                               추천
                             </span>

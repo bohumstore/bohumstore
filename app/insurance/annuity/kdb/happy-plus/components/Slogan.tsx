@@ -505,7 +505,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           gender,
           age,
           paymentPeriod: years,
-          monthlyPayment
+          monthlyPayment,
+          productType: 'happy-plus'
         })
       });
 
@@ -617,7 +618,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           gender,
           age,
           paymentPeriod: paymentYears,
-          monthlyPayment
+          monthlyPayment,
+          productType: 'happy-plus'
         })
       });
       
@@ -1064,7 +1066,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                         {isVerified ? (
                           pensionAmounts.monthly > 0 ? 
                             `약 ${pensionAmounts.monthly.toLocaleString('en-US')} 원` : 
-                            '가입 불가'
+                            '별도 상담 문의'
                         ) : "인증 후 확인가능"}
                       </span>
                     </span>
@@ -1079,7 +1081,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                         {isVerified ? (
                           pensionAmounts.guaranteed > 0 ? 
                             `약 ${pensionAmounts.guaranteed.toLocaleString('en-US')} 원` : 
-                            '가입 불가'
+                            '별도 상담 문의'
                         ) : "인증 후 확인가능"}
                       </span>
                     </span>
@@ -1094,7 +1096,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                         {isVerified ? (
                           pensionAmounts.totalUntil100 > 0 ? 
                             `약 ${pensionAmounts.totalUntil100.toLocaleString('en-US')} 원` : 
-                            '가입 불가'
+                            '별도 상담 문의'
                         ) : "인증 후 확인가능"}
                       </span>
                     </span>
