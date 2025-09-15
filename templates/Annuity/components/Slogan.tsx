@@ -79,6 +79,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   }, [consultOtpTimer, consultOtpResendAvailable]);
 
   const validateForm = () => {
+    if (!isChecked) {
+      alert('개인정보 수집 및 이용에 동의해주세요.');
+      return false;
+    }
     if (!gender) { 
       alert('성별을 선택해주세요.'); 
       return false;
@@ -267,6 +271,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
   };
 
   const handleOpenConsultModal = () => {
+    if (!isChecked) {
+      alert('개인정보 수집 및 이용에 동의해주세요.');
+      return;
+    }
     if (!gender || !name || !birth || !phone) {
       alert('성별, 이름, 생년월일, 연락처를 모두 입력해 주세요.');
       return;
