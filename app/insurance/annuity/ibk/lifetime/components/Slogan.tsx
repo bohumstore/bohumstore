@@ -1101,7 +1101,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     className="w-full bg-[#3a8094] text-white font-bold rounded-xl py-3 sm:py-4 text-base sm:text-lg hover:opacity-90 transition flex items-center justify-center gap-2 cursor-pointer"
                   >
                   <CalculatorIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-                  보험료 확인하기
+                  연금액 확인하기
                 </button>
                   <div className="flex flex-row gap-2">
                   <button 
@@ -1386,7 +1386,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   disabled={!isAgeEligible || verifying}
                   className={`w-full px-4 py-4 rounded-md text-lg font-semibold transition-colors mt-2 ${(!isAgeEligible || verifying) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
                 >
-                  {verifying ? '인증 처리중...' : '인증 및 연금액 계산'}
+                  {verifying ? '인증 처리중...' : '예상연금액 확인하기'}
                 </button>
               </div>
             </>
