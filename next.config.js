@@ -29,8 +29,13 @@ const nextConfig = {
           { key: 'Permissions-Policy', value: 'geolocation=()' },
           // 네이버 검색로봇 접근 허용을 위한 헤더 설정
           { key: 'X-Robots-Tag', value: 'index, follow' },
-          // 캐시 설정으로 응답 속도 개선
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+          // 캐시 설정: 개발 환경에서는 짧게, 프로덕션에서는 길게
+          { 
+            key: 'Cache-Control', 
+            value: process.env.NODE_ENV === 'development' 
+              ? 'no-cache, no-store, must-revalidate' 
+              : 'public, max-age=3600, s-maxage=86400'
+          },
         ],
       },
       // robots.txt 파일에 대한 특별 헤더
