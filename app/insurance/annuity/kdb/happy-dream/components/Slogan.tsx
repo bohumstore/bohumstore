@@ -1051,8 +1051,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <span className="font-bold">
                       <span className="text-[#ef4444]">
                         {isVerified ? (
-                          serverPension?.guaranteed > 0 ? 
-                            `약 ${serverPension.guaranteed.toLocaleString('en-US')}` : 
+                          (serverPension?.guaranteed || 0) > 0 ? 
+                            `약 ${serverPension?.guaranteed?.toLocaleString('en-US')}` : 
                             '별도 상담 문의'
                         ) : "인증 후 확인가능"}
                       </span>
