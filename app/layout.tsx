@@ -51,15 +51,31 @@ export const metadata: Metadata = {
     description: "연금보험, 종신보험, 저축보험 비교 및 상담",
     images: ["https://bohumstore.net/kakao-img.png"],
   },
-  // manifest: "/manifest.json", // PWA 앱 설치 버튼 비활성화
+  manifest: "/manifest.json",
   icons: {
     icon: [
-      { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
     ],
     apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/favicon/apple-icon-57x57.png", sizes: "57x57", type: "image/png" },
+      { url: "/favicon/apple-icon-60x60.png", sizes: "60x60", type: "image/png" },
+      { url: "/favicon/apple-icon-72x72.png", sizes: "72x72", type: "image/png" },
+      { url: "/favicon/apple-icon-76x76.png", sizes: "76x76", type: "image/png" },
+      { url: "/favicon/apple-icon-114x114.png", sizes: "114x114", type: "image/png" },
+      { url: "/favicon/apple-icon-120x120.png", sizes: "120x120", type: "image/png" },
+      { url: "/favicon/apple-icon-144x144.png", sizes: "144x144", type: "image/png" },
+      { url: "/favicon/apple-icon-152x152.png", sizes: "152x152", type: "image/png" },
+      { url: "/favicon/apple-icon-180x180.png", sizes: "180x180", type: "image/png" },
+    ],
+    other: [
+      {
+        rel: "icon",
+        url: "/favicon/android-icon-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
     ],
   },
   alternates: {
@@ -82,6 +98,10 @@ export default function RootLayout({
         <meta name="naver-site-verification" content="d3676ef8463ebb0a8a442021ba5e3ad7705a62be" />
         {/* 구글 Search Console 사이트 소유확인 */}
         <meta name="google-site-verification" content="0aw_ufWejmdoYnEGpMEUBAfWLjstUAWkkarWoRdjvMA" />
+        {/* MS Windows 타일 설정 */}
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
         {/* PWA 관련 메타태그들 - 앱 설치 버튼 비활성화를 위해 주석처리 */}
         {/* <meta name="mobile-web-app-capable" content="yes" /> */}
         {/* <meta name="apple-mobile-web-app-capable" content="yes" /> */}
