@@ -804,30 +804,30 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   )}
                 </h3>
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
                     <span className="font-bold text-[#3a8094]">동양생명</span>
                   </div>
                 </div>
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
                     <span className="font-bold text-[#3a8094]">new알뜰플러스종신보험</span>
                   </div>
                 </div>
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
                     <span className="font-bold text-[#3a8094]">
                       {paymentPeriod && paymentAmount ? `${paymentPeriod} / ${paymentAmount}` : '-'}
                     </span>
                   </div>
                 </div>
                 {/* 총 납입액 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
                     <span className="font-bold">
                       <span className="text-[#3a8094]">{total ? total.toLocaleString('en-US') : '-'}</span>
                       <span className="text-[#3a8094]"> 원</span>
@@ -835,26 +835,26 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
                 {/* 10년 시점 환급률 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 환급률</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 환급률</span>
                     <span className="font-bold">
                       <span className="text-[#7c3aed]">{rate ? (rate * 100).toFixed(1) : '-'}</span>{' '}<span className="text-[#3a8094]">%</span>
                     </span>
                   </div>
                 </div>
                 {/* 10년 시점 이자 (총납입액과 해약환급금 차액) */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 이자</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 이자</span>
                     <span className="font-bold">
                       <span className="text-[#3b82f6]">{interestValue}</span>{' '}<span className="text-[#3a8094]">원</span>
                     </span>
                   </div>
                 </div>
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 예상 해약환급금</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 예상 해약환급금</span>
                     <span className="font-bold">
                       <span className="text-[#ef4444]">{refundValue}</span>{' '}<span className="text-[#3a8094]">원</span>
                     </span>
@@ -883,30 +883,30 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   )}
                 </h3>
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
                     <span className="font-bold text-[#3a8094]">동양생명</span>
                   </div>
                 </div>
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
                     <span className="font-bold text-[#3a8094]">new알뜰플러스종신보험</span>
                   </div>
                 </div>
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
                     <span className="font-bold text-[#3a8094]">
                       {paymentPeriod && paymentAmount ? `${paymentPeriod} / ${paymentAmount}` : '-'}
                     </span>
                   </div>
                 </div>
                 {/* 총 납입액 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
                     <span className="font-bold">
                       <span className="text-[#3a8094]">{total ? total.toLocaleString('en-US') : '-'}</span>
                       <span className="text-[#3a8094]"> 원</span>
@@ -914,26 +914,26 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
                 {/* 10년 시점 환급률 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 환급률</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 환급률</span>
                     <span className="font-bold">
                       <span className="text-[#7c3aed]">?</span>{' '}<span className="text-[#3a8094]">%</span>
                     </span>
                   </div>
                 </div>
                 {/* 10년 시점 이자 (총납입액과 해약환급금 차액) */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 이자</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 이자</span>
                     <span className="font-bold">
                       <span className="text-[#3b82f6]">?</span>{' '}<span className="text-[#3a8094]">원</span>
                     </span>
                   </div>
                 </div>
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 예상 해약환급금</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 예상 해약환급금</span>
                     <span className="font-bold">
                       <span className="text-[#ef4444]">?</span>{' '}<span className="text-[#3a8094]">원</span>
                     </span>

@@ -60,27 +60,25 @@ export default function Modal({ title, open, onClose, children }: ModalProps) {
       }
     };
 
-    container.addEventListener('focusin', handleFocusIn);
     return () => {
-      container.removeEventListener('focusin', handleFocusIn);
     };
   }, [open]);
 
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-screen overflow-y-auto flex flex-col relative">
-        <div className="flex items-center justify-between px-6 pt-6 pb-2 border-b border-gray-200">
-          <div className="text-xl font-bold">{title}</div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-2 sm:p-4">
+      <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[95vh] sm:max-h-[92vh] overflow-hidden flex flex-col relative">
+        <div className="flex items-center justify-between px-4 sm:px-6 pt-3 sm:pt-4 pb-2 border-b border-gray-200 flex-shrink-0">
+          <div className="text-base sm:text-lg md:text-xl font-bold">{title}</div>
           <button onClick={onClose} className="p-1 text-gray-400 hover:text-gray-700">
-            <XMarkIcon className="w-7 h-7" />
+            <XMarkIcon className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         </div>
-        <div ref={contentRef} className="px-6 py-4 pb-4 md:pb-6 scroll-smooth">
+        <div ref={contentRef} className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 overflow-y-auto flex-1 scroll-smooth">
           {children}
         </div>
-        <div className="flex border-t border-gray-200">
-          <button onClick={onClose} className="flex-1 py-4 text-lg font-bold bg-[#ffe15a] text-gray-900 border-r border-gray-200 hover:bg-yellow-200 transition">
+        <div className="flex border-t border-gray-200 flex-shrink-0">
+          <button onClick={onClose} className="flex-1 py-3 sm:py-4 text-sm sm:text-base md:text-lg font-bold bg-[#ffe15a] text-gray-900 border-r border-gray-200 hover:bg-yellow-200 transition">
             닫기
           </button>
         </div>

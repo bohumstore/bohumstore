@@ -968,9 +968,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         open={showResultModal}
         onClose={handleCloseModal}
       >
-        <div className="space-y-4">
+        <div className="space-y-2 sm:space-y-3">
           {isAgeKnown && !isAgeEligible && (
-            <div className="bg-red-50 border border-red-200 text-red-700 rounded p-2 text-sm">
+            <div className="bg-red-50 border border-red-200 text-red-700 rounded p-1.5 sm:p-2 text-xs sm:text-sm">
               이 상품은 15세~70세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
               계산 기능은 이용하실 수 없습니다.
             </div>
@@ -979,11 +979,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           {isVerified && (
             <>
               <FireworksEffect show={true} />
-              <div className="bg-[#f8f8ff] rounded p-3 mb-2 text-center">
-                <div className="text-lg text-black font-bold">연금액 산출이 완료되었습니다.</div>
+              <div className="bg-[#f8f8ff] rounded p-2 sm:p-2.5 mb-1.5 sm:mb-2 text-center">
+                <div className="text-base sm:text-lg text-black font-bold">연금액 산출이 완료되었습니다.</div>
               </div>
               {/* 보험료 결과값 UI (상세 정보) */}
-              <div className="bg-gray-50 rounded-lg p-2">
+              <div className="bg-gray-50 rounded-lg p-1.5 sm:p-2">
                 <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center">
                   <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name}</span>
                   <span className="text-lg text-[#7c3aed] font-bold align-middle">&nbsp;님</span>
@@ -995,30 +995,30 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   )}
                 </h3>
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
                     <span className="font-bold text-[#3a8094]">KDB생명</span>
                   </div>
                 </div>
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
                     <span className="font-bold text-[#3a8094]">더!행복드림변액연금보험</span>
                   </div>
                 </div>
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
                     <span className="font-bold text-[#3a8094]">
                       {paymentPeriod && paymentAmount ? `${paymentPeriod} / ${paymentAmount}` : '-'}
                     </span>
                   </div>
                 </div>
                 {/* 총 납입액 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
                     <span className="font-bold">
                       <span className="text-[#3a8094]">{total ? total.toLocaleString('en-US') : '-'}</span>
                       <span className="text-[#3a8094]"> 원</span>
@@ -1026,18 +1026,18 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
                 {/* 연금개시연령 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연금개시연령</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연금개시연령</span>
                     <span className="font-bold">
                       <span className="text-[#7c3aed]">{currentPensionStartAge || '-'}</span>{' '}<span className="text-[#3a8094]">세</span>
                     </span>
                   </div>
                 </div>
                 {/* 월 연금액 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>월 연금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>월 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#3b82f6]">{isVerified ? `약 ${serverPension?.monthly.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
                       {isVerified && <span className="text-[#3a8094]"> 원</span>}
@@ -1045,9 +1045,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
                 {/* 20년 보증기간 연금액 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#ef4444]">
                         {isVerified ? (
@@ -1061,9 +1061,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
                 {/* 100세까지 생존 시 총 받는 금액 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
                     <span className="font-bold">
                       <span className="text-[#10b981]">{isVerified ? `약 ${serverPension?.totalUntil100.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
                       {isVerified && <span className="text-[#3a8094]"> 원</span>}
@@ -1093,30 +1093,30 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   )}
                 </h3>
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
                     <span className="font-bold text-[#3a8094]">{isVerified ? "KDB생명" : "인증 후 확인가능"}</span>
                   </div>
                 </div>
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
                     <span className="font-bold text-[#3a8094]">{isVerified ? "더!행복드림변액연금보험" : "인증 후 확인가능"}</span>
                   </div>
                 </div>
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
                     <span className="font-bold text-[#3a8094]">
                       {paymentPeriod && paymentAmount ? `${paymentPeriod} / ${paymentAmount}` : '-'}
                     </span>
                   </div>
                 </div>
                 {/* 총 납입액 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
                     <span className="font-bold">
                       <span className="text-[#3a8094]">{total ? total.toLocaleString('en-US') : '-'}</span>
                       <span className="text-[#3a8094]"> 원</span>
@@ -1124,36 +1124,36 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
                 {/* 연금개시연령 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연금개시연령</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연금개시연령</span>
                     <span className="font-bold">
                       <span className="text-[#7c3aed]">{currentPensionStartAge || '?'}</span>{' '}<span className="text-[#3a8094]">세</span>
                     </span>
                   </div>
                 </div>
                 {/* 월 연금액 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>월 연금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>월 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#3b82f6]">인증 후 확인가능</span>
                     </span>
                   </div>
                 </div>
                 {/* 20년 보증기간 연금액 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#ef4444]">인증 후 확인가능</span>
                     </span>
                   </div>
                 </div>
                 {/* 100세까지 생존 시 총 받는 금액 */}
-                <div className="bg-white p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
                     <span className="font-bold">
                       <span className="text-[#10b981]">인증 후 확인가능</span>
                     </span>
