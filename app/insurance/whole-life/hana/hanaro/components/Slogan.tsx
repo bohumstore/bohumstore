@@ -489,7 +489,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <img src="/hana-logo.png" alt="하나생명 로고" className="h-6 w-auto" style={{minWidth:'24px'}} />
               <span>하나생명</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 lg:mb-4 leading-tight">하나로 THE 연결된<br />종신보험(해약환급금 일부지급형)</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 lg:mb-4 leading-tight">(무)하나로 THE 연결된<br />종신보험<span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl">(해약환급금 일부지급형)</span></h1>
             <ul className="mb-6 sm:mb-8 md:mb-10 lg:mb-8 space-y-1.5 sm:space-y-2 md:space-y-3 lg:space-y-2">
               <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
