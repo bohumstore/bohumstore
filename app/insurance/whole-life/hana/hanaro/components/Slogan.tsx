@@ -486,7 +486,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-              <img src="/hana-logo.png" alt="하나생명 로고" className="h-6 w-auto" style={{minWidth:'24px'}} />
+              <img src="/hana-logo.png" alt="하나생명 로고" className="h-8 w-auto" style={{minWidth:'32px'}} />
               <span>하나생명</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 lg:mb-4 leading-tight">(무)하나로 THE 연결된<br />종신보험<span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl">(해약환급금 일부지급형)</span></h1>
@@ -513,7 +513,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               </li>
               <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
-                1형:&nbsp;<span className="text-xs sm:text-sm">만</span>&nbsp;<span className="text-blue-600 font-semibold">15~70세</span>&nbsp;/&nbsp;2형:&nbsp;<span className="text-xs sm:text-sm">만</span>&nbsp;<span className="text-indigo-600 font-semibold">30~69세</span>
+                1형(일반심사형):&nbsp;<span className="text-xs sm:text-sm">만</span>&nbsp;<span className="text-blue-600 font-semibold">15~69세</span>&nbsp;/&nbsp;2형(간편심사형):&nbsp;<span className="text-indigo-600 font-semibold">30~65세</span>
               </li>
             </ul>
             {/* 환급률 안내 UI */}

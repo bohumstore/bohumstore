@@ -38,12 +38,12 @@ export default function Surrender() {
           <tbody>
             <tr>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3개월</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">5,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">238</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,383,500</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">-</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">0.00%</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">5,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">254</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,535,000</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">-</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">0.00%</td>
             </tr>
