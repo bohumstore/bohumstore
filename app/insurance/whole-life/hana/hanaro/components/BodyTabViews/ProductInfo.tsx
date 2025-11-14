@@ -218,14 +218,14 @@ export default function ProductInfo() {
                 <td className="border border-gray-300 p-2 sm:p-3 text-center">일시납</td>
               </tr>
               <tr>
-                <td className="border border-gray-300 p-2 sm:p-3 text-center" rowSpan={2}>기본보험료</td>
+                <td className="border border-gray-300 p-2 sm:p-3 text-center">기본보험료</td>
                 <td className="border border-gray-300 p-2 sm:p-3 text-center">전환전계약의 지급금(해약환급금 또는 만기보험금)의 전부 또는 일부를 일시에 납입</td>
               </tr>
               <tr>
+                <td className="border border-gray-300 p-2 sm:p-3 text-center" rowSpan={2}>추가납입보험료</td>
                 <td className="border border-gray-300 p-2 sm:p-3 text-center">보험기간 중 '연금지급개시나이-2세' 연계약해당일까지 수시로 납입</td>
               </tr>
               <tr>
-                <td className="border border-gray-300 p-2 sm:p-3 text-center">추가납입보험료</td>
                 <td className="border border-gray-300 p-2 sm:p-3 text-center">*추가납입보험료 총 납입한도 = 기본보험료200% + 계약자적립액 인출금액의 합계(계약자적립액 인출금액은 기본보험료 계약자적립액의 인출금액, 추가납입보험료 계약자적립액의 인출금액을 포함)</td>
               </tr>
             </tbody>
@@ -424,7 +424,7 @@ export default function ProductInfo() {
         <h3 className="text-lg font-bold">추가납입보험료(보장형 계약)</h3>
         <div className="space-y-2 text-sm md:text-base">
           <p>⁻ 보험기간 중 기본보험료 납입주기와 달리 수시로 추가납입보험료를 납입할 수 있습니다. 납입기간 중에는 해당월의 기본보험료가 납입된 경우에 한하여 추가납입보험료를 납입할 수 있습니다.(특약보험료는 추가납입보험료 납입한도에서 제외)</p>
-          <p>⁻ 추가납입보험료는 적용이율(연2.5%)을 적용하여 산출방법서에서 정한 방법에 따라 적립합니다.</p>
+          <p>⁻ 추가납입보험료는 적용이율(10년 이내 연 2.75%, 10년 초과 연 1.75%)을 적용하여 산출방법서에서 정한 방법에 따라 적립합니다.</p>
           <p className="font-semibold">&lt;1회 납입 가능한 추가납입보험료 납입한도&gt;</p>
           <p>= 해당월까지 납입한 기본보험료 총액(선납포함)의 100% - 이미 납입한 추가납입보험료의 합계 + 계약자적립액의 인출금액의 합계 (계약자적립액의 인출금액은 유지보너스에 의한 계약자적립액 인출금액과 추가납입보험료에 의한 계약자적립액의 인출금액을 포함)</p>
         </div>

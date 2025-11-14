@@ -28,7 +28,7 @@ export default function Notice({ open, onClose }: NoticeProps) {
 
         <div className="mb-6">
           <div className="font-bold mb-3 text-lg">04. 3대 기본 지키기(보험품질보증제도)</div>
-          <div className="mb-2">보험계약 체결 시 약관과 계약자 보관용 청약서를 전달받지 못하였거나 약관의 중요한 내용을 설명 받지 못한 때 또는 청약서에 자필서명을 하지 않은 때에는 계약자는 계약이 성립한 날로부터 3개월 이내에 계약을 취소할 수 있습니다.</div>
+          <div className="mb-2">보험계약 체결 시 약관과 계약자 보관용 청약서를 전달받지 못하였거나 약관의 중요한 내용을 설명 받지 못한 때 또는 청약서에 자필서명(전자서명 포함)을 하지 않은 때에는 계약자는 계약이 성립한 날로부터 3개월 이내에 계약을 취소할 수 있습니다.</div>
         </div>
 
         <div className="mb-6">
@@ -42,7 +42,7 @@ export default function Notice({ open, onClose }: NoticeProps) {
         </div>
 
         <div className="mb-6">
-          <div className="font-bold mb-3 text-lg">07. 해약환급금이 납입보험료보다 적은 이유</div>
+          <div className="font-bold mb-3 text-lg">07. 해약환급금이 납입보험료보다 적거나 없는 이유</div>
           <div className="mb-2">계약자가 납입한 보험료는 불의의 사고를 당한 다른 가입자에게 보험금으로 지급되고 보험회사 운영에 필요한 경비로 사용되므로 중도 해지 시 지급되는 해약환급금은 납입한 보험료보다 적거나 없을 수 있습니다.</div>
         </div>
 

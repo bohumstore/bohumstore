@@ -480,98 +480,106 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     <>
       <section
         id="slogan-section"
-        className="w-full bg-gradient-to-b from-emerald-50 to-teal-50 py-6 md:py-10 lg:py-3"
+        className="w-full bg-gradient-to-b from-emerald-50 to-teal-50 py-4 md:py-8 lg:py-3"
       >
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-col lg:flex-row items-center md:items-center lg:items-start justify-center lg:justify-between gap-4 md:gap-8 lg:gap-12 px-4 md:px-6 lg:px-4 md:py-4 lg:py-4">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-col lg:flex-row items-center md:items-center lg:items-start justify-center lg:justify-between gap-3 md:gap-6 lg:gap-12 px-3 md:px-6 lg:px-4 md:py-4 lg:py-4">
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
-            <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-              <img src="/hana-logo.png" alt="하나생명 로고" className="h-8 w-auto" style={{minWidth:'32px'}} />
-              <span>하나생명</span>
+            <div className="flex items-center gap-2 text-sm text-gray-500 mb-1.5">
+              <img src="/hana-logo.png" alt="하나생명 로고" className="h-6 sm:h-8 w-auto" style={{minWidth:'24px'}} />
             </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 lg:mb-4 leading-tight">(무)하나로 THE 연결된<br />종신보험<span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl">(해약환급금 일부지급형)</span></h1>
-            <ul className="mb-6 sm:mb-8 md:mb-10 lg:mb-8 space-y-1.5 sm:space-y-2 md:space-y-3 lg:space-y-2">
-              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
-                병력 걱정 없이&nbsp;<span className="text-emerald-600 font-semibold">간편심사형</span>으로도&nbsp;가입 가능
+            <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-1 sm:mb-1.5 md:mb-2.5 lg:mb-2 leading-tight">(무)하나로 THE 연결된<br />종신보험<span className="text-lg sm:text-xl md:text-3xl lg:text-4xl">(해약환급금 일부지급형)</span></h1>
+            
+            <p className="text-xs text-gray-500 mb-3 sm:mb-4 md:mb-5 lg:mb-5 text-center">
+              * 이 상품은 사망을 보장하는 종신보험으로, 저축성보험(연금)이 아닙니다.
+            </p>
+
+            <ul className="mb-3 sm:mb-5 md:mb-8 lg:mb-8 space-y-1 sm:space-y-1.5 md:space-y-2.5 lg:space-y-2">
+              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
+                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#22c55e] flex-shrink-0">✔</span>
+                <span>병력 걱정 없이 <span className="text-emerald-600 font-semibold">간편심사형</span>으로도 가입 가능</span>
               </li>
-              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
-                3대질병 진단 시&nbsp;<span className="text-rose-600 font-semibold">보험료 환급·납입면제</span>&nbsp;선택 가능
+              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
+                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#22c55e] flex-shrink-0">✔</span>
+                <span className="leading-tight">3대질병 진단시 <span className="text-rose-600 font-semibold">보험료 환급·납입면제</span> 선택 <span className="text-[10px] sm:text-xs text-gray-500">(특약가입시)</span></span>
               </li>
-              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
-                10년 시점 해약환급금 <span className="text-orange-600 font-semibold mx-1">122.78%</span> <span className="text-xs sm:text-[13px] text-gray-500">(5년납, 1형 기준)</span>
+              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
+                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#22c55e] flex-shrink-0">✔</span>
+                <span className="leading-tight">10년 시점 환급금 <span className="text-orange-600 font-semibold">122.78%</span> <span className="text-[10px] sm:text-xs text-gray-500">(5년납,1형 기준)</span></span>
               </li>
-              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
-                <span className="text-teal-600 font-semibold">유지보너스</span>&nbsp;제공&nbsp;<span className="text-xs sm:text-[13px] text-gray-500">(약관 기준)</span>
+              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
+                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#22c55e] flex-shrink-0">✔</span>
+                <span><span className="text-teal-600 font-semibold">유지보너스</span> 제공 <span className="text-[10px] sm:text-xs text-gray-500">(약관 기준)</span></span>
               </li>
-              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
-                <span className="text-blue-600 font-semibold">일반심사형</span>&nbsp;/&nbsp;<span className="text-indigo-600 font-semibold">간편심사형</span>&nbsp;선택 가능
+              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
+                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#22c55e] flex-shrink-0">✔</span>
+                <span><span className="text-blue-600 font-semibold">일반심사형</span> / <span className="text-indigo-600 font-semibold">간편심사형</span> 선택 가능</span>
               </li>
-              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
-                1형(일반심사형):&nbsp;<span className="text-xs sm:text-sm">만</span>&nbsp;<span className="text-blue-600 font-semibold">15~69세</span>&nbsp;/&nbsp;2형(간편심사형):&nbsp;<span className="text-indigo-600 font-semibold">30~65세</span>
+              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
+                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#22c55e] flex-shrink-0">✔</span>
+                <span>1형(일반심사형): <span className="text-xs sm:text-sm">만</span> <span className="text-blue-600 font-semibold">15~69세</span></span>
+              </li>
+              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
+                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#22c55e] flex-shrink-0">✔</span>
+                <span>2형(간편심사형): <span className="text-indigo-600 font-semibold">30~65세</span></span>
               </li>
             </ul>
             {/* 환급률 안내 UI */}
-            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-4 sm:mb-6 p-3 sm:p-4 md:p-6 lg:p-4 px-3 sm:px-4 md:px-6 lg:px-4 pt-4 sm:pt-6 md:pt-8 lg:pt-6 pb-4 sm:pb-6 md:pb-8 lg:pb-6">
-                <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-2 mb-2">
+            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-3 sm:mb-4 p-2.5 sm:p-3 md:p-5 lg:p-4 px-2.5 sm:px-3 md:px-5 lg:px-4 pt-3 sm:pt-4 md:pt-6 lg:pt-6 pb-3 sm:pb-4 md:pb-6 lg:pb-6">
+                <div className="grid grid-cols-3 gap-1.5 sm:gap-3 md:gap-2 mb-1.5 sm:mb-2">
                   {/* 1. 7년 시점 */}
-                  <div className="text-center px-1 sm:px-2">
-                    <div className="inline-block bg-gradient-to-b from-[#10b981] via-[#059669] to-[#047857] text-white text-xs sm:text-sm md:text-base font-bold px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg mb-3 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
+                  <div className="text-center px-0.5 sm:px-1">
+                    <div className="inline-block bg-gradient-to-b from-[#10b981] via-[#059669] to-[#047857] text-white text-xs sm:text-sm md:text-base font-bold px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-lg mb-2 sm:mb-2.5 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
                       boxShadow: '0 6px 12px rgba(4, 120, 87, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
                     }}>7년 시점</div>
                     <div className="flex flex-col items-center">
-                      <div className="font-bold text-xs sm:text-sm mb-1">환급률</div>
-                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#10b981]">100%</div>
-                      <div className="text-xs text-gray-500 mt-1">유지보너스1</div>
+                      <div className="font-bold text-xs sm:text-sm mb-0.5 sm:mb-1">환급률</div>
+                      <div className="text-base sm:text-lg md:text-xl font-extrabold text-[#10b981]">100%</div>
+                      <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">유지보너스1</div>
                     </div>
                   </div>
 
                   {/* 2. 10년 시점 */}
-                  <div className="text-center px-1 sm:px-2">
-                    <div className="inline-block bg-gradient-to-b from-[#f59e0b] via-[#d97706] to-[#b45309] text-white text-xs sm:text-sm md:text-base font-bold px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg mb-3 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
+                  <div className="text-center px-0.5 sm:px-1">
+                    <div className="inline-block bg-gradient-to-b from-[#f59e0b] via-[#d97706] to-[#b45309] text-white text-xs sm:text-sm md:text-base font-bold px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-lg mb-2 sm:mb-2.5 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
                       boxShadow: '0 6px 12px rgba(180, 83, 9, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
                     }}>10년 시점</div>
                     <div className="flex flex-col items-center">
-                      <div className="font-bold text-xs sm:text-sm mb-1">환급률</div>
-                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#f59e0b] animate-[jump-glow_1.2s_ease-in-out_infinite]">122.78%</div>
-                      <div className="text-xs text-gray-500 mt-1">유지보너스2</div>
+                      <div className="font-bold text-xs sm:text-sm mb-0.5 sm:mb-1">환급률</div>
+                      <div className="text-base sm:text-lg md:text-xl font-extrabold text-[#f59e0b] animate-[jump-glow_1.2s_ease-in-out_infinite]">122.78%</div>
+                      <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">유지보너스2</div>
                     </div>
                   </div>
 
                   {/* 3. 15년 시점 */}
-                  <div className="text-center px-1 sm:px-2">
-                    <div className="inline-block bg-gradient-to-b from-[#14b8a6] via-[#0d9488] to-[#0f766e] text-white text-xs sm:text-sm md:text-base font-bold px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg mb-3 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
+                  <div className="text-center px-0.5 sm:px-1">
+                    <div className="inline-block bg-gradient-to-b from-[#14b8a6] via-[#0d9488] to-[#0f766e] text-white text-xs sm:text-sm md:text-base font-bold px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-lg mb-2 sm:mb-2.5 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
                       boxShadow: '0 6px 12px rgba(15, 118, 110, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
                     }}>15년 시점</div>
                     <div className="flex flex-col items-center">
-                      <div className="font-bold text-xs sm:text-sm mb-1">환급률</div>
-                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#14b8a6]">132.12%</div>
-                      <div className="text-xs text-gray-500 mt-1">유지보너스3</div>
+                      <div className="font-bold text-xs sm:text-sm mb-0.5 sm:mb-1">환급률</div>
+                      <div className="text-base sm:text-lg md:text-xl font-extrabold text-[#14b8a6]">132.12%</div>
+                      <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">유지보너스3</div>
                     </div>
                   </div>
                 </div>
-                <div className="text-xs text-gray-500 text-center mt-2 sm:mt-4">
+                <div className="text-[10px] sm:text-xs text-gray-500 text-center mt-1.5 sm:mt-3">
                   <p>* 40세 남자, 1형(일반심사형), 5년납 기준</p>
                 </div>
             </div>
           </div>
           {/* 오른쪽: 환급금 확인 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
-            <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-6 sm:p-6 md:p-8 lg:p-8 relative flex flex-col">
+            <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-4 sm:p-5 md:p-7 lg:p-8 relative flex flex-col">
               {/* 새로운 헤더 디자인 */}
               <div className="mb-4 sm:mb-6">
                 <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#3a8094] flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
                   </svg>
-                  환급금 계산하기
+                  해약환급금 계산하기
                 </h3>
-                <p className="text-gray-500 text-xs sm:text-sm mt-1">간단한 정보 입력으로 예상 환급금을 확인하세요</p>
+                <p className="text-gray-500 text-xs sm:text-sm mt-1">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
               </div>
               <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 가입 정보 입력 */}
@@ -735,7 +743,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     className="w-full bg-[#3a8094] text-white font-bold rounded-xl py-3 sm:py-4 text-base sm:text-lg hover:opacity-90 transition flex items-center justify-center gap-2 cursor-pointer"
                   >
                   <CalculatorIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-                  환급금 확인하기
+                  해약환급금 확인하기
                 </button>
                   <div className="flex flex-row gap-2">
                   <button 
@@ -769,7 +777,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           counselType === 1 ? (
             <span className="flex items-center gap-2">
               <CalculatorIcon className="w-6 h-6 text-[#3a8094]" />
-              환급금 확인하기
+              해약환급금 확인하기
             </span>
           ) : (
             <span className="flex items-center gap-2">
