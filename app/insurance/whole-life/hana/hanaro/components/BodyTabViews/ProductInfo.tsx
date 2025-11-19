@@ -658,6 +658,42 @@ export default function ProductInfo() {
           <p className="text-xs text-red-600">* (무)3대질병진단 보험료환급특약과 (무)3대질병 납입면제특약은 동시에 선택할 수 없습니다.</p>
         </div>
       </div>
+
+      {/* 종신보험 관련 유의사항 */}
+      <div className="space-y-4">
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">종신보험 관련 유의사항 안내</h3>
+        
+        <div className="space-y-2 text-sm md:text-base">
+          <p>· 종신보험은 피보험자의 사망을 보장하는 보장성보험으로 저축(연금) 목적에는 적합하지 않습니다.</p>
+          <p>· 일반사망보험금은 고의적 사고 및 2년 이내 자살의 경우 지급이 제한됩니다.</p>
+          <p>· 중도해약시 환급금이 이미 납부한 보험료보다 적거나 없을 수 있습니다.</p>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr className="bg-[#1e3a8a] text-white">
+                <th className="border border-gray-300 p-2 sm:p-3 text-center w-1/3">구분</th>
+                <th className="border border-gray-300 p-2 sm:p-3 text-center">유의사항</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-gray-300 p-1 sm:p-2 text-center">단기납 종신보험</td>
+                <td className="border border-gray-300 p-1 sm:p-2">단기납 종신보험은 동일한 보장내용의 일반 종신보험에 비해 보험료가 비쌀 수 있습니다.</td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-1 sm:p-2 text-center">체증형 종신보험</td>
+                <td className="border border-gray-300 p-1 sm:p-2">체증형 종신보험은 동일한 보장내용의 표준형 종신보험에 비해 사망보험금이 증가하는 만큼 보험료가 비쌀 수 있습니다.</td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-1 sm:p-2 text-center">해약환급금 일부지급형 종신보험</td>
+                <td className="border border-gray-300 p-1 sm:p-2">해약환급금 일부지급형 종신보험은 해약환급금이 일반형상품보다 적거나 없을 수 있습니다.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   )
 }
