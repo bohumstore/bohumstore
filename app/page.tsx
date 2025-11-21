@@ -134,6 +134,23 @@ const slogans = [
     ],
     company: '신한라이프생명',
     logo: '/shinhan-life-logo.png'
+  },
+  {
+    id: 'hana-hanaro',
+    title: '간편심사형 종신보험',
+    subtitle: '병력 걱정 없이 가입 가능',
+    description: '하나생명 하나로 THE 연결된 종신보험으로 높은 환급률과 간편한 가입을 경험하세요.',
+    path: '/insurance/whole-life/hana/hanaro',
+    color: 'from-teal-500 to-teal-600',
+    bgColor: 'bg-teal-50',
+    features: [
+      '10년시점 122.78% 환급률 (5년납)',
+      '간편심사형으로도 가입 가능',
+      '3대질병 진단시 보험료 환급',
+      '유지보너스 제공'
+    ],
+    company: '하나생명',
+    logo: '/hana-logo.png'
   }
 ];
 
@@ -193,6 +210,17 @@ const mainProducts = [
     badge: '',
     category: '종신보험',
     highlight: '10년시점 122.7%'
+  },
+  {
+    id: 'hana-hanaro',
+    name: '하나생명 하나로 THE 연결된 종신보험',
+    company: '하나생명',
+    logo: '/hana-logo.png',
+    path: '/insurance/whole-life/hana/hanaro',
+    description: '간편심사형 가능, 10년시점 122.78% 환급률로 병력 걱정 없이',
+    badge: 'NEW',
+    category: '종신보험',
+    highlight: '간편심사형 가능'
   }
 ];
 
@@ -309,6 +337,7 @@ export default function HomePage() {
                                                            currentSlogan.id === 'ibk-lifetime' ? 'bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50' : 
                                                            currentSlogan.id === 'kdb-happy-plus' ? 'bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50' : 
                                                            currentSlogan.id === 'kdb-happy-dream' ? 'bg-gradient-to-br from-blue-50 via-sky-50 to-cyan-50' : 
+                                                           currentSlogan.id === 'hana-hanaro' ? 'bg-gradient-to-br from-teal-50 via-cyan-50 to-emerald-50' :
                                                            'bg-gradient-to-br from-red-50 via-pink-50 to-purple-50'} relative overflow-hidden`} 
                  style={{
                    backgroundImage: currentSlogan.id === 'kb-triple-level-up' ? 
@@ -323,6 +352,9 @@ export default function HomePage() {
                      currentSlogan.id === 'kdb-happy-dream' ? 
                      `radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
                       radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 50%)` :
+                     currentSlogan.id === 'hana-hanaro' ? 
+                     `radial-gradient(circle at 20% 80%, rgba(20, 184, 166, 0.15) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(13, 148, 136, 0.15) 0%, transparent 50%)` :
                      `radial-gradient(circle at 20% 80%, rgba(239, 68, 68, 0.15) 0%, transparent 50%),
                       radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.15) 0%, transparent 50%)`
                  }}>
@@ -472,6 +504,7 @@ export default function HomePage() {
                         product.id === 'kdb-happy-plus' ? 'text-green-600 bg-green-50' :
                         product.id === 'kdb-happy-dream' ? 'text-purple-600 bg-purple-50' :
                         product.id === 'ibk-lifetime' ? 'text-orange-600 bg-orange-50' :
+                        product.id === 'hana-hanaro' ? 'text-teal-600 bg-teal-50' :
                         'text-red-600 bg-red-50'
                       }`}>
                         {product.highlight}

@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     product_id: productId,
     company_id: companyId
   })
-
+1!
   const kakaoResToClient = await request.post(
     `https://${process.env.KAKAO_BASE_URL}/v2/send/kakao`,
     {

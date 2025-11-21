@@ -4,15 +4,15 @@ import React from "react";
 import Header from "./components/Header";
 import Slogan from "./components/Slogan";
 import Footer from "./components/Footer";
-import PrivacyConsent from "../../../../components/PrivacyConsent";
-import Modal from "../../../../components/Modal";
+import PrivacyConsent from "@/app/components/PrivacyConsent";
+import Modal from "@/app/components/Modal";
 import Notice from "./components/Notice";
-import Tabs from "../../../../components/Tabs";
+import Tabs from "@/app/components/Tabs";
 import ProductInfo from "./components/BodyTabViews/ProductInfo";
 import CoverageDetails from "./components/BodyTabViews/CoverageDetails";
 import Surrender from "./components/BodyTabViews/Surrender";
-import { supabase } from "../../../../api/supabase";
-import { trackPageVisit } from "../../../../utils/visitorTracking";
+import { supabase } from "@/app/api/supabase";
+import { trackPageVisit } from "@/app/utils/visitorTracking";
 
 export default function ShinhanMoreTheDreamPage() {
   const tabs = [
