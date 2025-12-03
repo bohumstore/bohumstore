@@ -988,7 +988,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     type="button"
                     onClick={() => {
                       handleCloseModal();
-                      setTimeout(() => handleOpenConsultModal(), 100);
+                      setTimeout(() => handleOpenConsultModal({ preventDefault: () => {} } as React.FormEvent), 100);
                     }}
                     className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 bg-[#fa5a5a] text-white hover:bg-[#e14949] flex items-center justify-center gap-2"
                   >
