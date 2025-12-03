@@ -20,6 +20,7 @@ export async function POST(req: Request) {
     companyId,
     productId,
     insuranceType,
+    consultType,  // 상담 종류 문자열 (예: "어린이보험")
     counselTime,
     mounthlyPremium = null,
     paymentPeriod = null,
@@ -167,37 +168,49 @@ export async function POST(req: Request) {
 
   const ensuredUser = user!;
 
-  const [productResult, companyResult] = await Promise.all([
-    supabase
-      .from('product')
-      .select('name')
-      .eq('id', productId)
-      .single(),
-    supabase
-      .from('company')
-      .select('name')
-      .eq('id', companyId)
-      .single()
-  ])
+  // companyId/productId가 없으면(상담 신청) consultType 사용, 있으면 DB 조회
+  let productDisplayName = '';
+  let companyName = '';
+  
+  if (companyId && productId) {
+    // 특정 상품 가입: DB에서 조회
+    const [productResult, companyResult] = await Promise.all([
+      supabase
+        .from('product')
+        .select('name')
+        .eq('id', productId)
+        .single(),
+      supabase
+        .from('company')
+        .select('name')
+        .eq('id', companyId)
+        .single()
+    ])
 
-  const { data: product, error: productErr } = productResult
+    const { data: product, error: productErr } = productResult
 
-  if (productErr || !product) {
-    console.error('상품 조회 실패', productErr)
-    throw new Error('상품 조회 실패')
+    if (productErr || !product) {
+      console.error('상품 조회 실패', productErr)
+      throw new Error('상품 조회 실패')
+    }
+    console.log("[DEBUG] product:", product);
+
+    const { data: company, error: companyErr } = companyResult
+
+    if (companyErr || !company) {
+      console.error('회사 조회 실패', companyErr)
+      throw new Error('회사 조회 실패')
+    }
+    console.log("[DEBUG] company:", company);
+
+    productDisplayName = product.name;
+    companyName = company.name;
+  } else {
+    // 상담 신청: consultType 직접 사용
+    productDisplayName = consultType || '상담 신청';
+    companyName = '';
+    console.log("[DEBUG] 상담 신청이므로 consultType 사용:", productDisplayName);
   }
-  console.log("[DEBUG] product:", product);
-
-  const { data: company, error: companyErr } = companyResult
-
-  if (companyErr || !company) {
-    console.error('회사 조회 실패', companyErr)
-    throw new Error('회사 조회 실패')
-  }
-  console.log("[DEBUG] company:", company);
-
-  // 상품명은 DB 표기를 그대로 사용
-  const productDisplayName = product.name;
 
   // Aligo 토큰(가능 시) 획득 후 인증 정보 구성
   let authForSend = aligoAuth as any;
@@ -232,8 +245,8 @@ export async function POST(req: Request) {
       .from("counsel")
       .insert({
         user_id: ensuredUser.id,
-        company_id: companyId,
-        product_id: productId,
+        company_id: companyId || null,
+        product_id: productId || null,
         counsel_type_id: counselType,
         counsel_time: counselTime
       })
@@ -248,8 +261,6 @@ export async function POST(req: Request) {
     }
     console.log("[DEBUG] DB insert success");
 
-    // 실제 보험사명 사용
-    const companyName = company.name;
     // 표시용 값: 입력값 우선, 없으면 DB 값 사용
     const displayName = name || ensuredUser.name;
     const displayBirth = birth || ensuredUser.birth || '';
@@ -276,8 +287,8 @@ export async function POST(req: Request) {
             sender: "010-8897-7486",
             receiver: "010-8897-7486",
             msg: counselType === 1 
-              ? `🔄 중복신청 알림\n[보험료계산] ${duplicateLabel}\n${name}(${phone})\n${companyName} ${productDisplayName}`
-              : `🔄 중복신청 알림\n[상담신청] ${duplicateLabel}\n${name}(${phone})\n${counselTime}\n${companyName} ${productDisplayName}`,
+              ? `🔄 중복신청 알림\n[보험료계산] ${duplicateLabel}\n${name}(${phone})\n${companyName ? companyName + ' ' : ''}${productDisplayName}`
+              : `🔄 중복신청 알림\n[상담신청] ${duplicateLabel}\n${name}(${phone})\n${counselTime}\n${companyName ? companyName + ' ' : ''}${productDisplayName}`,
             testmode_yn: "N"
           }
         };
@@ -307,7 +318,7 @@ export async function POST(req: Request) {
           receiver_1: "010-8897-7486",
           subject_1:  subject,
           message_1:  counselType === 1
-            ? `[보험료계산]\n${companyName}\n${productDisplayName}\n${displayBirth}\n${displayName}\n${displayGenderKor}\n${phone}`
+            ? `[보험료계산]\n${companyName ? companyName + '\n' : ''}${productDisplayName}\n${displayBirth}\n${displayName}\n${displayGenderKor}\n${phone}`
             : `[상담/설계요청]\n${counselTime}\n${productDisplayName}\n${displayBirth}\n${displayName}\n${displayGenderKor}\n${phone}`,
           testMode: "N",
         },
