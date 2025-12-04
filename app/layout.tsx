@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import ContentProtection from "./components/ContentProtection";
 import BodyClassManager from "./components/BodyClassManager";
+import Header from "./components/Header";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -260,6 +261,7 @@ export default function RootLayout({
       <body className="antialiased">
         <BodyClassManager />
         <ContentProtection />
+        <Header />
         {children}
         {/* Smartlog */}
         <script

@@ -68,6 +68,17 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const phoneInputRef = useRef<HTMLInputElement>(null);
   const otpInputRef = useRef<HTMLInputElement>(null);
 
+  // 입력 필드 포커스 시 스크롤 조정
+  const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    const target = e.target;
+    // 모바일 환경에서 키보드가 올라올 때 입력창이 가려지지 않도록 중앙으로 스크롤
+    if (window.innerWidth < 768 && target) {
+      setTimeout(() => {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 300);
+    }
+  };
+
 
   // 타이머 효과
   useEffect(() => {
@@ -612,6 +623,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     ref={nameInputRef}
                     value={name}
                         onChange={handleNameChange}
+                        onFocus={handleInputFocus}
                         onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }}
                         onBlur={() => { if (name.trim()) { birthInputRef.current?.focus(); } }}
                         className="w-full px-2.5 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
@@ -627,6 +639,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     ref={birthInputRef}
                     value={birth}
                         onChange={handleBirthChange}
+                        onFocus={handleInputFocus}
                         className="w-full px-2.5 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="19880818"
                         maxLength={8}
@@ -641,6 +654,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     ref={phoneInputRef}
                     value={phone}
                     onChange={handlePhoneChange}
+                    onFocus={handleInputFocus}
                         className="w-full px-2.5 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="01012345678"
                       />

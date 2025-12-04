@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRightIcon, ChevronLeftIcon, ShieldCheckIcon, CurrencyDollarIcon, ChartBarIcon } from "@heroicons/react/24/outline";
+import { ArrowRightIcon, ChevronLeftIcon, ShieldCheckIcon, CurrencyDollarIcon, ChartBarIcon, ChatBubbleLeftRightIcon, MagnifyingGlassIcon, ScaleIcon, ClipboardDocumentCheckIcon, PlayIcon, PauseIcon, CalendarDaysIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
 import { trackPageVisit } from "./utils/visitorTracking";
 
 // CSS 애니메이션 스타일
@@ -50,6 +50,22 @@ const animationStyles = `
 
 // 슬로건 데이터
 const slogans = [
+  {
+    id: 'consult-main',
+    title: '나에게 딱 맞는 보험,\n찾기 어려우신가요?',
+    subtitle: '전문가가 객관적으로 분석해 드리는\n1:1 맞춤 무료 상담',
+    description: '복잡한 보험, 더 이상 고민하지 마세요. 내 보험 분석부터 맞춤 추천까지 한번에 해결해 드립니다.',
+    path: '/insurance/a_consult',
+    color: 'from-blue-600 to-indigo-600',
+    bgColor: 'bg-blue-50',
+    features: [
+      '내 보험료가 적절한지 궁금할 때',
+      '불필요한 특약이 있는지 확인할 때',
+      '여러 보험사의 상품을 비교하고 싶을 때',
+      '전문가의 객관적인 조언이 필요할 때'
+    ],
+    company: '' // 로고 없음
+  },
   {
     id: 'kb-triple-level-up',
     title: '트리플 레벨업 보장',
@@ -243,28 +259,79 @@ const insuranceFeatures = [
   }
 ];
 
+// 채팅 시나리오 데이터
+const chatScenarios = [
+  [
+    { role: "customer", text: "다음 달부터 실손보험료가 많이 오른다던데 사실인가요? 😥" },
+    { role: "expert", text: "네, 맞습니다. 연령 증가와 손해율 상승으로 인상 예정입니다." },
+    { role: "customer", text: "아이고... 그럼 지금이라도 어떻게 해야 할까요?" },
+    { role: "expert", text: "아직 늦지 않았습니다! 현재 조건으로 미리 대비하실 수 있게 도와드릴게요." }
+  ],
+  [
+    { role: "customer", text: "이번에 추천해주신 암보험 정말 든든하네요! 감사합니다 😊" },
+    { role: "expert", text: "고객님께 딱 맞는 상품을 찾아드릴 수 있어 저도 기쁩니다." },
+    { role: "customer", text: "주변 지인들에게도 많이 소개할게요!" },
+    { role: "expert", text: "감사합니다! 언제든 편하게 문의주세요." }
+  ],
+  [
+    { role: "customer", text: "한도 축소되기 전에 막차 탈 수 있게 도와주셔서 감사해요!" },
+    { role: "expert", text: "네, 다행히 좋은 조건으로 가입되셨네요 ^^" },
+    { role: "expert", text: "앞으로 보장 받으실 일만 남았습니다! 든든하시죠?" },
+    { role: "customer", text: "네!! 진짜 안심돼요 ㅎㅎ 감사합니다!" }
+  ],
+  [
+    { role: "customer", text: "기존 보험이 너무 비싸서 부담이었는데..." },
+    { role: "expert", text: "불필요한 특약은 줄이고 핵심 보장만 남겨드렸습니다." },
+    { role: "customer", text: "덕분에 보험료가 확 줄었네요! 진작 상담받을 걸 그랬어요." },
+    { role: "expert", text: "만족하셔서 다행입니다. 절약된 비용으로 맛있는 거 드세요! 🍚" }
+  ],
+  [
+    { role: "customer", text: "부모님 치매 보험 알아보고 있는데 상담 가능할까요?" },
+    { role: "expert", text: "물론이죠. 치매 단계별로 보장되는 상품들이 있습니다." },
+    { role: "customer", text: "간병비도 같이 보장되면 좋겠어요." },
+    { role: "expert", text: "네, 간병인 지원까지 포함된 든든한 효도 플랜으로 설계해 드릴게요." }
+  ]
+];
+
 export default function HomePage() {
   const [currentSloganIndex, setCurrentSloganIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [currentScenario, setCurrentScenario] = useState(chatScenarios[0]);
   const dragStartXRef = useRef<number | null>(null);
   const lastXRef = useRef<number | null>(null);
   const draggingRef = useRef(false);
   const resumeTimerRef = useRef<any>(null);
 
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth() + 1;
+
   useEffect(() => {
     // 페이지 방문 시 자동 추적
     trackPageVisit();
-    
-    // 자동 슬라이드 기능
+  }, []);
+
+  // 슬라이드가 변경될 때마다 시나리오 랜덤 변경 (첫 번째 슬라이드일 때)
+  useEffect(() => {
+    if (currentSloganIndex === 0) {
+      setCurrentScenario(chatScenarios[Math.floor(Math.random() * chatScenarios.length)]);
+    }
+  }, [currentSloganIndex]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
     if (isAutoPlaying) {
-      const interval = setInterval(() => {
+      interval = setInterval(() => {
         setCurrentSloganIndex((prevIndex) => 
           prevIndex === slogans.length - 1 ? 0 : prevIndex + 1
         );
       }, 5000);
-
-      return () => clearInterval(interval);
     }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [isAutoPlaying]);
 
   const goToPrevious = () => {
@@ -280,8 +347,6 @@ export default function HomePage() {
     draggingRef.current = true;
     dragStartXRef.current = x;
     lastXRef.current = x;
-    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-    setIsAutoPlaying(false);
   };
 
   const moveDrag = (x: number) => {
@@ -303,8 +368,6 @@ export default function HomePage() {
       if (dx < 0) goToNext();
       else goToPrevious();
     }
-    // resume autoplay after short delay
-    resumeTimerRef.current = setTimeout(() => setIsAutoPlaying(true), 2000);
   };
 
   const currentSlogan = slogans[currentSloganIndex];
@@ -313,11 +376,6 @@ export default function HomePage() {
     <div className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full">
       <style dangerouslySetInnerHTML={{ __html: animationStyles }} />
       
-      {/* 헤더 */}
-      <header className="w-full flex items-center justify-center py-6 px-4 md:px-12 bg-[#f8f8f8] border-b border-gray-200">
-        <Image src="/bohumstore-logo.png" alt="보험스토어 로고" width={220} height={60} priority />
-      </header>
-
       {/* 슬로건 캐러셀 섹션 - 화면 전체를 채우는 히어로 배너 */}
       <section
         className="w-full relative overflow-hidden"
@@ -333,14 +391,18 @@ export default function HomePage() {
         <div className="relative w-full">
           {/* 메인 슬로건 카드 */}
           <div className="relative w-full">
-            <div className={`w-full min-h-[560px] md:min-h-[680px] lg:h-[450px] ${currentSlogan.id === 'kb-triple-level-up' ? 'bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50' :
+            <div className={`w-full min-h-[540px] md:min-h-[680px] lg:h-[480px] ${currentSlogan.id === 'consult-main' ? 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50' :
+                                                           currentSlogan.id === 'kb-triple-level-up' ? 'bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50' :
                                                            currentSlogan.id === 'ibk-lifetime' ? 'bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50' : 
                                                            currentSlogan.id === 'kdb-happy-plus' ? 'bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50' : 
                                                            currentSlogan.id === 'kdb-happy-dream' ? 'bg-gradient-to-br from-blue-50 via-sky-50 to-cyan-50' : 
                                                            currentSlogan.id === 'hana-hanaro' ? 'bg-gradient-to-br from-teal-50 via-cyan-50 to-emerald-50' :
                                                            'bg-gradient-to-br from-red-50 via-pink-50 to-purple-50'} relative overflow-hidden`} 
                  style={{
-                   backgroundImage: currentSlogan.id === 'kb-triple-level-up' ? 
+                   backgroundImage: currentSlogan.id === 'consult-main' ?
+                     `radial-gradient(circle at 20% 80%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(79, 70, 229, 0.1) 0%, transparent 50%)` :
+                     currentSlogan.id === 'kb-triple-level-up' ? 
                      `radial-gradient(circle at 20% 80%, rgba(251, 191, 36, 0.15) 0%, transparent 50%),
                       radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 50%)` :
                      currentSlogan.id === 'ibk-lifetime' ? 
@@ -358,30 +420,129 @@ export default function HomePage() {
                      `radial-gradient(circle at 20% 80%, rgba(239, 68, 68, 0.15) 0%, transparent 50%),
                       radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.15) 0%, transparent 50%)`
                  }}>
-              
               {/* 슬로건 내용 */}
               <div className="relative z-10 h-full flex items-center">
                 <div className="w-full px-4 md:px-8 lg:px-12 py-6 md:py-8">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center max-w-7xl mx-auto">
+                  {currentSlogan.id === 'consult-main' ? (
+                    /* 상담 신청 전용 슬라이드 디자인 - 이달의 이슈 & 채팅 상담 컨셉 */
+                    <div className="w-full h-full flex items-center justify-center relative overflow-hidden py-8 md:py-0">
+                      
+                      <div className="relative z-10 max-w-6xl w-full mx-auto px-4 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center h-full">
+                        {/* 텍스트 영역 (왼쪽) */}
+                        <div className="text-center lg:text-left order-1 flex flex-col justify-center">
+                          <div className="inline-flex mx-auto lg:mx-0 items-center gap-2 px-3 py-1 rounded-full bg-white border border-blue-100 text-slate-700 text-xs md:text-sm font-bold mb-3 md:mb-6 animate-slide-in-up shadow-sm w-fit">
+                            <span className="relative flex h-2 w-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                            </span>
+                            <span>{currentYear}년 {currentMonth}월 <span className="text-red-500 animate-pulse font-bold ml-2">실시간</span>
+                              <span className="relative inline-flex h-2 w-2 ml-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                              </span>
+                            </span>
+                          </div>
+                          
+                          <h2 className="text-2xl sm:text-4xl lg:text-6xl font-bold text-slate-900 leading-tight mb-3 md:mb-6 animate-slide-in-up" style={{animationDelay: '0.1s'}}>
+                            {currentMonth}월 보험 이슈,<br />
+                            <span className="text-blue-600">확인하셨나요?</span>
+                          </h2>
+                          
+                          <p className="text-sm sm:text-lg text-slate-600 mb-4 md:mb-8 leading-relaxed animate-slide-in-up" style={{animationDelay: '0.2s'}}>
+                            <span className="md:hidden">
+                              매달 달라지는 보험,<br/>
+                              전문가가 꼼꼼히 챙겨드려요.
+                            </span>
+                            <span className="hidden md:block">
+                              매달 달라지는 보험 정보,<br/>
+                              전문가와 함께 꼼꼼하게 점검해보세요.
+                            </span>
+                          </p>
+                          
+                          <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start animate-slide-in-up" style={{animationDelay: '0.3s'}}>
+                            <Link 
+                              href="/insurance/a_consult"
+                              className="px-6 py-3 md:px-8 md:py-4 bg-blue-600 text-white text-base md:text-lg font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-500/30 flex items-center justify-center gap-2 group"
+                            >
+                              <span>{currentMonth}월 보험 상담신청</span>
+                              <ArrowRightIcon className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                          </div>
+                        </div>
+
+                        {/* 비주얼 영역 (오른쪽) - 채팅 UI 컨셉 (이슈 관련 대화) */}
+                        <div className="order-2 flex justify-center lg:justify-end animate-fade-in items-center" style={{animationDelay: '0.2s'}}>
+                           <div className="relative w-[300px] md:w-[360px] bg-slate-50 rounded-2xl md:rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+                              {/* 채팅방 헤더 */}
+                              <div className="bg-white p-3 md:p-4 border-b border-slate-100 flex items-center gap-3 shadow-sm relative z-10">
+                                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-blue-100 flex items-center justify-center text-lg md:text-xl border border-blue-50">👨‍💼</div>
+                                <div>
+                                  <div className="font-bold text-slate-800 text-xs md:text-sm">보험스토어 전문가</div>
+                                  <div className="text-[10px] md:text-xs text-green-500 flex items-center gap-1">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                    실시간 답변 중
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              {/* 채팅 내용 */}
+                              <div className="p-3 md:p-5 space-y-3 md:space-y-4 bg-slate-50 h-[240px] md:h-[340px] flex flex-col justify-center overflow-y-auto scrollbar-hide">
+                                {Array.isArray(currentScenario) && currentScenario.map((msg, idx) => (
+                                  <div key={idx} className={`flex ${msg.role === 'customer' ? 'justify-end' : 'justify-start'} animate-slide-in-up`} style={{animationDelay: `${0.3 + idx * 0.5}s`}}>
+                                    <div className={`${msg.role === 'customer' 
+                                      ? 'bg-yellow-100 text-slate-800 rounded-tr-none' 
+                                      : 'bg-white text-slate-800 rounded-tl-none border border-slate-100'} 
+                                      px-3 py-2 md:px-4 md:py-2.5 rounded-2xl text-xs md:text-sm shadow-sm max-w-[85%] break-keep`}>
+                                      {msg.text}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                              
+                              {/* 입력창 데코 */}
+                              <div className="bg-white p-2 md:p-3 border-t border-slate-100 flex gap-2">
+                                <div className="flex-1 bg-slate-100 rounded-full h-7 md:h-9 flex items-center px-3 md:px-4 text-[10px] md:text-xs text-gray-400">궁금한 점을 입력하세요...</div>
+                                <div className="w-7 h-7 md:w-9 md:h-9 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs md:text-base">↑</div>
+                              </div>
+                           </div>
+
+                           
+                           {/* 장식용 요소 - 모바일에서는 숨김 */}
+                           <div className="absolute -right-4 bottom-10 bg-white p-3 rounded-xl shadow-lg animate-bounce border border-slate-100 hidden md:block" style={{animationDuration: '3s'}}>
+                              <div className="flex items-center gap-2">
+                                <span className="text-2xl">📅</span>
+                                <div>
+                                  <div className="text-xs text-slate-500">변경 예정 D-Day</div>
+                                  <div className="text-sm font-bold text-red-500">놓치지 마세요!</div>
+                                </div>
+                              </div>
+                           </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (/* 일반 상품 슬라이드 디자인 */
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center max-w-7xl mx-auto">
                     {/* 텍스트 내용 */}
                     <div className="text-center lg:text-left">
                       <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
-                        <div className="relative group">
-                          <Image 
-                            src={currentSlogan.logo} 
-                            alt={currentSlogan.company} 
-                            width={60} 
-                            height={60} 
-                            className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 object-contain drop-shadow-lg transition-all duration-700 group-hover:rotate-12 group-hover:scale-110"
-                          />
-                        </div>
+                        {currentSlogan.logo && (
+                          <div className="relative group">
+                            <Image 
+                              src={currentSlogan.logo} 
+                              alt={currentSlogan.company} 
+                              width={60} 
+                              height={60} 
+                              className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 object-contain drop-shadow-lg transition-all duration-700 group-hover:rotate-12 group-hover:scale-110"
+                            />
+                          </div>
+                        )}
                         <span className="text-base md:text-lg lg:text-xl font-medium text-gray-700 drop-shadow-sm animate-fade-in">{currentSlogan.company}</span>
                       </div>
                       
-                      <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight drop-shadow-sm animate-slide-in-left">
+                      <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight drop-shadow-sm animate-slide-in-left whitespace-pre-line">
                         {currentSlogan.title}
                       </h2>
-                      <p className="text-lg md:text-xl lg:text-2xl font-semibold text-gray-700 mb-4 md:mb-6 leading-tight drop-shadow-sm animate-slide-in-left" style={{animationDelay: '0.2s'}}>
+                      <p className="text-lg md:text-xl lg:text-2xl font-semibold text-gray-700 mb-4 md:mb-6 leading-tight drop-shadow-sm animate-slide-in-left whitespace-pre-line" style={{animationDelay: '0.2s'}}>
                         {currentSlogan.subtitle}
                       </p>
                       <p className="text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed mb-6 md:mb-8 max-w-2xl mx-auto lg:mx-0 drop-shadow-sm animate-slide-in-left" style={{animationDelay: '0.4s'}}>
@@ -395,7 +556,7 @@ export default function HomePage() {
                           className={`inline-flex items-center px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-white shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm md:text-base lg:text-lg transition-all duration-300 bg-gradient-to-r ${currentSlogan.color} hover:scale-105 animate-slide-in-left`} style={{animationDelay: '0.8s'}}
                         >
                           <span className="flex items-center">
-                            자세히 보기
+                            {currentSlogan.id === 'consult-main' ? '무료 상담 신청하기' : '자세히 보기'}
                             <ArrowRightIcon className="w-4 h-4 md:w-5 md:h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                           </span>
                         </Link>
@@ -403,9 +564,11 @@ export default function HomePage() {
 
                     </div>
 
-                    {/* 특징 리스트 */}
+                    {/* 특징 리스트 - 상담 신청 슬라이드일 때는 다르게 표시 */}
                     <div className="bg-white/95 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-2xl border border-white/20">
-                      <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-6">주요 특징</h3>
+                      <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-6">
+                        {currentSlogan.id === 'consult-main' ? '이런 분들께 추천해요' : '주요 특징'}
+                      </h3>
                       <div className="space-y-3 md:space-y-4">
                         {currentSlogan.features.map((feature, index) => (
                           <div key={index} className="flex items-start gap-3 group hover:bg-white/60 p-3 rounded-lg transition-all duration-200 animate-slide-in-up bg-white/40 backdrop-blur-sm" style={{animationDelay: `${0.6 + index * 0.1}s`}}>
@@ -416,6 +579,7 @@ export default function HomePage() {
                       </div>
                     </div>
                   </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -436,19 +600,36 @@ export default function HomePage() {
             <ArrowRightIcon className="w-5 h-5 md:w-6 md:h-6" />
           </button>
 
-          {/* 인디케이터 */}
-          <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex justify-center space-x-2 md:space-x-3 z-20">
-            {slogans.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSloganIndex(index)}
-                className={`w-3 h-3 md:w-4 md:h-4 rounded-full transition-all duration-300 ${
-                  index === currentSloganIndex
-                    ? `bg-gradient-to-r ${currentSlogan.color} w-8 md:w-12 shadow-lg`
-                    : 'bg-white/60 hover:bg-white/80 hover:scale-110'
-                }`}
-              />
-            ))}
+          {/* 인디케이터 및 재생/멈춤 버튼 */}
+          <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex items-center justify-center gap-4 z-20">
+            {/* 재생/멈춤 버튼 */}
+            <button
+              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+              className="p-1.5 rounded-full bg-white/60 hover:bg-white/80 backdrop-blur-sm transition-all hover:scale-110 text-gray-700"
+              aria-label={isAutoPlaying ? "슬라이드 멈춤" : "슬라이드 재생"}
+            >
+              {isAutoPlaying ? (
+                <PauseIcon className="w-4 h-4 md:w-5 md:h-5" />
+              ) : (
+                <PlayIcon className="w-4 h-4 md:w-5 md:h-5" />
+              )}
+            </button>
+
+            {/* 페이지 점들 */}
+            <div className="flex space-x-2 md:space-x-3">
+              {slogans.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSloganIndex(index)}
+                  className={`w-3 h-3 md:w-4 md:h-4 rounded-full transition-all duration-300 ${
+                    index === currentSloganIndex
+                      ? `bg-gradient-to-r ${currentSlogan.color} w-8 md:w-12 shadow-lg`
+                      : 'bg-white/60 hover:bg-white/80 hover:scale-110'
+                  }`}
+                  aria-label={`${index + 1}번 슬라이드로 이동`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -579,9 +760,18 @@ export default function HomePage() {
           <div>(주)메타리치보험대리점 | 대리점등록번호: 제2023070016호</div>
           <div>보험스토어 | 서지후 | 등록번호: 제20060383110008호</div>
           <div>대표전화: 1533-3776 | 이메일: urisky1@naver.com</div>
-          <div className="mt-2">© {new Date().getFullYear()} BohumStore. All rights reserved.</div>
+          <div className="mt-2">  BohumStore. All rights reserved.</div>
         </div>
       </footer>
+      {/* 플로팅 상담 버튼 */}
+      <Link
+        href="/insurance/a_consult"
+        className="fixed bottom-8 right-4 sm:right-8 z-50 bg-white text-blue-600 rounded-2xl px-3 py-2 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_4px_25px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-blue-50 border border-blue-100 flex flex-col items-center gap-1 min-w-[60px] group"
+        aria-label="상담 신청"
+      >
+        <span className="text-xs font-bold text-gray-600 group-hover:text-blue-600 transition-colors">상담</span>
+        <ChatBubbleLeftRightIcon className="w-6 h-6 sm:w-7 sm:h-7 animate-pulse text-blue-500" />
+      </Link>
     </div>
   );
 }

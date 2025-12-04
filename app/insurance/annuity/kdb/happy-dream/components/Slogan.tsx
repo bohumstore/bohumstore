@@ -70,6 +70,17 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const birthInputRef = useRef<HTMLInputElement>(null);
   const phoneInputRef = useRef<HTMLInputElement>(null);
   const otpInputRef = useRef<HTMLInputElement>(null);
+  const consultOtpInputRef = useRef<HTMLInputElement>(null);
+
+  // 모바일 입력 포커스 시 스크롤 조정
+  const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    const target = e.target;
+    if (window.innerWidth < 768 && target) {
+      setTimeout(() => {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 300);
+    }
+  };
 
   // 보험연령 계산 함수
   const getInsuranceAge = (birth: string) => {
@@ -797,6 +808,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     ref={nameInputRef}
                     value={name}
                         onChange={handleNameChange}
+                        onFocus={handleInputFocus}
                         onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }}
                         onBlur={() => { if (name.trim()) { birthInputRef.current?.focus(); } }}
                         className="w-full px-2 sm:px-2.5 py-1.5 sm:py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
@@ -812,6 +824,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     ref={birthInputRef}
                     value={birth}
                         onChange={handleBirthChange}
+                        onFocus={handleInputFocus}
                         className="w-full px-2 sm:px-2.5 py-1.5 sm:py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="19880818"
                         maxLength={8}
@@ -826,6 +839,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     ref={phoneInputRef}
                     value={phone}
                     onChange={handlePhoneChange}
+                    onFocus={handleInputFocus}
                         className="w-full px-2 sm:px-2.5 py-1.5 sm:py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="01012345678"
                       />

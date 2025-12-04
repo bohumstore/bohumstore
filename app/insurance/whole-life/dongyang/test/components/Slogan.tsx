@@ -57,8 +57,22 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   ];
 
   // 입력 포커스 제어용 Ref
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const birthInputRef = useRef<HTMLInputElement>(null);
+  const phoneInputRef = useRef<HTMLInputElement>(null);
+  const otpInputRef = useRef<HTMLInputElement>(null);
   const consultOtpInputRef = useRef<HTMLInputElement>(null);
 
+  // 입력 필드 포커스 시 스크롤 조정
+  const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    const target = e.target;
+    // 모바일 환경에서 키보드가 올라올 때 입력창이 가려지지 않도록 중앙으로 스크롤
+    if (window.innerWidth < 768 && target) {
+      setTimeout(() => {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 300);
+    }
+  };
 
   // 타이머 효과
   useEffect(() => {
@@ -112,20 +126,18 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const birthYear = parseInt(birth.substring(0, 4));
     const birthMonth = parseInt(birth.substring(4, 6));
     const birthDay = parseInt(birth.substring(6, 8));
-    const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
-    
-    if (birthYear < 1900 || birthYear > new Date().getFullYear() ||
-        birthMonth < 1 || birthMonth > 12 ||
-        birthDay < 1 || birthDay > 31 ||
-        birthDate.getFullYear() !== birthYear ||
-        birthDate.getMonth() !== birthMonth - 1 ||
-        birthDate.getDate() !== birthDay) {
-      alert('올바른 생년월일을 입력해주세요.');
+    const today = new Date();
+    let age = today.getFullYear() - birthYear;
+    if (
+      today.getMonth() + 1 < birthMonth ||
+      (today.getMonth() + 1 === birthMonth && today.getDate() < birthDay)
+    ) {
+      age -= 1;
+    }
+    if (age < 15 || age > 70) {
+      alert('이 상품은 15세~70세까지만 가입 가능합니다.');
       return false;
     }
-
-    // 보험연령 안내는 모달에서 처리 (이 상품: 15~70세)
-    const formInsuranceAge = Number(getInsuranceAge(birth));
 
     if (!phone) { 
       alert('연락처를 입력해주세요.'); 
@@ -139,7 +151,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       alert('올바른 휴대폰 번호를 입력해주세요. (010으로 시작)');
       return false;
     }
-
 
     return true;
   }
@@ -161,49 +172,45 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     setShowResultModal(true);
   }
 
-
-
-
   const handleVerifyOTP = async () => {
-  const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-  if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 70) return;
-  if (otpCode.length !== OTP_CODE_LENGTH) {
-    alert(`${OTP_CODE_LENGTH}자리 인증번호를 입력해주세요.`);
-    return;
-  }
-
-  setVerifying(true);
-  try {
-    const res = await request.post("/api/verifyOTP", {
-      phone,
-      name,
-      birth,
-      gender,
-      code: otpCode,
-      counselType: counselType,
-      companyId: INSURANCE_COMPANY_ID,
-      productId: INSURANCE_PRODUCT_ID,
-      counselTime: consultTime,
-      mounthlyPremium: paymentAmount, // 실제 선택값
-      paymentPeriod: paymentPeriod,   // 실제 선택값
-      tenYearReturnRate: rate ? Math.round(rate * 100) : '-', // 환급률
-      interestValue, // 확정이자(실제 값)
-      refundValue,   // 예상해약환급금(실제 값)
-      templateId: "UB_8712"
-    });
-    if (res.data.success) {
-      setIsVerified(true);
-      alert("인증이 완료되었습니다!");
-    } else {
-      alert("인증에 실패했습니다.");
+    const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
+    if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 70) return;
+    if (otpCode.length !== OTP_CODE_LENGTH) {
+      alert(`${OTP_CODE_LENGTH}자리 인증번호를 입력해주세요.`);
+      return;
     }
-  } catch (e: any) {
-    alert(e.error || "인증에 실패했습니다.");
-  } finally {
-    setVerifying(false);
-  }
-};
 
+    setVerifying(true);
+    try {
+      const res = await request.post("/api/verifyOTP", {
+        phone,
+        name,
+        birth,
+        gender,
+        code: otpCode,
+        counselType: counselType,
+        companyId: INSURANCE_COMPANY_ID,
+        productId: INSURANCE_PRODUCT_ID,
+        counselTime: consultTime,
+        mounthlyPremium: paymentAmount, // 실제 선택값
+        paymentPeriod: paymentPeriod,   // 실제 선택값
+        tenYearReturnRate: rate ? Math.round(rate * 100) : '-', // 환급률
+        interestValue, // 확정이자(실제 값)
+        refundValue,   // 예상해약환급금(실제 값)
+        templateId: "UB_8712"
+      });
+      if (res.data.success) {
+        setIsVerified(true);
+        alert("인증이 완료되었습니다!");
+      } else {
+        alert("인증에 실패했습니다.");
+      }
+    } catch (e: any) {
+      alert(e.error || "인증에 실패했습니다.");
+    } finally {
+      setVerifying(false);
+    }
+  };
 
   const handleBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -211,6 +218,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const numbers = value.replace(/[^0-9]/g, '').slice(0, 8);
     setBirth(numbers);
     setIsVerified(false);
+    if (numbers.length === 8) {
+      setTimeout(() => phoneInputRef.current?.focus(), 0);
+    }
   }
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -227,6 +237,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     setOtpTimer(OTP_TIMER_DURATION);
     setOtpResendAvailable(false);
     await handlePostOTP();
+    setTimeout(() => otpInputRef.current?.focus(), 0);
   };
 
   const formatTime = (sec: number) => {
@@ -248,12 +259,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGender(e.target.value);
     setIsVerified(false);
+    setTimeout(() => nameInputRef.current?.focus(), 0);
   };
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
     setIsVerified(false);
   };
-
 
   const handleOpenConsultModal = () => {
     if (!isChecked) {
@@ -286,10 +297,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   };
 
   const handleConsultVerifyOTP = async () => {
-      if (consultOtpCode.length !== OTP_CODE_LENGTH) {
-    alert(`${OTP_CODE_LENGTH}자리 인증번호를 입력해주세요.`);
-    return;
-  }
+    if (consultOtpCode.length !== OTP_CODE_LENGTH) {
+      alert(`${OTP_CODE_LENGTH}자리 인증번호를 입력해주세요.`);
+      return;
+    }
     setVerifying(true);
     try {
       // 납입기간과 월납입금액이 있는 경우에만 계산값 사용
@@ -425,7 +436,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <ul className="mb-8 md:mb-10 lg:mb-8 space-y-2 md:space-y-3 lg:space-y-2">
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
-                10년시점 130% 해약환급률 보증 <span className="text-xs md:text-sm lg:text-xs align-baseline">(5년납)</span>
+                10년 시점 130% 해약환급률 보증 <span className="text-xs md:text-sm lg:text-xs align-baseline">(5년납)</span>
               </li>
               <li className="flex items-center text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-xl md:text-2xl lg:text-xl mr-2 md:mr-3 lg:mr-2 text-[#ff8c1a]">✔</span>
@@ -463,56 +474,62 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                       <label className="block text-sm font-medium text-gray-600 mb-1 cursor-pointer">성별</label>
                       <div className="flex gap-6">
                         <label className="flex items-center gap-2.5 cursor-pointer">
-                    <input 
-                      type="radio" 
-                      name="gender" 
+                          <input 
+                            type="radio" 
+                            name="gender" 
                             value="M"
                             checked={gender === "M"}
                             onChange={handleGenderChange}
                             className="w-5 h-5 text-blue-600 cursor-pointer"
                           />
                           <span className="text-base">남자</span>
-                  </label>
+                        </label>
                         <label className="flex items-center gap-2.5 cursor-pointer">
-                    <input 
-                      type="radio" 
-                      name="gender" 
+                          <input 
+                            type="radio" 
+                            name="gender" 
                             value="F"
                             checked={gender === "F"}
                             onChange={handleGenderChange}
                             className="w-5 h-5 text-blue-600 cursor-pointer"
                           />
                           <span className="text-base">여자</span>
-                  </label>
-                </div>
+                        </label>
+                      </div>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-600 mb-1 cursor-pointer">이름</label>
-                  <input 
-                    type="text" 
-                    value={name}
+                      <input 
+                        type="text" 
+                        value={name}
+                        ref={nameInputRef}
                         onChange={handleNameChange}
+                        onFocus={handleInputFocus}
                         className="w-full px-2.5 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="홍길동"
-                  />
-                </div>
+                      />
+                    </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-600 mb-1 cursor-pointer">생년월일</label>
-                  <input 
-                    type="text" 
-                    value={birth}
+                      <input 
+                        type="text" 
+                        value={birth}
+                        ref={birthInputRef}
                         onChange={handleBirthChange}
+                        onFocus={handleInputFocus}
                         className="w-full px-2.5 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="19880818"
                         maxLength={8}
-                  />
-                </div>
+                      />
+                    </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-600 mb-1 cursor-pointer">연락처</label>
-                  <input 
-                    type="text" 
-                    value={phone}
-                    onChange={handlePhoneChange}
+                      <input 
+                        type="text" 
+                        value={phone}
+                        ref={phoneInputRef}
+                        onChange={handlePhoneChange}
+                        onFocus={handleInputFocus}
                         className="w-full px-2.5 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="01012345678"
                       />
@@ -545,28 +562,28 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     type="submit"
                     className="w-full bg-[#3a8094] text-white font-bold rounded-xl py-4 text-lg hover:opacity-90 transition flex items-center justify-center gap-2 cursor-pointer"
                   >
-                  <CalculatorIcon className="w-6 h-6" />
-                  보험료 확인하기
-                </button>
+                    <CalculatorIcon className="w-6 h-6" />
+                    보험료 확인하기
+                  </button>
                   <div className="flex flex-row gap-2">
-                  <button 
-                    type="button" 
-                    onClick={handleOpenConsultModal}
-                    className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-4 text-lg flex items-center justify-center gap-2 hover:opacity-90 transition cursor-pointer"
-                  >
+                    <button 
+                      type="button" 
+                      onClick={handleOpenConsultModal}
+                      className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-4 text-lg flex items-center justify-center gap-2 hover:opacity-90 transition cursor-pointer"
+                    >
                       <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
                         <path strokeLinecap='round' strokeLinejoin='round' d='M2.25 12a9.75 9.75 0 1 1 19.5 0v3.375a2.625 2.625 0 0 1-2.625 2.625h-1.125a.375.375 0 0 1-.375-.375V15a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 0 .75-.75V12a8.25 8.25 0 1 0-16.5 0v1.5a.75.75 0 0 0 .75.75h.75A.75.75 0 0 1 6 15v2.625a.375.375 0 0 1-.375.375H4.5A2.625 2.625 0 0 1 1.875 15.375V12Z' />
                       </svg>
-                    상담신청
-                  </button>
+                      상담신청
+                    </button>
                     <a 
                       href="http://pf.kakao.com/_lrubxb/chat" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-4 text-lg flex items-center justify-center gap-2 hover:opacity-90 transition cursor-pointer"
                     >
-                    <ChatBubbleLeftRightIcon className="w-6 h-6" />
-                    채팅상담
+                      <ChatBubbleLeftRightIcon className="w-6 h-6" />
+                      채팅상담
                     </a>
                   </div>
                 </div>
@@ -710,6 +727,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <input
                     type="text"
                     value={otpCode}
+                    ref={otpInputRef}
                     onChange={(e) => {
                       const val = e.target.value.replace(/[^0-9]/g, '').slice(0, 6);
                       setOtpCode(val);

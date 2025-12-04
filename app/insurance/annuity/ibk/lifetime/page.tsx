@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import React from "react";
-import Header from "./components/Header";
 import Slogan from "./components/Slogan";
 import Footer from "./components/Footer";
 import PrivacyConsent from "../../../../components/PrivacyConsent";
@@ -54,7 +53,6 @@ export default function IBKLifetimeAnnuityPage() {
         <PrivacyConsent />
       </Modal>
       <div className="font-sans bg-[#f8f8f8] flex flex-col items-center w-full">
-        <Header />
         <Slogan onOpenPrivacy={() => setShowPrivacy(true)} onModalStateChange={setIsModalOpen} />
         {/* 상품 상세 영역 (탭/강조타이틀/설명/특약/일러스트/하단버튼) */}
         <section className="w-full bg-white py-8 sm:py-6 md:py-8 lg:py-10">

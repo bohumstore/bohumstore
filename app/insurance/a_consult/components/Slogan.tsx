@@ -335,6 +335,27 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     setIsVerified(false);
     setTimeout(() => nameInputRef.current?.focus(), 0);
   };
+  // 입력 필드 포커스 시 스크롤 조정
+  const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    const target = e.target;
+    // 모바일 환경에서 키보드가 올라올 때 입력창이 가려지지 않도록 중앙으로 스크롤
+    if (window.innerWidth < 768 && target) {
+      setTimeout(() => {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 300);
+    }
+  };
+
+  // 드롭다운 클릭 시 스크롤 조정
+  const handleDropdownClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const currentTarget = e.currentTarget;
+    if (window.innerWidth < 768 && currentTarget) {
+      setTimeout(() => {
+        currentTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+  };
+
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
     setIsVerified(false);
@@ -625,6 +646,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     ref={nameInputRef}
                     value={name}
                         onChange={handleNameChange}
+                        onFocus={handleInputFocus}
                         onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }}
                         onBlur={() => { if (name.trim()) { birthInputRef.current?.focus(); } }}
                         className="w-full px-2 sm:px-2.5 py-1.5 sm:py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
@@ -640,6 +662,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     ref={birthInputRef}
                     value={birth}
                         onChange={handleBirthChange}
+                        onFocus={handleInputFocus}
                         className="w-full px-2 sm:px-2.5 py-1.5 sm:py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="19880818"
                         maxLength={8}
@@ -654,6 +677,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     ref={phoneInputRef}
                     value={phone}
                     onChange={handlePhoneChange}
+                    onFocus={handleInputFocus}
                         className="w-full px-2 sm:px-2.5 py-1.5 sm:py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="01012345678"
                       />
@@ -666,7 +690,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   {/* 상담 종류 드롭다운 */}
                   <div className="relative" onBlur={() => setTimeout(() => setShowConsultTypeDropdown(false), 150)} tabIndex={-1}>
                       <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">상담 종류 <span className="text-red-500">*</span></label>
-                      <button type="button" onClick={() => setShowConsultTypeDropdown(!showConsultTypeDropdown)} className={`w-full p-2 text-center bg-white border rounded-md flex justify-center items-center ${consultType === '- 상담 종류 선택 -' ? 'border-gray-300 text-gray-400' : 'border-rose-400 text-gray-900'}`}>
+                      <button type="button" onClick={(e) => { setShowConsultTypeDropdown(!showConsultTypeDropdown); handleDropdownClick(e); }} className={`w-full p-2 text-center bg-white border rounded-md flex justify-center items-center ${consultType === '- 상담 종류 선택 -' ? 'border-gray-300 text-gray-400' : 'border-rose-400 text-gray-900'}`}>
                           <span className="flex-1">{consultType}</span>
                           <svg className={`w-4 h-4 transition-transform flex-shrink-0 ${showConsultTypeDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                       </button>
@@ -681,7 +705,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   {/* 상담 시간대 드롭다운 */}
                   <div className="relative" onBlur={() => setTimeout(() => setShowConsultTimeDropdown(false), 150)} tabIndex={-1}>
                       <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">상담 시간대 <span className="text-red-500">*</span></label>
-                      <button type="button" onClick={() => setShowConsultTimeDropdown(!showConsultTimeDropdown)} className={`w-full p-2 text-center bg-white border rounded-md flex justify-center items-center ${consultTime === '- 상담 시간대 선택 -' ? 'border-gray-300 text-gray-400' : 'border-rose-400 text-gray-900'}`}>
+                      <button type="button" onClick={(e) => { setShowConsultTimeDropdown(!showConsultTimeDropdown); handleDropdownClick(e); }} className={`w-full p-2 text-center bg-white border rounded-md flex justify-center items-center ${consultTime === '- 상담 시간대 선택 -' ? 'border-gray-300 text-gray-400' : 'border-rose-400 text-gray-900'}`}>
                           <span className="flex-1">{consultTime}</span>
                           <svg className={`w-4 h-4 transition-transform flex-shrink-0 ${showConsultTimeDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                       </button>
