@@ -695,7 +695,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                           <svg className={`w-4 h-4 transition-transform flex-shrink-0 ${showConsultTypeDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                       </button>
                       {showConsultTypeDropdown && (
-                          <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md mt-1 shadow-lg max-h-48 overflow-y-auto">
+                          <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md mt-1 shadow-lg max-h-48 overflow-y-auto overscroll-contain">
                               {consultTypeOptions.map(option => (
                                   <li key={option} onClick={() => { setConsultType(option); setShowConsultTypeDropdown(false); }} className={`p-2 hover:bg-rose-50 cursor-pointer text-sm text-center ${option === '- 상담 종류 선택 -' ? 'text-gray-400' : ''}`}>{option}</li>
                               ))}
@@ -710,7 +710,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                           <svg className={`w-4 h-4 transition-transform flex-shrink-0 ${showConsultTimeDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                       </button>
                       {showConsultTimeDropdown && (
-                          <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md mt-1 shadow-lg max-h-40 overflow-y-auto">
+                          <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md mt-1 shadow-lg max-h-40 overflow-y-auto overscroll-contain">
                               {consultTimeOptions.map(option => (
                                   <li key={option} onClick={() => { setConsultTime(option); setShowConsultTimeDropdown(false); }} className={`p-2 hover:bg-rose-50 cursor-pointer text-sm text-center ${option === '- 상담 시간대 선택 -' ? 'text-gray-400' : ''}`}>{option}</li>
                               ))}
