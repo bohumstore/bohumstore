@@ -137,32 +137,31 @@ jobs:
             # Nginx 설정 (HTTPS 우선, HTTP 리다이렉트)
             sudo rm -rf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
             
-            # SSL 인증서 확인 후 HTTPS 설정
-            if [ -f /etc/letsencrypt/live/bohumstore.net/fullchain.pem ] && [ -f /etc/letsencrypt/live/bohumstore.net/privkey.pem ]; then
-              echo "✅ SSL 인증서 확인됨 - HTTPS 설정 적용"
-              # HTTPS 설정 파일 생성 (echo 방식)
-              sudo rm -f /etc/nginx/sites-available/default
-              echo "server {" | sudo tee /etc/nginx/sites-available/default
-              echo "    listen 80;" | sudo tee -a /etc/nginx/sites-available/default
-              echo "    server_name bohumstore.net;" | sudo tee -a /etc/nginx/sites-available/default
-              echo "    return 301 https://\$server_name\$request_uri;" | sudo tee -a /etc/nginx/sites-available/default
-              echo "}" | sudo tee -a /etc/nginx/sites-available/default
-              echo "" | sudo tee -a /etc/nginx/sites-available/default
-              echo "server {" | sudo tee -a /etc/nginx/sites-available/default
-              echo "    listen 443 ssl;" | sudo tee -a /etc/nginx/sites-available/default
-              echo "    server_name bohumstore.net;" | sudo tee -a /etc/nginx/sites-available/default
-              echo "    ssl_certificate /etc/letsencrypt/live/bohumstore.net/fullchain.pem;" | sudo tee -a /etc/nginx/sites-available/default
-              echo "    ssl_certificate_key /etc/letsencrypt/live/bohumstore.net/privkey.pem;" | sudo tee -a /etc/nginx/sites-available/default
-              echo "    location / {" | sudo tee -a /etc/nginx/sites-available/default
-              echo "        proxy_pass http://localhost:3000;" | sudo tee -a /etc/nginx/sites-available/default
-              echo "        proxy_set_header Host \$host;" | sudo tee -a /etc/nginx/sites-available/default
-              echo "        proxy_set_header X-Real-IP \$remote_addr;" | sudo tee -a /etc/nginx/sites-available/default
-              echo "    }" | sudo tee -a /etc/nginx/sites-available/default
-              echo "}" | sudo tee -a /etc/nginx/sites-available/default
-            else
-              echo "⚠️  SSL 인증서 없음 - HTTP만 설정"
-              echo "server { listen 80; location / { proxy_pass http://localhost:3000; } }" | sudo tee /etc/nginx/sites-available/default
-            fi
+            # SSL 인증서 파일 확인 (디버깅)
+            echo "=== SSL 인증서 파일 확인 ==="
+            sudo ls -la /etc/letsencrypt/live/ || echo "letsencrypt 디렉토리 없음"
+            sudo ls -la /etc/letsencrypt/live/bohumstore.net/ || echo "bohumstore.net 인증서 디렉토리 없음"
+            
+            # 강제 HTTPS 설정 (인증서 존재하므로)
+            echo "✅ 강제 HTTPS 설정 적용"
+            sudo rm -f /etc/nginx/sites-available/default
+            echo "server {" | sudo tee /etc/nginx/sites-available/default
+            echo "    listen 80;" | sudo tee -a /etc/nginx/sites-available/default
+            echo "    server_name bohumstore.net;" | sudo tee -a /etc/nginx/sites-available/default
+            echo "    return 301 https://\$server_name\$request_uri;" | sudo tee -a /etc/nginx/sites-available/default
+            echo "}" | sudo tee -a /etc/nginx/sites-available/default
+            echo "" | sudo tee -a /etc/nginx/sites-available/default
+            echo "server {" | sudo tee -a /etc/nginx/sites-available/default
+            echo "    listen 443 ssl;" | sudo tee -a /etc/nginx/sites-available/default
+            echo "    server_name bohumstore.net;" | sudo tee -a /etc/nginx/sites-available/default
+            echo "    ssl_certificate /etc/letsencrypt/live/bohumstore.net/fullchain.pem;" | sudo tee -a /etc/nginx/sites-available/default
+            echo "    ssl_certificate_key /etc/letsencrypt/live/bohumstore.net/privkey.pem;" | sudo tee -a /etc/nginx/sites-available/default
+            echo "    location / {" | sudo tee -a /etc/nginx/sites-available/default
+            echo "        proxy_pass http://localhost:3000;" | sudo tee -a /etc/nginx/sites-available/default
+            echo "        proxy_set_header Host \$host;" | sudo tee -a /etc/nginx/sites-available/default
+            echo "        proxy_set_header X-Real-IP \$remote_addr;" | sudo tee -a /etc/nginx/sites-available/default
+            echo "    }" | sudo tee -a /etc/nginx/sites-available/default
+            echo "}" | sudo tee -a /etc/nginx/sites-available/default
             sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
             sudo systemctl enable nginx
             
@@ -213,13 +212,19 @@ jobs:
             echo "=== localhost:3000 연결 테스트 ==="
             curl -I http://localhost:3000 || echo "localhost:3000 연결 실패"
             
-            # Nginx 재시작 (80번 포트용)
+            # Nginx 설정 테스트 및 재시작
+            echo "=== Nginx 설정 테스트 ==="
             sudo nginx -t
             if [ \$? -eq 0 ]; then
+              echo "✅ Nginx 설정 테스트 성공"
               sudo systemctl restart nginx
-              echo "✅ Nginx 80번 포트 준비 완료"
+              sudo systemctl status nginx --no-pager -l
+              echo "✅ Nginx HTTPS 준비 완료"
+              echo "📋 확인 필요: AWS 보안그룹에서 443 포트(HTTPS) 열어야 함"
             else
-              echo "⚠️  Nginx 설정 오류, 3000번 포트만 사용"
+              echo "⚠️  Nginx 설정 오류 - HTTP만 사용"
+              echo "server { listen 80; location / { proxy_pass http://localhost:3000; } }" | sudo tee /etc/nginx/sites-available/default
+              sudo systemctl restart nginx
             fi
             
             echo "✅ 배포 완료!"
