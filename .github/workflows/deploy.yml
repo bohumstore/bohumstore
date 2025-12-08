@@ -72,7 +72,7 @@ jobs:
 
       - name: Create deployment package
         run: |
-          tar -czf deployment.tar.gz .next node_modules/next package.json package-lock.json .env.production
+          tar -czf deployment.tar.gz .next node_modules/next package.json package-lock.json .env.production public
 
       - name: Upload deployment package
         uses: actions/upload-artifact@v4
@@ -124,10 +124,22 @@ jobs:
               sudo apt-get install -y nginx
             fi
             
-            # Nginx 완전 초기화 및 최소 설정
-            sudo systemctl stop nginx || true
+            # SSL 인증서 설치 (Let's Encrypt)
+            if [ ! -f /etc/letsencrypt/live/bohumstore.net/fullchain.pem ]; then
+              sudo apt-get install -y certbot python3-certbot-nginx
+              sudo systemctl stop nginx || true
+              sudo certbot certonly --standalone -d bohumstore.net --non-interactive --agree-tos --email admin@bohumstore.net || echo "SSL 인증서 설정 실패 - HTTP만 사용"
+            fi
+            
+            # Nginx 설정 (HTTPS 우선, HTTP 리다이렉트)
             sudo rm -rf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-            echo "server { listen 80; location / { proxy_pass http://localhost:3000; } }" | sudo tee /etc/nginx/sites-available/default
+            if [ -f /etc/letsencrypt/live/bohumstore.net/fullchain.pem ]; then
+              # HTTPS 설정
+              echo "server { listen 80; return 301 https://\$server_name\$request_uri; } server { listen 443 ssl; ssl_certificate /etc/letsencrypt/live/bohumstore.net/fullchain.pem; ssl_certificate_key /etc/letsencrypt/live/bohumstore.net/privkey.pem; location / { proxy_pass http://localhost:3000; } }" | sudo tee /etc/nginx/sites-available/default
+            else
+              # HTTP만 설정
+              echo "server { listen 80; location / { proxy_pass http://localhost:3000; } }" | sudo tee /etc/nginx/sites-available/default
+            fi
             sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
             sudo systemctl enable nginx
             
