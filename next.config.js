@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Standalone 모드 활성화 (도커/EC2 배포 시 필수 최적화)
+  // 필요한 파일만 추려서 실행하므로 가볍고 빠름
+  output: 'standalone',
+  
   turbopack: {
     rules: {
       '*.svg': {
