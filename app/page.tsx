@@ -538,7 +538,7 @@ export default function HomePage() {
                                     alt={slogan.company} 
                                     width={60} 
                                     height={60} 
-                                    className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 object-contain drop-shadow-lg transition-all duration-700 group-hover:rotate-12 group-hover:scale-110"
+                                    className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 object-contain drop-shadow-lg transition-all duration-700 group-hover:scale-110"
                                   />
                                 </div>
                               )}
