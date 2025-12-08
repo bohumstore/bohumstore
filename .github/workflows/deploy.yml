@@ -151,12 +151,17 @@ jobs:
               pm2 delete "\$APP_NAME"
             fi
             
-            pm2 start node_modules/next/dist/bin/next --name "\$APP_NAME" -- start
+            pm2 start node_modules/next/dist/bin/next --name "\$APP_NAME" -- start -H 0.0.0.0
             pm2 save
             
-            # Nginx 재시작
-            sudo systemctl restart nginx
-            sudo systemctl status nginx --no-pager
+            # Nginx 재시작 (80번 포트용)
+            sudo nginx -t
+            if [ \$? -eq 0 ]; then
+              sudo systemctl restart nginx
+              echo "✅ Nginx 80번 포트 준비 완료"
+            else
+              echo "⚠️  Nginx 설정 오류, 3000번 포트만 사용"
+            fi
             
             echo "✅ 배포 완료!"
           EOF
