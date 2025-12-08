@@ -145,17 +145,16 @@ jobs:
             node -v
             npm -v
 
-            # === 환경변수(.env) 생성 ===
+            # === 환경변수(.env) 생성 (안전한 방식) ===
             echo "Creating .env.production..."
-            cat > .env.production <<ENV
-NEXT_PUBLIC_SUPABASE_URL=https://ttbwyuenbcsvnixvlaxi.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0Ynd5dWVuYmNzdm5peHZsYXhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MTQ5NDYsImV4cCI6MjA2NjQ5MDk0Nn0.e0eCn67ol3n3RMRlEKPNgfXipmfe84bYFORuvrO0vYQ
-ALIGO_API_KEY=sikjbqg1q2b28ypkiwu16s96v35ax3ws
-ALIGO_SENDER_KEY=26efd14d29bc820796c85a6fa84102e4d3cd0e1c
-ALIGO_USER_ID=urisky1
-NEXT_PUBLIC_KAKAO_REST_API_KEY=132e4aea952cb67e1824b97ed215fbb8
-NEXT_PUBLIC_KAKAO_ADMIN_KEY=6c384b1fb375be4acd649ee4d1aa4285
-ENV
+            rm -f .env.production
+            echo "NEXT_PUBLIC_SUPABASE_URL=https://ttbwyuenbcsvnixvlaxi.supabase.co" >> .env.production
+            echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0Ynd5dWVuYmNzdm5peHZsYXhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MTQ5NDYsImV4cCI6MjA2NjQ5MDk0Nn0.e0eCn67ol3n3RMRlEKPNgfXipmfe84bYFORuvrO0vYQ" >> .env.production
+            echo "ALIGO_API_KEY=sikjbqg1q2b28ypkiwu16s96v35ax3ws" >> .env.production
+            echo "ALIGO_SENDER_KEY=26efd14d29bc820796c85a6fa84102e4d3cd0e1c" >> .env.production
+            echo "ALIGO_USER_ID=urisky1" >> .env.production
+            echo "NEXT_PUBLIC_KAKAO_REST_API_KEY=132e4aea952cb67e1824b97ed215fbb8" >> .env.production
+            echo "NEXT_PUBLIC_KAKAO_ADMIN_KEY=6c384b1fb375be4acd649ee4d1aa4285" >> .env.production
 
             echo "[3/6] Install deps"
             npm ci --quiet || npm install --quiet
