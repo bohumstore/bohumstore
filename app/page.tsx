@@ -294,21 +294,13 @@ const chatScenarios = [
 ];
 
 export default function HomePage() {
-  const [currentIndex, setCurrentIndex] = useState(1);
-  const [transitionDuration, setTransitionDuration] = useState(500);
+  const [currentSloganIndex, setCurrentSloganIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [currentScenario, setCurrentScenario] = useState(chatScenarios[0]);
-  const [isSliding, setIsSliding] = useState(false);
-
   const dragStartXRef = useRef<number | null>(null);
   const lastXRef = useRef<number | null>(null);
   const draggingRef = useRef(false);
-
-  // Infinite loop: Clone last to start, first to end
-  const extendedSlogans = [slogans[slogans.length - 1], ...slogans, slogans[0]];
-  
-  // Calculate real index (0 to N-1) for display logic
-  const realIndex = (currentIndex - 1 + slogans.length) % slogans.length;
+  const resumeTimerRef = useRef<any>(null);
 
   const today = new Date();
   const currentYear = today.getFullYear();
@@ -321,57 +313,37 @@ export default function HomePage() {
 
   // 슬라이드가 변경될 때마다 시나리오 랜덤 변경 (첫 번째 슬라이드일 때)
   useEffect(() => {
-    if (realIndex === 0) {
+    if (currentSloganIndex === 0) {
       setCurrentScenario(chatScenarios[Math.floor(Math.random() * chatScenarios.length)]);
     }
-  }, [realIndex]);
-
-  const goToNext = () => {
-    if (isSliding) return;
-    setIsSliding(true);
-    setTransitionDuration(500);
-    setCurrentIndex((prev) => prev + 1);
-  };
-
-  const goToPrevious = () => {
-    if (isSliding) return;
-    setIsSliding(true);
-    setTransitionDuration(500);
-    setCurrentIndex((prev) => prev - 1);
-  };
-  
-  const handleTransitionEnd = () => {
-    setIsSliding(false);
-
-    // Boundary checks for seamless loop
-    if (currentIndex === 0) {
-      // Cloned Last -> Jump to Real Last
-      setTransitionDuration(0);
-      setCurrentIndex(slogans.length);
-    } else if (currentIndex === extendedSlogans.length - 1) {
-      // Cloned First -> Jump to Real First
-      setTransitionDuration(0);
-      setCurrentIndex(1);
-    }
-  };
+  }, [currentSloganIndex]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
-    if (isAutoPlaying && !isSliding) {
+    if (isAutoPlaying) {
       interval = setInterval(() => {
-        goToNext();
+        setCurrentSloganIndex((prevIndex) => 
+          prevIndex === slogans.length - 1 ? 0 : prevIndex + 1
+        );
       }, 5000);
     }
 
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isAutoPlaying, isSliding]); // Re-create interval when sliding state changes
+  }, [isAutoPlaying]);
+
+  const goToPrevious = () => {
+    setCurrentSloganIndex((prev) => (prev - 1 + slogans.length) % slogans.length);
+  };
+
+  const goToNext = () => {
+    setCurrentSloganIndex((prev) => (prev + 1) % slogans.length);
+  };
 
   // Swipe / Drag support
   const startDrag = (x: number) => {
-    if (isSliding) return;
     draggingRef.current = true;
     dragStartXRef.current = x;
     lastXRef.current = x;
@@ -398,8 +370,7 @@ export default function HomePage() {
     }
   };
 
-  // Check if we are in the "static" state (instant jump) to prevent re-animation
-  const showStatic = transitionDuration === 0;
+  const currentSlogan = slogans[currentSloganIndex];
 
   return (
     <div className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full">
@@ -419,18 +390,13 @@ export default function HomePage() {
         {/* 슬로건 캐러셀 */}
         <div className="relative w-full overflow-hidden group">
           <div 
-            className="flex h-full ease-in-out"
-            style={{ 
-              transform: `translateX(-${currentIndex * 100}%)`,
-              transitionDuration: `${transitionDuration}ms`
-            }}
-            onTransitionEnd={handleTransitionEnd}
+            className="flex transition-transform duration-500 ease-in-out h-full"
+            style={{ transform: `translateX(-${currentSloganIndex * 100}%)` }}
           >
-            {extendedSlogans.map((slogan, index) => {
-              const isActive = index === currentIndex;
-              // Unique key logic: use index since array is static for rendering purpose
+            {slogans.map((slogan, index) => {
+              const isActive = index === currentSloganIndex;
               return (
-                <div key={index} className="w-full flex-shrink-0 relative">
+                <div key={slogan.id} className="w-full flex-shrink-0 relative">
                   <div className={`w-full min-h-[540px] md:min-h-[680px] lg:h-[480px] ${slogan.id === 'consult-main' ? 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50' :
                                                                  slogan.id === 'kb-triple-level-up' ? 'bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50' :
                                                                  slogan.id === 'ibk-lifetime' ? 'bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50' : 
@@ -470,7 +436,7 @@ export default function HomePage() {
                             <div className="relative z-10 max-w-6xl w-full mx-auto px-4 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center h-full">
                               {/* 텍스트 영역 (왼쪽) */}
                               <div className="text-center lg:text-left order-1 flex flex-col justify-center">
-                                <div className={`inline-flex mx-auto lg:mx-0 items-center gap-2 px-3 py-1 rounded-full bg-white border border-blue-100 text-slate-700 text-xs md:text-sm font-bold mb-3 md:mb-6 shadow-sm w-fit ${isActive ? (showStatic ? 'opacity-100' : 'animate-slide-in-up') : 'opacity-0'}`}>
+                                <div className={`inline-flex mx-auto lg:mx-0 items-center gap-2 px-3 py-1 rounded-full bg-white border border-blue-100 text-slate-700 text-xs md:text-sm font-bold mb-3 md:mb-6 shadow-sm w-fit ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`}>
                                   <span className="relative flex h-2 w-2">
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                                     <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
@@ -483,12 +449,12 @@ export default function HomePage() {
                                   </span>
                                 </div>
                                 
-                                <h2 className={`text-2xl sm:text-4xl lg:text-6xl font-bold text-slate-900 leading-tight mb-3 md:mb-6 ${isActive ? (showStatic ? 'opacity-100' : 'animate-slide-in-up') : 'opacity-0'}`} style={{animationDelay: showStatic ? '0s' : '0.1s'}}>
+                                <h2 className={`text-2xl sm:text-4xl lg:text-6xl font-bold text-slate-900 leading-tight mb-3 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.1s'}}>
                                   {currentMonth}월 보험 이슈,<br />
                                   <span className="text-blue-600">확인하셨나요?</span>
                                 </h2>
                                 
-                                <p className={`text-sm sm:text-lg text-slate-600 mb-4 md:mb-8 leading-relaxed ${isActive ? (showStatic ? 'opacity-100' : 'animate-slide-in-up') : 'opacity-0'}`} style={{animationDelay: showStatic ? '0s' : '0.2s'}}>
+                                <p className={`text-sm sm:text-lg text-slate-600 mb-4 md:mb-8 leading-relaxed ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
                                   <span className="md:hidden">
                                     매달 달라지는 보험,<br/>
                                     전문가가 꼼꼼히 챙겨드려요.
@@ -499,7 +465,7 @@ export default function HomePage() {
                                   </span>
                                 </p>
                                 
-                                <div className={`flex flex-col sm:flex-row gap-3 justify-center lg:justify-start ${isActive ? (showStatic ? 'opacity-100' : 'animate-slide-in-up') : 'opacity-0'}`} style={{animationDelay: showStatic ? '0s' : '0.3s'}}>
+                                <div className={`flex flex-col sm:flex-row gap-3 justify-center lg:justify-start ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.3s'}}>
                                   <Link 
                                     href="/insurance/a_consult"
                                     className="px-6 py-3 md:px-8 md:py-4 bg-blue-600 text-white text-base md:text-lg font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-500/30 flex items-center justify-center gap-2 group"
@@ -511,7 +477,7 @@ export default function HomePage() {
                               </div>
 
                               {/* 비주얼 영역 (오른쪽) - 채팅 UI 컨셉 (이슈 관련 대화) */}
-                              <div className={`order-2 flex justify-center lg:justify-end items-center ${isActive ? (showStatic ? 'opacity-100' : 'animate-fade-in') : 'opacity-0'}`} style={{animationDelay: showStatic ? '0s' : '0.2s'}}>
+                              <div className={`order-2 flex justify-center lg:justify-end items-center ${isActive ? 'animate-fade-in' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
                                  <div className="relative w-[300px] md:w-[360px] bg-slate-50 rounded-2xl md:rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
                                     {/* 채팅방 헤더 */}
                                     <div className="bg-white p-3 md:p-4 border-b border-slate-100 flex items-center gap-3 shadow-sm relative z-10">
@@ -528,7 +494,7 @@ export default function HomePage() {
                                     {/* 채팅 내용 */}
                                     <div className="p-3 md:p-5 space-y-3 md:space-y-4 bg-slate-50 h-[240px] md:h-[340px] flex flex-col justify-center overflow-y-auto scrollbar-hide">
                                       {Array.isArray(currentScenario) && currentScenario.map((msg, idx) => (
-                                        <div key={idx} className={`flex ${msg.role === 'customer' ? 'justify-end' : 'justify-start'} ${isActive ? (showStatic ? 'opacity-100' : 'animate-slide-in-up') : 'opacity-0'}`} style={{animationDelay: showStatic ? '0s' : `${0.3 + idx * 0.5}s`}}>
+                                        <div key={idx} className={`flex ${msg.role === 'customer' ? 'justify-end' : 'justify-start'} ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: `${0.3 + idx * 0.5}s`}}>
                                           <div className={`${msg.role === 'customer' 
                                             ? 'bg-yellow-100 text-slate-800 rounded-tr-none' 
                                             : 'bg-white text-slate-800 rounded-tl-none border border-slate-100'} 
@@ -572,20 +538,20 @@ export default function HomePage() {
                                     alt={slogan.company} 
                                     width={60} 
                                     height={60} 
-                                    className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 object-contain drop-shadow-lg transition-all duration-700 group-hover:scale-110"
+                                    className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 object-contain drop-shadow-lg transition-all duration-700 group-hover:rotate-12 group-hover:scale-110"
                                   />
                                 </div>
                               )}
-                              <span className={`text-base md:text-lg lg:text-xl font-medium text-gray-700 drop-shadow-sm ${isActive ? (showStatic ? 'opacity-100' : 'animate-fade-in') : 'opacity-0'}`}>{slogan.company}</span>
+                              <span className={`text-base md:text-lg lg:text-xl font-medium text-gray-700 drop-shadow-sm ${isActive ? 'animate-fade-in' : 'opacity-0'}`}>{slogan.company}</span>
                             </div>
                             
-                            <h2 className={`text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight drop-shadow-sm whitespace-pre-line ${isActive ? (showStatic ? 'opacity-100' : 'animate-slide-in-left') : 'opacity-0'}`}>
+                            <h2 className={`text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight drop-shadow-sm whitespace-pre-line ${isActive ? 'animate-slide-in-left' : 'opacity-0'}`}>
                               {slogan.title}
                             </h2>
-                            <p className={`text-lg md:text-xl lg:text-2xl font-semibold text-gray-700 mb-4 md:mb-6 leading-tight drop-shadow-sm whitespace-pre-line ${isActive ? (showStatic ? 'opacity-100' : 'animate-slide-in-left') : 'opacity-0'}`} style={{animationDelay: showStatic ? '0s' : '0.2s'}}>
+                            <p className={`text-lg md:text-xl lg:text-2xl font-semibold text-gray-700 mb-4 md:mb-6 leading-tight drop-shadow-sm whitespace-pre-line ${isActive ? 'animate-slide-in-left' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
                               {slogan.subtitle}
                             </p>
-                            <p className={`text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed mb-6 md:mb-8 max-w-2xl mx-auto lg:mx-0 drop-shadow-sm ${isActive ? (showStatic ? 'opacity-100' : 'animate-slide-in-left') : 'opacity-0'}`} style={{animationDelay: showStatic ? '0s' : '0.4s'}}>
+                            <p className={`text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed mb-6 md:mb-8 max-w-2xl mx-auto lg:mx-0 drop-shadow-sm ${isActive ? 'animate-slide-in-left' : 'opacity-0'}`} style={{animationDelay: '0.4s'}}>
                               {slogan.description}
                             </p>
                             
@@ -593,7 +559,7 @@ export default function HomePage() {
                             <div className="text-center lg:text-left">
                               <Link 
                                 href={slogan.path}
-                                className={`inline-flex items-center px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-white shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm md:text-base lg:text-lg transition-all duration-300 bg-gradient-to-r ${slogan.color} hover:scale-105 ${isActive ? (showStatic ? 'opacity-100' : 'animate-slide-in-left') : 'opacity-0'}`} style={{animationDelay: showStatic ? '0s' : '0.8s'}}
+                                className={`inline-flex items-center px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-white shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm md:text-base lg:text-lg transition-all duration-300 bg-gradient-to-r ${slogan.color} hover:scale-105 ${isActive ? 'animate-slide-in-left' : 'opacity-0'}`} style={{animationDelay: '0.8s'}}
                               >
                                 <span className="flex items-center">
                                   {slogan.id === 'consult-main' ? '무료 상담 신청하기' : '자세히 보기'}
@@ -611,7 +577,7 @@ export default function HomePage() {
                             </h3>
                             <div className="space-y-3 md:space-y-4">
                               {slogan.features.map((feature, index) => (
-                                <div key={index} className={`flex items-start gap-3 group hover:bg-white/60 p-3 rounded-lg transition-all duration-200 bg-white/40 backdrop-blur-sm ${isActive ? (showStatic ? 'opacity-100' : 'animate-slide-in-up') : 'opacity-0'}`} style={{animationDelay: showStatic ? '0s' : `${0.6 + index * 0.1}s`}}>
+                                <div key={index} className={`flex items-start gap-3 group hover:bg-white/60 p-3 rounded-lg transition-all duration-200 bg-white/40 backdrop-blur-sm ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: `${0.6 + index * 0.1}s`}}>
                                   <div className={`w-2 h-2 rounded-full mt-2 bg-gradient-to-r ${slogan.color} group-hover:scale-125 transition-transform duration-200`}></div>
                                   <span className="text-sm md:text-base text-gray-700 leading-tight group-hover:text-gray-900 transition-colors duration-200 font-medium">{feature}</span>
                                 </div>
@@ -626,9 +592,7 @@ export default function HomePage() {
                 </div>
               );
             })}
-          </div>
-
-          {/* 네비게이션 버튼 */}
+          </div>    {/* 네비게이션 버튼 */}
           <button
             onClick={goToPrevious}
             className="absolute left-2 md:left-4 lg:left-8 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-700 hover:text-gray-900 p-2 md:p-3 rounded-full shadow-lg backdrop-blur-sm transition-all hover:scale-110 z-20 border border-white/20"
@@ -663,15 +627,10 @@ export default function HomePage() {
               {slogans.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => {
-                      if (isSliding) return;
-                      setIsSliding(true);
-                      setTransitionDuration(500);
-                      setCurrentIndex(index + 1);
-                  }}
+                  onClick={() => setCurrentSloganIndex(index)}
                   className={`w-3 h-3 md:w-4 md:h-4 rounded-full transition-all duration-300 ${
-                    index === realIndex
-                      ? `bg-gradient-to-r ${slogans[index].color} w-8 md:w-12 shadow-lg`
+                    index === currentSloganIndex
+                      ? `bg-gradient-to-r ${currentSlogan.color} w-8 md:w-12 shadow-lg`
                       : 'bg-white/60 hover:bg-white/80 hover:scale-110'
                   }`}
                   aria-label={`${index + 1}번 슬라이드로 이동`}
