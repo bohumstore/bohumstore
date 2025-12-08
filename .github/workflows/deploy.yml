@@ -141,11 +141,7 @@ jobs:
             git fetch --all --prune
             git reset --hard origin/master
 
-            echo "[2/6] Upgrade Node.js to v20 (LTS)"
-            # 복잡한 체크 없이 무조건 Node 20.x 설치 (가장 안정적)
-            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-            sudo apt-get install -y nodejs
-            
+            echo "[2/6] Check Node/npm"
             node -v
             npm -v
 
@@ -173,6 +169,8 @@ ENV
 
             echo "[5/6] Build"
             rm -rf .next
+            # 메모리 제한 옵션 추가 (빌드 멈춤 방지)
+            export NODE_OPTIONS="--max-old-space-size=2048"
             NODE_ENV=${NODE_ENV:-production} npm run build
 
             echo "[6/6] PM2 Force Restart (Memory Optimized)"
