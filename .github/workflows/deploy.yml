@@ -118,21 +118,18 @@ jobs:
               sudo npm install -g pm2
             fi
             
-            # Nginx 설치 및 설정
+            # Nginx 설치 및 설정 (완전 초기화)
             if ! command -v nginx >/dev/null 2>&1; then
               sudo apt-get update
               sudo apt-get install -y nginx
-              sudo systemctl enable nginx
-              
-              # 기본 Nginx 설정 제거 후 간단한 프록시 설정
-              sudo rm -f /etc/nginx/sites-available/default
-              echo "server {" | sudo tee /etc/nginx/sites-available/default
-              echo "  listen 80 default_server;" | sudo tee -a /etc/nginx/sites-available/default  
-              echo "  location / {" | sudo tee -a /etc/nginx/sites-available/default
-              echo "    proxy_pass http://localhost:3000;" | sudo tee -a /etc/nginx/sites-available/default
-              echo "  }" | sudo tee -a /etc/nginx/sites-available/default
-              echo "}" | sudo tee -a /etc/nginx/sites-available/default
             fi
+            
+            # Nginx 완전 초기화 및 최소 설정
+            sudo systemctl stop nginx || true
+            sudo rm -rf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+            echo "server { listen 80; location / { proxy_pass http://localhost:3000; } }" | sudo tee /etc/nginx/sites-available/default
+            sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+            sudo systemctl enable nginx
             
             # 배포 디렉토리 준비
             mkdir -p "${EC2_PATH}"
