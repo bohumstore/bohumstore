@@ -78,6 +78,46 @@ jobs:
               sudo npm i -g pm2
             fi
 
+            # === 스왑 메모리 설정 (2GB) ===
+            # 메모리가 1GB인 EC2 t2.micro에서 빌드/실행 시 멈춤 방지
+            if ! grep -q "swapfile" /proc/swaps; then
+              echo "[bootstrap] Creating 2GB Swapfile..."
+              sudo fallocate -l 2G /swapfile || sudo dd if=/dev/zero of=/swapfile bs=1M count=2048
+              sudo chmod 600 /swapfile
+              sudo mkswap /swapfile
+              sudo swapon /swapfile
+              echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+              echo "[bootstrap] Swapfile created."
+            else
+              echo "[bootstrap] Swapfile already exists."
+            fi
+
+            # === Nginx 타임아웃 설정 (504 에러 방지) ===
+            echo "[bootstrap] Configuring Nginx timeouts..."
+            # Nginx 설정 파일 경로 찾기 (보통 default)
+            NGINX_CONF="/etc/nginx/sites-available/default"
+            if [ -f "\$NGINX_CONF" ]; then
+              # 이미 설정되어 있는지 확인 후 없으면 추가
+              if ! grep -q "proxy_read_timeout" "\$NGINX_CONF"; then
+                # location / 블록 안에 설정 추가 (임시로 파일 끝이나 적절한 위치에 sed로 삽입 시도하되, 안전하게 server 블록 안에 넣는 것이 좋음)
+                # 여기서는 간단하게 http 블록(nginx.conf) 또는 해당 파일의 server 블록 내에 적용되도록 유도
+                # 가장 안전한 방법: 별도 설정 파일 생성 후 include (복잡함)
+                # 차선책: sed로 location / { ... } 안에 넣기. 하지만 구조가 다양할 수 있음.
+                # 가장 확실한 방법: 전체 Nginx 설정에 적용되도록 nginx.conf의 http 블록 수정
+                sudo sed -i '/http {/a \ \ \ \ proxy_read_timeout 300;\n    proxy_connect_timeout 300;\n    proxy_send_timeout 300;' /etc/nginx/nginx.conf
+                echo "[bootstrap] Nginx timeouts updated in nginx.conf"
+              else
+                 echo "[bootstrap] Nginx timeouts might already be set."
+              fi
+              
+              # 혹시 모르니 사이트 설정에서도 강제 적용 시도
+              sudo sed -i 's/proxy_read_timeout [0-9]*;/proxy_read_timeout 300;/' "\$NGINX_CONF" 2>/dev/null || true
+              
+              sudo nginx -t && sudo systemctl reload nginx
+            else
+               echo "[bootstrap] Nginx config not found, skipping..."
+            fi
+
             mkdir -p "${EC2_PATH}"
             cd "${EC2_PATH}"
 
@@ -101,9 +141,28 @@ jobs:
             git fetch --all --prune
             git reset --hard origin/master
 
-            echo "[2/6] Check Node/npm"
+            echo "[2/6] Check Node/npm & Upgrade if needed"
+            # Node.js 20+ 필요하므로 버전 확인 후 업그레이드
+            CURRENT_NODE=\$(node -v)
+            if [[ "\$CURRENT_NODE" == v18* ]] || [[ "\$CURRENT_NODE" == v16* ]] || [[ "\$CURRENT_NODE" == v14* ]]; then
+              echo "Node.js is old (\$CURRENT_NODE). Installing Node 22..."
+              curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+              sudo apt-get install -y nodejs
+            fi
             node -v
             npm -v
+
+            # === 환경변수(.env) 생성 ===
+            echo "Creating .env.production..."
+            cat > .env.production <<ENV
+NEXT_PUBLIC_SUPABASE_URL=https://ttbwyuenbcsvnixvlaxi.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0Ynd5dWVuYmNzdm5peHZsYXhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MTQ5NDYsImV4cCI6MjA2NjQ5MDk0Nn0.e0eCn67ol3n3RMRlEKPNgfXipmfe84bYFORuvrO0vYQ
+ALIGO_API_KEY=sikjbqg1q2b28ypkiwu16s96v35ax3ws
+ALIGO_SENDER_KEY=26efd14d29bc820796c85a6fa84102e4d3cd0e1c
+ALIGO_USER_ID=urisky1
+NEXT_PUBLIC_KAKAO_REST_API_KEY=132e4aea952cb67e1824b97ed215fbb8
+NEXT_PUBLIC_KAKAO_ADMIN_KEY=6c384b1fb375be4acd649ee4d1aa4285
+ENV
 
             echo "[3/6] Install deps"
             npm ci --quiet || npm install --quiet
@@ -119,7 +178,7 @@ jobs:
             rm -rf .next
             NODE_ENV=${NODE_ENV:-production} npm run build
 
-            echo "[6/6] PM2 Force Restart"
+            echo "[6/6] PM2 Force Restart (Memory Optimized)"
             APP_NAME=${PM2_APP:-bohumstore}
 
             # 프로세스 꼬임 방지를 위해 삭제 후 재시작
@@ -127,7 +186,8 @@ jobs:
               pm2 delete "\$APP_NAME"
             fi
 
-            pm2 start npm --name "\$APP_NAME" -- run start
+            # npm run start 대신 next 바이너리 직접 실행 (메모리 절약)
+            pm2 start node_modules/next/dist/bin/next --name "\$APP_NAME" -- start
 
             pm2 save
           EOF
