@@ -124,17 +124,14 @@ jobs:
               sudo apt-get install -y nginx
               sudo systemctl enable nginx
               
-              # 간단한 Nginx 설정 생성
-              sudo tee /etc/nginx/sites-available/default > /dev/null <<'NGINX_END'
-server {
-    listen 80 default_server;
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-}
-NGINX_END
+              # 기본 Nginx 설정 제거 후 간단한 프록시 설정
+              sudo rm -f /etc/nginx/sites-available/default
+              echo "server {" | sudo tee /etc/nginx/sites-available/default
+              echo "  listen 80 default_server;" | sudo tee -a /etc/nginx/sites-available/default  
+              echo "  location / {" | sudo tee -a /etc/nginx/sites-available/default
+              echo "    proxy_pass http://localhost:3000;" | sudo tee -a /etc/nginx/sites-available/default
+              echo "  }" | sudo tee -a /etc/nginx/sites-available/default
+              echo "}" | sudo tee -a /etc/nginx/sites-available/default
             fi
             
             # 배포 디렉토리 준비
