@@ -157,6 +157,23 @@ jobs:
             pm2 start node_modules/next/dist/bin/next --name "\$APP_NAME" -- start -H 0.0.0.0
             pm2 save
             
+            # 디버깅: PM2 상태 확인
+            echo "=== PM2 상태 확인 ==="
+            pm2 status
+            pm2 logs "\$APP_NAME" --lines 10 --nostream || true
+            
+            # 디버깅: 포트 상태 확인  
+            echo "=== 포트 3000 상태 확인 ==="
+            sudo netstat -tlnp | grep :3000 || echo "포트 3000 사용 없음"
+            
+            # 디버깅: Next.js 프로세스 확인
+            echo "=== Next.js 프로세스 확인 ==="
+            ps aux | grep next || echo "Next.js 프로세스 없음"
+            
+            # 디버깅: localhost:3000 테스트
+            echo "=== localhost:3000 연결 테스트 ==="
+            curl -I http://localhost:3000 || echo "localhost:3000 연결 실패"
+            
             # Nginx 재시작 (80번 포트용)
             sudo nginx -t
             if [ \$? -eq 0 ]; then
