@@ -141,14 +141,11 @@ jobs:
             git fetch --all --prune
             git reset --hard origin/master
 
-            echo "[2/6] Check Node/npm & Upgrade if needed"
-            # Node.js 20+ 필요하므로 버전 확인 후 업그레이드
-            CURRENT_NODE=\$(node -v)
-            if [[ "\$CURRENT_NODE" == v18* ]] || [[ "\$CURRENT_NODE" == v16* ]] || [[ "\$CURRENT_NODE" == v14* ]]; then
-              echo "Node.js is old (\$CURRENT_NODE). Installing Node 22..."
-              curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
-              sudo apt-get install -y nodejs
-            fi
+            echo "[2/6] Upgrade Node.js to v20 (LTS)"
+            # 복잡한 체크 없이 무조건 Node 20.x 설치 (가장 안정적)
+            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            
             node -v
             npm -v
 
