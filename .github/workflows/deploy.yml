@@ -72,7 +72,7 @@ jobs:
 
       - name: Create deployment package
         run: |
-          tar -czf deployment.tar.gz .next standalone node_modules/next package.json package-lock.json .env.production
+          tar -czf deployment.tar.gz .next node_modules/next package.json package-lock.json .env.production
 
       - name: Upload deployment package
         uses: actions/upload-artifact@v4
