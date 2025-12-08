@@ -116,6 +116,7 @@ jobs:
             npm install @tailwindcss/postcss --silent
 
             echo "[5/6] Build"
+            rm -rf .next
             NODE_ENV=${NODE_ENV:-production} npm run build
 
             echo "[6/6] PM2 reload/start"
