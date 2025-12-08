@@ -27,7 +27,7 @@
 #           ssh -i bohumstore.pem -o StrictHostKeyChecking=no ubuntu@3.37.112.222 'cd bohumstore && git pull && npm install && npm run build && pm2 restart bohumstore'
 
 
-name: Deploy to EC2
+name: Deploy to EC2 (GitHub Build)
 
 on:
   push:
@@ -39,149 +39,144 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create production environment
+        run: |
+          echo "NEXT_PUBLIC_SUPABASE_URL=https://ttbwyuenbcsvnixvlaxi.supabase.co" > .env.production
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0Ynd5dWVuYmNzdm5peHZsYXhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MTQ5NDYsImV4cCI6MjA2NjQ5MDk0Nn0.e0eCn67ol3n3RMRlEKPNgfXipmfe84bYFORuvrO0vYQ" >> .env.production
+          echo "ALIGO_API_KEY=sikjbqg1q2b28ypkiwu16s96v35ax3ws" >> .env.production
+          echo "ALIGO_SENDER_KEY=26efd14d29bc820796c85a6fa84102e4d3cd0e1c" >> .env.production
+          echo "ALIGO_USER_ID=urisky1" >> .env.production
+          echo "NEXT_PUBLIC_KAKAO_REST_API_KEY=132e4aea952cb67e1824b97ed215fbb8" >> .env.production
+          echo "NEXT_PUBLIC_KAKAO_ADMIN_KEY=6c384b1fb375be4acd649ee4d1aa4285" >> .env.production
+
+      - name: Build Next.js
+        run: |
+          npm uninstall lightningcss @tailwindcss/node @tailwindcss/postcss --silent || true
+          npm install @tailwindcss/postcss --silent
+          NODE_ENV=production npm run build
+
+      - name: Create deployment package
+        run: |
+          tar -czf deployment.tar.gz .next standalone node_modules/next package.json package-lock.json .env.production
+
+      - name: Upload deployment package
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-package
+          path: deployment.tar.gz
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download deployment package
+        uses: actions/download-artifact@v4
+        with:
+          name: deployment-package
 
       - name: Write SSH key
         run: |
           echo "${{ secrets.EC2_PEM_KEY }}" > ec2.pem
           chmod 400 ec2.pem
 
-      - name: Add EC2 to known_hosts
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
-
-      - name: Deploy on EC2
+      - name: Deploy to EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_USER: ${{ secrets.EC2_USER }}
           EC2_PATH: ${{ secrets.EC2_PATH }}
           PM2_APP: ${{ secrets.PM2_APP }}
-          NODE_ENV: ${{ secrets.NODE_ENV }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
+          # EC2에 배포 패키지 전송
+          scp -o StrictHostKeyChecking=no -i ec2.pem deployment.tar.gz "${EC2_USER}@${EC2_HOST}:/tmp/"
+          
+          # EC2에서 배포 실행
           ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -i ec2.pem "${EC2_USER}@${EC2_HOST}" <<EOF
             set -e
-
-            # git / pm2가 없으면 설치
-            if ! command -v git >/dev/null 2>&1; then
-              sudo apt-get update -y
-              sudo apt-get install -y git
+            
+            # 필수 패키지 설치
+            if ! command -v node >/dev/null 2>&1; then
+              curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+              sudo apt-get install -y nodejs
             fi
             if ! command -v pm2 >/dev/null 2>&1; then
-              sudo npm i -g pm2
+              sudo npm install -g pm2
             fi
-
-            # === 스왑 메모리 설정 (2GB) ===
-            # 메모리가 1GB인 EC2 t2.micro에서 빌드/실행 시 멈춤 방지
-            if ! grep -q "swapfile" /proc/swaps; then
-              echo "[bootstrap] Creating 2GB Swapfile..."
-              sudo fallocate -l 2G /swapfile || sudo dd if=/dev/zero of=/swapfile bs=1M count=2048
-              sudo chmod 600 /swapfile
-              sudo mkswap /swapfile
-              sudo swapon /swapfile
-              echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
-              echo "[bootstrap] Swapfile created."
-            else
-              echo "[bootstrap] Swapfile already exists."
-            fi
-
-            # === Nginx 타임아웃 설정 (504 에러 방지) ===
-            echo "[bootstrap] Configuring Nginx timeouts..."
-            # Nginx 설정 파일 경로 찾기 (보통 default)
-            NGINX_CONF="/etc/nginx/sites-available/default"
-            if [ -f "\$NGINX_CONF" ]; then
-              # 이미 설정되어 있는지 확인 후 없으면 추가
-              if ! grep -q "proxy_read_timeout" "\$NGINX_CONF"; then
-                # location / 블록 안에 설정 추가 (임시로 파일 끝이나 적절한 위치에 sed로 삽입 시도하되, 안전하게 server 블록 안에 넣는 것이 좋음)
-                # 여기서는 간단하게 http 블록(nginx.conf) 또는 해당 파일의 server 블록 내에 적용되도록 유도
-                # 가장 안전한 방법: 별도 설정 파일 생성 후 include (복잡함)
-                # 차선책: sed로 location / { ... } 안에 넣기. 하지만 구조가 다양할 수 있음.
-                # 가장 확실한 방법: 전체 Nginx 설정에 적용되도록 nginx.conf의 http 블록 수정
-                sudo sed -i '/http {/a \ \ \ \ proxy_read_timeout 300;\n    proxy_connect_timeout 300;\n    proxy_send_timeout 300;' /etc/nginx/nginx.conf
-                echo "[bootstrap] Nginx timeouts updated in nginx.conf"
-              else
-                 echo "[bootstrap] Nginx timeouts might already be set."
-              fi
+            
+            # Nginx 설치 및 설정
+            if ! command -v nginx >/dev/null 2>&1; then
+              sudo apt-get update
+              sudo apt-get install -y nginx
+              sudo systemctl enable nginx
               
-              # 혹시 모르니 사이트 설정에서도 강제 적용 시도
-              sudo sed -i 's/proxy_read_timeout [0-9]*;/proxy_read_timeout 300;/' "\$NGINX_CONF" 2>/dev/null || true
-              
-              sudo nginx -t && sudo systemctl reload nginx
-            else
-               echo "[bootstrap] Nginx config not found, skipping..."
+              # Nginx 기본 설정
+              sudo tee /etc/nginx/sites-available/default > /dev/null <<NGINX_CONF
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_cache_bypass \$http_upgrade;
+        proxy_read_timeout 300;
+        proxy_connect_timeout 300;
+        proxy_send_timeout 300;
+    }
+}
+NGINX_CONF
             fi
-
+            
+            # 배포 디렉토리 준비
             mkdir -p "${EC2_PATH}"
             cd "${EC2_PATH}"
-
-            # === 최초 세팅: .git 없으면 클론 ===
-            if [ ! -d ".git" ]; then
-              echo "[bootstrap] No .git -> cloning..."
-              REPO_SLUG="${GITHUB_REPOSITORY}"   # 예: owner/repo
-              if [ -n "${GH_PAT}" ]; then
-                REPO_URL="https://${GH_PAT}@github.com/\${REPO_SLUG}.git"
-              else
-                REPO_URL="https://github.com/\${REPO_SLUG}.git"
-              fi
-              # 비어있지 않으면 안전 삭제 후 클론
-              if [ "$(ls -A 2>/dev/null | wc -l)" -ne 0 ]; then
-                find . -mindepth 1 -maxdepth 1 -exec rm -rf {} +
-              fi
-              git clone --depth 1 "\${REPO_URL}" .
+            
+            # 기존 파일 백업 및 정리
+            if [ -f "deployment.tar.gz.old" ]; then
+              rm -f deployment.tar.gz.old
             fi
-
-            echo "[1/6] Git sync..."
-            git fetch --all --prune
-            git reset --hard origin/master
-
-            echo "[2/6] Check Node/npm"
-            node -v
-            npm -v
-
-            # === 환경변수(.env) 생성 (안전한 방식) ===
-            echo "Creating .env.production..."
-            rm -f .env.production
-            echo "NEXT_PUBLIC_SUPABASE_URL=https://ttbwyuenbcsvnixvlaxi.supabase.co" >> .env.production
-            echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0Ynd5dWVuYmNzdm5peHZsYXhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5MTQ5NDYsImV4cCI6MjA2NjQ5MDk0Nn0.e0eCn67ol3n3RMRlEKPNgfXipmfe84bYFORuvrO0vYQ" >> .env.production
-            echo "ALIGO_API_KEY=sikjbqg1q2b28ypkiwu16s96v35ax3ws" >> .env.production
-            echo "ALIGO_SENDER_KEY=26efd14d29bc820796c85a6fa84102e4d3cd0e1c" >> .env.production
-            echo "ALIGO_USER_ID=urisky1" >> .env.production
-            echo "NEXT_PUBLIC_KAKAO_REST_API_KEY=132e4aea952cb67e1824b97ed215fbb8" >> .env.production
-            echo "NEXT_PUBLIC_KAKAO_ADMIN_KEY=6c384b1fb375be4acd649ee4d1aa4285" >> .env.production
-
-            echo "[3/6] Install deps"
-            npm ci --quiet || npm install --quiet
-
-            echo "[4/6] Fix lightningcss issues (pre-build)"
-            # lightningcss 문제 해결: 문제가 되는 패키지들 제거 후 재설치
-            echo "Removing problematic packages..."
-            npm uninstall lightningcss @tailwindcss/node @tailwindcss/postcss --silent || true
-            echo "Reinstalling @tailwindcss/postcss..."
-            npm install @tailwindcss/postcss --silent
-
-            echo "[5/6] Build"
-            rm -rf .next
-            # 메모리 제한 옵션 추가 (빌드 멈춤 방지)
-            export NODE_OPTIONS="--max-old-space-size=2048"
-            NODE_ENV=${NODE_ENV:-production} npm run build
-
-            echo "[6/6] PM2 Force Restart (Memory Optimized)"
-            APP_NAME=${PM2_APP:-bohumstore}
-
-            # 프로세스 꼬임 방지를 위해 삭제 후 재시작
+            if [ -f "deployment.tar.gz" ]; then
+              mv deployment.tar.gz deployment.tar.gz.old
+            fi
+            
+            # 새 배포 파일 이동 및 압축 해제
+            mv /tmp/deployment.tar.gz .
+            tar -xzf deployment.tar.gz
+            
+            # PM2로 애플리케이션 재시작
+            APP_NAME="${PM2_APP:-bohumstore}"
+            
             if pm2 describe "\$APP_NAME" >/dev/null 2>&1; then
               pm2 delete "\$APP_NAME"
             fi
-
-            # npm run start 대신 next 바이너리 직접 실행 (메모리 절약)
+            
             pm2 start node_modules/next/dist/bin/next --name "\$APP_NAME" -- start
-
             pm2 save
+            
+            # Nginx 재시작
+            sudo systemctl restart nginx
+            sudo systemctl status nginx --no-pager
+            
+            echo "✅ 배포 완료!"
           EOF
