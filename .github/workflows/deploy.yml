@@ -147,6 +147,10 @@ jobs:
             mv /tmp/deployment.tar.gz .
             tar -xzf deployment.tar.gz
             
+            # 종속성 재설치 (모듈 에러 방지)
+            echo "=== 종속성 재설치 ==="
+            npm install --production
+            
             # PM2로 애플리케이션 재시작
             APP_NAME="${PM2_APP:-bohumstore}"
             
