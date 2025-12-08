@@ -81,7 +81,7 @@ const slogans = [
       '병력 무심사 / 전건 가입가능'
     ],
     company: 'KB라이프생명',
-    logo: '/KB라이프.png'
+    logo: '/kb-life.png'
   },
   {
     id: 'ibk-lifetime',
@@ -176,7 +176,7 @@ const mainProducts = [
     id: 'kb-triple-level-up',
     name: 'KB 트리플 레벨업 연금보험(보증형)',
     company: 'KB라이프생명',
-    logo: '/KB라이프.png',
+    logo: '/kb-life.png',
     path: '/insurance/annuity/kb/triple-level-up',
     description: '10년시점 130% 해약환급률 보증으로 단기간 높은 보장',
     badge: 'BEST',

@@ -370,7 +370,7 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-              <img src="/KB라이프.png" alt="KB라이프 로고" className="h-6 w-auto" style={{minWidth:'24px'}} />
+              <img src="/kb-life.png" alt="KB라이프 로고" className="h-6 w-auto" style={{minWidth:'24px'}} />
               <span>KB라이프생명</span>
             </div>
             <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">KB 트리플 레벨업<br />연금보험 (보증형)</h1>
