@@ -124,28 +124,17 @@ jobs:
               sudo apt-get install -y nginx
             fi
             
-            # SSL 인증서 설치 (Let's Encrypt)
-            if [ ! -f /etc/letsencrypt/live/bohumstore.net/fullchain.pem ]; then
-              sudo apt-get install -y certbot python3-certbot-nginx
-              sudo systemctl stop nginx || true
-              sudo certbot certonly --standalone -d bohumstore.net --non-interactive --agree-tos --email admin@bohumstore.net || echo "SSL 인증서 설정 실패 - HTTP만 사용"
-            fi
-            
-            # Nginx 설정 대기 (SSL 인증서 파일 생성 대기)
-            sleep 3
-            
-            # Nginx 설정 (HTTPS 우선, HTTP 리다이렉트)
+            # 먼저 기본 HTTP Nginx 설정
+            echo "✅ 기본 HTTP Nginx 설정"
             sudo rm -rf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+            echo "server { listen 80; server_name bohumstore.net; location / { proxy_pass http://localhost:3000; } }" | sudo tee /etc/nginx/sites-available/default
+            sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+            sudo systemctl start nginx
             
-            # SSL 인증서 파일 확인 (디버깅)
-            echo "=== SSL 인증서 파일 확인 ==="
-            sudo ls -la /etc/letsencrypt/live/ || echo "letsencrypt 디렉토리 없음"
-            sudo ls -la /etc/letsencrypt/live/bohumstore.net/ || echo "bohumstore.net 인증서 디렉토리 없음"
-            
-            # 강제 HTTPS 설정 (printf + tee 방식)
-            echo "✅ 강제 HTTPS 설정 적용 (printf + tee 방식)"
-            sudo rm -f /etc/nginx/sites-available/default
-            printf 'server {\n    listen 80;\n    server_name bohumstore.net;\n    return 301 https://\\$server_name\\$request_uri;\n}\n\nserver {\n    listen 443 ssl;\n    server_name bohumstore.net;\n    ssl_certificate /etc/letsencrypt/live/bohumstore.net/fullchain.pem;\n    ssl_certificate_key /etc/letsencrypt/live/bohumstore.net/privkey.pem;\n    location / {\n        proxy_pass http://localhost:3000;\n        proxy_set_header Host \\$host;\n        proxy_set_header X-Real-IP \\$remote_addr;\n    }\n}\n' | sudo tee /etc/nginx/sites-available/default > /dev/null
+            # Certbot으로 자동 HTTPS 설정 (변수 이스케이핑 문제 없음)
+            echo "✅ Certbot 자동 HTTPS 설정 시작"
+            sudo apt-get install -y certbot python3-certbot-nginx
+            sudo certbot --nginx -d bohumstore.net --non-interactive --agree-tos --email admin@bohumstore.net --redirect || echo "HTTPS 자동 설정 실패"
             sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
             sudo systemctl enable nginx
             
