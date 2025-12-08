@@ -1,10 +1,14 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function ContentProtection() {
+  const [isMounted, setIsMounted] = useState(false);
+
   useEffect(() => {
-    // 개발 환경에서는 보호 기능 비활성화
+    setIsMounted(true);
+    
+    // 개발 환경 체크
     const isDevelopment = process.env.NODE_ENV === 'development' || 
                          window.location.hostname === 'localhost' || 
                          window.location.hostname === '127.0.0.1' ||
@@ -151,17 +155,5 @@ export default function ContentProtection() {
     };
   }, []);
 
-  // 개발 환경에서는 아무것도 렌더링하지 않음
-  const isDevelopment = process.env.NODE_ENV === 'development' || 
-                       (typeof window !== 'undefined' && (
-                         window.location.hostname === 'localhost' || 
-                         window.location.hostname === '127.0.0.1' ||
-                         window.location.port !== ''
-                       ));
-  
-  if (isDevelopment) {
-    return null;
-  }
-
-  return null; // 이 컴포넌트는 UI를 렌더링하지 않고 이벤트만 처리
+  return null;
 }
