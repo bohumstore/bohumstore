@@ -119,13 +119,15 @@ jobs:
             rm -rf .next
             NODE_ENV=${NODE_ENV:-production} npm run build
 
-            echo "[6/6] PM2 reload/start"
+            echo "[6/6] PM2 Force Restart"
             APP_NAME=${PM2_APP:-bohumstore}
+
+            # 프로세스 꼬임 방지를 위해 삭제 후 재시작
             if pm2 describe "\$APP_NAME" >/dev/null 2>&1; then
-              pm2 reload "\$APP_NAME" --update-env
-            else
-              pm2 start npm --name "\$APP_NAME" -- run start
+              pm2 delete "\$APP_NAME"
             fi
+
+            pm2 start npm --name "\$APP_NAME" -- run start
 
             pm2 save
           EOF
