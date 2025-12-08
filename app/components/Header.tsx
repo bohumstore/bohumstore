@@ -182,7 +182,7 @@ export default function Header() {
           to { transform: translateX(0); }
         }
         .animate-slide-in-right {
-          animation: slideInRight 0.3s ease-out forwards;
+          animation: slideInRight 0.2s ease-out forwards;
         }
       `}</style>
     </>

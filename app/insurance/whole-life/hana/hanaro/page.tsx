@@ -23,6 +23,7 @@ export default function ShinhanMoreTheDreamPage() {
   const [showNotice, setShowNotice] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   useEffect(() => {
     // 페이지 방문 시 자동 추적
@@ -40,6 +41,23 @@ export default function ShinhanMoreTheDreamPage() {
     return data;
   }
 
+  const handleFocus = (e: React.FocusEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+      setIsInputFocused(true);
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent) => {
+    setTimeout(() => {
+      const active = document.activeElement as HTMLElement;
+      if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) {
+        return;
+      }
+      setIsInputFocused(false);
+    }, 100);
+  };
+
   return (
     <>
       <style jsx global>{`
@@ -52,7 +70,11 @@ export default function ShinhanMoreTheDreamPage() {
       <Modal title="개인정보 수집 및 이용 동의" open={showPrivacy} onClose={() => setShowPrivacy(false)}>
         <PrivacyConsent />
       </Modal>
-      <div className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full">
+      <div 
+        className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full"
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+      >
         <Slogan onOpenPrivacy={() => setShowPrivacy(true)} onModalStateChange={setIsModalOpen} />
         {/* 상품 상세 영역 (탭/강조타이틀/설명/특약/일러스트/하단버튼) */}
         <section className="w-full bg-white py-8 sm:py-6 md:py-8 lg:py-10">
@@ -99,7 +121,7 @@ export default function ShinhanMoreTheDreamPage() {
         <Footer />
         
         {/* 오른쪽 하단 플로팅 액션 버튼들 - 모달이 열렸을 때는 숨김 */}
-        {!isModalOpen && !showPrivacy && !showNotice && (
+        {!isModalOpen && !showPrivacy && !showNotice && !isInputFocused && (
         <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 flex flex-col gap-2 sm:gap-3 z-50">
           {/* 계산하기 버튼 */}
           <button
@@ -114,6 +136,15 @@ export default function ShinhanMoreTheDreamPage() {
           >
             <span className="text-xs font-semibold">계산</span>
             <img src="/Calculator.png" alt="계산하기" className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
+          {/* 카톡상담 버튼 */}
+          <button 
+            onClick={() => window.open('http://pf.kakao.com/_lrubxb/chat', '_blank')}
+            className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
+            aria-label="카톡상담"
+          >
+            <span className="text-xs font-semibold">카톡</span>
+            <img src="/kakaotalk.png" alt="카톡상담" className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
           {/* 맨 위로 버튼 */}
           <button 
