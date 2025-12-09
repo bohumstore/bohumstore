@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useEffect, useState } from "react";
 import React from "react";
 import Slogan from "./components/Slogan";
@@ -155,7 +155,7 @@ export default function ShinhanMoreTheDreamPage() {
           </button>
           {/* 카톡상담 버튼 */}
           <button 
-            onClick={() => window.open('http://pf.kakao.com/_lrubxb/chat', '_blank')}
+            onClick={() => window.open('https://pf.kakao.com/_lrubxb/chat', '_blank')}
             className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
             aria-label="카톡상담"
           >

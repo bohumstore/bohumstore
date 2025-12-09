@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
@@ -821,7 +821,7 @@ export default function HomePage() {
 
         {/* 카톡 상담 버튼 */}
         <button 
-          onClick={() => window.open('http://pf.kakao.com/_lrubxb/chat', '_blank')}
+          onClick={() => window.open('https://pf.kakao.com/_lrubxb/chat', '_blank')}
           className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_4px_25px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1 min-w-[50px]"
           aria-label="카톡상담"
         >

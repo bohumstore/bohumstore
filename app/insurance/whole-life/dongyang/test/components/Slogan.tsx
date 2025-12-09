@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+﻿import React, { useState, useEffect, useRef } from 'react'
 import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
@@ -577,7 +577,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                       상담신청
                     </button>
                     <a 
-                      href="http://pf.kakao.com/_lrubxb/chat" 
+                      href="https://pf.kakao.com/_lrubxb/chat" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-4 text-lg flex items-center justify-center gap-2 hover:opacity-90 transition cursor-pointer"
