@@ -5,7 +5,6 @@ import Slogan from "./components/Slogan";
 import Footer from "./components/Footer";
 import PrivacyConsent from "../../../../components/PrivacyConsent";
 import Modal from "../../../../components/Modal";
-import Notice from "./components/Notice";
 import Tabs from "../../../../components/Tabs";
 import ProductInfo from "./components/BodyTabViews/ProductInfo";
 import CoverageDetails from "./components/BodyTabViews/CoverageDetails";
@@ -20,7 +19,6 @@ export default function ShinhanMoreTheDreamPage() {
     { label: '해약환급금 예시표', content: <Surrender /> },
   ];
 
-  const [showNotice, setShowNotice] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -70,7 +68,6 @@ export default function ShinhanMoreTheDreamPage() {
           0%, 100% { transform: scale(1); text-shadow: 0 0 0 transparent; }
           50% { transform: scale(1.05); text-shadow: 0 0 20px rgba(234, 88, 12, 0.5); }
         }`}</style>
-      <Notice open={showNotice} onClose={() => setShowNotice(false)} />
       <Modal title="개인정보 수집 및 이용 동의" open={showPrivacy} onClose={() => setShowPrivacy(false)}>
         <PrivacyConsent />
       </Modal>
@@ -84,12 +81,6 @@ export default function ShinhanMoreTheDreamPage() {
         <section className="w-full bg-white py-8 sm:py-6 md:py-8 lg:py-10">
           <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 md:px-10 lg:px-16">
             <Tabs tabs={tabs} />
-            {/* 하단 버튼 */}
-            <div className="flex justify-center mt-4">
-              <button type="button" onClick={() => setShowNotice(true)} className="border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
-                가입시 알아두실 사항
-              </button>
-            </div>
           </div>
         </section>
         {/* 유의사항 박스 */}
@@ -129,7 +120,7 @@ export default function ShinhanMoreTheDreamPage() {
         <Footer />
         
         {/* 오른쪽 하단 플로팅 액션 버튼들 - 모달이 열렸을 때는 숨김 */}
-        {!isModalOpen && !showPrivacy && !showNotice && !isInputFocused && (
+        {!isModalOpen && !showPrivacy && !isInputFocused && (
         <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 flex flex-col gap-2 sm:gap-3 z-50">
           {/* 계산하기 버튼 */}
           <button

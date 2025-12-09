@@ -499,7 +499,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-1.5">
               <img src="/hana-logo.png" alt="하나생명 로고" className="h-6 sm:h-8 w-auto" style={{minWidth:'24px'}} />
             </div>
-            <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-1 sm:mb-1.5 md:mb-2.5 lg:mb-2 leading-tight">(무)하나로 THE 연결된<br />종신보험<span className="text-lg sm:text-xl md:text-3xl lg:text-4xl">(해약환급금 일부지급형)</span></h1>
+            <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-1 sm:mb-1.5 md:mb-2.5 lg:mb-2 leading-tight">(무)하나로 THE 연결된 종신보험<br /><span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">(해약환급금 일부지급형)</span></h1>
             
             <p className="text-xs text-gray-500 mb-3 sm:mb-4 md:mb-5 lg:mb-5 text-center">
               * 이 상품은 사망을 보장하는 종신보험으로, 저축성보험(연금)이 아닙니다.
@@ -536,8 +536,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               </li>
             </ul>
             {/* 환급률 안내 UI */}
-            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-3 sm:mb-4 p-2.5 sm:p-3 md:p-5 lg:p-4 px-2.5 sm:px-3 md:px-5 lg:px-4 pt-3 sm:pt-4 md:pt-6 lg:pt-6 pb-3 sm:pb-4 md:pb-6 lg:pb-6">
-                <div className="grid grid-cols-3 gap-1.5 sm:gap-3 md:gap-2 mb-1.5 sm:mb-2">
+            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-3 sm:mb-4 p-3 sm:p-4 md:p-6 lg:p-4 px-3 sm:px-4 md:px-6 lg:px-4 pt-4 sm:pt-5 md:pt-7 lg:pt-6 pb-4 sm:pb-5 md:pb-7 lg:pb-6">
+                <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 lg:gap-3 mb-2 sm:mb-3">
                   {/* 1. 7년 시점 */}
                   <div className="text-center px-0.5 sm:px-1">
                     <div className="inline-block bg-gradient-to-b from-[#10b981] via-[#059669] to-[#047857] text-white text-xs sm:text-sm md:text-base font-bold px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-lg mb-2 sm:mb-2.5 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
@@ -581,203 +581,108 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           </div>
           {/* 오른쪽: 환급금 확인 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
-            <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-3xl border-2 border-[#3a8094] shadow-xl p-4 sm:p-5 md:p-7 lg:p-8 relative flex flex-col">
-              {/* 새로운 헤더 디자인 */}
-              <div className="mb-4 sm:mb-6">
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#3a8094] flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
-                  </svg>
-                  해약환급금 계산하기
-                </h3>
-                <p className="text-gray-500 text-xs sm:text-sm mt-1">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
+            <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-5 sm:p-6 md:p-7 relative flex flex-col">
+              <div className="mb-5 sm:mb-6">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-8 h-8 bg-gradient-to-br from-[#14b8a6] to-[#0f766e] rounded-lg flex items-center justify-center">
+                    <CalculatorIcon className="w-4 h-4 text-white" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">해약환급금 계산하기</h3>
+                </div>
+                <p className="text-gray-500 text-xs sm:text-sm ml-10">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
               </div>
               <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleInsuranceCostCalculate}>
-                {/* 가입 정보 입력 */}
-                <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
-                  <div className="grid grid-cols-2 gap-2 sm:gap-3">
-                    <div>
-                      <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 cursor-pointer">성별</label>
-                      <div className="flex gap-3 sm:gap-6">
-                        <label className="flex items-center gap-1.5 sm:gap-2.5 cursor-pointer">
-                    <input 
-                      type="radio" 
-                      name="gender" 
-                            value="M"
-                            checked={gender === "M"}
-                            onChange={handleGenderChange}
-                            className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 cursor-pointer flex-shrink-0"
-                          />
-                          <span className="text-base sm:text-lg whitespace-nowrap">남자</span>
-                  </label>
-                        <label className="flex items-center gap-1.5 sm:gap-2.5 cursor-pointer">
-                    <input 
-                      type="radio" 
-                      name="gender" 
-                            value="F"
-                            checked={gender === "F"}
-                            onChange={handleGenderChange}
-                            className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 cursor-pointer flex-shrink-0"
-                          />
-                          <span className="text-base sm:text-lg whitespace-nowrap">여자</span>
-                  </label>
-                </div>
+                {/* 성별/이름 */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1.5">성별</label>
+                    <div className="flex gap-2">
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#14b8a6] bg-[#14b8a6]/5 text-[#14b8a6]' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
+                        <span className="text-sm font-medium">남자</span>
+                      </label>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#14b8a6] bg-[#14b8a6]/5 text-[#14b8a6]' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <input type="radio" name="gender" value="F" checked={gender === "F"} onChange={handleGenderChange} className="sr-only" />
+                        <span className="text-sm font-medium">여자</span>
+                      </label>
                     </div>
-                    <div>
-                      <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 cursor-pointer">이름</label>
-                  <input 
-                    type="text" 
-                    inputMode="text"
-                    ref={nameInputRef}
-                    value={name}
-                        onChange={handleNameChange}
-                        onFocus={handleInputFocus}
-                        onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }}
-                        onBlur={() => { if (name.trim()) { birthInputRef.current?.focus(); } }}
-                        className="w-full px-2 sm:px-2.5 py-1.5 sm:py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="홍길동"
-                  />
-                </div>
-                    <div>
-                      <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 cursor-pointer">생년월일</label>
-                  <input 
-                    type="text" 
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    ref={birthInputRef}
-                    value={birth}
-                        onChange={handleBirthChange}
-                        onFocus={handleInputFocus}
-                        className="w-full px-2 sm:px-2.5 py-1.5 sm:py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="19880818"
-                        maxLength={8}
-                  />
-                </div>
-                    <div>
-                      <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 cursor-pointer">연락처</label>
-                  <input 
-                    type="text" 
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    ref={phoneInputRef}
-                    value={phone}
-                    onChange={handlePhoneChange}
-                    onFocus={handleInputFocus}
-                        className="w-full px-2 sm:px-2.5 py-1.5 sm:py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="01012345678"
-                      />
-                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1.5">이름</label>
+                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#14b8a6]/20 focus:border-[#14b8a6] transition-all" placeholder="홍길동" />
                   </div>
                 </div>
 
-                {/* 납입 정보 선택 */}
-                <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
+                {/* 생년월일/연락처 */}
+                <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">납입기간</label>
-                    <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                      {['5년납', '7년납', '10년납'].map((period) => (
-                        <label key={period} className="relative flex items-center justify-center cursor-pointer">
-                          {/* 추천 배지 */}
-                          {period === '5년납' && (
-                            <span className="absolute -top-2.5 sm:-top-3 left-1/2 -translate-x-1/2 bg-[#ff8c1a] text-white text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full animate-bounce shadow z-10">
-                              추천
-                            </span>
-                          )}
-                          <input
-                            type="radio"
-                            name="paymentPeriod"
-                            value={period}
-                            checked={paymentPeriod === period}
-                            onChange={handlePaymentPeriodChange}
-                            className="peer sr-only cursor-pointer"
-                          />
-                          <div className="w-full text-center px-1.5 sm:px-2 py-2 text-xs sm:text-sm border-2 rounded-lg cursor-pointer
-                                      transition-all duration-200 ease-in-out
-                                      peer-checked:border-[#3a8094] peer-checked:bg-[#f0f9ff] peer-checked:text-[#3a8094] peer-checked:font-bold
-                                      peer-checked:shadow-[0_0_10px_rgba(58,128,148,0.1)]
-                                      hover:border-[#3a8094] hover:bg-gray-50
-                                      border-gray-200">
-                            {period}
-                          </div>
-                        </label>
-                      ))}
-                    </div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1.5">생년월일</label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#14b8a6]/20 focus:border-[#14b8a6] transition-all" placeholder="19880818" maxLength={8} />
                   </div>
                   <div>
-                    <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">월 납입금액</label>
-                    <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                      {['30만원', '50만원', '100만원'].map((amount) => (
-                        <label key={amount} className="relative flex items-center justify-center cursor-pointer">
-                          <input
-                            type="radio"
-                            name="paymentAmount"
-                            value={amount}
-                            checked={paymentAmount === amount}
-                            onChange={handlePaymentAmountChange}
-                            className="peer sr-only cursor-pointer"
-                          />
-                          <div className="w-full text-center px-1.5 sm:px-2 py-2 text-xs sm:text-sm border-2 rounded-lg cursor-pointer
-                                      transition-all duration-200 ease-in-out
-                                      peer-checked:border-[#3a8094] peer-checked:bg-[#f0f9ff] peer-checked:text-[#3a8094] peer-checked:font-bold
-                                      peer-checked:shadow-[0_0_10px_rgba(58,128,148,0.1)]
-                                      hover:border-[#3a8094] hover:bg-gray-50
-                                      border-gray-200">
-                            {amount}
-                          </div>
-                        </label>
-                      ))}
-                    </div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1.5">연락처</label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#14b8a6]/20 focus:border-[#14b8a6] transition-all" placeholder="01012345678" />
+                  </div>
+                </div>
+
+                {/* 납입기간 */}
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1.5">납입기간</label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {['5년납', '7년납', '10년납'].map((period) => (
+                      <label key={period} className="relative cursor-pointer">
+                        {period === '5년납' && (
+                          <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
+                        )}
+                        <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
+                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#14b8a6] bg-[#14b8a6]/5 text-[#14b8a6] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                          {period}
+                        </div>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 월 납입금액 */}
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1.5">월 납입금액</label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {['30만원', '50만원', '100만원'].map((amount) => (
+                      <label key={amount} className="cursor-pointer">
+                        <input type="radio" name="paymentAmount" value={amount} checked={paymentAmount === amount} onChange={handlePaymentAmountChange} className="peer sr-only" />
+                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#14b8a6] bg-[#14b8a6]/5 text-[#14b8a6] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                          {amount}
+                        </div>
+                      </label>
+                    ))}
                   </div>
                 </div>
 
                 {/* 개인정보 동의 */}
-                <div className="flex items-start gap-2 mb-4 sm:mb-6 justify-end">
-                  <input 
-                    type="checkbox" 
-                    checked={isChecked}
-                    onChange={(e) => setIsChecked(e.target.checked)}
-                    className="mt-0.5 w-3 h-3 sm:w-3.5 sm:h-3.5 text-blue-600 rounded border-gray-300 cursor-pointer"
-                  />
-                  <div className="text-xs text-gray-600">
-                    <span>개인정보 수집 및 이용에 동의합니다. </span>
-                    <button
-                      type="button"
-                      onClick={onOpenPrivacy}
-                      className="text-blue-600 underline hover:text-blue-800 cursor-pointer"
-                    >
-                      자세히 보기
-                    </button>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-[#14b8a6] rounded border-gray-300 cursor-pointer focus:ring-[#14b8a6]" />
+                  <span className="text-xs text-gray-600">
+                    개인정보 수집 및 이용에 동의합니다. 
+                    <button type="button" onClick={onOpenPrivacy} className="text-[#14b8a6] underline ml-1 hover:text-[#0f766e]">자세히 보기</button>
+                  </span>
                 </div>
 
-                {/* 기존 버튼들 */}
-                <div className="flex flex-col gap-2">
-                  <button
-                    type="submit"
-                    className="w-full bg-[#3a8094] text-white font-bold rounded-xl py-3 sm:py-4 text-base sm:text-lg hover:opacity-90 transition flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                  <CalculatorIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-                  해약환급금 확인하기
-                </button>
-                  <div className="flex flex-row gap-2">
-                  <button 
-                    type="button" 
-                    onClick={handleOpenConsultModal}
-                    className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-3 sm:py-4 text-base sm:text-lg flex items-center justify-center gap-1 sm:gap-2 hover:opacity-90 transition cursor-pointer min-w-0"
-                  >
-                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0'>
+                {/* 버튼들 */}
+                <div className="flex flex-col gap-2 mt-1">
+                  <button type="submit" className="w-full bg-gradient-to-r from-[#14b8a6] to-[#0f766e] text-white font-bold rounded-xl py-3.5 text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#14b8a6]/25 cursor-pointer">
+                    <CalculatorIcon className="w-5 h-5" />
+                    해약환급금 확인하기
+                  </button>
+                  <div className="flex gap-2">
+                    <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-3 text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
+                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-4 h-4'>
                         <path strokeLinecap='round' strokeLinejoin='round' d='M2.25 12a9.75 9.75 0 1 1 19.5 0v3.375a2.625 2.625 0 0 1-2.625 2.625h-1.125a.375.375 0 0 1-.375-.375V15a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 0 .75-.75V12a8.25 8.25 0 1 0-16.5 0v1.5a.75.75 0 0 0 .75.75h.75A.75.75 0 0 1 6 15v2.625a.375.375 0 0 1-.375.375H4.5A2.625 2.625 0 0 1 1.875 15.375V12Z' />
                       </svg>
-                    <span className="whitespace-nowrap text-sm sm:text-base">상담신청</span>
-                  </button>
-                    <a 
-                      href="https://pf.kakao.com/_lrubxb/chat" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-3 sm:py-4 text-base sm:text-lg flex items-center justify-center gap-1 sm:gap-2 hover:opacity-90 transition cursor-pointer min-w-0"
-                    >
-                    <ChatBubbleLeftRightIcon className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
-                    <span className="whitespace-nowrap text-sm sm:text-base">채팅상담</span>
+                      상담신청
+                    </button>
+                    <a href="https://pf.kakao.com/_lrubxb/chat" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-3 text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
+                      <ChatBubbleLeftRightIcon className="w-4 h-4" />
+                      채팅상담
                     </a>
                   </div>
                 </div>

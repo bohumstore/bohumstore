@@ -545,8 +545,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                 </div>
-                <p className="text-[10px] sm:text-xs text-gray-300 text-center mb-0.5 relative z-10">10년+1일 환급금</p>
-                <p className="text-base sm:text-xl font-black text-[#fbbf24] text-center relative z-10 drop-shadow-[0_0_12px_rgba(251,191,36,0.6)] animate-pulse">124.9%</p>
+                <p className="text-[10px] sm:text-xs text-gray-300 text-center mb-0.5 relative z-10">10년+1일 해약환급금</p>
+                <p className="text-xl sm:text-2xl font-black text-[#fbbf24] text-center relative z-10 drop-shadow-[0_0_15px_rgba(251,191,36,0.8)] animate-pulse scale-110 origin-center">124.9%</p>
               </div>
 
               {/* 사망보장 체증 */}
@@ -598,9 +598,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div className="w-8 h-8 bg-gradient-to-br from-[#00529b] to-[#003d7a] rounded-lg flex items-center justify-center">
                     <CalculatorIcon className="w-4 h-4 text-white" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">해약환급금 계산하기</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">달러환급액 계산하기</h3>
                 </div>
-                <p className="text-gray-500 text-xs sm:text-sm ml-10">10초만에 예상 환급금을 확인하세요</p>
+                <p className="text-gray-500 text-xs sm:text-sm ml-10">간단한 정보 입력으로 예상 달러환급액을 확인하세요</p>
               </div>
 
               <form className="flex flex-col gap-4" onSubmit={handleInsuranceCostCalculate}>
@@ -609,11 +609,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">성별</label>
                     <div className="flex gap-2">
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#00529b] bg-[#00529b]/5 text-[#00529b]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#00529b] bg-[#00529b]/5 text-[#00529b]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
                         <span className="text-sm font-medium">남자</span>
                       </label>
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#00529b] bg-[#00529b]/5 text-[#00529b]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#00529b] bg-[#00529b]/5 text-[#00529b]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="F" checked={gender === "F"} onChange={handleGenderChange} className="sr-only" />
                         <span className="text-sm font-medium">여자</span>
                       </label>
@@ -621,7 +621,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">이름</label>
-                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#00529b]/20 focus:border-[#00529b] transition-all" placeholder="홍길동" />
+                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#00529b]/20 focus:border-[#00529b] transition-all" placeholder="홍길동" />
                   </div>
                 </div>
 
@@ -629,11 +629,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">생년월일</label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#00529b]/20 focus:border-[#00529b] transition-all" placeholder="19880818" maxLength={8} />
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#00529b]/20 focus:border-[#00529b] transition-all" placeholder="19880818" maxLength={8} />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">연락처</label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#00529b]/20 focus:border-[#00529b] transition-all" placeholder="01012345678" />
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#00529b]/20 focus:border-[#00529b] transition-all" placeholder="01012345678" />
                   </div>
                 </div>
 
@@ -683,7 +683,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="flex flex-col gap-2 mt-1">
                   <button type="submit" className="w-full bg-gradient-to-r from-[#00529b] to-[#003d7a] text-white font-bold rounded-xl py-3.5 text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#00529b]/25 cursor-pointer">
                     <CalculatorIcon className="w-5 h-5" />
-                    해약환급금 확인하기
+                    달러환급액 확인하기
                   </button>
                   <div className="flex gap-2">
                     <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-3 text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
