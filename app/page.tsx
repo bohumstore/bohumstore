@@ -294,13 +294,25 @@ const chatScenarios = [
 ];
 
 export default function HomePage() {
-  const [currentSloganIndex, setCurrentSloganIndex] = useState(0);
+  // 무한 루프를 위해 실제 인덱스는 1부터 시작 (앞에 마지막 슬라이드 복제본이 있음)
+  const [displayIndex, setDisplayIndex] = useState(1);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [currentScenario, setCurrentScenario] = useState(chatScenarios[0]);
+  const [isTransitioning, setIsTransitioning] = useState(true);
   const dragStartXRef = useRef<number | null>(null);
   const lastXRef = useRef<number | null>(null);
   const draggingRef = useRef(false);
   const resumeTimerRef = useRef<any>(null);
+
+  // 무한 루프용 슬라이드 배열: [마지막복제, ...원본들..., 첫번째복제]
+  const extendedSlogans = [slogans[slogans.length - 1], ...slogans, slogans[0]];
+  
+  // 실제 슬라이드 인덱스 (0 ~ slogans.length - 1)
+  const currentSloganIndex = displayIndex === 0 
+    ? slogans.length - 1 
+    : displayIndex === extendedSlogans.length - 1 
+      ? 0 
+      : displayIndex - 1;
 
   const today = new Date();
   const currentYear = today.getFullYear();
@@ -323,23 +335,45 @@ export default function HomePage() {
 
     if (isAutoPlaying) {
       interval = setInterval(() => {
-        setCurrentSloganIndex((prevIndex) => 
-          prevIndex === slogans.length - 1 ? 0 : prevIndex + 1
-        );
+        goToNext();
       }, 5000);
     }
 
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, displayIndex]);
+
+  // 경계에서 실제 위치로 점프
+  useEffect(() => {
+    if (!isTransitioning) return;
+    
+    const handleTransitionEnd = () => {
+      if (displayIndex === 0) {
+        // 첫번째 복제본(마지막 슬라이드)에서 실제 마지막 슬라이드로 점프
+        setIsTransitioning(false);
+        setDisplayIndex(slogans.length);
+        setTimeout(() => setIsTransitioning(true), 50);
+      } else if (displayIndex === extendedSlogans.length - 1) {
+        // 마지막 복제본(첫번째 슬라이드)에서 실제 첫번째 슬라이드로 점프
+        setIsTransitioning(false);
+        setDisplayIndex(1);
+        setTimeout(() => setIsTransitioning(true), 50);
+      }
+    };
+
+    const timer = setTimeout(handleTransitionEnd, 500);
+    return () => clearTimeout(timer);
+  }, [displayIndex, isTransitioning]);
 
   const goToPrevious = () => {
-    setCurrentSloganIndex((prev) => (prev - 1 + slogans.length) % slogans.length);
+    setIsTransitioning(true);
+    setDisplayIndex((prev) => prev - 1);
   };
 
   const goToNext = () => {
-    setCurrentSloganIndex((prev) => (prev + 1) % slogans.length);
+    setIsTransitioning(true);
+    setDisplayIndex((prev) => prev + 1);
   };
 
   // Swipe / Drag support
@@ -390,13 +424,13 @@ export default function HomePage() {
         {/* 슬로건 캐러셀 */}
         <div className="relative w-full overflow-hidden group">
           <div 
-            className="flex transition-transform duration-500 ease-in-out h-full"
-            style={{ transform: `translateX(-${currentSloganIndex * 100}%)` }}
+            className={`flex h-full ${isTransitioning ? 'transition-transform duration-500 ease-in-out' : ''}`}
+            style={{ transform: `translateX(-${displayIndex * 100}%)` }}
           >
-            {slogans.map((slogan, index) => {
-              const isActive = index === currentSloganIndex;
+            {extendedSlogans.map((slogan, index) => {
+              const isActive = index === displayIndex;
               return (
-                <div key={slogan.id} className="w-full flex-shrink-0 relative">
+                <div key={`${slogan.id}-${index}`} className="w-full flex-shrink-0 relative">
                   <div className={`w-full min-h-[540px] md:min-h-[680px] lg:h-[480px] ${slogan.id === 'consult-main' ? 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50' :
                                                                  slogan.id === 'kb-triple-level-up' ? 'bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50' :
                                                                  slogan.id === 'ibk-lifetime' ? 'bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50' : 
@@ -627,7 +661,10 @@ export default function HomePage() {
               {slogans.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => setCurrentSloganIndex(index)}
+                  onClick={() => {
+                    setIsTransitioning(true);
+                    setDisplayIndex(index + 1);
+                  }}
                   className={`w-3 h-3 md:w-4 md:h-4 rounded-full transition-all duration-300 ${
                     index === currentSloganIndex
                       ? `bg-gradient-to-r ${currentSlogan.color} w-8 md:w-12 shadow-lg`
@@ -758,16 +795,16 @@ export default function HomePage() {
 
       {/* 푸터 - KDB 해피플러스와 동일한 스타일 */}
       <footer className="w-full bg-[#f8f8f8] border-t border-gray-200 py-8 mt-4">
-        <div className="max-w-5xl mx-auto px-4 text-center text-gray-500 text-sm flex flex-col gap-2">
-          <div className="flex justify-center items-center gap-6 mb-2">
-            <Image src="/metarich-logo1.png" alt="MetaRich 로고" width={120} height={40} style={{objectFit:'contain',height:'40px'}} />
-            <span className="h-8 w-px bg-gray-300 mx-2 inline-block" />
-            <Image src="/bohumstore-logo.png" alt="보험스토어 로고" width={120} height={40} style={{objectFit:'contain',height:'40px'}} />
+        <div className="max-w-5xl mx-auto px-4 text-center text-gray-500 text-xs flex flex-col gap-1.5">
+          <div className="flex justify-center items-center gap-4 mb-2">
+            <Image src="/metarich-logo1.png" alt="MetaRich 로고" width={100} height={32} style={{objectFit:'contain',height:'32px'}} />
+            <span className="h-6 w-px bg-gray-300 mx-1 inline-block" />
+            <Image src="/bohumstore-logo.png" alt="보험스토어 로고" width={100} height={32} style={{objectFit:'contain',height:'32px'}} />
           </div>
           <div>(주)메타리치보험대리점 | 대리점등록번호: 제2023070016호</div>
           <div>보험스토어 | 서지후 | 등록번호: 제20060383110008호</div>
           <div>대표전화: 1533-3776 | 이메일: urisky1@naver.com</div>
-          <div className="mt-2">  BohumStore. All rights reserved.</div>
+          <div className="mt-1">BohumStore. All rights reserved.</div>
         </div>
       </footer>
       {/* 플로팅 버튼 모음 */}

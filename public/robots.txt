@@ -1,32 +1,41 @@
-User-agent: *
+# 네이버 광고 웹수집 로봇 - 모든 경로 허용 (최우선)
+User-agent: AdsBot-Naver
 Allow: /
+Crawl-delay: 0
 
-# 네이버 검색로봇 특별 허용
+# 네이버 검색로봇
 User-agent: Yeti
 Allow: /
-
-User-agent: NaverBot
-Allow: /
-
-# 구글 검색로봇
-User-agent: Googlebot
-Allow: /
-
-# Sitemap
-Sitemap: https://bohumstore.net/sitemap.xml
-
-# Crawl-delay (네이버 검색로봇은 더 빠르게)
-User-agent: Yeti
-Crawl-delay: 0.5
-
-User-agent: NaverBot  
-Crawl-delay: 0.5
-
-User-agent: *
-Crawl-delay: 1
-
-# Disallow admin and API routes
 Disallow: /api/
 Disallow: /admin/
 Disallow: /_next/
 Disallow: /static/
+Crawl-delay: 0.5
+
+User-agent: NaverBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /static/
+Crawl-delay: 0.5
+
+# 구글 검색로봇
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /static/
+
+# 기타 모든 로봇
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /static/
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://bohumstore.net/sitemap.xml
