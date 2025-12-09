@@ -6,6 +6,7 @@ export const INSURANCE_COMPANIES = {
   SHINHAN_LIFE: 4, // 신한라이프생명 추가
   DONGYANG_LIFE: 5, // 동양생명 추가
   HANA_LIFE: 6, // 하나생명 추가
+  METLIFE: 9, // 메트라이프생명 추가
 } as const;
 
 // 상품 ID
@@ -17,6 +18,7 @@ export const INSURANCE_PRODUCTS = {
   SHINHAN_MORE_THE_DREAM: 5, // 신한라이프 모아더드림Plus종신보험 추가
   DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE: 6, // 동양생명 new알뜰플러스종신보험
   HANA_HANARO: 7, // 하나생명 하나로THE연결된종신보험
+  METLIFE_USD: 10, // 메트라이프생명 (무)백만인을위한달러종신보험Plus
 } as const;
 
 // 상담 타입 ID
@@ -116,6 +118,19 @@ export const PRODUCT_CONFIGS = {
       '10년 시점 해약환급금 122.78% (5년납, 1형 기준)',
       '일반심사형 / 간편심사형 선택 가능'
     ]
+  },
+  [INSURANCE_PRODUCTS.METLIFE_USD]: {
+    name: '(무)백만인을위한달러종신보험Plus',
+    companyId: INSURANCE_COMPANIES.METLIFE,
+    companyName: '메트라이프생명',
+    category: '달러종신보험',
+    features: [
+      '달러/원화 선택 수령 가능',
+      '원화고정납입옵션으로 환율 변동 리스크 헤지',
+      '10년+1일 시점 해약환급금 124.9%',
+      '사망보험금 최대 150% 체증',
+      '환전수수료 1$당 2원'
+    ]
   }
 } as const;
 
@@ -148,6 +163,10 @@ export const PRODUCT_PATH_CONFIGS = {
   '/insurance/whole-life/hana/hanaro': {
     productId: INSURANCE_PRODUCTS.HANA_HANARO,
     config: PRODUCT_CONFIGS[INSURANCE_PRODUCTS.HANA_HANARO]
+  },
+  '/insurance/whole-life/metlife/usd': {
+    productId: INSURANCE_PRODUCTS.METLIFE_USD,
+    config: PRODUCT_CONFIGS[INSURANCE_PRODUCTS.METLIFE_USD]
   }
 } as const;
 
@@ -165,6 +184,7 @@ export const ALIGO_TEMPLATE_IDS = {
   SHINHAN_MORE_THE_DREAM: 'UB_8712', // 신한라이프 모아더드림Plus종신보험 (종신보험 기본값)
   DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE: 'UB_8712', // 동양생명 new알뜰플러스종신보험 (종신보험 기본값)
   HANA_HANARO: 'UB_8712', // 하나생명 하나로THE연결된종신보험 (종신보험 기본값)
+  METLIFE_USD: 'UB_8712', // 메트라이프생명 (무)백만인을위한달러종신보험Plus (종신보험 기본값)
 } as const;
 
 // 경로별 상품 정보 조회 함수
@@ -185,6 +205,7 @@ export const getTemplateIdByPath = (path: string) => {
     case 5: return ALIGO_TEMPLATE_IDS.SHINHAN_MORE_THE_DREAM; // 신한라이프 모아더드림Plus종신보험
     case 6: return ALIGO_TEMPLATE_IDS.DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE; // 동양생명 new알뜰플러스종신보험
     case 7: return ALIGO_TEMPLATE_IDS.HANA_HANARO; // 하나생명 하나로THE연결된종신보험
+    case 10: return ALIGO_TEMPLATE_IDS.METLIFE_USD; // 메트라이프생명 (무)백만인을위한달러종신보험Plus
     default: return 'UB_8705'; // 기본값 (연금보험 기본값)
   }
 }; 

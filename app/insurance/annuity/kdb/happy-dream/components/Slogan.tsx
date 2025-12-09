@@ -1110,13 +1110,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
-                    <span className="font-bold text-[#3a8094]">{isVerified ? "KDB생명" : "인증 후 확인가능"}</span>
+                    {isVerified ? <span className="font-bold text-[#3a8094]">KDB생명</span> : <span className="font-medium text-[#7c3aed] text-xs">🔒 인증 후 확인</span>}
                   </div>
                 </div>
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
-                    <span className="font-bold text-[#3a8094]">{isVerified ? "더!행복드림변액연금보험" : "인증 후 확인가능"}</span>
+                    {isVerified ? <span className="font-bold text-[#3a8094]">더!행복드림변액연금보험</span> : <span className="font-medium text-[#7c3aed] text-xs">🔒 인증 후 확인</span>}
                   </div>
                 </div>
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
@@ -1224,10 +1224,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <button
                   type="button"
                   onClick={handleVerifyOTP}
-                  disabled={!isAgeEligible || verifying}
-                  className={`w-full px-2 py-2.5 rounded-md text-base font-semibold transition-colors mt-1 ${(!isAgeEligible || verifying) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                  disabled={!isAgeEligible || verifying || !otpSent}
+                  className={`w-full px-2 py-2.5 rounded-md text-base font-semibold transition-colors mt-1 ${(!isAgeEligible || verifying || !otpSent) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
                 >
-                  {verifying ? '인증 처리중...' : '예상연금액 확인하기'}
+                  {verifying ? '인증 처리중...' : (otpSent ? '인증하고 결과 확인하기' : '인증번호를 먼저 전송하세요')}
                 </button>
               </div>
             </>

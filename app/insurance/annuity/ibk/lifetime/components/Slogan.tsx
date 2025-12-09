@@ -1397,10 +1397,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <button
                   type="button"
                   onClick={handleVerifyOTP}
-                  disabled={!isAgeEligible || verifying}
-                  className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(!isAgeEligible || verifying) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                  disabled={!isAgeEligible || verifying || !otpSent}
+                  className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(!isAgeEligible || verifying || !otpSent) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
                 >
-                  {verifying ? '인증 처리중...' : '예상연금액 확인하기'}
+                  {verifying ? '인증 처리중...' : (otpSent ? '인증하고 결과 확인하기' : '인증번호를 먼저 전송하세요')}
                 </button>
               </div>
             </>
