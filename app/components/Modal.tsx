@@ -75,33 +75,39 @@ export default function Modal({ title, open, onClose, children }: ModalProps) {
     const ua = (typeof navigator !== 'undefined' ? navigator.userAgent || '' : '').toLowerCase();
     const isIOS = /iphone|ipad|ipod/.test(ua) && !/windows/.test(ua);
     const isAndroid = /android/.test(ua);
-    const focusDelayMs = isIOS ? 120 : isAndroid ? 60 : 40;
-    const extraOffsetPx = isIOS ? 64 : 24; // iOS는 주소/바텀바 변동 고려해 더 크게 보정
+    const isMobile = isIOS || isAndroid || window.innerWidth < 768;
+
+    const scrollToElement = (target: HTMLElement) => {
+      if (!isMobile) return;
+      
+      // 모달 컨테이너 내에서의 상대 위치 계산
+      const containerRect = container.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      
+      // 타겟이 컨테이너 중앙에 오도록 스크롤 위치 계산
+      const targetCenterY = targetRect.top + targetRect.height / 2;
+      const containerCenterY = containerRect.top + containerRect.height / 2;
+      const scrollOffset = targetCenterY - containerCenterY;
+      
+      container.scrollBy({ top: scrollOffset, behavior: 'smooth' });
+    };
 
     const handleFocusIn = (e: Event) => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
       const tag = target.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.getAttribute('contenteditable') === 'true') {
-        // 약간의 지연 후 스크롤(키패드가 열리면서 레이아웃 변동 고려)
-        setTimeout(() => {
-          try {
-            // 1차: 중앙 정렬
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            // 2차: 플랫폼별 추가 오프셋 보정(컨테이너 기준 상단으로 조금 더 끌어올림)
-            const scrollBy = () => {
-              try {
-                container.scrollBy({ top: -extraOffsetPx, left: 0, behavior: 'smooth' });
-              } catch {}
-            };
-            // iOS는 키패드 전환이 더 늦게 반영되어 한 번 더 보정
-            setTimeout(scrollBy, isIOS ? 140 : 80);
-          } catch {}
-        }, focusDelayMs);
+        // 키패드가 열리면서 레이아웃 변동 고려해 지연 후 스크롤
+        setTimeout(() => scrollToElement(target), isIOS ? 350 : 300);
+        // 키패드 완전 표시 후 한 번 더 보정
+        setTimeout(() => scrollToElement(target), isIOS ? 600 : 500);
       }
     };
 
+    container.addEventListener('focusin', handleFocusIn);
+
     return () => {
+      container.removeEventListener('focusin', handleFocusIn);
     };
   }, [open]);
 
