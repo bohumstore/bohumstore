@@ -84,6 +84,23 @@ const slogans = [
     logo: '/kb-life.png'
   },
   {
+    id: 'metlife-usd',
+    title: '달러로 준비하는 미래 자산',
+    subtitle: '달러/원화 선택 수령 가능',
+    description: '메트라이프 달러종신보험으로 환율 변동에도 안정적인 자산을 설계하세요.',
+    path: '/insurance/whole-life/metlife/usd',
+    color: 'from-[#00529b] to-[#003d7a]',
+    bgColor: 'bg-blue-50',
+    features: [
+      '달러/원화 선택 수령 가능',
+      '원화고정납입옵션으로 환율 걱정 無',
+      '10년시점 124.9% 환급률 (5년납)',
+      '15~70세 가입 가능'
+    ],
+    company: '메트라이프생명',
+    logo: '/metlife-logo.png'
+  },
+  {
     id: 'ibk-lifetime',
     title: '평생 연금 보장',
     subtitle: '연단리 8% 보증으로 끝없는 보장',
@@ -237,6 +254,17 @@ const mainProducts = [
     badge: 'NEW',
     category: '종신보험',
     highlight: '간편심사형 가능'
+  },
+  {
+    id: 'metlife-usd',
+    name: '메트라이프 달러종신보험Plus',
+    company: '메트라이프생명',
+    logo: '/metlife-logo.png',
+    path: '/insurance/whole-life/metlife/usd',
+    description: '달러/원화 선택 수령, 원화고정납입옵션으로 환율 걱정 無',
+    badge: 'TOP',
+    category: '달러종신보험',
+    highlight: '달러/원화 선택'
   }
 ];
 
@@ -712,6 +740,7 @@ export default function HomePage() {
                         product.badge === 'BEST' ? 'bg-yellow-100 text-yellow-800' :
                         product.badge === 'NEW' ? 'bg-green-100 text-green-800' :
                         product.badge === 'HOT' ? 'bg-red-100 text-red-800' :
+                        product.badge === 'TOP' ? 'bg-[#00529b]/10 text-[#00529b]' :
                         'bg-blue-100 text-blue-800'
                       }`}>
                         {product.badge}
@@ -730,6 +759,7 @@ export default function HomePage() {
                         product.id === 'kdb-happy-dream' ? 'text-purple-600 bg-purple-50' :
                         product.id === 'ibk-lifetime' ? 'text-orange-600 bg-orange-50' :
                         product.id === 'hana-hanaro' ? 'text-teal-600 bg-teal-50' :
+                        product.id === 'metlife-usd' ? 'text-[#00529b] bg-[#00529b]/10' :
                         'text-red-600 bg-red-50'
                       }`}>
                         {product.highlight}

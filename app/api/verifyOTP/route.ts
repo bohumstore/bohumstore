@@ -425,8 +425,8 @@ export async function POST(req: Request) {
 
 [10년 시점] (돈)
 예상 환급률: ${tenYearReturnRate != null ? tenYearReturnRate + ' %' : '-'}
-예상 확정이자: ${interestValue != null ? interestValue + ' 원' : '-'}
-예상 해약환급금: ${refundValue != null ? `${refundValue} 원` : '-'}
+예상 확정이자: ${interestValue != null ? (String(interestValue).includes('$') ? String(interestValue) : interestValue + ' 원') : '-'}
+예상 해약환급금: ${refundValue != null ? (String(refundValue).includes('$') ? String(refundValue) : `${refundValue} 원`) : '-'}
 
 
 `
@@ -482,8 +482,9 @@ export async function POST(req: Request) {
           base.var6 = String(paymentPeriod || '');
           base.var7 = String(mounthlyPremium || '');
           base.var8 = tenYearReturnRate != null ? `${tenYearReturnRate} %` : '-';
-          base.var9 = interestValue != null ? `${interestValue} 원` : '-';
-          base.var10 = refundValue != null ? `${refundValue} 원` : '-';
+          // 달러($) 포함된 값은 이미 완성된 형태이므로 " 원" 추가 안함
+          base.var9 = interestValue != null ? (String(interestValue).includes('$') ? String(interestValue) : `${interestValue} 원`) : '-';
+          base.var10 = refundValue != null ? (String(refundValue).includes('$') ? String(refundValue) : `${refundValue} 원`) : '-';
         } else if (clientTemplateId === "UB_8715") {
           // UB_8715 order: 고객명, 성별, 생년월일, 보험종류, 상담시간
           base.var1 = displayName;

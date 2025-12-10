@@ -5,6 +5,7 @@ import request from '@/app/api/request';
 import { getProductConfigByPath, getTemplateIdByPath, INSURANCE_COMPANIES, INSURANCE_PRODUCTS } from '@/app/constants/insurance';
 import FireworksEffect from './FireworksEffect';
 import { trackPremiumCheck } from "@/app/utils/visitorTracking";
+import { getRefundRate, PaymentPeriod, Gender } from '../data/refundRateTable';
 
 // 현재 경로에 맞는 상품 정보 가져오기
 const currentPath = '/insurance/whole-life/metlife/usd';
@@ -12,6 +13,9 @@ const productConfig = getProductConfigByPath(currentPath);
 
 const INSURANCE_COMPANY_ID = INSURANCE_COMPANIES.METLIFE; // 메트라이프생명
 const INSURANCE_PRODUCT_ID = INSURANCE_PRODUCTS.METLIFE_USD; // (무)백만인을위한달러종신보험Plus
+
+// 기준환율 (원/달러)
+const BASE_EXCHANGE_RATE = 1450;
 
 type SloganProps = {
   onOpenPrivacy: () => void
@@ -238,11 +242,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       companyId: INSURANCE_COMPANY_ID,
       productId: INSURANCE_PRODUCT_ID,
       counselTime: consultTime,
-      mounthlyPremium: paymentAmount, // 실제 선택값
+      mounthlyPremium: monthlyPremiumForAlimtalk, // 달러 환산 포함
       paymentPeriod: paymentPeriod,   // 실제 선택값
       tenYearReturnRate: rate ? (rate * 100).toFixed(2) : '-', // 환급률 (소수점 둘째 자리까지)
-      interestValue, // 확정이자(실제 값)
-      refundValue,   // 예상해약환급금(실제 값)
+      interestValue: interestValueForAlimtalk, // 확정이자(달러 환산 포함)
+      refundValue: refundValueForAlimtalk,   // 예상해약환급금(달러 환산 포함)
       templateId: "UB_8712"
     });
     if (res.data.success) {
@@ -477,23 +481,28 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const months = parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12;
   const total = (!isNaN(amount) && !isNaN(months) && amount > 0 && months > 0) ? amount * months : 0;
   
-  // 환급률 계산 (10년 시점 기준)
-  let rate = 1.2278, interestRate = 0.2278; // 기본값: 5년납
-  if (paymentPeriod.includes('5')) { 
-    rate = 1.2278; // 122.78%
-    interestRate = 0.2278; // 22.78%
-  }
-  else if (paymentPeriod.includes('7')) { 
-    rate = 1.1958; // 119.58%
-    interestRate = 0.1958; // 19.58%
-  }
-  else if (paymentPeriod.includes('10')) { 
-    rate = 1.1499; // 114.99%
-    interestRate = 0.1499; // 14.99%
-  }
+  // 환급률 계산 (10년 시점 기준) - 연령/성별별 조견표 사용
+  const refundRateFromTable = (paymentPeriod && gender && isAgeKnown) 
+    ? getRefundRate(paymentPeriod as PaymentPeriod, numericInsuranceAge, gender as Gender)
+    : null;
   
-  const interestValue = total ? (total * interestRate).toLocaleString('en-US') : '-';
-  const refundValue = total ? (total * rate).toLocaleString('en-US') : '-';
+  // 환급률 (소수점 형태, 예: 1.249 = 124.9%)
+  const rate = refundRateFromTable ? refundRateFromTable / 100 : 1.249;
+  const interestRate = rate - 1; // 이자율 = 환급률 - 100%
+  
+  const interestValue = total ? Math.round(total * interestRate).toLocaleString('ko-KR') : '-';
+  const refundValue = total ? Math.round(total * rate).toLocaleString('ko-KR') : '-';
+  
+  // 알림톡용 달러 환산 포함 값 (띄어쓰기: "10,374,000 원 (약 7,154$)" 형태)
+  const interestValueForAlimtalk = total 
+    ? `${Math.round(total * interestRate).toLocaleString('ko-KR')} 원 (약 ${Math.round(total * interestRate / BASE_EXCHANGE_RATE).toLocaleString()}$)` 
+    : '-';
+  const refundValueForAlimtalk = total 
+    ? `${Math.round(total * rate).toLocaleString('ko-KR')} 원 (약 ${Math.round(total * rate / BASE_EXCHANGE_RATE).toLocaleString()}$)` 
+    : '-';
+  const monthlyPremiumForAlimtalk = paymentAmount 
+    ? `${paymentAmount} (약 ${Math.round(parseInt(paymentAmount.replace(/[^0-9]/g, '')) * 10000 / BASE_EXCHANGE_RATE)}$)` 
+    : '-';
 
   return (
     <>
@@ -520,14 +529,14 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             {/* 메인 타이틀 */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-white leading-tight mb-3">
               <span className="text-[#00d4aa]">달러</span> vs <span className="text-[#60a5fa]">원화</span>,
-              <br className="hidden sm:block" />
+              <br />
               <span className="text-white">원하는 화폐로</span>
               <br />
               <span className="text-white">골라 받으세요!</span>
             </h1>
             
             <p className="text-gray-400 text-sm sm:text-base mb-6 lg:mb-8 max-w-md">
-              <span className="text-[#f97316] font-bold">원화고정납입옵션</span>으로<br className="hidden sm:block" />
+              <span className="text-[#f97316] font-bold">원화고정납입옵션</span>으로<br />
               <span className="text-white font-medium">환율 변동에도 흔들리지 않는 안정적인 자산 설계</span>
             </p>
 
@@ -665,17 +674,23 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 월 납입금액 */}
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1.5">월 납입금액</label>
+                  <label className="block text-xs font-medium text-gray-600 mb-1.5">월 납입금액 <span className="text-gray-400 font-normal">(원화/달러)</span></label>
                   <div className="grid grid-cols-3 gap-2">
-                    {['30만원', '50만원', '100만원'].map((amount) => (
-                      <label key={amount} className="cursor-pointer">
-                        <input type="radio" name="paymentAmount" value={amount} checked={paymentAmount === amount} onChange={handlePaymentAmountChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#00529b] bg-[#00529b]/5 text-[#00529b] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
-                          {amount}
+                    {[
+                      { krw: '30만원', usd: Math.round(300000 / BASE_EXCHANGE_RATE) },
+                      { krw: '50만원', usd: Math.round(500000 / BASE_EXCHANGE_RATE) },
+                      { krw: '100만원', usd: Math.round(1000000 / BASE_EXCHANGE_RATE) }
+                    ].map((item) => (
+                      <label key={item.krw} className="cursor-pointer">
+                        <input type="radio" name="paymentAmount" value={item.krw} checked={paymentAmount === item.krw} onChange={handlePaymentAmountChange} className="peer sr-only" />
+                        <div className={`w-full text-center py-2 text-sm border-2 rounded-lg transition-all ${paymentAmount === item.krw ? 'border-[#00529b] bg-[#00529b]/5 text-[#00529b] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                          <div>{item.krw}</div>
+                          <div className={`text-xs ${paymentAmount === item.krw ? 'text-[#00529b]/70' : 'text-gray-400'}`}>약 {item.usd}$</div>
                         </div>
                       </label>
                     ))}
                   </div>
+                  <p className="text-[10px] text-[#00529b] mt-2 text-center">※ 달러 환산 금액은 기준환율 {BASE_EXCHANGE_RATE.toLocaleString()}원 적용 / 실제 환율에 따라 변동됩니다.</p>
                 </div>
 
                 {/* 개인정보 동의 */}
@@ -716,7 +731,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           counselType === 1 ? (
             <span className="flex items-center gap-2">
               <CalculatorIcon className="w-6 h-6 text-[#3a8094]" />
-              해약환급금 확인하기
+              달러환급액 확인하기
             </span>
           ) : (
             <span className="flex items-center gap-2">
@@ -777,7 +792,14 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
                     <span className="font-bold text-[#3a8094]">
-                      {paymentPeriod && paymentAmount ? `${paymentPeriod} / ${paymentAmount}` : '-'}
+                      {paymentPeriod && paymentAmount ? (
+                        <>
+                          {paymentPeriod} / {paymentAmount}
+                          <span className="text-gray-400 text-xs ml-1 font-normal">
+                            (약 {Math.round(parseInt(paymentAmount.replace(/[^0-9]/g, '')) * 10000 / BASE_EXCHANGE_RATE)}$)
+                          </span>
+                        </>
+                      ) : '-'}
                     </span>
                   </div>
                 </div>
@@ -786,8 +808,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
                     <span className="font-bold">
-                      <span className="text-[#3a8094]">{total ? total.toLocaleString('en-US') : '-'}</span>
-                      <span className="text-[#3a8094]"> 원</span>
+                      <span className="text-[#3a8094]">{total ? total.toLocaleString('ko-KR') : '-'}원</span>
+                      <span className="text-gray-400 text-xs ml-1 font-normal">(약 {total ? `${Math.round(total / BASE_EXCHANGE_RATE).toLocaleString()}$` : '-'})</span>
                     </span>
                   </div>
                 </div>
@@ -805,7 +827,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 이자</span>
                     <span className="font-bold">
-                      <span className="text-[#3b82f6]">{interestValue}</span>{' '}<span className="text-[#3a8094]">원</span>
+                      <span className="text-[#3b82f6]">{interestValue}원</span>
+                      <span className="text-gray-400 text-xs ml-1 font-normal">(약 {total ? `${Math.round(total * interestRate / BASE_EXCHANGE_RATE).toLocaleString()}$` : '-'})</span>
                     </span>
                   </div>
                 </div>
@@ -813,7 +836,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 예상 해약환급금</span>
                     <span className="font-bold">
-                      <span className="text-[#ef4444]">{refundValue}</span>{' '}<span className="text-[#3a8094]">원</span>
+                      <span className="text-[#ef4444]">{refundValue}원</span>
+                      <span className="text-gray-400 text-xs ml-1 font-normal">(약 {total ? `${Math.round(total * rate / BASE_EXCHANGE_RATE).toLocaleString()}$` : '-'})</span>
                     </span>
                   </div>
                 </div>
@@ -856,7 +880,14 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
                     <span className="font-bold text-[#3a8094]">
-                      {paymentPeriod && paymentAmount ? `${paymentPeriod} / ${paymentAmount}` : '-'}
+                      {paymentPeriod && paymentAmount ? (
+                        <>
+                          {paymentPeriod} / {paymentAmount}
+                          <span className="text-gray-400 text-xs ml-1 font-normal">
+                            (약 {Math.round(parseInt(paymentAmount.replace(/[^0-9]/g, '')) * 10000 / BASE_EXCHANGE_RATE)}$)
+                          </span>
+                        </>
+                      ) : '-'}
                     </span>
                   </div>
                 </div>
@@ -865,8 +896,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
                     <span className="font-bold">
-                      <span className="text-[#3a8094]">{total ? total.toLocaleString('en-US') : '-'}</span>
-                      <span className="text-[#3a8094]"> 원</span>
+                      <span className="text-[#3a8094]">{total ? total.toLocaleString('ko-KR') : '-'}원</span>
+                      <span className="text-gray-400 text-xs ml-1 font-normal">(약 {total ? `${Math.round(total / BASE_EXCHANGE_RATE).toLocaleString()}$` : '-'})</span>
                     </span>
                   </div>
                 </div>

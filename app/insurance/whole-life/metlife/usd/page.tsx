@@ -114,7 +114,7 @@ export default function ShinhanMoreTheDreamPage() {
             <div className="text-red-500">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
             <div className="text-red-500">① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.</div>
             <div className="text-red-500">② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</div>
-            <div>※ ㈜메타리치 심의필 00000000호(0000.00.00~0000.00.00)</div>
+            <div>※ ㈜메타리치 심의필 25120061호(2025.12.10~2026.12.09)</div>
           </div>
         </div>
         <Footer />
@@ -127,7 +127,7 @@ export default function ShinhanMoreTheDreamPage() {
             onClick={() => {
               const calculatorBox = document.getElementById('calculator-box');
               if (calculatorBox) {
-                calculatorBox.scrollIntoView({ behavior: 'smooth' });
+                calculatorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
               }
             }}
             className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"

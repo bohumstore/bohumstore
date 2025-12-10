@@ -144,7 +144,7 @@ export default function ShinhanMoreTheDreamPage() {
             onClick={() => {
               const calculatorBox = document.getElementById('calculator-box');
               if (calculatorBox) {
-                calculatorBox.scrollIntoView({ behavior: 'smooth' });
+                calculatorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
               }
             }}
             className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"

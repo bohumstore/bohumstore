@@ -49,6 +49,7 @@ export default function Header() {
       title: "종신보험",
       id: "whole-life",
       subItems: [
+        { name: "메트라이프달러종신보험Plus", path: "/insurance/whole-life/metlife/usd" },
         { name: "신한모아더드림Plus종신보험", path: "/insurance/whole-life/shinhan/more-the-dream" },
         { name: "하나로THE연결된종신보험", path: "/insurance/whole-life/hana/hanaro" }
       ]
@@ -131,7 +132,7 @@ export default function Header() {
                     
                     {/* 서브 메뉴 */}
                     <div 
-                      className={`bg-gray-50 overflow-hidden transition-all duration-300 ${
+                      className={`bg-gray-50 overflow-hidden transition-all duration-100 ${
                         expandedMenu === item.id ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
                       }`}
                     >
@@ -182,7 +183,7 @@ export default function Header() {
           to { transform: translateX(0); }
         }
         .animate-slide-in-right {
-          animation: slideInRight 0.2s ease-out forwards;
+          animation: slideInRight 0.1s ease-out forwards;
         }
       `}</style>
     </>
