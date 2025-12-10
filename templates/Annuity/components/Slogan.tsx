@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
@@ -291,10 +291,15 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
     setConsultOtpTimer(0);
     setConsultOtpResendAvailable(true);
   };
+  const consultOtpInputRef = useRef<HTMLInputElement>(null);
   const handleConsultSendOTP = async () => {
     setConsultOtpTimer(180);
     setConsultOtpResendAvailable(false);
-    await handlePostOTP()
+    await handlePostOTP();
+    setTimeout(() => {
+      consultOtpInputRef.current?.focus();
+      consultOtpInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
   };
 
   const handleConsultVerifyOTP = async () => {
@@ -1021,8 +1026,18 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               <div className="flex gap-1 mb-1">
                 <input
                   type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  ref={consultOtpInputRef}
                   value={consultOtpCode}
                   onChange={e => setConsultOtpCode(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
+                  onFocus={(e) => {
+                    if (window.innerWidth < 768) {
+                      setTimeout(() => {
+                        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }, 300);
+                    }
+                  }}
                   maxLength={6}
                   className="flex-1 px-2 py-2 border border-gray-300 rounded-md text-sm focus:ring-[#3a8094] focus:border-[#3a8094]"
                   placeholder="6자리 인증번호 입력"
@@ -1031,9 +1046,10 @@ export default function Slogan({ onOpenPrivacy }: SloganProps) {
               <button
                 type="button"
                 onClick={handleConsultVerifyOTP}
-                className="w-full px-2 py-2.5 bg-[#3a8094] text-white rounded-md text-base font-semibold hover:bg-[#2c6070] transition-colors mt-1"
+                disabled={verifying || consultOtpResendAvailable}
+                className={`w-full px-2 py-2.5 rounded-md text-base font-semibold transition-colors mt-1 ${(verifying || consultOtpResendAvailable) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
               >
-                인증 및 상담신청
+                {verifying ? '인증 처리중...' : (consultOtpResendAvailable ? '인증번호를 먼저 전송하세요' : '인증 및 상담신청')}
               </button>
             </div>
           )}

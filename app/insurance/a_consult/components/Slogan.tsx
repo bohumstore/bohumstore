@@ -85,6 +85,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const birthInputRef = useRef<HTMLInputElement>(null);
   const phoneInputRef = useRef<HTMLInputElement>(null);
   const otpInputRef = useRef<HTMLInputElement>(null);
+  const consultOtpInputRef = useRef<HTMLInputElement>(null);
 
 
   // 타이머 효과
@@ -312,7 +313,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
-    setTimeout(() => otpInputRef.current?.focus(), 0);
+    setTimeout(() => {
+      otpInputRef.current?.focus();
+      otpInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
   };
 
   const formatTime = (sec: number) => {
@@ -402,7 +406,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const handleConsultSendOTP = async () => {
     setConsultOtpTimer(180);
     setConsultOtpResendAvailable(false);
-    await handlePostOTP()
+    await handlePostOTP();
+    // 인증번호 입력란에 포커스 및 스크롤
+    setTimeout(() => {
+      consultOtpInputRef.current?.focus();
+      consultOtpInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
   };
 
   const handleConsultVerifyOTP = async () => {
@@ -653,9 +662,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">상담신청</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">전문가 1:1 무료 상담</h3>
                 </div>
-                <p className="text-gray-500 text-xs sm:text-sm ml-10">간단한 정보 입력으로 상담 신청하세요</p>
+                <p className="text-gray-500 text-xs sm:text-sm ml-10">복잡한 보험, 전문가가 쉽고 명쾌하게 알려드립니다.</p>
               </div>
               <form className="flex flex-col gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 성별/이름 */}
@@ -980,6 +989,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                       const val = e.target.value.replace(/[^0-9]/g, '').slice(0, 6);
                       setOtpCode(val);
                     }}
+                    onFocus={(e) => {
+                      if (window.innerWidth < 768) {
+                        setTimeout(() => {
+                          e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 300);
+                      }
+                    }}
                     maxLength={6}
                     className="flex-1 px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
                     placeholder="6자리 인증번호 입력"
@@ -1160,8 +1176,18 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <div className="flex gap-1.5 sm:gap-2 mb-2 sm:mb-3">
                 <input
                   type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  ref={consultOtpInputRef}
                   value={consultOtpCode}
                   onChange={e => setConsultOtpCode(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
+                  onFocus={(e) => {
+                    if (window.innerWidth < 768) {
+                      setTimeout(() => {
+                        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }, 300);
+                    }
+                  }}
                   maxLength={6}
                   className="flex-1 px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
                   placeholder="6자리 인증번호 입력"
@@ -1170,10 +1196,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <button
                 type="button"
                 onClick={handleConsultVerifyOTP}
-                disabled={verifying}
-                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${verifying ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                disabled={verifying || consultOtpResendAvailable}
+                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpResendAvailable) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
               >
-                {verifying ? '인증 처리중...' : '인증 및 상담신청'}
+                {verifying ? '인증 처리중...' : (consultOtpResendAvailable ? '인증번호를 먼저 전송하세요' : '인증 및 상담신청')}
               </button>
             </div>
           )}

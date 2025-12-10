@@ -67,6 +67,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const birthInputRef = useRef<HTMLInputElement>(null);
   const phoneInputRef = useRef<HTMLInputElement>(null);
   const otpInputRef = useRef<HTMLInputElement>(null);
+  const consultOtpInputRef = useRef<HTMLInputElement>(null);
 
   // 입력 필드 포커스 시 스크롤 조정
   const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -298,7 +299,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
-    setTimeout(() => otpInputRef.current?.focus(), 0);
+    setTimeout(() => {
+      otpInputRef.current?.focus();
+      otpInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
   };
 
   const formatTime = (sec: number) => {
@@ -358,7 +362,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const handleConsultSendOTP = async () => {
     setConsultOtpTimer(180);
     setConsultOtpResendAvailable(false);
-    await handlePostOTP()
+    await handlePostOTP();
+    setTimeout(() => {
+      consultOtpInputRef.current?.focus();
+      consultOtpInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
   };
 
   const handleConsultVerifyOTP = async () => {
@@ -893,6 +901,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                       const val = e.target.value.replace(/[^0-9]/g, '').slice(0, 6);
                       setOtpCode(val);
                     }}
+                    onFocus={(e) => {
+                      if (window.innerWidth < 768) {
+                        setTimeout(() => {
+                          e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 300);
+                      }
+                    }}
                     maxLength={6}
                     className="flex-1 px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
                     placeholder="6자리 인증번호 입력"
@@ -1057,8 +1072,18 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <div className="flex gap-1.5 sm:gap-2 mb-2 sm:mb-3">
                 <input
                   type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  ref={consultOtpInputRef}
                   value={consultOtpCode}
                   onChange={e => setConsultOtpCode(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
+                  onFocus={(e) => {
+                    if (window.innerWidth < 768) {
+                      setTimeout(() => {
+                        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }, 300);
+                    }
+                  }}
                   maxLength={6}
                   className="flex-1 px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
                   placeholder="6자리 인증번호 입력"
@@ -1067,10 +1092,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <button
                 type="button"
                 onClick={handleConsultVerifyOTP}
-                disabled={verifying}
-                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${verifying ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                disabled={verifying || consultOtpResendAvailable}
+                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpResendAvailable) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
               >
-                {verifying ? '인증 처리중...' : '인증 및 상담신청'}
+                {verifying ? '인증 처리중...' : (consultOtpResendAvailable ? '인증번호를 먼저 전송하세요' : '인증 및 상담신청')}
               </button>
             </div>
           )}

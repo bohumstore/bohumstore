@@ -434,7 +434,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
-    setTimeout(() => otpInputRef.current?.focus(), 0);
+    setTimeout(() => {
+      otpInputRef.current?.focus();
+      otpInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
   };
 
   const formatTime = (sec: number) => {
@@ -504,7 +507,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const handleConsultSendOTP = async () => {
     setConsultOtpTimer(180);
     setConsultOtpResendAvailable(false);
-    await handlePostOTP()
+    await handlePostOTP();
+    setTimeout(() => {
+      consultOtpInputRef.current?.focus();
+      consultOtpInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
   };
 
   // Supabase에 사용자 생성 및 상담 기록 저장
@@ -1285,8 +1292,18 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <div className="flex gap-1 mb-1">
                 <input
                   type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  ref={consultOtpInputRef}
                   value={consultOtpCode}
                   onChange={e => setConsultOtpCode(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
+                  onFocus={(e) => {
+                    if (window.innerWidth < 768) {
+                      setTimeout(() => {
+                        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }, 300);
+                    }
+                  }}
                   maxLength={6}
                   className="flex-1 px-2 py-2 border border-gray-300 rounded-md text-sm focus:ring-[#3a8094] focus:border-[#3a8094]"
                   placeholder="6자리 인증번호 입력"
@@ -1295,10 +1312,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <button
                 type="button"
                 onClick={handleConsultVerifyOTP}
-                disabled={verifying}
-                className={`w-full px-2 py-2.5 rounded-md text-base font-semibold transition-colors mt-1 ${verifying ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                disabled={verifying || consultOtpResendAvailable}
+                className={`w-full px-2 py-2.5 rounded-md text-base font-semibold transition-colors mt-1 ${(verifying || consultOtpResendAvailable) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
               >
-                {verifying ? '인증 처리중...' : '인증 및 상담신청'}
+                {verifying ? '인증 처리중...' : (consultOtpResendAvailable ? '인증번호를 먼저 전송하세요' : '인증 및 상담신청')}
               </button>
             </div>
           )}
