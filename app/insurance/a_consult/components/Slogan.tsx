@@ -627,7 +627,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <p className="text-lg text-gray-600 mb-5">최적의 보험을 찾아드립니다</p>
             <ul className="space-y-2.5 text-left">
                 <li className="flex items-center text-base sm:text-lg text-gray-700">
-                    <div className="flex items-center justify-center w-6 h-6 rounded-full bg-rose-500 mr-3 flex-shrink-0">
+                    <div className="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 mr-3 flex-shrink-0">
                       <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
@@ -635,7 +635,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <span className="font-medium">모든 보험사 무료 비교 상담</span>
                 </li>
                 <li className="flex items-center text-base sm:text-lg text-gray-700">
-                    <div className="flex items-center justify-center w-6 h-6 rounded-full bg-rose-500 mr-3 flex-shrink-0">
+                    <div className="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 mr-3 flex-shrink-0">
                       <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
@@ -643,7 +643,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <span className="font-medium">1:1 맞춤형 보험 설계</span>
                 </li>
                 <li className="flex items-center text-base sm:text-lg text-gray-700">
-                    <div className="flex items-center justify-center w-6 h-6 rounded-full bg-rose-500 mr-3 flex-shrink-0">
+                    <div className="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 mr-3 flex-shrink-0">
                       <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
@@ -657,26 +657,24 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-5 sm:p-6 md:p-7 relative flex flex-col">
               <div className="mb-5 sm:mb-6">
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-gradient-to-br from-[#ef4444] to-[#dc2626] rounded-lg flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 text-white">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z" />
-                    </svg>
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-lg flex items-center justify-center">
+                    <CalculatorIcon className="w-4 h-4 text-white" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">전문가 1:1 무료 상담</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">무료 상담 신청하기</h3>
                 </div>
                 <p className="text-gray-500 text-xs sm:text-sm ml-10">복잡한 보험, 전문가가 쉽고 명쾌하게 알려드립니다.</p>
               </div>
-              <form className="flex flex-col gap-4" onSubmit={handleInsuranceCostCalculate}>
+              <form className="flex flex-col gap-4 sm:gap-5" onSubmit={handleInsuranceCostCalculate}>
                 {/* 성별/이름 */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">성별 <span className="text-red-500">*</span></label>
                     <div className="flex gap-2">
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#ef4444] bg-[#ef4444]/5 text-[#ef4444]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#e11d48] bg-rose-50 text-[#e11d48]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
                         <span className="text-sm font-medium">남자</span>
                       </label>
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#ef4444] bg-[#ef4444]/5 text-[#ef4444]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#e11d48] bg-rose-50 text-[#e11d48]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="F" checked={gender === "F"} onChange={handleGenderChange} className="sr-only" />
                         <span className="text-sm font-medium">여자</span>
                       </label>
@@ -684,7 +682,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">이름 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444] transition-all" placeholder="홍길동" />
+                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-rose-500/20 focus:border-[#e11d48] transition-all" placeholder="홍길동" />
                   </div>
                 </div>
 
@@ -692,11 +690,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">생년월일 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444] transition-all" placeholder="19880818" maxLength={8} />
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-rose-500/20 focus:border-[#e11d48] transition-all" placeholder="19880818" maxLength={8} />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">연락처 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444] transition-all" placeholder="01012345678" />
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-rose-500/20 focus:border-[#e11d48] transition-all" placeholder="01012345678" />
                   </div>
                 </div>
 
@@ -705,7 +703,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   {/* 상담 종류 드롭다운 */}
                   <div className="relative" onBlur={() => setTimeout(() => setShowConsultTypeDropdown(false), 150)} tabIndex={-1}>
                       <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">상담 종류 <span className="text-red-500">*</span></label>
-                      <button type="button" onClick={(e) => { setShowConsultTypeDropdown(!showConsultTypeDropdown); handleDropdownClick(e); }} className={`w-full p-2 text-center bg-white border rounded-md flex justify-center items-center ${consultType === '- 상담 종류 선택 -' ? 'border-gray-300 text-gray-400' : 'border-rose-400 text-gray-900'}`}>
+                      <button type="button" onClick={(e) => { setShowConsultTypeDropdown(!showConsultTypeDropdown); handleDropdownClick(e); }} className={`w-full px-3 py-2.5 text-left bg-white border rounded-lg flex justify-between items-center text-sm transition-all ${consultType === '- 상담 종류 선택 -' ? 'border-gray-200 text-gray-400' : 'border-[#e11d48] text-gray-900 focus:ring-2 focus:ring-rose-500/20'}`}>
                           <span className="flex-1">{consultType}</span>
                           <svg className={`w-4 h-4 transition-transform flex-shrink-0 ${showConsultTypeDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                       </button>
@@ -720,7 +718,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   {/* 상담 시간대 드롭다운 */}
                   <div className="relative" onBlur={() => setTimeout(() => setShowConsultTimeDropdown(false), 150)} tabIndex={-1}>
                       <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">상담 시간대 <span className="text-red-500">*</span></label>
-                      <button type="button" onClick={(e) => { setShowConsultTimeDropdown(!showConsultTimeDropdown); handleDropdownClick(e); }} className={`w-full p-2 text-center bg-white border rounded-md flex justify-center items-center ${consultTime === '- 상담 시간대 선택 -' ? 'border-gray-300 text-gray-400' : 'border-rose-400 text-gray-900'}`}>
+                      <button type="button" onClick={(e) => { setShowConsultTimeDropdown(!showConsultTimeDropdown); handleDropdownClick(e); }} className={`w-full px-3 py-2.5 text-left bg-white border rounded-lg flex justify-between items-center text-sm transition-all ${consultTime === '- 상담 시간대 선택 -' ? 'border-gray-200 text-gray-400' : 'border-[#e11d48] text-gray-900 focus:ring-2 focus:ring-rose-500/20'}`}>
                           <span className="flex-1">{consultTime}</span>
                           <svg className={`w-4 h-4 transition-transform flex-shrink-0 ${showConsultTimeDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                       </button>
@@ -736,16 +734,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 개인정보 동의 */}
                 <div className="flex items-center gap-2">
-                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-[#ef4444] rounded border-gray-300 cursor-pointer focus:ring-[#ef4444]" />
+                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-rose-600 rounded border-gray-300 cursor-pointer focus:ring-rose-500" />
                   <span className="text-xs text-gray-600">
                     개인정보 수집 및 이용에 동의합니다. 
-                    <button type="button" onClick={onOpenPrivacy} className="text-[#ef4444] underline ml-1 hover:text-[#dc2626]">자세히 보기</button>
+                    <button type="button" onClick={onOpenPrivacy} className="text-rose-600 underline ml-1 hover:text-rose-800">자세히 보기</button>
                   </span>
                 </div>
 
                 {/* 버튼들 */}
                 <div className="flex gap-2">
-                  <button type="submit" className="flex-1 bg-gradient-to-r from-[#ef4444] to-[#dc2626] text-white font-bold rounded-xl py-3.5 text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#ef4444]/25 cursor-pointer">
+                  <button type="submit" className="flex-1 bg-gradient-to-r from-[#e11d48] to-[#be185d] text-white font-bold rounded-xl py-3.5 text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#e11d48]/25 cursor-pointer">
                     <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-5 h-5'>
                       <path strokeLinecap='round' strokeLinejoin='round' d='M2.25 12a9.75 9.75 0 1 1 19.5 0v3.375a2.625 2.625 0 0 1-2.625 2.625h-1.125a.375.375 0 0 1-.375-.375V15a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 0 .75-.75V12a8.25 8.25 0 1 0-16.5 0v1.5a.75.75 0 0 0 .75.75h.75A.75.75 0 0 1 6 15v2.625a.375.375 0 0 1-.375.375H4.5A2.625 2.625 0 0 1 1.875 15.375V12Z' />
                     </svg>
@@ -1006,7 +1004,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     type="button"
                     onClick={handleVerifyOTP}
                     disabled={verifying || !otpSent}
-                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || !otpSent) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || !otpSent) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#2563eb] text-white hover:bg-[#1d4ed8]'}`}
                   >
                     {verifying ? '인증 처리중...' : (otpSent ? '인증하고 결과 확인하기' : '인증번호를 먼저 전송하세요')}
                   </button>
@@ -1099,7 +1097,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </span>
                 </div>
                 {!consultIsVerified && showConsultTypeDropdown && (
-                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto">
+                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-96 overflow-y-auto">
                     {consultTypeOptions.map(opt => (
                       <div
                         key={opt}
@@ -1128,7 +1126,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </span>
                 </div>
                 {!consultIsVerified && showConsultTimeDropdown && (
-                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto overscroll-contain">
+                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-96 overflow-y-auto overscroll-contain">
                     {consultTimeOptions.map(opt => (
                       <div
                         key={opt}
@@ -1197,7 +1195,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 type="button"
                 onClick={handleConsultVerifyOTP}
                 disabled={verifying || consultOtpResendAvailable}
-                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpResendAvailable) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpResendAvailable) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#2563eb] text-white hover:bg-[#1d4ed8]'}`}
               >
                 {verifying ? '인증 처리중...' : (consultOtpResendAvailable ? '인증번호를 먼저 전송하세요' : '인증 및 상담신청')}
               </button>

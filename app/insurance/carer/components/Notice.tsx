@@ -1,4 +1,4 @@
-import Modal from '@/app/components/Modal';
+import Modal from '@/app/components/Modal'
 import React from 'react'
 
 interface NoticeProps {

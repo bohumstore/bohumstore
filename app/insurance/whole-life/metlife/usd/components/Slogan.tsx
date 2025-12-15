@@ -523,7 +523,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             {/* 상단 뱃지 */}
             <div className="inline-flex items-center gap-2 bg-[#00d4aa]/20 border border-[#00d4aa]/40 rounded-full px-4 py-1.5 mb-4">
               <span className="w-2 h-2 bg-[#00d4aa] rounded-full animate-pulse"></span>
-              <span className="text-[#00d4aa] text-xs sm:text-sm font-medium">달러로 준비하는 미래 자산</span>
+              <span className="text-[#00d4aa] text-xs sm:text-sm font-medium">달러종신보험으로 준비하는 미래 자산</span>
             </div>
 
             {/* 메인 타이틀 */}

@@ -21,7 +21,7 @@ export async function POST(req: Request) {
       template_code: process.env.KAKAO_TEMPLATE_CODE,
       phone_number:  phone,
       sender_no:     process.env.KAKAO_SENDER_NO,
-      message:       `상담 신청이 접수되었습니다. 곧 연락드리겠습니다.`,
+      message:       `간병인보험 상담 신청이 접수되었습니다. 곧 연락드리겠습니다.`,
       fall_back_yn:  false
     },
     {
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
       template_code: process.env.KAKAO_TEMPLATE_CODE,
       phone_number:  phone,
       sender_no:     process.env.KAKAO_SENDER_NO,
-      message:       `${userId} 님이 상담 신청을 하셨습니다.\n\n상담 유형: ${counselTypeId}\n보험사: ${companyId}\n상품: ${productId}`,
+      message:       `${userId} 님이 간병인보험 상담 신청을 하셨습니다.\n\n상담 유형: 간병인보험\n연락처: ${phone}`,
       fall_back_yn:  false
     },
     {
