@@ -592,6 +592,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold text-gray-900">간병인보험 무료 상담신청</h3>
                 </div>
+                <p className="text-gray-500 text-xs sm:text-sm ml-10">복잡한 보험, 전문가가 쉽고 명쾌하게 알려드립니다.</p>
               </div>
               
               {/* 간병인보험 보장 내용 박스 */}
