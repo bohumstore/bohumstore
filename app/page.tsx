@@ -166,7 +166,7 @@ const slogans = [
   {
     id: 'hana-hanaro',
     title: '10년시점 122.78% 환급률',
-    subtitle: '간편심사형으로 병력 걱정 없이',
+    subtitle: '간편심사형 가입 가능',
     description: '하나생명 하나로 THE 연결된 종신보험으로 높은 환급률과 간편한 가입을 경험하세요.',
     path: '/insurance/whole-life/hana/hanaro',
     color: 'from-teal-500 to-teal-600',
@@ -189,10 +189,21 @@ const mainProducts = [
     company: 'KB라이프생명',
     logo: '/kb-life.png',
     path: '/insurance/annuity/kb/triple-level-up',
-    description: '10년시점 130% 해약환급률 보증으로 단기간 높은 보장',
+    description: '5년납 단기완납, 병력 무심사 가입 가능',
     badge: 'BEST',
     category: '연금보험',
     highlight: '10년시점 130% 보증'
+  },
+  {
+    id: 'metlife-usd',
+    name: '메트라이프 달러종신보험Plus',
+    company: '메트라이프생명',
+    logo: '/metlife-logo.png',
+    path: '/insurance/whole-life/metlife/usd',
+    description: '달러/원화 선택 수령, 원화고정납입옵션으로 환율 걱정 無',
+    badge: 'TOP',
+    category: '달러종신보험',
+    highlight: '10년시점 124.9%'
   },
   {
     id: 'ibk-lifetime',
@@ -200,10 +211,44 @@ const mainProducts = [
     company: 'IBK연금보험',
     logo: '/IBK-logo.png',
     path: '/insurance/annuity/ibk/lifetime',
-    description: '연단리 8% 보증으로 평생 연금 보장',
+    description: '업계 최고 연단리 8% 보증, 100세까지 평생 연금 수령',
     badge: 'HOT',
     category: '변액연금',
     highlight: '연단리 8% 보증'
+  },
+  {
+    id: 'kdb-happy-dream',
+    name: 'KDB 행복드림 변액연금보험',
+    company: 'KDB생명',
+    logo: '/kdb-logo.png',
+    path: '/insurance/annuity/kdb/happy-dream',
+    description: '연단리 7% 보증으로 안정성과 수익성 동시 확보',
+    badge: '',
+    category: '변액연금',
+    highlight: '연단리 7% 보증'
+  },
+  {
+    id: 'shinhan-more-the-dream',
+    name: '신한 모아더드림 Plus 종신보험',
+    company: '신한라이프생명',
+    logo: '/shinhan-life-logo.png',
+    path: '/insurance/whole-life/shinhan/more-the-dream',
+    description: '15~70세 전연령 가입 가능, 단기납 완료 후 높은 환급률',
+    badge: '',
+    category: '종신보험',
+    highlight: '10년시점 122.7%'
+  },
+  {
+    id: 'hana-hanaro',
+    name: '하나생명 하나로 THE 연결된 종신보험',
+    company: '하나생명',
+    logo: '/hana-logo.png',
+    path: '/insurance/whole-life/hana/hanaro',
+    description: '간편심사형 가입 가능, 3대질병 진단시 보험료 환급',
+    descriptionNote: '(※특약 가입시)',
+    badge: '',
+    category: '종신보험',
+    highlight: '10년시점 122.78%'
   },
   {
     id: 'kdb-happy-plus',
@@ -215,50 +260,6 @@ const mainProducts = [
     badge: '',
     category: '연금보험',
     highlight: '연단리 7% 보증'
-  },
-  {
-    id: 'kdb-happy-dream',
-    name: 'KDB 행복드림 변액연금보험',
-    company: 'KDB생명',
-    logo: '/kdb-logo.png',
-    path: '/insurance/annuity/kdb/happy-dream',
-    description: '연단리 7% 보증으로 안정성과 수익성 동시 확보',
-    badge: '추천',
-    category: '변액연금',
-    highlight: '연단리 7% 보증'
-  },
-  {
-    id: 'shinhan-more-the-dream',
-    name: '신한 모아더드림 Plus 종신보험',
-    company: '신한라이프생명',
-    logo: '/shinhan-life-logo.png',
-    path: '/insurance/whole-life/shinhan/more-the-dream',
-    description: '15~70세 전연령 10년시점 122.7%로 단기납 완료 후 높은 환급률',
-    badge: '',
-    category: '종신보험',
-    highlight: '10년시점 122.7%'
-  },
-  {
-    id: 'hana-hanaro',
-    name: '하나생명 하나로 THE 연결된 종신보험',
-    company: '하나생명',
-    logo: '/hana-logo.png',
-    path: '/insurance/whole-life/hana/hanaro',
-    description: '간편심사형 가능, 10년시점 122.78% 환급률로 병력 걱정 없이',
-    badge: 'NEW',
-    category: '종신보험',
-    highlight: '간편심사형 가능'
-  },
-  {
-    id: 'metlife-usd',
-    name: '메트라이프 달러종신보험Plus',
-    company: '메트라이프생명',
-    logo: '/metlife-logo.png',
-    path: '/insurance/whole-life/metlife/usd',
-    description: '달러/원화 선택 수령, 원화고정납입옵션으로 환율 걱정 無',
-    badge: 'TOP',
-    category: '달러종신보험',
-    highlight: '달러/원화 선택'
   }
 ];
 
@@ -858,7 +859,12 @@ export default function HomePage() {
                   {/* 상품 정보 */}
                   <div className="mb-4">
                     <h3 className="font-bold text-gray-900 mb-2 text-lg leading-tight">{product.name}</h3>
-                    <p className="text-sm text-gray-600 mb-3 leading-relaxed">{product.description}</p>
+                    <p className="text-sm text-gray-600 mb-3 leading-relaxed">
+                      {product.description}
+                      {product.descriptionNote && (
+                        <span className="text-xs text-gray-400 ml-1">{product.descriptionNote}</span>
+                      )}
+                    </p>
                     <div className="flex items-center gap-2 mb-3">
                       <span className={`text-xs font-medium px-2 py-1 rounded ${
                         product.id === 'kb-triple-level-up' ? 'text-yellow-600 bg-yellow-50' :

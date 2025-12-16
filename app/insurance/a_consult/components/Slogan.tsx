@@ -295,13 +295,31 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     }
     
     if (birth.length !== 8) {
-      alert('생년월일을 8자리로 입력해주세요.');
+      alert('생년월일을 8자리로 입력해주세요. (예: 19880818)');
       birthInputRef.current?.focus();
       return;
     }
     
-    if (phone.length < 10) {
-      alert('연락처를 정확히 입력해주세요.');
+    // 생년월일 유효성 검사
+    const birthYear = parseInt(birth.substring(0, 4));
+    const birthMonth = parseInt(birth.substring(4, 6));
+    const birthDay = parseInt(birth.substring(6, 8));
+    if (birthYear < 1900 || birthYear > new Date().getFullYear() ||
+        birthMonth < 1 || birthMonth > 12 ||
+        birthDay < 1 || birthDay > 31) {
+      alert('생년월일을 올바르게 입력해 주세요. (예: 19880818)');
+      birthInputRef.current?.focus();
+      return;
+    }
+    
+    if (phone.length < 10 || phone.length > 11) {
+      alert('연락처를 올바르게 입력해 주세요. (예: 01012345678)');
+      phoneInputRef.current?.focus();
+      return;
+    }
+    
+    if (!phone.startsWith('010')) {
+      alert('연락처를 올바르게 입력해 주세요. (010으로 시작)');
       phoneInputRef.current?.focus();
       return;
     }

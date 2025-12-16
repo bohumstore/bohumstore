@@ -412,14 +412,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   };
 
   const handleOpenConsultModal = () => {
-    if (!isChecked) {
-      alert('개인정보 수집 및 이용에 동의해주세요.');
-      return;
-    }
-    if (!gender || !name || !birth || !phone) {
-      alert('성별, 이름, 생년월일, 연락처를 모두 입력해 주세요.');
-      return;
-    }
+    if (!validateForm()) return;
     setConsultIsVerified(false);
     setConsultOtpCode("");
     setConsultOtpTimer(0);

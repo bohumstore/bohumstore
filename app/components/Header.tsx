@@ -51,6 +51,13 @@ export default function Header() {
 
   const menuItems = [
     {
+      title: "건강보험",
+      id: "health",
+      subItems: [
+        { name: "간병인보험", path: "/insurance/carer" }
+      ]
+    },
+    {
       title: "종신보험",
       id: "whole-life",
       subItems: [
@@ -88,10 +95,11 @@ export default function Header() {
         {/* 햄버거 메뉴 버튼 (우측 끝) */}
         <button 
           onClick={toggleMenu}
-          className="absolute right-4 md:right-12 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"
+          className="absolute right-4 md:right-12 p-1 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors flex flex-col items-center"
           aria-label="메뉴 열기"
         >
-          <Bars3Icon className="w-7 h-7 md:w-8 md:h-8" />
+          <Bars3Icon className="w-6 h-6 md:w-7 md:h-7" />
+          <span className="text-[10px] md:text-xs font-medium mt-0.5">메뉴</span>
         </button>
       </header>
 

@@ -338,6 +338,25 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     setIsVerified(false);
   };
 
+  // 생년월일 유효성 검사
+  const validateBirth = (birthValue: string): boolean => {
+    if (birthValue.length !== 8) return false;
+    const year = parseInt(birthValue.substring(0, 4));
+    const month = parseInt(birthValue.substring(4, 6));
+    const day = parseInt(birthValue.substring(6, 8));
+    if (year < 1900 || year > new Date().getFullYear()) return false;
+    if (month < 1 || month > 12) return false;
+    if (day < 1 || day > 31) return false;
+    return true;
+  };
+
+  // 연락처 유효성 검사
+  const validatePhone = (phoneValue: string): boolean => {
+    if (!phoneValue.startsWith('010')) return false;
+    if (phoneValue.length < 10 || phoneValue.length > 11) return false;
+    return true;
+  };
+
   const handleOpenConsultModal = () => {
     if (!isChecked) {
       alert('개인정보 수집 및 이용에 동의해주세요.');
@@ -345,6 +364,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     }
     if (!gender || !name || !birth || !phone) {
       alert('성별, 이름, 생년월일, 연락처를 모두 입력해 주세요.');
+      return;
+    }
+    if (!validateBirth(birth)) {
+      alert('생년월일을 올바르게 입력해 주세요. (예: 19880818)');
+      birthInputRef.current?.focus();
+      return;
+    }
+    if (!validatePhone(phone)) {
+      alert('연락처를 올바르게 입력해 주세요. (예: 01012345678)');
+      phoneInputRef.current?.focus();
       return;
     }
     setConsultIsVerified(false);
