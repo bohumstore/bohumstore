@@ -24,10 +24,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const [consultOtpResendAvailable, setConsultOtpResendAvailable] = useState(true);
   const [consultIsVerified, setConsultIsVerified] = useState(false);
 
-  const [showConsultTypeDropdown, setShowConsultTypeDropdown] = useState(false);
-  const [showConsultTimeDropdown, setShowConsultTimeDropdown] = useState(false);
   const [consultType, setConsultType] = useState('- 상담 종류 선택 -');
-  const [consultTime, setConsultTime] = useState('- 상담 시간대 선택 -');
+  const [consultTime, setConsultTime] = useState('아무때나');
   const consultTypeOptions = [
     '- 상담 종류 선택 -',
     '암보험',
@@ -196,16 +194,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       setTimeout(() => {
         target.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }, 300);
-    }
-  };
-
-  // 드롭다운 클릭 시 스크롤 조정
-  const handleDropdownClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const currentTarget = e.currentTarget;
-    if (window.innerWidth < 768 && currentTarget) {
-      setTimeout(() => {
-        currentTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 100);
     }
   };
 
@@ -489,36 +477,32 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 </div>
 
                 {/* 상담 정보 선택 */}
-                <div className="space-y-3 sm:space-y-4">
+                <div className="grid grid-cols-2 gap-3">
                   {/* 상담 종류 드롭다운 */}
-                  <div className="relative" onBlur={() => setTimeout(() => setShowConsultTypeDropdown(false), 150)} tabIndex={-1}>
-                      <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">상담 종류 <span className="text-red-500">*</span></label>
-                      <button type="button" onClick={(e) => { setShowConsultTypeDropdown(!showConsultTypeDropdown); handleDropdownClick(e); }} className={`w-full px-3 py-2.5 text-left bg-white border rounded-lg flex justify-between items-center text-sm transition-all ${consultType === '- 상담 종류 선택 -' ? 'border-gray-200 text-gray-400' : 'border-blue-600 text-gray-900 focus:ring-2 focus:ring-blue-500/20'}`}>
-                          <span className="flex-1">{consultType}</span>
-                          <svg className={`w-4 h-4 transition-transform flex-shrink-0 ${showConsultTypeDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                      </button>
-                      {showConsultTypeDropdown && (
-                          <ul className="absolute z-20 w-full bg-white border border-gray-300 rounded-md mt-1 shadow-lg max-h-48 overflow-y-auto overscroll-contain">
-                              {consultTypeOptions.map(option => (
-                                  <li key={option} onClick={() => { setConsultType(option); setShowConsultTypeDropdown(false); }} className={`p-2 hover:bg-blue-50 cursor-pointer text-sm text-center ${option === '- 상담 종류 선택 -' ? 'text-gray-400' : ''}`}>{option}</li>
-                              ))}
-                          </ul>
-                      )}
+                  <div>
+                    <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5">상담 종류 <span className="text-red-500">*</span></label>
+                    <select
+                      value={consultType}
+                      onChange={(e) => setConsultType(e.target.value)}
+                      className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all"
+                    >
+                      {consultTypeOptions.map((option) => (
+                        <option key={option} value={option}>{option}</option>
+                      ))}
+                    </select>
                   </div>
                   {/* 상담 시간대 드롭다운 */}
-                  <div className="relative" onBlur={() => setTimeout(() => setShowConsultTimeDropdown(false), 150)} tabIndex={-1}>
-                      <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">상담 시간대 <span className="text-red-500">*</span></label>
-                      <button type="button" onClick={(e) => { setShowConsultTimeDropdown(!showConsultTimeDropdown); handleDropdownClick(e); }} className={`w-full px-3 py-2.5 text-left bg-white border rounded-lg flex justify-between items-center text-sm transition-all ${consultTime === '- 상담 시간대 선택 -' ? 'border-gray-200 text-gray-400' : 'border-blue-600 text-gray-900 focus:ring-2 focus:ring-blue-500/20'}`}>
-                          <span className="flex-1">{consultTime}</span>
-                          <svg className={`w-4 h-4 transition-transform flex-shrink-0 ${showConsultTimeDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                      </button>
-                      {showConsultTimeDropdown && (
-                          <ul className="absolute z-20 w-full bg-white border border-gray-300 rounded-md mt-1 shadow-lg max-h-40 overflow-y-auto overscroll-contain">
-                              {consultTimeOptions.map(option => (
-                                  <li key={option} onClick={() => { setConsultTime(option); setShowConsultTimeDropdown(false); }} className={`p-2 hover:bg-blue-50 cursor-pointer text-sm text-center ${option === '- 상담 시간대 선택 -' ? 'text-gray-400' : ''}`}>{option}</li>
-                              ))}
-                          </ul>
-                      )}
+                  <div>
+                    <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5">상담 시간대 <span className="text-red-500">*</span></label>
+                    <select
+                      value={consultTime}
+                      onChange={(e) => setConsultTime(e.target.value)}
+                      className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all"
+                    >
+                      {consultTimeOptions.map((option) => (
+                        <option key={option} value={option}>{option}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
@@ -607,63 +591,41 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <span className="font-bold text-gray-900 text-sm sm:text-base">{phone}</span>
                 </div>
               </div>
-              <div className={`bg-white p-1.5 sm:p-2 rounded border border-gray-200 relative ${consultIsVerified ? '' : 'cursor-pointer select-none'}`}
-                onClick={consultIsVerified ? undefined : () => setShowConsultTypeDropdown(v => !v)}
-                tabIndex={consultIsVerified ? -1 : 0}
-                onBlur={consultIsVerified ? undefined : () => setTimeout(() => setShowConsultTypeDropdown(false), 100)}
-                aria-disabled={consultIsVerified}
-              >
+              <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-blue-600 mr-1'>▸</span>상담 종류</span>
-                  <span className={`font-bold flex items-center gap-1 text-sm sm:text-base ${consultIsVerified ? 'text-gray-900' : (consultType === '- 상담 종류 선택 -' ? 'text-gray-400' : 'text-blue-600')}`}>
-                    {consultType}
-                    {!consultIsVerified && (
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-                    )}
-                  </span>
+                  {consultIsVerified ? (
+                    <span className="font-bold text-gray-900 text-sm sm:text-base">{consultType}</span>
+                  ) : (
+                    <select
+                      value={consultType}
+                      onChange={(e) => setConsultType(e.target.value)}
+                      className="font-bold text-blue-600 text-sm sm:text-base bg-transparent border-none focus:outline-none cursor-pointer text-right"
+                    >
+                      {consultTypeOptions.map((opt) => (
+                        <option key={opt} value={opt}>{opt}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
-                {!consultIsVerified && showConsultTypeDropdown && (
-                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-96 overflow-y-auto">
-                    {consultTypeOptions.map(opt => (
-                      <div
-                        key={opt}
-                        className={`px-4 py-2 text-sm cursor-pointer hover:bg-blue-50 text-center ${consultType === opt ? 'text-blue-600 font-bold' : (opt === '- 상담 종류 선택 -' ? 'text-gray-400' : 'text-gray-700')}`}
-                        onClick={e => { e.stopPropagation(); setConsultType(opt); setShowConsultTypeDropdown(false); }}
-                      >
-                        {opt}
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
-              <div className={`bg-white p-1.5 sm:p-2 rounded border border-gray-200 relative ${consultIsVerified ? '' : 'cursor-pointer select-none'}`}
-                onClick={consultIsVerified ? undefined : () => setShowConsultTimeDropdown(v => !v)}
-                tabIndex={consultIsVerified ? -1 : 0}
-                onBlur={consultIsVerified ? undefined : () => setTimeout(() => setShowConsultTimeDropdown(false), 100)}
-                aria-disabled={consultIsVerified}
-              >
+              <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-blue-600 mr-1'>▸</span>상담 시간대</span>
-                  <span className={`font-bold flex items-center gap-1 text-sm sm:text-base ${consultIsVerified ? 'text-gray-900' : (consultTime === '- 상담 시간대 선택 -' ? 'text-gray-400' : 'text-blue-600')}`}>
-                    {consultTime}
-                    {!consultIsVerified && (
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-                    )}
-                  </span>
+                  {consultIsVerified ? (
+                    <span className="font-bold text-gray-900 text-sm sm:text-base">{consultTime}</span>
+                  ) : (
+                    <select
+                      value={consultTime}
+                      onChange={(e) => setConsultTime(e.target.value)}
+                      className="font-bold text-blue-600 text-sm sm:text-base bg-transparent border-none focus:outline-none cursor-pointer text-right"
+                    >
+                      {consultTimeOptions.map((opt) => (
+                        <option key={opt} value={opt}>{opt}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
-                {!consultIsVerified && showConsultTimeDropdown && (
-                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-96 overflow-y-auto overscroll-contain">
-                    {consultTimeOptions.map(opt => (
-                      <div
-                        key={opt}
-                        className={`px-4 py-2 text-sm cursor-pointer hover:bg-blue-50 text-center ${consultTime === opt ? 'text-blue-600 font-bold' : (opt === '- 상담 시간대 선택 -' ? 'text-gray-400' : 'text-gray-700')}`}
-                        onClick={e => { e.stopPropagation(); setConsultTime(opt); setShowConsultTimeDropdown(false); }}
-                      >
-                        {opt}
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
             </div>
           </div>

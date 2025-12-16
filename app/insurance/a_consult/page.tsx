@@ -1,5 +1,5 @@
 ﻿"use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import Slogan from "./components/Slogan";
 import Footer from "./components/Footer";
@@ -10,6 +10,16 @@ export default function ConsultPage() {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState(false);
+
+  // 햄버거 메뉴 상태 수신
+  useEffect(() => {
+    const handleMenuChange = (e: CustomEvent<{ isOpen: boolean }>) => {
+      setIsHeaderMenuOpen(e.detail.isOpen);
+    };
+    window.addEventListener('headerMenuChange', handleMenuChange as EventListener);
+    return () => window.removeEventListener('headerMenuChange', handleMenuChange as EventListener);
+  }, []);
 
   const handleFocus = (e: React.FocusEvent) => {
     const target = e.target as HTMLElement;
@@ -53,7 +63,7 @@ export default function ConsultPage() {
         <Footer />
         
         {/* 플로팅 버튼 - 카톡상담 */}
-        {!isModalOpen && !showPrivacy && !isInputFocused && (
+        {!isModalOpen && !showPrivacy && !isInputFocused && !isHeaderMenuOpen && (
           <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 flex flex-col gap-2 sm:gap-3">
             <button 
               onClick={() => window.open('https://pf.kakao.com/_lrubxb/chat', '_blank')}

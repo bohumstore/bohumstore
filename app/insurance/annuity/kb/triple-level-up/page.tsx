@@ -24,11 +24,21 @@ export default function KBTripleLevelUpAnnuityPage() {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState(false);
 
   useEffect(() => {
     // 페이지 방문 시 자동 추적
     trackPageVisit();
     // getProduct()
+  }, []);
+
+  // 햄버거 메뉴 상태 수신
+  useEffect(() => {
+    const handleMenuChange = (e: CustomEvent<{ isOpen: boolean }>) => {
+      setIsHeaderMenuOpen(e.detail.isOpen);
+    };
+    window.addEventListener('headerMenuChange', handleMenuChange as EventListener);
+    return () => window.removeEventListener('headerMenuChange', handleMenuChange as EventListener);
   }, []);
 
   const trackPageVisit = async () => {
@@ -123,7 +133,7 @@ export default function KBTripleLevelUpAnnuityPage() {
         <Footer />
         
         {/* 맨 위로 & 계산하기 버튼 - 모달이 열렸을 때는 숨김 */}
-        {!isModalOpen && !showPrivacy && !showNotice && !isInputFocused && (
+        {!isModalOpen && !showPrivacy && !showNotice && !isInputFocused && !isHeaderMenuOpen && (
         <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 flex flex-col gap-2 sm:gap-3">
           {/* 계산하기 버튼 */}
           <button 

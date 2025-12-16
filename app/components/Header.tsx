@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import { Bars3Icon, XMarkIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
@@ -8,6 +8,11 @@ import { Bars3Icon, XMarkIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+
+  // 메뉴 상태 변경 시 커스텀 이벤트 발생 (플로팅 버튼 숨김용)
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('headerMenuChange', { detail: { isOpen: isMenuOpen } }));
+  }, [isMenuOpen]);
 
   // 모바일 메뉴 뒤로가기 버튼 지원
   React.useEffect(() => {

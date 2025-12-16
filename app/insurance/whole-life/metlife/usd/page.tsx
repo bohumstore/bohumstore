@@ -22,11 +22,21 @@ export default function ShinhanMoreTheDreamPage() {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState(false);
 
   useEffect(() => {
     // 페이지 방문 시 자동 추적
     trackPageVisit();
     // getProduct()
+  }, []);
+
+  // 햄버거 메뉴 상태 수신
+  useEffect(() => {
+    const handleMenuChange = (e: CustomEvent<{ isOpen: boolean }>) => {
+      setIsHeaderMenuOpen(e.detail.isOpen);
+    };
+    window.addEventListener('headerMenuChange', handleMenuChange as EventListener);
+    return () => window.removeEventListener('headerMenuChange', handleMenuChange as EventListener);
   }, []);
 
   const getProduct = async () => {
@@ -120,7 +130,7 @@ export default function ShinhanMoreTheDreamPage() {
         <Footer />
         
         {/* 오른쪽 하단 플로팅 액션 버튼들 - 모달이 열렸을 때는 숨김 */}
-        {!isModalOpen && !showPrivacy && !isInputFocused && (
+        {!isModalOpen && !showPrivacy && !isInputFocused && !isHeaderMenuOpen && (
         <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 flex flex-col gap-2 sm:gap-3 z-50">
           {/* 계산하기 버튼 */}
           <button
