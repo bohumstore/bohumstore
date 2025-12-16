@@ -946,8 +946,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       <Modal
         title={
           <span className="flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-[#fa5a5a]">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z"/>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-blue-600">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
             </svg>
             상담 신청하기
           </span>
@@ -972,86 +972,64 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           )}
           <div className="bg-gray-50 rounded-lg p-1.5 sm:p-2 mb-0.5">
             <h3 className="mb-1.5 sm:mb-2 flex items-center">
-              <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name}</span>
-              <span className="text-lg text-[#7c3aed] font-bold align-middle">&nbsp;님</span>
+              <span className="text-2xl text-blue-600 font-extrabold align-middle">{name}</span>
+              <span className="text-lg text-blue-600 font-bold align-middle">&nbsp;님</span>
               {insuranceAge !== '' && (
                 <span className="font-bold ml-2 flex items-center">
-                  <span className="text-lg text-[#3a8094]">보험연령 </span>
-                  <span className="text-2xl font-extrabold text-[#ef4444] mx-1">{insuranceAge}</span>
-                  <span className="text-lg text-[#3a8094]">세</span>
+                  <span className="text-lg text-gray-500">보험연령 </span>
+                  <span className="text-2xl font-extrabold text-red-500 mx-1">{insuranceAge}</span>
+                  <span className="text-lg text-gray-500">세</span>
                 </span>
               )}
             </h3>
             <div className="grid grid-cols-1 gap-1.5">
               <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>이름</span>
-                  <span className="font-bold text-[#3a8094] text-sm sm:text-base">{name}</span>
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-blue-600 mr-1'>▸</span>이름</span>
+                  <span className="font-bold text-gray-900 text-sm sm:text-base">{name}</span>
                 </div>
               </div>
               <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연락처</span>
-                  <span className="font-bold text-[#3a8094] text-sm sm:text-base">{phone}</span>
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-blue-600 mr-1'>▸</span>연락처</span>
+                  <span className="font-bold text-gray-900 text-sm sm:text-base">{phone}</span>
                 </div>
               </div>
-              <div className={`bg-white p-1.5 sm:p-2 rounded border border-gray-200 relative ${consultIsVerified ? '' : 'cursor-pointer select-none'}`}
-                onClick={consultIsVerified ? undefined : () => setShowConsultTypeDropdown(v => !v)}
-                tabIndex={consultIsVerified ? -1 : 0}
-                onBlur={consultIsVerified ? undefined : () => setTimeout(() => setShowConsultTypeDropdown(false), 100)}
-                aria-disabled={consultIsVerified}
-              >
+              <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상담종류</span>
-                  <span className={`font-bold flex items-center gap-1 text-sm sm:text-base ${consultIsVerified ? 'text-[#3a8094]' : 'text-[#7c3aed]'}`}>
-                    {consultType}
-                    {!consultIsVerified && (
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-                    )}
-                  </span>
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-blue-600 mr-1'>▸</span>상담 종류</span>
+                  {consultIsVerified ? (
+                    <span className="font-bold text-gray-900 text-sm sm:text-base">{consultType}</span>
+                  ) : (
+                    <select
+                      value={consultType}
+                      onChange={(e) => setConsultType(e.target.value)}
+                      className="font-bold text-blue-600 text-sm sm:text-base bg-transparent border-none focus:outline-none cursor-pointer text-right"
+                    >
+                      {consultTypeOptions.map((opt) => (
+                        <option key={opt} value={opt}>{opt}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
-                {!consultIsVerified && showConsultTypeDropdown && (
-                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10">
-                    {consultTypeOptions.map(opt => (
-                      <div
-                        key={opt}
-                        className={`px-4 py-2 text-sm cursor-pointer hover:bg-blue-50 ${consultType === opt ? 'text-[#7c3aed] font-bold' : 'text-gray-700'}`}
-                        onClick={e => { e.stopPropagation(); setConsultType(opt); setShowConsultTypeDropdown(false); }}
-                      >
-                        {opt}
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
-              <div className={`bg-white p-1.5 sm:p-2 rounded border border-gray-200 relative ${consultIsVerified ? '' : 'cursor-pointer select-none'}`}
-                onClick={consultIsVerified ? undefined : () => setShowConsultTimeDropdown(v => !v)}
-                tabIndex={consultIsVerified ? -1 : 0}
-                onBlur={consultIsVerified ? undefined : () => setTimeout(() => setShowConsultTimeDropdown(false), 100)}
-                aria-disabled={consultIsVerified}
-              >
+              <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상담시간대</span>
-                  <span className={`font-bold flex items-center gap-1 text-sm sm:text-base ${consultIsVerified ? 'text-[#3a8094]' : 'text-[#7c3aed]'}`}>
-                    {consultTime}
-                    {!consultIsVerified && (
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-                    )}
-                  </span>
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-blue-600 mr-1'>▸</span>상담 시간대</span>
+                  {consultIsVerified ? (
+                    <span className="font-bold text-gray-900 text-sm sm:text-base">{consultTime}</span>
+                  ) : (
+                    <select
+                      value={consultTime}
+                      onChange={(e) => setConsultTime(e.target.value)}
+                      className="font-bold text-blue-600 text-sm sm:text-base bg-transparent border-none focus:outline-none cursor-pointer text-right"
+                    >
+                      {consultTimeOptions.map((opt) => (
+                        <option key={opt} value={opt}>{opt}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
-                {!consultIsVerified && showConsultTimeDropdown && (
-                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto overscroll-contain">
-                    {consultTimeOptions.map(opt => (
-                      <div
-                        key={opt}
-                        className={`px-4 py-2 text-sm cursor-pointer hover:bg-blue-50 ${consultTime === opt ? 'text-[#7c3aed] font-bold' : 'text-gray-700'}`}
-                        onClick={e => { e.stopPropagation(); setConsultTime(opt); setShowConsultTimeDropdown(false); }}
-                      >
-                        {opt}
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -1074,13 +1052,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <button
                   type="button"
                   onClick={handleConsultSendOTP}
-                  className="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 bg-[#f97316] text-white rounded-md text-sm sm:text-base font-medium 
-                           hover:bg-[#ea580c] transition-colors min-w-[100px] sm:min-w-[120px]"
+                  className="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 bg-blue-600 text-white rounded-md text-sm sm:text-base font-medium 
+                           hover:bg-blue-700 transition-colors min-w-[100px] sm:min-w-[120px]"
                 >
                   {consultOtpResendAvailable ? '인증번호 전송' : '재발송'}
                 </button>
                 {!consultOtpResendAvailable && (
-                  <div className="min-w-[60px] flex items-center justify-center text-[#3a8094] font-medium text-sm">
+                  <div className="min-w-[60px] flex items-center justify-center text-blue-600 font-medium text-sm">
                     {formatTime(consultOtpTimer)}
                   </div>
                 )}
@@ -1101,7 +1079,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     }
                   }}
                   maxLength={6}
-                  className="flex-1 px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
+                  className="flex-1 px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-blue-500 focus:border-blue-600"
                   placeholder="6자리 인증번호 입력"
                 />
               </div>
@@ -1109,7 +1087,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 type="button"
                 onClick={handleConsultVerifyOTP}
                 disabled={verifying || consultOtpCode.length !== 6}
-                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpCode.length !== 6) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#e11d48] text-white hover:bg-[#be185d]'}`}
+                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpCode.length !== 6) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
               >
                 {verifying ? '인증 처리중...' : '인증하고 상담신청'}
               </button>
