@@ -42,9 +42,12 @@ export default function Modal({ title, open, onClose, children }: ModalProps) {
       isClosingByBackRef.current = false;
       
       // 히스토리에 모달 상태 추가 (뒤로가기 시 모달만 닫히도록)
-      window.history.pushState({ modal: true }, '');
+      // 히스토리 중복 추가 방지
+      if (!window.history.state?.modal) {
+        window.history.pushState({ modal: true }, '');
+      }
       
-      const handlePopState = () => {
+      const handlePopState = (e: PopStateEvent) => {
         isClosingByBackRef.current = true;
         onClose();
       };

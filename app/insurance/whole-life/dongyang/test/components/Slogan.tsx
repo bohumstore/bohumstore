@@ -923,10 +923,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <button
                 type="button"
                 onClick={handleConsultVerifyOTP}
-                disabled={verifying || consultOtpResendAvailable}
-                className={`w-full px-2 py-2.5 rounded-md text-base font-semibold transition-colors mt-1 ${(verifying || consultOtpResendAvailable) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                disabled={verifying || consultOtpCode.length !== 6}
+                className={`w-full px-2 py-2.5 rounded-md text-base font-semibold transition-colors mt-1 ${(verifying || consultOtpCode.length !== 6) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
               >
-                {verifying ? '인증 처리중...' : (consultOtpResendAvailable ? '인증번호를 먼저 전송하세요' : '인증 및 상담신청')}
+                {verifying ? '인증 처리중...' : '인증하고 상담신청'}
               </button>
             </div>
           )}

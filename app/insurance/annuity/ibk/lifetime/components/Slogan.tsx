@@ -1309,10 +1309,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <button
                   type="button"
                   onClick={handleVerifyOTP}
-                  disabled={!isAgeEligible || verifying || !otpSent}
-                  className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(!isAgeEligible || verifying || !otpSent) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                  disabled={!isAgeEligible || verifying || otpCode.length !== 6}
+                  className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(!isAgeEligible || verifying || otpCode.length !== 6) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
                 >
-                  {verifying ? '인증 처리중...' : (otpSent ? '인증하고 결과 확인하기' : '인증번호를 먼저 전송하세요')}
+                  {verifying ? '인증 처리중...' : '인증하고 결과 확인하기'}
                 </button>
               </div>
             </>
@@ -1485,10 +1485,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <button
                 type="button"
                 onClick={handleConsultVerifyOTP}
-                disabled={verifying || consultOtpResendAvailable}
-                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpResendAvailable) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                disabled={verifying || consultOtpCode.length !== 6}
+                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpCode.length !== 6) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
               >
-                {verifying ? '인증 처리중...' : (consultOtpResendAvailable ? '인증번호를 먼저 전송하세요' : '인증 및 상담신청')}
+                {verifying ? '인증 처리중...' : '인증하고 상담신청'}
               </button>
             </div>
           )}
