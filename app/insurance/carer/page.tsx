@@ -333,9 +333,29 @@ export default function CarerInsurancePage() {
           </div>
         </section>
 
-        {/* 필수안내사항 박스 */}
+        {/* 유의사항 박스 */}
         <div className="w-full flex justify-center">
           <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mb-2 md:mb-4 lg:mb-6 mt-6 md:mt-8 lg:mt-10 px-6 py-0 text-xs md:text-sm text-gray-800">
+            <div className="mb-1 font-bold">[ 유의사항 ]</div>
+            <div className="text-red-500">※ 본 안내물은 지면관계상 상품의 개략적인 내용을 요약·정리한 것이오니 가입 전에 상품의 약관 및 상품설명서를 자세히 읽어보시기 바랍니다.</div>
+            <div>※ 가입 시 보험계약의 기본사항(보험 상품명, 보험기간, 보험료, 보험료 납입기간 등)을 반드시 확인하시기 바랍니다.</div>
+            <div>※ 피보험자의 과거 건강상태, 직업 등 계약 전 알릴 의무를 사실대로 고지하지 않으면 보험금 지급이 제한되거나 계약이 해지될 수 있습니다.</div>
+            <div>※ 본 상품은 간병비를 보장하는 보장성보험으로, 저축성보험과 비교하여 위험보험료 및 사업비가 더 많이 차감되므로 저축 목적에는 적합하지 않습니다.</div>
+            <div>※ 해약환급금은 경과기간 및 해약공제에 따라 납입보험료보다 적거나 없을 수 있습니다.</div>
+            <div>※ 이 보험계약은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금)에 기타지급금을 합한 금액이 1인당 "1억원까지"(본 보험회사의 여타 보호상품과 합산) 보호됩니다.</div>
+            <div>※ 이와 별도로 본 보험회사 보호상품의 사고보험금을 합산한 금액이 1인당 "1억원까지" 보호됩니다. 단, 보험계약자 및 보험료 납부자가 법인이면 보호되지 않습니다.</div>
+            <div>※ 본 상품은 무배당 상품으로, 배당금이 지급되지 않습니다.</div>
+          </div>
+        </div>
+        {/* 구분선 */}
+        <div className="w-full flex justify-center">
+          <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl px-6">
+            <hr className="border-gray-300 my-4" />
+          </div>
+        </div>
+        {/* 필수안내사항 박스 */}
+        <div className="w-full flex justify-center">
+          <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mb-2 md:mb-4 lg:mb-6 mt-2 md:mt-4 lg:mt-6 px-6 py-0 text-xs md:text-sm text-gray-800">
             <div className="mb-1 font-bold">[ 필수안내사항 ]</div>
             <div>※ 본 광고는 심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.</div>
             <div className="text-red-500">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
@@ -344,7 +364,7 @@ export default function CarerInsurancePage() {
             <div>※ ㈜메타리치 심의필 00000000호 (0000.00.00~0000.00.00)</div>
           </div>
         </div>
-
+        
         <Footer />
         
         {/* 오른쪽 하단 플로팅 액션 버튼들 - 모달이 열렸을 때는 숨김 */}

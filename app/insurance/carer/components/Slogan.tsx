@@ -488,139 +488,97 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     <>
       <section
         id="slogan-section"
-        className="w-full bg-gradient-to-b from-blue-50 to-indigo-50 py-4 md:py-8 lg:py-3"
+        className="w-full bg-gradient-to-b from-slate-50 to-white py-6 md:py-10 lg:py-8"
       >
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-col lg:flex-row items-center md:items-center lg:items-start justify-center lg:justify-between gap-3 md:gap-6 lg:gap-12 px-3 md:px-6 lg:px-4 md:py-4 lg:py-4">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-col lg:flex-row items-center md:items-center lg:items-start justify-center lg:justify-between gap-4 md:gap-6 lg:gap-16 px-4 md:px-8 lg:px-8 md:py-4 lg:py-6">
           {/* 왼쪽: 상품 설명/이미지 */}
-          <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
-            <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4 lg:mb-3 leading-tight">노후에 가장 무서운 건<br /><span className="text-red-600">병원비가 아니라 <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-blue-700 relative inline-block" style={{
-                background: 'linear-gradient(transparent 65%, #fef3cd 65%, #fef3cd 95%, transparent 95%)'
-              }}>간병비</span>입니다</span></h1>
-            <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-4">실손보험으로는 해결되지 않는 간병비 부담을 준비하세요</p>
+          <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left lg:max-w-xl">
+            <p className="text-gray-500 text-sm sm:text-base lg:text-lg mb-2 lg:mb-3">노후에 가장 무서운 건</p>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] xl:text-5xl font-bold text-gray-900 mb-3 lg:mb-4 leading-tight lg:whitespace-nowrap">
+              병원비가 아니라 <span className="text-blue-600">간병비</span>입니다
+            </h1>
+            <p className="text-sm md:text-base lg:text-lg text-gray-500 mb-4 md:mb-6">실손보험으로는 해결되지 않는 간병비, 미리 준비하세요</p>
             
 
-            <ul className="mb-4 sm:mb-6 md:mb-8 lg:mb-6 space-y-1.5 sm:space-y-2 md:space-y-3 lg:space-y-2">
-              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-2 sm:mr-2.5 md:mr-3 lg:mr-2.5 text-blue-600 flex-shrink-0">✓</span>
-                <span><span className="text-blue-600 font-semibold">실손보험이 안 되는 간병비</span> 전문 보장</span>
+            <ul className="mb-5 sm:mb-6 lg:mb-8 space-y-2.5 sm:space-y-3 lg:space-y-4">
+              <li className="flex items-center text-sm sm:text-base lg:text-lg text-gray-700 justify-center lg:justify-start">
+                <span className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs lg:text-sm mr-2.5 lg:mr-3 flex-shrink-0">✓</span>
+                <span>하루 <span className="font-semibold text-gray-900">최대 20만원</span> 간병인 사용료 지급</span>
               </li>
-              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-2 sm:mr-2.5 md:mr-3 lg:mr-2.5 text-blue-600 flex-shrink-0">✓</span>
-                <span>하루 <span className="text-green-600 font-semibold">최대 20만원</span> 간병인 사용료 지급</span>
+              <li className="flex items-center text-sm sm:text-base lg:text-lg text-gray-700 justify-center lg:justify-start">
+                <span className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs lg:text-sm mr-2.5 lg:mr-3 flex-shrink-0">✓</span>
+                <span>월 <span className="font-semibold text-gray-900">2~5만원</span>으로 간병비 걱정 해결</span>
               </li>
-              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-2 sm:mr-2.5 md:mr-3 lg:mr-2.5 text-blue-600 flex-shrink-0">✓</span>
-                <span>월 <span className="text-orange-600 font-semibold">2~5만원</span>으로 <span className="text-purple-600 font-semibold">최대 80세</span>까지 가입</span>
-              </li>
-              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-2 sm:mr-2.5 md:mr-3 lg:mr-2.5 text-blue-600 flex-shrink-0">✓</span>
-                <span><span className="text-rose-600 font-semibold">가족간병시</span>에도 동일하게 보험금 지급</span>
+              <li className="flex items-center text-sm sm:text-base lg:text-lg text-gray-700 justify-center lg:justify-start">
+                <span className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs lg:text-sm mr-2.5 lg:mr-3 flex-shrink-0">✓</span>
+                <span><span className="font-semibold text-gray-900">가족간병</span>시에도 보험금 지급</span>
               </li>
             </ul>
             
-            {/* 공통 안내 문구 */}
-            <div className="text-center mb-3">
-              <p className="text-xs text-gray-500">
-                ※ 보장내용은 보험사 및 상품에 따라 다를 수 있습니다.
-              </p>
-            </div>
-            {/* 간병 준비 현실 통계 카드 */}
-            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl border-2 border-blue-100 shadow-lg mb-3 sm:mb-4 p-4 sm:p-6">
-                <div className="text-center mb-4">
-                  <div className="inline-flex items-center gap-2 bg-blue-50 rounded-full px-4 py-2 mb-3">
-                    <span className="text-lg">📈</span>
-                    <span className="font-semibold text-sm text-blue-700">노인 간병 준비 현실</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">어떤 방법으로 노인 간병에 대비하시나요?</h3>
-                  <p className="text-sm text-gray-600">설문조사 결과</p>
-                </div>
+            {/* 간병비 현실 카드 */}
+            <div className="w-full max-w-lg lg:max-w-xl mx-auto lg:mx-0 bg-slate-50 rounded-2xl p-5 sm:p-6 lg:p-7 mb-4">
+                <p className="text-center lg:text-left text-sm lg:text-base text-gray-500 mb-4 lg:mb-5">간병인 비용, 얼마나 드는지 아시나요?</p>
                 
-                <div className="space-y-3 mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-sm font-medium text-gray-700">장기요양보험</span>
-                        <span className="text-sm font-bold text-blue-600">59.6%</span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div className="bg-blue-500 h-2 rounded-full" style={{width: '59.6%'}}></div>
-                      </div>
-                    </div>
+                {/* 핵심 금액 */}
+                <div className="flex items-center justify-center lg:justify-start gap-4 sm:gap-6 lg:gap-8 mb-4 lg:mb-5">
+                  <div className="text-center lg:text-left">
+                    <div className="text-xs lg:text-sm text-gray-400 mb-1">하루 평균</div>
+                    <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800">12만원</div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-sm font-medium text-gray-700">간병비 저축</span>
-                        <span className="text-sm font-bold text-green-600">41.2%</span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div className="bg-green-500 h-2 rounded-full" style={{width: '41.2%'}}></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-sm font-medium text-gray-700">간병인보험 가입</span>
-                        <span className="text-sm font-bold text-red-600">19.5%</span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div className="bg-red-500 h-2 rounded-full" style={{width: '19.5%'}}></div>
-                      </div>
-                    </div>
+                  <div className="text-gray-300 text-xl lg:text-2xl">→</div>
+                  <div className="text-center lg:text-left">
+                    <div className="text-xs lg:text-sm text-gray-400 mb-1">한 달이면</div>
+                    <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-600 animate-pulse">360만원</div>
                   </div>
                 </div>
 
-                <div className="text-center bg-red-50 rounded-lg p-3">
-                  <div className="text-sm text-red-700 mb-1">⚠️ 간병인보험 가입률이 너무 낮습니다!</div>
-                  <div className="text-xs text-red-600 font-medium">예상보다 높은 간병비, 저축만으로 감당하시겠습니까?</div>
+                <div className="text-center lg:text-left">
+                  <span className="inline-block bg-blue-600 text-white text-xs sm:text-sm lg:text-base font-medium px-4 lg:px-5 py-2 lg:py-2.5 rounded-full">
+                    간병인보험으로 하루 최대 20만원 보장
+                  </span>
                 </div>
             </div>
+            
+            {/* 안내 문구 */}
+            <p className="text-xs lg:text-sm text-gray-400 text-center lg:text-left">※ 보장내용은 보험사 및 상품에 따라 다를 수 있습니다</p>
           </div>
           {/* 오른쪽: 환급금 확인 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
-            <div id="consultation-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-5 sm:p-6 md:p-7 relative flex flex-col">
+            <div id="consultation-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-xl border border-gray-100 p-5 sm:p-6 md:p-7 relative flex flex-col">
               <div className="mb-5 sm:mb-6">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-gradient-to-br from-[#e11d48] to-[#be185d] rounded-lg flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 text-white">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                <div className="flex items-center gap-2.5 mb-1">
+                  <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-white">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">간병인보험 무료 상담신청</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">무료 상담신청</h3>
                 </div>
-                <p className="text-gray-500 text-xs sm:text-sm ml-10">복잡한 보험, 전문가가 쉽고 명쾌하게 알려드립니다.</p>
+                <p className="text-gray-500 text-xs sm:text-sm ml-[46px]">간병인보험, 전문가가 쉽고 명쾌하게 알려드립니다</p>
               </div>
               
               {/* 간병인보험 보장 내용 박스 */}
-              <div className="bg-rose-50 rounded-lg p-2.5 mb-3 border border-rose-100">
-                <div className="text-center mb-1.5">
-                  <div className="text-xs text-rose-700 font-bold">🏥 일일 보장금액</div>
-                </div>
-                <div className="space-y-1">
-                  <div className="flex justify-between text-[11px] py-1">
-                    <span className="text-gray-600">• 가족간병비</span>
-                    <span className="font-bold text-rose-600">보장</span>
+              <div className="bg-slate-50 rounded-xl p-3 mb-4">
+                <div className="text-xs font-semibold text-gray-700 mb-2">일일 보장금액</div>
+                <div className="space-y-1.5">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-gray-500">간병인사용일당<span className="text-gray-400">(요양병원제외)</span></span>
+                    <span className="font-semibold text-gray-900">15~20만원</span>
                   </div>
-                  <div className="flex justify-between text-[11px] py-1">
-                    <span className="text-gray-600">• 간병인사용일당<span className="text-[10px] text-gray-400">(요양병원제외)</span></span>
-                    <span className="font-bold text-blue-600">15~20만원</span>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-gray-500">요양병원</span>
+                    <span className="font-semibold text-gray-900">5~6만원</span>
                   </div>
-                  <div className="flex justify-between text-[11px] py-1">
-                    <span className="text-gray-600">• 요양병원</span>
-                    <span className="font-bold text-blue-600">5~6만원</span>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-gray-500">간호간병통합서비스병실</span>
+                    <span className="font-semibold text-gray-900">7만원</span>
                   </div>
-                  <div className="flex justify-between text-[11px] py-1">
-                    <span className="text-gray-600">• 간호간병통합서비스병실</span>
-                    <span className="font-bold text-blue-600">7만원</span>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-gray-500">가족간병</span>
+                    <span className="font-semibold text-blue-600">보장</span>
                   </div>
                 </div>
-                <div className="text-center mt-1">
-                  <div className="text-[9px] text-gray-400">※ 보장내용은 보험사 및 상품에 따라 다를 수 있습니다</div>
-                </div>
+                <div className="text-[10px] text-gray-400 mt-2">※ 보장내용은 보험사 및 상품에 따라 다를 수 있습니다</div>
               </div>
 
               <form className="flex flex-col gap-4 sm:gap-5" onSubmit={handleConsultationRequest}>
@@ -629,11 +587,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">성별 <span className="text-red-500">*</span></label>
                     <div className="flex gap-2">
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#e11d48] bg-rose-50 text-[#e11d48]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-blue-600 bg-blue-50 text-blue-600' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
                         <span className="text-sm font-medium">남자</span>
                       </label>
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#e11d48] bg-rose-50 text-[#e11d48]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-blue-600 bg-blue-50 text-blue-600' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="F" checked={gender === "F"} onChange={handleGenderChange} className="sr-only" />
                         <span className="text-sm font-medium">여자</span>
                       </label>
@@ -641,7 +599,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">이름 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-rose-500/20 focus:border-[#e11d48] transition-all" placeholder="홍길동" />
+                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" placeholder="홍길동" />
                   </div>
                 </div>
 
@@ -649,7 +607,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">생년월일 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-rose-500/20 focus:border-[#e11d48] transition-all" placeholder="19880818" maxLength={8} />
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" placeholder="19880818" maxLength={8} />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">연락처 <span className="text-red-500">*</span></label>
@@ -661,7 +619,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                       value={phone} 
                       onChange={handlePhoneChange} 
                       onFocus={handleInputFocus} 
-                      className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-rose-500/20 focus:border-[#e11d48] transition-all" 
+                      className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" 
                       placeholder="01012345678" 
                     />
                   </div>
@@ -671,8 +629,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 {/* 상담종류/상담시간대 */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">상담종류 <span className="text-red-500">*</span></label>
-                    <div className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700 font-medium">
+                    <label className="block text-xs font-medium text-gray-600 mb-1.5">상담종류</label>
+                    <div className="w-full px-3 py-2.5 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700 font-semibold flex items-center gap-1.5">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
                       간병인보험
                     </div>
                   </div>
@@ -681,7 +642,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <select 
                       value={consultTime} 
                       onChange={(e) => setConsultTime(e.target.value)}
-                      className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-rose-500/20 focus:border-[#e11d48] transition-all"
+                      className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                     >
                       {consultTimeOptions.map((option) => (
                         <option key={option} value={option}>
@@ -694,16 +655,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 개인정보 동의 */}
                 <div className="flex items-center gap-2">
-                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-rose-600 rounded border-gray-300 cursor-pointer focus:ring-rose-500" />
+                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-blue-600 rounded border-gray-300 cursor-pointer focus:ring-blue-500" />
                   <span className="text-xs text-gray-600">
                     개인정보 수집 및 이용에 동의합니다. 
-                    <button type="button" onClick={onOpenPrivacy} className="text-rose-600 underline ml-1 hover:text-rose-800">자세히 보기</button>
+                    <button type="button" onClick={onOpenPrivacy} className="text-blue-600 underline ml-1 hover:text-blue-800">자세히 보기</button>
                   </span>
                 </div>
 
                 {/* 버튼들 */}
                 <div className="flex gap-2 mt-1">
-                  <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-gradient-to-r from-[#e11d48] to-[#be185d] text-white font-bold rounded-xl py-3.5 text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-rose-500/25 cursor-pointer">
+                  <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl py-3.5 text-base transition flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 cursor-pointer">
                     <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-5 h-5'>
                       <path strokeLinecap='round' strokeLinejoin='round' d='M2.25 12a9.75 9.75 0 1 1 19.5 0v3.375a2.625 2.625 0 0 1-2.625 2.625h-1.125a.375.375 0 0 1-.375-.375V15a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 0 .75-.75V12a8.25 8.25 0 1 0-16.5 0v1.5a.75.75 0 0 0 .75.75h.75A.75.75 0 0 1 6 15v2.625a.375.375 0 0 1-.375.375H4.5A2.625 2.625 0 0 1 1.875 15.375V12Z' />
                     </svg>
