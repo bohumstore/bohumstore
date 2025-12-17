@@ -101,7 +101,7 @@ export default function CarerInsurancePage() {
                   </div>
                   <div className="text-sm text-gray-600">
                     <p className="mb-2">가족이 직접 간병하는 경우, 보험서비스</p>
-                    <p className="text-xs text-gray-500">* 해당 내용을 보험사별, 상품별 상이할 수 있습니다.</p>
+                    <p className="text-xs text-gray-500">* 해당 내용은 보험사별, 상품별 상이할 수 있습니다.</p>
                   </div>
                 </div>
                 
@@ -371,7 +371,7 @@ export default function CarerInsurancePage() {
             <div className="text-red-500">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
             <div className="text-red-500">① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.</div>
             <div className="text-red-500">② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</div>
-            <div>※ ㈜메타리치 심의필 00000000호 (0000.00.00~0000.00.00)</div>
+            <div>※ ㈜메타리치 심의필 25120102호 (2025.12.17~2026.12.16)</div>
           </div>
         </div>
         
