@@ -522,7 +522,7 @@ export default function HomePage() {
                                 
                                 {/* 타이틀 */}
                                 <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-2 md:mb-4 leading-tight ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.1s'}}>
-                                  보험, <span className="text-blue-600">제대로</span> 알고<br className="hidden sm:block" /> 가입하고 계신가요?
+                                  보험, <span className="text-blue-600">제대로</span> 알고<br /> 가입하고 계신가요?
                                 </h2>
                                 <p className={`text-sm md:text-base lg:text-lg text-gray-500 mb-4 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
                                   복잡한 보험, 전문가가 쉽게 설명해드립니다
@@ -545,10 +545,13 @@ export default function HomePage() {
                                 </ul>
                                 
                                 {/* 버튼 */}
-                                <div className={`${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.4s'}}>
+                                <div className={`${isActive ? 'animate-slide-in-up' : 'opacity-0'} relative inline-block`} style={{animationDelay: '0.4s'}}>
+                                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full shadow-md z-10 animate-bounce whitespace-nowrap">
+                                    📢 {currentMonth}월 이슈 확인!
+                                  </span>
                                   <Link 
                                     href="/insurance/a_consult"
-                                    className="inline-flex items-center px-6 md:px-8 py-3 md:py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm md:text-base transition-all shadow-lg shadow-blue-500/25"
+                                    className="inline-flex items-center px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-orange-400 to-rose-400 hover:from-orange-500 hover:to-rose-500 text-white font-bold rounded-xl text-sm md:text-base transition-all shadow-lg shadow-orange-400/25"
                                   >
                                     무료 상담 신청하기
                                     <ArrowRightIcon className="w-4 h-4 md:w-5 md:h-5 ml-2" />
@@ -557,14 +560,14 @@ export default function HomePage() {
                               </div>
                               
                               {/* 오른쪽: 채팅 UI */}
-                              <div className={`w-full max-w-xs md:max-w-sm lg:max-w-md ${isActive ? 'animate-fade-in' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
+                              <div className={`w-full max-w-xs md:max-w-sm lg:max-w-lg ${isActive ? 'animate-fade-in' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
                                 <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
                                   {/* 채팅 헤더 */}
-                                  <div className="bg-blue-600 p-3 md:p-4 flex items-center gap-3">
-                                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/20 flex items-center justify-center text-white text-lg">💬</div>
+                                  <div className="bg-gradient-to-r from-slate-700 to-slate-800 p-3 md:p-4 flex items-center gap-3">
+                                    <Image src="/favicon/favicon-96x96.png" alt="보험스토어" width={40} height={40} className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover border-2 border-white/30" />
                                     <div>
                                       <div className="font-bold text-white text-sm md:text-base">보험스토어 전문가</div>
-                                      <div className="text-[10px] md:text-xs text-blue-100 flex items-center gap-1">
+                                      <div className="text-[10px] md:text-xs text-slate-300 flex items-center gap-1">
                                         <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span>
                                         실시간 답변 중
                                       </div>
@@ -572,13 +575,13 @@ export default function HomePage() {
                                   </div>
                                   
                                   {/* 채팅 내용 - 전문가 입장에서 보는 화면 (전문가=오른쪽, 고객=왼쪽) */}
-                                  <div className="p-3 md:p-4 space-y-2 md:space-y-2.5 bg-gray-50 h-[200px] md:h-[240px] overflow-y-auto">
+                                  <div className="p-3 md:p-4 lg:p-5 space-y-2 md:space-y-2.5 lg:space-y-3 bg-gray-50 md:min-h-[180px]">
                                     {Array.isArray(currentScenario) && currentScenario.map((msg, idx) => (
                                       <div key={idx} className={`flex ${msg.role === 'expert' ? 'justify-end' : 'justify-start'}`}>
                                         <div className={`${msg.role === 'expert' 
-                                          ? 'bg-blue-500 text-white rounded-br-sm' 
+                                          ? 'bg-amber-100 text-amber-900 rounded-br-sm' 
                                           : 'bg-white text-gray-800 rounded-bl-sm border border-gray-100'} 
-                                          px-2.5 py-1.5 md:px-3 md:py-2 rounded-xl text-[11px] md:text-xs shadow-sm max-w-[85%]`}>
+                                          px-2.5 py-1.5 md:px-3 md:py-2 rounded-xl text-[11px] md:text-xs lg:text-sm shadow-sm max-w-[85%]`}>
                                           {msg.text}
                                         </div>
                                       </div>
@@ -588,7 +591,7 @@ export default function HomePage() {
                                   {/* 입력창 */}
                                   <div className="bg-white p-2 md:p-3 border-t border-gray-100 flex gap-2">
                                     <div className="flex-1 bg-gray-100 rounded-full h-8 md:h-9 flex items-center px-3 text-[10px] md:text-xs text-gray-400">메시지를 입력하세요...</div>
-                                    <div className="w-8 h-8 md:w-9 md:h-9 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm">↑</div>
+                                    <div className="w-8 h-8 md:w-9 md:h-9 bg-[#FEE500] rounded-full flex items-center justify-center text-[#3A1D1D] text-sm font-bold">↑</div>
                                   </div>
                                 </div>
                               </div>

@@ -376,7 +376,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     <>
       <section
         id="slogan-section"
-        className="w-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-8 md:py-10 lg:py-12"
+        className="w-full bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-50 py-8 md:py-10 lg:py-12"
       >
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-16 px-4 lg:px-8">
           {/* 왼쪽: 설명 */}
@@ -431,15 +431,15 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="space-y-2 sm:space-y-2.5">
                   <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
                     <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
-                    <span>2025년 <span className="font-semibold text-gray-900">보험료 인상</span> 예정!</span>
+                    <span>2025년 <span className="font-semibold text-red-500">보험료 인상</span> 예정!</span>
                   </div>
                   <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
                     <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
-                    <span>운전자보험 <span className="font-semibold text-gray-900">변호사선임비용 축소</span> 예정!</span>
+                    <span>운전자보험 <span className="font-semibold text-red-500">변호사선임비용 축소</span> 예정!</span>
                   </div>
                   <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
                     <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
-                    <span>단기납종신보험 <span className="font-semibold text-gray-900">환급률 축소</span> 예정!</span>
+                    <span>단기납종신보험 <span className="font-semibold text-red-500">환급률 축소</span> 예정!</span>
                   </div>
                 </div>
               )}

@@ -517,7 +517,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     <>
       <section
         id="slogan-section"
-        className="w-full bg-gradient-to-b from-slate-50 to-white py-6 md:py-10 lg:py-8"
+        className="w-full bg-gradient-to-br from-rose-50 via-pink-50 to-orange-50 py-6 md:py-10 lg:py-8"
       >
         <div className="max-w-7xl mx-auto flex flex-col md:flex-col lg:flex-row items-center md:items-center lg:items-start justify-center lg:justify-between gap-4 md:gap-6 lg:gap-16 px-4 md:px-8 lg:px-8 md:py-4 lg:py-6">
           {/* 왼쪽: 상품 설명/이미지 */}
@@ -587,7 +587,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               </div>
               
               {/* 간병인보험 보장 내용 박스 */}
-              <div className="bg-slate-50 rounded-xl p-3 mb-4">
+              <div className="bg-slate-50 rounded-xl p-3 mb-4 relative">
+                {/* 상품 비교 뱃지 */}
+                <span className="absolute -top-2 -right-2 bg-gradient-to-r from-red-500 to-rose-500 text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full shadow-lg z-10 animate-bounce">
+                  상품 비교
+                </span>
                 <div className="text-xs font-semibold text-gray-700 mb-2">일일 보장금액</div>
                 <div className="space-y-1.5">
                   <div className="flex justify-between text-xs">
