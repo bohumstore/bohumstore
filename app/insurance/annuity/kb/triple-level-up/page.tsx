@@ -10,7 +10,6 @@ import Tabs from "../../../../components/Tabs";
 import ProductInfo from "./components/BodyTabViews/ProductInfo";
 import CoverageDetails from "./components/BodyTabViews/CoverageDetails";
 import Surrender from "./components/BodyTabViews/Surrender";
-import { supabase } from "../../../../api/supabase";
 import { trackPageVisit } from "../../../../utils/visitorTracking";
 
 export default function KBTripleLevelUpAnnuityPage() {
@@ -29,7 +28,6 @@ export default function KBTripleLevelUpAnnuityPage() {
   useEffect(() => {
     // 페이지 방문 시 자동 추적
     trackPageVisit();
-    // getProduct()
   }, []);
 
   // 햄버거 메뉴 상태 수신
@@ -40,20 +38,6 @@ export default function KBTripleLevelUpAnnuityPage() {
     window.addEventListener('headerMenuChange', handleMenuChange as EventListener);
     return () => window.removeEventListener('headerMenuChange', handleMenuChange as EventListener);
   }, []);
-
-  const trackPageVisit = async () => {
-    // 방문 추적 로직
-  };
-
-  const getProduct = async () => {
-    const { data, error } = await supabase.from('product').select('*');
-    if (error) {
-      console.error('Error fetching product:', error);
-      return null;
-    }
-    console.log(data);
-    return data;
-  }
 
   const handleFocus = (e: React.FocusEvent) => {
     const target = e.target as HTMLElement;

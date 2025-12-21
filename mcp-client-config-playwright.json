@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "playwright": {
-      "command": "npx",
-      "args": ["@playwright/mcp"],
-      "cwd": "C:/Users/개미남/Desktop/웹개발수업/project/bohumstore"
-    }
-  }
-}

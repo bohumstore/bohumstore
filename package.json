@@ -7,10 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "mcp-server": "node mcp-server-supabase.js",
-    "mcp-playwright": "node mcp-server-playwright.js",
-    "setup-supabase": "node setup-supabase-data.js",
-    "check-supabase": "node setup-supabase-data.js check"
+    "mcp-server": "node scripts/mcp/mcp-server-supabase.js",
+    "mcp-playwright": "node scripts/mcp/mcp-server-playwright.js",
+    "setup-supabase": "node scripts/setup/setup-supabase-data.js",
+    "check-supabase": "node scripts/setup/setup-supabase-data.js check"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
