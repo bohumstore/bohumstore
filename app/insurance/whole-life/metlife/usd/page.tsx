@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import Slogan from "./components/Slogan";
-import Footer from "./components/Footer";
+import Footer from "@/app/components/shared/Footer";
 import PrivacyConsent from "../../../../components/PrivacyConsent";
 import Modal from "../../../../components/Modal";
 import Tabs from "../../../../components/Tabs";

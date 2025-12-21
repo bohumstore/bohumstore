@@ -6,7 +6,7 @@ import { supabase } from '@/app/api/supabase';
 import { queryUsers, createUser, queryCounsel, createCounsel } from '@/app/utils/mcpClient';
 import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/insurance';
 import { calculateAnnuityStartAge } from '@/app/utils/annuityCalculator';
-import FireworksEffect from './FireworksEffect';
+import FireworksEffect from '@/app/components/shared/FireworksEffect';
 import { trackSimplifiedVisitor } from "@/app/utils/visitorTracking";
 
 // 현재 경로에 맞는 상품 정보 가져오기

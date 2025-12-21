@@ -6,7 +6,7 @@ import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/ins
 import { calculateAnnuityStartAge } from '@/app/utils/annuityCalculator';
 import { trackPremiumCheck, trackCounselRequest } from "@/app/utils/visitorTracking";
 
-import FireworksEffect from './FireworksEffect';
+import FireworksEffect from '@/app/components/shared/FireworksEffect';
 
 // 현재 경로에 맞는 상품 정보 가져오기
 const currentPath = '/insurance/annuity/kdb/happy-plus';

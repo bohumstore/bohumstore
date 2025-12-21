@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
-import FireworksEffect from './FireworksEffect';
+import FireworksEffect from '@/app/components/shared/FireworksEffect';
 
 type SloganProps = {
   onOpenPrivacy: () => void

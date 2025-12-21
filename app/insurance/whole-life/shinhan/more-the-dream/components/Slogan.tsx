@@ -3,7 +3,7 @@ import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/out
 import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
 import { getProductConfigByPath, getTemplateIdByPath, INSURANCE_COMPANIES, INSURANCE_PRODUCTS } from '@/app/constants/insurance';
-import FireworksEffect from './FireworksEffect';
+import FireworksEffect from '@/app/components/shared/FireworksEffect';
 import { trackPremiumCheck } from "@/app/utils/visitorTracking";
 
 // 현재 경로에 맞는 상품 정보 가져오기

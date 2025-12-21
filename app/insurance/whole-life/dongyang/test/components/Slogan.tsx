@@ -2,7 +2,7 @@
 import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
-import FireworksEffect from './FireworksEffect';
+import FireworksEffect from '@/app/components/shared/FireworksEffect';
 
 const INSURANCE_COMPANY_ID = 5; // 동양생명
 const INSURANCE_PRODUCT_ID = 6; // 동양생명 테스트 상품 id 코드값

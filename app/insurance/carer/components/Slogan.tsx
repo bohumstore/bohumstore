@@ -3,7 +3,7 @@ import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/out
 import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
 import { getProductConfigByPath, getTemplateIdByPath, INSURANCE_COMPANIES, INSURANCE_PRODUCTS } from '@/app/constants/insurance';
-import FireworksEffect from './FireworksEffect';
+import FireworksEffect from '@/app/components/shared/FireworksEffect';
 import { trackPremiumCheck } from "@/app/utils/visitorTracking";
 
 // 간병인보험 전용 설정
