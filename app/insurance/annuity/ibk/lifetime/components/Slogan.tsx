@@ -813,19 +813,19 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <ul className="mb-3 sm:mb-5 md:mb-8 lg:mb-8 space-y-1 sm:space-y-1.5 md:space-y-2.5 lg:space-y-2">
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
-                <span>최대 20년동안 연단리 8%!</span>
+                <span>최대 <span className="text-[#fbbf24] font-semibold">20년</span>동안 <span className="text-[#fbbf24] font-semibold">연단리 8%</span>!</span>
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
-                <span>가입 0~68세 / 연금개시 30~80세</span>
+                <span>가입 <span className="text-[#60a5fa] font-semibold">0~68세</span> / 연금개시 <span className="text-[#60a5fa] font-semibold">30~80세</span></span>
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
-                <span>실적배당 종신연금 보증지급</span>
+                <span><span className="text-[#22d3ee] font-semibold">실적배당</span> 종신연금 <span className="text-[#22d3ee] font-semibold">보증지급</span></span>
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
-                <span>최저사망계약자적립액 보증</span>
+                <span>최저사망계약자적립액 <span className="text-[#a78bfa] font-semibold">보증</span></span>
               </li>
             </ul>
             

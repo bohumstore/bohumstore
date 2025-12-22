@@ -215,7 +215,7 @@ export default function CarerInsurancePage() {
                   <p className="text-xs text-green-600 mt-1">"모든 책임이 나에게만 있다는 부담감"</p>
                 </div>
                 <div className="bg-purple-50 p-4 rounded-lg text-left">
-                  <div className="font-semibold text-purple-700 mb-2">👴 70대 이상</div>
+                  <div className="font-semibold text-purple-700 mb-2">👴 50대 이상</div>
                   <p className="text-sm text-gray-600">전문 간병인 도움이 필요한 연령대</p>
                   <p className="text-xs text-purple-600 mt-1">"자녀에게 부담 주기 싫은 마음"</p>
                 </div>

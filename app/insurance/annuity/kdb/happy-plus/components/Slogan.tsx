@@ -696,7 +696,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <ul className="mb-3 sm:mb-5 md:mb-8 lg:mb-8 space-y-1 sm:space-y-1.5 md:space-y-2.5 lg:space-y-2">
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
-                <span className="leading-tight">연단리 7% 최저연금기준금액 보증 <span className="text-[10px] sm:text-xs text-gray-200">(20년까지)</span></span>
+                <span className="leading-tight">연단리 7% 최저연금기준금액 보증 <span className="text-[10px] sm:text-xs text-gray-300">(20년까지)</span></span>
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
@@ -704,7 +704,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
-                <span className="leading-tight">비과세 <span className="text-[10px] sm:text-xs text-gray-200">(월 150만원 한도, 10년유지 세법요건 충족시)</span></span>
+                <span className="leading-tight">비과세 <span className="text-[10px] sm:text-xs text-gray-300">(월 150만원 한도, 10년유지 세법요건 충족시)</span></span>
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>

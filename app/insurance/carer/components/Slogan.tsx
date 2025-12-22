@@ -532,15 +532,15 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <ul className="mb-5 sm:mb-6 lg:mb-8 space-y-2.5 sm:space-y-3 lg:space-y-4">
               <li className="flex items-center text-sm sm:text-base lg:text-lg text-gray-700 justify-center lg:justify-start">
                 <span className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs lg:text-sm mr-2.5 lg:mr-3 flex-shrink-0">✓</span>
-                <span>하루 <span className="font-semibold text-gray-900">최대 20만원</span> 간병인 사용료 지급</span>
+                <span>하루 <span className="font-bold text-rose-500">최대 20만원</span> 간병인 사용료 지급</span>
               </li>
               <li className="flex items-center text-sm sm:text-base lg:text-lg text-gray-700 justify-center lg:justify-start">
                 <span className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs lg:text-sm mr-2.5 lg:mr-3 flex-shrink-0">✓</span>
-                <span>월 <span className="font-semibold text-gray-900">2~5만원</span>으로 간병비 걱정 해결</span>
+                <span>월 <span className="font-bold text-blue-600">2~5만원</span>으로 간병비 걱정 해결</span>
               </li>
               <li className="flex items-center text-sm sm:text-base lg:text-lg text-gray-700 justify-center lg:justify-start">
                 <span className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs lg:text-sm mr-2.5 lg:mr-3 flex-shrink-0">✓</span>
-                <span><span className="font-semibold text-gray-900">가족간병</span>시에도 보험금 지급</span>
+                <span><span className="font-bold text-emerald-600">가족간병</span>시에도 보험금 지급</span>
               </li>
             </ul>
             
