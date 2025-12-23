@@ -76,18 +76,33 @@ export default function CarerInsurancePage() {
         onBlur={handleBlur}
       >
         <Slogan onOpenPrivacy={() => setShowPrivacy(true)} onModalStateChange={setIsModalOpen} />
+        
+        {/* 히어로 이미지 배너 */}
+        <div className="w-full md:py-12 lg:py-12 md:px-6 lg:px-8">
+          <div className="w-full md:max-w-4xl lg:max-w-5xl mx-auto">
+            <img 
+              src="/carer_img.png" 
+              alt="가족을 위한 든든한 지원군 - 전문 간병인 보험으로 안심을 선물하세요" 
+              className="w-full h-auto object-cover md:rounded-2xl md:shadow-xl"
+            />
+          </div>
+        </div>
+
         {/* 간병인보험 정보 섹션 */}
-        <section className="w-full bg-white py-8 sm:py-6 md:py-8 lg:py-10">
+        <section className="w-full bg-white py-10 sm:py-6 md:py-12 lg:py-12">
           <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 md:px-10 lg:px-16">
+{/* 
             <div className="text-center mb-8">
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">간병인보험이 필요한 이유</h2>
               <p className="text-gray-600 mb-2">실비보험으로는 해결할 수 없는 간병비 부담을 덜어드립니다</p>
             </div>
+*/}
             
             {/* 간병인보험 상세 정보 */}
             <div className="bg-pink-50 rounded-xl p-6 mb-8 border-2 border-pink-200">
               <div className="text-center mb-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">🏥 간병인사용일당</h3>
+                <p className="text-gray-600 mb-2">질병이나 상해 사고로 인하여 간병이 필요한 상황이 발생했을 때, 간병인을 먼저 고용하고 보험사에 청구하여 보상받는 보험입니다.</p>
                 <p className="text-pink-600 font-medium">질병이나 상해 사고로 인하여 간병이 필요한 상황이 발생했을 때, 간병인을 먼저 고용하고 보험사에 청구하여 보상받는 보험입니다.</p>
               </div>
               
@@ -100,7 +115,7 @@ export default function CarerInsurancePage() {
                     <h4 className="font-bold text-red-600 text-lg">가족간병</h4>
                   </div>
                   <div className="text-sm text-gray-600">
-                    <p className="mb-2">가족이 직접 간병하는 경우, 보험서비스</p>
+                    <p className="mb-2">가족이 직접 간병하는 경우에도 보험금 지급</p>
                     <p className="text-xs text-gray-500">* 해당 내용은 보험사별, 상품별 상이할 수 있습니다.</p>
                   </div>
                 </div>
@@ -113,7 +128,7 @@ export default function CarerInsurancePage() {
                     <h4 className="font-bold text-gray-600 text-lg">청구 방식</h4>
                   </div>
                   <div className="text-sm text-gray-600">
-                    <p className="mb-2">간병 서비스 이용한 후 영수증 등을 제출하여 보상</p>
+                    <p className="mb-2">간병서비스 이용 후 영수증 등을 제출하여 보상</p>
                   </div>
                 </div>
                 
@@ -231,7 +246,7 @@ export default function CarerInsurancePage() {
             <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 mb-8 border border-green-200">
               <div className="text-center mb-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-3">💬 실제 고객 후기</h3>
-                <p className="text-gray-600">간병인보험으로 도움을 받으신 분들의 이야기입니다</p>
+                <p className="text-gray-600">간병인보험으로 도움을 받으신 분들의 이야기</p>
               </div>
               
               <div className="grid md:grid-cols-2 gap-6">
