@@ -257,6 +257,20 @@ export default function RootLayout({
             `
           }}
         />
+        
+        {/* BORAWARE LOG SCRIPT */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "var protect_id = 'j376';",
+          }}
+        />
+        <script async type="text/javascript" src="//script.boraware.kr/protect_script_v2.js"></script>
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: '<img src="//script.boraware.kr/protect_nbora.php?protect_id=j376" style="display:none;width:0;height:0;" border="0" />',
+          }}
+        />
+        {/* END OF BORAWARE LOG SCRIPT */}
       </head>
       <body className="antialiased">
         <BodyClassManager />
