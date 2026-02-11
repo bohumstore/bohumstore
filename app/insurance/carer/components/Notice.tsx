@@ -1,4 +1,4 @@
-import Modal from '@/app/components/Modal'
+import Modal from '@/components/Modal'
 import React from 'react'
 
 interface NoticeProps {
@@ -67,27 +67,27 @@ export default function Notice({ open, onClose }: NoticeProps) {
         </div>
 
         <div className="mb-4">
-          <div className="mb-3 p-3 bg-gray-50">
+          <div className="mb-3 p-3 bg-page-bg">
             <div className="mb-2">※ 이 보험계약은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금)에 기타지급금을 합한 금액이</div>
             <div className="mb-2 pl-3">1인당 "1억원까지"(본 보험회사의 여타 보호상품과 합산) 보호됩니다. 이와 별도로 본 보험회사</div>
             <div className="mb-2 pl-3">보호상품의 사고보험금을 합산한 금액이 1인당 "1억원까지" 보호됩니다. 다만, 보험계약자 및</div>
             <div className="pl-3">보험료 납부자가 법인인 경우에는 보호되지 않습니다.</div>
           </div>
           
-          <div className="mb-3 p-3 bg-gray-50">
+          <div className="mb-3 p-3 bg-page-bg">
             <div className="mb-2">※ 계약자가 기존에 체결했던 보험계약을 해지하고 다른 보험계약을 체결하면 보험인수가 거절되거나</div>
             <div className="pl-3">보험료가 인상될 수 있으며 보장내용이 달라질 수 있습니다.</div>
           </div>
           
-          <div className="mb-3 p-3 bg-gray-50">
+          <div className="mb-3 p-3 bg-page-bg">
             <div className="mb-2">※ 판매회사 및 모집종사자는 해당 상품에 대해 충분히 설명할 의무가 있으며, 가입자는 가입에 앞서</div>
             <div className="pl-3">이에 대한 충분한 설명을 받으시기 바랍니다.</div>
           </div>
         </div>
 
         <div className="mb-4">
-          <div className="text-sm text-gray-600">
-            <hr className="my-3 border-gray-300" />
+          <div className="text-sm text-text-secondary">
+            <hr className="my-3 border-border-default" />
             <div className="mb-1">※ ㈜메타리치 보험스토어는 다수의 보험사와 계약 체결 및 대리·중개하는 대리점입니다.</div>
             <div className="mb-1">※ ㈜메타리치 보험스토어는 보험사로부터 보험계약체결권을 부여받지 아니한 금융상품판매 대리·중개업자임을 알려드립니다.</div>
             <div className="mb-1">※ ㈜메타리치 보험스토어는 금융소비자 보호에 관한 법률 및 회사 내부 통제기준에 따른 광고 관련 절차를 준수하고 있습니다.</div>

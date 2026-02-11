@@ -1,5 +1,5 @@
 import axios from 'axios';
-import logger from '@/app/lib/logger';
+import logger from '@/lib/logger';
 
 const request = axios.create({ 
   timeout: 15000, // 15초로 늘림

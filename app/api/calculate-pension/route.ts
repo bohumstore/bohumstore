@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import * as XLSX from 'xlsx';
 import path from 'path';
 import fs from 'fs';
-import { mapGender } from '@/app/utils/genderMapping';
+import { mapGender } from '@/lib/genderMapping';
 
 export async function POST(request: NextRequest) {
 	try {

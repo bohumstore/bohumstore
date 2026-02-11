@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { supabase } from "../supabase";
-import { alimtalkSend, smsSend } from "@/app/lib/aligo";
+import { alimtalkSend, smsSend } from "@/lib/aligo";
 import aligoAuth from "../utils/aligoAuth";
-import { getCachedAligoToken } from "@/app/lib/aligoTokenCache";
+import { getCachedAligoToken } from "@/lib/aligoTokenCache";
 import { link } from "fs";
 import { use } from "react";
 

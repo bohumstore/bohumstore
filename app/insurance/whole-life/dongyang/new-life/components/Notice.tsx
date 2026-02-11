@@ -1,4 +1,4 @@
-import Modal from '@/app/components/Modal'
+import Modal from '@/components/Modal'
 import React from 'react'
 
 interface NoticeProps {
@@ -13,7 +13,7 @@ export default function Notice({ open, onClose }: NoticeProps) {
         
         <div className="mb-4">
           <div className="font-bold mb-2">• 금융소비자 보호안내</div>
-          <div className="text-blue-600">• 금융소비자보호법 제19조(설명의무) 1항에 따라 일반금융소비자는 충분한 설명을 받을 권리가 있으며, 상품의 설명을 이해한 후 거래하시기 바랍니다.</div>
+          <div className="text-brand-primary">• 금융소비자보호법 제19조(설명의무) 1항에 따라 일반금융소비자는 충분한 설명을 받을 권리가 있으며, 상품의 설명을 이해한 후 거래하시기 바랍니다.</div>
         </div>
         
         <div className="mb-4">
@@ -31,7 +31,7 @@ export default function Notice({ open, onClose }: NoticeProps) {
           <div className="text-xl font-bold mb-2">• 금융소비자의 권리</div>
           <div className="mb-3">
             <div className="font-semibold mb-1">• 보험계약 청약을 철회할 수 있는 권리</div>
-            <div className="mb-2">• 보험계약자는 <span className="text-blue-600">보험증권을 받은 날부터 15일 이내</span>에 그 청약을 철회할 수 있으며, 이 경우 회사는 청약의 철회를 접수한 날부터 3영업일 이내에 납입한 보험료를 돌려드립니다. 다만 보험기간이 90일 이내인 계약, 전문금융소비자가 체결한 계약 또는 청약을 한 날부터 30일(만65세 이상인 계약자가 체결한 통신판매계약의 경우에는 45일)이 초과된 경우에는 청약을 철회할 수 없습니다.</div>
+            <div className="mb-2">• 보험계약자는 <span className="text-brand-primary">보험증권을 받은 날부터 15일 이내</span>에 그 청약을 철회할 수 있으며, 이 경우 회사는 청약의 철회를 접수한 날부터 3영업일 이내에 납입한 보험료를 돌려드립니다. 다만 보험기간이 90일 이내인 계약, 전문금융소비자가 체결한 계약 또는 청약을 한 날부터 30일(만65세 이상인 계약자가 체결한 통신판매계약의 경우에는 45일)이 초과된 경우에는 청약을 철회할 수 없습니다.</div>
             <div className="mb-2">• 청약을 철회할 당시에 이미 보험금 지급사유가 발생하였으나 계약자가 그 보험금 지급사유의 발생사실을 알지 못한 경우에는 청약철회의 효력은 발생하지 않습니다.</div>
           </div>
           
@@ -45,7 +45,7 @@ export default function Notice({ open, onClose }: NoticeProps) {
           
           <div className="mb-3">
             <div className="font-semibold mb-1">• 보험계약을 취소할 수 있는 권리</div>
-            <div className="mb-2">• 보험계약자는 다음의 경우 <span className="text-blue-600">계약이 성립한 날부터 3개월 이내</span>에 계약을 취소할 수 있으며, 이 경우 실제 납입한 보험료와 보험료를 받은 기간에 대하여 소정의 이자를 더하여 지급합니다.</div>
+            <div className="mb-2">• 보험계약자는 다음의 경우 <span className="text-brand-primary">계약이 성립한 날부터 3개월 이내</span>에 계약을 취소할 수 있으며, 이 경우 실제 납입한 보험료와 보험료를 받은 기간에 대하여 소정의 이자를 더하여 지급합니다.</div>
             <div className="mb-1">• 약관 및 계약자보관용 청약서를 전달받지 못한 경우</div>
             <div className="mb-1">• 약관의 중요한 내용을 설명받지 못한 경우</div>
             <div className="mb-1">• 청약서에 자필서명(전자서명 포함)을 하지 않은 경우</div>
@@ -87,14 +87,14 @@ export default function Notice({ open, onClose }: NoticeProps) {
           <div className="font-bold mb-2">• 예금자 보호에 관한 사항</div>
           <div className="mb-1">• 이 보험계약은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금)에 기타지급금을 합한 금액이 1인당 5천만원까지(본 보험회사의 여타 보호상품과 합산) 보호됩니다.</div>
           <div className="mb-1">• 이와 별도로 본 보험회사의 보호상품의 사고보험금을 합산한 금액이 1인당 5천만원까지 보호됩니다.</div>
-          <div className="mb-1 text-red-600">• 단, 2025년 9월 1일부터 해당 보호 한도가 1억원으로 상향됩니다.</div>
+          <div className="mb-1 text-status-red">• 단, 2025년 9월 1일부터 해당 보호 한도가 1억원으로 상향됩니다.</div>
           <div>• 다만, 보험계약자 및 보험료 납부자가 법인인 보험 계약은 「예금자보호법」에 따라 보호되지 않습니다.</div>
         </div>
         
         <div className="mb-4">
-          <div className="text-sm text-gray-600">
-            <div className="mb-2 text-red-600">※ 이 상품에 대한 보다 자세한 사항은 계약 체결 전에 보험약관 및 상품설명서를 반드시 확인하시기 바랍니다.</div>
-            <hr className="my-3 border-gray-300" />
+          <div className="text-sm text-text-secondary">
+            <div className="mb-2 text-status-red">※ 이 상품에 대한 보다 자세한 사항은 계약 체결 전에 보험약관 및 상품설명서를 반드시 확인하시기 바랍니다.</div>
+            <hr className="my-3 border-border-default" />
             <div className="mb-1">※ ㈜메타리치 보험스토어는 다수의 보험사와 계약 체결 및 대리·중개하는 대리점입니다.</div>
             <div className="mb-1">※ ㈜메타리치 보험스토어는 보험사로부터 보험계약체결권을 부여받지 아니한 금융상품판매 대리·중개업자임을 알려드립니다.</div>
             <div className="mb-1">※ ㈜메타리치 보험스토어는 금융소비자 보호에 관한 법률 및 회사 내부 통제기준에 따른 광고 관련 절차를 준수하고 있습니다.</div>

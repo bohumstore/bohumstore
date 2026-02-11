@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import ContentProtection from "./components/ContentProtection";
-import BodyClassManager from "./components/BodyClassManager";
-import Header from "./components/Header";
+import ContentProtection from "@/components/ContentProtection";
+import BodyClassManager from "@/components/BodyClassManager";
+import Header from "@/components/Header";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -193,7 +193,7 @@ export default function RootLayout({
                       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif !important;
                     }
                     
-                    .text-gray-800, .text-gray-900, [class*="text-gray-800"], [class*="text-gray-900"] {
+                    .text-gray-800, .text-text-primary, [class*="text-gray-800"], [class*="text-text-primary"] {
                       font-weight: 500 !important;
                     }
                   \`;
@@ -239,7 +239,7 @@ export default function RootLayout({
                           element.style.fontWeight = '500';
                         }
                         // 회사명, 상품 설명 등
-                        else if (className.includes('text-gray-800') || className.includes('text-gray-900')) {
+                        else if (className.includes('text-gray-800') || className.includes('text-text-primary')) {
                           element.style.fontWeight = '500';
                         }
                         // font-medium, font-semibold

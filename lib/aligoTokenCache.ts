@@ -1,4 +1,4 @@
-import { AuthData, getToken } from '@/app/lib/aligo'
+import { AuthData, getToken } from '@/lib/aligo'
 
 type CachedToken = {
   token: string

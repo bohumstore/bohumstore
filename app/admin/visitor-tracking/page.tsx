@@ -3,9 +3,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { format } from 'date-fns';
 import { supabase } from '@/app/api/supabase';
-import { toKSTString } from '@/app/lib/time';
-import logger from '@/app/lib/logger';
-import type { VisitorData, StatsData, VisitorFilters } from '@/app/types/visitor';
+import { toKSTString } from '@/lib/time';
+import logger from '@/lib/logger';
+import type { VisitorData, StatsData, VisitorFilters } from '@/types/visitor';
 
 export default function VisitorTrackingPage() {
   const [visitors, setVisitors] = useState<VisitorData[]>([]);
@@ -264,7 +264,7 @@ export default function VisitorTrackingPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-8">
+      <div className="min-h-screen bg-page-bg p-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center">로딩 중...</div>
         </div>
@@ -292,7 +292,7 @@ export default function VisitorTrackingPage() {
           href={row.original.referrer || '#'}
           target="_blank" 
           rel="noopener noreferrer"
-          className="text-blue-600 hover:underline break-all"
+          className="text-brand-primary hover:underline break-all"
           title={getFullReferrer(row.original.referrer)}
         >
           {formatReferrerForDisplay(row.original.referrer, row.original.search_keyword)}
@@ -338,30 +338,30 @@ export default function VisitorTrackingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-page-bg p-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">방문자 추적 관리</h1>
+        <h1 className="text-3xl font-bold text-text-primary mb-8">방문자 추적 관리</h1>
 
         {/* 통계 요약 */}
         {stats && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-sm font-medium text-gray-500">전체 방문자</h3>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalVisitors?.toLocaleString() || 0}</p>
+              <h3 className="text-sm font-medium text-text-muted">전체 방문자</h3>
+              <p className="text-2xl font-bold text-text-primary">{stats.totalVisitors?.toLocaleString() || 0}</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-sm font-medium text-gray-500">고유 방문자</h3>
-              <p className="text-2xl font-bold text-gray-900">{stats.uniqueVisitors?.toLocaleString() || 0}</p>
+              <h3 className="text-sm font-medium text-text-muted">고유 방문자</h3>
+              <p className="text-2xl font-bold text-text-primary">{stats.uniqueVisitors?.toLocaleString() || 0}</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-sm font-medium text-gray-500">기간</h3>
-              <p className="text-lg font-semibold text-gray-900">
+              <h3 className="text-sm font-medium text-text-muted">기간</h3>
+              <p className="text-lg font-semibold text-text-primary">
                 {stats.dateRange?.startDate ? format(new Date(stats.dateRange.startDate), 'MM/dd') : 'N/A'} - {stats.dateRange?.endDate ? format(new Date(stats.dateRange.endDate), 'MM/dd') : 'N/A'}
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-sm font-medium text-gray-500">상담 신청</h3>
-              <p className="text-2xl font-bold text-blue-600">
+              <h3 className="text-sm font-medium text-text-muted">상담 신청</h3>
+              <p className="text-2xl font-bold text-brand-primary">
                 {getSafeStat(stats, '상담신청', 0)}
               </p>
             </div>
@@ -372,37 +372,37 @@ export default function VisitorTrackingPage() {
         {stats && (
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xs font-medium text-gray-500">Google 검색</h3>
+              <h3 className="text-xs font-medium text-text-muted">Google 검색</h3>
               <p className="text-lg font-semibold text-green-600">
                 {(stats.trafficSourceStats?.['Google-PC'] || 0) + (stats.trafficSourceStats?.['Google-Mobile'] || 0)}
               </p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xs font-medium text-gray-500">네이버 검색</h3>
+              <h3 className="text-xs font-medium text-text-muted">네이버 검색</h3>
               <p className="text-lg font-semibold text-green-600">
                 {(stats.trafficSourceStats?.['Naver-PC'] || 0) + (stats.trafficSourceStats?.['Naver-Mobile'] || 0)}
               </p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xs font-medium text-gray-500">모바일</h3>
-              <p className="text-lg font-semibold text-blue-600">
+              <h3 className="text-xs font-medium text-text-muted">모바일</h3>
+              <p className="text-lg font-semibold text-brand-primary">
                 {stats.deviceStats?.['mobile'] || 0}
               </p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xs font-medium text-gray-500">데스크톱</h3>
-              <p className="text-lg font-semibold text-blue-600">
+              <h3 className="text-xs font-medium text-text-muted">데스크톱</h3>
+              <p className="text-lg font-semibold text-brand-primary">
                 {stats.deviceStats?.['desktop'] || 0}
               </p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xs font-medium text-gray-500">통신사</h3>
+              <h3 className="text-xs font-medium text-text-muted">통신사</h3>
               <p className="text-lg font-semibold text-purple-600">
                 {stats.carrierStats?.['SKT'] || stats.carrierStats?.['KT'] || stats.carrierStats?.['LG U+'] || 0}
               </p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xs font-medium text-gray-500">모바일기종</h3>
+              <h3 className="text-xs font-medium text-text-muted">모바일기종</h3>
               <p className="text-lg font-semibold text-orange-600">
                 {stats.deviceModelStats?.['iPhone'] || stats.deviceModelStats?.['Android'] || 0}
               </p>
@@ -412,14 +412,14 @@ export default function VisitorTrackingPage() {
 
         {/* 필터 */}
         <div className="bg-white p-6 rounded-lg shadow mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">필터</h2>
+          <h2 className="text-lg font-semibold text-text-primary mb-4">필터</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">상담 유형</label>
               <select
                 value={filters.counsel_type_id}
                 onChange={(e) => handleFilterChange('counsel_type_id', e.target.value)}
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                className="w-full border border-border-default rounded-md px-3 py-2"
               >
                 <option value="">전체</option>
                 <option value="1">보험료 확인</option>
@@ -432,7 +432,7 @@ export default function VisitorTrackingPage() {
                 type="date"
                 value={filters.date_from}
                 onChange={(e) => handleFilterChange('date_from', e.target.value)}
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                className="w-full border border-border-default rounded-md px-3 py-2"
               />
             </div>
             <div>
@@ -441,7 +441,7 @@ export default function VisitorTrackingPage() {
                 type="date"
                 value={filters.date_to}
                 onChange={(e) => handleFilterChange('date_to', e.target.value)}
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                className="w-full border border-border-default rounded-md px-3 py-2"
               />
             </div>
             <div>
@@ -451,7 +451,7 @@ export default function VisitorTrackingPage() {
                 value={filters.traffic_source}
                 onChange={(e) => handleFilterChange('traffic_source', e.target.value)}
                 placeholder="Google-PC, Naver-Mobile 등"
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                className="w-full border border-border-default rounded-md px-3 py-2"
               />
             </div>
             <div>
@@ -459,7 +459,7 @@ export default function VisitorTrackingPage() {
               <select
                 value={filters.device_type}
                 onChange={(e) => handleFilterChange('device_type', e.target.value)}
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                className="w-full border border-border-default rounded-md px-3 py-2"
               >
                 <option value="">전체</option>
                 <option value="desktop">데스크톱</option>
@@ -472,7 +472,7 @@ export default function VisitorTrackingPage() {
               <select
                 value={filters.search_engine}
                 onChange={(e) => handleFilterChange('search_engine', e.target.value)}
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                className="w-full border border-border-default rounded-md px-3 py-2"
               >
                 <option value="">전체</option>
                 <option value="Google">Google</option>
@@ -488,7 +488,7 @@ export default function VisitorTrackingPage() {
                 value={filters.search_keyword}
                 onChange={(e) => handleFilterChange('search_keyword', e.target.value)}
                 placeholder="검색 키워드 입력"
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                className="w-full border border-border-default rounded-md px-3 py-2"
               />
             </div>
             <div className="flex items-end">
@@ -506,7 +506,7 @@ export default function VisitorTrackingPage() {
                   });
                   setCurrentPage(1);
                 }}
-                className="w-full bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600"
+                className="w-full bg-page-bg0 text-white px-4 py-2 rounded-md hover:bg-gray-600"
               >
                 필터 초기화
               </button>
@@ -516,8 +516,8 @@ export default function VisitorTrackingPage() {
 
         {/* 데이터 테이블 */}
         <div className="bg-white rounded-lg shadow">
-          <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 className="text-lg font-semibold text-gray-900">방문자 데이터</h2>
+          <div className="px-6 py-4 border-b border-border-default flex justify-between items-center">
+            <h2 className="text-lg font-semibold text-text-primary">방문자 데이터</h2>
             <button
               onClick={exportToCSV}
               className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
@@ -525,7 +525,7 @@ export default function VisitorTrackingPage() {
               CSV 다운로드
             </button>
             <div className="flex items-center space-x-2">
-              <label className="text-sm text-gray-600">자동 새로고침(60초)</label>
+              <label className="text-sm text-text-secondary">자동 새로고침(60초)</label>
               <input
                 type="checkbox"
                 checked={autoRefresh}
@@ -533,7 +533,7 @@ export default function VisitorTrackingPage() {
               />
               <button
                 onClick={safeRefresh}
-                className="ml-2 px-3 py-2 border border-gray-300 rounded-md"
+                className="ml-2 px-3 py-2 border border-border-default rounded-md"
               >
                 새로고침
               </button>
@@ -542,56 +542,56 @@ export default function VisitorTrackingPage() {
           
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-page-bg">
                 <tr>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">방문시간</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-16">방문수</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-64">유입사이트</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[240px]">키워드</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">모바일기종</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">브라우저</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">상담유형</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">이름</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">전화번호</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider w-24">방문시간</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider w-16">방문수</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider w-64">유입사이트</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider w-[240px]">키워드</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider w-24">모바일기종</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider w-20">브라우저</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider w-24">상담유형</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider w-20">이름</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider w-24">전화번호</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {visitors.map((visitor) => (
-                  <tr key={visitor.id} className="hover:bg-gray-50">
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <tr key={visitor.id} className="hover:bg-page-bg">
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-text-primary">
                       {formatKST(visitor.created_at)}
                     </td>
-                    <td className="px-3 py-4 text-sm text-gray-900">
+                    <td className="px-3 py-4 text-sm text-text-primary">
                       {visitor.session_count || 1}
                     </td>
-                    <td className="px-3 py-4 text-sm text-gray-900 max-w-xs truncate">
+                    <td className="px-3 py-4 text-sm text-text-primary max-w-xs truncate">
                       <a 
                         href={visitor.referrer || '#'} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline"
+                        className="text-brand-primary hover:underline"
                         title={visitor.referrer || undefined}
                       >
                         {getFullReferrer(visitor.referrer)}
                       </a>
                     </td>
-                    <td className="px-3 py-4 text-sm text-gray-900 max-w-[320px]">
+                    <td className="px-3 py-4 text-sm text-text-primary max-w-[320px]">
                       {visitor.search_keyword || '-'}
                     </td>
-                    <td className="px-3 py-4 text-sm text-gray-900">
+                    <td className="px-3 py-4 text-sm text-text-primary">
                       {visitor.device_model || '-'}
                     </td>
-                    <td className="px-3 py-4 text-sm text-gray-900">
+                    <td className="px-3 py-4 text-sm text-text-primary">
                       {visitor.browser || '-'}
                     </td>
-                    <td className="px-3 py-4 text-sm text-gray-900">
+                    <td className="px-3 py-4 text-sm text-text-primary">
                       {visitor.counsel_type_id === 1 ? '보험료 확인' : 
                        visitor.counsel_type_id === 2 ? '상담신청' : '-'}
                     </td>
-                    <td className="px-3 py-4 text-sm text-gray-900">
+                    <td className="px-3 py-4 text-sm text-text-primary">
                       {visitor.name || '-'}
                     </td>
-                    <td className="px-3 py-4 text-sm text-gray-900">
+                    <td className="px-3 py-4 text-sm text-text-primary">
                       {visitor.phone || '-'}
                     </td>
                   </tr>
@@ -602,7 +602,7 @@ export default function VisitorTrackingPage() {
 
           {/* 페이지네이션 */}
           {totalPages > 1 && (
-            <div className="px-6 py-4 border-t border-gray-200 flex justify-between items-center">
+            <div className="px-6 py-4 border-t border-border-default flex justify-between items-center">
               <div className="text-sm text-gray-700">
                 페이지 {currentPage} / {totalPages}
               </div>
@@ -610,14 +610,14 @@ export default function VisitorTrackingPage() {
                 <button
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
-                  className="px-3 py-2 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-3 py-2 border border-border-default rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   이전
                 </button>
                 <button
                   onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages}
-                  className="px-3 py-2 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-3 py-2 border border-border-default rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   다음
                 </button>

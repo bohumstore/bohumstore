@@ -121,7 +121,7 @@ export default function Modal({ title, open, onClose, children }: ModalProps) {
       onTouchMove={(e) => e.stopPropagation()}
     >
       <div 
-        className="bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] sm:max-h-[92vh] overflow-hidden flex flex-col relative touch-auto"
+        className="bg-white text-text-primary rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] sm:max-h-[92vh] overflow-hidden flex flex-col relative touch-auto"
         onTouchMove={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-3 sm:px-6 pt-2 sm:pt-4 pb-1.5 sm:pb-2 border-b border-gray-200 flex-shrink-0">

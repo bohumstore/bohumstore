@@ -1,12 +1,12 @@
 ﻿import React, { useState, useEffect, useRef } from 'react'
 import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
-import Modal from '@/app/components/Modal';
+import Modal from '@/components/Modal';
 import request from '@/app/api/request';
-import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/insurance';
-import { calculateAnnuityStartAge } from '@/app/utils/annuityCalculator';
-import { trackPremiumCheck, trackCounselRequest } from "@/app/utils/visitorTracking";
+import { getProductConfigByPath, getTemplateIdByPath } from '@/constants/insurance';
+import { calculateAnnuityStartAge } from '@/lib/annuityCalculator';
+import { trackPremiumCheck, trackCounselRequest } from "@/lib/visitorTracking";
 
-import FireworksEffect from '@/app/components/shared/FireworksEffect';
+import FireworksEffect from '@/components/shared/FireworksEffect';
 
 // 현재 경로에 맞는 상품 정보 가져오기
 const currentPath = '/insurance/annuity/kdb/happy-plus';
@@ -724,7 +724,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                         (예시) 100세<br />최종연금지급일
                   </div>
                     </div>
-                    <div className="text-[10px] sm:text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-1 sm:p-1.5">
+                    <div className="text-[10px] sm:text-xs text-text-secondary leading-tight bg-white/50 rounded-lg p-1 sm:p-1.5">
                       = 피보험자의 99세<br />계약 해당일
                   </div>
                     </div>
@@ -741,9 +741,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                         <div className="text-2xl sm:text-3xl md:text-4xl font-black text-orange-600 drop-shadow-2xl animate-bounce">7%</div>
                       </div>
                     </div>
-                    <div className="text-[10px] sm:text-xs text-gray-600 space-y-0.5 sm:space-y-1 leading-tight relative z-10 mt-auto">
+                    <div className="text-[10px] sm:text-xs text-text-secondary space-y-0.5 sm:space-y-1 leading-tight relative z-10 mt-auto">
                         <div className="bg-white/60 rounded-lg p-0.5 sm:p-1 font-medium">계약일로부터<br />20년: 7%</div>
-                        <div className="bg-white/60 rounded-lg p-0.5 sm:p-1 font-medium">20년~연금개시까지: <span className="text-blue-600 font-bold">5%</span></div>
+                        <div className="bg-white/60 rounded-lg p-0.5 sm:p-1 font-medium">20년~연금개시까지: <span className="text-brand-primary font-bold">5%</span></div>
                       </div>
                   </div>
 
@@ -757,12 +757,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                         최저 사망적립액<br />보장
                       </div>
                     </div>
-                    <div className="text-[10px] sm:text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-1 sm:p-1.5">
+                    <div className="text-[10px] sm:text-xs text-text-secondary leading-tight bg-white/50 rounded-lg p-1 sm:p-1.5">
                       장래 공시이율과<br />관계없이
                     </div>
                   </div>
                 </div>
-                <div className="text-xs text-gray-500 text-center mt-2 sm:mt-4">
+                <div className="text-xs text-text-muted text-center mt-2 sm:mt-4">
                   <p>※ 대표계약기준(40세 남자, 10년납, 연금개시 나이 65세), 복리이자율로 환산시 4.21%</p>
                 </div>
             </div>
@@ -775,48 +775,48 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div className="w-8 h-8 bg-gradient-to-br from-[#f59e0b] to-[#d97706] rounded-lg flex items-center justify-center">
                     <CalculatorIcon className="w-4 h-4 text-white" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">연금액 계산하기</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-text-primary">연금액 계산하기</h3>
                 </div>
-                <p className="text-gray-500 text-xs sm:text-sm ml-10">간단한 정보 입력으로 예상 연금액을 확인하세요</p>
+                <p className="text-text-muted text-xs sm:text-sm ml-10">간단한 정보 입력으로 예상 연금액을 확인하세요</p>
               </div>
               <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 성별/이름 */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">성별 <span className="text-red-500">*</span></label>
+                    <label className="block text-xs font-medium text-text-secondary mb-1.5">성별 <span className="text-status-red">*</span></label>
                     <div className="flex gap-2">
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b]' : 'border-border-default hover:border-border-default'}`}>
                         <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
                         <span className="text-sm font-medium">남자</span>
                       </label>
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b]' : 'border-border-default hover:border-border-default'}`}>
                         <input type="radio" name="gender" value="F" checked={gender === "F"} onChange={handleGenderChange} className="sr-only" />
                         <span className="text-sm font-medium">여자</span>
                       </label>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">이름 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#f59e0b]/20 focus:border-[#f59e0b] transition-all" placeholder="홍길동" />
+                    <label className="block text-xs font-medium text-text-secondary mb-1.5">이름 <span className="text-status-red">*</span></label>
+                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-border-default rounded-lg text-sm focus:ring-2 focus:ring-[#f59e0b]/20 focus:border-[#f59e0b] transition-all" placeholder="홍길동" />
                   </div>
                 </div>
 
                 {/* 생년월일/연락처 */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">생년월일 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#f59e0b]/20 focus:border-[#f59e0b] transition-all" placeholder="19880818" maxLength={8} />
+                    <label className="block text-xs font-medium text-text-secondary mb-1.5">생년월일 <span className="text-status-red">*</span></label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-border-default rounded-lg text-sm focus:ring-2 focus:ring-[#f59e0b]/20 focus:border-[#f59e0b] transition-all" placeholder="19880818" maxLength={8} />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">연락처 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#f59e0b]/20 focus:border-[#f59e0b] transition-all" placeholder="01012345678" />
+                    <label className="block text-xs font-medium text-text-secondary mb-1.5">연락처 <span className="text-status-red">*</span></label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-border-default rounded-lg text-sm focus:ring-2 focus:ring-[#f59e0b]/20 focus:border-[#f59e0b] transition-all" placeholder="01012345678" />
                   </div>
                 </div>
 
                 {/* 납입 정보 선택 */}
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">납입기간</label>
+                    <label className="block text-sm font-medium text-text-secondary mb-1.5 cursor-pointer">납입기간</label>
                     <div className="grid grid-cols-3 gap-2">
                       {['10년', '15년', '20년'].map((period) => {
                         const isDisabled = (period === '15년' && is15YearDisabled) || (period === '20년' && is20YearDisabled);
@@ -838,12 +838,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                               className="peer sr-only cursor-pointer"
                             />
                             <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${isDisabled 
-                                          ? 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed' 
-                                          : 'cursor-pointer peer-checked:border-[#f59e0b] peer-checked:bg-[#f59e0b]/5 peer-checked:text-[#f59e0b] peer-checked:font-bold hover:border-[#f59e0b] hover:bg-gray-50 border-gray-200'
+                                          ? 'bg-gray-100 border-border-default text-gray-400 cursor-not-allowed' 
+                                          : 'cursor-pointer peer-checked:border-[#f59e0b] peer-checked:bg-[#f59e0b]/5 peer-checked:text-[#f59e0b] peer-checked:font-bold hover:border-[#f59e0b] hover:bg-page-bg border-border-default'
                                         }`}>
                               {period}
                               {isDisabled && (
-                                <div className="text-xs text-red-500 mt-1">
+                                <div className="text-xs text-status-red mt-1">
                                   {Number(insuranceAge) >= 66 ? '가입불가' : 
                                    (period === '15년' && Number(insuranceAge) + 15 > 80) ? '개시연령초과' :
                                    (period === '20년' && Number(insuranceAge) + 20 > 80) ? '개시연령초과' : '가입불가'}
@@ -856,7 +856,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-1.5 cursor-pointer">월 납입금액</label>
+                    <label className="block text-sm font-medium text-text-secondary mb-1.5 cursor-pointer">월 납입금액</label>
                     <div className="grid grid-cols-3 gap-2">
                       {['30만원', '50만원', '100만원'].map((amount) => (
                         <label key={amount} className="relative flex items-center justify-center cursor-pointer">
@@ -868,7 +868,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                             onChange={handlePaymentAmountChange}
                             className="peer sr-only cursor-pointer"
                           />
-                          <div className="w-full text-center py-2.5 text-sm border-2 rounded-lg cursor-pointer transition-all peer-checked:border-[#f59e0b] peer-checked:bg-[#f59e0b]/5 peer-checked:text-[#f59e0b] peer-checked:font-bold hover:border-[#f59e0b] hover:bg-gray-50 border-gray-200">
+                          <div className="w-full text-center py-2.5 text-sm border-2 rounded-lg cursor-pointer transition-all peer-checked:border-[#f59e0b] peer-checked:bg-[#f59e0b]/5 peer-checked:text-[#f59e0b] peer-checked:font-bold hover:border-[#f59e0b] hover:bg-page-bg border-border-default">
                             {amount}
                           </div>
                         </label>
@@ -879,8 +879,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 개인정보 동의 */}
                 <div className="flex items-center gap-2 mb-4">
-                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-[#f59e0b] rounded border-gray-300 cursor-pointer focus:ring-[#f59e0b]" />
-                  <span className="text-xs text-gray-600">
+                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-[#f59e0b] rounded border-border-default cursor-pointer focus:ring-[#f59e0b]" />
+                  <span className="text-xs text-text-secondary">
                     개인정보 수집 및 이용에 동의합니다. 
                     <button type="button" onClick={onOpenPrivacy} className="text-[#f59e0b] underline ml-1 hover:text-[#d97706]">자세히 보기</button>
                   </span>
@@ -944,8 +944,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="text-base sm:text-lg text-black font-bold">연금액 산출이 완료되었습니다.</div>
               </div>
               {/* 보험료 결과값 UI (상세 정보) */}
-              <div className="bg-gray-50 rounded-lg p-1.5 sm:p-2">
-                <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center">
+              <div className="bg-page-bg rounded-lg p-1.5 sm:p-2">
+                <h3 className="text-lg font-bold text-text-primary mb-2 flex items-center">
                   <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name}</span>
                   <span className="text-lg text-[#7c3aed] font-bold align-middle">&nbsp;님</span>
                   {insuranceAge !== '' && (
@@ -956,30 +956,30 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   )}
                 </h3>
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
                     <span className="font-bold text-[#3a8094]">{isVerified ? "KDB생명" : "?"}</span>
                   </div>
                 </div>
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
                     <span className="font-bold text-[#3a8094]">{isVerified ? "더!행복플러스연금보험(보증형)" : "?"}</span>
                   </div>
                 </div>
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
                     <span className="font-bold text-[#3a8094]">
                       {paymentPeriod && paymentAmount ? `${paymentPeriod} / ${paymentAmount}` : '-'}
                     </span>
                   </div>
                 </div>
                 {/* 총 납입액 */}
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
                     <span className="font-bold">
                       <span className="text-[#3a8094]">{total ? total.toLocaleString('en-US') : '-'}</span>
                       <span className="text-[#3a8094]"> 원</span>
@@ -987,18 +987,18 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
                 {/* 연금개시연령 */}
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연금개시연령</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연금개시연령</span>
                     <span className="font-bold">
                       <span className="text-[#7c3aed]">{isVerified ? (pensionAmounts.pensionStartAge || currentPensionStartAge) : currentPensionStartAge || '?'}</span>{' '}<span className="text-[#3a8094]">세</span>
                     </span>
                   </div>
                 </div>
                 {/* 월 연금액 */}
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>월 연금액</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>월 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#3b82f6]">
                         {isVerified ? (
@@ -1011,9 +1011,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
                 {/* 20년 보증기간 연금액 */}
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#ef4444]">
                         {isVerified ? (
@@ -1026,9 +1026,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
                 {/* 100세까지 생존 시 총 받는 금액 */}
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
                     <span className="font-bold">
                       <span className="text-[#10b981]">
                         {isVerified ? (
@@ -1048,7 +1048,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </div>
                   </div>
                 )}
-                <div className="text-xs text-gray-500 text-center mt-4">
+                <div className="text-xs text-text-muted text-center mt-4">
                   * 실제 연금액은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
                   <br />
                   * 본 계산 결과는 참고용이며, 실제 계약 시 보험사 약관 및 상품설명서를 확인 바랍니다.
@@ -1059,8 +1059,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           {!isVerified && (
             <>
               {/* 보험료 계산 결과 */}
-              <div className="bg-gray-50 rounded-lg p-2">
-                <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center">
+              <div className="bg-page-bg rounded-lg p-2">
+                <h3 className="text-lg font-bold text-text-primary mb-2 flex items-center">
                   <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name}</span>
                   <span className="text-lg text-[#7c3aed] font-bold align-middle">&nbsp;님</span>
                   {insuranceAge !== '' && (
@@ -1071,30 +1071,30 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   )}
                 </h3>
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
                     {isVerified ? <span className="font-bold text-[#3a8094]">KDB생명</span> : <span className="font-medium text-[#7c3aed] text-xs">🔒 인증 후 확인</span>}
                   </div>
                 </div>
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
                     {isVerified ? <span className="font-bold text-[#3a8094]">더!행복플러스연금보험(보증형)</span> : <span className="font-medium text-[#7c3aed] text-xs">🔒 인증 후 확인</span>}
                   </div>
                 </div>
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>납입기간 / 월보험료</span>
                     <span className="font-bold text-[#3a8094]">
                       {paymentPeriod && paymentAmount ? `${paymentPeriod} / ${paymentAmount}` : '-'}
                     </span>
                   </div>
                 </div>
                 {/* 총 납입액 */}
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>총 납입액</span>
                     <span className="font-bold">
                       <span className="text-[#3a8094]">{total ? total.toLocaleString('en-US') : '-'}</span>
                       <span className="text-[#3a8094]"> 원</span>
@@ -1102,36 +1102,36 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
                 {/* 연금개시연령 */}
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연금개시연령</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연금개시연령</span>
                     <span className="font-bold">
                       <span className="text-[#7c3aed]">{currentPensionStartAge || '?'}</span>{' '}<span className="text-[#3a8094]">세</span>
                     </span>
                   </div>
                 </div>
                 {/* 월 연금액 */}
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>월 연금액</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>월 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#3b82f6]">인증 후 확인가능</span>
                     </span>
                   </div>
                 </div>
                 {/* 20년 보증기간 연금액 */}
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#ef4444]">인증 후 확인가능</span>
                     </span>
                   </div>
                 </div>
                 {/* 100세까지 생존 시 총 받는 금액 */}
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-border-default">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
+                    <span className="text-xs sm:text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
                     <span className="font-bold">
                       <span className="text-[#10b981]">인증 후 확인가능</span>
                     </span>
@@ -1145,15 +1145,15 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </div>
                   </div>
                 )}
-                <div className="text-xs text-gray-500 text-center mt-4">
+                <div className="text-xs text-text-muted text-center mt-4">
                   * 실제 연금액은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
                   <div className="mt-0.5 text-[#3a8094]">* 휴대폰 인증 완료 후 상세 정보를 확인하실 수 있습니다.</div>
                 </div>
               </div>
               {/* 휴대폰 인증 안내 및 인증번호 입력란 */}
-              <div className="bg-gray-50 rounded-lg p-1.5 sm:p-2 mt-0">
-                <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-1">휴대폰 인증</h3>
-                <p className="text-xs sm:text-sm text-gray-600 mb-1">
+              <div className="bg-page-bg rounded-lg p-1.5 sm:p-2 mt-0">
+                <h3 className="text-sm sm:text-base font-bold text-text-primary mb-1">휴대폰 인증</h3>
+                <p className="text-xs sm:text-sm text-text-secondary mb-1">
                   정확한 보험료 확인을 위해 휴대폰 인증이 필요합니다.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2 mb-2 sm:mb-3 items-stretch sm:items-center">
@@ -1161,13 +1161,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     type="text"
                     value={phone}
                     readOnly
-                    className="flex-1 px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base bg-gray-100"
+                    className="flex-1 px-3 py-2 sm:py-2.5 border border-border-default rounded-md text-sm sm:text-base bg-gray-100"
                   />
                   <button
                     type="button"
                     onClick={handleSendOTP}
                     disabled={!isAgeEligible}
-                    className={`${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#f97316] text-white hover:bg-[#ea580c]'} w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 rounded-md text-sm sm:text-base font-medium transition-colors min-w-[100px] sm:min-w-[120px]`}
+                    className={`${!isAgeEligible ? 'bg-gray-300 text-text-muted cursor-not-allowed' : 'bg-[#f97316] text-white hover:bg-[#ea580c]'} w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 rounded-md text-sm sm:text-base font-medium transition-colors min-w-[100px] sm:min-w-[120px]`}
                   >
                     {otpResendAvailable ? '인증번호 전송' : '재발송'}
                   </button>
@@ -1189,7 +1189,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                       setOtpCode(val);
                     }}
                     maxLength={6}
-                    className="flex-1 px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
+                    className="flex-1 px-3 py-2 sm:py-2.5 border border-border-default rounded-md text-sm sm:text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
                     placeholder="6자리 인증번호 입력"
                   />
                 </div>
@@ -1197,7 +1197,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   type="button"
                   onClick={handleVerifyOTP}
                   disabled={!isAgeEligible || verifying || otpCode.length !== 6}
-                  className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(!isAgeEligible || verifying || otpCode.length !== 6) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                  className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(!isAgeEligible || verifying || otpCode.length !== 6) ? 'bg-gray-300 text-text-muted cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
                 >
                   {verifying ? '인증 처리중...' : '인증하고 결과 확인하기'}
                 </button>
@@ -1226,7 +1226,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <FireworksEffect show={true} />
               <div className="bg-[#f8f8ff] rounded p-3 mb-1 text-center">
                 <div className="text-lg text-black font-bold">상담신청이 접수되었습니다.</div>
-                <div className="text-sm text-gray-600 mt-1">담당자가 선택하신 상담 시간에 연락드릴 예정입니다.</div>
+                <div className="text-sm text-text-secondary mt-1">담당자가 선택하신 상담 시간에 연락드릴 예정입니다.</div>
               </div>
             </>
           ) : (
@@ -1234,7 +1234,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               상담신청을 위해 아래 정보를 입력해 주세요.
             </div>
           )}
-          <div className="bg-gray-50 rounded-lg p-2.5 mb-0.5">
+          <div className="bg-page-bg rounded-lg p-2.5 mb-0.5">
             <h3 className="mb-2 flex items-center">
               <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name}</span>
               <span className="text-lg text-[#7c3aed] font-bold align-middle">&nbsp;님</span>
@@ -1247,26 +1247,26 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               )}
             </h3>
             <div className="grid grid-cols-1 gap-1.5">
-              <div className="bg-white p-2.5 rounded border border-gray-200">
+              <div className="bg-white p-2.5 rounded border border-border-default">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>이름</span>
+                  <span className="text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>이름</span>
                   <span className="font-bold text-[#3a8094] text-base">{name}</span>
                 </div>
               </div>
-              <div className="bg-white p-2.5 rounded border border-gray-200">
+              <div className="bg-white p-2.5 rounded border border-border-default">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연락처</span>
+                  <span className="text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연락처</span>
                   <span className="font-bold text-[#3a8094] text-base">{phone}</span>
                 </div>
               </div>
-              <div className={`bg-white p-2.5 rounded border border-gray-200 relative ${consultIsVerified ? '' : 'cursor-pointer select-none'}`}
+              <div className={`bg-white p-2.5 rounded border border-border-default relative ${consultIsVerified ? '' : 'cursor-pointer select-none'}`}
                 onClick={consultIsVerified ? undefined : () => setShowConsultTypeDropdown(v => !v)}
                 tabIndex={consultIsVerified ? -1 : 0}
                 onBlur={consultIsVerified ? undefined : () => setTimeout(() => setShowConsultTypeDropdown(false), 100)}
                 aria-disabled={consultIsVerified}
               >
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상담종류</span>
+                  <span className="text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상담종류</span>
                   <span className={`font-bold flex items-center gap-1 text-base ${consultIsVerified ? 'text-[#3a8094]' : 'text-[#7c3aed]'}`}>
                     {consultType}
                     {!consultIsVerified && (
@@ -1275,11 +1275,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </span>
                 </div>
                 {!consultIsVerified && showConsultTypeDropdown && (
-                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10">
+                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-border-default rounded shadow z-10">
                     {consultTypeOptions.map(opt => (
                       <div
                         key={opt}
-                        className={`px-4 py-2 text-sm cursor-pointer hover:bg-blue-50 ${consultType === opt ? 'text-[#7c3aed] font-bold' : 'text-gray-700'}`}
+                        className={`px-4 py-2 text-sm cursor-pointer hover:bg-bg-blue ${consultType === opt ? 'text-[#7c3aed] font-bold' : 'text-gray-700'}`}
                         onClick={e => { e.stopPropagation(); setConsultType(opt); setShowConsultTypeDropdown(false); }}
                       >
                         {opt}
@@ -1288,14 +1288,14 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 )}
               </div>
-              <div className={`bg-white p-2.5 rounded border border-gray-200 relative ${consultIsVerified ? '' : 'cursor-pointer select-none'}`}
+              <div className={`bg-white p-2.5 rounded border border-border-default relative ${consultIsVerified ? '' : 'cursor-pointer select-none'}`}
                 onClick={consultIsVerified ? undefined : () => setShowConsultTimeDropdown(v => !v)}
                 tabIndex={consultIsVerified ? -1 : 0}
                 onBlur={consultIsVerified ? undefined : () => setTimeout(() => setShowConsultTimeDropdown(false), 100)}
                 aria-disabled={consultIsVerified}
               >
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상담시간대</span>
+                  <span className="text-sm text-text-secondary font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상담시간대</span>
                   <span className={`font-bold flex items-center gap-1 text-base ${consultIsVerified ? 'text-[#3a8094]' : 'text-[#7c3aed]'}`}>
                     {consultTime}
                     {!consultIsVerified && (
@@ -1304,11 +1304,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </span>
                 </div>
                 {!consultIsVerified && showConsultTimeDropdown && (
-                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto overscroll-contain">
+                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-border-default rounded shadow z-10 max-h-48 overflow-y-auto overscroll-contain">
                     {consultTimeOptions.map(opt => (
                       <div
                         key={opt}
-                        className={`px-4 py-2 text-sm cursor-pointer hover:bg-blue-50 ${consultTime === opt ? 'text-[#7c3aed] font-bold' : 'text-gray-700'}`}
+                        className={`px-4 py-2 text-sm cursor-pointer hover:bg-bg-blue ${consultTime === opt ? 'text-[#7c3aed] font-bold' : 'text-gray-700'}`}
                         onClick={e => { e.stopPropagation(); setConsultTime(opt); setShowConsultTimeDropdown(false); }}
                       >
                         {opt}
@@ -1320,20 +1320,20 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             </div>
           </div>
           {/* 상담 안내 박스 */}
-          <div className="bg-[#f8f8ff] rounded p-2 text-xs text-gray-600 text-center mb-1">
+          <div className="bg-[#f8f8ff] rounded p-2 text-xs text-text-secondary text-center mb-1">
             📢 상담 중 궁금한 점은 언제든 말씀해 주세요.
           </div>
           {/* 휴대폰 인증 안내 */}
           {!consultIsVerified && (
-            <div className="bg-gray-50 rounded-lg p-1.5 sm:p-2 mt-0">
-              <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-1">휴대폰 인증</h3>
-              <p className="text-xs sm:text-sm text-gray-600 mb-1">상담신청을 위해 휴대폰 인증이 필요합니다.</p>
+            <div className="bg-page-bg rounded-lg p-1.5 sm:p-2 mt-0">
+              <h3 className="text-sm sm:text-base font-bold text-text-primary mb-1">휴대폰 인증</h3>
+              <p className="text-xs sm:text-sm text-text-secondary mb-1">상담신청을 위해 휴대폰 인증이 필요합니다.</p>
               <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2 mb-2 sm:mb-2.5 items-stretch sm:items-center">
                 <input
                   type="text"
                   value={phone}
                   readOnly
-                  className="flex-1 px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base bg-gray-100"
+                  className="flex-1 px-3 py-2 sm:py-2.5 border border-border-default rounded-md text-sm sm:text-base bg-gray-100"
                 />
                 <button
                   type="button"
@@ -1365,7 +1365,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     }
                   }}
                   maxLength={6}
-                  className="flex-1 px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
+                  className="flex-1 px-3 py-2 sm:py-2.5 border border-border-default rounded-md text-sm sm:text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
                   placeholder="6자리 인증번호 입력"
                 />
               </div>
@@ -1373,7 +1373,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 type="button"
                 onClick={handleConsultVerifyOTP}
                 disabled={verifying || consultOtpCode.length !== 6}
-                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpCode.length !== 6) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpCode.length !== 6) ? 'bg-gray-300 text-text-muted cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
               >
                 {verifying ? '인증 처리중...' : '인증하고 상담신청'}
               </button>

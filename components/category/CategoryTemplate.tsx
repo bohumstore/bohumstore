@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { trackPageVisit } from "../../utils/visitorTracking";
-import { PageHeader, FeatureGrid, GuidanceBox, ProductCard, Footer } from "../shared";
-import { Product, FeatureItem, GuideSection } from "../../types/product";
+import { trackPageVisit } from "@/lib/visitorTracking";
+import { PageHeader, FeatureGrid, GuidanceBox, ProductCard, Footer } from "@/components/shared";
+import { Product, FeatureItem, GuideSection } from "@/types/product";
 
 interface CategoryTemplateProps {
   /** 카테고리 이름 (예: "연금보험") */

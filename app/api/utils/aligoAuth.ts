@@ -1,4 +1,4 @@
-import { AuthData } from "@/app/lib/aligo";
+import { AuthData } from "@/lib/aligo";
 
 // 서버/배포 환경별로 ALIGO_* 또는 NEXT_PUBLIC_ALIGO_* 어느 쪽이든 인식되도록 처리
 const aligoAuth: AuthData = {

@@ -1,4 +1,4 @@
-import Modal from '@/app/components/Modal'
+import Modal from '@/components/Modal'
 import React from 'react'
 
 interface NoticeProps {
@@ -73,8 +73,8 @@ export default function Notice({ open, onClose }: NoticeProps) {
         </div>
         
         <div className="mb-4">
-          <div className="text-sm text-gray-600">
-            <hr className="my-3 border-gray-300" />
+          <div className="text-sm text-text-secondary">
+            <hr className="my-3 border-border-default" />
             <div className="mb-1">※ ㈜메타리치 보험스토어는 다수의 보험사와 계약 체결 및 대리·중개하는 대리점입니다.</div>
             <div className="mb-1">※ ㈜메타리치 보험스토어는 보험사로부터 보험계약체결권을 부여받지 아니한 금융상품판매 대리·중개업자임을 알려드립니다.</div>
             <div className="mb-1">※ ㈜메타리치 보험스토어는 금융소비자 보호에 관한 법률 및 회사 내부 통제기준에 따른 광고 관련 절차를 준수하고 있습니다.</div>

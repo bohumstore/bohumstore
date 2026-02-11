@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { supabase } from "../supabase";
-import { smsSend } from "@/app/lib/aligo";
+import { smsSend } from "@/lib/aligo";
 import aligoAuth from "../utils/aligoAuth";
-import logger from "@/app/lib/logger";
+import logger from "@/lib/logger";
 
 export async function POST(req: Request) {
   const startTime = Date.now();

@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useEffect, useState, ReactNode } from "react";
-import Footer from "@/app/components/shared/Footer";
-import PrivacyConsent from "@/app/components/PrivacyConsent";
-import Modal from "@/app/components/Modal";
-import Tabs from "@/app/components/Tabs";
-import RequiredNotice from "@/app/components/shared/RequiredNotice";
-import FloatingButtons from "@/app/components/shared/FloatingButtons";
-import { trackPageVisit } from "@/app/utils/visitorTracking";
+import Footer from "@/components/shared/Footer";
+import PrivacyConsent from "@/components/PrivacyConsent";
+import Modal from "@/components/Modal";
+import Tabs from "@/components/Tabs";
+import RequiredNotice from "@/components/shared/RequiredNotice";
+import FloatingButtons from "@/components/shared/FloatingButtons";
+import { trackPageVisit } from "@/lib/visitorTracking";
 
 interface Tab {
   label: string;
