@@ -10,7 +10,7 @@ export interface UnifiedProduct {
   path: string;
   description: string;
   features: string[];
-  category: string;       // 'annuity' | 'whole-life' 등
+  category: string; // 'annuity' | 'whole-life' 등
 
   // === 카테고리 페이지용 ===
   badge?: string;
@@ -43,14 +43,14 @@ export const products: UnifiedProduct[] = [
     id: 'kb-triple-level-up',
     name: 'KB 트리플 레벨업 연금보험(보증형)',
     company: 'KB라이프생명',
-    logo: '/kb-life.png',
+    logo: '/images/logos/kb-life-logo.png',
     path: '/insurance/annuity/kb/triple-level-up',
     description: '5년납 단기완납, 병력 무심사 가입 가능',
     features: [
       '10년시점 130% 해약환급률 보증 (5년납)',
       '가입 0~70세 / 연금개시 45~85세',
       '비과세 혜택 (월 150만원 한도)',
-      '병력 무심사 / 전건 가입가능'
+      '병력 무심사 / 전건 가입가능',
     ],
     category: 'annuity',
     badge: '',
@@ -72,7 +72,7 @@ export const products: UnifiedProduct[] = [
         '10년시점 130% 해약환급률 보증 (5년납)',
         '가입 0~70세 / 연금개시 45~85세',
         '비과세 혜택 (월 150만원 한도)',
-        '병력 무심사 / 전건 가입가능'
+        '병력 무심사 / 전건 가입가능',
       ],
     },
   },
@@ -80,15 +80,10 @@ export const products: UnifiedProduct[] = [
     id: 'kdb-happy-plus',
     name: 'KDB 행복플러스 연금보험(보증형)',
     company: 'KDB생명',
-    logo: '/kdb-logo.png',
+    logo: '/images/logos/kdb-logo.png',
     path: '/insurance/annuity/kdb/happy-plus',
     description: '연단리 7% 보증으로 안정적인 노후 준비',
-    features: [
-      '안정적인 연금 수령',
-      '사망보장',
-      '해지환급금 보장',
-      '다양한 납입방식'
-    ],
+    features: ['안정적인 연금 수령', '사망보장', '해지환급금 보장', '다양한 납입방식'],
     category: 'annuity',
     badge: 'BEST',
     price: '월 10만원부터',
@@ -105,26 +100,17 @@ export const products: UnifiedProduct[] = [
       description: 'KDB 행복플러스 연금보험으로 안전하고 안정적인 노후를 준비하세요.',
       color: 'from-green-500 to-green-600',
       bgColor: 'bg-green-50',
-      sloganFeatures: [
-        '연단리 7% 보증 수익',
-        '보증형 연금으로 확실한 보장',
-        '안정적인 노후 준비'
-      ],
+      sloganFeatures: ['연단리 7% 보증 수익', '보증형 연금으로 확실한 보장', '안정적인 노후 준비'],
     },
   },
   {
     id: 'kdb-happy-dream',
     name: 'KDB 행복드림 변액연금보험',
     company: 'KDB생명',
-    logo: '/kdb-logo.png',
+    logo: '/images/logos/kdb-logo.png',
     path: '/insurance/annuity/kdb/happy-dream',
     description: '연단리 7% 보증으로 안정성과 수익성 동시 확보',
-    features: [
-      '높은 연금 수령',
-      '투자형 연금',
-      '유연한 납입',
-      '수익률 연동'
-    ],
+    features: ['높은 연금 수령', '투자형 연금', '유연한 납입', '수익률 연동'],
     category: 'annuity',
     badge: 'NEW',
     price: '월 15만원부터',
@@ -144,7 +130,7 @@ export const products: UnifiedProduct[] = [
       sloganFeatures: [
         '연단리 7% 보증 + 추가 수익',
         '변액형 연금의 성장성',
-        '유연한 연금 수령 방식'
+        '유연한 연금 수령 방식',
       ],
     },
   },
@@ -152,15 +138,10 @@ export const products: UnifiedProduct[] = [
     id: 'ibk-lifetime',
     name: 'IBK 평생보증받는 변액연금보험',
     company: 'IBK연금보험',
-    logo: '/IBK-logo.png',
+    logo: '/images/logos/ibk-logo.png',
     path: '/insurance/annuity/ibk/lifetime',
     description: '업계 최고 연단리 8% 보증, 100세까지 평생 연금 수령',
-    features: [
-      '평생 연금 보장',
-      '안정적인 수익',
-      '다양한 납입방식',
-      '사망보장'
-    ],
+    features: ['평생 연금 보장', '안정적인 수익', '다양한 납입방식', '사망보장'],
     category: 'annuity',
     badge: 'HOT',
     price: '월 12만원부터',
@@ -177,25 +158,17 @@ export const products: UnifiedProduct[] = [
       description: 'IBK 평생연금받는 변액연금보험으로 평생 동안 안정적인 연금을 받으세요.',
       color: 'from-orange-500 to-orange-600',
       bgColor: 'bg-orange-50',
-      sloganFeatures: [
-        '업계 최고 연단리 8% 보증',
-        '평생 연금 지급',
-        '변액형 연금의 수익성'
-      ],
+      sloganFeatures: ['업계 최고 연단리 8% 보증', '평생 연금 지급', '변액형 연금의 수익성'],
     },
   },
   {
     id: 'metlife-usd',
     name: '메트라이프 달러종신보험Plus',
     company: '메트라이프생명',
-    logo: '/metlife-logo.png',
+    logo: '/images/logos/metlife-logo.png',
     path: '/insurance/whole-life/metlife/usd',
     description: '달러/원화 선택 수령, 원화고정납입옵션으로 환율 걱정 無',
-    features: [
-      '달러/원화 선택 수령 가능',
-      '원화고정납입으로 환율 걱정 無',
-      '15~70세 가입 가능'
-    ],
+    features: ['달러/원화 선택 수령 가능', '원화고정납입으로 환율 걱정 無', '15~70세 가입 가능'],
     category: 'whole-life',
     mainPage: {
       highlight: '10년시점 124.9%',
@@ -211,7 +184,7 @@ export const products: UnifiedProduct[] = [
       sloganFeatures: [
         '달러/원화 선택 수령 가능',
         '원화고정납입으로 환율 걱정 無',
-        '15~70세 가입 가능'
+        '15~70세 가입 가능',
       ],
     },
   },
@@ -219,15 +192,10 @@ export const products: UnifiedProduct[] = [
     id: 'shinhan-more-dream',
     name: '신한 모아더드림 Plus 종신보험',
     company: '신한라이프생명',
-    logo: '/shinhan-life-logo.png',
+    logo: '/images/logos/shinhan-life-logo.png',
     path: '/insurance/whole-life/shinhan/more-the-dream',
     description: '15~70세 전연령 가입 가능, 단기납 완료 후 높은 환급률',
-    features: [
-      '평생 보장',
-      '사망보험금',
-      '해지환급금',
-      '다양한 특약'
-    ],
+    features: ['평생 보장', '사망보험금', '해지환급금', '다양한 특약'],
     category: 'whole-life',
     badge: 'TOP',
     price: '월 8만원부터',
@@ -247,7 +215,7 @@ export const products: UnifiedProduct[] = [
       sloganFeatures: [
         '15~70세 전연령 가입 가능',
         '단기납으로 빠른 완납',
-        '종신보장으로 평생 보호'
+        '종신보장으로 평생 보호',
       ],
     },
   },
@@ -255,14 +223,10 @@ export const products: UnifiedProduct[] = [
     id: 'hana-hanaro',
     name: '하나생명 하나로 THE 연결된 종신보험',
     company: '하나생명',
-    logo: '/hana-logo.png',
+    logo: '/images/logos/hana-logo.png',
     path: '/insurance/whole-life/hana/hanaro',
     description: '간편심사형 가입 가능, 3대질병 진단시 보험료 환급',
-    features: [
-      '간편심사형으로도 가입 가능',
-      '3대질병 진단시 보험료 환급',
-      '유지보너스 제공'
-    ],
+    features: ['간편심사형으로도 가입 가능', '3대질병 진단시 보험료 환급', '유지보너스 제공'],
     category: 'whole-life',
     mainPage: {
       highlight: '10년시점 122.78%',
@@ -273,13 +237,14 @@ export const products: UnifiedProduct[] = [
     slogan: {
       title: '10년시점 122.78% 환급률',
       subtitle: '간편심사형 가입 가능',
-      description: '하나생명 하나로 THE 연결된 종신보험으로 높은 환급률과 간편한 가입을 경험하세요.',
+      description:
+        '하나생명 하나로 THE 연결된 종신보험으로 높은 환급률과 간편한 가입을 경험하세요.',
       color: 'from-teal-500 to-teal-600',
       bgColor: 'bg-teal-50',
       sloganFeatures: [
         '간편심사형으로도 가입 가능',
         '3대질병 진단시 보험료 환급',
-        '유지보너스 제공'
+        '유지보너스 제공',
       ],
     },
   },
@@ -289,20 +254,20 @@ export const products: UnifiedProduct[] = [
 
 /** 히어로 슬라이더에 표시할 상품 목록 (slogan이 있는 상품) */
 export function getSloganProducts(): UnifiedProduct[] {
-  return products.filter(p => p.slogan != null);
+  return products.filter((p) => p.slogan != null);
 }
 
 /** 메인 페이지 추천 상품 목록 (mainPage가 있는 상품) */
 export function getMainPageProducts(): UnifiedProduct[] {
-  return products.filter(p => p.mainPage != null);
+  return products.filter((p) => p.mainPage != null);
 }
 
 /** 카테고리별 상품 필터 */
 export function getProductsByCategory(category: string): UnifiedProduct[] {
-  return products.filter(p => p.category === category);
+  return products.filter((p) => p.category === category);
 }
 
 /** ID로 상품 찾기 */
 export function getProductById(id: string): UnifiedProduct | undefined {
-  return products.find(p => p.id === id);
+  return products.find((p) => p.id === id);
 }

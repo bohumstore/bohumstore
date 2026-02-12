@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { trackPageVisit } from "@/lib/visitorTracking";
-import { PageHeader, FeatureGrid, GuidanceBox, ProductCard, Footer } from "@/components/shared";
-import { Product, FeatureItem, GuideSection } from "@/types/product";
+import React, { useEffect } from 'react';
+import { trackPageVisit } from '@/lib/visitorTracking';
+import { PageHeader, FeatureGrid, GuidanceBox, ProductCard, Footer } from '@/components/shared';
+import { Product, FeatureItem, GuideSection } from '@/types/product';
 
 interface CategoryTemplateProps {
   /** 카테고리 이름 (예: "연금보험") */
@@ -57,7 +57,7 @@ export default function CategoryTemplate({
   features,
   productListTitle,
   products,
-  accentColor = "blue",
+  accentColor = 'blue',
   guideTitle,
   guideLeft,
   guideLeftColor,
@@ -74,19 +74,14 @@ export default function CategoryTemplate({
       <PageHeader />
 
       {/* 히어로 섹션 */}
-      <section className={`${heroGradient} text-white py-16`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">{title}</h1>
-          <p className={`text-xl md:text-2xl mb-8 ${heroSubColor}`}>
-            {heroDescription}
-          </p>
+      <section className={`${heroGradient} py-16 text-white`}>
+        <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+          <h1 className="mb-6 text-4xl font-bold md:text-5xl">{title}</h1>
+          <p className={`mb-8 text-xl md:text-2xl ${heroSubColor}`}>{heroDescription}</p>
           {tags.length > 0 && (
             <div className="flex flex-wrap justify-center gap-4">
               {tags.map((tag, index) => (
-                <span
-                  key={index}
-                  className={`${heroTagBg} px-4 py-2 rounded-full text-sm`}
-                >
+                <span key={index} className={`${heroTagBg} rounded-full px-4 py-2 text-sm`}>
                   {tag}
                 </span>
               ))}
@@ -99,18 +94,12 @@ export default function CategoryTemplate({
       <FeatureGrid title={featureTitle} features={features} />
 
       {/* 상품 리스트 */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            {productListTitle}
-          </h2>
+      <section className="bg-gray-50 py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="mb-12 text-center text-3xl font-bold text-gray-900">{productListTitle}</h2>
           <div className="space-y-6">
             {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                accentColor={accentColor}
-              />
+              <ProductCard key={product.id} product={product} accentColor={accentColor} />
             ))}
           </div>
         </div>

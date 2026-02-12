@@ -9,8 +9,26 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', 'sans-serif'],
-        gothic: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', 'sans-serif'],
+        sans: [
+          'Pretendard',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Noto Sans KR',
+          'Malgun Gothic',
+          'Apple SD Gothic Neo',
+          'sans-serif',
+        ],
+        gothic: [
+          'Pretendard',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Noto Sans KR',
+          'Malgun Gothic',
+          'Apple SD Gothic Neo',
+          'sans-serif',
+        ],
       },
       colors: {
         /* Button */
@@ -55,7 +73,7 @@ module.exports = {
         'bg-blue': 'var(--bg-blue)',
         'page-bg': 'var(--page-bg)',
         'section-bg': 'var(--section-bg)',
-        'divider': 'var(--divider)',
+        divider: 'var(--divider)',
         /* Text */
         'text-primary': 'var(--text-primary)',
         'text-secondary': 'var(--text-secondary)',
@@ -68,4 +86,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};

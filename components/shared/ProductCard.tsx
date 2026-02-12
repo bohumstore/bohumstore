@@ -1,8 +1,8 @@
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRightIcon, StarIcon } from "@heroicons/react/24/outline";
-import { Product } from "../../types/product";
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { ArrowRightIcon, StarIcon } from '@heroicons/react/24/outline';
+import { Product } from '../../types/product';
 
 interface ProductCardProps {
   product: Product;
@@ -19,16 +19,16 @@ interface ProductCardProps {
  */
 export default function ProductCard({
   product,
-  accentColor = "blue",
-  className = "",
+  accentColor = 'blue',
+  className = '',
 }: ProductCardProps) {
   return (
     <Link href={product.path} className={`block ${className}`}>
       <div
-        className={`bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-${accentColor}-300`}
+        className={`rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl hover:border-${accentColor}-300`}
       >
         <div className="p-8">
-          <div className="flex flex-col lg:flex-row lg:items-center gap-6">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center">
             {/* 상품 로고 */}
             <div className="flex-shrink-0">
               <Image
@@ -36,39 +36,30 @@ export default function ProductCard({
                 alt={product.company}
                 width={80}
                 height={80}
-                className="w-20 h-20 object-contain"
+                className="h-20 w-20 object-contain"
               />
             </div>
 
             {/* 상품 상세 정보 */}
             <div className="flex-1">
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-2xl font-bold text-gray-900">
-                      {product.name}
-                    </h3>
+                  <div className="mb-2 flex items-center gap-3">
+                    <h3 className="text-2xl font-bold text-gray-900">{product.name}</h3>
                     {product.badge && (
-                      <span className="px-3 py-1 text-sm font-bold text-white bg-red-500 rounded-full">
+                      <span className="rounded-full bg-red-500 px-3 py-1 text-sm font-bold text-white">
                         {product.badge}
                       </span>
                     )}
                   </div>
-                  <p className="text-lg text-gray-600 mb-3">
-                    {product.company}
-                  </p>
-                  <p className="text-gray-700 mb-4">{product.description}</p>
+                  <p className="mb-3 text-lg text-gray-600">{product.company}</p>
+                  <p className="mb-4 text-gray-700">{product.description}</p>
 
                   {/* 특징 리스트 */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
+                  <div className="mb-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
                     {product.features.map((feature, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center gap-2 text-sm text-gray-600"
-                      >
-                        <div
-                          className={`w-1.5 h-1.5 bg-${accentColor}-500 rounded-full`}
-                        />
+                      <div key={index} className="flex items-center gap-2 text-sm text-gray-600">
+                        <div className={`h-1.5 w-1.5 bg-${accentColor}-500 rounded-full`} />
                         {feature}
                       </div>
                     ))}
@@ -81,9 +72,7 @@ export default function ProductCard({
                     >
                       {product.category}
                     </span>
-                    {product.price && (
-                      <span className="text-gray-600">{product.price}</span>
-                    )}
+                    {product.price && <span className="text-gray-600">{product.price}</span>}
                   </div>
                 </div>
 
@@ -92,22 +81,18 @@ export default function ProductCard({
                   {product.rating && (
                     <div className="flex items-center gap-2">
                       <div className="flex items-center gap-1 text-yellow-500">
-                        <StarIcon className="w-5 h-5 fill-current" />
+                        <StarIcon className="h-5 w-5 fill-current" />
                         <span className="font-medium">{product.rating}</span>
                       </div>
                       {product.reviewCount && (
-                        <span className="text-gray-500 text-sm">
-                          ({product.reviewCount})
-                        </span>
+                        <span className="text-sm text-gray-500">({product.reviewCount})</span>
                       )}
                     </div>
                   )}
 
-                  <div
-                    className={`flex items-center text-${accentColor}-600 font-medium`}
-                  >
+                  <div className={`flex items-center text-${accentColor}-600 font-medium`}>
                     상품 자세히 보기
-                    <ArrowRightIcon className="w-5 h-5 ml-2" />
+                    <ArrowRightIcon className="ml-2 h-5 w-5" />
                   </div>
                 </div>
               </div>

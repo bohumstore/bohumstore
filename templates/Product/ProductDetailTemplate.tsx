@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState, ReactNode } from "react";
-import Footer from "@/components/shared/Footer";
-import PrivacyConsent from "@/components/PrivacyConsent";
-import Modal from "@/components/Modal";
-import Tabs from "@/components/Tabs";
-import RequiredNotice from "@/components/shared/RequiredNotice";
-import FloatingButtons from "@/components/shared/FloatingButtons";
-import { trackPageVisit } from "@/lib/visitorTracking";
+import React, { useEffect, useState, ReactNode } from 'react';
+import Footer from '@/components/shared/Footer';
+import PrivacyConsent from '@/components/PrivacyConsent';
+import Modal from '@/components/Modal';
+import Tabs from '@/components/Tabs';
+import RequiredNotice from '@/components/shared/RequiredNotice';
+import FloatingButtons from '@/components/shared/FloatingButtons';
+import { trackPageVisit } from '@/lib/visitorTracking';
 
 interface Tab {
   label: string;
@@ -85,20 +85,13 @@ export default function ProductDetailTemplate({
     const handleMenuChange = (e: CustomEvent<{ isOpen: boolean }>) => {
       setIsHeaderMenuOpen(e.detail.isOpen);
     };
-    window.addEventListener(
-      "headerMenuChange",
-      handleMenuChange as EventListener
-    );
-    return () =>
-      window.removeEventListener(
-        "headerMenuChange",
-        handleMenuChange as EventListener
-      );
+    window.addEventListener('headerMenuChange', handleMenuChange as EventListener);
+    return () => window.removeEventListener('headerMenuChange', handleMenuChange as EventListener);
   }, []);
 
   const handleFocus = (e: React.FocusEvent) => {
     const target = e.target as HTMLElement;
-    if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") {
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
       setIsInputFocused(true);
     }
   };
@@ -106,10 +99,7 @@ export default function ProductDetailTemplate({
   const handleBlur = () => {
     setTimeout(() => {
       const active = document.activeElement as HTMLElement;
-      if (
-        active &&
-        (active.tagName === "INPUT" || active.tagName === "TEXTAREA")
-      ) {
+      if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) {
         return;
       }
       setIsInputFocused(false);
@@ -118,17 +108,15 @@ export default function ProductDetailTemplate({
 
   // 플로팅 버튼 표시 여부
   const showFloating =
-    !isModalOpen &&
-    !showPrivacy &&
-    !showNotice &&
-    !isInputFocused &&
-    !isHeaderMenuOpen;
+    !isModalOpen && !showPrivacy && !showNotice && !isInputFocused && !isHeaderMenuOpen;
 
   return (
     <>
       {/* 추가 글로벌 CSS가 필요한 경우 */}
       {globalStyles && (
-        <style jsx global>{globalStyles}</style>
+        <style jsx global>
+          {globalStyles}
+        </style>
       )}
 
       {/* 가입시 알아두실 사항 모달 (Notice 컴포넌트가 자체 Modal 포함) */}
@@ -142,7 +130,7 @@ export default function ProductDetailTemplate({
       </Modal>
 
       <div
-        className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full"
+        className="flex min-h-screen w-full flex-col items-center bg-[#f8f8f8] font-sans"
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
@@ -154,18 +142,18 @@ export default function ProductDetailTemplate({
 
         {/* 상품 상세 영역 (탭) */}
         <section className="w-full bg-white py-6 sm:py-8 lg:py-10">
-          <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl px-3 sm:px-4 md:max-w-4xl md:px-6 lg:max-w-5xl lg:px-8">
             <Tabs tabs={tabs} />
 
             {/* 문서 버튼 (상품설명서, 약관 등) */}
             {documents.length > 0 && (
-              <div className="flex flex-col md:flex-row gap-4 justify-center md:mt-10">
+              <div className="flex flex-col justify-center gap-4 md:mt-10 md:flex-row">
                 {documents.map((doc) => (
                   <button
                     key={doc.label}
                     type="button"
-                    onClick={() => window.open(doc.url, "_blank")}
-                    className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer"
+                    onClick={() => window.open(doc.url, '_blank')}
+                    className="flex-1 cursor-pointer rounded-md border border-[#e0e0e0] bg-white px-8 py-4 text-lg font-bold text-gray-700 transition hover:bg-gray-100 md:flex-none"
                   >
                     {doc.label}
                   </button>
@@ -176,7 +164,7 @@ export default function ProductDetailTemplate({
                   <button
                     type="button"
                     onClick={() => setShowNotice(true)}
-                    className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer"
+                    className="flex-1 cursor-pointer rounded-md border border-[#e0e0e0] bg-white px-8 py-4 text-lg font-bold text-gray-700 transition hover:bg-gray-100 md:flex-none"
                   >
                     가입시 알아두실 사항
                   </button>
@@ -187,18 +175,12 @@ export default function ProductDetailTemplate({
         </section>
 
         {/* 유의사항 + 필수안내사항 */}
-        <RequiredNotice
-          extraNotices={notices}
-          approvalNumber={approvalNumber}
-        />
+        <RequiredNotice extraNotices={notices} approvalNumber={approvalNumber} />
 
         <Footer />
 
         {/* 플로팅 버튼 */}
-        <FloatingButtons
-          visible={showFloating}
-          showCalculator={true}
-        />
+        <FloatingButtons visible={showFloating} showCalculator={true} />
       </div>
     </>
   );

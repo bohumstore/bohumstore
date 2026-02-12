@@ -7,13 +7,14 @@ export default function ContentProtection() {
 
   useEffect(() => {
     setIsMounted(true);
-    
+
     // 개발 환경 체크
-    const isDevelopment = process.env.NODE_ENV === 'development' || 
-                         window.location.hostname === 'localhost' || 
-                         window.location.hostname === '127.0.0.1' ||
-                         window.location.port !== '';
-    
+    const isDevelopment =
+      process.env.NODE_ENV === 'development' ||
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.port !== '';
+
     if (isDevelopment) {
       return;
     }
@@ -31,7 +32,7 @@ export default function ContentProtection() {
         e.preventDefault();
         return false;
       }
-      
+
       // Ctrl 조합 키들
       if (e.ctrlKey || e.metaKey) {
         // Ctrl+S (저장)
@@ -109,10 +110,12 @@ export default function ContentProtection() {
     // 개발자 도구 탐지 (크기 변화 감지)
     let devtools = { open: false };
     const threshold = 160;
-    
+
     const checkDevTools = () => {
-      if (window.outerHeight - window.innerHeight > threshold || 
-          window.outerWidth - window.innerWidth > threshold) {
+      if (
+        window.outerHeight - window.innerHeight > threshold ||
+        window.outerWidth - window.innerWidth > threshold
+      ) {
         if (!devtools.open) {
           devtools.open = true;
           alert('개발자 도구는 사용할 수 없습니다.');
@@ -129,7 +132,7 @@ export default function ContentProtection() {
     document.addEventListener('dragstart', handleDragStart);
     document.addEventListener('selectstart', handleSelectStart);
     window.addEventListener('beforeprint', handleBeforePrint);
-    
+
     // 개발자 도구 감지 (주기적 체크)
     const devToolsInterval = setInterval(checkDevTools, 500);
 

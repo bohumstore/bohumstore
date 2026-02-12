@@ -5,11 +5,12 @@ import { useEffect } from 'react';
 export default function BodyClassManager() {
   useEffect(() => {
     // 개발 환경 체크
-    const isDevelopment = process.env.NODE_ENV === 'development' || 
-                         window.location.hostname === 'localhost' || 
-                         window.location.hostname === '127.0.0.1' ||
-                         window.location.port !== '';
-    
+    const isDevelopment =
+      process.env.NODE_ENV === 'development' ||
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.port !== '';
+
     // body에 보호 클래스 적용/제거
     if (!isDevelopment) {
       document.body.classList.add('content-protection');

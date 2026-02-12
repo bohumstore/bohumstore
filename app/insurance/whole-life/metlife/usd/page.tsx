@@ -1,15 +1,15 @@
-﻿"use client";
-import React from "react";
-import Slogan from "./components/Slogan";
-import ProductInfo from "./components/BodyTabViews/ProductInfo";
-import CoverageDetails from "./components/BodyTabViews/CoverageDetails";
-import Surrender from "./components/BodyTabViews/Surrender";
-import ProductDetailTemplate from "@/templates/Product/ProductDetailTemplate";
+﻿'use client';
+import React from 'react';
+import Slogan from './components/Slogan';
+import ProductInfo from './components/BodyTabViews/ProductInfo';
+import CoverageDetails from './components/BodyTabViews/CoverageDetails';
+import Surrender from './components/BodyTabViews/Surrender';
+import ProductDetailTemplate from '@/templates/Product/ProductDetailTemplate';
 
 export default function MetLifeUSDWholeLifePage() {
   const tabs = [
-    { label: '상품 정보',      content: <ProductInfo /> },
-    { label: '보장 내용',      content: <CoverageDetails /> },
+    { label: '상품 정보', content: <ProductInfo /> },
+    { label: '보장 내용', content: <CoverageDetails /> },
     { label: '해약환급금 예시표', content: <Surrender /> },
   ];
 

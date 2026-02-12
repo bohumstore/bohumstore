@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 // ── 공통 상품 타입 ──
 export interface Product {

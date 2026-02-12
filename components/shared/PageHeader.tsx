@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 interface PageHeaderProps {
   /** 뒤로가기 링크 경로 (기본: "/") */
@@ -19,19 +19,16 @@ interface PageHeaderProps {
  * - 기존 annuity/page.tsx, whole-life/page.tsx 등에서 반복되던 헤더를 공통화
  */
 export default function PageHeader({
-  backHref = "/",
-  backLabel = "메인으로 돌아가기",
-  className = "",
+  backHref = '/',
+  backLabel = '메인으로 돌아가기',
+  className = '',
 }: PageHeaderProps) {
   return (
-    <header className={`bg-white shadow-sm border-b ${className}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className={`border-b bg-white shadow-sm ${className}`}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center py-6">
-          <Link
-            href={backHref}
-            className="flex items-center text-gray-600 hover:text-blue-600"
-          >
-            <ArrowLeftIcon className="w-5 h-5 mr-2" />
+          <Link href={backHref} className="flex items-center text-gray-600 hover:text-blue-600">
+            <ArrowLeftIcon className="mr-2 h-5 w-5" />
             {backLabel}
           </Link>
           <div className="ml-8">

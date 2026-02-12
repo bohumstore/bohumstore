@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
 interface FloatingButtonsProps {
   /** 카카오톡 상담 URL */
@@ -23,27 +23,27 @@ interface FloatingButtonsProps {
  * - 디자인: 기존 코드 그대로 유지
  */
 export default function FloatingButtons({
-  kakaoUrl = "https://pf.kakao.com/_lrubxb/chat",
+  kakaoUrl = 'https://pf.kakao.com/_lrubxb/chat',
   showCalculator = false,
   showConsult = false,
-  consultHref = "/insurance/a_consult",
+  consultHref = '/insurance/a_consult',
   visible = true,
-  className = "",
+  className = '',
 }: FloatingButtonsProps) {
   if (!visible) return null;
 
   return (
     <div
-      className={`fixed bottom-4 sm:bottom-6 right-4 sm:right-6 flex flex-col gap-2 sm:gap-3 z-50 ${className}`}
+      className={`fixed bottom-4 right-4 z-50 flex flex-col gap-2 sm:bottom-6 sm:right-6 sm:gap-3 ${className}`}
     >
       {/* 상담 신청 버튼 */}
       {showConsult && (
         <a
           href={consultHref}
-          className="bg-white text-blue-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_4px_25px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-blue-50 border border-blue-100 flex flex-col items-center gap-1 min-w-[50px] group"
+          className="group flex min-w-[50px] flex-col items-center gap-1 rounded-2xl border border-blue-100 bg-white px-2 py-2 text-blue-600 shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-300 hover:bg-blue-50 hover:shadow-[0_4px_25px_rgba(0,0,0,0.2)] sm:px-3 sm:py-3"
           aria-label="상담 신청"
         >
-          <span className="text-xs font-bold text-gray-600 group-hover:text-blue-600 transition-colors">
+          <span className="text-xs font-bold text-gray-600 transition-colors group-hover:text-blue-600">
             상담
           </span>
           <svg
@@ -52,7 +52,7 @@ export default function FloatingButtons({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse text-blue-500"
+            className="h-5 w-5 animate-pulse text-blue-500 sm:h-6 sm:w-6"
           >
             <path
               strokeLinecap="round"
@@ -67,44 +67,44 @@ export default function FloatingButtons({
       {showCalculator && (
         <button
           onClick={() => {
-            const calculatorBox = document.getElementById("calculator-box");
+            const calculatorBox = document.getElementById('calculator-box');
             if (calculatorBox) {
               calculatorBox.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
+                behavior: 'smooth',
+                block: 'center',
               });
             }
           }}
-          className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
+          className="flex flex-col items-center gap-1 rounded-2xl border border-gray-200 bg-white px-2 py-2 text-gray-600 shadow-lg transition-all duration-200 hover:bg-gray-50 hover:shadow-xl sm:px-3 sm:py-3"
           aria-label="계산하기"
         >
           <span className="text-xs font-semibold">계산</span>
           <img
-            src="/Calculator.png"
+            src="/images/icons/icon-calculator.png"
             alt="계산하기"
-            className="w-5 h-5 sm:w-6 sm:h-6"
+            className="h-5 w-5 sm:h-6 sm:w-6"
           />
         </button>
       )}
 
       {/* 카톡상담 버튼 */}
       <button
-        onClick={() => window.open(kakaoUrl, "_blank")}
-        className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
+        onClick={() => window.open(kakaoUrl, '_blank')}
+        className="flex flex-col items-center gap-1 rounded-2xl border border-gray-200 bg-white px-2 py-2 text-gray-600 shadow-lg transition-all duration-200 hover:bg-gray-50 hover:shadow-xl sm:px-3 sm:py-3"
         aria-label="카톡상담"
       >
         <span className="text-xs font-semibold">카톡</span>
         <img
-          src="/kakaotalk.png"
+          src="/images/icons/icon-kakaotalk.png"
           alt="카톡상담"
-          className="w-5 h-5 sm:w-6 sm:h-6"
+          className="h-5 w-5 sm:h-6 sm:w-6"
         />
       </button>
 
       {/* 맨 위로 버튼 */}
       <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="bg-white text-gray-600 rounded-full p-2 sm:p-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="rounded-full border border-gray-200 bg-white p-2 text-gray-600 shadow-lg transition-all duration-200 hover:bg-gray-50 hover:shadow-xl sm:p-3"
         aria-label="맨 위로"
       >
         <svg
@@ -113,13 +113,9 @@ export default function FloatingButtons({
           viewBox="0 0 24 24"
           strokeWidth={2}
           stroke="currentColor"
-          className="w-5 h-5 sm:w-6 sm:h-6"
+          className="h-5 w-5 sm:h-6 sm:w-6"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M4.5 15.75l7.5-7.5 7.5 7.5"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
         </svg>
       </button>
     </div>

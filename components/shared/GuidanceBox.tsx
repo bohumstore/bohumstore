@@ -1,5 +1,5 @@
-import React from "react";
-import { GuideSection } from "../../types/product";
+import React from 'react';
+import { GuideSection } from '../../types/product';
 
 interface GuidanceBoxProps {
   /** 왼쪽 박스 데이터 */
@@ -23,30 +23,24 @@ interface GuidanceBoxProps {
  */
 export default function GuidanceBox({
   left,
-  leftColor = { bg: "bg-blue-50", dot: "bg-blue-500" },
+  leftColor = { bg: 'bg-blue-50', dot: 'bg-blue-500' },
   right,
-  rightColor = { bg: "bg-green-50", dot: "bg-green-500" },
+  rightColor = { bg: 'bg-green-50', dot: 'bg-green-500' },
   title,
-  className = "",
+  className = '',
 }: GuidanceBoxProps) {
   return (
-    <section className={`py-16 bg-white ${className}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-          {title}
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <section className={`bg-white py-16 ${className}`}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 className="mb-12 text-center text-3xl font-bold text-gray-900">{title}</h2>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* 왼쪽 박스 */}
           <div className={`${leftColor.bg} rounded-2xl p-8`}>
-            <h3 className="text-xl font-bold text-gray-900 mb-4">
-              {left.title}
-            </h3>
+            <h3 className="mb-4 text-xl font-bold text-gray-900">{left.title}</h3>
             <ul className="space-y-3 text-gray-700">
               {left.items.map((item, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <div
-                    className={`w-2 h-2 ${leftColor.dot} rounded-full mt-2 flex-shrink-0`}
-                  />
+                  <div className={`h-2 w-2 ${leftColor.dot} mt-2 flex-shrink-0 rounded-full`} />
                   <span>{item}</span>
                 </li>
               ))}
@@ -55,15 +49,11 @@ export default function GuidanceBox({
 
           {/* 오른쪽 박스 */}
           <div className={`${rightColor.bg} rounded-2xl p-8`}>
-            <h3 className="text-xl font-bold text-gray-900 mb-4">
-              {right.title}
-            </h3>
+            <h3 className="mb-4 text-xl font-bold text-gray-900">{right.title}</h3>
             <ul className="space-y-3 text-gray-700">
               {right.items.map((item, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <div
-                    className={`w-2 h-2 ${rightColor.dot} rounded-full mt-2 flex-shrink-0`}
-                  />
+                  <div className={`h-2 w-2 ${rightColor.dot} mt-2 flex-shrink-0 rounded-full`} />
                   <span>{item}</span>
                 </li>
               ))}

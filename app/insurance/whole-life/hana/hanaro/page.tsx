@@ -1,16 +1,16 @@
-﻿"use client";
-import React from "react";
-import Slogan from "./components/Slogan";
-import Notice from "./components/Notice";
-import ProductInfo from "./components/BodyTabViews/ProductInfo";
-import CoverageDetails from "./components/BodyTabViews/CoverageDetails";
-import Surrender from "./components/BodyTabViews/Surrender";
-import ProductDetailTemplate from "@/templates/Product/ProductDetailTemplate";
+﻿'use client';
+import React from 'react';
+import Slogan from './components/Slogan';
+import Notice from './components/Notice';
+import ProductInfo from './components/BodyTabViews/ProductInfo';
+import CoverageDetails from './components/BodyTabViews/CoverageDetails';
+import Surrender from './components/BodyTabViews/Surrender';
+import ProductDetailTemplate from '@/templates/Product/ProductDetailTemplate';
 
 export default function HanaHanaroWholeLifePage() {
   const tabs = [
-    { label: '상품 정보',      content: <ProductInfo /> },
-    { label: '보장 내용',      content: <CoverageDetails /> },
+    { label: '상품 정보', content: <ProductInfo /> },
+    { label: '보장 내용', content: <CoverageDetails /> },
     { label: '해약환급금 예시표', content: <Surrender /> },
   ];
 
@@ -20,9 +20,7 @@ export default function HanaHanaroWholeLifePage() {
         <Slogan onOpenPrivacy={onOpenPrivacy} onModalStateChange={onModalStateChange} />
       )}
       tabs={tabs}
-      renderNotice={({ open, onClose }) => (
-        <Notice open={open} onClose={onClose} />
-      )}
+      renderNotice={({ open, onClose }) => <Notice open={open} onClose={onClose} />}
       notices={[
         '가입 시 보험계약의 기본사항(보험 상품명, 보험기간, 보험료, 보험료 납입기간 등)을 반드시 확인하시기 바랍니다.',
         '피보험자의 과거 건강상태, 직업 등 계약 전 알릴 의무를 사실대로 고지하지 않으면 보험금 지급이 제한되거나 계약이 해지될 수 있습니다.',

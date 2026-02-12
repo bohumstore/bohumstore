@@ -10,18 +10,16 @@ export default function Tabs({ tabs }: { tabs: Tab[] }) {
 
   return (
     <div>
-      <nav className="flex border-b mb-6">
+      <nav className="mb-6 flex border-b">
         {tabs.map(({ label }) => (
           <button
             key={label}
             onClick={() => setActive(label)}
-            className={`flex-1 pb-3 sm:pb-4 font-bold transition relative whitespace-nowrap after:absolute after:left-0 after:bottom-0 after:w-full after:h-1.5 after:rounded after:content-[''] text-base sm:text-lg md:text-xl lg:text-2xl cursor-pointer
-              ${
-                active === label
-                  ? 'text-[#3a8094] after:bg-[#3a8094]'
-                  : 'text-[#333] hover:text-[#3a8094] after:bg-transparent hover:after:bg-[#3a8094]'
-              }
-            `}
+            className={`relative flex-1 cursor-pointer whitespace-nowrap pb-3 text-base font-bold transition after:absolute after:bottom-0 after:left-0 after:h-1.5 after:w-full after:rounded after:content-[''] sm:pb-4 sm:text-lg md:text-xl lg:text-2xl ${
+              active === label
+                ? 'text-[#3a8094] after:bg-[#3a8094]'
+                : 'text-[#333] after:bg-transparent hover:text-[#3a8094] hover:after:bg-[#3a8094]'
+            } `}
             style={{ outline: 'none' }}
           >
             {label}
@@ -30,9 +28,9 @@ export default function Tabs({ tabs }: { tabs: Tab[] }) {
       </nav>
 
       <div>
-        {tabs.map(tab =>
+        {tabs.map((tab) =>
           tab.label === active ? (
-            <div key={tab.label} className="px-4 py-6 space-y-8">
+            <div key={tab.label} className="space-y-8 px-4 py-6">
               {tab.content}
             </div>
           ) : null
