@@ -1,4 +1,4 @@
-/* Self-hosted Pretendard font-face */
+/* 폰트 설정 */
 @font-face {
   font-family: 'Pretendard';
   src: url('/fonts/Pretendard-Regular.woff2') format('woff2');
@@ -24,11 +24,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design Tokens */
 :root {
   --background: #ffffff;
   --foreground: #171717;
-
-  /* Design Tokens */
 
   /* Button */
   --button-default: #2f6bff;
@@ -79,6 +78,100 @@
 
   /* 제품 페이지 전용 색상 */
   --product-primary: #1e3a8a;
+}
+
+/* ── 디자인 시스템 타이포그래피 (Design System Typography) ── */
+/* 폰트: Pretendard (전역 적용) */
+@layer components {
+  /* Hero Heading (Responsive) */
+  .heading-hero {
+    font-size: 1.75rem; /* 28px mobile */
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  @media (min-width: 768px) {
+    .heading-hero {
+      font-size: 3.125rem; /* 50px desktop */
+    }
+  }
+
+  /* Heading */
+  .heading-h1 {
+    font-size: 1.5rem; /* 24px */
+    font-weight: 800;
+    line-height: 1.3;
+  }
+  .heading-h2 {
+    font-size: 1.125rem; /* 18px */
+    font-weight: 800;
+    line-height: 1.3;
+  }
+  .heading-h3 {
+    font-size: 1rem; /* 16px */
+    font-weight: 800;
+    line-height: 1.3;
+  }
+  .heading-h4 {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .heading-h5 {
+    font-size: 0.75rem; /* 12px */
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  /* Body */
+  .body-xl {
+    font-size: 1.125rem; /* 18px */
+    font-weight: 400;
+    line-height: 1.3;
+  }
+  .body-l {
+    font-size: 1rem; /* 16px */
+    font-weight: 400;
+    line-height: 1.3;
+  }
+  .body-m {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 400;
+    line-height: 1.3;
+  }
+  .body-s {
+    font-size: 0.75rem; /* 12px */
+    font-weight: 400;
+    line-height: 1.3;
+  }
+  .body-xs {
+    font-size: 0.625rem; /* 10px */
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  /* Action */
+  .action-l {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .action-m {
+    font-size: 0.75rem; /* 12px */
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .action-s {
+    font-size: 0.625rem; /* 10px */
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  /* Caption */
+  .caption-m {
+    font-size: 0.625rem; /* 10px */
+    font-weight: 600;
+    line-height: 1.3;
+  }
 }
 
 /* 테이블 스크롤바 항상 표시 (모바일에서 스크롤 가능 여부 인지) */
@@ -134,88 +227,6 @@ html {
   font-weight: 400;
   font-display: swap;
   src: local('Pretendard Regular'), local('Pretendard-Regular');
-}
-
-/* ── 디자인 시스템 타이포그래피 (Design System Typography) ── */
-/* 폰트: Pretendard (전역 적용) */
-@layer components {
-  /* Heading */
-  .heading-h1 {
-    font-size: 24px;
-    font-weight: 800;
-    line-height: 1.3;
-  }
-  .heading-h2 {
-    font-size: 18px;
-    font-weight: 800;
-    line-height: 1.3;
-  }
-  .heading-h3 {
-    font-size: 16px;
-    font-weight: 800;
-    line-height: 1.3;
-  }
-  .heading-h4 {
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1.3;
-  }
-  .heading-h5 {
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.3;
-  }
-
-  /* Body */
-  .body-xl {
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 1.3;
-  }
-  .body-l {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.3;
-  }
-  .body-m {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.3;
-  }
-  .body-s {
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.3;
-  }
-  .body-xs {
-    font-size: 10px;
-    font-weight: 500;
-    line-height: 1.3;
-  }
-
-  /* Action */
-  .action-l {
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-  .action-m {
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-  .action-s {
-    font-size: 10px;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
-  /* Caption */
-  .caption-m {
-    font-size: 10px;
-    font-weight: 600;
-    line-height: 1.3;
-  }
 }
 
 /* Product Page Reusable Component Classes */

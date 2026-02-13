@@ -48,7 +48,7 @@ export default function Header() {
   return (
     <>
       <header
-        className="relative sticky top-0 z-40 flex w-full items-center justify-between bg-[var(--background)] px-[73px] py-[24px]"
+        className="sticky top-0 z-40 flex w-full items-center justify-between bg-[var(--background)] px-[73px] py-[24px]"
         onMouseLeave={() => {
             setHoveredCategory(null);
             setIsMegaMenuOpen(false);
@@ -64,9 +64,9 @@ export default function Header() {
         </Link>
         <div className='hidden md:flex justify-between gap-[24px] h-full items-center'>
             {menuItems.map((item) => (
-                <div 
+                <div
                     key={item.id}
-                    className={`flex items-center w-[100px] justify-center heading-h2 cursor-pointer h-[80px] transition-colors duration-200 ${hoveredCategory === item.id ? 'text-blue-600' : 'text-gray-900'}`}
+                    className={`flex items-center w-[100px] justify-center heading-h2 cursor-pointer transition-colors duration-200 ${hoveredCategory === item.id ? 'text-blue-600' : 'text-gray-900'}`}
                     onMouseEnter={() => {
                         setHoveredCategory(item.id);
                         setIsMegaMenuOpen(true);
@@ -76,7 +76,9 @@ export default function Header() {
                 </div>
             ))}
         </div>
-        <Button text="상담 신청" />
+        <Link href="/insurance/a_consult">
+          <Button text="상담 신청" />
+        </Link>
         <div
             className={`absolute left-0 top-full w-full bg-white shadow-xl border-t border-gray-100 transition-all duration-300 ease-in-out overflow-hidden z-[-1] ${
                 isMegaMenuOpen ? 'max-h-[500px] opacity-100 visible' : 'max-h-0 opacity-0 invisible'
@@ -130,9 +132,11 @@ export default function Header() {
                                     보험스토어 보험 전문가에게<br/>
                                     부담없이 물어보세요!
                                 </p>
-                                <button className="bg-brand-primary text-white px-8 py-3.5 rounded-xl text-lg font-bold shadow-[0_4px_12px_rgba(31,111,235,0.25)] transition-all hover:bg-brand-primary-hover hover:shadow-[0_6px_16px_rgba(31,111,235,0.35)] active:scale-95">
-                                    상담하기
-                                </button>
+                                <Link href="/insurance/a_consult">
+                                    <button className="bg-brand-primary text-white px-8 py-3.5 rounded-xl text-lg font-bold shadow-[0_4px_12px_rgba(31,111,235,0.25)] transition-all hover:bg-brand-primary-hover hover:shadow-[0_6px_16px_rgba(31,111,235,0.35)] active:scale-95">
+                                        상담하기
+                                    </button>
+                                </Link>
                             </div>
                             <div className="absolute right-0 bottom-0 w-[240px] h-[220px]">
                                 <Image

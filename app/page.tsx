@@ -3,8 +3,11 @@
 import React, { useEffect } from 'react';
 import { trackPageVisit } from '@/lib/visitorTracking';
 import HeroSection from '@/components/home/HeroSection';
-import RecommendSection from '@/components/home/RecommendSection';
-import ReasonSection from '@/components/home/ReasonSection';
+import PopularSection from '@/components/home/PopularSection';
+import TrendingSection from '@/components/home/TrendingSection';
+import AboutSection from '@/components/home/AboutSection';
+import ReviewSection from '@/components/home/ReviewSection';
+import ContactSection from '@/components/home/ContactSection';
 import RequiredNotice from '@/components/shared/RequiredNotice';
 import Footer from '@/components/shared/Footer';
 import FloatingButtons from '@/components/shared/FloatingButtons';
@@ -16,15 +19,24 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center bg-[#f8f8f8] font-sans">
+    <div className="flex min-h-screen w-full flex-col items-center bg-page-bg">
       {/* 슬로건 캐러셀 섹션 - 화면 전체를 채우는 히어로 배너 */}
       <HeroSection />
 
       {/* 추천 상품 섹션 */}
-      <RecommendSection />
+      <PopularSection />
 
       {/* 보험 특징 섹션 */}
-      <ReasonSection />
+      <TrendingSection />
+
+      {/* 보험스토어 소개 섹션 */}
+      <AboutSection />
+
+      {/* 고객 후기 섹션 */}
+      <ReviewSection />
+
+      {/* 문의 섹션 */}
+      <ContactSection />
 
       {/* 필수안내사항 박스 */}
       <RequiredNotice />
@@ -33,7 +45,7 @@ export default function HomePage() {
       <Footer />
 
       {/* 플로팅 버튼 모음 */}
-      <FloatingButtons showConsult={true} />
+      {/* <FloatingButtons showConsult={true} /> */}
     </div>
   );
 }

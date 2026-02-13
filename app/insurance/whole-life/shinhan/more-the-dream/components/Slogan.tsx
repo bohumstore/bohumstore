@@ -315,7 +315,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           <div className="flex flex-1 flex-col items-center text-center md:items-center md:text-center lg:items-start lg:text-left">
             <div className="mb-2 flex items-center gap-2 text-sm text-text-muted">
               <img
-                src="/shinhan-life-logo.png"
+                src="/images/logos/shinhan-life-logo.png"
                 alt="신한라이프 로고"
                 className="h-6 w-auto"
                 style={{ minWidth: '24px' }}

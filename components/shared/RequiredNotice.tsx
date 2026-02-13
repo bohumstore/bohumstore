@@ -20,7 +20,7 @@ export default function RequiredNotice({
   className = '',
 }: RequiredNoticeProps) {
   return (
-    <div className={`w-full ${className}`}>
+    <div className={`w-full pt-10 pb-5 ${className}`}>
       {/* 유의사항 (있을 경우) */}
       {extraNotices && extraNotices.length > 0 && (
         <div className="flex w-full justify-center">

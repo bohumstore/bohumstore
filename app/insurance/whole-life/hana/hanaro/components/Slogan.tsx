@@ -332,7 +332,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           <div className="flex flex-1 flex-col items-center text-center md:items-center md:text-center lg:items-start lg:text-left">
             <div className="mb-1.5 flex items-center gap-2 text-sm text-text-muted">
               <img
-                src="/hana-logo.png"
+                src="/images/logos/hana-logo.png"
                 alt="하나생명 로고"
                 className="h-6 w-auto sm:h-8"
                 style={{ minWidth: '24px' }}

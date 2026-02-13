@@ -248,6 +248,25 @@ export const products: UnifiedProduct[] = [
       ],
     },
   },
+  {
+    id: 'health',
+    name: '365일 든든한 건강보험',
+    company: 'DB손해보험',
+    logo: '/images/logos/db-logo.png',
+    path: '/insurance/carer',
+    description: '암/뇌/심장 3대 질병 진단비 보장, 수술비, 입원비까지 종합 보장',
+    features: ['3대 질병 진단비', '수술비/입원비 특약', '비갱신형 선택 가능'],
+    category: 'health',
+    badge: 'HOT',
+    price: '월 3만원부터',
+    rating: 4.9,
+    reviewCount: 210,
+    mainPage: {
+      highlight: '3대 질병 집중 보장',
+      badge: 'HOT',
+      description: '암/뇌/심장 3대 질병 진단비 보장, 수술비, 입원비까지 종합 보장',
+    },
+  },
 ];
 
 // ─── Helper 함수 ───
