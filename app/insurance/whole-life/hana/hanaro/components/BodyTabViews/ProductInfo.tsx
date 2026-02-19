@@ -5,7 +5,7 @@ export default function ProductInfo() {
   const [showResultModal, setShowResultModal] = useState(false);
 
   return (
-    <div className="space-y-8 px-2 py-4 sm:px-4 md:px-8 md:py-6">
+    <div className="space-y-8 px-8 py-6">
       {/* 가입안내 제목 */}
       <h2 className="product-page-title">가입안내</h2>
 
@@ -29,35 +29,35 @@ export default function ProductInfo() {
                   주계약
                 </td>
                 <td
-                  className="product-table-td-center leading-tight sm:leading-relaxed"
+                  className="product-table-td-center leading-relaxed"
                   rowSpan={3}
                 >
                   (무)하나로 THE 연결된 종신보험
                 </td>
                 <td
-                  className="product-table-td-center leading-tight sm:leading-relaxed"
+                  className="product-table-td-center leading-relaxed"
                   rowSpan={2}
                 >
                   보장형 계약
                 </td>
-                <td className="product-table-td-center leading-tight sm:leading-relaxed">
+                <td className="product-table-td-center leading-relaxed">
                   1형(일반심사형)
                 </td>
-                <td className="product-table-td leading-tight sm:leading-relaxed">
+                <td className="product-table-td leading-relaxed">
                   해약환급금 일부지급형, 일반형
                 </td>
               </tr>
               <tr>
-                <td className="product-table-td-center leading-tight sm:leading-relaxed">
+                <td className="product-table-td-center leading-relaxed">
                   2형(간편심사형)
                 </td>
-                <td className="product-table-td leading-tight sm:leading-relaxed">
+                <td className="product-table-td leading-relaxed">
                   해약환급금 일부지급형, 일반형
                 </td>
               </tr>
               <tr>
                 <td
-                  className="product-table-td-center leading-tight sm:leading-relaxed"
+                  className="product-table-td-center leading-relaxed"
                   colSpan={3}
                 >
                   적립형 계약
@@ -67,22 +67,22 @@ export default function ProductInfo() {
                 <td className="product-table-td-center font-semibold" rowSpan={2}>
                   선택특약
                 </td>
-                <td className="product-table-td-center leading-tight sm:leading-relaxed">
+                <td className="product-table-td-center leading-relaxed">
                   (무)3대질병 납입면제특약
                 </td>
                 <td
-                  className="product-table-td-center leading-tight sm:leading-relaxed"
+                  className="product-table-td-center leading-relaxed"
                   colSpan={3}
                 >
                   일반심사형, 간편심사형
                 </td>
               </tr>
               <tr>
-                <td className="product-table-td-center leading-tight sm:leading-relaxed">
+                <td className="product-table-td-center leading-relaxed">
                   (무)3대질병진단 보험료환급특약
                 </td>
                 <td
-                  className="product-table-td-center leading-tight sm:leading-relaxed"
+                  className="product-table-td-center leading-relaxed"
                   colSpan={3}
                 >
                   일반심사형, 간편심사형
@@ -91,7 +91,7 @@ export default function ProductInfo() {
               <tr>
                 <td className="product-table-td-center font-semibold">제도성특약</td>
                 <td
-                  className="product-table-td-center leading-tight sm:leading-relaxed"
+                  className="product-table-td-center leading-relaxed"
                   colSpan={4}
                 >
                   (무)하나로 연결된 연금전환특약
@@ -135,10 +135,10 @@ export default function ProductInfo() {
                 </th>
               </tr>
               <tr className="product-table-header">
-                <th className="border border-border-default p-1 sm:p-2" colSpan={2}>
+                <th className="product-table-th" colSpan={2}>
                   1형(일반심사형)
                 </th>
-                <th className="border border-border-default p-1 sm:p-2" colSpan={2}>
+                <th className="product-table-th" colSpan={2}>
                   2형(간편심사형)
                 </th>
               </tr>
@@ -226,40 +226,40 @@ export default function ProductInfo() {
                 </th>
               </tr>
               <tr className="product-table-header">
-                <th className="border border-border-default p-1 sm:p-2">일반심사형</th>
-                <th className="border border-border-default p-1 sm:p-2">간편심사형</th>
+                <th className="product-table-th">일반심사형</th>
+                <th className="product-table-th">간편심사형</th>
               </tr>
             </thead>
             <tbody className="product-table-body">
               <tr>
-                <td className="border border-border-default p-1 text-center sm:p-2">
+                <td className="product-table-td-center">
                   (무)3대질병진단 보험료환급특약
                 </td>
-                <td className="border border-border-default p-1 text-center sm:p-2" rowSpan={2}>
+                <td className="product-table-td-center" rowSpan={2}>
                   5, 7, 10, 15, 20년 만기
                 </td>
-                <td className="border border-border-default p-1 text-center sm:p-2" rowSpan={2}>
+                <td className="product-table-td-center" rowSpan={2}>
                   전기납
                 </td>
-                <td className="border border-border-default p-1 text-center sm:p-2" rowSpan={2}>
+                <td className="product-table-td-center" rowSpan={2}>
                   월납
                 </td>
                 <td
-                  className="border border-border-default p-1 text-center sm:p-2"
+                  className="product-table-td-center"
                   colSpan={2}
                   rowSpan={2}
                 >
                   주계약 가입나이와 동일
                 </td>
-                <td className="border border-border-default p-1 text-center sm:p-2">
+                <td className="product-table-td-center">
                   주계약의 총보험료
                 </td>
               </tr>
               <tr>
-                <td className="border border-border-default p-1 text-center sm:p-2">
+                <td className="product-table-td-center">
                   (무)3대질병 납입면제특약
                 </td>
-                <td className="border border-border-default p-1 text-center sm:p-2">
+                <td className="product-table-td-center">
                   주계약 보험료
                 </td>
               </tr>
@@ -281,55 +281,55 @@ export default function ProductInfo() {
         <p className="product-small-title">(무)하나로 연결된 연금전환특약</p>
 
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-xs sm:text-sm">
+          <table className="product-table">
             <tbody className="product-table-body">
               <tr>
                 <td
-                  className="w-[12%] border border-border-default bg-[#1e3a8a] p-2 text-center font-semibold text-white sm:p-3"
+                  className="w-[12%] product-table-th bg-product-primary text-white font-semibold"
                   colSpan={2}
                 >
                   상품유형
                 </td>
-                <td className="border border-border-default p-2 text-center sm:p-3" colSpan={2}>
+                <td className="product-table-td-center" colSpan={2}>
                   즉시형, 거치형
                 </td>
               </tr>
               <tr>
                 <td
-                  className="border border-border-default bg-[#1e3a8a] p-2 text-center font-semibold text-white sm:p-3"
+                  className="product-table-th bg-product-primary text-white font-semibold"
                   rowSpan={2}
                   colSpan={2}
                 >
                   가입나이
                 </td>
-                <td className="border border-border-default p-2 text-center sm:p-3" colSpan={2}>
+                <td className="product-table-td-center" colSpan={2}>
                   즉시형:35세~85세(단, 종신연금형:45세~85세)
                 </td>
               </tr>
               <tr>
-                <td className="border border-border-default p-2 text-center sm:p-3" colSpan={2}>
+                <td className="product-table-td-center" colSpan={2}>
                   거치형:20세~(연금지급개시나이-1)세
                 </td>
               </tr>
               <tr>
                 <td
-                  className="border border-border-default bg-[#1e3a8a] p-2 text-center font-semibold text-white sm:p-3"
+                  className="product-table-th bg-product-primary text-white font-semibold"
                   colSpan={2}
                 >
                   연금지급개시나이
                 </td>
-                <td className="border border-border-default p-2 text-center sm:p-3" colSpan={2}>
+                <td className="product-table-td-center" colSpan={2}>
                   35세~85세(단, 종신연금형:45세~85세)
                 </td>
               </tr>
               <tr>
                 <td
-                  className="border border-border-default bg-[#1e3a8a] p-2 text-center font-semibold text-white sm:p-3"
+                  className="product-table-th bg-product-primary text-white font-semibold"
                   colSpan={2}
                 >
                   연금지급형태
                 </td>
-                <td className="border border-border-default p-2 text-center sm:p-3" colSpan={2}>
+                <td className="product-table-td-center" colSpan={2}>
                   종신연금형(10년보증, 20년보증, 100세보증)[정액형],
                   <br />
                   확정연금형(5년형, 10년형, 15년형, 20년형),
@@ -339,69 +339,69 @@ export default function ProductInfo() {
               </tr>
               <tr>
                 <td
-                  className="w-[12%] border border-border-default bg-[#1e3a8a] p-2 text-center font-semibold text-white sm:p-3"
+                  className="w-[12%] product-table-th bg-product-primary text-white font-semibold"
                   rowSpan={3}
                 >
                   보험기간
                 </td>
-                <td className="w-[12%] border border-border-default bg-[#1e3a8a] p-2 text-center font-semibold text-white sm:p-3">
+                <td className="w-[12%] product-table-th bg-product-primary text-white font-semibold">
                   연금지급개시전
                 </td>
-                <td className="border border-border-default p-2 text-center sm:p-3" colSpan={2}>
+                <td className="product-table-td-center" colSpan={2}>
                   보험계약일부터 연금지급개시나이 연계약해당일 전일까지
                 </td>
               </tr>
               <tr>
                 <td
-                  className="border border-border-default bg-[#1e3a8a] p-2 text-center font-semibold text-white sm:p-3"
+                  className="product-table-th bg-product-primary text-white font-semibold"
                   rowSpan={2}
                 >
                   연금지급개시후
                 </td>
-                <td className="w-[15%] border border-border-default p-2 text-center sm:p-3">
+                <td className="w-[15%] product-table-td-center">
                   종신연금형,
                   <br />
                   상속연금형
                 </td>
-                <td className="border border-border-default p-2 text-center sm:p-3">
+                <td className="product-table-td-center">
                   연금지급개시나이 연계약해당일부터 종신까지
                 </td>
               </tr>
               <tr>
-                <td className="border border-border-default p-2 text-center sm:p-3">확정연금형</td>
-                <td className="border border-border-default p-2 text-center sm:p-3">
+                <td className="product-table-td-center">확정연금형</td>
+                <td className="product-table-td-center">
                   연금지급개시나이 연계약해당일부터 확정연금의 최종 지급일까지
                 </td>
               </tr>
               <tr>
                 <td
-                  className="border border-border-default bg-[#1e3a8a] p-2 text-center font-semibold text-white sm:p-3"
+                  className="product-table-th bg-product-primary text-white font-semibold"
                   rowSpan={4}
                   colSpan={2}
                 >
                   보험료
                 </td>
-                <td className="w-[15%] border border-border-default p-2 text-center sm:p-3">
+                <td className="w-[15%] product-table-td-center">
                   납입주기
                 </td>
-                <td className="border border-border-default p-2 text-center sm:p-3">일시납</td>
+                <td className="product-table-td-center">일시납</td>
               </tr>
               <tr>
-                <td className="border border-border-default p-2 text-center sm:p-3">기본보험료</td>
-                <td className="border border-border-default p-2 text-center sm:p-3">
+                <td className="product-table-td-center">기본보험료</td>
+                <td className="product-table-td-center">
                   전환전계약의 지급금(해약환급금 또는 만기보험금)의 전부 또는 일부를 일시에 납입
                 </td>
               </tr>
               <tr>
-                <td className="border border-border-default p-2 text-center sm:p-3" rowSpan={2}>
+                <td className="product-table-td-center" rowSpan={2}>
                   추가납입보험료
                 </td>
-                <td className="border border-border-default p-2 text-center sm:p-3">
+                <td className="product-table-td-center">
                   보험기간 중 '연금지급개시나이-2세' 연계약해당일까지 수시로 납입
                 </td>
               </tr>
               <tr>
-                <td className="border border-border-default p-2 text-center sm:p-3">
+                <td className="product-table-td-center">
                   *추가납입보험료 총 납입한도 = 기본보험료200% + 계약자적립액 인출금액의
                   합계(계약자적립액 인출금액은 기본보험료 계약자적립액의 인출금액, 추가납입보험료
                   계약자적립액의 인출금액을 포함)
@@ -494,37 +494,37 @@ export default function ProductInfo() {
               </thead>
               <tbody className="product-table-body">
                 <tr>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     유지보너스1
                   </td>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     84회차 해당일*이후 최초로 도래하는 월계약해당일
                   </td>
-                  <td className="border border-border-default p-2">
+                  <td className="product-table-td">
                     「"주계약 기본보험료x84x100.00%"에서 "유지보너스1 발생일 기준 기본보험료에 의한
                     해약환급금"을 차감한 금액
                   </td>
                 </tr>
                 <tr>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     유지보너스2
                   </td>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     120회차 해당일*이후 최초로 도래하는 월계약해당일
                   </td>
-                  <td className="border border-border-default p-2">
+                  <td className="product-table-td">
                     "주계약 기본보험료x84x119.58"에서 "유지보너스2 발생일 기준 기본보험료에 의한
                     해약환급금과 유지보너스1에 의한 해약환급금을 합산한 금액"을 차감한 금액
                   </td>
                 </tr>
                 <tr>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     유지보너스3
                   </td>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     180회차 해당일*이후 최초로 도래하는 월계약해당일
                   </td>
-                  <td className="border border-border-default p-2">
+                  <td className="product-table-td">
                     "주계약 기본보험료x84x25.5%"에서 "유지보너스1 금액과 유지보너스2 금액"을 차감한
                     금액
                   </td>
@@ -540,33 +540,33 @@ export default function ProductInfo() {
           <div className="overflow-x-auto">
             <table className="product-table">
               <thead>
-                <tr className="bg-[#1e3a8a] text-white">
-                  <th className="border border-border-default p-2 text-center">구분</th>
-                  <th className="border border-border-default p-2 text-center">발생일</th>
-                  <th className="border border-border-default p-2 text-center">금액</th>
+                <tr className="bg-product-primary text-white">
+                  <th className="product-table-td-center">구분</th>
+                  <th className="product-table-td-center">발생일</th>
+                  <th className="product-table-td-center">금액</th>
                 </tr>
               </thead>
               <tbody className="text-text-primary">
                 <tr>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     유지보너스1
                   </td>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     120회차 해당일*이후 최초로 도래하는 월계약해당일
                   </td>
-                  <td className="border border-border-default p-2">
+                  <td className="product-table-td">
                     "주계약 기본보험료x120x114.99%"에서 "유지보너스1 발생일 기준 기본보험료에 의한
                     해약환급금"을 차감한 금액
                   </td>
                 </tr>
                 <tr>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     유지보너스2
                   </td>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     180회차 해당일*이후 최초로 도래하는 월계약해당일
                   </td>
-                  <td className="border border-border-default p-2">
+                  <td className="product-table-td">
                     "주계약 기본보험료x120x28.5%"에서 "유지보너스1 금액"을 차감한 금액
                   </td>
                 </tr>
@@ -581,30 +581,30 @@ export default function ProductInfo() {
           <div className="overflow-x-auto">
             <table className="product-table">
               <thead>
-                <tr className="bg-[#1e3a8a] text-white">
-                  <th className="border border-border-default p-2 text-center">구분</th>
-                  <th className="border border-border-default p-2 text-center">발생일</th>
-                  <th className="border border-border-default p-2 text-center">금액</th>
+                <tr className="bg-product-primary text-white">
+                  <th className="product-table-td-center">구분</th>
+                  <th className="product-table-td-center">발생일</th>
+                  <th className="product-table-td-center">금액</th>
                 </tr>
               </thead>
               <tbody className="text-text-primary">
                 <tr>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     유지보너스1
                   </td>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     60회차 해당일*이후 최초로 도래하는 월계약해당일
                   </td>
-                  <td className="border border-border-default p-2">주계약 기본보험료x60x9%</td>
+                  <td className="product-table-td">주계약 기본보험료x60x9%</td>
                 </tr>
                 <tr>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     유지보너스2
                   </td>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     180회차 해당일*이후 최초로 도래하는 월계약해당일
                   </td>
-                  <td className="border border-border-default p-2">주계약 기본보험료x180x25.5%</td>
+                  <td className="product-table-td">주계약 기본보험료x180x25.5%</td>
                 </tr>
               </tbody>
             </table>
@@ -617,30 +617,30 @@ export default function ProductInfo() {
           <div className="overflow-x-auto">
             <table className="product-table">
               <thead>
-                <tr className="bg-[#1e3a8a] text-white">
-                  <th className="border border-border-default p-2 text-center">구분</th>
-                  <th className="border border-border-default p-2 text-center">발생일</th>
-                  <th className="border border-border-default p-2 text-center">금액</th>
+                <tr className="bg-product-primary text-white">
+                  <th className="product-table-td-center">구분</th>
+                  <th className="product-table-td-center">발생일</th>
+                  <th className="product-table-td-center">금액</th>
                 </tr>
               </thead>
               <tbody className="text-text-primary">
                 <tr>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     유지보너스1
                   </td>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     60회차 해당일*이후 최초로 도래하는 월계약해당일
                   </td>
-                  <td className="border border-border-default p-2">주계약 기본보험료x60x11%</td>
+                  <td className="product-table-td">주계약 기본보험료x60x11%</td>
                 </tr>
                 <tr>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     유지보너스2
                   </td>
-                  <td className="border border-border-default p-1 text-center sm:p-2">
+                  <td className="product-table-td-center">
                     240회차 해당일*이후 최초로 도래하는 월계약해당일
                   </td>
-                  <td className="border border-border-default p-2">주계약 기본보험료x240x33%</td>
+                  <td className="product-table-td">주계약 기본보험료x240x33%</td>
                 </tr>
               </tbody>
             </table>
@@ -1034,7 +1034,7 @@ export default function ProductInfo() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-xs sm:text-sm">
+          <table className="product-table">
             <thead>
               <tr className="product-table-header">
                 <th className="product-table-th w-1/3">구분</th>

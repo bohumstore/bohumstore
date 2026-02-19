@@ -22,7 +22,7 @@ export default function Notice({ open, onClose }: NoticeProps) {
         </div>
 
         <div className="mb-4">
-          <div className="heading-h2 mb-2">■ 가입시 유의사항</div>
+          <div className="heading-5 mb-2">■ 가입시 유의사항</div>
           <div className="mb-2">
             - 이 자료는 요약된 것으로, 가입전에 해당 상품의 약관 및 상품설명서를 자세히 확인하시기
             바랍니다.
@@ -65,7 +65,7 @@ export default function Notice({ open, onClose }: NoticeProps) {
         </div>
 
         <div className="mb-4">
-          <div className="heading-h2 mb-2">■ 금융소비자의 권리</div>
+          <div className="heading-5 mb-2">■ 금융소비자의 권리</div>
           <div className="mb-3">
             <div className="mb-1 font-semibold">■ 보험계약 청약을 철회할 수 있는 권리</div>
             <div className="mb-2">
@@ -129,7 +129,7 @@ export default function Notice({ open, onClose }: NoticeProps) {
         </div>
 
         <div className="mb-4">
-          <div className="heading-h2 mb-2">■ 금융소비자에게 불이익이 발생할 수 있는 사항</div>
+          <div className="heading-5 mb-2">■ 금융소비자에게 불이익이 발생할 수 있는 사항</div>
           <div className="mb-3">
             <div className="mb-1 font-semibold">■ 보험계약 전 알릴 의무 및 위반 시 효과</div>
             <div className="mb-2">

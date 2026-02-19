@@ -97,56 +97,56 @@ export default function CoverageDetails() {
                       </thead>
                       <tbody className="text-text-primary">
                         <tr>
-                          <td className="product-table-td bg-page-bg font-semibold">
+                          <td className="product-table-td font-semibold">
                             30세 이상 ~ 40세 미만
                           </td>
                           <td className="product-table-td text-center">2.40%</td>
                           <td className="product-table-td text-center">2.20%</td>
                         </tr>
                         <tr>
-                          <td className="product-table-td bg-page-bg font-semibold">
+                          <td className="product-table-td font-semibold">
                             40세 이상 ~ 50세 미만
                           </td>
                           <td className="product-table-td text-center">2.80%</td>
                           <td className="product-table-td text-center">2.60%</td>
                         </tr>
                         <tr>
-                          <td className="product-table-td bg-page-bg font-semibold">
+                          <td className="product-table-td font-semibold">
                             50세 이상 ~ 55세 미만
                           </td>
                           <td className="product-table-td text-center">3.05%</td>
                           <td className="product-table-td text-center">2.85%</td>
                         </tr>
                         <tr>
-                          <td className="product-table-td bg-page-bg font-semibold">
+                          <td className="product-table-td font-semibold">
                             55세 이상 ~ 60세 미만
                           </td>
                           <td className="product-table-td text-center">3.50%</td>
                           <td className="product-table-td text-center">3.30%</td>
                         </tr>
                         <tr>
-                          <td className="product-table-td bg-page-bg font-semibold">
+                          <td className="product-table-td font-semibold">
                             60세 이상 ~ 65세 미만
                           </td>
                           <td className="product-table-td text-center">4.20%</td>
                           <td className="product-table-td text-center">4.00%</td>
                         </tr>
                         <tr>
-                          <td className="product-table-td bg-page-bg font-semibold">
+                          <td className="product-table-td font-semibold">
                             65세 이상 ~ 70세 미만
                           </td>
                           <td className="product-table-td text-center">4.70%</td>
                           <td className="product-table-td text-center">4.50%</td>
                         </tr>
                         <tr>
-                          <td className="product-table-td bg-page-bg font-semibold">
+                          <td className="product-table-td font-semibold">
                             70세 이상 ~ 80세 미만
                           </td>
                           <td className="product-table-td text-center">5.05%</td>
                           <td className="product-table-td text-center">4.85%</td>
                         </tr>
                         <tr>
-                          <td className="product-table-td bg-page-bg font-semibold">80세</td>
+                          <td className="product-table-td font-semibold">80세</td>
                           <td className="product-table-td text-center">5.05%</td>
                           <td className="product-table-td text-center">4.85%</td>
                         </tr>
@@ -167,25 +167,25 @@ export default function CoverageDetails() {
                       </thead>
                       <tbody className="text-text-primary">
                         <tr>
-                          <td className="product-table-td bg-page-bg font-semibold">
+                          <td className="product-table-td font-semibold">
                             10년 이상 ~ 20년 미만
                           </td>
                           <td className="product-table-td text-center">0%</td>
                         </tr>
                         <tr>
-                          <td className="product-table-td bg-page-bg font-semibold">
+                          <td className="product-table-td font-semibold">
                             20년 이상 ~ 25년 미만
                           </td>
                           <td className="product-table-td text-center">7%</td>
                         </tr>
                         <tr>
-                          <td className="product-table-td bg-page-bg font-semibold">
+                          <td className="product-table-td font-semibold">
                             25년 이상 ~ 30년 미만
                           </td>
                           <td className="product-table-td text-center">16%</td>
                         </tr>
                         <tr>
-                          <td className="product-table-td bg-page-bg font-semibold">30년 이상</td>
+                          <td className="product-table-td font-semibold">30년 이상</td>
                           <td className="product-table-td text-center">24%</td>
                         </tr>
                       </tbody>
@@ -219,7 +219,7 @@ export default function CoverageDetails() {
                     </thead>
                     <tbody className="text-text-primary">
                       <tr>
-                        <td className="product-table-td bg-page-bg font-semibold">
+                        <td className="product-table-td font-semibold">
                           종신연금형
                           <br />
                           기본연금형
@@ -235,7 +235,7 @@ export default function CoverageDetails() {
                         </td>
                       </tr>
                       <tr>
-                        <td className="product-table-td bg-page-bg font-semibold">조기집중형</td>
+                        <td className="product-table-td font-semibold">조기집중형</td>
                         <td className="product-table-td">
                           피보험자가 매년 보험계약해당일에 살아있을 때
                         </td>
@@ -248,7 +248,7 @@ export default function CoverageDetails() {
                         </td>
                       </tr>
                       <tr>
-                        <td className="product-table-td bg-page-bg font-semibold">부부연금형</td>
+                        <td className="product-table-td font-semibold">부부연금형</td>
                         <td className="product-table-td">
                           피보험자가 매년 보험계약해당일에 살아있을 때
                         </td>
@@ -265,7 +265,7 @@ export default function CoverageDetails() {
                         </td>
                       </tr>
                       <tr>
-                        <td className="product-table-td bg-page-bg font-semibold">확정연금형</td>
+                        <td className="product-table-td font-semibold">확정연금형</td>
                         <td className="product-table-td">연금지급기간의 매년 보험계약해당일</td>
                         <td className="product-table-td">
                           [연금개시시점의 계약자적립금 × 확정연금형 분할비율]을 계산한 금액을
@@ -276,7 +276,7 @@ export default function CoverageDetails() {
                         </td>
                       </tr>
                       <tr>
-                        <td className="product-table-td bg-page-bg font-semibold">상속연금형</td>
+                        <td className="product-table-td font-semibold">상속연금형</td>
                         <td className="product-table-td">
                           피보험자가 매년 보험계약해당일에 살아있을 때
                         </td>
@@ -286,7 +286,7 @@ export default function CoverageDetails() {
                         </td>
                       </tr>
                       <tr>
-                        <td className="product-table-td bg-page-bg font-semibold">
+                        <td className="product-table-td font-semibold">
                           일시생활자금형
                         </td>
                         <td className="product-table-td">피보험자가 연금개시시점에 살아있을 때</td>
@@ -296,7 +296,7 @@ export default function CoverageDetails() {
                         </td>
                       </tr>
                       <tr>
-                        <td className="product-table-td bg-page-bg font-semibold">
+                        <td className="product-table-td font-semibold">
                           실적연금형
                           <br />
                           (2형(미보증형)에 한함)

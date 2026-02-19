@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Surrender() {
   return (
-    <div className="space-y-8 px-2 py-4 sm:px-4 md:px-8 md:py-6">
+    <div className="space-y-8 px-8 py-6">
       <div className="mb-2">
         <div className="product-page-title">해약환급금 예시</div>
         <p className="product-text mb-6 mt-4">
@@ -25,7 +25,7 @@ export default function Surrender() {
               <tr className="product-table-header align-middle">
                 <th className="product-table-th" rowSpan={2}>
                   경과
-                  <br className="md:hidden" />
+                  
                   기간
                 </th>
                 <th className="product-table-th" colSpan={4}>
@@ -38,33 +38,33 @@ export default function Surrender() {
               <tr className="product-table-header">
                 <th className="product-table-th">
                   사망
-                  <br className="md:hidden" />
+                  
                   보험금
                 </th>
                 <th className="product-table-th">
                   납입
-                  <br className="md:hidden" />
+                  
                   보험료
                 </th>
                 <th className="product-table-th">
                   해약
-                  <br className="md:hidden" />
+                  
                   환급금
                 </th>
                 <th className="product-table-th">환급률</th>
                 <th className="product-table-th">
                   사망
-                  <br className="md:hidden" />
+                  
                   보험금
                 </th>
                 <th className="product-table-th">
                   납입
-                  <br className="md:hidden" />
+                  
                   보험료
                 </th>
                 <th className="product-table-th">
                   해약
-                  <br className="md:hidden" />
+                  
                   환급금
                 </th>
                 <th className="product-table-th">환급률</th>
@@ -232,7 +232,7 @@ export default function Surrender() {
               <tr className="product-table-header align-middle">
                 <th className="product-table-th" rowSpan={2}>
                   경과
-                  <br className="md:hidden" />
+                  
                   기간
                 </th>
                 <th className="product-table-th" colSpan={4}>
@@ -245,33 +245,33 @@ export default function Surrender() {
               <tr className="product-table-header">
                 <th className="product-table-th">
                   사망
-                  <br className="md:hidden" />
+                  
                   보험금
                 </th>
                 <th className="product-table-th">
                   납입
-                  <br className="md:hidden" />
+                  
                   보험료
                 </th>
                 <th className="product-table-th">
                   해약
-                  <br className="md:hidden" />
+                  
                   환급금
                 </th>
                 <th className="product-table-th">환급률</th>
                 <th className="product-table-th">
                   사망
-                  <br className="md:hidden" />
+                  
                   보험금
                 </th>
                 <th className="product-table-th">
                   납입
-                  <br className="md:hidden" />
+                  
                   보험료
                 </th>
                 <th className="product-table-th">
                   해약
-                  <br className="md:hidden" />
+                  
                   환급금
                 </th>
                 <th className="product-table-th">환급률</th>
@@ -492,12 +492,12 @@ export default function Surrender() {
               </thead>
               <tbody className="product-table-body">
                 <tr>
-                  <td className="product-table-td-center bg-page-bg font-semibold">보장내용</td>
+                  <td className="product-table-td-center  font-semibold">보장내용</td>
                   <td className="product-table-td-center">'보험금 지급기준' 참고</td>
                   <td className="product-table-td-center">'보험금 지급기준' 참고</td>
                 </tr>
                 <tr>
-                  <td className="product-table-td-center bg-page-bg font-semibold">계약승낙여부</td>
+                  <td className="product-table-td-center  font-semibold">계약승낙여부</td>
                   <td className="product-table-td-center">
                     일반상품 대비 질문항목을 간소화하여,
                     <br />

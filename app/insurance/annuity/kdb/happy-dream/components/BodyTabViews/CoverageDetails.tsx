@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function CoverageDetails() {
   return (
-    <div className="space-y-6 px-2 py-3 sm:px-4 md:px-8 md:py-4">
+    <div className="space-y-6 px-8 py-6">
       <h2 className="product-page-title">주계약</h2>
 
       {/* 연금개시 전 보험기간 */}
@@ -17,11 +17,11 @@ export default function CoverageDetails() {
               <table className="product-table">
                 <thead>
                   <tr className="product-table-header">
-                    <th className="product-table-th w-[80px] sm:w-[120px] md:w-[150px]">
+                    <th className="product-table-th w-[150px]">
                       급부명칭
                     </th>
                     <th className="product-table-th">지급사유</th>
-                    <th className="product-table-th w-[70px] sm:w-[100px] md:w-[120px]">
+                    <th className="product-table-th w-[120px]">
                       지급금액
                     </th>
                   </tr>
@@ -31,7 +31,7 @@ export default function CoverageDetails() {
                     <td className="product-table-td-center text-product-primary">
                       고도후유장해보험금
                     </td>
-                    <td className="product-table-td leading-tight sm:leading-relaxed">
+                    <td className="product-table-td leading-relaxed">
                       연금개시 전 보험기간 중 피보험자가 장해분류표 중 동일한 재해로 여러 신체부위의
                       장해지급률을 더하여 80% 이상인 장해상태가 되었을 때 (최초1회한)
                     </td>
@@ -57,10 +57,10 @@ export default function CoverageDetails() {
               <table className="product-table">
                 <thead>
                   <tr className="product-table-header">
-                    <th className="product-table-th w-[80px] sm:w-[120px] md:w-[150px]">
+                    <th className="product-table-th w-[150px]">
                       급부명칭
                     </th>
-                    <th className="product-table-th w-[90px] sm:w-[140px] md:w-[200px]">
+                    <th className="product-table-th w-[200px]">
                       지급사유
                     </th>
                     <th className="product-table-th">지급금액</th>
@@ -69,10 +69,10 @@ export default function CoverageDetails() {
                 <tbody className="text-text-primary">
                   <tr>
                     <td className="product-table-td-center text-product-primary">금액보증연금</td>
-                    <td className="product-table-td leading-tight sm:leading-relaxed">
+                    <td className="product-table-td leading-relaxed">
                       연금개시 후 보험기간 중 피보험자가 매년 계약해당일에 살아있을 때
                     </td>
-                    <td className="product-table-td leading-tight sm:leading-relaxed">
+                    <td className="product-table-td leading-relaxed">
                       연금기준금액(다만, 연계약해당일의 계약자적립액이 더 클 경우에는
                       계약자적립액)을 기준으로 금액보증연금 지급률을 적용하여 계산한 금액보증연금
                       연지급액을 피보험자가 연계약해당일에 살아 있을 경우 지급
@@ -193,106 +193,106 @@ export default function CoverageDetails() {
         <h3 className="product-section-title">실적배당종신연금 연지급액 예시표</h3>
         <div className="product-info-box">
           <div className="space-y-3">
-            <div className="text-right text-xs text-text-secondary">
+            <div className="text-right body-s text-text-secondary">
               예시기준 : 남자 40세, 60세 연금개시, 기본보험료 30만원, 10년납, 채권형100% (단위:
               만원)
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse text-xs">
+              <table className="product-table">
                 <thead>
-                  <tr className="bg-gray-100 text-gray-700">
-                    <th className="border border-border-default p-1 text-xs" rowSpan={4}>
+                  <tr className="product-table-header">
+                    <th className="product-table-th" rowSpan={4}>
                       나이
                     </th>
-                    <th className="border border-border-default p-1 text-xs" colSpan={4}>
+                    <th className="product-table-th" colSpan={4}>
                       투자수익률 -1.0% 가정시
                     </th>
-                    <th className="border border-border-default p-1 text-xs" colSpan={4}>
+                    <th className="product-table-th" colSpan={4}>
                       투자수익률 2.75% 가정시
                     </th>
-                    <th className="border border-border-default p-1 text-xs" colSpan={4}>
+                    <th className="product-table-th" colSpan={4}>
                       투자수익률 4.125% 가정시
                     </th>
                   </tr>
-                  <tr className="bg-gray-100 text-gray-700">
-                    <th className="border border-border-default p-1 text-xs" colSpan={4}>
+                  <tr className="product-table-header">
+                    <th className="product-table-th" colSpan={4}>
                       순수익률 -4.7%
                     </th>
-                    <th className="border border-border-default p-1 text-xs" colSpan={4}>
+                    <th className="product-table-th" colSpan={4}>
                       순수익률 -1.0%
                     </th>
-                    <th className="border border-border-default p-1 text-xs" colSpan={4}>
+                    <th className="product-table-th" colSpan={4}>
                       순수익률 0.4%
                     </th>
                   </tr>
-                  <tr className="bg-gray-100 text-gray-700">
-                    <th className="border border-border-default p-1 text-xs" colSpan={4}>
+                  <tr className="product-table-header">
+                    <th className="product-table-th" colSpan={4}>
                       연금기준금액: 7,390만원
                     </th>
-                    <th className="border border-border-default p-1 text-xs" colSpan={4}>
+                    <th className="product-table-th" colSpan={4}>
                       연금기준금액: 7,390만원
                     </th>
-                    <th className="border border-border-default p-1 text-xs" colSpan={4}>
+                    <th className="product-table-th" colSpan={4}>
                       연금기준금액: 7,390만원
                     </th>
                   </tr>
-                  <tr className="bg-gray-100 text-gray-700">
-                    <th className="border border-border-default p-1 text-xs">
+                  <tr className="product-table-header">
+                    <th className="product-table-th">
                       연금
                       <br />
                       연지급액
                     </th>
-                    <th className="border border-border-default p-1 text-xs">
+                    <th className="product-table-th">
                       연금
                       <br />
                       누계액
                     </th>
-                    <th className="border border-border-default p-1 text-xs">
+                    <th className="product-table-th">
                       계약자
                       <br />
                       적립액
                     </th>
-                    <th className="border border-border-default p-1 text-xs">
+                    <th className="product-table-th">
                       최저사망
                       <br />
                       적립액
                     </th>
-                    <th className="border border-border-default p-1 text-xs">
+                    <th className="product-table-th">
                       연금
                       <br />
                       연지급액
                     </th>
-                    <th className="border border-border-default p-1 text-xs">
+                    <th className="product-table-th">
                       연금
                       <br />
                       누계액
                     </th>
-                    <th className="border border-border-default p-1 text-xs">
+                    <th className="product-table-th">
                       계약자
                       <br />
                       적립액
                     </th>
-                    <th className="border border-border-default p-1 text-xs">
+                    <th className="product-table-th">
                       최저사망
                       <br />
                       적립액
                     </th>
-                    <th className="border border-border-default p-1 text-xs">
+                    <th className="product-table-th">
                       연금
                       <br />
                       연지급액
                     </th>
-                    <th className="border border-border-default p-1 text-xs">
+                    <th className="product-table-th">
                       연금
                       <br />
                       누계액
                     </th>
-                    <th className="border border-border-default p-1 text-xs">
+                    <th className="product-table-th">
                       계약자
                       <br />
                       적립액
                     </th>
-                    <th className="border border-border-default p-1 text-xs">
+                    <th className="product-table-th">
                       최저사망
                       <br />
                       적립액
@@ -301,259 +301,259 @@ export default function CoverageDetails() {
                 </thead>
                 <tbody className="text-text-primary">
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">60세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">7,029</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">793</td>
-                    <td className="border border-border-default p-1 text-center text-xs">7,029</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">1,505</td>
-                    <td className="border border-border-default p-1 text-center text-xs">7,029</td>
+                    <td className="product-table-td-center">60세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">7,029</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">793</td>
+                    <td className="product-table-td-center">7,029</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">1,505</td>
+                    <td className="product-table-td-center">7,029</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">61세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">721</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">6,668</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">721</td>
-                    <td className="border border-border-default p-1 text-center text-xs">302</td>
-                    <td className="border border-border-default p-1 text-center text-xs">6,668</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">721</td>
-                    <td className="border border-border-default p-1 text-center text-xs">1,054</td>
-                    <td className="border border-border-default p-1 text-center text-xs">6,668</td>
+                    <td className="product-table-td-center">61세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">721</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">6,668</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">721</td>
+                    <td className="product-table-td-center">302</td>
+                    <td className="product-table-td-center">6,668</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">721</td>
+                    <td className="product-table-td-center">1,054</td>
+                    <td className="product-table-td-center">6,668</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">62세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">1,082</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">6,307</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">1,082</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">6,307</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">1,082</td>
-                    <td className="border border-border-default p-1 text-center text-xs">584</td>
-                    <td className="border border-border-default p-1 text-center text-xs">6,307</td>
+                    <td className="product-table-td-center">62세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">1,082</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">6,307</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">1,082</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">6,307</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">1,082</td>
+                    <td className="product-table-td-center">584</td>
+                    <td className="product-table-td-center">6,307</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">63세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">1,443</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">5,947</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">1,443</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">5,947</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">1,443</td>
-                    <td className="border border-border-default p-1 text-center text-xs">95</td>
-                    <td className="border border-border-default p-1 text-center text-xs">5,947</td>
+                    <td className="product-table-td-center">63세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">1,443</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">5,947</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">1,443</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">5,947</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">1,443</td>
+                    <td className="product-table-td-center">95</td>
+                    <td className="product-table-td-center">5,947</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">64세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">1,804</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">5,586</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">1,804</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">5,586</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">1,804</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">5,586</td>
+                    <td className="product-table-td-center">64세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">1,804</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">5,586</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">1,804</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">5,586</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">1,804</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">5,586</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">65세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">2,165</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">5,225</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">2,165</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">5,225</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">2,165</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">5,225</td>
+                    <td className="product-table-td-center">65세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">2,165</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">5,225</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">2,165</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">5,225</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">2,165</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">5,225</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">66세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">2,525</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">4,864</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">2,525</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">4,864</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">2,525</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">4,864</td>
+                    <td className="product-table-td-center">66세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">2,525</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">4,864</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">2,525</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">4,864</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">2,525</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">4,864</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">67세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">2,886</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">4,503</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">2,886</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">4,503</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">2,886</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">4,503</td>
+                    <td className="product-table-td-center">67세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">2,886</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">4,503</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">2,886</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">4,503</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">2,886</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">4,503</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">68세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,247</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">4,142</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,247</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">4,142</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,247</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">4,142</td>
+                    <td className="product-table-td-center">68세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">3,247</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">4,142</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">3,247</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">4,142</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">3,247</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">4,142</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">69세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,608</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,782</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,608</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,782</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,608</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,782</td>
+                    <td className="product-table-td-center">69세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">3,608</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">3,782</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">3,608</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">3,782</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">3,608</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">3,782</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">70세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,969</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,421</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,969</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,421</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,969</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">3,421</td>
+                    <td className="product-table-td-center">70세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">3,969</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">3,421</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">3,969</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">3,421</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">3,969</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">3,421</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">75세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">5,773</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">1,617</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">5,773</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">1,617</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">5,773</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">1,617</td>
+                    <td className="product-table-td-center">75세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">5,773</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">1,617</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">5,773</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">1,617</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">5,773</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">1,617</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">80세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">7,577</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">7,577</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">7,577</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
+                    <td className="product-table-td-center">80세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">7,577</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">7,577</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">7,577</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">85세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">9,381</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">9,381</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">9,381</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
+                    <td className="product-table-td-center">85세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">9,381</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">9,381</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">9,381</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">90세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">11,186</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">11,186</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">11,186</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
+                    <td className="product-table-td-center">90세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">11,186</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">11,186</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">11,186</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">95세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">12,990</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">12,990</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">12,990</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
+                    <td className="product-table-td-center">95세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">12,990</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">12,990</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">12,990</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">100세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">14,794</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">14,794</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">360</td>
-                    <td className="border border-border-default p-1 text-center text-xs">14,794</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
+                    <td className="product-table-td-center">100세</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">14,794</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">14,794</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">360</td>
+                    <td className="product-table-td-center">14,794</td>
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">-</td>
                   </tr>
                 </tbody>
               </table>
@@ -621,37 +621,37 @@ export default function CoverageDetails() {
         <h3 className="product-section-title">해약환급금 예시표</h3>
         <div className="product-info-box">
           <div className="space-y-3">
-            <div className="text-right text-xs text-text-secondary">
+            <div className="text-right body-s text-text-secondary">
               예시기준 : 남자 40세, 60세 연금개시, 기본보험료 30만원, 10년납, 채권형100% (단위: 원)
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse text-xs">
+              <table className="product-table">
                 <thead>
-                  <tr className="bg-gray-100 text-gray-700">
-                    <th className="border border-border-default p-1 text-xs" rowSpan={3}>
+                  <tr className="product-table-header">
+                    <th className="product-table-th" rowSpan={3}>
                       경과년수
                     </th>
-                    <th className="border border-border-default p-1 text-xs" rowSpan={3}>
+                    <th className="product-table-th" rowSpan={3}>
                       나이
                     </th>
-                    <th className="border border-border-default p-1 text-xs" rowSpan={3}>
+                    <th className="product-table-th" rowSpan={3}>
                       납입보험료
                     </th>
-                    <th className="border border-border-default p-1 text-xs" rowSpan={3}>
+                    <th className="product-table-th" rowSpan={3}>
                       특별계정
                       <br />
                       투입금액
                     </th>
-                    <th className="border border-border-default p-1 text-xs" colSpan={2}>
+                    <th className="product-table-th" colSpan={2}>
                       투자수익률 -1.0% 가정시
                     </th>
-                    <th className="border border-border-default p-1 text-xs" colSpan={2}>
+                    <th className="product-table-th" colSpan={2}>
                       투자수익률 2.75% 가정시
                     </th>
-                    <th className="border border-border-default p-1 text-xs" colSpan={2}>
+                    <th className="product-table-th" colSpan={2}>
                       투자수익률 4.125% 가정시
                     </th>
-                    <th className="border border-border-default p-1 text-xs" rowSpan={3}>
+                    <th className="product-table-th" rowSpan={3}>
                       최저연금기준금액
                       <br />
                       (해지할때
@@ -661,197 +661,197 @@ export default function CoverageDetails() {
                       금액이 아님)
                     </th>
                   </tr>
-                  <tr className="bg-gray-100 text-gray-700">
-                    <th className="border border-border-default p-1 text-xs" colSpan={2}>
+                  <tr className="product-table-header">
+                    <th className="product-table-th" colSpan={2}>
                       순수익률 -4.7%
                     </th>
-                    <th className="border border-border-default p-1 text-xs" colSpan={2}>
+                    <th className="product-table-th" colSpan={2}>
                       순수익률 -1.0%
                     </th>
-                    <th className="border border-border-default p-1 text-xs" colSpan={2}>
+                    <th className="product-table-th" colSpan={2}>
                       순수익률 0.4%
                     </th>
                   </tr>
-                  <tr className="bg-gray-100 text-gray-700">
-                    <th className="border border-border-default p-1 text-xs">해약환급금</th>
-                    <th className="border border-border-default p-1 text-xs">환급률</th>
-                    <th className="border border-border-default p-1 text-xs">해약환급금</th>
-                    <th className="border border-border-default p-1 text-xs">환급률</th>
-                    <th className="border border-border-default p-1 text-xs">해약환급금</th>
-                    <th className="border border-border-default p-1 text-xs">환급률</th>
+                  <tr className="product-table-header">
+                    <th className="product-table-th">해약환급금</th>
+                    <th className="product-table-th">환급률</th>
+                    <th className="product-table-th">해약환급금</th>
+                    <th className="product-table-th">환급률</th>
+                    <th className="product-table-th">해약환급금</th>
+                    <th className="product-table-th">환급률</th>
                   </tr>
                 </thead>
                 <tbody className="text-text-primary">
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">1년</td>
-                    <td className="border border-border-default p-1 text-center text-xs">41세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">1년</td>
+                    <td className="product-table-td-center">41세</td>
+                    <td className="product-table-td-center">
                       3,600,000
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">
                       3,287,736
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">
                       2,505,532
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">69.6%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">69.6%</td>
+                    <td className="product-table-td-center">
                       2,571,299
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">71.4%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">71.4%</td>
+                    <td className="product-table-td-center">
                       2,595,231
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">72.1%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">72.1%</td>
+                    <td className="product-table-td-center">
                       3,736,500
                     </td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">3년</td>
-                    <td className="border border-border-default p-1 text-center text-xs">43세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">3년</td>
+                    <td className="product-table-td-center">43세</td>
+                    <td className="product-table-td-center">
                       10,800,000
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">
                       9,863,208
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">
                       8,625,561
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">79.9%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">79.9%</td>
+                    <td className="product-table-td-center">
                       9,177,129
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">85.0%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">85.0%</td>
+                    <td className="product-table-td-center">
                       9,384,825
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">86.9%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">86.9%</td>
+                    <td className="product-table-td-center">
                       11,965,500
                     </td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">5년</td>
-                    <td className="border border-border-default p-1 text-center text-xs">45세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">5년</td>
+                    <td className="product-table-td-center">45세</td>
+                    <td className="product-table-td-center">
                       18,000,000
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">
                       16,438,680
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">
                       13,990,349
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">77.7%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">77.7%</td>
+                    <td className="product-table-td-center">
                       15,475,328
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">86.0%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">86.0%</td>
+                    <td className="product-table-td-center">
                       16,054,338
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">89.2%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">89.2%</td>
+                    <td className="product-table-td-center">
                       21,202,500
                     </td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">7년</td>
-                    <td className="border border-border-default p-1 text-center text-xs">47세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">7년</td>
+                    <td className="product-table-td-center">47세</td>
+                    <td className="product-table-td-center">
                       25,200,000
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">
                       23,014,152
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">
                       18,541,110
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">73.6%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">73.6%</td>
+                    <td className="product-table-td-center">
                       21,372,003
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">84.8%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">84.8%</td>
+                    <td className="product-table-td-center">
                       22,515,838
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">89.3%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">89.3%</td>
+                    <td className="product-table-td-center">
                       31,447,500
                     </td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">10년</td>
-                    <td className="border border-border-default p-1 text-center text-xs">50세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">10년</td>
+                    <td className="product-table-td-center">50세</td>
+                    <td className="product-table-td-center">
                       36,000,000
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">
                       32,877,360
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">
                       23,364,227
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">64.9%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">64.9%</td>
+                    <td className="product-table-td-center">
                       28,894,817
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">80.3%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">80.3%</td>
+                    <td className="product-table-td-center">
                       31,256,339
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">86.8%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">86.8%</td>
+                    <td className="product-table-td-center">
                       48,705,000
                     </td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">15년</td>
-                    <td className="border border-border-default p-1 text-center text-xs">55세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">15년</td>
+                    <td className="product-table-td-center">55세</td>
+                    <td className="product-table-td-center">
                       36,000,000
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">
                       32,635,440
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">
                       12,072,407
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">33.5%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">33.5%</td>
+                    <td className="product-table-td-center">
                       21,971,449
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">61.0%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">61.0%</td>
+                    <td className="product-table-td-center">
                       26,757,571
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">74.3%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">74.3%</td>
+                    <td className="product-table-td-center">
                       61,305,000
                     </td>
                   </tr>
                   <tr>
-                    <td className="border border-border-default p-1 text-center text-xs">20년</td>
-                    <td className="border border-border-default p-1 text-center text-xs">60세</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">20년</td>
+                    <td className="product-table-td-center">60세</td>
+                    <td className="product-table-td-center">
                       36,000,000
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">
                       32,393,520
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">-</td>
-                    <td className="border border-border-default p-1 text-center text-xs">0.0%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">-</td>
+                    <td className="product-table-td-center">0.0%</td>
+                    <td className="product-table-td-center">
                       11,542,988
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">32.1%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">32.1%</td>
+                    <td className="product-table-td-center">
                       18,663,542
                     </td>
-                    <td className="border border-border-default p-1 text-center text-xs">51.8%</td>
-                    <td className="border border-border-default p-1 text-center text-xs">
+                    <td className="product-table-td-center">51.8%</td>
+                    <td className="product-table-td-center">
                       73,905,000
                     </td>
                   </tr>
@@ -937,10 +937,10 @@ export default function CoverageDetails() {
         <div className="product-info-box">
           <div className="space-y-4">
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
+              <table className="product-table">
                 <tbody>
                   <tr>
-                    <td className="border border-border-default p-2 text-xs sm:p-3 sm:text-sm">
+                    <td className="product-table-td">
                       (무)신보험료납입면제특약(3대질병형)
                     </td>
                   </tr>

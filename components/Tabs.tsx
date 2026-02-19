@@ -15,12 +15,11 @@ export default function Tabs({ tabs }: { tabs: Tab[] }) {
           <button
             key={label}
             onClick={() => setActive(label)}
-            className={`relative flex-1 cursor-pointer whitespace-nowrap pb-3 text-base font-bold transition after:absolute after:bottom-0 after:left-0 after:h-1.5 after:w-full after:rounded after:content-[''] sm:pb-4 sm:text-lg md:text-xl lg:text-2xl ${
+            className={`relative flex-1 cursor-pointer whitespace-nowrap outline-none pb-4 heading-3 transition after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-full after:rounded-full after:content-[''] ${
               active === label
-                ? 'text-[#3a8094] after:bg-[#3a8094]'
-                : 'text-[#333] after:bg-transparent hover:text-[#3a8094] hover:after:bg-[#3a8094]'
+                ? 'text-brand-primary after:bg-brand-primary'
+                : 'text-brand-primary/60 after:bg-transparent hover:text-brand-primary hover:after:bg-brand-primary/30'
             } `}
-            style={{ outline: 'none' }}
           >
             {label}
           </button>

@@ -66,7 +66,7 @@ export default function Header() {
             {menuItems.map((item) => (
                 <div
                     key={item.id}
-                    className={`flex items-center w-[100px] justify-center heading-h2 cursor-pointer transition-colors duration-200 ${hoveredCategory === item.id ? 'text-blue-600' : 'text-gray-900'}`}
+                    className={`flex items-center w-[100px] justify-center heading-5 cursor-pointer transition-colors duration-200 ${hoveredCategory === item.id ? 'text-blue-600' : 'text-gray-900'}`}
                     onMouseEnter={() => {
                         setHoveredCategory(item.id);
                         setIsMegaMenuOpen(true);

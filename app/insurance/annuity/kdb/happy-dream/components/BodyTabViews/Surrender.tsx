@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function JoinNotice() {
   return (
-    <div className="space-y-8 px-2 py-4 sm:px-4 md:px-8 md:py-6">
+    <div className="space-y-8 px-8 py-6">
       <h2 className="product-page-title">가입시 알아두실 사항</h2>
 
       {/* 보험계약의 기본사항 확인 */}

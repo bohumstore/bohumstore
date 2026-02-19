@@ -75,8 +75,8 @@ export default function TrendingSection() {
     <div className="flex flex-col items-center max-w-[800px] pt-10 pb-5">
       {/* 섹션 헤더 */}
       <div className="flex flex-col items-center justify-center mb-8 gap-2">
-        <div className="action-l text-[20px] text-text-muted">보장과 보험료 균형이 좋아 요즘 가장 주목받는 보험이에요.</div>
-        <div className="heading-hero text-text-primary">요즘 뜨는 보험</div>
+        <div className="body-xl text-text-muted">보장과 보험료 균형이 좋아 요즘 가장 주목받는 보험이에요.</div>
+        <div className="heading-1 text-text-primary">요즘 뜨는 보험</div>
       </div>
 
       {/* 슬라이더 컨테이너 */}
@@ -89,7 +89,7 @@ export default function TrendingSection() {
             <div key={product.id} className="min-w-full">
               <Link href={product.path} className="flex w-[800px] bg-white rounded-lg border border-border-default shadow-sm p-10 flex-row items-center gap-12 relative overflow-hidden transition-all hover:shadow-md cursor-pointer">
                 <div className="absolute top-0 left-0">
-                  <span className="bg-brand-primary text-white heading-h5 px-2 py-1 rounded-br-lg">
+                  <span className="bg-brand-primary text-white button-s px-2 py-1 rounded-br-lg">
                     {product.badge}
                   </span>
                 </div>
@@ -102,10 +102,10 @@ export default function TrendingSection() {
                 </div>
 
                 <div className="flex flex-col items-start text-left w-full">
-                  <div className="text-brand-primary heading-h2 mb-2">
+                  <div className="text-brand-primary heading-5 mb-2">
                     {product.marketingText}
                   </div>
-                  <h3 className="heading-h1 text-3xl text-text-primary mb-7">
+                  <h3 className="heading-2 text-text-primary mb-7">
                     {product.title}
                   </h3>
                   <div className="flex flex-col gap-1">

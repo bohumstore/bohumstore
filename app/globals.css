@@ -77,99 +77,87 @@
   --text-inverse: #ffffff;
 
   /* 제품 페이지 전용 색상 */
-  --product-primary: #1e3a8a;
+  --product-primary: #1f6feb;
 }
 
 /* ── 디자인 시스템 타이포그래피 (Design System Typography) ── */
 /* 폰트: Pretendard (전역 적용) */
 @layer components {
-  /* Hero Heading (Responsive) */
-  .heading-hero {
-    font-size: 1.75rem; /* 28px mobile */
+  /* ── Heading ── */
+  .heading-1 {
+    font-size: 3.125rem; /* 50px */
     font-weight: 800;
     line-height: 1.2;
   }
-  @media (min-width: 768px) {
-    .heading-hero {
-      font-size: 3.125rem; /* 50px desktop */
-    }
+  .heading-2 {
+    font-size: 2rem; /* 32px */
+    font-weight: 800;
+    line-height: 1.2;
   }
-
-  /* Heading */
-  .heading-h1 {
+  .heading-3 {
     font-size: 1.5rem; /* 24px */
     font-weight: 800;
     line-height: 1.3;
   }
-  .heading-h2 {
-    font-size: 1.125rem; /* 18px */
-    font-weight: 800;
-    line-height: 1.3;
-  }
-  .heading-h3 {
-    font-size: 1rem; /* 16px */
-    font-weight: 800;
-    line-height: 1.3;
-  }
-  .heading-h4 {
-    font-size: 0.875rem; /* 14px */
+  .heading-4 {
+    font-size: 1.5rem; /* 24px */
     font-weight: 700;
     line-height: 1.3;
   }
-  .heading-h5 {
-    font-size: 0.75rem; /* 12px */
+  .heading-5 {
+    font-size: 1rem; /* 16px */
     font-weight: 700;
     line-height: 1.3;
   }
 
-  /* Body */
+  /* ── Body ── */
   .body-xl {
     font-size: 1.125rem; /* 18px */
     font-weight: 400;
-    line-height: 1.3;
+    line-height: 1.5;
   }
   .body-l {
     font-size: 1rem; /* 16px */
     font-weight: 400;
-    line-height: 1.3;
+    line-height: 1.5;
   }
   .body-m {
     font-size: 0.875rem; /* 14px */
     font-weight: 400;
-    line-height: 1.3;
+    line-height: 1.5;
   }
   .body-s {
     font-size: 0.75rem; /* 12px */
     font-weight: 400;
-    line-height: 1.3;
-  }
-  .body-xs {
-    font-size: 0.625rem; /* 10px */
-    font-weight: 500;
-    line-height: 1.3;
+    line-height: 1.5;
   }
 
-  /* Action */
-  .action-l {
+  /* ── Button ── */
+  .button-l {
+    font-size: 1rem; /* 16px */
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .button-m {
     font-size: 0.875rem; /* 14px */
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.3;
   }
-  .action-m {
+  .button-s {
     font-size: 0.75rem; /* 12px */
-    font-weight: 600;
-    line-height: 1.3;
-  }
-  .action-s {
-    font-size: 0.625rem; /* 10px */
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.3;
   }
 
-  /* Caption */
-  .caption-m {
+  /* ── Caption ── */
+  .caption-r {
+    font-size: 0.75rem; /* 12px */
+    font-weight: 400;
+    line-height: 1.3;
+  }
+  .caption-s {
     font-size: 0.625rem; /* 10px */
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1.3;
   }
 }
@@ -233,7 +221,7 @@ html {
 @layer components {
   /* Page Title (e.g., 가입안내, 보험금 지급기준, 해약환급금 예시) */
   .product-page-title {
-    @apply border-b-2 border-product-primary pb-2 text-2xl font-bold text-product-primary;
+    @apply border-b-2 border-text-primary pb-2 text-2xl font-bold text-text-primary;
   }
 
   /* Section Title (e.g., 상품명 및 상품유형, 상품 구성) */
@@ -253,7 +241,7 @@ html {
 
   /* Standard Product Table */
   .product-table {
-    @apply w-full border-collapse text-xs sm:text-sm;
+    @apply w-full border-collapse text-sm;
   }
 
   /* Table Header Row */
@@ -263,7 +251,7 @@ html {
 
   /* Table Header Cell */
   .product-table-th {
-    @apply border border-border-default p-1 text-center font-normal sm:p-2 md:p-3;
+    @apply border border-[#6b7280] p-3 text-center font-normal;
   }
 
   /* Table Body */
@@ -273,7 +261,7 @@ html {
 
   /* Table Body Cell */
   .product-table-td {
-    @apply border border-border-default p-1 sm:p-2 md:p-3;
+    @apply border border-[#6b7280] p-3;
   }
 
   /* Center-aligned Body Cell */
@@ -283,7 +271,7 @@ html {
 
   /* Body Text (Paragraphs) */
   .product-text {
-    @apply text-sm text-text-primary md:text-base;
+    @apply text-base text-text-primary;
   }
 
   /* Caption / Small Text */
@@ -293,6 +281,6 @@ html {
 
   /* Info Box */
   .product-info-box {
-    @apply space-y-2 rounded-lg border border-border-default bg-page-bg p-4 text-sm text-text-primary;
+    @apply space-y-2 rounded-lg border border-divider bg-section-bg p-4 text-sm text-text-primary;
   }
 }

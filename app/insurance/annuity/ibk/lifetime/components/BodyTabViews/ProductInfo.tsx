@@ -21,7 +21,7 @@ export default function ProductInfo() {
                 </thead>
                 <tbody className="text-text-primary">
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">
+                    <td className="product-table-td font-semibold">
                       최저연금기준금액비율
                     </td>
                     <td className="product-table-td">기납입 보험료 연단리 X% 부리</td>
@@ -51,15 +51,15 @@ export default function ProductInfo() {
                 </thead>
                 <tbody className="text-text-primary">
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">10년 이내</td>
+                    <td className="product-table-td font-semibold">10년 이내</td>
                     <td className="product-table-td">최저연금기준금액의 3.60% (매월 0.30%)</td>
                   </tr>
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">10년 이후</td>
+                    <td className="product-table-td font-semibold">10년 이후</td>
                     <td className="product-table-td">최저연금기준금액의 1.80% (매월 0.15%)</td>
                   </tr>
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">연금개시 이후</td>
+                    <td className="product-table-td font-semibold">연금개시 이후</td>
                     <td className="product-table-td">연금기준금액의 1.20% (매월 0.10%)</td>
                   </tr>
                 </tbody>
@@ -92,15 +92,15 @@ export default function ProductInfo() {
                 </thead>
                 <tbody className="text-text-primary">
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">10년 이내</td>
+                    <td className="product-table-td font-semibold">10년 이내</td>
                     <td className="product-table-td">최저연금기준금액의 0.36% (매월 0.030%)</td>
                   </tr>
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">10년 이후</td>
+                    <td className="product-table-td font-semibold">10년 이후</td>
                     <td className="product-table-td">최저연금기준금액의 0.18% (매월 0.015%)</td>
                   </tr>
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">연금개시 이후</td>
+                    <td className="product-table-td font-semibold">연금개시 이후</td>
                     <td className="product-table-td">연금기준금액의 0.18% (매월 0.015%)</td>
                   </tr>
                 </tbody>
@@ -198,37 +198,37 @@ export default function ProductInfo() {
                 </thead>
                 <tbody className="text-text-primary">
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">보험종류</td>
+                    <td className="product-table-td font-semibold">보험종류</td>
                     <td className="product-table-td">변액연금보험</td>
                   </tr>
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">부가가능 특약</td>
+                    <td className="product-table-td font-semibold">부가가능 특약</td>
                     <td className="product-table-td">해당 없음</td>
                   </tr>
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">가입나이</td>
+                    <td className="product-table-td font-semibold">가입나이</td>
                     <td className="product-table-td">0세~최대68세(미보증형: 최대75세)</td>
                   </tr>
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">연금개시나이</td>
+                    <td className="product-table-td font-semibold">연금개시나이</td>
                     <td className="product-table-td">30세~80세(미보증형: 45~80세)</td>
                   </tr>
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">납입기간</td>
+                    <td className="product-table-td font-semibold">납입기간</td>
                     <td className="product-table-td">5,7,10년납이상 (30년이하)</td>
                   </tr>
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">납입주기</td>
+                    <td className="product-table-td font-semibold">납입주기</td>
                     <td className="product-table-td">월납</td>
                   </tr>
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">최소거치기간</td>
+                    <td className="product-table-td font-semibold">최소거치기간</td>
                     <td className="product-table-td">
                       5년납은 7년 / 7년납이상은 5년(미보증형: 없음)
                     </td>
                   </tr>
                   <tr>
-                    <td className="product-table-td bg-page-bg font-semibold">최소보험료</td>
+                    <td className="product-table-td font-semibold">최소보험료</td>
                     <td className="product-table-td">
                       5/7년납은 30만원이상, 10년납이상은 20만원이상
                     </td>

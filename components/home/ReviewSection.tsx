@@ -25,7 +25,7 @@ export default function ReviewSection() {
     <div className="min-w-[782px] flex flex-col items-center gap-8 pt-10 pb-5">
       {/* Header */}
       <div className="flex flex-col items-center gap-2">
-        <div className="action-l text-[20px] text-text-muted">실제 가입자 후기만 모아봤어요.</div>
+        <div className="body-xl text-text-muted">실제 가입자 후기만 모아봤어요.</div>
         <div className="flex items-center">
           <Image
             src="/svgs/main-review-title-star.svg"
@@ -33,7 +33,7 @@ export default function ReviewSection() {
             width={70}
             height={70}
           />
-          <h2 className="heading-hero text-text-primary">고객 후기</h2>
+          <h2 className="heading-1 text-text-primary">고객 후기</h2>
         </div>
       </div>
 
