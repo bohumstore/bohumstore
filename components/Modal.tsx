@@ -2,13 +2,15 @@ import React, { ReactNode, useEffect, useRef, useCallback } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 
 interface ModalProps {
-  title: React.ReactNode;
+  title?: React.ReactNode;
   open: boolean;
   onClose: () => void;
   children: ReactNode;
+  hideHeader?: boolean;
+  hideFooter?: boolean;
 }
 
-export default function Modal({ title, open, onClose, children }: ModalProps) {
+export default function Modal({ title, open, onClose, children, hideHeader, hideFooter }: ModalProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const isClosingByBackRef = useRef(false);
 
@@ -122,33 +124,37 @@ export default function Modal({ title, open, onClose, children }: ModalProps) {
   if (!open) return null;
   return (
     <div
-      className="fixed inset-0 z-50 flex touch-none items-center justify-center bg-black/40 p-1 sm:p-4"
+      className="fixed inset-0 z-50 flex touch-none items-center justify-center bg-black/40"
       onTouchMove={(e) => e.stopPropagation()}
     >
       <div
-        className="relative flex max-h-[90vh] w-full max-w-lg touch-auto flex-col overflow-hidden rounded-xl bg-white text-text-primary shadow-2xl sm:max-h-[92vh]"
+        className="relative flex max-h-[90vh] w-full max-w-lg touch-auto flex-col overflow-hidden rounded-2xl bg-white text-text-primary shadow-2xl"
         onTouchMove={(e) => e.stopPropagation()}
       >
-        <div className="flex flex-shrink-0 items-center justify-between border-b border-gray-200 px-3 pb-1.5 pt-2 sm:px-6 sm:pb-2 sm:pt-4">
-          <div className="text-sm font-bold sm:text-lg md:text-xl">{title}</div>
-          <button onClick={handleClose} className="p-1 text-gray-400 hover:text-gray-700">
-            <XMarkIcon className="h-5 w-5 sm:h-6 sm:w-6" />
-          </button>
-        </div>
+        {!hideHeader && (
+          <div className="flex flex-shrink-0 items-center justify-between border-b border-gray-200 px-6 pb-2 pt-4">
+            <div className="text-lg font-bold">{title}</div>
+            <button onClick={handleClose} className="p-1 text-gray-400 hover:text-gray-700">
+              <XMarkIcon className="h-6 w-6" />
+            </button>
+          </div>
+        )}
         <div
           ref={contentRef}
-          className="flex-1 touch-auto overflow-y-auto overscroll-contain scroll-smooth px-2.5 py-1.5 sm:px-4 sm:py-3 md:px-6 md:py-4"
+          className="flex-1 touch-auto overflow-y-auto overscroll-contain scroll-smooth"
         >
           {children}
         </div>
-        <div className="flex flex-shrink-0 border-t border-gray-200">
-          <button
-            onClick={handleClose}
-            className="flex-1 border-r border-gray-200 bg-[#ffe15a] py-3 text-sm font-bold text-gray-900 transition hover:bg-yellow-200 sm:py-4 sm:text-base md:text-lg"
-          >
-            닫기
-          </button>
-        </div>
+        {!hideFooter && (
+          <div className="flex flex-shrink-0 border-t border-gray-200">
+            <button
+              onClick={handleClose}
+              className="flex-1 border-r border-gray-200 bg-[#ffe15a] py-4 text-base font-bold text-gray-900 transition hover:bg-yellow-200"
+            >
+              닫기
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
