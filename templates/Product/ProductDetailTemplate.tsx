@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, ReactNode } from 'react';
 import Footer from '@/components/shared/Footer';
-import PrivacyConsent from '@/components/PrivacyConsent';
 import Modal from '@/components/Modal';
 import Tabs from '@/components/Tabs';
 import RequiredNotice from '@/components/shared/RequiredNotice';
@@ -120,16 +119,7 @@ export default function ProductDetailTemplate({
       )}
 
       {/* 가입시 알아두실 사항 모달 (Notice 컴포넌트가 자체 Modal 포함) */}
-      {renderNotice && renderNotice({ open: showNotice, onClose: () => setShowNotice(false) })}
-      <Modal
-        title="개인정보 수집 및 이용 동의"
-        open={showPrivacy}
-        onClose={() => setShowPrivacy(false)}
-      >
-        <PrivacyConsent />
-      </Modal>
-
-      <div
+      {renderNotice && renderNotice({ open: showNotice, onClose: () => setShowNotice(false) })}      <div
         className="flex min-h-screen w-full flex-col items-center bg-[#f8f8f8] font-sans"
         onFocus={handleFocus}
         onBlur={handleBlur}

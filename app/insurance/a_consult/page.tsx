@@ -3,11 +3,8 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import Slogan from './components/Slogan';
 import Footer from '@/components/shared/Footer';
-import PrivacyConsent from '@/components/PrivacyConsent';
-import Modal from '@/components/Modal';
 
 export default function ConsultPage() {
-  const [showPrivacy, setShowPrivacy] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState(false);
@@ -40,19 +37,12 @@ export default function ConsultPage() {
 
   return (
     <>
-      <Modal
-        title="개인정보 수집 및 이용 동의"
-        open={showPrivacy}
-        onClose={() => setShowPrivacy(false)}
-      >
-        <PrivacyConsent />
-      </Modal>
       <div
         className="flex min-h-screen w-full flex-col items-center bg-[#f8f8f8] font-sans"
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
-        <Slogan onOpenPrivacy={() => setShowPrivacy(true)} onModalStateChange={setIsModalOpen} />
+        <Slogan onModalStateChange={setIsModalOpen} />
         {/* 필수안내사항 박스 */}
         <div className="flex w-full justify-center">
           <div className="mb-2 mt-6 w-full max-w-3xl px-6 py-0 text-xs text-gray-800 md:mb-4 md:mt-8 md:max-w-4xl md:text-sm lg:mb-6 lg:mt-10 lg:max-w-5xl">
@@ -74,7 +64,7 @@ export default function ConsultPage() {
         <Footer />
 
         {/* 플로팅 버튼 - 카톡상담 */}
-        {!isModalOpen && !showPrivacy && !isInputFocused && !isHeaderMenuOpen && (
+        {!isModalOpen && !isInputFocused && !isHeaderMenuOpen && (
           <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 sm:bottom-6 sm:right-6 sm:gap-3">
             <button
               onClick={() => window.open('https://pf.kakao.com/_lrubxb/chat', '_blank')}

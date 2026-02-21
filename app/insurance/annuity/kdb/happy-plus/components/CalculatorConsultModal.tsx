@@ -8,6 +8,7 @@ import { trackPremiumCheck } from '@/lib/visitorTracking';
 import FireworksEffect from '@/components/shared/FireworksEffect';
 import { useInsuranceForm } from '@/hooks/useInsuranceForm';
 import { useOTP } from '@/hooks/useOTP';
+import TextField from '@/components/TextField';
 
 const currentPath = '/insurance/annuity/kdb/happy-plus';
 const INSURANCE_COMPANY_ID = 2;
@@ -277,7 +278,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         </div>
         <div>
           <label className="block button-s text-text-secondary mb-1.5">이름 <span className="text-status-red">*</span></label>
-          <input type="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} className="w-full rounded-lg border border-border-default px-3 py-2.5 body-m outline-none focus:border-border-focus" placeholder="홍길동" />
+          <TextField ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} className="w-full" placeholder="홍길동" />
         </div>
       </div>
 
@@ -285,11 +286,11 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block button-s text-text-secondary mb-1.5">생년월일 <span className="text-status-red">*</span></label>
-          <input type="text" inputMode="numeric" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} maxLength={8} className="w-full rounded-lg border border-border-default px-3 py-2.5 body-m outline-none focus:border-border-focus" placeholder="19880818" />
+          <TextField type="text" inputMode="numeric" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} maxLength={8} className="w-full" placeholder="19880818" />
         </div>
         <div>
           <label className="block button-s text-text-secondary mb-1.5">연락처 <span className="text-status-red">*</span></label>
-          <input type="text" inputMode="numeric" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} maxLength={11} className="w-full rounded-lg border border-border-default px-3 py-2.5 body-m outline-none focus:border-border-focus" placeholder="01012345678" />
+          <TextField type="text" inputMode="numeric" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} maxLength={11} className="w-full" placeholder="01012345678" />
         </div>
       </div>
 
@@ -377,13 +378,13 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
             <p className="heading-5 text-text-primary mb-1 flex items-center">🔒 휴대폰 인증</p>
             <p className="body-s text-text-muted mb-3">정확한 연금액 확인을 위해 휴대폰 인증이 필요합니다.</p>
             <div className="flex gap-2 mb-3">
-              <input type="text" value={phone} readOnly className="flex-1 rounded-lg border border-border-default bg-page-bg px-3 py-2.5 body-m text-text-muted" />
+              <TextField type="text" value={phone} readOnly className="flex-1 bg-page-bg text-text-muted h-auto py-2.5" />
               <button onClick={handleSendOTP} className="min-w-[100px] rounded-lg bg-button px-4 py-2.5 button-m text-text-inverse transition hover:bg-button-hover whitespace-nowrap">
                 {canResend ? '인증번호 받기' : '재발송'}
               </button>
             </div>
             <div className="relative mb-4">
-              <input type="text" inputMode="numeric" maxLength={6} ref={otpInputRef} value={code} onChange={e => setCode(e.target.value.replace(/[^0-9]/g, ''))} className="w-full rounded-lg border border-border-default px-3 py-2.5 body-m outline-none focus:border-border-focus" placeholder="인증번호 6자리 입력" />
+              <TextField type="text" inputMode="numeric" maxLength={6} ref={otpInputRef} value={code} onChange={e => setCode(e.target.value.replace(/[^0-9]/g, ''))} className="w-full h-auto py-2.5" placeholder="인증번호 6자리 입력" />
               {!canResend && <span className="absolute right-3 top-1/2 -translate-y-1/2 body-m font-medium text-status-red">{formatTime(timer)}</span>}
             </div>
           </div>
@@ -443,13 +444,13 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
           <p className="heading-5 text-text-primary mb-1 flex items-center">🔒 휴대폰 인증</p>
           <p className="body-s text-text-muted mb-3">상담신청을 위해 휴대폰 인증이 필요해요.</p>
           <div className="flex gap-2 mb-3">
-            <input type="text" value={phone} readOnly className="flex-1 rounded-lg border border-border-default bg-page-bg px-3 py-2.5 body-m text-text-muted" />
+            <TextField type="text" value={phone} readOnly className="flex-1 bg-page-bg text-text-muted h-auto py-2.5" />
             <button onClick={handleSendOTP} className="min-w-[100px] rounded-lg bg-button px-4 py-2.5 button-m text-text-inverse transition hover:bg-button-hover whitespace-nowrap">
               {canResend ? '인증번호 받기' : '재발송'}
             </button>
           </div>
           <div className="relative mb-2">
-            <input type="text" inputMode="numeric" maxLength={6} ref={consultOtpInputRef} value={code} onChange={e => setCode(e.target.value.replace(/[^0-9]/g, ''))} className="w-full rounded-lg border border-border-default px-3 py-2.5 body-m outline-none focus:border-border-focus" placeholder="인증번호 6자리 입력" />
+            <TextField type="text" inputMode="numeric" maxLength={6} ref={consultOtpInputRef} value={code} onChange={e => setCode(e.target.value.replace(/[^0-9]/g, ''))} className="w-full h-auto py-2.5" placeholder="인증번호 6자리 입력" />
             {!canResend && <span className="absolute right-3 top-1/2 -translate-y-1/2 body-m font-medium text-status-red">{formatTime(timer)}</span>}
           </div>
         </div>

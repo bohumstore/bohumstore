@@ -3,14 +3,12 @@ import { useEffect, useState } from 'react';
 import React from 'react';
 import Slogan from './components/Slogan';
 import Footer from '@/components/shared/Footer';
-import PrivacyConsent from '@/components/PrivacyConsent';
 import Modal from '@/components/Modal';
 import Notice from './components/Notice';
 import { trackPageVisit } from '@/lib/visitorTracking';
 
 export default function CarerInsurancePage() {
   const [showNotice, setShowNotice] = useState(false);
-  const [showPrivacy, setShowPrivacy] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState(false);
@@ -66,19 +64,12 @@ export default function CarerInsurancePage() {
         }
       `}</style>
       <Notice open={showNotice} onClose={() => setShowNotice(false)} />
-      <Modal
-        title="개인정보 수집 및 이용 동의"
-        open={showPrivacy}
-        onClose={() => setShowPrivacy(false)}
-      >
-        <PrivacyConsent />
-      </Modal>
       <div
         className="flex min-h-screen w-full flex-col items-center bg-[#f8f8f8] font-sans"
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
-        <Slogan onOpenPrivacy={() => setShowPrivacy(true)} onModalStateChange={setIsModalOpen} />
+        <Slogan onModalStateChange={setIsModalOpen} />
 
         {/* 히어로 이미지 배너 */}
         <div className="w-full md:px-6 md:py-12 lg:px-8 lg:py-12">
@@ -494,7 +485,7 @@ export default function CarerInsurancePage() {
         <Footer />
 
         {/* 오른쪽 하단 플로팅 액션 버튼들 - 모달이 열렸을 때는 숨김 */}
-        {!isModalOpen && !showPrivacy && !showNotice && !isInputFocused && !isHeaderMenuOpen && (
+        {!isModalOpen && !showNotice && !isInputFocused && !isHeaderMenuOpen && (
           <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 sm:bottom-6 sm:right-6 sm:gap-3">
             {/* 상담신청 버튼 */}
             <button
