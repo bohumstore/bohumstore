@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../supabase';
-import logger from '@/lib/logger';
+import logger from '@/app/lib/logger';
 
 export async function GET(request: NextRequest) {
   try {
@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     // 기본 날짜 범위 (최근 30일)
     const defaultDateFrom = new Date();
     defaultDateFrom.setDate(defaultDateFrom.getDate() - 30);
-
+    
     const startDate = date_from || defaultDateFrom.toISOString().split('T')[0];
     const endDate = date_to || new Date().toISOString().split('T')[0];
 
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     const { count: totalVisitors, error: totalError } = await supabase
       .from('visitor_tracking')
       .select('*', { count: 'exact', head: true });
-
+    
     if (totalError) {
       logger.error('VISITOR_STATS', '전체 방문자 수 조회 오류', totalError);
     } else {
@@ -34,52 +34,54 @@ export async function GET(request: NextRequest) {
       .not('counsel_type_id', 'is', null);
 
     // 3. 디바이스별 통계
-    const { data: deviceStats } = await supabase.from('visitor_tracking').select('device_type');
+    const { data: deviceStats } = await supabase
+      .from('visitor_tracking')
+      .select('device_type');
 
     // 4. 브라우저별 통계
-    const { data: browserStats } = await supabase.from('visitor_tracking').select('browser');
+    const { data: browserStats } = await supabase
+      .from('visitor_tracking')
+      .select('browser');
 
     // 5. OS별 통계
-    const { data: osStats } = await supabase.from('visitor_tracking').select('os');
+    const { data: osStats } = await supabase
+      .from('visitor_tracking')
+      .select('os');
 
     // 6. IP 주소별 고유 방문자 수
-    const { data: uniqueIPStats } = await supabase.from('visitor_tracking').select('ip_address');
+    const { data: uniqueIPStats } = await supabase
+      .from('visitor_tracking')
+      .select('ip_address');
 
     // 고유 IP 수 계산
-    const uniqueIPs = uniqueIPStats
-      ? new Set(uniqueIPStats.map((item) => item.ip_address)).size
-      : 0;
+    const uniqueIPs = uniqueIPStats ? new Set(uniqueIPStats.map(item => item.ip_address)).size : 0;
 
     // 상담 유형별 통계 정리
-    const counselTypeCounts =
-      counselTypeStats?.reduce((acc: any, item: any) => {
-        const typeId = item.counsel_type_id;
-        if (typeId === 1) acc['보험료 확인'] = (acc['보험료 확인'] || 0) + 1;
-        else if (typeId === 2) acc['상담신청'] = (acc['상담신청'] || 0) + 1;
-        else acc['기타'] = (acc['기타'] || 0) + 1;
-        return acc;
-      }, {}) || {};
+    const counselTypeCounts = counselTypeStats?.reduce((acc: any, item: any) => {
+      const typeId = item.counsel_type_id;
+      if (typeId === 1) acc['보험료 확인'] = (acc['보험료 확인'] || 0) + 1;
+      else if (typeId === 2) acc['상담신청'] = (acc['상담신청'] || 0) + 1;
+      else acc['기타'] = (acc['기타'] || 0) + 1;
+      return acc;
+    }, {}) || {};
 
     // 디바이스별 통계 정리
-    const deviceCounts =
-      deviceStats?.reduce((acc: any, item: any) => {
-        acc[item.device_type] = (acc[item.device_type] || 0) + 1;
-        return acc;
-      }, {}) || {};
+    const deviceCounts = deviceStats?.reduce((acc: any, item: any) => {
+      acc[item.device_type] = (acc[item.device_type] || 0) + 1;
+      return acc;
+    }, {}) || {};
 
     // 브라우저별 통계 정리
-    const browserCounts =
-      browserStats?.reduce((acc: any, item: any) => {
-        acc[item.browser] = (acc[item.browser] || 0) + 1;
-        return acc;
-      }, {}) || {};
+    const browserCounts = browserStats?.reduce((acc: any, item: any) => {
+      acc[item.browser] = (acc[item.browser] || 0) + 1;
+      return acc;
+    }, {}) || {};
 
     // OS별 통계 정리
-    const osCounts =
-      osStats?.reduce((acc: any, item: any) => {
-        acc[item.os] = (acc[item.os] || 0) + 1;
-        return acc;
-      }, {}) || {};
+    const osCounts = osStats?.reduce((acc: any, item: any) => {
+      acc[item.os] = (acc[item.os] || 0) + 1;
+      return acc;
+    }, {}) || {};
 
     const responseData = {
       dateRange: { startDate, endDate },
@@ -90,12 +92,16 @@ export async function GET(request: NextRequest) {
       browserStats: browserCounts,
       osStats: osCounts,
     };
-
+    
     logger.debug('VISITOR_STATS', '최종 응답 데이터 준비 완료');
-
+    
     return NextResponse.json(responseData);
+
   } catch (error) {
     logger.error('VISITOR_STATS', 'API error', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }

@@ -1,7 +1,6 @@
 # 🚀 EC2 배포 가이드
 
 ## 문제 발생 원인
-
 - 로컬에서 `git push`만 하고 EC2 서버에서 `git pull`을 안 해서 발생
 - EC2 디스크 용량 부족 (99.8%)
 
@@ -21,7 +20,6 @@
 ### 방법 2: 수동 배포 (현재 방식)
 
 #### 로컬 PC에서:
-
 ```bash
 git add .
 git commit -m "커밋 메시지"
@@ -29,10 +27,8 @@ git push origin master
 ```
 
 #### EC2 서버에서:
-
 1. AWS 콘솔 → EC2 → 인스턴스 → "연결" → "EC2 Instance Connect"
 2. 터미널에서 실행:
-
 ```bash
 cd /home/ubuntu/bohumstore
 git pull origin master
@@ -62,7 +58,6 @@ bash cleanup-ec2.sh
 ```
 
 또는 직접 실행:
-
 ```bash
 # npm 캐시 정리
 npm cache clean --force
@@ -88,7 +83,6 @@ df -h
 GitHub Actions가 이미 설정되어 있지만 비활성화 상태입니다.
 
 활성화하려면:
-
 1. GitHub 저장소 → Settings → Secrets and variables → Actions
 2. 다음 Secrets 추가:
    - `EC2_HOST`: EC2 IP 주소
@@ -105,20 +99,17 @@ GitHub Actions가 이미 설정되어 있지만 비활성화 상태입니다.
 ## 📊 모니터링
 
 ### 디스크 용량 확인:
-
 ```bash
 df -h
 ```
 
 ### PM2 상태 확인:
-
 ```bash
 pm2 status
 pm2 logs bohumstore
 ```
 
 ### 서버 재시작:
-
 ```bash
 pm2 restart bohumstore
 ```
@@ -129,7 +120,8 @@ pm2 restart bohumstore
 
 1. **디스크 용량**: 90% 이상 차면 빌드 실패
    - 정기적으로 `cleanup-ec2.sh` 실행
-2. **배포 후 확인**:
+   
+2. **배포 후 확인**: 
    - 핸드폰 브라우저 캐시 삭제
    - 시크릿 모드로 확인
 
@@ -142,7 +134,6 @@ pm2 restart bohumstore
 ## 🎯 빠른 참조
 
 ### 로컬 → GitHub:
-
 ```bash
 git add .
 git commit -m "메시지"
@@ -150,13 +141,11 @@ git push origin master
 ```
 
 ### EC2 업데이트:
-
 ```bash
 cd /home/ubuntu/bohumstore && git pull && npm install && npm run build && pm2 restart bohumstore
 ```
 
 ### 용량 정리:
-
 ```bash
 npm cache clean --force && sudo apt clean && sudo apt autoremove -y
 ```

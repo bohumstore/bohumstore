@@ -6,8 +6,8 @@ export type PaymentPeriod = '5년납' | '7년납' | '10년납';
 
 interface RefundRateData {
   [age: number]: {
-    M: number; // 남자 환급률
-    F: number; // 여자 환급률
+    M: number;  // 남자 환급률
+    F: number;  // 여자 환급률
   };
 }
 
@@ -201,13 +201,17 @@ export const REFUND_RATE_TABLE: RefundRateTable = {
  * @param gender 성별 ('M' | 'F')
  * @returns 환급률 (예: 124.9) 또는 null (해당 데이터 없음)
  */
-export function getRefundRate(period: PaymentPeriod, age: number, gender: Gender): number | null {
+export function getRefundRate(
+  period: PaymentPeriod,
+  age: number,
+  gender: Gender
+): number | null {
   const periodData = REFUND_RATE_TABLE[period];
   if (!periodData) return null;
-
+  
   const ageData = periodData[age];
   if (!ageData) return null;
-
+  
   return ageData[gender] ?? null;
 }
 
@@ -227,12 +231,12 @@ export function calculateRefund(
 ): { rate: number; interest: number; refund: number; total: number } | null {
   const rate = getRefundRate(period, age, gender);
   if (rate === null) return null;
-
+  
   const years = parseInt(period.replace(/[^0-9]/g, ''));
   const total = monthlyPremium * 12 * years;
   const rateDecimal = rate / 100;
   const refund = Math.round(total * rateDecimal);
   const interest = refund - total;
-
+  
   return { rate, interest, refund, total };
 }

@@ -1,11 +1,11 @@
 import axios from 'axios';
-import logger from '@/lib/logger';
+import logger from '@/app/lib/logger';
 
-const request = axios.create({
+const request = axios.create({ 
   timeout: 15000, // 15초로 늘림
   headers: {
     'Content-Type': 'application/json',
-  },
+  }
 });
 
 // 요청 인터셉터 추가

@@ -3,7 +3,7 @@ const nextConfig = {
   // Standalone 모드 활성화 (도커/EC2 배포 시 필수 최적화)
   // 필요한 파일만 추려서 실행하므로 가볍고 빠름
   output: 'standalone',
-
+  
   turbopack: {
     rules: {
       '*.svg': {
@@ -18,8 +18,8 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'via.placeholder.com',
-        port: '', // 빈 문자열이면 모든 포트 허용
-        pathname: '/**', // 모든 경로 허용
+        port: '',       // 빈 문자열이면 모든 포트 허용
+        pathname: '/**' // 모든 경로 허용
       },
     ],
     // 로컬 이미지 최적화 설정
@@ -34,12 +34,11 @@ const nextConfig = {
           // 네이버 검색로봇 접근 허용을 위한 헤더 설정
           { key: 'X-Robots-Tag', value: 'index, follow' },
           // 캐시 설정: 개발 환경에서는 짧게, 프로덕션에서는 길게
-          {
-            key: 'Cache-Control',
-            value:
-              process.env.NODE_ENV === 'development'
-                ? 'no-cache, no-store, must-revalidate'
-                : 'public, max-age=3600, s-maxage=86400',
+          { 
+            key: 'Cache-Control', 
+            value: process.env.NODE_ENV === 'development' 
+              ? 'no-cache, no-store, must-revalidate' 
+              : 'public, max-age=3600, s-maxage=86400'
           },
         ],
       },

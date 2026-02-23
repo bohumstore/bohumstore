@@ -55,7 +55,7 @@ server.setRequestHandler('resources/list', async () => {
 
 server.setRequestHandler('resources/read', async (request) => {
   const { uri } = request.params;
-
+  
   if (uri === 'supabase://database') {
     // 데이터베이스 정보 반환
     return {
@@ -71,7 +71,7 @@ server.setRequestHandler('resources/read', async (request) => {
       ],
     };
   }
-
+  
   throw new Error(`Unknown resource: ${uri}`);
 });
 
@@ -171,7 +171,7 @@ server.setRequestHandler('tools/list', async () => {
 
 server.setRequestHandler('tools/call', async (request) => {
   const { name, arguments: args } = request.params;
-
+  
   try {
     switch (name) {
       case 'query_users':
@@ -179,9 +179,9 @@ server.setRequestHandler('tools/call', async (request) => {
           .from('user')
           .select('*')
           .limit(args.limit || 10);
-
+        
         if (usersError) throw usersError;
-
+        
         return {
           content: [
             {
@@ -190,7 +190,7 @@ server.setRequestHandler('tools/call', async (request) => {
             },
           ],
         };
-
+      
       case 'create_user':
         const { data: newUser, error: createError } = await supabase
           .from('user')
@@ -202,9 +202,9 @@ server.setRequestHandler('tools/call', async (request) => {
           })
           .select()
           .single();
-
+        
         if (createError) throw createError;
-
+        
         return {
           content: [
             {
@@ -213,15 +213,15 @@ server.setRequestHandler('tools/call', async (request) => {
             },
           ],
         };
-
+      
       case 'query_counsel':
         const { data: counsel, error: counselError } = await supabase
           .from('counsel')
           .select('*')
           .limit(args.limit || 10);
-
+        
         if (counselError) throw counselError;
-
+        
         return {
           content: [
             {
@@ -230,7 +230,7 @@ server.setRequestHandler('tools/call', async (request) => {
             },
           ],
         };
-
+      
       case 'create_counsel':
         const { data: newCounsel, error: counselCreateError } = await supabase
           .from('counsel')
@@ -242,9 +242,9 @@ server.setRequestHandler('tools/call', async (request) => {
           })
           .select()
           .single();
-
+        
         if (counselCreateError) throw counselCreateError;
-
+        
         return {
           content: [
             {
@@ -253,7 +253,7 @@ server.setRequestHandler('tools/call', async (request) => {
             },
           ],
         };
-
+      
       default:
         throw new Error(`Unknown tool: ${name}`);
     }
@@ -272,4 +272,4 @@ server.setRequestHandler('tools/call', async (request) => {
 
 // 서버 시작
 const transport = new StdioServerTransport();
-await server.connect(transport);
+await server.connect(transport); 

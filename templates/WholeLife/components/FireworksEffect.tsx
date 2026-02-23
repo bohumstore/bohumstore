@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useEffect, useState } from 'react';
 import { Fireworks } from 'fireworks/lib/react';
@@ -42,7 +42,7 @@ const FireworksEffect: React.FC<FireworksEffectProps> = ({ show, duration = 2000
       '#007aff', // blue
       '#5856d6', // purple
       '#ff2d55', // pink
-      '#fff', // white
+      '#fff',    // white
       '#34c759', // lime
       '#af52de', // violet
       '#ffd60a', // gold
@@ -52,25 +52,25 @@ const FireworksEffect: React.FC<FireworksEffectProps> = ({ show, duration = 2000
     calc: (props: any, i: number) => ({
       ...props,
       x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0,
-      y: 180,
-    }),
+      y: 180
+    })
   };
 
   if (!isMounted || !visible) return null;
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        width: '100vw',
-        height: '100vh',
-        top: 0,
-        left: 0,
-        pointerEvents: 'none',
-        zIndex: 9999,
-      }}
-    >
-      <Fireworks {...fxProps} />
+    <div style={{
+      position: 'fixed',
+      width: '100vw',
+      height: '100vh',
+      top: 0,
+      left: 0,
+      pointerEvents: 'none',
+      zIndex: 9999
+    }}>
+      <Fireworks
+        {...fxProps}
+      />
     </div>
   );
 };
