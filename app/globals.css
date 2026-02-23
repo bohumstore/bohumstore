@@ -1,4 +1,4 @@
-/* Self-hosted Pretendard font-face */
+/* 폰트 설정 */
 @font-face {
   font-family: 'Pretendard';
   src: url('/fonts/Pretendard-Regular.woff2') format('woff2');
@@ -24,15 +24,143 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design Tokens */
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Button */
+  --button-default: #2f6bff;
+  --button-hover: #2559d6;
+  --button-press: #1e49b8;
+  --button-disabled: #c7d2fe;
+  --button-talk: #fee500;
+
+  /* Category */
+  --category-health: #3b82f6;
+  --category-variable: #f59e0b;
+  --category-life: #22c55e;
+  --category-purple: #7c3aed;
+
+  /* Status */
+  --status-green: #22c55e;
+  --status-yellow: #f59e0b;
+  --status-red: #ef4444;
+  --status-info: #60a5fa;
+
+  /* Brand */
+  --brand-primary: #1f6feb;
+  --brand-primary-hover: #165edb;
+  --brand-primary-soft: #eff6ff;
+  --brand-primary-disabled: #bfdbfe;
+
+  /* Border */
+  --border-default: #e5e7eb;
+  --border-focus: #60a5fa;
+  --border-accent: #bfdbfe;
+
+  /* Card */
+  --card-service: #eef2f7;
+  --card-review: #f3f5f9;
+
+  /* Background */
+  --bg-blue: #f2f7ff;
+  --page-bg: #f9fafb;
+  --section-bg: #f1f5ff;
+  --divider: #e5e7eb;
+
+  /* Text */
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
+  --text-disabled: #9ca3af;
+  --text-inverse: #ffffff;
+
+  /* 제품 페이지 전용 색상 */
+  --product-primary: #1f6feb;
 }
 
-/* 숫자 가독성 보강 */
-.num-strong { font-variant-numeric: lining-nums; font-weight: 700; }
-.num-semibold { font-variant-numeric: lining-nums; font-weight: 600; }
-.num-medium { font-variant-numeric: lining-nums; font-weight: 500; }
+/* ── 디자인 시스템 타이포그래피 (Design System Typography) ── */
+/* 폰트: Pretendard (전역 적용) */
+@layer components {
+  /* ── Heading ── */
+  .heading-1 {
+    font-size: 3.125rem; /* 50px */
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .heading-2 {
+    font-size: 2rem; /* 32px */
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .heading-3 {
+    font-size: 1.5rem; /* 24px */
+    font-weight: 800;
+    line-height: 1.3;
+  }
+  .heading-4 {
+    font-size: 1.5rem; /* 24px */
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .heading-5 {
+    font-size: 1rem; /* 16px */
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  /* ── Body ── */
+  .body-xl {
+    font-size: 1.125rem; /* 18px */
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .body-l {
+    font-size: 1rem; /* 16px */
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .body-m {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .body-s {
+    font-size: 0.75rem; /* 12px */
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  /* ── Button ── */
+  .button-l {
+    font-size: 1rem; /* 16px */
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .button-m {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .button-s {
+    font-size: 0.75rem; /* 12px */
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  /* ── Caption ── */
+  .caption-r {
+    font-size: 0.75rem; /* 12px */
+    font-weight: 400;
+    line-height: 1.3;
+  }
+  .caption-s {
+    font-size: 0.625rem; /* 10px */
+    font-weight: 400;
+    line-height: 1.3;
+  }
+}
 
 /* 테이블 스크롤바 항상 표시 (모바일에서 스크롤 가능 여부 인지) */
 .overflow-x-auto {
@@ -58,28 +186,29 @@
   background: #94a3b8;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif !important;
+  font-family:
+    'Pretendard',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Malgun Gothic',
+    'Apple SD Gothic Neo',
+    sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-display: swap;
 }
 
 /* WebView 텍스트 자동 확대/굵기 방지 */
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
-/* 네이버 앱 웹뷰에서만 적용되는 시스템 폰트 스타일 (JavaScript에서 동적으로 처리) */
-
-/* 네이버 파워링크 환경 대응 - 폰트 로딩 실패 시 일관된 렌더링 */
+/* 네이버 파워링크 환경 대응 */
 @font-face {
   font-family: 'Pretendard';
   font-style: normal;
@@ -88,168 +217,70 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   src: local('Pretendard Regular'), local('Pretendard-Regular');
 }
 
-/* 폰트 로딩 상태별 스타일 통일 */
-.font-loading {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-  visibility: hidden;
-}
+/* Product Page Reusable Component Classes */
+@layer components {
+  /* Page Title (e.g., 가입안내, 보험금 지급기준, 해약환급금 예시) */
+  .product-page-title {
+    @apply border-b-2 border-text-primary pb-2 text-2xl font-bold text-text-primary;
+  }
 
-.font-loaded {
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-  visibility: visible;
-}
+  /* Section Title (e.g., 상품명 및 상품유형, 상품 구성) */
+  .product-section-title {
+    @apply border-l-4 border-product-primary pl-3 text-xl font-bold text-text-primary;
+  }
 
-/* 콘텐츠 보호 스타일 - 개발 환경에서는 적용되지 않음 */
-.content-protection {
-  /* 텍스트 선택 방지 */
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  
-  /* 드래그 방지 */
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;
-  
-  /* 하이라이트 방지 */
-  -webkit-touch-callout: none;
-  -webkit-tap-highlight-color: transparent;
-}
+  /* Sub Section Title (e.g., 주계약, 유지보너스) */
+  .product-sub-title {
+    @apply text-lg font-bold text-text-primary;
+  }
 
-/* 이미지 보호 */
-.content-protection img {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;
-  
-  pointer-events: none;
-}
+  /* Small Sub Section Title (e.g., 제도성 특약) */
+  .product-small-title {
+    @apply text-base font-semibold text-text-primary;
+  }
 
-/* 인쇄시 숨김 */
-@media print {
-  .content-protection {
-    display: none !important;
+  /* Standard Product Table */
+  .product-table {
+    @apply w-full border-collapse text-sm;
+  }
+
+  /* Table Header Row */
+  .product-table-header {
+    @apply bg-product-primary text-white;
+  }
+
+  /* Table Header Cell */
+  .product-table-th {
+    @apply border border-[#6b7280] p-3 text-center font-normal;
+  }
+
+  /* Table Body */
+  .product-table-body {
+    @apply text-text-primary;
+  }
+
+  /* Table Body Cell */
+  .product-table-td {
+    @apply border border-[#6b7280] p-3;
+  }
+
+  /* Center-aligned Body Cell */
+  .product-table-td-center {
+    @apply product-table-td text-center;
+  }
+
+  /* Body Text (Paragraphs) */
+  .product-text {
+    @apply text-base text-text-primary;
+  }
+
+  /* Caption / Small Text */
+  .product-caption {
+    @apply text-xs text-text-disabled;
+  }
+
+  /* Info Box */
+  .product-info-box {
+    @apply space-y-2 rounded-lg border border-divider bg-section-bg p-4 text-sm text-text-primary;
   }
 }
-
-/* 입력 필드에서는 선택 허용 */
-.content-protection input,
-.content-protection textarea,
-.content-protection select,
-.content-protection [contenteditable="true"] {
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
-  user-select: text !important;
-  
-  -webkit-user-drag: auto !important;
-  -khtml-user-drag: auto !important;
-  -moz-user-drag: auto !important;
-  -o-user-drag: auto !important;
-  user-drag: auto !important;
-  
-  pointer-events: auto !important;
-}
-
-@keyframes shine {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-.animate-shine {
-  animation: shine 2s ease-in-out infinite;
-}
-
-@keyframes shine-strong {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-.animate-shine-strong {
-  animation: shine-strong 1.5s ease-in-out infinite;
-}
-
-@keyframes wobble-shake {
-  0% { 
-    transform: translateX(-8px) rotate(-2deg);
-    filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.12));
-  }
-  50% { 
-    transform: translateX(8px) rotate(2deg);
-    filter: drop-shadow(-2px 4px 8px rgba(0, 0, 0, 0.12));
-  }
-  100% { 
-    transform: translateX(-8px) rotate(-2deg);
-    filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.12));
-  }
-}
-
-@keyframes jump-glow {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 #e23c3c); }
-  30% { transform: scale(1.18) translateY(-6px); filter: drop-shadow(0 0 8px #f87171); }
-  60% { transform: scale(0.95) translateY(2px); filter: drop-shadow(0 0 0 #e23c3c); }
-}
-
-@keyframes shine-inline {
-  0% { left: -100%; }
-  100% { left: 100%; }
-}
-
-/* 홈페이지 슬로건 캐러셀 애니메이션 */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideInLeft {
-  from { 
-    opacity: 0; 
-    transform: translateX(-30px); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translateX(0); 
-  }
-}
-
-@keyframes slideInUp {
-  from { 
-    opacity: 0; 
-    transform: translateY(20px); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-out both;
-}
-
-.animate-slide-in-left {
-  animation: slideInLeft 0.8s ease-out both;
-}
-
-.animate-slide-in-up {
-  animation: slideInUp 0.6s ease-out both;
-}
-

@@ -1,14 +1,26 @@
-import React from 'react'
-import Image from 'next/image'
+import React from 'react';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#f8f8f8] border-t border-gray-200 py-8 mt-4">
-      <div className="max-w-5xl mx-auto px-4 text-center text-gray-500 text-sm flex flex-col gap-2">
-        <div className="flex justify-center items-center gap-6 mb-2">
-          <Image src="/metarich-logo1.png" alt="MetaRich 로고" width={120} height={40} style={{objectFit:'contain',height:'40px'}} />
-          <span className="h-8 w-px bg-gray-300 mx-2 inline-block" />
-          <Image src="/bohumstore-logo.png" alt="보험스토어 로고" width={120} height={40} style={{objectFit:'contain',height:'40px'}} />
+    <footer className="mt-4 w-full border-t border-gray-200 bg-[#f8f8f8] py-8">
+      <div className="mx-auto flex max-w-5xl flex-col gap-2 px-4 text-center text-sm text-gray-500">
+        <div className="mb-2 flex items-center justify-center gap-6">
+          <Image
+            src="/images/logos/metarich-logo.png"
+            alt="MetaRich 로고"
+            width={120}
+            height={40}
+            style={{ objectFit: 'contain', height: '40px' }}
+          />
+          <span className="mx-2 inline-block h-8 w-px bg-gray-300" />
+          <Image
+            src="/bohumstore-logo.png"
+            alt="보험스토어 로고"
+            width={120}
+            height={40}
+            style={{ objectFit: 'contain', height: '40px' }}
+          />
         </div>
         {/* <div className="font-bold text-gray-700">보험스토어</div> */}
         <div>(주)메타리치보험대리점 | 대리점등록번호: 제2023070016호</div>
@@ -18,5 +30,5 @@ export default function Footer() {
         <div className="mt-2">© {new Date().getFullYear()} BohumStore. All rights reserved.</div>
       </div>
     </footer>
-  )
+  );
 }
