@@ -27,12 +27,6 @@ export default function KDBHappyDreamAnnuityPage() {
         '최저보증연금은 연금개시 이전 중도해지시에는 최저보증이 되지 않아 운용결과에 따라 해지환급금에 손실이 발생할 수 있습니다.',
       ]}
       approvalNumber="25080085호 (2025.08.13~2026.08.12)"
-      globalStyles={`
-        @keyframes jump-glow {
-          0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 #3a80e0); }
-          30% { transform: scale(1.18) translateY(-6px); filter: drop-shadow(0 0 8px #87b7f0); }
-          60% { transform: scale(0.95) translateY(2px); filter: drop-shadow(0 0 0 #3a80e0); }
-        }`}
     />
   );
 }

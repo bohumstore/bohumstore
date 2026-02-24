@@ -12,11 +12,15 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ variant, size = 's', children, className = '', ...props }, ref) => {
     const isPrimary = variant === 'primary';
 
-    const sizeStyle = size === 'm' ? 'h-[44px] min-w-[134px] text-[15px]' : 'h-[36px] min-w-[134px] text-[14px]';
-    const baseStyle = `inline-flex items-center justify-center gap-[4px] rounded-[4px] ${sizeStyle} font-bold transition-opacity hover:opacity-90 flex-shrink-0`;
+    const sizeStyle = size === 'm' 
+      ? 'h-[40px] px-6 text-[16px] font-bold' 
+      : 'h-[36px] min-w-[120px] px-4 text-[14px] font-normal';
+      
+    const baseStyle = `inline-flex items-center justify-center gap-[6px] rounded-[4px] ${sizeStyle} transition-opacity hover:opacity-90 flex-shrink-0 active:scale-[0.98]`;
+    
     const variantStyle = isPrimary
-      ? 'bg-[#2F6BFF] text-[#FFFFFF]' // primary (상담신청)
-      : 'bg-[#FEE500] text-[#111827]'; // kakao (채팅상담)
+      ? 'bg-[#2F6BFF] text-[#E5E7EB] shadow-sm' // primary (상담신청)
+      : 'bg-[#FEE500] text-[#111827] shadow-sm'; // kakao (채팅상담)
 
     const icon = isPrimary ? (
       <img

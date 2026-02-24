@@ -3,10 +3,8 @@ import React from 'react';
 export default function ProductInfo() {
   return (
     <div className="space-y-6 px-2 py-4 sm:space-y-8 sm:px-4 md:px-8 md:py-6">
-      {/* 가입안내 제목 */}
       <h2 className="product-page-title">가입안내</h2>
 
-      {/* 기본 가입정보 */}
       <div className="space-y-4">
         <div className="overflow-x-auto">
           <table className="product-table">
@@ -42,7 +40,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 가입연령 */}
       <div className="space-y-4">
         <div className="overflow-x-auto">
           <table className="product-table">
@@ -128,7 +125,6 @@ export default function ProductInfo() {
         </p>
       </div>
 
-      {/* 주계약 보험료 예시 - 저해약환급금형Ⅰ */}
       <h2 className="product-page-title">주계약 보험료 예시</h2>
       <div className="space-y-4">
         <h4 className="product-small-title">- 저해약환급금형Ⅰ</h4>
@@ -167,7 +163,6 @@ export default function ProductInfo() {
           * 보험료는 가입나이, 성별, 납입기간 등에 따라 달라질 수 있습니다.
         </p>
 
-        {/* 저해약환급금형Ⅱ */}
         <h4 className="product-small-title mt-6">- 저해약환급금형Ⅱ</h4>
         <p className="product-caption text-right">
           예시기준 : 주계약 가입금액 1만달러, 10년납, 월납, 단위 : 달러
@@ -205,7 +200,6 @@ export default function ProductInfo() {
         </p>
       </div>
 
-      {/* 유지보너스 */}
       <h2 className="product-page-title">유지보너스</h2>
       <div className="space-y-4">
         <p className="product-text">
@@ -219,7 +213,6 @@ export default function ProductInfo() {
           </p>
         </div>
 
-        {/* 유지보너스 발생일 - 저해약환급금형Ⅰ */}
         <h4 className="product-small-title mt-4 text-[#8B9A2B]">* 유지보너스 발생일</h4>
         <p className="product-text font-semibold">- 저해약환급금형Ⅰ</p>
         <div className="overflow-x-auto">
@@ -243,7 +236,6 @@ export default function ProductInfo() {
           </table>
         </div>
 
-        {/* 유지보너스 발생일 - 저해약환급금형Ⅱ */}
         <p className="product-text mt-4 font-semibold">- 저해약환급금형Ⅱ</p>
         <div className="overflow-x-auto">
           <table className="product-table">
@@ -278,7 +270,6 @@ export default function ProductInfo() {
           </table>
         </div>
 
-        {/* 유지보너스 지급률 - 저해약환급금형Ⅰ */}
         <h4 className="product-small-title mt-4 text-[#8B9A2B]">* 유지보너스 지급률</h4>
         <p className="product-text font-semibold">- 저해약환급금형Ⅰ</p>
         <div className="overflow-x-auto">
@@ -298,7 +289,6 @@ export default function ProductInfo() {
           </table>
         </div>
 
-        {/* 유지보너스 지급률 - 저해약환급금형Ⅱ */}
         <p className="product-text mt-4 font-semibold">- 저해약환급금형Ⅱ</p>
         <div className="overflow-x-auto">
           <table className="product-table">

@@ -43,7 +43,6 @@ export default function ConsultPage() {
         onBlur={handleBlur}
       >
         <Slogan onModalStateChange={setIsModalOpen} />
-        {/* 필수안내사항 박스 */}
         <div className="flex w-full justify-center">
           <div className="mb-2 mt-6 w-full max-w-3xl px-6 py-0 text-xs text-gray-800 md:mb-4 md:mt-8 md:max-w-4xl md:text-sm lg:mb-6 lg:mt-10 lg:max-w-5xl">
             <div className="mb-1 font-bold">[ 필수안내사항 ]</div>
@@ -63,7 +62,6 @@ export default function ConsultPage() {
         </div>
         <Footer />
 
-        {/* 플로팅 버튼 - 카톡상담 */}
         {!isModalOpen && !isInputFocused && !isHeaderMenuOpen && (
           <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 sm:bottom-6 sm:right-6 sm:gap-3">
             <button
@@ -79,7 +77,6 @@ export default function ConsultPage() {
               />
             </button>
 
-            {/* 맨 위로 버튼 */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="rounded-full border border-border-default bg-white p-3 text-text-secondary shadow-lg transition-all duration-200 hover:bg-page-bg hover:shadow-xl sm:p-4"

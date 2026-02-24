@@ -3,7 +3,6 @@ import React from 'react';
 export default function ProductInfo() {
   return (
     <div className="space-y-6 px-2 py-3 sm:px-4 md:px-8 md:py-4">
-      {/* 연단리 8% 연금기준금액 */}
       <div className="space-y-4">
         <h3 className="product-section-title">연단리 8% 연금기준금액</h3>
         <div className="product-info-box">
@@ -36,7 +35,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 실적배당종신연금보증형 보장 */}
       <div className="space-y-4">
         <h3 className="product-section-title">실적배당종신연금보증형 보장</h3>
         <div className="product-info-box">
@@ -69,7 +67,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 최저사망계약자적립액 보증 */}
       <div className="space-y-4">
         <h3 className="product-section-title">최저사망계약자적립액 보증</h3>
         <div className="product-info-box">
@@ -110,7 +107,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 유연한 자금운용 */}
       <div className="space-y-4">
         <h3 className="product-section-title">유연한 자금운용</h3>
         <div className="product-info-box">
@@ -160,7 +156,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 무심사 가입 및 조기연금개시 */}
       <div className="space-y-4">
         <h3 className="product-section-title">무심사 가입 및 조기연금개시</h3>
         <div className="product-info-box">
@@ -183,7 +178,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 가입안내 */}
       <div className="space-y-4">
         <h3 className="product-section-title">가입안내</h3>
         <div className="product-info-box">

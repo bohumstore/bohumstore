@@ -4,10 +4,24 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Button from '@/components/shared/Button';
+import { useResponsive } from '@/hooks/useResponsive';
+import { useRef, useEffect } from 'react';
+import { Bars3Icon, XMarkIcon, ChevronRightIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 
 export default function Header() {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const { isMobile } = useResponsive();
+  const headerRef = useRef<HTMLElement>(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  useEffect(() => {
+    if (headerRef.current) {
+      setHeaderHeight(headerRef.current.offsetHeight);
+    }
+  }, [isMobile]);
 
   const menuItems = [
     {
@@ -45,115 +59,228 @@ export default function Header() {
     },
   ];
 
+  const toggleCategory = (id: string) => {
+    setExpandedCategory(expandedCategory === id ? null : id);
+  };
+
   return (
     <>
       <header
-        className="sticky top-0 z-40 flex w-full items-center justify-between bg-[var(--background)] px-[73px] py-[24px]"
+        ref={headerRef}
+        className={`sticky top-0 z-40 flex w-full items-center justify-between bg-[var(--background)] ${isMobile ? 'px-6 py-3' : 'px-[73px] py-[24px]'}`}
         onMouseLeave={() => {
+          if (!isMobile) {
             setHoveredCategory(null);
             setIsMegaMenuOpen(false);
+          }
         }}
       >
         <Link href="/" className="cursor-pointer">
           <Image
             src="/images/logos/bohumstore-logo.png"
             alt="보험스토어 로고"
-            width={130}
-            height={32}
+            width={isMobile ? 100 : 130}
+            height={isMobile ? 24 : 32}
           />
         </Link>
-        <div className='hidden md:flex justify-between gap-[24px] h-full items-center'>
-            {menuItems.map((item) => (
-                <div
-                    key={item.id}
-                    className={`flex items-center w-[100px] justify-center heading-5 cursor-pointer transition-colors duration-200 ${hoveredCategory === item.id ? 'text-blue-600' : 'text-gray-900'}`}
-                    onMouseEnter={() => {
-                        setHoveredCategory(item.id);
-                        setIsMegaMenuOpen(true);
-                    }}
-                >
-                    {item.title}
-                </div>
+
+        {/* 데스크탑: 메뉴 아이템 */}
+        {!isMobile && (
+          <div className='flex justify-between gap-6 items-center'>
+            {menuItems.filter(item => item.subItems.length > 0).map((item) => (
+              <div
+                key={item.id}
+                className={`flex items-center w-24 justify-center heading-5 cursor-pointer transition-colors duration-200 ${hoveredCategory === item.id ? 'text-brand-primary' : 'text-text-primary'}`}
+                onMouseEnter={() => {
+                  setHoveredCategory(item.id);
+                  setIsMegaMenuOpen(true);
+                }}
+              >
+                {item.title}
+              </div>
             ))}
-        </div>
-        <Link href="/insurance/a_consult">
-          <Button text="상담 신청" />
-        </Link>
-        <div
-            className={`absolute left-0 top-full w-full bg-white shadow-xl border-t border-gray-100 transition-all duration-300 ease-in-out overflow-hidden z-[-1] ${
-                isMegaMenuOpen ? 'max-h-[500px] opacity-100 visible' : 'max-h-0 opacity-0 invisible'
+          </div>
+        )}
+
+        {/* 모바일: 햄버거/X 토글 버튼 */}
+        {isMobile ? (
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-1.5 rounded-lg hover:bg-page-bg transition-colors"
+            aria-label={isMobileMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
+          >
+            {isMobileMenuOpen ? (
+              <XMarkIcon className="w-7 h-7 text-text-secondary" />
+            ) : (
+              <Bars3Icon className="w-7 h-7 text-text-secondary" />
+            )}
+          </button>
+        ) : (
+          <Link href="/insurance/a_consult">
+            <Button text="상담 신청" />
+          </Link>
+        )}
+
+        {/* 데스크탑: 메가메뉴 */}
+        {!isMobile && (
+          <div
+            className={`absolute left-0 top-full w-full bg-white shadow-xl border-t border-border-default transition-all duration-300 ease-in-out overflow-hidden z-[-1] ${
+              isMegaMenuOpen ? 'max-h-[500px] opacity-100 visible' : 'max-h-0 opacity-0 invisible'
             }`}
-        >
+          >
             <div className="mx-auto w-full max-w-[1440px] px-[73px] py-10">
-                <div className="flex gap-8">
-                    <div className="flex-1 grid grid-cols-4 gap-4">
-                        {menuItems.map((category) => (
-                            <div
-                                key={category.id}
-                                className={`p-6 rounded-xl transition-all duration-200 ${
-                                    hoveredCategory === category.id
-                                    ? 'bg-blue-50/50 scale-[1.02] shadow-sm'
-                                    : 'hover:bg-gray-50'
-                                }`}
-                                onMouseEnter={() => setHoveredCategory(category.id)}
+              <div className="flex gap-8">
+                <div className="flex-1 grid grid-cols-4 gap-4">
+                  {menuItems.filter(item => item.subItems.length > 0).map((category) => (
+                    <div
+                      key={category.id}
+                      className={`p-6 rounded-xl transition-all duration-200 ${
+                        hoveredCategory === category.id
+                          ? 'bg-brand-primary-soft scale-[1.02] shadow-sm'
+                          : 'hover:bg-page-bg'
+                      }`}
+                      onMouseEnter={() => setHoveredCategory(category.id)}
+                    >
+                      <h3 className={`text-lg font-bold mb-4 ${
+                        hoveredCategory === category.id ? 'text-brand-primary' : 'text-text-primary'
+                      }`}>
+                        {category.title}
+                      </h3>
+                      <ul className="space-y-3">
+                        {category.subItems.map((subItem, idx) => (
+                          <li key={idx}>
+                            <Link
+                              href={subItem.path}
+                              onClick={() => {
+                                setHoveredCategory(null);
+                                setIsMegaMenuOpen(false);
+                              }}
+                              className={`text-sm block py-1 transition-colors ${
+                                hoveredCategory === category.id
+                                  ? 'text-text-secondary font-medium hover:text-brand-primary'
+                                  : 'text-text-muted hover:text-text-primary'
+                              }`}
                             >
-                                <h3 className={`text-lg font-bold mb-4 ${
-                                    hoveredCategory === category.id ? 'text-blue-700' : 'text-gray-900'
-                                }`}>
-                                    {category.title}
-                                </h3>
-                                <ul className="space-y-3">
-                                    {category.subItems.map((subItem, idx) => (
-                                        <li key={idx}>
-                                            <Link
-                                                href={subItem.path}
-                                                className={`text-sm block py-1 transition-colors ${
-                                                    hoveredCategory === category.id
-                                                    ? 'text-gray-700 font-medium hover:text-blue-600'
-                                                    : 'text-gray-500 hover:text-gray-900'
-                                                }`}
-                                            >
-                                                {subItem.name}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                              {subItem.name}
+                            </Link>
+                          </li>
                         ))}
+                      </ul>
                     </div>
-
-                    <div className="w-[420px] shrink-0">
-                        <div className="h-full rounded-2xl bg-brand-primary-soft p-10 relative overflow-hidden group cursor-pointer border border-brand-primary-soft">
-                            <div className="relative z-10">
-                                <h3 className="text-[28px] font-extrabold text-brand-primary tracking-tight mb-3">
-                                    보험이 어렵다면
-                                </h3>
-                                <p className="text-text-muted text-lg mb-8 leading-snug font-medium">
-                                    보험스토어 보험 전문가에게<br/>
-                                    부담없이 물어보세요!
-                                </p>
-                                <Link href="/insurance/a_consult">
-                                    <button className="bg-brand-primary text-white px-8 py-3.5 rounded-xl text-lg font-bold shadow-[0_4px_12px_rgba(31,111,235,0.25)] transition-all hover:bg-brand-primary-hover hover:shadow-[0_6px_16px_rgba(31,111,235,0.35)] active:scale-95">
-                                        상담하기
-                                    </button>
-                                </Link>
-                            </div>
-                            <div className="absolute right-0 bottom-0 w-[240px] h-[220px]">
-                                <Image
-                                    src="/svgs/header-expanded-counsel.svg"
-                                    alt="상담 캐릭터"
-                                    fill
-                                    className="object-contain object-right-bottom transition-transform duration-500 group-hover:scale-105"
-                                />
-                            </div>
-                        </div>
-                    </div>
+                  ))}
                 </div>
+
+                <div className="w-[420px] shrink-0">
+                  <div className="h-full rounded-2xl bg-brand-primary-soft p-10 relative overflow-hidden group cursor-pointer border border-brand-primary-soft">
+                    <div className="relative z-10">
+                      <h3 className="text-[28px] font-extrabold text-brand-primary tracking-tight mb-3">
+                        보험이 어렵다면
+                      </h3>
+                      <p className="text-text-muted text-lg mb-8 leading-snug font-medium">
+                        보험스토어 보험 전문가에게<br/>
+                        부담없이 물어보세요!
+                      </p>
+                      <Link href="/insurance/a_consult">
+                        <Button variant="primary" size="lg" className="rounded-xl shadow-[0_4px_12px_rgba(31,111,235,0.25)] hover:shadow-[0_6px_16px_rgba(31,111,235,0.35)]">
+                          상담하기
+                        </Button>
+                      </Link>
+                    </div>
+                    <div className="absolute right-0 bottom-0 w-[240px] h-[220px]">
+                      <Image
+                        src="/svgs/header-expanded-counsel.svg"
+                        alt="상담 캐릭터"
+                        fill
+                        className="object-contain object-right-bottom transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
+          </div>
+        )}
       </header>
+
+      {/* ============================================= */}
+      {/* 모바일: 좌측 슬라이드 드로어 메뉴              */}
+      {/* ============================================= */}
+      {isMobile && (
+        <>
+          {/* 드로어 패널 (헤더 아래에서 좌→우 슬라이드) */}
+          <div
+            className={`fixed left-0 z-30 w-full bg-white shadow-2xl flex flex-col transition-transform duration-300 ease-in-out ${
+              isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}
+            style={{ top: `${headerHeight}px`, height: `calc(100dvh - ${headerHeight}px)` }}
+          >
+
+            {/* 드로어 메뉴 목록 (아코디언) */}
+            <div className="flex-1 overflow-y-auto">
+              {menuItems.map((category) => {
+                const isExpanded = expandedCategory === category.id;
+                const hasSubItems = category.subItems.length > 0;
+                return (
+                  <div key={category.id} className="border-b border-border-default">
+                    <button
+                      onClick={() => hasSubItems && toggleCategory(category.id)}
+                      className={`flex items-center justify-between w-full px-5 py-4 text-left transition-colors ${
+                        isExpanded ? 'bg-brand-primary-soft border-l-4 border-brand-primary' : 'hover:bg-page-bg border-l-4 border-transparent'
+                      }`}
+                    >
+                      <span className={`text-base font-semibold ${isExpanded ? 'text-brand-primary' : 'text-text-primary'}`}>
+                        {category.title}
+                      </span>
+                      {hasSubItems && (
+                        isExpanded ? (
+                          <ChevronDownIcon className="w-5 h-5 text-brand-primary" />
+                        ) : (
+                          <ChevronRightIcon className="w-5 h-5 text-text-disabled" />
+                        )
+                      )}
+                    </button>
+
+                    {/* 서브 아이템 (아코디언 펼침) */}
+                    <div
+                      className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                        isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                      }`}
+                      style={isExpanded ? { borderLeft: '4px solid var(--brand-primary, #3B82F6)' } : {}}
+                    >
+                      <div className={`pb-3 ${isExpanded ? 'bg-brand-primary-soft' : ''}`}>
+                        {category.subItems.map((subItem, idx) => (
+                          <Link
+                            key={idx}
+                            href={subItem.path}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="flex items-center gap-2 px-8 py-2 text-sm text-text-muted hover:text-brand-primary transition-colors"
+                          >
+                            <span className="w-1 h-1 rounded-full bg-text-disabled flex-shrink-0" />
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* 드로어 하단 CTA */}
+            <div className="p-5 border-t border-border-default">
+              <Link
+                href="/insurance/a_consult"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block w-full"
+              >
+                <Button variant="primary" size="lg" fullWidth>
+                  상담신청
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </>
+      )}
     </>
-
-
   );
 }

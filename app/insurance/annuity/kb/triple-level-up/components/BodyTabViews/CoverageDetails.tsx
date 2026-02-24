@@ -3,7 +3,6 @@ import React from 'react';
 export default function CoverageDetails() {
   return (
     <div className="space-y-8 px-2 py-4 sm:px-4 md:px-8 md:py-6">
-      {/* 연금개시전 보험기간 */}
       <div className="space-y-4">
         <h2 className="product-page-title">1. 연금개시전 보험기간</h2>
         <div className="overflow-x-auto">
@@ -35,9 +34,7 @@ export default function CoverageDetails() {
             </tbody>
           </table>
         </div>
-        {/* 모바일 카드형 */}
         <div className="block space-y-2 md:hidden">
-          {/* 예시: 각 row를 카드로 */}
           {/* {data.map((row, i) => (
           <div key={i} className="border rounded p-2 bg-white">
             <div><b>급부명:</b> {row.name}</div>
@@ -60,7 +57,6 @@ export default function CoverageDetails() {
         </div>
       </div>
 
-      {/* 연금개시후 보험기간 */}
       <div className="space-y-4">
         <h2 className="product-page-title">2. 연금개시후 보험기간</h2>
         <p className="mb-4 text-text-secondary">
@@ -125,9 +121,7 @@ export default function CoverageDetails() {
             </tbody>
           </table>
         </div>
-        {/* 모바일 카드형 */}
         <div className="block space-y-2 md:hidden">
-          {/* 예시: 각 row를 카드로 */}
           {/* {data.map((row, i) => (
           <div key={i} className="border rounded p-2 bg-white">
             <div><b>급부명:</b> {row.name}</div>

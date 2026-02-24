@@ -17,7 +17,6 @@ export default function Surrender() {
           기준 : 주계약, 남자 40세, 보증형, 5년납, 60세 연금개시, 월보험료 50만원, 단위 : 만원
         </div>
       </div>
-      {/* 표 */}
       <div className="overflow-x-auto">
         <table className="product-table table-fixed text-center text-xs md:text-sm">
           <colgroup>
@@ -338,7 +337,6 @@ export default function Surrender() {
           </tbody>
         </table>
       </div>
-      {/* 주석 */}
       <ol className="list-decimal space-y-1 pl-4 text-xs text-gray-800 md:text-sm">
         <li>
           계약일부터 경과기간이 지난 말 시점의 예시이며 나이는 경과기간에 따른 주계약 피보험자의
@@ -392,7 +390,6 @@ export default function Surrender() {
           <span className="text-status-red">중도인출금액을 재납입하더라도 원복되지 않습니다.</span>
         </li>
       </ol>
-      {/* 두 번째 해약환급금 예시표 헤더 */}
       <div className="mb-2 mt-16">
         <h2 className="product-page-title">■ 연금지급액 예시표</h2>
         <div className="mt-2 flex flex-col gap-0.5">
@@ -407,7 +404,6 @@ export default function Surrender() {
           기준 : 주계약, 남자 40세, 보증형, 5년납, 60세 연금개시, 월보험료 50만원, 단위 : 원
         </div>
       </div>
-      {/* 연금지급액 예시표 표 */}
       <div className="overflow-x-auto">
         <table className="product-table text-center text-xs md:text-sm">
           <thead>
@@ -498,7 +494,6 @@ export default function Surrender() {
           </tbody>
         </table>
       </div>
-      {/* 연금지급액 예시표 주석 */}
       <ol className="mt-2 list-decimal space-y-1 pl-4 text-xs text-gray-800 md:text-sm">
         <li>
           상기 예시금액은 최저보증이율, 평균공시이율 2.75%(현재공시이율 상한) 및 현재{' '}

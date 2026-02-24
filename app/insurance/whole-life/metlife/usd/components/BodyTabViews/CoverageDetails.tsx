@@ -3,11 +3,9 @@ import React from 'react';
 export default function CoverageDetails() {
   return (
     <div className="space-y-6 px-2 py-4 sm:space-y-8 sm:px-4 md:px-8 md:py-6">
-      {/* 보장내용 */}
       <h2 className="product-page-title">보장내용</h2>
 
       <div className="space-y-4">
-        {/* 보장내용표 */}
         <div className="overflow-x-auto">
           <table className="product-table">
             <tbody className="product-table-body">
@@ -38,7 +36,6 @@ export default function CoverageDetails() {
                   지급금액
                 </td>
               </tr>
-              {/* 일반심사형 - 5년납 */}
               <tr>
                 <td
                   className="product-table-td-center bg-product-primary font-semibold text-white"
@@ -72,7 +69,6 @@ export default function CoverageDetails() {
                 </td>
                 <td className="product-table-td-center">보험가입금액의 150%</td>
               </tr>
-              {/* 일반심사형 - 7년납 */}
               <tr>
                 <td className="product-table-td-center font-semibold" rowSpan={3}>
                   7년납
@@ -98,7 +94,6 @@ export default function CoverageDetails() {
                 </td>
                 <td className="product-table-td-center">보험가입금액의 150%</td>
               </tr>
-              {/* 일반심사형 - 10/15/20년납 */}
               <tr>
                 <td className="product-table-td-center font-semibold" rowSpan={3}>
                   10/15/
@@ -130,7 +125,6 @@ export default function CoverageDetails() {
           </table>
         </div>
 
-        {/* 주의사항 */}
         <div className="product-text space-y-2">
           <p>
             • 보험료 납입기간 중 피보험자가 약관 별표4(장해분류표) 중 동일한 재해 또는 재해 이외의

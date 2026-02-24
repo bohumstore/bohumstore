@@ -31,12 +31,6 @@ export default function HanaHanaroWholeLifePage() {
         '본 상품은 무배당 상품으로, 배당금이 지급되지 않습니다.',
       ]}
       approvalNumber="준법감시인 심의필 하생 2025-1048(2025.11.20~2026.11.19)"
-      globalStyles={`
-        @keyframes jump-glow {
-          0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 #dc2626); }
-          30% { transform: scale(1.18) translateY(-6px); filter: drop-shadow(0 0 8px #fca5a5); }
-          60% { transform: scale(0.95) translateY(2px); filter: drop-shadow(0 0 0 #dc2626); }
-        }`}
     />
   );
 }

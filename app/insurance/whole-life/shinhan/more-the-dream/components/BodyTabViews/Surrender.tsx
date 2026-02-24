@@ -9,7 +9,6 @@ export default function Surrender() {
           기준: 남자 40세, 일반심사형, 보험료형, 종신, 5년납, 월납, 30만원 (단위: 원, %)
         </div>
       </div>
-      {/* 표 */}
       <div className="overflow-x-auto">
         <table className="product-table">
           <thead>
@@ -466,7 +465,6 @@ export default function Surrender() {
           </tbody>
         </table>
       </div>
-      {/* 주석 */}
       <div className="product-text space-y-2">
         <p>
           ※ 이 보험계약을 중도 해지할 경우 해약환급금은 납입한 보험료에서 경과된 기간의 위험보험료,

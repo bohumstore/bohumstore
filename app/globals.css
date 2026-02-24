@@ -281,6 +281,15 @@ html {
 
   /* Info Box */
   .product-info-box {
-    @apply space-y-2 rounded-lg border border-divider bg-section-bg p-4 text-sm text-text-primary;
+    @apply rounded-md border border-divider bg-section-bg p-4 text-sm text-text-primary;
   }
+}
+
+/* 모바일 가로 스크롤 시 스크롤바 숨기기 */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

@@ -3,10 +3,8 @@ import React from 'react';
 export default function ProductInfo() {
   return (
     <div className="space-y-8 px-2 py-4 sm:px-4 md:px-8 md:py-6">
-      {/* 상품특징 제목 */}
       <h2 className="product-page-title">상품특징</h2>
 
-      {/* 최저연금기준금액 보증 */}
       <div className="space-y-4">
         <h3 className="product-section-title">최저연금기준금액 보증</h3>
         <div className="product-info-box">
@@ -62,7 +60,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 금액보증연금 보증 */}
       <div className="space-y-4">
         <h3 className="product-section-title">금액보증연금 보증</h3>
         <div className="product-info-box">
@@ -141,7 +138,6 @@ export default function ProductInfo() {
                 </table>
               </div>
             </div>
-            {/* 장기유지가산율 표 부분 */}
             <div>
               <div className="mb-2">※ 장기유지가산율</div>
               <div className="overflow-x-auto">
@@ -181,7 +177,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 최저사망적립액 보증 */}
       <div className="space-y-4">
         <h3 className="product-section-title">최저사망적립액 보증</h3>
         <div className="product-info-box">
@@ -222,7 +217,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 보험료 납입면제 */}
       <div className="space-y-4">
         <h3 className="product-section-title">
           보험료 납입면제 [(무)신보험료납입면제특약 (3대질병형) 선택시]
@@ -244,7 +238,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 보험차익 비과세 혜택 */}
       <div className="space-y-4">
         <h3 className="product-section-title">보험차익 비과세 혜택</h3>
         <div className="product-info-box">
@@ -256,7 +249,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 선지급행복자금 */}
       <div className="space-y-4">
         <h3 className="product-section-title">선지급행복자금</h3>
         <div className="product-info-box">
@@ -333,10 +325,8 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 가입안내 제목 */}
       <h2 className="product-page-title">가입안내</h2>
 
-      {/* 가입안내 내용 */}
       <div className="space-y-4">
         <div className="product-info-box">
           <div className="space-y-4">

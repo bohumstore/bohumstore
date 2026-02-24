@@ -1,15 +1,11 @@
 import React from 'react';
-import { useState } from 'react';
+import TabContentWrapper from '@/components/shared/TabContentWrapper';
 
 export default function ProductInfo() {
-  const [showResultModal, setShowResultModal] = useState(false);
-
   return (
-    <div className="space-y-8 px-8 py-6">
-      {/* 가입안내 제목 */}
+    <TabContentWrapper>
       <h2 className="product-page-title">가입안내</h2>
 
-      {/* 상품명 및 상품유형 */}
       <div className="space-y-4">
         <h3 className="product-section-title">상품명 및 상품유형</h3>
         <div className="overflow-x-auto">
@@ -106,14 +102,12 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 상품 구성 */}
       <div className="space-y-4">
         <h3 className="product-section-title">상품 구성</h3>
 
         <h4 className="product-small-title">· 주계약</h4>
         <p className="product-small-title">(무)하나로 THE 연결된 종신보험(보장형 계약)</p>
 
-        {/* 주계약 표 */}
         <div className="overflow-x-auto">
           <table className="product-table">
             <thead>
@@ -200,7 +194,6 @@ export default function ProductInfo() {
           </table>
         </div>
 
-        {/* 선택특약 표 */}
         <h4 className="product-small-title mt-6">· 선택특약</h4>
         <div className="overflow-x-auto">
           <table className="product-table">
@@ -275,7 +268,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 제도성 특약 */}
       <div className="space-y-4">
         <h4 className="product-small-title">· 제도성 특약</h4>
         <p className="product-small-title">(무)하나로 연결된 연금전환특약</p>
@@ -420,7 +412,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 상품의 유용한 기능 */}
       <div className="space-y-4">
         <h3 className="product-section-title">상품의 유용한 기능</h3>
 
@@ -431,7 +422,6 @@ export default function ProductInfo() {
           방법에 따라 적립합니다.
         </p>
 
-        {/* (1) 납입기간 5년 */}
         <div className="space-y-2">
           <h4 className="product-small-title">(1) 보험료 납입기간이 5년인 경우</h4>
           <div className="overflow-x-auto">
@@ -480,7 +470,6 @@ export default function ProductInfo() {
           </div>
         </div>
 
-        {/* (2) 납입기간 7년 */}
         <div className="space-y-2">
           <h4 className="product-small-title">(2) 보험료 납입기간이 7년인 경우</h4>
           <div className="overflow-x-auto">
@@ -534,7 +523,6 @@ export default function ProductInfo() {
           </div>
         </div>
 
-        {/* (3) 납입기간 10년 */}
         <div className="space-y-2">
           <h4 className="product-small-title">(3) 보험료 납입기간이 10년인 경우</h4>
           <div className="overflow-x-auto">
@@ -575,7 +563,6 @@ export default function ProductInfo() {
           </div>
         </div>
 
-        {/* (4) 납입기간 15년 */}
         <div className="space-y-2">
           <h4 className="product-small-title">(4) 보험료 납입기간이 15년인 경우</h4>
           <div className="overflow-x-auto">
@@ -611,7 +598,6 @@ export default function ProductInfo() {
           </div>
         </div>
 
-        {/* (5) 납입기간 20년 */}
         <div className="space-y-2">
           <h4 className="product-small-title">(5) 보험료 납입기간이 20년인 경우</h4>
           <div className="overflow-x-auto">
@@ -660,7 +646,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 선납할인 */}
       <div className="space-y-4">
         <h3 className="product-sub-title">선납할인</h3>
         <p className="product-text">
@@ -670,7 +655,6 @@ export default function ProductInfo() {
         </p>
       </div>
 
-      {/* 계약자적립액 인출 */}
       <div className="space-y-4">
         <h3 className="product-sub-title">계약자적립액 인출(보장형 계약)</h3>
         <div className="product-text space-y-2">
@@ -695,7 +679,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 추가납입보험료 */}
       <div className="space-y-4">
         <h3 className="product-sub-title">추가납입보험료(보장형 계약)</h3>
         <div className="product-text space-y-2">
@@ -717,7 +700,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 적립형 계약 전환 */}
       <div className="space-y-4">
         <h3 className="product-sub-title">적립형 계약 전환</h3>
         <div className="product-text space-y-2">
@@ -751,7 +733,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 보험료 예시 */}
       <div className="space-y-4">
         <h3 className="product-section-title">보험료 예시</h3>
         <p className="product-text">
@@ -767,7 +748,6 @@ export default function ProductInfo() {
           *일반형은 비교를 위한 종목으로 실제 판매하는 상품이 아닙니다.
         </p>
 
-        {/* 주계약 */}
         <div className="space-y-2">
           <h4 className="text-base font-semibold text-text-primary">· 주계약</h4>
           <p className="text-right text-xs text-text-secondary">
@@ -851,10 +831,8 @@ export default function ProductInfo() {
           </div>
         </div>
 
-        {/* 선택특약 */}
         <h4 className="mt-6 text-base font-semibold text-text-primary">· 선택특약</h4>
 
-        {/* (무)3대질병진단 보험료환급특약 */}
         <div className="space-y-2">
           <h4 className="text-base font-semibold text-text-primary">
             (무)3대질병진단 보험료환급특약
@@ -936,7 +914,6 @@ export default function ProductInfo() {
           </p>
         </div>
 
-        {/* (무)3대질병 납입면제특약 */}
         <div className="space-y-2">
           <h4 className="text-base font-semibold text-text-primary">(무)3대질병 납입면제특약</h4>
           <p className="text-right text-xs text-text-secondary">
@@ -1020,7 +997,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 종신보험 관련 유의사항 */}
       <div className="space-y-4">
         <h3 className="product-section-title">종신보험 관련 유의사항 안내</h3>
 
@@ -1067,6 +1043,6 @@ export default function ProductInfo() {
           </table>
         </div>
       </div>
-    </div>
+    </TabContentWrapper>
   );
 }

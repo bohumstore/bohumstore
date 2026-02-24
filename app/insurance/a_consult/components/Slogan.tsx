@@ -6,6 +6,7 @@ import SelectField from '@/components/SelectField';
 import TextField from '@/components/TextField';
 import ToggleButtonGroup from '@/components/ToggleButtonGroup';
 import IconButton from '@/components/IconButton';
+import Button from '@/components/shared/Button';
 
 type SloganProps = {
   onOpenPrivacy?: () => void;
@@ -261,7 +262,6 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
 
   const renderStep2 = () => (
     <div className="space-y-5">
-      {/* 내 상담 정보 */}
       <div>
         <p className="heading-5 text-text-primary mb-3 flex items-center">
           <span className="mr-1.5">●</span> 내 상담 정보
@@ -272,7 +272,6 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
         </div>
       </div>
 
-      {/* 남길 말 */}
       <div>
         <p className="heading-5 text-text-primary mb-2">상담 전에 남길 말이 있나요? (선택)</p>
         <textarea
@@ -283,15 +282,14 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
         />
       </div>
 
-      {/* 휴대폰 인증 */}
       <div>
         <p className="heading-5 text-text-primary mb-1 flex items-center">🔒 휴대폰 인증</p>
         <p className="body-s text-text-muted mb-3">상담신청을 위해 휴대폰 인증이 필요해요.</p>
         <div className="flex gap-2 mb-3">
           <TextField type="text" value={phone} readOnly className="flex-1 bg-page-bg text-text-muted h-auto py-2.5" />
-          <button onClick={handleSendOTP} className="min-w-[100px] rounded-lg bg-button px-4 py-2.5 button-m text-text-inverse transition hover:bg-button-hover whitespace-nowrap">
+          <Button variant="secondary" size="sm" onClick={handleSendOTP}>
             {consultOtpResendAvailable ? '인증번호 받기' : '재발송'}
-          </button>
+          </Button>
         </div>
         <div className="relative mb-2">
           <TextField type="text" inputMode="numeric" maxLength={6} ref={consultOtpInputRef} value={consultOtpCode} onChange={e => setConsultOtpCode(e.target.value.replace(/[^0-9]/g, ''))} className="w-full h-auto py-2.5" placeholder="인증번호 6자리 입력" />
@@ -299,9 +297,14 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
         </div>
       </div>
 
-      <button onClick={handleVerifyOTP} disabled={verifying || consultOtpCode.length !== 6} className={`w-full h-[44px] rounded-lg button-l transition ${verifying || consultOtpCode.length !== 6 ? 'bg-button-disabled text-text-disabled cursor-not-allowed' : 'bg-button text-text-inverse hover:bg-button-hover'}`}>
+      <Button
+        variant="primary"
+        size="full"
+        onClick={handleVerifyOTP}
+        disabled={verifying || consultOtpCode.length !== 6}
+      >
         {verifying ? '인증 처리중...' : '상담 신청하기'}
-      </button>
+      </Button>
     </div>
   );
 
@@ -323,7 +326,6 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
         className="w-full bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-50 py-8 md:py-10 lg:py-12"
       >
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-4 px-4 sm:gap-6 lg:flex-row lg:gap-16 lg:px-8">
-          {/* 왼쪽: 설명 */}
           <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left">
             <h1 className="heading-2 mb-3 leading-tight text-text-primary md:mb-4 md:heading-1">
               <span className="text-brand-primary">내 보험</span>,
@@ -356,7 +358,6 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
             </ul>
           </div>
 
-          {/* 오른쪽: 정보 입력 폼 카드 */}
           <div className="flex w-full max-w-lg flex-1 justify-center lg:justify-end">
             <div
               id="calculator-box"
@@ -369,7 +370,6 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
                 className="flex flex-col gap-4 sm:gap-5"
                 onSubmit={handleFormSubmit}
               >
-                {/* 이름/성별 */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="mb-1.5 block button-s text-text-secondary">
@@ -403,7 +403,6 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
                   </div>
                 </div>
 
-                {/* 생년월일/연락처 */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="mb-1.5 block button-s text-text-secondary">
@@ -439,7 +438,6 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
                   </div>
                 </div>
 
-                {/* 상담 종류/시간대 */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="mb-1.5 block button-s text-text-secondary sm:text-sm">
@@ -475,7 +473,6 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
                   </div>
                 </div>
 
-                {/* 버튼들 */}
                 <div className="flex gap-3 pt-2">
                   <IconButton
                     type="submit"
@@ -501,7 +498,6 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
         </div>
       </section>
 
-      {/* 멀티스텝 상담 모달: 약관동의 → 인증 → 완료 */}
       <Modal open={showConsultModal} onClose={closeConsultModal} hideHeader hideFooter>
         <div className="relative py-10 px-6">
           {step === 1 && renderStep1()}

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRightIcon, ChevronLeftIcon, PlayIcon, PauseIcon } from '@heroicons/react/24/outline';
 import { slogans, chatScenarios } from '@/data/home-data';
+import { useResponsive } from '@/hooks/useResponsive';
 
 export default function HeroSection() {
   // 무한 루프를 위해 실제 인덱스는 1부터 시작 (앞에 마지막 슬라이드 복제본이 있음)
@@ -15,6 +16,7 @@ export default function HeroSection() {
   const dragStartXRef = useRef<number | null>(null);
   const lastXRef = useRef<number | null>(null);
   const draggingRef = useRef(false);
+  const { isMobile } = useResponsive();
 
   // 무한 루프용 슬라이드 배열: [마지막복제, ...원본들..., 첫번째복제]
   const extendedSlogans = [slogans[slogans.length - 1], ...slogans, slogans[0]];
@@ -136,7 +138,7 @@ export default function HeroSection() {
             return (
               <div key={`${slogan.id}-${index}`} className="relative w-full flex-shrink-0">
                 <div
-                  className={`w-full ${slogan.id === 'consult-main' ? 'min-h-[500px] md:min-h-[560px]' : 'min-h-[480px] md:min-h-[520px]'} lg:min-h-[520px] ${
+                  className={`w-full ${isMobile ? (slogan.id === 'consult-main' ? 'min-h-[380px]' : 'min-h-[360px]') : (slogan.id === 'consult-main' ? 'min-h-[500px] md:min-h-[560px]' : 'min-h-[480px] md:min-h-[520px]')} lg:min-h-[520px] ${
                     slogan.id === 'consult-main'
                       ? 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'
                       : 'bg-gradient-to-b from-slate-50 to-white'
@@ -238,7 +240,8 @@ export default function HeroSection() {
                               </div>
                             </div>
 
-                            {/* 오른쪽: 채팅 UI */}
+                            {/* 오른쪽: 채팅 UI (데스크탑만) */}
+                            {!isMobile && (
                             <div
                               className={`w-full max-w-xs md:max-w-sm lg:max-w-lg ${isActive ? 'animate-fade-in' : 'opacity-0'}`}
                               style={{ animationDelay: '0.2s' }}
@@ -296,6 +299,7 @@ export default function HeroSection() {
                                 </div>
                               </div>
                             </div>
+                            )}
                           </div>
                         </div>
                       ) : slogan.id === 'kb-triple-level-up' ? (
@@ -374,7 +378,8 @@ export default function HeroSection() {
                               </div>
                             </div>
 
-                            {/* 오른쪽: 핵심 정보 카드 */}
+                            {/* 오른쪽: 핵심 정보 카드 (데스크탑만) */}
+                            {!isMobile && (
                             <div
                               className={`w-full max-w-sm md:max-w-md lg:max-w-lg ${isActive ? 'animate-fade-in' : 'opacity-0'}`}
                               style={{ animationDelay: '0.2s' }}
@@ -421,6 +426,7 @@ export default function HeroSection() {
                                 </p>
                               </div>
                             </div>
+                            )}
                           </div>
                         </div>
                       ) : (
@@ -524,7 +530,8 @@ export default function HeroSection() {
                               </div>
                             </div>
 
-                            {/* 오른쪽: 핵심 정보 카드 */}
+                            {/* 오른쪽: 핵심 정보 카드 (데스크탑만) */}
+                            {!isMobile && (
                             <div
                               className={`w-full max-w-sm md:max-w-md lg:max-w-lg ${isActive ? 'animate-fade-in' : 'opacity-0'}`}
                               style={{ animationDelay: '0.2s' }}
@@ -571,6 +578,7 @@ export default function HeroSection() {
                                 </p>
                               </div>
                             </div>
+                            )}
                           </div>
                         </div>
                       )}

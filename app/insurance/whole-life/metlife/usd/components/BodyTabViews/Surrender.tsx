@@ -3,10 +3,8 @@ import React from 'react';
 export default function Surrender() {
   return (
     <div className="space-y-6 px-2 py-4 sm:space-y-8 sm:px-4 md:px-8 md:py-6">
-      {/* 해약환급금 예시 제목 */}
       <h2 className="product-page-title">해약환급금 예시</h2>
 
-      {/* 저해약환급금형Ⅰ */}
       <div className="space-y-4">
         <h4 className="product-small-title">- 저해약환급금형Ⅰ</h4>
         <p className="product-caption text-right">
@@ -155,7 +153,6 @@ export default function Surrender() {
             </tbody>
           </table>
         </div>
-        {/* 저해약환급금형Ⅰ 주의사항 */}
         <div className="product-text mt-4 space-y-1">
           <p className="text-status-red">
             • 이 보험상품은 달러상품이므로 원-달러 환율변동에 의해 원화기준으로 환산 시 보험료,
@@ -178,7 +175,6 @@ export default function Surrender() {
         </div>
       </div>
 
-      {/* 저해약환급금형Ⅱ */}
       <div className="space-y-4">
         <h4 className="product-small-title">- 저해약환급금형Ⅱ</h4>
         <p className="product-caption text-right">
@@ -318,7 +314,6 @@ export default function Surrender() {
             </tbody>
           </table>
         </div>
-        {/* 저해약환급금형Ⅱ 주의사항 */}
         <div className="product-text mt-4 space-y-1">
           <p className="text-status-red">
             • 이 보험상품은 달러상품이므로 원-달러 환율변동에 의해 원화기준으로 환산 시 보험료,
@@ -337,7 +332,6 @@ export default function Surrender() {
         </div>
       </div>
 
-      {/* 추가 안내사항 */}
       <div className="product-caption mt-6 space-y-1">
         <p>
           ※ 이 상품의 보험기간은 종신이며, 납입기간은 저해약환급금형Ⅰ은 5년납, 저해약환급금형Ⅱ은

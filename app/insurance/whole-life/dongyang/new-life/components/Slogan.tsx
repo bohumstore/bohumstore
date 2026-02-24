@@ -328,7 +328,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         }}
       >
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-4 px-4 md:flex-col md:items-center md:gap-8 md:px-6 md:py-4 lg:flex-row lg:items-start lg:justify-between lg:gap-12 lg:px-4 lg:py-4">
-          {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex flex-1 flex-col items-center text-center md:items-center md:text-center lg:items-start lg:text-left">
             <div className="mb-2 flex items-center gap-2 text-sm text-text-secondary">
               <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#2f80ed] font-bold text-white">
@@ -373,7 +372,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 가입나이 및 가입한도는 회사 심사기준에 따름
               </li>
             </ul>
-            {/* 환급률/보너스 안내 UI */}
             <div
               className="relative mx-auto mb-4 w-full max-w-full overflow-hidden rounded-2xl border border-white/50 bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30 p-6 shadow-2xl backdrop-blur-sm md:mb-6 md:max-w-4xl md:p-8 lg:p-6"
               style={{
@@ -383,12 +381,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
               }}
             >
-              {/* 유리반사 효과 */}
               <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-transparent opacity-60"></div>
               <div className="absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
 
               <div className="relative z-10 grid grid-cols-1 gap-2 md:grid-cols-3 md:gap-3 lg:gap-4">
-                {/* 1. 7년 시점 (안내용) */}
                 <div className="flex h-full flex-col justify-between rounded-xl border border-blue-200 bg-gradient-to-br from-blue-100 to-indigo-100 p-3 text-center shadow-lg transition-all duration-300 hover:shadow-xl md:p-4 lg:p-3">
                   <div>
                     <div className="mb-3 inline-block rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 px-4 py-2 text-sm font-bold text-white shadow-md">
@@ -405,7 +401,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
 
-                {/* 2. 10년 시점 (안내용) */}
                 <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-red-200 bg-gradient-to-br from-red-100 to-rose-100 p-3 text-center shadow-lg transition-all duration-300 hover:shadow-xl md:p-4 lg:p-3">
                   <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-transparent via-white/70 to-transparent"></div>
                   <div className="relative z-10">
@@ -423,7 +418,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
 
-                {/* 3. 보너스 */}
                 <div className="flex h-full flex-col justify-between rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-100 to-teal-100 p-3 text-center shadow-lg transition-all duration-300 hover:shadow-xl md:p-4 lg:p-3">
                   <div>
                     <div className="mb-3 inline-block rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 px-4 py-2 text-sm font-bold text-white shadow-md">
@@ -445,7 +439,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               </div>
             </div>
           </div>
-          {/* 오른쪽: 보험료 확인 카드 */}
           <div className="flex w-full flex-1 justify-center lg:ml-8 lg:justify-end lg:self-end">
             <div
               id="calculator-box"
@@ -465,7 +458,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 </p>
               </div>
               <form className="flex flex-col gap-4" onSubmit={handleInsuranceCostCalculate}>
-                {/* 성별/이름 */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="mb-1.5 block text-xs font-medium text-text-secondary">
@@ -523,7 +515,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
 
-                {/* 생년월일/연락처 */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="mb-1.5 block text-xs font-medium text-text-secondary">
@@ -560,7 +551,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
 
-                {/* 납입기간 */}
                 <div>
                   <label className="mb-1.5 block text-xs font-medium text-text-secondary">
                     납입기간
@@ -591,7 +581,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
 
-                {/* 월 납입금액 */}
                 <div>
                   <label className="mb-1.5 block text-xs font-medium text-text-secondary">
                     월 납입금액
@@ -617,7 +606,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
 
-                {/* 개인정보 동의 */}
                 <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
@@ -637,7 +625,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </span>
                 </div>
 
-                {/* 버튼들 */}
                 <div className="mt-1 flex flex-col gap-2">
                   <button
                     type="submit"
@@ -715,14 +702,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         onClose={handleCloseModal}
       >
         <div className="space-y-4">
-          {/* 보험료 산출 완료 안내 박스 (인증 후) */}
           {isVerified && (
             <>
               <FireworksEffect show={true} />
               <div className="mb-2 rounded bg-[#f8f8ff] p-3 text-center">
                 <div className="text-lg font-bold text-black">보험료 산출이 완료되었습니다.</div>
               </div>
-              {/* 보험료 결과값 UI (상세 정보) */}
               <div className="rounded-lg bg-page-bg p-2">
                 <h3 className="mb-2 flex items-center text-lg font-bold text-text-primary">
                   <span className="align-middle text-2xl font-extrabold text-[#7c3aed]">
@@ -765,7 +750,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 총 납입액 */}
                 <div className="rounded border border-border-default bg-white p-1.5 sm:p-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-xs font-medium text-text-secondary sm:text-sm">
@@ -779,7 +763,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 10년 시점 환급률 */}
                 <div className="rounded border border-border-default bg-white p-1.5 sm:p-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-xs font-medium text-text-secondary sm:text-sm">
@@ -791,7 +774,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 10년 시점 이자 (총납입액과 해약환급금 차액) */}
                 <div className="rounded border border-border-default bg-white p-1.5 sm:p-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-xs font-medium text-text-secondary sm:text-sm">
@@ -824,7 +806,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           )}
           {!isVerified && (
             <>
-              {/* 보험료 계산 결과 */}
               <div className="rounded-lg bg-page-bg p-2">
                 <h3 className="mb-2 flex items-center text-lg font-bold text-text-primary">
                   <span className="align-middle text-2xl font-extrabold text-[#7c3aed]">
@@ -867,7 +848,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 총 납입액 */}
                 <div className="rounded border border-border-default bg-white p-1.5 sm:p-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-xs font-medium text-text-secondary sm:text-sm">
@@ -881,7 +861,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 10년 시점 환급률 */}
                 <div className="rounded border border-border-default bg-white p-1.5 sm:p-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-xs font-medium text-text-secondary sm:text-sm">
@@ -893,7 +872,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 10년 시점 이자 (총납입액과 해약환급금 차액) */}
                 <div className="rounded border border-border-default bg-white p-1.5 sm:p-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-xs font-medium text-text-secondary sm:text-sm">
@@ -923,7 +901,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
               </div>
-              {/* 휴대폰 인증 안내 및 인증번호 입력란을 항상 노출 */}
               <div className="mt-0 rounded-lg bg-page-bg p-2">
                 {isAgeKnown && !isAgeEligible && (
                   <div className="mb-1 rounded border border-red-200 bg-red-50 p-2 text-sm text-red-700">
@@ -982,7 +959,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           )}
         </div>
       </Modal>
-      {/* 상담신청 모달 */}
       <Modal
         title={
           <span className="flex items-center gap-2">
@@ -1007,7 +983,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         onClose={handleCloseConsultModal}
       >
         <div className="space-y-3">
-          {/* 안내문구 */}
           {consultIsVerified ? (
             <>
               <FireworksEffect show={true} />
@@ -1160,11 +1135,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               </div>
             </div>
           </div>
-          {/* 상담 안내 박스 */}
           <div className="mb-1 rounded bg-[#f8f8ff] p-2 text-center text-xs text-text-secondary">
             📢 상담 중 궁금한 점은 언제든 말씀해 주세요.
           </div>
-          {/* 휴대폰 인증 안내 */}
           {!consultIsVerified && (
             <div className="mt-0 rounded-lg bg-page-bg p-2">
               <h3 className="mb-1 text-base font-bold text-text-primary">휴대폰 인증</h3>

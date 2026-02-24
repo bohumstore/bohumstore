@@ -5,7 +5,6 @@ export default function CoverageDetails() {
     <div className="space-y-8 px-2 py-4 sm:px-4 md:px-8 md:py-6">
       <h2 className="product-page-title">주계약</h2>
 
-      {/* 연금개시 전 보험기간 */}
       <div className="space-y-4">
         <h3 className="product-section-title">연금개시 전 보험기간</h3>
         <div className="mb-2 whitespace-nowrap text-right text-sm text-text-secondary">
@@ -50,7 +49,6 @@ export default function CoverageDetails() {
         </div>
       </div>
 
-      {/* 연금개시 후 보험기간 */}
       <div className="space-y-4">
         <h3 className="product-section-title">연금개시 후 보험기간</h3>
         <div className="product-info-box">
@@ -96,7 +94,6 @@ export default function CoverageDetails() {
         </div>
       </div>
 
-      {/* 주의사항 */}
       <div className="space-y-4 text-sm text-text-secondary">
         <p>
           보험기간 중 피보험자의 사망으로 인하여 이 약관에서 규정하는 보험금 지급사유가 더 이상
@@ -123,7 +120,6 @@ export default function CoverageDetails() {
         </p>
       </div>
 
-      {/* 부가가능특약 */}
       <h2 className="product-page-title">부가가능특약</h2>
       <div className="space-y-4">
         <div className="product-info-box">

@@ -5,7 +5,6 @@ export default function JoinNotice() {
     <div className="space-y-8 px-2 py-4 sm:px-4 md:px-8 md:py-6">
       <h2 className="product-page-title">가입시 알아두실 사항</h2>
 
-      {/* 보험계약의 기본사항 확인 */}
       <div className="space-y-4">
         <h3 className="product-section-title">보험계약의 기본사항 확인</h3>
         <div className="product-info-box">
@@ -16,7 +15,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 설명의무에 대한 안내 */}
       <div className="space-y-4">
         <h3 className="product-section-title">설명의무에 대한 안내</h3>
         <div className="product-info-box">
@@ -27,7 +25,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 자필서명(전자서명 포함)의 중요성 */}
       <div className="space-y-4">
         <h3 className="product-section-title">자필서명(전자서명 포함)의 중요성</h3>
         <div className="product-info-box">
@@ -38,7 +35,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 계약 전 알릴 의무 위반시 불이익 사항 */}
       <div className="space-y-4">
         <h3 className="product-section-title">계약 전 알릴 의무 위반시 불이익 사항</h3>
         <div className="product-info-box">
@@ -50,7 +46,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 청약철회 청구제도 */}
       <div className="space-y-4">
         <h3 className="product-section-title">청약철회 청구제도</h3>
         <div className="product-info-box">
@@ -65,7 +60,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 품질보증제도 */}
       <div className="space-y-4">
         <h3 className="product-section-title">품질보증제도</h3>
         <div className="product-info-box">
@@ -78,7 +72,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 위험직종에 따른 가입거절 및 제한 안내 */}
       <div className="space-y-4">
         <h3 className="product-section-title">위험직종에 따른 가입거절 및 제한 안내</h3>
         <div className="product-info-box">
@@ -89,7 +82,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 기존계약 해지후 가입시 불이익사항에 대한 안내 */}
       <div className="space-y-4">
         <h3 className="product-section-title">기존계약 해지후 가입시 불이익사항에 대한 안내</h3>
         <div className="product-info-box">
@@ -100,7 +92,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 해약환급금이 납입보험료보다 적은 이유 */}
       <div className="space-y-4">
         <h3 className="product-section-title">해약환급금이 납입보험료보다 적은 이유</h3>
         <div className="product-info-box">
@@ -113,7 +104,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 예금자보호안내 */}
       <div className="space-y-4">
         <h3 className="product-section-title">예금자보호안내</h3>
         <div className="product-info-box">
@@ -137,7 +127,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 광고관련 절차의 준수에 관한 사항 */}
       <div className="space-y-4">
         <h3 className="product-section-title">광고관련 절차의 준수에 관한 사항</h3>
         <div className="product-info-box">
@@ -147,7 +136,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 보험상담 및 분쟁조정 안내 */}
       {/* <div className="space-y-4">
         <h3 className="product-section-title">보험상담 및 분쟁조정 안내</h3>
         <div className="product-info-box">
@@ -178,7 +166,6 @@ export default function JoinNotice() {
         바랍니다.
       </div>
 
-      {/* 메타리치 보험스토어 안내 */}
       <div className="mt-8 space-y-2 border-t border-border-default pt-4 text-sm text-text-secondary">
         <div>
           ※ ㈜메타리치 보험스토어는 다수의 보험사와 계약 체결 및 대리·중개하는 대리점입니다.

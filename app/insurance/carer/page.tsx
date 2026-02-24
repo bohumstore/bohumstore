@@ -71,7 +71,6 @@ export default function CarerInsurancePage() {
       >
         <Slogan onModalStateChange={setIsModalOpen} />
 
-        {/* 히어로 이미지 배너 */}
         <div className="w-full md:px-6 md:py-12 lg:px-8 lg:py-12">
           <div className="mx-auto w-full md:max-w-4xl lg:max-w-5xl">
             <img
@@ -82,10 +81,8 @@ export default function CarerInsurancePage() {
           </div>
         </div>
 
-        {/* 간병인보험 정보 섹션 */}
         <section className="w-full bg-white py-10 sm:py-6 md:py-12 lg:py-12">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 md:max-w-4xl md:px-10 lg:max-w-5xl lg:px-16">
-            {/* 간병인보험 상세 정보 */}
             <div className="mb-8 rounded-xl border-2 border-pink-200 bg-pink-50 p-6">
               <div className="mb-6 text-center">
                 <h3 className="mb-2 text-xl font-bold text-text-primary">🏥 간병인사용일당</h3>
@@ -175,7 +172,6 @@ export default function CarerInsurancePage() {
               </div>
             </div>
 
-            {/* 감정적 어필 섹션 */}
             <div className="mb-8 rounded-2xl border border-orange-100 bg-gradient-to-br from-amber-50 to-orange-50 p-6 md:p-8">
               <div className="mb-6 text-center">
                 <h3 className="mb-3 text-2xl font-bold text-text-primary">
@@ -232,7 +228,6 @@ export default function CarerInsurancePage() {
               </div>
             </div>
 
-            {/* 이런 분에게 필요 */}
             <div className="mb-6 text-center">
               <h3 className="mb-6 text-xl font-bold text-text-primary">
                 이런 분에게 간병인보험이 필요합니다
@@ -269,7 +264,6 @@ export default function CarerInsurancePage() {
               </div>
             </div>
 
-            {/* 고객 후기 섹션 */}
             <div className="mb-8 rounded-2xl border border-green-200 bg-gradient-to-r from-green-50 to-emerald-50 p-6">
               <div className="mb-6 text-center">
                 <h3 className="mb-3 text-xl font-bold text-text-primary">💬 실제 고객 후기</h3>
@@ -325,7 +319,6 @@ export default function CarerInsurancePage() {
               </div>
             </div>
 
-            {/* 긴급감 조성 섹션 */}
             <div className="mb-8 rounded-2xl border border-red-200 bg-gradient-to-r from-red-50 to-rose-50 p-6">
               <div className="text-center">
                 <h3 className="mb-4 text-xl font-bold text-red-700">⏰ 지금 바로 준비하세요!</h3>
@@ -358,7 +351,6 @@ export default function CarerInsurancePage() {
               </div>
             </div>
 
-            {/* FAQ 섹션 */}
             <div className="mt-8 rounded-xl bg-page-bg p-6">
               <h3 className="mb-6 text-center text-xl font-bold text-text-primary">
                 자주 묻는 질문 (FAQ)
@@ -423,7 +415,6 @@ export default function CarerInsurancePage() {
           </div>
         </section>
 
-        {/* 유의사항 박스 */}
         <div className="flex w-full justify-center">
           <div className="mb-2 mt-6 w-full max-w-3xl px-6 py-0 text-xs text-gray-800 md:mb-4 md:mt-8 md:max-w-4xl md:text-sm lg:mb-6 lg:mt-10 lg:max-w-5xl">
             <div className="mb-1 font-bold">[ 유의사항 ]</div>
@@ -457,13 +448,11 @@ export default function CarerInsurancePage() {
             <div>※ 본 상품은 무배당 상품으로, 배당금이 지급되지 않습니다.</div>
           </div>
         </div>
-        {/* 구분선 */}
         <div className="flex w-full justify-center">
           <div className="w-full max-w-3xl px-6 md:max-w-4xl lg:max-w-5xl">
             <hr className="my-4 border-border-default" />
           </div>
         </div>
-        {/* 필수안내사항 박스 */}
         <div className="flex w-full justify-center">
           <div className="mb-2 mt-2 w-full max-w-3xl px-6 py-0 text-xs text-gray-800 md:mb-4 md:mt-4 md:max-w-4xl md:text-sm lg:mb-6 lg:mt-6 lg:max-w-5xl">
             <div className="mb-1 font-bold">[ 필수안내사항 ]</div>
@@ -484,10 +473,8 @@ export default function CarerInsurancePage() {
 
         <Footer />
 
-        {/* 오른쪽 하단 플로팅 액션 버튼들 - 모달이 열렸을 때는 숨김 */}
         {!isModalOpen && !showNotice && !isInputFocused && !isHeaderMenuOpen && (
           <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 sm:bottom-6 sm:right-6 sm:gap-3">
-            {/* 상담신청 버튼 */}
             <button
               onClick={() => {
                 const consultationBox = document.getElementById('consultation-box');
@@ -514,7 +501,6 @@ export default function CarerInsurancePage() {
                 />
               </svg>
             </button>
-            {/* 카톡상담 버튼 */}
             <button
               onClick={() => window.open('https://pf.kakao.com/_lrubxb/chat', '_blank')}
               className="flex flex-col items-center gap-1 rounded-2xl border border-border-default bg-white px-2 py-2 text-text-secondary shadow-lg transition-all duration-200 hover:bg-page-bg hover:shadow-xl sm:px-3 sm:py-3"
@@ -527,7 +513,6 @@ export default function CarerInsurancePage() {
                 className="h-5 w-5 sm:h-6 sm:w-6"
               />
             </button>
-            {/* 맨 위로 버튼 */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="rounded-full border border-border-default bg-white p-3 text-text-secondary shadow-lg transition-all duration-200 hover:bg-page-bg hover:shadow-xl sm:p-4"

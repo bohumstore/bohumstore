@@ -3,7 +3,6 @@ import React from 'react';
 export default function CoverageDetails() {
   return (
     <div className="space-y-8 px-2 py-4 sm:px-4 md:px-8 md:py-6">
-      {/* 주계약 */}
       <div className="space-y-4">
         <h2 className="border-b-2 border-[#1e3a8a] pb-2 text-2xl font-bold text-[#1e3a8a]">
           주계약

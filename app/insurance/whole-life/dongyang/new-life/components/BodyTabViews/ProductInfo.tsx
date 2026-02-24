@@ -6,12 +6,10 @@ export default function ProductInfo() {
 
   return (
     <div className="space-y-8 px-2 py-4 sm:px-4 md:px-8 md:py-6">
-      {/* 가입안내 제목 */}
       <h2 className="border-b-2 border-[#1e3a8a] pb-2 text-2xl font-bold text-[#1e3a8a]">
         가입안내
       </h2>
 
-      {/* 보험종류 */}
       <div className="space-y-4">
         <h3 className="border-l-4 border-[#1e3a8a] pl-3 text-xl font-bold">보험종류</h3>
         <div className="overflow-x-auto">
@@ -51,7 +49,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 보험기간, 납입기간 및 피보험자 가입나이 */}
       <div className="space-y-4">
         <h3 className="border-l-4 border-[#1e3a8a] pl-3 text-xl font-bold">
           보험기간, 납입기간 및 피보험자 가입나이
@@ -122,7 +119,6 @@ export default function ProductInfo() {
         </p>
       </div>
 
-      {/* 보험료 납입주기 */}
       <div className="space-y-4">
         <h3 className="border-l-4 border-[#1e3a8a] pl-3 text-xl font-bold">보험료 납입주기</h3>
         <div className="overflow-x-auto">
@@ -141,7 +137,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 가입한도 */}
       <div className="space-y-4">
         <h3 className="border-l-4 border-[#1e3a8a] pl-3 text-xl font-bold">가입한도</h3>
         <div className="overflow-x-auto">
@@ -177,7 +172,6 @@ export default function ProductInfo() {
         </p>
       </div>
 
-      {/* 건강진단 여부 */}
       <div className="space-y-4">
         <h3 className="border-l-4 border-[#1e3a8a] pl-3 text-xl font-bold">건강진단 여부</h3>
         <div className="rounded-lg border border-border-default bg-page-bg p-6">

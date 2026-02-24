@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
+import { useResponsive } from '@/hooks/useResponsive';
 
 // 슬라이더 데이터 타입 정의
 interface FeaturedProduct {
@@ -32,7 +33,7 @@ const featuredProducts: FeaturedProduct[] = [
     path: '/insurance/annuity/kb/triple-level-up',
   },
   {
-    id: 'kb-triple-2', // 슬라이더 동작 확인을 위한 더미 데이터 1
+    id: 'kb-triple-2',
     badge: 'BEST',
     marketingText: '안정적인 수익률과 비과세 혜택을 동시에',
     title: 'KB 알뜰 연금보험 무배당',
@@ -45,7 +46,7 @@ const featuredProducts: FeaturedProduct[] = [
     path: '/insurance/annuity/kb/triple-level-up',
   },
    {
-    id: 'kb-triple-3', // 슬라이더 동작 확인을 위한 더미 데이터 2
+    id: 'kb-triple-3',
     badge: 'HOT',
     marketingText: '노후 준비를 위한 최고의 선택',
     title: 'KB 평생 든든 연금보험',
@@ -61,6 +62,7 @@ const featuredProducts: FeaturedProduct[] = [
 
 export default function TrendingSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { isMobile } = useResponsive();
 
   // 자동 슬라이드 기능
   useEffect(() => {
@@ -72,11 +74,11 @@ export default function TrendingSection() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center max-w-[800px] pt-10 pb-5">
+    <div className={`flex flex-col items-center pt-10 pb-5 ${isMobile ? 'w-full px-6' : 'max-w-[800px]'}`}>
       {/* 섹션 헤더 */}
-      <div className="flex flex-col items-center justify-center mb-8 gap-2">
-        <div className="body-xl text-text-muted">보장과 보험료 균형이 좋아 요즘 가장 주목받는 보험이에요.</div>
-        <div className="heading-1 text-text-primary">요즘 뜨는 보험</div>
+      <div className={`flex flex-col items-center justify-center mb-8 gap-2 ${isMobile ? 'text-center' : ''}`}>
+        <div className={`text-text-muted ${isMobile ? 'body-m' : 'body-xl'}`}>보장과 보험료 균형이 좋아 요즘 가장 주목받는 보험이에요.</div>
+        <div className={`text-text-primary ${isMobile ? 'heading-3' : 'heading-1'}`}>요즘 뜨는 보험</div>
       </div>
 
       {/* 슬라이더 컨테이너 */}
@@ -87,13 +89,20 @@ export default function TrendingSection() {
         >
           {featuredProducts.map((product) => (
             <div key={product.id} className="min-w-full">
-              <Link href={product.path} className="flex w-[800px] bg-white rounded-lg border border-border-default shadow-sm p-10 flex-row items-center gap-12 relative overflow-hidden transition-all hover:shadow-md cursor-pointer">
+              <Link
+                href={product.path}
+                className={`flex bg-white rounded-lg border border-border-default shadow-sm relative overflow-hidden transition-all hover:shadow-md cursor-pointer ${
+                  isMobile
+                    ? 'flex-col w-full p-5 gap-4'
+                    : 'flex-row w-[800px] p-10 items-center gap-12'
+                }`}
+              >
                 <div className="absolute top-0 left-0">
                   <span className="bg-brand-primary text-white button-s px-2 py-1 rounded-br-lg">
                     {product.badge}
                   </span>
                 </div>
-                <div className="relative flex-shrink-0 w-[160px] h-[160px]">
+                <div className={`relative flex-shrink-0 ${isMobile ? 'w-[100px] h-[100px] mx-auto mt-4' : 'w-[160px] h-[160px]'}`}>
                   <Image
                     src={product.image}
                     alt={product.title}
@@ -102,17 +111,17 @@ export default function TrendingSection() {
                 </div>
 
                 <div className="flex flex-col items-start text-left w-full">
-                  <div className="text-brand-primary heading-5 mb-2">
+                  <div className={`text-brand-primary heading-5 mb-2 ${isMobile ? 'text-xs' : ''}`}>
                     {product.marketingText}
                   </div>
-                  <h3 className="heading-2 text-text-primary mb-7">
+                  <h3 className={`heading-2 text-text-primary ${isMobile ? 'mb-3 text-base' : 'mb-7'}`}>
                     {product.title}
                   </h3>
                   <div className="flex flex-col gap-1">
                     {product.features.map((feature, idx) => (
                       <div key={idx} className="flex items-center gap-2">
-                        <CheckCircleIcon className="w-6 h-6 text-brand-primary flex-shrink-0" />
-                        <span className="text-text-primary body-l">{feature}</span>
+                        <CheckCircleIcon className={`text-brand-primary flex-shrink-0 ${isMobile ? 'w-5 h-5' : 'w-6 h-6'}`} />
+                        <span className={`text-text-primary ${isMobile ? 'body-s' : 'body-l'}`}>{feature}</span>
                       </div>
                     ))}
                   </div>

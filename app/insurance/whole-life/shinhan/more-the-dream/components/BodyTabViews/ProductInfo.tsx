@@ -6,10 +6,8 @@ export default function ProductInfo() {
 
   return (
     <div className="space-y-8 px-2 py-4 sm:px-4 md:px-8 md:py-6">
-      {/* 가입안내 제목 */}
       <h2 className="product-page-title">가입안내</h2>
 
-      {/* 보험종류 */}
       <div className="space-y-4">
         <h3 className="product-section-title">보험종류</h3>
         <div className="overflow-x-auto">
@@ -49,7 +47,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 보험기간, 납입기간 및 피보험자 가입나이 */}
       <div className="space-y-4">
         <h3 className="product-section-title">보험기간, 납입기간 및 피보험자 가입나이</h3>
         <div className="overflow-x-auto">
@@ -84,7 +81,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 보험료 납입주기 */}
       <div className="space-y-4">
         <h3 className="product-section-title">보험료 납입주기</h3>
         <div className="overflow-x-auto">
@@ -99,7 +95,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 가입한도 */}
       <div className="space-y-4">
         <h3 className="product-section-title">가입한도</h3>
         <div className="overflow-x-auto">
@@ -128,7 +123,6 @@ export default function ProductInfo() {
         </p>
       </div>
 
-      {/* 건강진단 여부 */}
       <div className="space-y-4">
         <h3 className="product-section-title">건강진단 여부</h3>
         <div className="product-box">

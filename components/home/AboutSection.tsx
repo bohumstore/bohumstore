@@ -3,19 +3,22 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
+import { useResponsive } from '@/hooks/useResponsive';
 
 export default function AboutSection() {
+  const { isMobile } = useResponsive();
+
   return (
-    <div className="w-full max-w-[740px] mx-auto flex flex-col gap-6 pt-10 pb-5">
-      <div className="flex flex-row gap-8 items-center">
+    <div className={`w-full mx-auto flex flex-col gap-6 pt-10 pb-5 ${isMobile ? 'px-6' : 'max-w-[740px]'}`}>
+      <div className={`flex gap-8 items-center ${isMobile ? 'flex-col' : 'flex-row'}`}>
         <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
           <Image
             src="/svgs/main-about-shield.svg"
             alt="보험스토어 로고"
-            width={200}
-            height={200}
+            width={isMobile ? 140 : 200}
+            height={isMobile ? 140 : 200}
           />
-          <div className="heading-2 text-text-primary mb-2">
+          <div className={`text-text-primary mb-2 ${isMobile ? 'heading-3' : 'heading-2'}`}>
             <span className="text-brand-primary">보험스토어</span>는요
           </div>
           <div className="body-m text-text-muted">
@@ -24,7 +27,7 @@ export default function AboutSection() {
           </div>
         </div>
 
-        <div className="bg-white rounded-[16px] px-5 py-6 shadow-md flex flex-col gap-3 w-[360px]">
+        <div className={`bg-white rounded-[16px] px-5 py-6 shadow-md flex flex-col gap-3 ${isMobile ? 'w-full' : 'w-[360px]'}`}>
           <div className="flex items-center gap-4">
             <Image
               src="/svgs/main-about-check.svg"
@@ -55,15 +58,15 @@ export default function AboutSection() {
         </div>
       </div>
       {/* Bottom Section: Features Grid */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
 
         {/* Feature 1 */}
-        <div className="bg-card-service rounded-[24px] px-5 py-6 flex items-center justify-between w-[360px] h-[130px]">
+        <div className={`bg-card-service rounded-[24px] px-5 py-6 flex items-center justify-between ${isMobile ? 'w-full h-auto' : 'w-[360px] h-[130px]'}`}>
           <div className="flex flex-col gap-2">
             <h3 className="heading-3 text-text-primary">전문 상담사의 보장 분석</h3>
             <p className="body-m text-text-muted">내 보험, 지금 상태를 한 번에 정리해줘요.</p>
           </div>
-          <div className="relative w-20 h-20 shrink-0">
+          <div className={`relative shrink-0 ${isMobile ? 'w-16 h-16' : 'w-20 h-20'}`}>
             <Image
               src="/svgs/main-about-analyze.svg"
               alt="분석 아이콘"
@@ -73,12 +76,12 @@ export default function AboutSection() {
           </div>
         </div>
         {/* Feature 2 */}
-        <div className="bg-card-service rounded-[24px] px-5 py-6 flex items-center justify-between w-[360px] h-[130px]">
+        <div className={`bg-card-service rounded-[24px] px-5 py-6 flex items-center justify-between ${isMobile ? 'w-full h-auto' : 'w-[360px] h-[130px]'}`}>
           <div className="flex flex-col gap-2">
             <h3 className="heading-3 text-text-primary">딱 맞는 보험 추천</h3>
             <p className="body-m text-text-muted">가입 전 꼭 비교 할 부분만 콕 집어 안내해요.</p>
           </div>
-          <div className="relative w-20 h-20 shrink-0">
+          <div className={`relative shrink-0 ${isMobile ? 'w-16 h-16' : 'w-20 h-20'}`}>
             <Image
               src="/svgs/main-about-recommend.svg"
               alt="추천 아이콘"
@@ -88,12 +91,12 @@ export default function AboutSection() {
           </div>
         </div>
         {/* Feature 3 */}
-        <div className="bg-card-service rounded-[24px] px-5 py-6 flex items-center justify-between w-[360px] h-[130px]">
+        <div className={`bg-card-service rounded-[24px] px-5 py-6 flex items-center justify-between ${isMobile ? 'w-full h-auto' : 'w-[360px] h-[130px]'}`}>
           <div className="flex flex-col gap-2">
             <h3 className="heading-3 text-text-primary">불필요한 보험은 빼기</h3>
             <p className="body-m text-text-muted">내 상황에 맞춰 제안해드려요.</p>
           </div>
-          <div className="relative w-20 h-20 shrink-0">
+          <div className={`relative shrink-0 ${isMobile ? 'w-16 h-16' : 'w-20 h-20'}`}>
             <Image
               src="/svgs/main-about-cut.svg"
               alt="절감 아이콘"
@@ -103,12 +106,12 @@ export default function AboutSection() {
           </div>
         </div>
         {/* Feature 4 */}
-        <div className="bg-card-service rounded-[24px] px-5 py-6 flex items-center justify-between w-[360px] h-[130px]">
+        <div className={`bg-card-service rounded-[24px] px-5 py-6 flex items-center justify-between ${isMobile ? 'w-full h-auto' : 'w-[360px] h-[130px]'}`}>
           <div className="flex flex-col gap-2">
             <h3 className="heading-3 text-text-primary">실시간 채팅 상담</h3>
             <p className="body-m text-text-muted">궁금한 건 바로 물어볼 수 있어요.</p>
           </div>
-          <div className="relative w-20 h-20 shrink-0">
+          <div className={`relative shrink-0 ${isMobile ? 'w-16 h-16' : 'w-20 h-20'}`}>
             <Image
               src="/svgs/main-about-chat.svg"
               alt="채팅 아이콘"

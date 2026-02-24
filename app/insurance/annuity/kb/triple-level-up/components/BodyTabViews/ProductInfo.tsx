@@ -6,10 +6,8 @@ export default function ProductInfo() {
 
   return (
     <div className="space-y-8 px-2 py-4 sm:px-4 md:px-8 md:py-6">
-      {/* 가입안내 제목 */}
       <h2 className="product-page-title">가입안내</h2>
 
-      {/* 상품 구성 */}
       <div className="space-y-4">
         <h3 className="product-section-title">상품 구성</h3>
         <div className="rounded-lg border border-border-default bg-page-bg p-6">
@@ -29,7 +27,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 연금지급형태, 연금개시나이, 보험기간 및 납입주기 */}
       <div className="space-y-4">
         <h3 className="product-section-title">연금지급형태, 연금개시나이, 보험기간 및 납입주기</h3>
         <div className="rounded-lg border border-border-default bg-page-bg p-6">
@@ -80,7 +77,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 보험료 납입기간, 최소거치기간 및 가입나이 */}
       <div className="space-y-4">
         <h3 className="product-section-title">보험료 납입기간, 최소거치기간 및 가입나이</h3>
         <div className="overflow-x-auto">
@@ -117,10 +113,8 @@ export default function ProductInfo() {
         </p>
       </div>
 
-      {/* 보험료에 관한 사항 */}
       <div className="space-y-6">
         <h3 className="product-section-title">보험료에 관한 사항</h3>
-        {/* 기본보험료 */}
         <div className="space-y-4">
           <h4 className="product-sub-title border-b border-product-primary pb-2 text-product-primary">
             기본보험료
@@ -161,7 +155,6 @@ export default function ProductInfo() {
           </p>
         </div>
 
-        {/* 추가납입보험료 */}
         <div className="space-y-4">
           <h4 className="product-sub-title border-b border-product-primary pb-2 text-product-primary">
             추가납입보험료
@@ -200,7 +193,6 @@ export default function ProductInfo() {
           </div>
         </div>
 
-        {/* 중도인출에 관한 사항 */}
         <div className="space-y-4">
           <h4 className="product-sub-title border-b border-product-primary pb-2 text-product-primary">
             중도인출에 관한 사항
@@ -244,7 +236,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 최저사망적립액에 관한 사항 */}
       <div className="space-y-4">
         <h3 className="product-section-title">최저사망적립액에 관한 사항</h3>
         <div className="rounded-lg border border-border-default bg-page-bg p-6">
@@ -256,7 +247,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 트리플 레벨업 보증에 관한 사항 */}
       <div className="space-y-4">
         <h3 className="product-section-title">트리플 레벨업 보증에 관한 사항(보증형에 한함)</h3>
         <div className="rounded-lg border border-border-default bg-page-bg p-3 sm:p-6">
@@ -350,7 +340,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 연금지급개시시점의 연금계약 계약자적립액에 관한 사항 */}
       <div className="space-y-4">
         <h3 className="product-section-title">
           연금지급개시시점의 연금계약 계약자적립액에 관한 사항

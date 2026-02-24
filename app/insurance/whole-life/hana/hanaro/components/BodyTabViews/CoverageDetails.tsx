@@ -1,9 +1,9 @@
 import React from 'react';
+import TabContentWrapper from '@/components/shared/TabContentWrapper';
 
 export default function CoverageDetails() {
   return (
-    <div className="space-y-8 px-8 py-6">
-      {/* 주계약 */}
+    <TabContentWrapper>
       <div className="space-y-4">
         <h2 className="product-page-title">보험금 지급기준</h2>
         <h3 className="product-sub-title mt-4">· 주계약 (보장형 계약)</h3>
@@ -11,7 +11,6 @@ export default function CoverageDetails() {
           <p className="product-caption">기준: 보험가입금액 5천만원</p>
         </div>
 
-        {/* 보장내용표 */}
         <div className="overflow-x-auto">
           <table className="product-table">
             <thead>
@@ -61,7 +60,6 @@ export default function CoverageDetails() {
           </table>
         </div>
 
-        {/* 주의사항 */}
         <div className="product-info-box">
           <p>
             1. 보험료 납입기간 중 피보험자가 장해분류표 중 동일한 재해 또는 재해 이외의 동일한
@@ -75,7 +73,6 @@ export default function CoverageDetails() {
           </p>
         </div>
 
-        {/* 사망보험금 예시 */}
         <div className="mt-6">
           <h3 className="product-sub-title mb-2">&lt;사망보험금 예시&gt;</h3>
           <p className="product-caption mb-2 text-right">
@@ -145,7 +142,6 @@ export default function CoverageDetails() {
         </div>
       </div>
 
-      {/* 특약 */}
       <div className="mt-8 space-y-4">
         <h3 className="product-sub-title mt-4">· 특약</h3>
         <h2 className="product-small-title">(무)3대질병진단 보험료환급특약</h2>
@@ -222,7 +218,6 @@ export default function CoverageDetails() {
         </div>
       </div>
 
-      {/* (무)3대질병 납입면제특약 */}
       <div className="mt-8 space-y-4">
         <h2 className="product-small-title">(무)3대질병 납입면제특약</h2>
 
@@ -238,6 +233,6 @@ export default function CoverageDetails() {
           </p>
         </div>
       </div>
-    </div>
+    </TabContentWrapper>
   );
 }

@@ -9,6 +9,7 @@ import FireworksEffect from '@/components/shared/FireworksEffect';
 import { useInsuranceForm } from '@/hooks/useInsuranceForm';
 import { useOTP } from '@/hooks/useOTP';
 import TextField from '@/components/TextField';
+import Button from '@/components/shared/Button';
 
 const currentPath = '/insurance/annuity/kdb/happy-plus';
 const INSURANCE_COMPANY_ID = 2;
@@ -263,7 +264,6 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         <p className="body-l text-text-muted mt-1">정확한 안내를 위해 필수 정보를 입력해주세요.</p>
       </div>
 
-      {/* 성별·이름 */}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block button-s text-text-secondary mb-1.5">성별 <span className="text-status-red">*</span></label>
@@ -282,7 +282,6 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         </div>
       </div>
 
-      {/* 생년월일·연락처 */}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block button-s text-text-secondary mb-1.5">생년월일 <span className="text-status-red">*</span></label>
@@ -294,7 +293,6 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         </div>
       </div>
 
-      {/* 납입기간 */}
       <div>
         <label className="block button-s text-text-secondary mb-2">납입기간 <span className="text-status-red">*</span></label>
         <div className="grid grid-cols-3 gap-2">
@@ -311,7 +309,6 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         </div>
       </div>
 
-      {/* 월 납입금액 */}
       <div>
         <label className="block button-s text-text-secondary mb-2">월 납입금액 <span className="text-status-red">*</span></label>
         <div className="grid grid-cols-3 gap-2">
@@ -357,7 +354,6 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
               {type === 'calculate' ? '연금액 확인하기' : '상담 신청하기'}
             </div>
           </div>
-          {/* 연금 예상 요약 - 블러 카드 */}
           <div className="rounded-2xl bg-section-bg p-5">
             <p className="body-m font-bold text-text-primary flex items-center mb-3">
               <span className="text-brand-primary mr-1.5">●</span> 연금 예상 요약 <span className="ml-2 text-brand-primary font-extrabold">{name} 님</span>
@@ -373,15 +369,14 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
             </div>
           </div>
 
-          {/* 휴대폰 인증 */}
           <div>
             <p className="heading-5 text-text-primary mb-1 flex items-center">🔒 휴대폰 인증</p>
             <p className="body-s text-text-muted mb-3">정확한 연금액 확인을 위해 휴대폰 인증이 필요합니다.</p>
             <div className="flex gap-2 mb-3">
               <TextField type="text" value={phone} readOnly className="flex-1 bg-page-bg text-text-muted h-auto py-2.5" />
-              <button onClick={handleSendOTP} className="min-w-[100px] rounded-lg bg-button px-4 py-2.5 button-m text-text-inverse transition hover:bg-button-hover whitespace-nowrap">
+              <Button variant="secondary" size="sm" onClick={handleSendOTP}>
                 {canResend ? '인증번호 받기' : '재발송'}
-              </button>
+              </Button>
             </div>
             <div className="relative mb-4">
               <TextField type="text" inputMode="numeric" maxLength={6} ref={otpInputRef} value={code} onChange={e => setCode(e.target.value.replace(/[^0-9]/g, ''))} className="w-full h-auto py-2.5" placeholder="인증번호 6자리 입력" />
@@ -389,7 +384,6 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
             </div>
           </div>
 
-          {/* 상세 정보 보기 - 블러 */}
           <div>
             <p className="heading-5 text-text-primary mb-3 flex items-center">··· 상세 정보 보기</p>
             <div className="space-y-2 select-none">
@@ -406,9 +400,9 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
             </div>
           </div>
 
-          <button onClick={handleVerifyOTP} disabled={verifying || code.length !== 6} className={`w-full h-[44px] rounded-lg button-l transition ${verifying || code.length !== 6 ? 'bg-button-disabled text-text-disabled cursor-not-allowed' : 'bg-status-red text-text-inverse hover:bg-red-600'}`}>
+          <Button variant="primary" size="full" onClick={handleVerifyOTP} disabled={verifying || code.length !== 6}>
             {verifying ? '인증 처리중...' : '연금액 결과 확인하기'}
-          </button>
+          </Button>
         </div>
       );
     }
@@ -416,7 +410,6 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
     /* ── 상담 신청 인증 ── */
     return (
       <div className="space-y-5">
-        {/* 내 상담 정보 */}
         <div>
           <p className="heading-5 text-text-primary mb-3 flex items-center">
             <span className="mr-1.5">●</span> 내 상담 정보
@@ -428,7 +421,6 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
           </div>
         </div>
 
-        {/* 남길 말 */}
         <div>
           <p className="heading-5 text-text-primary mb-2">상담 전에 남길 말이 있나요? (선택)</p>
           <textarea
@@ -439,15 +431,14 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
           />
         </div>
 
-        {/* 휴대폰 인증 */}
         <div>
           <p className="heading-5 text-text-primary mb-1 flex items-center">🔒 휴대폰 인증</p>
           <p className="body-s text-text-muted mb-3">상담신청을 위해 휴대폰 인증이 필요해요.</p>
           <div className="flex gap-2 mb-3">
             <TextField type="text" value={phone} readOnly className="flex-1 bg-page-bg text-text-muted h-auto py-2.5" />
-            <button onClick={handleSendOTP} className="min-w-[100px] rounded-lg bg-button px-4 py-2.5 button-m text-text-inverse transition hover:bg-button-hover whitespace-nowrap">
+            <Button variant="secondary" size="sm" onClick={handleSendOTP}>
               {canResend ? '인증번호 받기' : '재발송'}
-            </button>
+            </Button>
           </div>
           <div className="relative mb-2">
             <TextField type="text" inputMode="numeric" maxLength={6} ref={consultOtpInputRef} value={code} onChange={e => setCode(e.target.value.replace(/[^0-9]/g, ''))} className="w-full h-auto py-2.5" placeholder="인증번호 6자리 입력" />
@@ -455,9 +446,9 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
           </div>
         </div>
 
-        <button onClick={handleVerifyOTP} disabled={verifying || code.length !== 6} className={`w-full h-[44px] rounded-lg button-l transition ${verifying || code.length !== 6 ? 'bg-button-disabled text-text-disabled cursor-not-allowed' : 'bg-button text-text-inverse hover:bg-button-hover'}`}>
+        <Button variant="primary" size="full" onClick={handleVerifyOTP} disabled={verifying || code.length !== 6}>
           {verifying ? '인증 처리중...' : '상담 신청하기'}
-        </button>
+        </Button>
       </div>
     );
   };
@@ -548,7 +539,6 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         {step === 3 && renderStep3()}
         {step === 4 && renderStep4()}
 
-        {/* 하단 텍스트 닫기 버튼 */}
         <button
           onClick={onClose}
           className="w-full mt-3 py-3 body-m font-medium text-text-muted hover:text-text-primary transition text-center"
