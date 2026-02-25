@@ -19,7 +19,9 @@ export interface ProductHeroProps {
   /** 데스크탑 화면용 타이틀 (ReactNode 형태) */
   titleDesktop: React.ReactNode;
   /** 메인 타이틀 아래에 들어갈 서브타이틀 (상풍명 등) */
-  subtitle: string;
+  subtitle?: string;
+  /** 상품명 (메인 타이틀 하단 서브타이틀) */
+  productName?: string;
   /** 돼지/로고 등 메인 일러스트 이미지 경로 */
   mainImageSrc: string;
   /** 이미지 Alt 속성 */
@@ -37,6 +39,7 @@ export default function ProductHero({
   titleMobile,
   titleDesktop,
   subtitle,
+  productName,
   mainImageSrc,
   mainImageAlt = '',
   features,
@@ -57,6 +60,9 @@ export default function ProductHero({
             <div className="heading-2 text-text-primary leading-tight">
               {titleMobile}
             </div>
+            {productName && (
+              <p className="body-l text-text-muted mt-2 font-medium">{productName}</p>
+            )}
             {subtitle && (
               <p className="body-l text-text-secondary mt-2">{subtitle}</p>
             )}
@@ -117,6 +123,9 @@ export default function ProductHero({
             <div className="flex flex-col items-start w-[340px]">
               <div className="mb-4">
                 {titleDesktop}
+                {productName && (
+                  <p className="body-l text-text-muted mt-2 font-medium">{productName}</p>
+                )}
                 {subtitle && (
                   <p className="body-l text-text-secondary mt-2">{subtitle}</p>
                 )}

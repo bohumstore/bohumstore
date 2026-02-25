@@ -40,7 +40,7 @@ export default function KDBHappyPlusAnnuityPage() {
                 </div>
               </>
             }
-            subtitle=""
+            productName="(무)KDB생명 해피플러스변액연금보험"
             mainImageSrc="/svgs/slogan/slogan-pig.svg"
             mainImageAlt="연금보험 돼지 일러스트"
             features={[

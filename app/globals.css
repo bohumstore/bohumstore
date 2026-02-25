@@ -281,7 +281,7 @@ html {
 
   /* Info Box */
   .product-info-box {
-    @apply rounded-md border border-divider bg-section-bg p-4 text-sm text-text-primary;
+    @apply rounded-md border border-divider bg-section-bg p-4 text-sm text-text-primary overflow-hidden break-keep;
   }
 }
 

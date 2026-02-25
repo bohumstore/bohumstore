@@ -14,14 +14,14 @@ export default function CoverageDetails() {
         <div className="product-info-box">
           <div className="space-y-4">
             <div className="overflow-x-auto">
-              <table className="product-table">
+              <table className="product-table min-w-[500px]">
                 <thead>
                   <tr className="product-table-header">
-                    <th className="product-table-th w-[150px]">
+                    <th className="product-table-th w-[25%]">
                       급부명칭
                     </th>
                     <th className="product-table-th">지급사유</th>
-                    <th className="product-table-th w-[120px]">
+                    <th className="product-table-th w-[20%]">
                       지급금액
                     </th>
                   </tr>
@@ -53,13 +53,13 @@ export default function CoverageDetails() {
         <div className="product-info-box">
           <div className="space-y-4">
             <div className="overflow-x-auto">
-              <table className="product-table">
+              <table className="product-table min-w-[500px]">
                 <thead>
                   <tr className="product-table-header">
-                    <th className="product-table-th w-[150px]">
+                    <th className="product-table-th w-[20%]">
                       급부명칭
                     </th>
-                    <th className="product-table-th w-[200px]">
+                    <th className="product-table-th w-[35%]">
                       지급사유
                     </th>
                     <th className="product-table-th">지급금액</th>
@@ -195,7 +195,7 @@ export default function CoverageDetails() {
               만원)
             </div>
             <div className="overflow-x-auto">
-              <table className="product-table">
+              <table className="product-table min-w-[900px]">
                 <thead>
                   <tr className="product-table-header">
                     <th className="product-table-th" rowSpan={4}>
@@ -621,7 +621,7 @@ export default function CoverageDetails() {
               예시기준 : 남자 40세, 60세 연금개시, 기본보험료 30만원, 10년납, 채권형100% (단위: 원)
             </div>
             <div className="overflow-x-auto">
-              <table className="product-table">
+              <table className="product-table min-w-[900px]">
                 <thead>
                   <tr className="product-table-header">
                     <th className="product-table-th" rowSpan={3}>

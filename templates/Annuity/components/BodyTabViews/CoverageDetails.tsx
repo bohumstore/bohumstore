@@ -6,7 +6,7 @@ export default function CoverageDetails() {
       {/* 연금개시전 보험기간 */}
       <div className="space-y-4">
         <h2 className="border-b-2 border-[#1e3a8a] pb-2 text-2xl font-bold text-[#1e3a8a] hover:cursor-pointer">
-          1. 연금개시전 보험기간
+          연금개시전 보험기간
         </h2>
         <div className="hidden overflow-x-auto md:block">
           <table className="w-full min-w-[600px] border-collapse">
@@ -61,7 +61,7 @@ export default function CoverageDetails() {
       {/* 연금개시후 보험기간 */}
       <div className="space-y-4">
         <h2 className="border-b-2 border-[#1e3a8a] pb-2 text-2xl font-bold text-[#1e3a8a] hover:cursor-pointer">
-          2. 연금개시후 보험기간
+          연금개시후 보험기간
         </h2>
         <p className="mb-4 text-gray-600">
           - 계약자는 해당 약관에 따라 연금지급개시전에 연금지급형태 및 연금지급형태의 구성비율,
