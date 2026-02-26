@@ -1,6 +1,7 @@
 ﻿'use client';
-import React from 'react';
-import Slogan from './components/Slogan';
+import React, { useState } from 'react';
+import CalculatorConsultModal from './components/CalculatorConsultModal';
+import ProductHero from '@/components/product/ProductHero';
 import Notice from './components/Notice';
 import ProductInfo from './components/BodyTabViews/ProductInfo';
 import CoverageDetails from './components/BodyTabViews/CoverageDetails';
@@ -8,6 +9,8 @@ import Surrender from './components/BodyTabViews/Surrender';
 import ProductDetailTemplate from '@/templates/Product/ProductDetailTemplate';
 
 export default function KBTripleLevelUpAnnuityPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'calculate' | 'consult'>('calculate');
   const tabs = [
     { label: '상품 정보', content: <ProductInfo /> },
     { label: '보장 내용', content: <CoverageDetails /> },
@@ -17,7 +20,72 @@ export default function KBTripleLevelUpAnnuityPage() {
   return (
     <ProductDetailTemplate
       renderHero={({ onOpenPrivacy, onModalStateChange }) => (
-        <Slogan onOpenPrivacy={onOpenPrivacy} onModalStateChange={onModalStateChange} />
+        <>
+          <ProductHero
+            backgroundColor="#fef9e7"
+            titleMobile={
+              <>
+                <span className="text-[#e23c3c] font-bold text-[24px]">트리플 레벨업 보증!</span>
+                <br />
+                <span className="text-text-primary">연금보험 무배당</span>
+              </>
+            }
+            titleDesktop={
+              <>
+                <div className="heading-2 text-text-primary">
+                  트리플 레벨업 보증!
+                </div>
+                <div className="heading-2 text-text-primary">
+                  연금보험 무배당
+                </div>
+              </>
+            }
+            productName="(무)KB 트리플 레벨업 연금보험"
+            mainImageSrc="/svgs/slogan/slogan-pig.svg"
+            mainImageAlt="연금보험 돼지 일러스트"
+            features={[
+              {
+                icon: '/svgs/slogan/slogan-guarantee.svg',
+                title: '7년/10년/연금개시',
+                title_sub: '3단계 적립액 보증',
+              },
+              {
+                icon: '/svgs/slogan/slogan-age-range.svg',
+                title: '가입 0~70세',
+                title_sub: '연금개시 45~85세',
+              },
+              {
+                icon: '/svgs/slogan/slogan-tax-exempt.svg',
+                title: '비과세 혜택',
+                subtitle: '(월 150만원 한도,\n10년 유지 시 세법 요건 충족)',
+                small: true,
+              },
+              {
+                icon: '/svgs/slogan/slogan-graph.svg',
+                title: '병력 무심사',
+                title_sub: '전건 가입가능',
+              },
+            ]}
+            onCalculateClick={() => {
+              setModalType('calculate');
+              setIsModalOpen(true);
+              onModalStateChange?.(true);
+            }}
+            onConsultClick={() => {
+              setModalType('consult');
+              setIsModalOpen(true);
+              onModalStateChange?.(true);
+            }}
+          />
+          <CalculatorConsultModal
+            isOpen={isModalOpen}
+            onClose={() => {
+              setIsModalOpen(false);
+              onModalStateChange?.(false);
+            }}
+            type={modalType}
+          />
+        </>
       )}
       tabs={tabs}
       documents={[

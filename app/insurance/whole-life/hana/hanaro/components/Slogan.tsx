@@ -2,6 +2,9 @@
 import { CalculatorIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline';
 import Modal from '@/components/Modal';
 import request from '@/app/api/request';
+import SelectField from '@/components/SelectField';
+import TextField from '@/components/TextField';
+import ToggleButtonGroup from '@/components/ToggleButtonGroup';
 import {
   getProductConfigByPath,
   getTemplateIdByPath,
@@ -511,42 +514,23 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <label className="mb-1.5 block text-xs font-medium text-text-secondary">
                       성별
                     </label>
-                    <div className="flex gap-2">
-                      <label
-                        className={`flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-lg border-2 py-2.5 transition-all ${gender === 'M' ? 'border-[#14b8a6] bg-[#14b8a6]/5 text-[#14b8a6]' : 'border-border-default hover:border-border-default'}`}
-                      >
-                        <input
-                          type="radio"
-                          name="gender"
-                          value="M"
-                          checked={gender === 'M'}
-                          onChange={handleGenderChange}
-                          className="sr-only"
-                        />
-                        <span className="text-sm font-medium">남자</span>
-                      </label>
-                      <label
-                        className={`flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-lg border-2 py-2.5 transition-all ${gender === 'F' ? 'border-[#14b8a6] bg-[#14b8a6]/5 text-[#14b8a6]' : 'border-border-default hover:border-border-default'}`}
-                      >
-                        <input
-                          type="radio"
-                          name="gender"
-                          value="F"
-                          checked={gender === 'F'}
-                          onChange={handleGenderChange}
-                          className="sr-only"
-                        />
-                        <span className="text-sm font-medium">여자</span>
-                      </label>
-                    </div>
+                    <ToggleButtonGroup
+                      options={[
+                        { label: '남자', value: 'M' },
+                        { label: '여자', value: 'F' },
+                      ]}
+                      value={gender}
+                      size="s"
+                      onChange={(val) => {
+                        handleGenderChange({ target: { value: val } } as any);
+                      }}
+                    />
                   </div>
                   <div>
                     <label className="mb-1.5 block text-xs font-medium text-text-secondary">
                       이름
                     </label>
-                    <input
-                      type="text"
-                      inputMode="text"
+                    <TextField
                       ref={nameInputRef}
                       value={name}
                       onChange={handleNameChange}
@@ -557,7 +541,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                           birthInputRef.current?.focus();
                         }
                       }}
-                      className="w-full rounded-lg border border-border-default px-3 py-2.5 text-sm transition-all focus:border-[#14b8a6] focus:ring-2 focus:ring-[#14b8a6]/20"
+                      className="w-full"
                       placeholder="홍길동"
                     />
                   </div>
@@ -568,15 +552,14 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <label className="mb-1.5 block text-xs font-medium text-text-secondary">
                       생년월일
                     </label>
-                    <input
+                    <TextField
                       type="text"
                       inputMode="numeric"
-                      pattern="[0-9]*"
                       ref={birthInputRef}
                       value={birth}
                       onChange={handleBirthChange}
                       onFocus={handleInputFocus}
-                      className="w-full rounded-lg border border-border-default px-3 py-2.5 text-sm transition-all focus:border-[#14b8a6] focus:ring-2 focus:ring-[#14b8a6]/20"
+                      className="w-full"
                       placeholder="19880818"
                       maxLength={8}
                     />
@@ -585,16 +568,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <label className="mb-1.5 block text-xs font-medium text-text-secondary">
                       연락처
                     </label>
-                    <input
+                    <TextField
                       type="text"
                       inputMode="numeric"
-                      pattern="[0-9]*"
                       ref={phoneInputRef}
                       value={phone}
                       onChange={handlePhoneChange}
                       onFocus={handleInputFocus}
-                      className="w-full rounded-lg border border-border-default px-3 py-2.5 text-sm transition-all focus:border-[#14b8a6] focus:ring-2 focus:ring-[#14b8a6]/20"
+                      className="w-full"
                       placeholder="01012345678"
+                      maxLength={11}
                     />
                   </div>
                 </div>
@@ -603,55 +586,32 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <label className="mb-1.5 block text-xs font-medium text-text-secondary">
                     납입기간
                   </label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <SelectField
+                    value={paymentPeriod}
+                    onChange={handlePaymentPeriodChange}
+                    className="w-full"
+                  >
+                    <option value="" disabled>선택</option>
                     {['5년납', '7년납', '10년납'].map((period) => (
-                      <label key={period} className="relative cursor-pointer">
-                        {period === '5년납' && (
-                          <span className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 animate-bounce rounded-full bg-gradient-to-r from-[#f59e0b] to-[#d97706] px-2.5 py-0.5 text-xs font-bold text-white shadow-lg">
-                            추천
-                          </span>
-                        )}
-                        <input
-                          type="radio"
-                          name="paymentPeriod"
-                          value={period}
-                          checked={paymentPeriod === period}
-                          onChange={handlePaymentPeriodChange}
-                          className="peer sr-only"
-                        />
-                        <div
-                          className={`w-full rounded-lg border-2 py-2.5 text-center text-sm transition-all ${paymentPeriod === period ? 'border-[#14b8a6] bg-[#14b8a6]/5 font-bold text-[#14b8a6]' : 'border-border-default hover:border-border-default'}`}
-                        >
-                          {period}
-                        </div>
-                      </label>
+                      <option key={period} value={period}>{period}</option>
                     ))}
-                  </div>
+                  </SelectField>
                 </div>
 
                 <div>
                   <label className="mb-1.5 block text-xs font-medium text-text-secondary">
                     월 납입금액
                   </label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <SelectField
+                    value={paymentAmount}
+                    onChange={handlePaymentAmountChange}
+                    className="w-full"
+                  >
+                    <option value="" disabled>선택</option>
                     {['30만원', '50만원', '100만원'].map((amount) => (
-                      <label key={amount} className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="paymentAmount"
-                          value={amount}
-                          checked={paymentAmount === amount}
-                          onChange={handlePaymentAmountChange}
-                          className="peer sr-only"
-                        />
-                        <div
-                          className={`w-full rounded-lg border-2 py-2.5 text-center text-sm transition-all ${paymentAmount === amount ? 'border-[#14b8a6] bg-[#14b8a6]/5 font-bold text-[#14b8a6]' : 'border-border-default hover:border-border-default'}`}
-                        >
-                          {amount}
-                        </div>
-                      </label>
+                      <option key={amount} value={amount}>{amount}</option>
                     ))}
-                  </div>
+                  </SelectField>
                 </div>
 
                 <div className="flex items-center gap-2">

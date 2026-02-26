@@ -106,7 +106,7 @@ export function useInsuranceForm(options?: InsuranceFormOptions) {
   }, []);
 
   const handlePaymentPeriodChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setPaymentPeriod(e.target.value);
       setIsVerified(false);
       onInputChange?.();
@@ -115,7 +115,7 @@ export function useInsuranceForm(options?: InsuranceFormOptions) {
   );
 
   const handlePaymentAmountChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setPaymentAmount(e.target.value);
       setIsVerified(false);
       onInputChange?.();

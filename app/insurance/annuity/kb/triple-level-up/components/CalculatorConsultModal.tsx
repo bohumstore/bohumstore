@@ -13,9 +13,9 @@ import SelectField from '@/components/SelectField';
 import SelectChip from '@/components/SelectChip';
 import Button from '@/components/shared/Button';
 
-const currentPath = '/insurance/annuity/kdb/happy-plus';
-const INSURANCE_COMPANY_ID = 2;
-const INSURANCE_PRODUCT_ID = 3;
+const currentPath = '/insurance/annuity/kb/triple-level-up';
+const INSURANCE_COMPANY_ID = 1; // KB라이프
+const INSURANCE_PRODUCT_ID = 1; // KB 트리플 레벨업 연금보험
 
 type ModalType = 'calculate' | 'consult';
 
@@ -28,10 +28,6 @@ interface CalculatorConsultModalProps {
 export default function CalculatorConsultModal({ isOpen, onClose, type }: CalculatorConsultModalProps) {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [consultMessage, setConsultMessage] = useState('');
-  const [pensionAmounts, setPensionAmounts] = useState({
-    monthly: 0, guaranteed: 0, totalUntil100: 0, pensionStartAge: 0, notice: '',
-  });
-  const [currentPensionStartAge, setCurrentPensionStartAge] = useState<number | null>(null);
 
   const {
     name, setName, gender, setGender, birth, phone, setPhone,
@@ -62,13 +58,12 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
       else if (type === 'consult' && consultIsVerified) setStep(3);
       else setStep(1);
     } else {
-      // 모달이 닫히면 상태 초기화
       setStep(1);
       setIsChecked(false);
     }
   }, [isOpen, type, isVerified, consultIsVerified]);
 
-  // Input handlers
+  // ── Input handlers ──
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGender(e.target.value); setIsVerified(false);
     setTimeout(() => nameInputRef.current?.focus(), 0);
@@ -79,15 +74,15 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
   const handleBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => { baseHandleBirthChange(e); setIsVerified(false); };
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => { baseHandlePhoneChange(e); setIsVerified(false); };
 
-  // OTP
+  // ── OTP ──
   const handleSendOTP = async () => {
     const age = insuranceAge !== '' ? Number(insuranceAge) : NaN;
     if (isNaN(age) || age < 15 || age > 70) return;
 
     const otpConfig = {
-      templateId: type === 'calculate' ? getTemplateIdByPath(currentPath) : 'UB_8715',
-      companyName: 'KDB생명',
-      productName: '더!행복플러스연금보험(보증형)',
+      templateId: type === 'calculate' ? (getTemplateIdByPath(currentPath) || 'UA_7754') : 'UB_8715',
+      companyName: 'KB라이프',
+      productName: 'KB트리플레벨업연금보험',
       phone,
     };
 
@@ -98,81 +93,75 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
     }
   };
 
-  // Pension calc
-  const getPensionStartAge = (age: number, pp: string) => {
-    const years = parseInt(pp.replace(/[^0-9]/g, ''));
-    const ca = age + years;
-    if (ca >= 80) return 80; if (ca >= 75) return 75; if (ca >= 70) return 70;
-    return Math.max(ca, 65);
-  };
+  // ══════════════════════════════════════════════
+  // KB 전용 계산 로직 (기존 Slogan 로직 100% 보존)
+  // ══════════════════════════════════════════════
+  let amount = 0;
+  if (paymentAmount.includes('만원')) {
+    const num = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+    amount = num * 10000;
+  } else {
+    amount = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+  }
+  const months = parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12;
+  const total = !isNaN(amount) && !isNaN(months) && amount > 0 && months > 0 ? amount * months : 0;
 
-  useEffect(() => {
-    if (!paymentPeriod || !paymentAmount || !gender || !insuranceAge) { setCurrentPensionStartAge(null); return; }
-    setCurrentPensionStartAge(getPensionStartAge(Number(insuranceAge), paymentPeriod));
-  }, [paymentPeriod, paymentAmount, gender, insuranceAge]);
+  let rate = 1.3, interestRate = 0.3;
+  if (paymentPeriod.includes('5')) { rate = 1.3; interestRate = 0.3; }
+  else if (paymentPeriod.includes('7')) { rate = 1.25; interestRate = 0.25; }
+  else if (paymentPeriod.includes('10')) { rate = 1.2; interestRate = 0.2; }
 
-  const is15YearDisabled = Number(insuranceAge) + 15 > 80;
-  const is20YearDisabled = Number(insuranceAge) + 20 > 80;
+  const interestValue = total ? (total * interestRate).toLocaleString('en-US') : '-';
+  const refundValue = total ? (total * rate).toLocaleString('en-US') : '-';
 
-  const calculatePensionAmount = async (age: number, pp: string, pa: string, g: string) => {
-    if (!age || !pp || !pa || !g) return { monthly: 0, guaranteed: 0, totalUntil100: 0, pensionStartAge: 0, notice: '' };
-    try {
-      let mp = 0;
-      if (pa.includes('만원')) mp = parseInt(pa.replace(/[^0-9]/g, '')) * 10000;
-      else mp = parseInt(pa.replace(/[^0-9]/g, ''));
-      const py = parseInt(pp.replace(/[^0-9]/g, ''));
-      const res = await fetch('/api/calculate-pension/', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ customerName: name, gender: g, age, paymentPeriod: py, monthlyPayment: mp, productType: 'happy-plus' }),
-      });
-      if (!res.ok) throw new Error('fail');
-      const result = await res.json();
-      if (result.success) return { monthly: result.data.monthlyPension, guaranteed: result.data.guaranteedAmount, totalUntil100: result.data.totalUntil100, pensionStartAge: result.data.pensionStartAge, notice: result.data.notice };
-      throw new Error('fail');
-    } catch { return { monthly: 0, guaranteed: 0, totalUntil100: 0, pensionStartAge: 0, notice: '' }; }
-  };
-
+  // ── OTP Verify ──
   const handleVerifyOTP = async () => {
     const code = type === 'calculate' ? otpCode : consultOtpCode;
     if (code.length !== 6) { alert('6자리 인증번호를 입력해 주세요.'); return; }
     setVerifying(true);
     try {
-      let calc = pensionAmounts;
-      if (paymentPeriod && paymentAmount) { calc = await calculatePensionAmount(Number(insuranceAge), paymentPeriod, paymentAmount, gender); setPensionAmounts(calc); }
       const res = await request.post('/api/verifyOTP', {
-        phone, name, birth, gender, code, counselType: type === 'calculate' ? 1 : 2,
-        companyId: INSURANCE_COMPANY_ID, productId: INSURANCE_PRODUCT_ID,
-        counselTime: consultTime, consultType: type === 'consult' ? consultType : undefined,
-        mounthlyPremium: paymentAmount, paymentPeriod,
-        monthlyPension: calc.monthly, guaranteedPension: calc.guaranteed,
-        pensionStartAge: calc.pensionStartAge, totalUntil100: calc.totalUntil100,
-        templateId: type === 'calculate' ? 'UB_8705' : 'UB_8715',
-        adminTemplateId: type === 'calculate' ? 'UA_8331' : 'UA_8332',
+        phone, name, birth, gender, code,
+        counselType: type === 'calculate' ? 1 : 2,
+        companyId: INSURANCE_COMPANY_ID,
+        productId: INSURANCE_PRODUCT_ID,
+        counselTime: consultTime,
+        consultType: type === 'consult' ? consultType : undefined,
+        mounthlyPremium: paymentAmount,
+        paymentPeriod: paymentPeriod,
+        tenYearReturnRate: rate ? Math.round(rate * 100).toString() : '-',
+        interestValue,
+        refundValue,
+        templateId: type === 'calculate' ? 'UB_8712' : 'UB_8715',
       });
       if (res.data.success) {
         if (type === 'calculate') {
-          try { await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, { phone, name, counsel_type_id: 1, utm_source: 'direct', utm_campaign: 'premium_calculation' }); } catch {}
-          setIsVerified(true); setOtpSent(false);
-        } else { setConsultIsVerified(true); }
-        alert('인증이 완료되었습니다!'); setStep(3);
+          try {
+            await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
+              phone, name, counsel_type_id: 1,
+              utm_source: 'direct', utm_campaign: 'premium_calculation',
+            });
+          } catch {}
+          setIsVerified(true);
+          setOtpSent(false);
+        } else {
+          setConsultIsVerified(true);
+        }
+        alert('인증이 완료되었습니다!');
+        setStep(3);
       } else { alert('인증에 실패했습니다.'); }
     } catch { alert('인증에 실패했습니다. 다시 시도해주세요.'); }
     finally { setVerifying(false); }
   };
-
-  let amount = 0;
-  if (paymentAmount.includes('만원')) amount = parseInt(paymentAmount.replace(/[^0-9]/g, '')) * 10000;
-  const months = parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12;
-  const total = amount > 0 && months > 0 ? amount * months : 0;
 
   /* ═══════════════════════════════════════════
      Step 1: 정보 입력
   ═══════════════════════════════════════════ */
   const renderStep1 = () => (
     <div className="space-y-5">
-      <div className="">
+      <div>
         <div className="heading-4 text-text-primary">
-          {type === 'calculate' ? '보험료 계산 정보 입력' : '상담 신청 정보 입력'}
+          {type === 'calculate' ? '해약환급금 계산 정보 입력' : '상담 신청 정보 입력'}
         </div>
         <p className="body-l text-text-muted mt-1">정확한 안내를 위해 필수 정보를 입력해주세요.</p>
       </div>
@@ -219,14 +208,9 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
             className="w-full"
           >
             <option value="" disabled>선택</option>
-            {['10년', '15년', '20년'].map(p => {
-              const disabled = (p === '15년' && is15YearDisabled) || (p === '20년' && is20YearDisabled);
-              return (
-                <option key={p} value={p} disabled={disabled}>
-                  {p} {disabled ? '(가입불가)' : ''}
-                </option>
-              );
-            })}
+            {['5년', '7년', '10년'].map(p => (
+              <option key={p} value={p}>{p}</option>
+            ))}
           </SelectField>
         </div>
         <div>
@@ -298,32 +282,30 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
     const setCode = isCalc ? setOtpCode : setConsultOtpCode;
 
     if (isCalc) {
-      /* ── 계산하기 인증 ── */
+      /* ── 환급금 확인 인증 ── */
       return (
         <div className="space-y-5">
-          <div className="">
-            <div className="heading-4 text-text-primary">
-              {type === 'calculate' ? '연금액 확인하기' : '상담 신청하기'}
-            </div>
+          <div>
+            <div className="heading-4 text-text-primary">해약환급금 확인하기</div>
           </div>
           <div className="rounded-2xl bg-section-bg p-5">
             <p className="body-m font-bold text-text-primary flex items-center mb-3">
-              <span className="text-brand-primary mr-1.5">●</span> 연금 예상 요약 <span className="ml-2 text-brand-primary font-extrabold">{name} 님</span>
+              <span className="text-brand-primary mr-1.5">●</span> 환급금 예상 요약 <span className="ml-2 text-brand-primary font-extrabold">{name} 님</span>
             </p>
             <div className="space-y-2 select-none">
               <div className="flex justify-between bg-white/60 rounded-lg p-3 body-m">
-                <span className="text-text-secondary font-medium">월 연금액</span>
-                <span className="font-bold text-brand-primary bg-brand-primary/10 rounded px-5 blur-[4px]">000,000 원</span>
+                <span className="text-text-secondary font-medium">10년 시점 환급률</span>
+                <span className="font-bold text-brand-primary bg-brand-primary/10 rounded px-5 blur-[4px]">{Math.round(rate * 100)}%</span>
               </div>
               <div className="caption-r text-text-muted px-1">
-                연금 개시 {currentPensionStartAge || '--'}세 · 총 납입액 약 {total > 0 ? Math.round(total / 10000).toLocaleString() : '--'}만 원
+                총 납입액 {total > 0 ? total.toLocaleString('en-US') : '--'} 원 · {paymentPeriod || '--'}납
               </div>
             </div>
           </div>
 
           <div>
             <p className="heading-5 text-text-primary mb-1 flex items-center">🔒 휴대폰 인증</p>
-            <p className="body-s text-text-muted mb-3">정확한 연금액 확인을 위해 휴대폰 인증이 필요합니다.</p>
+            <p className="body-s text-text-muted mb-3">정확한 환급금 확인을 위해 휴대폰 인증이 필요합니다.</p>
             <div className="flex gap-2 mb-3">
               <TextField type="text" value={phone} readOnly className="flex-1 bg-page-bg text-text-muted h-auto py-2.5" />
               <Button variant="secondary" size="sm" onClick={handleSendOTP}>
@@ -339,7 +321,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
           <div>
             <p className="heading-5 text-text-primary mb-3 flex items-center">··· 상세 정보 보기</p>
             <div className="space-y-2 select-none">
-              {['보험사', '상품명', '납입기간/월보험료', '20년 보증기간 연금액', '100세까지 생존 시 총 받는 금액'].map(label => (
+              {['보험사', '상품명', '납입기간/월보험료', '10년 시점 환급률', '10년 확정이자', '10년 시점 예상 해약환급금'].map(label => (
                 <div key={label} className="flex justify-between items-center bg-white border border-border-default rounded-lg p-3 body-m">
                   <span className="text-text-secondary font-medium flex items-center"><span className="text-brand-primary mr-1.5">▸</span>{label}</span>
                   <span className="font-bold text-brand-primary blur-[4px] select-none">●●●</span>
@@ -347,13 +329,13 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
               ))}
             </div>
             <div className="mt-3 caption-r text-text-muted leading-normal text-center">
-              * 실제 연금액은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.<br />
+              * 실제 보험료 및 해약환급금은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.<br />
               * 휴대폰 인증 완료 후 상세정보를 확인하실 수 있습니다.
             </div>
           </div>
 
           <Button variant="primary" size="full" onClick={handleVerifyOTP} disabled={verifying || code.length !== 6}>
-            {verifying ? '인증 처리중...' : '연금액 결과 확인하기'}
+            {verifying ? '인증 처리중...' : '환급금 결과 확인하기'}
           </Button>
         </div>
       );
@@ -369,7 +351,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
           </p>
           <div className="bg-section-bg rounded-xl p-4 body-m text-text-primary space-y-1">
             <p><span className="font-bold">{name}</span> · {insuranceAge}세</p>
-            <p className="text-text-muted body-m">담보상담 · {consultTime}</p>
+            <p className="text-text-muted body-m">연금보험 · {consultTime}</p>
           </div>
         </div>
 
@@ -422,12 +404,12 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
       );
     }
 
-    /* 계산 결과 */
+    /* 환급금 결과 — KB 전용 데이터 */
     return (
       <div className="px-2 py-2 space-y-4">
         <FireworksEffect show={true} />
         <div className="mb-2">
-          <div className="heading-4 text-text-primary">연금액 산출 결과</div>
+          <div className="heading-4 text-text-primary">환급금 산출 결과</div>
         </div>
 
         <div className="rounded-xl bg-page-bg p-4">
@@ -443,14 +425,13 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
 
           <div className="space-y-2">
             {[
-              { label: '보험사', value: 'KDB생명', color: 'text-brand-primary' },
-              { label: '상품명', value: '더!행복플러스연금보험(보증형)', color: 'text-brand-primary' },
+              { label: '보험사', value: 'KB라이프', color: 'text-brand-primary' },
+              { label: '상품명', value: 'KB트리플레벨업연금보험', color: 'text-brand-primary' },
               { label: '납입기간 / 월보험료', value: `${paymentPeriod} / ${paymentAmount}`, color: 'text-brand-primary' },
-              { label: '총 납입액', value: total ? `${total.toLocaleString()} 원` : '-', color: 'text-brand-primary' },
-              { label: '연금개시연령', value: `${pensionAmounts.pensionStartAge || currentPensionStartAge || '?'} 세`, color: 'text-category-purple' },
-              { label: '월 연금액', value: pensionAmounts.monthly > 0 ? `약 ${pensionAmounts.monthly.toLocaleString()} 원` : '별도 상담 문의', color: 'text-category-health' },
-              { label: '20년 보증기간 연금액', value: pensionAmounts.guaranteed > 0 ? `약 ${pensionAmounts.guaranteed.toLocaleString()} 원` : '별도 상담 문의', color: 'text-status-red' },
-              { label: '100세까지 생존 시 총 받는 금액', value: pensionAmounts.totalUntil100 > 0 ? `약 ${pensionAmounts.totalUntil100.toLocaleString()} 원` : '별도 상담 문의', color: 'text-category-life' },
+              { label: '총 납입액', value: total ? `${total.toLocaleString('en-US')} 원` : '-', color: 'text-brand-primary' },
+              { label: '10년 시점 환급률', value: rate ? `${Math.round(rate * 100)}%` : '-', color: 'text-category-purple' },
+              { label: '10년 확정이자', value: `${interestValue} 원`, color: 'text-status-info' },
+              { label: '10년 시점 예상 해약환급금', value: `${refundValue} 원`, color: 'text-status-red' },
             ].map(item => (
               <div key={item.label} className="flex justify-between bg-white border border-border-default p-3 rounded-lg body-m">
                 <span className="text-text-secondary font-medium"><span className="text-brand-primary mr-1">▸</span>{item.label}</span>
@@ -459,28 +440,14 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
             ))}
           </div>
 
-          {pensionAmounts.notice && (
-            <div className="mt-3 rounded-lg border border-status-yellow/30 bg-status-yellow/5 p-3 body-s text-text-secondary">
-              <span className="font-medium">※ 안내:</span> {pensionAmounts.notice}
-            </div>
-          )}
-
           <div className="mt-4 text-center caption-r text-text-muted leading-normal">
-            * 실제 연금액은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.<br />
+            * 실제 보험료 및 해약환급금은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.<br />
             * 본 계산 결과는 참고용이며, 실제 계약 시 약관을 확인 바랍니다.
           </div>
         </div>
       </div>
     );
   };
-
-  /* ═══════════════════════════════════════════
-     Modal Title
-  ═══════════════════════════════════════════ */
-  let modalTitle = '상담 신청하기';
-  if (step === 1) modalTitle = type === 'calculate' ? '보험료 계산 정보 입력' : '상담 신청 정보 입력';
-  else if (step === 2) modalTitle = type === 'calculate' ? '상담 전 인증' : '상담 전 인증';
-  else if (step === 3) modalTitle = type === 'calculate' ? '연금액 산출 완료' : '상담 신청 완료';
 
   return (
     <Modal open={isOpen} onClose={onClose} hideHeader hideFooter>
