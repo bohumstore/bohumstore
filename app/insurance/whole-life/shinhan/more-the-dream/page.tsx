@@ -1,6 +1,7 @@
 ﻿'use client';
-import React from 'react';
-import Slogan from './components/Slogan';
+import React, { useState } from 'react';
+import CalculatorConsultModal from './components/CalculatorConsultModal';
+import ProductHero from '@/components/product/ProductHero';
 import Notice from './components/Notice';
 import ProductInfo from './components/BodyTabViews/ProductInfo';
 import CoverageDetails from './components/BodyTabViews/CoverageDetails';
@@ -8,6 +9,8 @@ import Surrender from './components/BodyTabViews/Surrender';
 import ProductDetailTemplate from '@/templates/Product/ProductDetailTemplate';
 
 export default function ShinhanMoreTheDreamPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'calculate' | 'consult'>('calculate');
   const tabs = [
     { label: '상품 정보', content: <ProductInfo /> },
     { label: '보장 내용', content: <CoverageDetails /> },
@@ -16,8 +19,73 @@ export default function ShinhanMoreTheDreamPage() {
 
   return (
     <ProductDetailTemplate
-      renderHero={({ onOpenPrivacy, onModalStateChange }) => (
-        <Slogan onOpenPrivacy={onOpenPrivacy} onModalStateChange={onModalStateChange} />
+      renderHero={({ onOpenPrivacy: _onOpenPrivacy, onModalStateChange }) => (
+        <>
+          <ProductHero
+            backgroundColor="#F5F3FF"
+            featureCardColor="#EDE9FE"
+            titleMobile={
+              <>
+                <span className="text-[#8b5cf6] font-bold text-[24px]">해약환급금 122.7%!</span>
+                <br />
+                <span className="text-text-primary">평생 든든한 종신보장</span>
+              </>
+            }
+            titleDesktop={
+              <>
+                <div className="heading-2 text-text-primary">
+                  해약환급금 122.7%!
+                </div>
+                <div className="heading-2 text-text-primary">
+                  평생 든든한 종신보장
+                </div>
+              </>
+            }
+            productName="모아더드림Plus종신보험"
+            mainImageSrc="/svgs/slogan/main/slogan-payout.svg"
+            mainImageAlt="종신보험 일러스트"
+            features={[
+              {
+                icon: '/svgs/slogan/slogan-guarantee.svg',
+                title: '10년 환급률',
+                title_sub: '122.7% (5년납 기준)',
+              },
+              {
+                icon: '/svgs/slogan/slogan-age-range.svg',
+                title: '가입연령',
+                title_sub: '일반 15~70세 / 간편 30~69세',
+              },
+              {
+                icon: '/svgs/slogan/slogan-graph.svg',
+                title: '납입완료보너스',
+                title_sub: '약관 기준 제공',
+              },
+              {
+                icon: '/svgs/slogan/slogan-tax-exempt.svg',
+                title: '장기유지보너스',
+                title_sub: '약관 기준 제공',
+              },
+            ]}
+            onCalculateClick={() => {
+              setModalType('calculate');
+              setIsModalOpen(true);
+              onModalStateChange?.(true);
+            }}
+            onConsultClick={() => {
+              setModalType('consult');
+              setIsModalOpen(true);
+              onModalStateChange?.(true);
+            }}
+          />
+          <CalculatorConsultModal
+            isOpen={isModalOpen}
+            onClose={() => {
+              setIsModalOpen(false);
+              onModalStateChange?.(false);
+            }}
+            type={modalType}
+          />
+        </>
       )}
       tabs={tabs}
       documents={[
@@ -35,12 +103,6 @@ export default function ShinhanMoreTheDreamPage() {
         '본 상품은 무배당 상품으로, 배당금이 지급되지 않습니다.',
       ]}
       approvalNumber="준법감시인 심의필 43149호 (2025.08.26~2026.08.25)"
-      globalStyles={`
-        @keyframes jump-glow {
-          0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 #dc2626); }
-          30% { transform: scale(1.18) translateY(-6px); filter: drop-shadow(0 0 8px #fca5a5); }
-          60% { transform: scale(0.95) translateY(2px); filter: drop-shadow(0 0 0 #dc2626); }
-        }`}
     />
   );
 }

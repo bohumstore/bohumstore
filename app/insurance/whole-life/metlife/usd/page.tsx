@@ -1,12 +1,15 @@
 ﻿'use client';
-import React from 'react';
-import Slogan from './components/Slogan';
+import React, { useState } from 'react';
+import CalculatorConsultModal from './components/CalculatorConsultModal';
+import ProductHero from '@/components/product/ProductHero';
 import ProductInfo from './components/BodyTabViews/ProductInfo';
 import CoverageDetails from './components/BodyTabViews/CoverageDetails';
 import Surrender from './components/BodyTabViews/Surrender';
 import ProductDetailTemplate from '@/templates/Product/ProductDetailTemplate';
 
 export default function MetLifeUSDWholeLifePage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'calculate' | 'consult'>('calculate');
   const tabs = [
     { label: '상품 정보', content: <ProductInfo /> },
     { label: '보장 내용', content: <CoverageDetails /> },
@@ -15,8 +18,73 @@ export default function MetLifeUSDWholeLifePage() {
 
   return (
     <ProductDetailTemplate
-      renderHero={({ onOpenPrivacy, onModalStateChange }) => (
-        <Slogan onOpenPrivacy={onOpenPrivacy} onModalStateChange={onModalStateChange} />
+      renderHero={({ onOpenPrivacy: _onOpenPrivacy, onModalStateChange }) => (
+        <>
+          <ProductHero
+            backgroundColor="#F5F3FF"
+            featureCardColor="#EDE9FE"
+            titleMobile={
+              <>
+                <span className="text-[#00529b] font-bold text-[24px]">달러 vs 원화, 골라 받으세요!</span>
+                <br />
+                <span className="text-text-primary">달러종신보험 Plus</span>
+              </>
+            }
+            titleDesktop={
+              <>
+                <div className="heading-2 text-text-primary">
+                  달러 vs 원화, 골라 받으세요!
+                </div>
+                <div className="heading-2 text-text-primary">
+                  달러종신보험 Plus
+                </div>
+              </>
+            }
+            productName="(무)백만인을위한달러종신보험Plus"
+            mainImageSrc="/svgs/slogan/main/slogan-currency-cycle.svg"
+            mainImageAlt="달러종신보험 일러스트"
+            features={[
+              {
+                icon: '/svgs/slogan/slogan-guarantee.svg',
+                title: '$/₩ 통화 선택',
+                title_sub: '원하는 화폐로 수령',
+              },
+              {
+                icon: '/svgs/slogan/slogan-graph.svg',
+                title: '10년+1일 환급률',
+                title_sub: '124.9% (40세 남 기준)',
+              },
+              {
+                icon: '/svgs/slogan/slogan-age-range.svg',
+                title: '사망보장',
+                title_sub: '최대 150%',
+              },
+              {
+                icon: '/svgs/slogan/slogan-tax-exempt.svg',
+                title: '환전수수료',
+                title_sub: '최저 1$당 2원',
+              },
+            ]}
+            onCalculateClick={() => {
+              setModalType('calculate');
+              setIsModalOpen(true);
+              onModalStateChange?.(true);
+            }}
+            onConsultClick={() => {
+              setModalType('consult');
+              setIsModalOpen(true);
+              onModalStateChange?.(true);
+            }}
+          />
+          <CalculatorConsultModal
+            isOpen={isModalOpen}
+            onClose={() => {
+              setIsModalOpen(false);
+              onModalStateChange?.(false);
+            }}
+            type={modalType}
+          />
+        </>
       )}
       tabs={tabs}
       notices={[
@@ -33,16 +101,6 @@ export default function MetLifeUSDWholeLifePage() {
         '공시이율은 현재 공시이율에서 시장금리를 반영하여 매월 변동할 수 있습니다.',
       ]}
       approvalNumber="25120061호(2025.12.10~2026.12.09)"
-      globalStyles={`
-        @keyframes jump-glow {
-          0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 #dc2626); }
-          30% { transform: scale(1.18) translateY(-6px); filter: drop-shadow(0 0 8px #fca5a5); }
-          60% { transform: scale(0.95) translateY(2px); filter: drop-shadow(0 0 0 #dc2626); }
-        }
-        @keyframes pulse-glow {
-          0%, 100% { transform: scale(1); text-shadow: 0 0 0 transparent; }
-          50% { transform: scale(1.05); text-shadow: 0 0 20px rgba(234, 88, 12, 0.5); }
-        }`}
     />
   );
 }

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, ReactNode } from 'react';
 import Footer from '@/components/shared/Footer';
-import Modal from '@/components/Modal';
 import Tabs from '@/components/Tabs';
 import RequiredNotice from '@/components/shared/RequiredNotice';
 import FloatingButtons from '@/components/shared/FloatingButtons';
@@ -24,9 +23,9 @@ interface ProductDetailTemplateProps {
    * - render prop 패턴: 개인정보 모달 열기 함수와 모달 상태 변경 함수를 전달받음
    * - 기존 Slogan 컴포넌트를 그대로 넘기면 됨
    */
-  renderHero: (props: {
+  renderHero: (_props: {
     onOpenPrivacy: () => void;
-    onModalStateChange: (isOpen: boolean) => void;
+    onModalStateChange: (_isOpen: boolean) => void;
   }) => ReactNode;
   /** 탭 데이터 배열 */
   tabs: Tab[];
@@ -41,7 +40,7 @@ interface ProductDetailTemplateProps {
    * - Notice 컴포넌트가 이미 자체 Modal을 감싸고 있으므로 render prop으로 전달
    * - open/onClose를 받아서 기존 Notice 컴포넌트를 그대로 렌더링
    */
-  renderNotice?: (props: { open: boolean; onClose: () => void }) => ReactNode;
+  renderNotice?: (_props: { open: boolean; onClose: () => void }) => ReactNode;
   /** 추가 CSS keyframes (jsx global) */
   globalStyles?: string;
 }

@@ -197,7 +197,7 @@ function extractSearchInfo(referrer: string | null): {
     }
 
     return { searchEngine: 'Other', searchKeyword: null };
-  } catch (error) {
+  } catch (_error) {
     return { searchEngine: null, searchKeyword: null };
   }
 }

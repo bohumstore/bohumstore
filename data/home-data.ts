@@ -1,7 +1,7 @@
 // 홈 페이지 데이터 — products.ts에서 파생 + 홈 전용 데이터
 // 기존 컴포넌트(HeroSection, RecommendSection)가 사용하는 타입/변수명을 그대로 유지
 
-import { products, getSloganProducts, getMainPageProducts, type UnifiedProduct } from './products';
+import { getSloganProducts, getMainPageProducts, type UnifiedProduct } from './products';
 
 // ─── 타입 정의 (기존 그대로 유지) ───
 

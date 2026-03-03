@@ -19,7 +19,6 @@ export default function MobileAccordionWrapper({ children }: { children: ReactNo
   const contentRef = useRef<HTMLDivElement>(null);
   const [sections, setSections] = useState<AccordionSection[]>([]);
   const [openIndex, setOpenIndex] = useState<number>(0); // 첫 번째 섹션 기본 열림
-  const [mounted, setMounted] = useState(false);
 
   // 1️⃣ DOM 구조 분석 및 초기 래퍼(Wrapper) 구성
   useEffect(() => {
@@ -28,7 +27,6 @@ export default function MobileAccordionWrapper({ children }: { children: ReactNo
     const titles = contentRef.current.querySelectorAll('.product-section-title');
 
     if (titles.length === 0) {
-      setMounted(true);
       return;
     }
 
@@ -66,8 +64,7 @@ export default function MobileAccordionWrapper({ children }: { children: ReactNo
       });
     });
 
-    setSections(foundSections);
-    setMounted(true);
+    setTimeout(() => setSections(foundSections), 0);
   }, [isMobile, children]);
 
   // 2️⃣ 아코디언 상태(openIndex)에 따른 스타일 및 DOM 조작
@@ -203,7 +200,7 @@ export default function MobileAccordionWrapper({ children }: { children: ReactNo
 
   /* ── 모바일 화면: DOM 가공 전까지 깜빡임 방지 (visibility: hidden) ── */
   return (
-    <div ref={contentRef} style={{ visibility: mounted ? 'visible' : 'hidden' }}>
+    <div ref={contentRef}>
       {children}
     </div>
   );

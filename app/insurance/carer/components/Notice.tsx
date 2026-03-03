@@ -1,4 +1,4 @@
-import Modal from '@/components/Modal';
+import NoticeModal from '@/templates/Product/components/NoticeModal';
 import React from 'react';
 
 interface NoticeProps {
@@ -8,11 +8,7 @@ interface NoticeProps {
 
 export default function Notice({ open, onClose }: NoticeProps) {
   return (
-    <Modal title="가입시 알아두실 사항" open={open} onClose={onClose}>
-      <div
-        className="overflow-y-auto px-6 py-4 text-[15px] leading-relaxed"
-        style={{ maxHeight: '60vh' }}
-      >
+    <NoticeModal open={open} onClose={onClose}>
         <div className="mb-6">
           <div className="mb-3 text-lg font-bold">01. 청약 시 보험계약의 기본사항 확인</div>
           <div className="mb-2">
@@ -163,7 +159,6 @@ export default function Notice({ open, onClose }: NoticeProps) {
             <div className="text-right">㈜메타리치 대리점등록번호 : 2023070016</div>
           </div>
         </div>
-      </div>
-    </Modal>
+    </NoticeModal>
   );
 }

@@ -36,7 +36,9 @@ export default function HeroSection() {
   // 슬라이드가 변경될 때마다 시나리오 랜덤 변경 (첫 번째 슬라이드일 때)
   useEffect(() => {
     if (currentSloganIndex === 0) {
-      setCurrentScenario(chatScenarios[Math.floor(Math.random() * chatScenarios.length)]);
+      setTimeout(() => {
+        setCurrentScenario(chatScenarios[Math.floor(Math.random() * chatScenarios.length)]);
+      }, 0);
     }
   }, [currentSloganIndex]);
 
@@ -45,14 +47,15 @@ export default function HeroSection() {
 
     if (isAutoPlaying) {
       interval = setInterval(() => {
-        goToNext();
+        setIsTransitioning(true);
+        setDisplayIndex((prev) => prev + 1);
       }, 5000);
     }
 
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isAutoPlaying, displayIndex]);
+  }, [isAutoPlaying]);
 
   // 경계에서 실제 위치로 점프
   useEffect(() => {
@@ -74,7 +77,7 @@ export default function HeroSection() {
 
     const timer = setTimeout(handleTransitionEnd, 500);
     return () => clearTimeout(timer);
-  }, [displayIndex, isTransitioning]);
+  }, [displayIndex, isTransitioning, extendedSlogans.length]);
 
   const goToPrevious = () => {
     setIsTransitioning(true);

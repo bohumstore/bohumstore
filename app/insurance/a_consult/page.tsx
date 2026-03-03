@@ -25,7 +25,7 @@ export default function ConsultPage() {
     }
   };
 
-  const handleBlur = (e: React.FocusEvent) => {
+  const handleBlur = (_e: React.FocusEvent) => {
     setTimeout(() => {
       const active = document.activeElement as HTMLElement;
       if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) {

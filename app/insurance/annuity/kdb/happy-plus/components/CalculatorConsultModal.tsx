@@ -12,6 +12,7 @@ import TextField from '@/components/TextField';
 import SelectField from '@/components/SelectField';
 import SelectChip from '@/components/SelectChip';
 import Button from '@/components/shared/Button';
+import { ModalScrollBody, PreviewCard, StepSection } from '@/templates/Product/components/CalculatorConsultModalScaffold';
 
 const currentPath = '/insurance/annuity/kdb/happy-plus';
 const INSURANCE_COMPANY_ID = 2;
@@ -34,7 +35,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
   const [currentPensionStartAge, setCurrentPensionStartAge] = useState<number | null>(null);
 
   const {
-    name, setName, gender, setGender, birth, phone, setPhone,
+    name, setName, gender, setGender, birth, phone,
     paymentPeriod, setPaymentPeriod, paymentAmount, setPaymentAmount,
     isChecked, setIsChecked, nameInputRef, birthInputRef, phoneInputRef,
     handleInputFocus, handleBirthChange: baseHandleBirthChange,
@@ -49,7 +50,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
     consultOtpCode, setConsultOtpCode, consultOtpTimer,
     consultOtpResendAvailable,
     consultIsVerified, setConsultIsVerified,
-    consultType, setConsultType, consultTime, setConsultTime,
+    consultType, consultTime, setConsultTime,
     otpInputRef, consultOtpInputRef,
     handleSendOTP: baseHandleSendOTP,
     handleConsultSendOTP: baseHandleConsultSendOTP,
@@ -66,7 +67,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
       setStep(1);
       setIsChecked(false);
     }
-  }, [isOpen, type, isVerified, consultIsVerified]);
+  }, [isOpen, type, isVerified, consultIsVerified, setIsChecked]);
 
   // Input handlers
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -301,25 +302,33 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
       /* ── 계산하기 인증 ── */
       return (
         <div className="space-y-5">
-          <div className="">
-            <div className="heading-4 text-text-primary">
-              {type === 'calculate' ? '연금액 확인하기' : '상담 신청하기'}
+          <div><div className="heading-4 text-text-primary">연금액 확인하기</div></div>
+
+          <PreviewCard
+            className="rounded-2xl bg-section-bg p-5"
+            headerClassName="body-m font-bold text-text-primary flex items-center mb-3"
+            titleClassName=""
+            bodyClassName="select-none"
+            title={
+              <>
+                연금 예상 요약
+                <span className="ml-2 text-brand-primary font-extrabold">{name} 님</span>
+              </>
+            }
+            icon={<svg className="w-4 h-4 mr-1.5 text-brand-primary flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>}
+            hint={<><span className="text-brand-primary">→</span><span>인증하면 바로 알 수 있어요.</span></>}
+            hintClassName="flex items-center gap-1 body-s text-text-muted"
+          >
+            <div className="flex items-center justify-between bg-brand-primary/10 rounded-lg px-3 py-2.5 body-m mb-2">
+              <span className="text-text-secondary font-medium">월 연금액</span>
+              <span className="font-bold text-category-health blur-sm">
+                {pensionAmounts.monthly > 0 ? `약 ${pensionAmounts.monthly.toLocaleString()} 원` : '약 000,000 원'}
+              </span>
             </div>
-          </div>
-          <div className="rounded-2xl bg-section-bg p-5">
-            <p className="body-m font-bold text-text-primary flex items-center mb-3">
-              <span className="text-brand-primary mr-1.5">●</span> 연금 예상 요약 <span className="ml-2 text-brand-primary font-extrabold">{name} 님</span>
-            </p>
-            <div className="space-y-2 select-none">
-              <div className="flex justify-between bg-white/60 rounded-lg p-3 body-m">
-                <span className="text-text-secondary font-medium">월 연금액</span>
-                <span className="font-bold text-brand-primary bg-brand-primary/10 rounded px-5 blur-[4px]">000,000 원</span>
-              </div>
-              <div className="caption-r text-text-muted px-1">
-                연금 개시 {currentPensionStartAge || '--'}세 · 총 납입액 약 {total > 0 ? Math.round(total / 10000).toLocaleString() : '--'}만 원
-              </div>
+            <div className="caption-r text-text-muted px-1 mb-2">
+              연금 개시 {currentPensionStartAge || '--'}세 · 총 납입액 약 {total > 0 ? Math.round(total / 10000).toLocaleString() : '--'}만 원
             </div>
-          </div>
+          </PreviewCard>
 
           <div>
             <p className="heading-5 text-text-primary mb-1 flex items-center">🔒 휴대폰 인증</p>
@@ -336,21 +345,28 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
             </div>
           </div>
 
-          <div>
-            <p className="heading-5 text-text-primary mb-3 flex items-center">··· 상세 정보 보기</p>
-            <div className="space-y-2 select-none">
-              {['보험사', '상품명', '납입기간/월보험료', '20년 보증기간 연금액', '100세까지 생존 시 총 받는 금액'].map(label => (
-                <div key={label} className="flex justify-between items-center bg-white border border-border-default rounded-lg p-3 body-m">
-                  <span className="text-text-secondary font-medium flex items-center"><span className="text-brand-primary mr-1.5">▸</span>{label}</span>
-                  <span className="font-bold text-brand-primary blur-[4px] select-none">●●●</span>
+          <StepSection title="··· 상세 정보 보기" titleClassName="heading-5 text-text-primary mb-3 flex items-center">
+            <div className="space-y-2 select-none pointer-events-none">
+              {[
+                { label: '보험사',                       value: 'KDB생명',                          color: 'text-brand-primary' },
+                { label: '상품명',                       value: '더!행복플러스연금보험(보증형)',             color: 'text-brand-primary' },
+                { label: '납입기간/월보험료',               value: `${paymentPeriod} / ${paymentAmount}`, color: 'text-brand-primary' },
+                { label: '20년 보증기간 연금액',            value: '약 000,000 원',                    color: 'text-status-red' },
+                { label: '100세까지 생존 시 총 받는 금액',  value: '약 0,000만 원',                     color: 'text-category-life' },
+              ].map(item => (
+                <div key={item.label} className="flex justify-between items-center bg-white border border-border-default rounded-lg p-3 body-m">
+                  <span className="text-text-secondary font-medium flex items-center shrink-0 mr-2">
+                    <span className="text-brand-primary mr-1.5">▸</span>{item.label}
+                  </span>
+                  <span className={`font-bold blur-sm ${item.color}`}>{item.value}</span>
                 </div>
               ))}
             </div>
             <div className="mt-3 caption-r text-text-muted leading-normal text-center">
-              * 실제 연금액은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.<br />
-              * 휴대폰 인증 완료 후 상세정보를 확인하실 수 있습니다.
+              * 실제 연금액은 가입시점 및 고객 정보에 따라 달라질 수 있어요.<br />
+              * 휴대폰 인증 완료 후 상세정보를 확인하실 수 있어요.
             </div>
-          </div>
+          </StepSection>
 
           <Button variant="primary" size="full" onClick={handleVerifyOTP} disabled={verifying || code.length !== 6}>
             {verifying ? '인증 처리중...' : '연금액 결과 확인하기'}
@@ -474,17 +490,9 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
     );
   };
 
-  /* ═══════════════════════════════════════════
-     Modal Title
-  ═══════════════════════════════════════════ */
-  let modalTitle = '상담 신청하기';
-  if (step === 1) modalTitle = type === 'calculate' ? '보험료 계산 정보 입력' : '상담 신청 정보 입력';
-  else if (step === 2) modalTitle = type === 'calculate' ? '상담 전 인증' : '상담 전 인증';
-  else if (step === 3) modalTitle = type === 'calculate' ? '연금액 산출 완료' : '상담 신청 완료';
-
   return (
     <Modal open={isOpen} onClose={onClose} hideHeader hideFooter>
-      <div className="relative py-10 px-6">
+      <ModalScrollBody className="relative py-10 px-6">
         {step === 1 && renderStep1()}
         {step === 2 && renderStep2()}
         {step === 3 && renderStep3()}
@@ -495,7 +503,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         >
           닫기
         </button>
-      </div>
+      </ModalScrollBody>
     </Modal>
   );
 }

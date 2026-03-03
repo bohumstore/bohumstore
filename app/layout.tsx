@@ -310,7 +310,7 @@ export default function RootLayout({
             __html: "var hpt_info={'_account':'UHPT-72306', '_server': 'a72'};",
           }}
         />
-        <script src="//cdn.smlog.co.kr/core/smart.js" charSet="utf-8" />
+        <script async src="//cdn.smlog.co.kr/core/smart.js" charSet="utf-8" />
         <noscript
           dangerouslySetInnerHTML={{
             __html:

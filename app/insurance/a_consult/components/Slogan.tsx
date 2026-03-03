@@ -10,10 +10,10 @@ import Button from '@/components/shared/Button';
 
 type SloganProps = {
   onOpenPrivacy?: () => void;
-  onModalStateChange?: (isOpen: boolean) => void;
+  onModalStateChange?: (_isOpen: boolean) => void;
 };
 
-export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProps) {
+export default function Slogan({ onOpenPrivacy: _onOpenPrivacy, onModalStateChange }: SloganProps) {
   const [step, setStep] = useState<1 | 2>(1);
   const [showConsultModal, setShowConsultModal] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
@@ -404,7 +404,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   />
                   <label htmlFor="privacy-consent" className="body-s text-text-secondary cursor-pointer">
                     [필수] 개인정보 수집·이용 및 제공에 동의합니다.
-                    <button type="button" onClick={onOpenPrivacy} className="ml-1 text-text-muted underline hover:text-text-primary">
+                    <button type="button" onClick={_onOpenPrivacy} className="ml-1 text-text-muted underline hover:text-text-primary">
                       자세히 보기
                     </button>
                   </label>

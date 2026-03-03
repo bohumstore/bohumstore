@@ -1,6 +1,7 @@
 ﻿'use client';
-import React from 'react';
-import Slogan from './components/Slogan';
+import React, { useState } from 'react';
+import CalculatorConsultModal from './components/CalculatorConsultModal';
+import ProductHero from '@/components/product/ProductHero';
 import Notice from './components/Notice';
 import ProductInfo from './components/BodyTabViews/ProductInfo';
 import CoverageDetails from './components/BodyTabViews/CoverageDetails';
@@ -8,6 +9,8 @@ import Surrender from './components/BodyTabViews/Surrender';
 import ProductDetailTemplate from '@/templates/Product/ProductDetailTemplate';
 
 export default function KDBHappyDreamAnnuityPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'calculate' | 'consult'>('calculate');
   const tabs = [
     { label: '상품 정보', content: <ProductInfo /> },
     { label: '보장 내용', content: <CoverageDetails /> },
@@ -16,8 +19,73 @@ export default function KDBHappyDreamAnnuityPage() {
 
   return (
     <ProductDetailTemplate
-      renderHero={({ onOpenPrivacy, onModalStateChange }) => (
-        <Slogan onOpenPrivacy={onOpenPrivacy} onModalStateChange={onModalStateChange} />
+      renderHero={({ onOpenPrivacy: _onOpenPrivacy, onModalStateChange }) => (
+        <>
+          <ProductHero
+            backgroundColor="#FFF8E8"
+            featureCardColor="#FEF3C7"
+            titleMobile={
+              <>
+                <span className="text-[#e23c3c] font-bold text-[24px]">20년까지 연단리 8%!</span>
+                <br />
+                <span className="text-text-primary">변액연금보험 보증형</span>
+              </>
+            }
+            titleDesktop={
+              <>
+                <div className="heading-2 text-text-primary">
+                  20년까지 연단리 8%!
+                </div>
+                <div className="heading-2 text-text-primary">
+                  변액연금보험 보증형
+                </div>
+              </>
+            }
+            productName="(무)KDB 더!행복드림변액연금보험"
+            mainImageSrc="/svgs/slogan/main/slogan-moneybag.svg"
+            mainImageAlt="연금보험 돼지 일러스트"
+            features={[
+              {
+                icon: '/svgs/slogan/slogan-guarantee.svg',
+                title: '연단리 8%',
+                title_sub: '20년 보증, 이후 5%',
+              },
+              {
+                icon: '/svgs/slogan/slogan-age-range.svg',
+                title: '가입 15~70세',
+                title_sub: '연금개시 45~80세',
+              },
+              {
+                icon: '/svgs/slogan/slogan-graph.svg',
+                title: '조기 연금개시',
+                title_sub: '45세부터 가능',
+              },
+              {
+                icon: '/svgs/slogan/slogan-tax-exempt.svg',
+                title: '무진단·무심사',
+                title_sub: '전건 가입가능',
+              },
+            ]}
+            onCalculateClick={() => {
+              setModalType('calculate');
+              setIsModalOpen(true);
+              onModalStateChange?.(true);
+            }}
+            onConsultClick={() => {
+              setModalType('consult');
+              setIsModalOpen(true);
+              onModalStateChange?.(true);
+            }}
+          />
+          <CalculatorConsultModal
+            isOpen={isModalOpen}
+            onClose={() => {
+              setIsModalOpen(false);
+              onModalStateChange?.(false);
+            }}
+            type={modalType}
+          />
+        </>
       )}
       tabs={tabs}
       renderNotice={({ open, onClose }) => <Notice open={open} onClose={onClose} />}

@@ -49,7 +49,7 @@ export default function Modal({ title, open, onClose, children, hideHeader, hide
         window.history.pushState({ modal: true }, '');
       }
 
-      const handlePopState = (e: PopStateEvent) => {
+      const handlePopState = (_e: PopStateEvent) => {
         isClosingByBackRef.current = true;
         onClose();
       };

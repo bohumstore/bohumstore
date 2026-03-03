@@ -1,14 +1,12 @@
 import React from 'react';
-import { useState } from 'react';
+import ProductInfoBodyTabTemplate from '@/templates/Product/components/ProductInfoBodyTabTemplate';
 
 export default function ProductInfo() {
-  const [showResultModal, setShowResultModal] = useState(false);
-
   return (
-    <div className="space-y-8 px-2 py-4 sm:px-4 md:px-8 md:py-6">
-      <h2 className="border-b-2 border-[#1e3a8a] pb-2 text-2xl font-bold text-[#1e3a8a]">
-        가입안내
-      </h2>
+    <ProductInfoBodyTabTemplate
+      title="가입안내"
+      titleClassName="border-b-2 border-[#1e3a8a] pb-2 text-2xl font-bold text-[#1e3a8a]"
+    >
 
       <div className="space-y-4">
         <h3 className="border-l-4 border-[#1e3a8a] pl-3 text-xl font-bold">보험종류</h3>
@@ -184,6 +182,6 @@ export default function ProductInfo() {
           </p>
         </div>
       </div>
-    </div>
+    </ProductInfoBodyTabTemplate>
   );
 }

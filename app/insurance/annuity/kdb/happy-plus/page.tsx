@@ -19,7 +19,7 @@ export default function KDBHappyPlusAnnuityPage() {
 
   return (
     <ProductDetailTemplate
-      renderHero={({ onOpenPrivacy, onModalStateChange }) => (
+      renderHero={({ onOpenPrivacy: _onOpenPrivacy, onModalStateChange }) => (
         <>
           <ProductHero
             backgroundColor="#e8ecf4"
@@ -41,7 +41,7 @@ export default function KDBHappyPlusAnnuityPage() {
               </>
             }
             productName="(무)KDB생명 해피플러스변액연금보험"
-            mainImageSrc="/svgs/slogan/slogan-pig.svg"
+            mainImageSrc="/svgs/slogan/main/slogan-pig.svg"
             mainImageAlt="연금보험 돼지 일러스트"
             features={[
               {

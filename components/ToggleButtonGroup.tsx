@@ -8,7 +8,7 @@ export interface ToggleOption {
 export interface ToggleButtonGroupProps {
   options: ToggleOption[];
   value: string;
-  onChange: (value: string) => void;
+  onChange: (_value: string) => void;
   className?: string;
   size?: 's' | 'm';
 }

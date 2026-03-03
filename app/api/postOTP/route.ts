@@ -22,6 +22,13 @@ export async function POST(req: Request) {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     logger.debug('POST_OTP', '코드 생성', { code, phone });
 
+    // 1) 먼저 DB에 OTP 저장 (필수)
+    const { error: dbErr } = await supabase.from('otp').insert({ phone, code });
+    if (dbErr) {
+      logger.error('POST_OTP', 'DB 저장 실패', dbErr);
+      return NextResponse.json({ error: 'DB 저장 실패' }, { status: 500 });
+    }
+
     logger.debug('POST_OTP', 'SMS API 호출 준비');
     const requestData = {
       headers: { 'content-type': 'application/json' },
@@ -34,13 +41,6 @@ export async function POST(req: Request) {
         testmode_yn: 'N',
       },
     };
-
-    // 1) 먼저 DB에 OTP 저장 (필수)
-    const { error: dbErr } = await supabase.from('otp').insert({ phone, code });
-    if (dbErr) {
-      logger.error('POST_OTP', 'DB 저장 실패', dbErr);
-      return NextResponse.json({ error: 'DB 저장 실패' }, { status: 500 });
-    }
 
     // 2) SMS 전송은 백그라운드 처리
     const sendPromise = smsSend(requestData, aligoAuth)

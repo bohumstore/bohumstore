@@ -1,10 +1,9 @@
 import React from 'react';
-import TabContentWrapper from '@/components/shared/TabContentWrapper';
+import ProductInfoBodyTabTemplate from '@/templates/Product/components/ProductInfoBodyTabTemplate';
 
 export default function ProductInfo() {
   return (
-    <TabContentWrapper>
-      <h2 className="product-page-title">가입안내</h2>
+    <ProductInfoBodyTabTemplate title="가입안내">
 
       <div className="space-y-4">
         <h3 className="product-section-title">상품명 및 상품유형</h3>
@@ -1069,6 +1068,6 @@ export default function ProductInfo() {
           </div>
         </div>
       </div>
-    </TabContentWrapper>
+    </ProductInfoBodyTabTemplate>
   );
 }

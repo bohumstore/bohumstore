@@ -62,29 +62,41 @@ export function useOTP() {
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (otpTimer > 0) {
-      timer = setTimeout(() => setOtpTimer(otpTimer - 1), 1000);
-    } else if (otpTimer === 0 && !otpResendAvailable) {
-      setOtpResendAvailable(true);
+      timer = setTimeout(() => {
+        setOtpTimer((prev) => {
+          if (prev <= 1) {
+            setOtpResendAvailable(true);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
     }
     return () => clearTimeout(timer);
-  }, [otpTimer, otpResendAvailable]);
+  }, [otpTimer]);
 
   // ── Consult OTP Timer ──
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (consultOtpTimer > 0) {
-      timer = setTimeout(() => setConsultOtpTimer(consultOtpTimer - 1), 1000);
-    } else if (consultOtpTimer === 0 && !consultOtpResendAvailable) {
-      setConsultOtpResendAvailable(true);
+      timer = setTimeout(() => {
+        setConsultOtpTimer((prev) => {
+          if (prev <= 1) {
+            setConsultOtpResendAvailable(true);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
     }
     return () => clearTimeout(timer);
-  }, [consultOtpTimer, consultOtpResendAvailable]);
+  }, [consultOtpTimer]);
 
   // ── OTP 전송 ──
   const handlePostOTP = useCallback(async (config: OTPConfig) => {
     console.log(`[CLIENT] 인증번호 전송 시작: ${new Date().toISOString()}`);
     try {
-      const response = await request.post('/api/postOTP', {
+      await request.post('/api/postOTP', {
         phone: config.phone,
         templateId: config.templateId,
         companyName: config.companyName,

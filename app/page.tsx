@@ -10,7 +10,6 @@ import ReviewSection from '@/components/home/ReviewSection';
 import ContactSection from '@/components/home/ContactSection';
 import RequiredNotice from '@/components/shared/RequiredNotice';
 import Footer from '@/components/shared/Footer';
-import FloatingButtons from '@/components/shared/FloatingButtons';
 
 export default function HomePage() {
   useEffect(() => {
@@ -44,8 +43,6 @@ export default function HomePage() {
       {/* 푸터 */}
       <Footer />
 
-      {/* 플로팅 버튼 모음 */}
-      {/* <FloatingButtons showConsult={true} /> */}
     </div>
   );
 }

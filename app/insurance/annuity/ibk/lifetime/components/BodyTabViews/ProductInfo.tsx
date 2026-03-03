@@ -1,8 +1,9 @@
 import React from 'react';
+import ProductInfoBodyTabTemplate from '@/templates/Product/components/ProductInfoBodyTabTemplate';
 
 export default function ProductInfo() {
   return (
-    <div className="space-y-6 px-2 py-3 sm:px-4 md:px-8 md:py-4">
+    <ProductInfoBodyTabTemplate className="space-y-6 px-2 py-3 sm:px-4 md:px-8 md:py-4">
       <div className="space-y-4">
         <h3 className="product-section-title">연단리 8% 연금기준금액</h3>
         <div className="product-info-box">
@@ -238,6 +239,6 @@ export default function ProductInfo() {
           </div>
         </div>
       </div>
-    </div>
+    </ProductInfoBodyTabTemplate>
   );
 }

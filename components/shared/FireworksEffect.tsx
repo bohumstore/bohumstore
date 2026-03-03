@@ -9,20 +9,12 @@ interface FireworksEffectProps {
 }
 
 const FireworksEffect: React.FC<FireworksEffectProps> = ({ show, duration = 2000 }) => {
-  const [visible, setVisible] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const [visible, setVisible] = useState(show);
 
   useEffect(() => {
     if (show) {
-      setVisible(true);
       const timer = setTimeout(() => setVisible(false), duration);
       return () => clearTimeout(timer);
-    } else {
-      setVisible(false);
     }
   }, [show, duration]);
 
@@ -49,14 +41,14 @@ const FireworksEffect: React.FC<FireworksEffectProps> = ({ show, duration = 2000
       '#00c7be', // teal
       '#ff375f', // magenta
     ],
-    calc: (props: any, i: number) => ({
+    calc: (props: any, _i: number) => ({
       ...props,
       x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0,
       y: 180,
     }),
   };
 
-  if (!isMounted || !visible) return null;
+  if (!visible) return null;
 
   return (
     <div

@@ -26,10 +26,12 @@ export default function VisitorTrackingPage() {
     search_keyword: '',
   });
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     fetchVisitors();
     fetchStats();
   }, [currentPage, filters]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const safeRefresh = () => {
     const now = Date.now();
@@ -73,6 +75,7 @@ export default function VisitorTrackingPage() {
   };
 
   // 실시간 업데이트
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     let pollingTimer: any = null;
     let subscribed = false;
@@ -121,8 +124,10 @@ export default function VisitorTrackingPage() {
       } catch {}
     };
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // 선택적 자동 새로고침 (기본 OFF, 5초)
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!autoRefresh) return;
     const interval = setInterval(() => {
@@ -131,6 +136,7 @@ export default function VisitorTrackingPage() {
     }, 5000); // 5초
     return () => clearInterval(interval);
   }, [autoRefresh]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const fetchVisitors = async () => {
     try {
@@ -316,7 +322,7 @@ export default function VisitorTrackingPage() {
   }
 
   // 방문자 데이터 테이블 컬럼 정의 (요청에 맞게 간소화)
-  const columns = [
+  const _columns = [
     {
       header: '방문시간',
       accessorKey: 'created_at',

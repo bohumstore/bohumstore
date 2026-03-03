@@ -19,13 +19,13 @@ export default function KBTripleLevelUpAnnuityPage() {
 
   return (
     <ProductDetailTemplate
-      renderHero={({ onOpenPrivacy, onModalStateChange }) => (
+      renderHero={({ onOpenPrivacy: _onOpenPrivacy, onModalStateChange }) => (
         <>
           <ProductHero
-            backgroundColor="#fef9e7"
+            backgroundColor="#e8ecf4"
             titleMobile={
               <>
-                <span className="text-[#e23c3c] font-bold text-[24px]">트리플 레벨업 보증!</span>
+                <span className="text-status-red font-bold text-[24px]">트리플 레벨업 보증!</span>
                 <br />
                 <span className="text-text-primary">연금보험 무배당</span>
               </>
@@ -41,7 +41,7 @@ export default function KBTripleLevelUpAnnuityPage() {
               </>
             }
             productName="(무)KB 트리플 레벨업 연금보험"
-            mainImageSrc="/svgs/slogan/slogan-pig.svg"
+            mainImageSrc="/svgs/slogan/main/slogan-compare.svg"
             mainImageAlt="연금보험 돼지 일러스트"
             features={[
               {

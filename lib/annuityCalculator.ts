@@ -76,7 +76,6 @@ export function generateAnnuityExamples(): AnnuityCalculationResult[] {
   const examples: AnnuityCalculationResult[] = [];
 
   // 연령별 예시 (15세~70세)
-  const ages = [15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70];
   const paymentPeriods = [10, 15, 20];
   const monthlyPremiums = [300000, 500000, 1000000]; // 30만원, 50만원, 100만원
   const genders: ('male' | 'female')[] = ['male', 'female'];
