@@ -106,7 +106,8 @@ export default function ContentProtection() {
       return false;
     };
 
-    // 개발자 도구 탐지 (크기 변화 감지)
+    // 개발자 도구 탐지 (크기 변화 감지) - 봇 수집 오류 방지를 위해 비활성화
+    /*
     let devtools = { open: false };
     const threshold = 160;
     
@@ -122,6 +123,7 @@ export default function ContentProtection() {
         devtools.open = false;
       }
     };
+    */
 
     // 이벤트 리스너 등록
     document.addEventListener('contextmenu', handleContextMenu);
@@ -130,8 +132,8 @@ export default function ContentProtection() {
     document.addEventListener('selectstart', handleSelectStart);
     window.addEventListener('beforeprint', handleBeforePrint);
     
-    // 개발자 도구 감지 (주기적 체크)
-    const devToolsInterval = setInterval(checkDevTools, 500);
+    // 개발자 도구 감지 (주기적 체크) - 비활성화
+    // const devToolsInterval = setInterval(checkDevTools, 500);
 
     // 콘솔 메시지 숨기기 시도
     if (typeof window !== 'undefined') {
@@ -151,7 +153,7 @@ export default function ContentProtection() {
       document.removeEventListener('dragstart', handleDragStart);
       document.removeEventListener('selectstart', handleSelectStart);
       window.removeEventListener('beforeprint', handleBeforePrint);
-      clearInterval(devToolsInterval);
+      // clearInterval(devToolsInterval);
     };
   }, []);
 

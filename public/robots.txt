@@ -8,16 +8,12 @@ User-agent: Yeti
 Allow: /
 Disallow: /api/
 Disallow: /admin/
-Disallow: /_next/
-Disallow: /static/
 Crawl-delay: 0.5
 
 User-agent: NaverBot
 Allow: /
 Disallow: /api/
 Disallow: /admin/
-Disallow: /_next/
-Disallow: /static/
 Crawl-delay: 0.5
 
 # 구글 검색로봇
@@ -25,8 +21,6 @@ User-agent: Googlebot
 Allow: /
 Disallow: /api/
 Disallow: /admin/
-Disallow: /_next/
-Disallow: /static/
 
 # 기타 모든 로봇
 User-agent: *
