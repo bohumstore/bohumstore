@@ -48,7 +48,7 @@ export default function AboutSection() {
               <span className="text-brand-primary">3분</span> 만에 내 보험을 간편하게 점검해보세요.
             </p>
             <Link
-            href="/insurance/check"
+            href="/insurance/a_consult"
             className="flex items-center justify-between w-full bg-brand-primary hover:bg-brand-primary-hover text-white font-bold py-2 px-4 rounded-lg transition-colors"
             >
                 <span className="button-m">무료 점검 시작하기</span>

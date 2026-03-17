@@ -20,8 +20,8 @@ export default function ContactSection() {
             <div className="heading-5 text-text-primary">전문상담원 연결하기</div>
             <div className={`text-brand-primary font-bold ${isMobile ? 'text-[26px]' : 'text-[32px]'}`}>1533-3776</div>
            </div>
-           <Link href="tel:15333776" className="flex items-center text-text-muted hover:text-text-primary transition-colors body-m z-10">
-              상담 예약하기 <ChevronRightIcon className="w-4 h-4 ml-1" />
+           <Link href="/insurance/a_consult" className="flex items-center text-text-muted hover:text-text-primary transition-colors body-m z-10">
+              상담 신청 <ChevronRightIcon className="w-4 h-4 ml-1" />
            </Link>
            <div className={`absolute right-3 top-1/2 -translate-y-1/2 ${isMobile ? 'w-[100px] h-[85px]' : 'w-[140px] h-[120px]'}`}>
              <Image
@@ -41,9 +41,9 @@ export default function ContactSection() {
               채팅으로 바로바로!
             </div>
            </div>
-           <Link href="/consultation/chat" className="flex items-center text-text-muted hover:text-text-primary transition-colors body-m z-10">
+           <a href="https://pf.kakao.com/_lrubxb/chat" target="_blank" rel="noopener noreferrer" className="flex items-center text-text-muted hover:text-text-primary transition-colors body-m z-10">
               1:1 채팅상담 <ChevronRightIcon className="w-4 h-4 ml-1" />
-           </Link>
+           </a>
            <div className={`absolute right-3 top-1/2 -translate-y-1/2 ${isMobile ? 'w-[90px] h-[75px]' : 'w-[120px] h-[100px]'}`}>
              <Image
                src="/svgs/main-contact-chat.svg"

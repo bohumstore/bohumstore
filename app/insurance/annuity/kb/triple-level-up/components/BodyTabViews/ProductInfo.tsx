@@ -270,7 +270,7 @@ export default function ProductInfo() {
               해약환급금 산출방법서」에서 정한 방법에 따라 계산한 금액으로 합니다.
             </p>
 
-            <div className="rounded-lg bg-bg-blue p-3 sm:p-6">
+            <div className="rounded-lg bg-product-primary-soft p-3 sm:p-6">
               <div className="mb-3 text-center text-sm font-bold leading-tight text-product-primary sm:mb-4 sm:text-base sm:leading-normal">
                 트리플 레벨업 보증금액 = 트리플 레벨업 보증 기준금액 X 트리플 레벨업 보증비율
               </div>

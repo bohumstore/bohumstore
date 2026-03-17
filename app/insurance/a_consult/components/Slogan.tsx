@@ -7,6 +7,7 @@ import TextField from '@/components/TextField';
 import ToggleButtonGroup from '@/components/ToggleButtonGroup';
 import IconButton from '@/components/IconButton';
 import Button from '@/components/shared/Button';
+import { CONSULT_TIME_SELECT_OPTIONS } from '@/constants/insurance';
 
 type SloganProps = {
   onOpenPrivacy?: () => void;
@@ -37,13 +38,7 @@ export default function Slogan({ onOpenPrivacy: _onOpenPrivacy, onModalStateChan
     '어린이보험', '수술/입원비보험', '유병자/간편보험', '간호/간병보험',
     '종신/정기보험', '연금/변액연금보험', '운전자보험', '기타문의',
   ];
-  const consultTimeOptions = [
-    '- 상담 시간대 선택 -', '아무때나',
-    '오전 09:00 ~ 10:00', '오전 10:00 ~ 11:00', '오전 11:00 ~ 12:00',
-    '오후 12:00 ~ 01:00', '오후 01:00 ~ 02:00', '오후 02:00 ~ 03:00',
-    '오후 03:00 ~ 04:00', '오후 04:00 ~ 05:00', '오후 05:00 ~ 06:00',
-    '오후 06:00 이후',
-  ];
+  const consultTimeOptions = CONSULT_TIME_SELECT_OPTIONS;
 
   const nameInputRef = useRef<HTMLInputElement>(null);
   const birthInputRef = useRef<HTMLInputElement>(null);

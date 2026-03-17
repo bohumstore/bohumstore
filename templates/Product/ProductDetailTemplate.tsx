@@ -87,6 +87,22 @@ export default function ProductDetailTemplate({
     return () => window.removeEventListener('headerMenuChange', handleMenuChange as EventListener);
   }, []);
 
+  // 플로팅 버튼 → 모달 연결
+  useEffect(() => {
+    const clickBtn = (selector: string) => {
+      const btn = document.querySelector<HTMLElement>(selector);
+      btn?.click();
+    };
+    const onCalc = () => clickBtn('[data-floating-calculate]');
+    const onConsult = () => clickBtn('[data-floating-consult]');
+    window.addEventListener('floatingCalculate', onCalc);
+    window.addEventListener('floatingConsult', onConsult);
+    return () => {
+      window.removeEventListener('floatingCalculate', onCalc);
+      window.removeEventListener('floatingConsult', onConsult);
+    };
+  }, []);
+
   const handleFocus = (e: React.FocusEvent) => {
     const target = e.target as HTMLElement;
     if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
@@ -169,7 +185,7 @@ export default function ProductDetailTemplate({
         <Footer />
 
         {/* 플로팅 버튼 */}
-        <FloatingButtons visible={showFloating} showCalculator={true} />
+        <FloatingButtons visible={showFloating} showCalculator={true} showConsult={true} />
       </div>
     </>
   );

@@ -80,15 +80,15 @@ export default function ProductHero({
         <div className="flex items-end justify-between mb-8">
           <div className="flex flex-col gap-2">
             {calculateButtonVariant === 'kakao' ? (
-              <IconButton variant="kakao" size="m" onClick={onCalculateClick} className="w-[180px] min-h-[42px]" aria-label={calculateButtonLabel}>
+              <IconButton variant="kakao" size="m" onClick={onCalculateClick} className="w-[180px] min-h-[42px]" aria-label={calculateButtonLabel} data-floating-calculate>
                 {calculateButtonLabel}
               </IconButton>
             ) : (
-              <Button variant="primary" onClick={onCalculateClick} className="w-[180px]" aria-label={calculateButtonLabel}>
+              <Button variant="primary" onClick={onCalculateClick} className="w-[180px]" aria-label={calculateButtonLabel} data-floating-calculate>
                 {calculateButtonLabel}
               </Button>
             )}
-            <Button variant="outline" onClick={onConsultClick} className="w-[180px]">
+            <Button variant="outline" onClick={onConsultClick} className="w-[180px]" data-floating-consult>
               상담 신청
             </Button>
           </div>
@@ -164,15 +164,15 @@ export default function ProductHero({
             </div>
             <div className="flex justify-between w-full">
               {calculateButtonVariant === 'kakao' ? (
-                <IconButton variant="kakao" size="m" onClick={onCalculateClick} className="w-[160px] min-h-[48px] text-[15px]" aria-label={calculateButtonLabel}>
+                <IconButton variant="kakao" size="m" onClick={onCalculateClick} className="w-[160px] min-h-[48px] text-[15px]" aria-label={calculateButtonLabel} data-floating-calculate>
                   {calculateButtonLabel}
                 </IconButton>
               ) : (
-                <Button variant="primary" size="lg" onClick={onCalculateClick} className="w-[160px] text-[15px]" aria-label={calculateButtonLabel}>
+                <Button variant="primary" size="lg" onClick={onCalculateClick} className="w-[160px] text-[15px]" aria-label={calculateButtonLabel} data-floating-calculate>
                   {calculateButtonLabel}
                 </Button>
               )}
-              <Button variant="outline" size="lg" onClick={onConsultClick} className="w-[160px] text-[15px]">
+              <Button variant="outline" size="lg" onClick={onConsultClick} className="w-[160px] text-[15px]" data-floating-consult>
                 상담 신청
               </Button>
             </div>

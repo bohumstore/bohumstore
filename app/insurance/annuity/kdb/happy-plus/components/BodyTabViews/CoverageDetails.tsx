@@ -19,7 +19,7 @@ export default function CoverageDetails() {
                     <th className="product-table-th w-[80px] sm:w-[120px] md:w-[150px]">
                       급부명칭
                     </th>
-                    <th className="border border-border-default p-1 text-xs sm:p-2 sm:text-sm md:p-3">
+                    <th className="product-table-th">
                       지급사유
                     </th>
                     <th className="product-table-th w-[70px] sm:w-[100px] md:w-[120px]">

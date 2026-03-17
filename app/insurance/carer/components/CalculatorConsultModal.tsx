@@ -10,20 +10,7 @@ import TextField from '@/components/TextField';
 import Button from '@/components/shared/Button';
 import { ModalScrollBody } from '@/templates/Product/components/CalculatorConsultModalScaffold';
 
-// ── 기존 Slogan.tsx에서 100% 동일한 상수 ──
-const CONSULTATION_TIME_OPTIONS = [
-  '아무때나',
-  '오전 09:00 ~ 10:00',
-  '오전 10:00 ~ 11:00',
-  '오전 11:00 ~ 12:00',
-  '오후 12:00 ~ 01:00',
-  '오후 01:00 ~ 02:00',
-  '오후 02:00 ~ 03:00',
-  '오후 03:00 ~ 04:00',
-  '오후 04:00 ~ 05:00',
-  '오후 05:00 ~ 06:00',
-  '오후 06:00 이후',
-];
+import { CONSULT_TIME_OPTIONS } from '@/constants/insurance';
 
 type ModalType = 'calculate' | 'consult';
 
@@ -198,7 +185,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type: _type }:
           onChange={(e) => setConsultTimeLocal(e.target.value)}
           className="w-full rounded-lg border border-border-default bg-white px-3 py-2.5 text-sm transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
         >
-          {CONSULTATION_TIME_OPTIONS.map((option) => (
+          {CONSULT_TIME_OPTIONS.map((option) => (
             <option key={option} value={option}>{option}</option>
           ))}
         </select>

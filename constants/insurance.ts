@@ -218,3 +218,25 @@ export const getTemplateIdByPath = (path: string) => {
       return 'UB_8705'; // 기본값 (연금보험 기본값)
   }
 };
+
+
+/** 상담 시간대 선택 옵션 (1시간 단위, 09:00~18:00 + 6시 이후) */
+export const CONSULT_TIME_OPTIONS = [
+  '아무때나',
+  '오전 09:00 ~ 10:00',
+  '오전 10:00 ~ 11:00',
+  '오전 11:00 ~ 12:00',
+  '오후 12:00 ~ 13:00',
+  '오후 13:00 ~ 14:00',
+  '오후 14:00 ~ 15:00',
+  '오후 15:00 ~ 16:00',
+  '오후 16:00 ~ 17:00',
+  '오후 17:00 ~ 18:00',
+  '오후 6시 이후',
+] as const;
+
+/** Slogan.tsx 드롭다운용 (헤더 옵션 포함) */
+export const CONSULT_TIME_SELECT_OPTIONS = [
+  '- 상담 시간대 선택 -',
+  ...CONSULT_TIME_OPTIONS,
+] as const;

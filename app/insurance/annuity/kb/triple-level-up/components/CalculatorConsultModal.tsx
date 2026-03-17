@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from '@/components/Modal';
 import request from '@/app/api/request';
-import { getTemplateIdByPath } from '@/constants/insurance';
+import { getTemplateIdByPath, CONSULT_TIME_OPTIONS } from '@/constants/insurance';
 import { trackPremiumCheck } from '@/lib/visitorTracking';
 import FireworksEffect from '@/components/shared/FireworksEffect';
 import { useInsuranceForm } from '@/hooks/useInsuranceForm';
@@ -237,7 +237,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
             onChange={(e) => setConsultTime(e.target.value)}
             className="w-full"
           >
-            {['아무때나', '오전 (09:00 ~ 12:00)', '오후 (12:00 ~ 18:00)', '저녁 (18:00 ~ 20:00)'].map(t => (
+            {CONSULT_TIME_OPTIONS.map(t => (
               <option key={t} value={t}>{t}</option>
             ))}
           </SelectField>

@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useResponsive } from '@/hooks/useResponsive';
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 
 interface RequiredNoticeProps {
   /** 심의필 번호 (예: "25080166호 (2025.08.21~2026.08.20)") */
@@ -24,7 +23,6 @@ export default function RequiredNotice({
   className = '',
 }: RequiredNoticeProps) {
   const { isMobile } = useResponsive();
-  const [isOpen, setIsOpen] = useState(false);
 
   const noticeContent = (
     <>
@@ -71,29 +69,11 @@ export default function RequiredNotice({
   if (isMobile) {
     return (
       <div className={`w-full py-4 ${className}`}>
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center justify-between w-full px-6 text-left"
-        >
-          <div className="flex items-center gap-2">
-            <span className="flex h-5 w-5 items-center justify-center rounded-full border border-border-default text-xs text-text-disabled">ⓘ</span>
-            <span className="body-m">꼭 확인해주세요.</span>
-          </div>
-          {isOpen ? (
-            <ChevronUpIcon className="w-5 h-5 text-text-disabled" />
-          ) : (
-            <ChevronDownIcon className="w-5 h-5 text-text-disabled" />
-          )}
-        </button>
-        <div
-          className={`overflow-hidden transition-all duration-300 ease-in-out ${
-            isOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'
-          }`}
-        >
-          <div className="">
-            {noticeContent}
-          </div>
+        <div className="flex items-center gap-2 px-6 mb-2">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full border border-border-default text-xs text-text-disabled">ⓘ</span>
+          <span className="body-m">꼭 확인해주세요.</span>
         </div>
+        <div>{noticeContent}</div>
       </div>
     );
   }

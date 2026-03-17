@@ -155,7 +155,7 @@ export default function CoverageDetails() {
                 <div>
                   <div className="mb-2 font-semibold">■ 장기유지 가산율</div>
                   <div className="overflow-x-auto">
-                    <table className="w-full border-collapse text-xs">
+                    <table className="product-table">
                       <thead>
                         <tr className="product-table-header">
                           <th className="product-table-th">유지기간</th>
@@ -205,12 +205,12 @@ export default function CoverageDetails() {
               </div>
               <div className="space-y-3">
                 <div className="overflow-x-auto">
-                  <table className="w-full border-collapse text-xs">
+                  <table className="product-table">
                     <thead>
                       <tr className="product-table-header">
-                        <th className="border border-border-default p-2">연금지급형태</th>
-                        <th className="border border-border-default p-2">지급조건</th>
-                        <th className="border border-border-default p-2">지급내용</th>
+                        <th className="product-table-th">연금지급형태</th>
+                        <th className="product-table-th">지급조건</th>
+                        <th className="product-table-th">지급내용</th>
                       </tr>
                     </thead>
                     <tbody className="text-text-primary">

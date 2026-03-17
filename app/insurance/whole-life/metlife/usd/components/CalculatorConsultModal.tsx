@@ -8,6 +8,7 @@ import {
   getTemplateIdByPath,
   INSURANCE_COMPANIES,
   INSURANCE_PRODUCTS,
+  CONSULT_TIME_OPTIONS,
 } from '@/constants/insurance';
 import FireworksEffect from '@/components/shared/FireworksEffect';
 import { trackPremiumCheck } from '@/lib/visitorTracking';
@@ -284,7 +285,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         <div>
           <label className="block button-s text-text-secondary mb-1.5">상담 시간대 <span className="text-status-red">*</span></label>
           <SelectField value={consultTime} onChange={(e) => setConsultTime(e.target.value)} className="w-full">
-            {['아무때나', '오전 (09:00 ~ 12:00)', '오후 (12:00 ~ 18:00)', '저녁 (18:00 ~ 20:00)'].map(t => (
+            {CONSULT_TIME_OPTIONS.map(t => (
               <option key={t} value={t}>{t}</option>
             ))}
           </SelectField>
