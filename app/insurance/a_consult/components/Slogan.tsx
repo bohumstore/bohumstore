@@ -343,7 +343,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     handleOpenConsultModal(e);
   };
 
-  // 보험연령 계산 함수
+  // 보험연령 계산 함수 (만 나이 + 1)
   const getInsuranceAge = (birth: string) => {
     if (!/^\d{8}$/.test(birth)) return '';
     const birthYear = parseInt(birth.substring(0, 4));
@@ -357,7 +357,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     ) {
       age -= 1;
     }
-    return age;
+    // 보험연령은 만 나이 + 1
+    return age + 1;
   };
 
   // 보험연령 계산
@@ -369,7 +370,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const currentMonth = currentDate.getMonth() + 1; // 0-11을 1-12로 변환
   
   // 이슈 업데이트 관리: 내용 업데이트 완료 시 이 값을 현재 월로 변경
-  const lastUpdatedMonth = 12; // ★ 이슈 내용이 업데이트된 월 (12월 = 내용 표시, 1월 되면 자동으로 업데이트중)
+  const lastUpdatedMonth = 3; // ★ 이슈 내용이 업데이트된 월 (3월 = 내용 표시, 4월 되면 자동으로 업데이트중)
   const isUpdating = currentMonth !== lastUpdatedMonth;
 
   return (
@@ -431,15 +432,15 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="space-y-2 sm:space-y-2.5">
                   <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
                     <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
-                    <span>2025년 <span className="font-semibold text-red-500">보험료 인상</span> 예정!</span>
+                    <span>실손보험료 <span className="font-semibold text-red-500">최대 20% 인상</span> 예정!</span>
                   </div>
                   <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
                     <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
-                    <span>운전자보험 <span className="font-semibold text-red-500">변호사선임비용 축소</span> 예정!</span>
+                    <span>암보험 <span className="font-semibold text-red-500">보험료 인상</span> 예정!</span>
                   </div>
                   <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
                     <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
-                    <span>단기납종신보험 <span className="font-semibold text-red-500">환급률 축소</span> 예정!</span>
+                    <span>종신·연금보험 <span className="font-semibold text-red-500">공시이율 하향</span> 추세!</span>
                   </div>
                 </div>
               )}
