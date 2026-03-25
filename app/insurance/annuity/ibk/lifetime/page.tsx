@@ -1,7 +1,8 @@
-﻿'use client';
-import React, { useState } from 'react';
+'use client';
+import { useState } from 'react';
 import CalculatorConsultModal from './components/CalculatorConsultModal';
-import ProductHero from '@/components/product/ProductHero';
+import SloganSection from '@/components/product/SloganSection';
+import SloganCardView from '@/components/product/SloganCardView';
 import Notice from './components/Notice';
 import ProductInfo from './components/BodyTabViews/ProductInfo';
 import CoverageDetails from './components/BodyTabViews/CoverageDetails';
@@ -19,63 +20,73 @@ export default function IBKLifetimeAnnuityPage() {
 
   return (
     <ProductDetailTemplate
-      renderHero={({ onOpenPrivacy: _onOpenPrivacy, onModalStateChange }) => (
+      renderHero={({ onModalStateChange }) => (
         <>
-          <ProductHero
+          <SloganSection
             backgroundColor="#FFF8E8"
-            featureCardColor="#FEF3C7"
-            titleMobile={
-              <>
-                <span className="text-[#e23c3c] font-bold text-[24px]">20년까지 연단리 8%!</span>
-                <br />
-                <span className="text-text-primary">평생 연금받는 변액연금보험</span>
-              </>
-            }
-            titleDesktop={
-              <>
-                <div className="heading-2 text-text-primary">
-                  20년까지 연단리 8%!
+            sloganTitle={
+              <div>
+                <div className="heading-2 text-text-primary leading-tight">
+                  20년까지 연단리 8%
                 </div>
-                <div className="heading-2 text-text-primary">
-                  평생 연금받는 변액연금보험
+                <div className="heading-2 text-text-primary leading-tight">
+                  보증되는 변액연금보험!
                 </div>
-              </>
+              </div>
             }
-            productName="(무)IBK 평생연금받는 변액연금보험"
-            mainImageSrc="/svgs/slogan/main/slogan-sun-sofa.svg"
-            mainImageAlt="연금보험 돼지 일러스트"
-            features={[
-              {
-                icon: '/svgs/slogan/slogan-guarantee.svg',
-                title: '연단리 8%',
-                title_sub: '최대 20년 보증이율',
-              },
-              {
-                icon: '/svgs/slogan/slogan-age-range.svg',
-                title: '가입 0~68세',
-                title_sub: '연금개시 30~80세',
-              },
-              {
-                icon: '/svgs/slogan/slogan-graph.svg',
-                title: '실적배당 종신연금',
-                title_sub: '보증지급',
-              },
-              {
-                icon: '/svgs/slogan/slogan-tax-exempt.svg',
-                title: '최저사망적립액',
-                title_sub: '보증',
-              },
+            illustrationSrc="/svgs/slogan/main/slogan-moneybag.svg"
+            illustrationAlt="연금보험 일러스트"
+            checkItems={[
+              <>연단리 8% 최저연금기준금액 보증 <span className="text-text-muted">(20년까지)</span></>,
+              <>가입 <span className="font-bold">0~68세</span>/연금개시 <span className="font-bold">30~80세</span></>,
+              <><span className="font-bold">실적배당</span> 종신연금 <span className="font-bold">보증지급</span></>,
+              <>최저사망계약자적립액 <span className="font-bold">보증</span></>,
             ]}
-            onCalculateClick={() => {
-              setModalType('calculate');
-              setIsModalOpen(true);
-              onModalStateChange?.(true);
-            }}
-            onConsultClick={() => {
-              setModalType('consult');
-              setIsModalOpen(true);
-              onModalStateChange?.(true);
-            }}
+            cardContent={
+              <SloganCardView
+                title={
+                  <>
+                    높고 안정적인 보장 혜택 <br className="md:hidden" /> <span className="font-normal tracking-[-0.01em]">시점별 환급 구조를 확인해보세요.</span>
+                  </>
+                }
+                showDivider={false}
+                onCalculate={() => { setModalType('calculate'); setIsModalOpen(true); onModalStateChange?.(true); }}
+                onConsult={() => { setModalType('consult'); setIsModalOpen(true); onModalStateChange?.(true); }}
+              >
+                {/* 보장 카드 (모바일, 데스크탑 모두 3열 배치) */}
+                <div className="grid grid-cols-3 gap-1 md:gap-2 mb-4 w-full px-1 justify-items-center [&>div]:w-full [&>div]:max-w-[130px]">
+                  {/* 보장 1 */}
+                  <div className="flex flex-col w-[130px] h-[160px] px-2 py-4 shadow-lg rounded-lg items-center justify-center gap-2">
+                    <div className="w-[105px] text-center bg-status-info text-white body-s font-bold rounded-md px-2 py-0.5">보장 1</div>
+                    <p className="body-m font-bold text-text-primary">높은 보증 이율</p>
+                    <div className="flex items-center gap-2.5">
+                      <img src="/svgs/slogan/ibk-lifetime/icon-magnifier.svg" alt="" className="w-10 h-10" />
+                      <div>
+                        <p className="caption-s text-text-muted">연 최대</p>
+                        <p className="text-xl font-extrabold text-text-primary">8%</p>
+                      </div>
+                    </div>
+                    <p className="caption-s text-text-muted">20년 이후 5% 보증</p>
+                  </div>
+
+                  {/* 보장 2 */}
+                  <div className="flex flex-col w-[130px] h-[160px] px-2 py-4 shadow-lg rounded-lg items-center justify-center gap-2">
+                    <div className="w-[105px] text-center bg-status-info text-white body-s font-bold rounded-md px-2 py-0.5">보장 2</div>
+                    <p className="body-m font-bold text-text-primary">무심사 가입</p>
+                    <p className="caption-s text-text-primary text-center">질병 여부와 관계 없이<br/>무진단·무심사</p>
+                    <p className="caption-s text-text-muted text-center">당뇨, 암, 고혈압 등<br/>가입제한 없음</p>
+                  </div>
+
+                  {/* 보장 3 */}
+                  <div className="flex flex-col w-[130px] h-[160px] px-2 py-4 shadow-lg rounded-lg items-center justify-center gap-2">
+                    <div className="w-[105px] text-center bg-status-info text-white body-s font-bold rounded-md px-2 py-0.5">보장 3</div>
+                    <p className="body-m font-bold text-text-primary">조기연금 개시</p>
+                    <p className="caption-s text-text-primary text-center">30세부터 가능<br/>미보증형은 45세부터</p>
+                    <p className="caption-s text-text-muted text-center">미보증형은<br/>45세부터 가능</p>
+                  </div>
+                </div>
+              </SloganCardView>
+            }
           />
           <CalculatorConsultModal
             isOpen={isModalOpen}

@@ -37,7 +37,7 @@ export default function FloatingButtons({
           className="group flex h-[90px] w-[90px] flex-col items-center justify-center gap-1.5 rounded-full bg-[#1a6ef5] shadow-[0_4px_20px_rgba(26,110,245,0.4)] transition-transform duration-200 hover:scale-105"
           aria-label="보험료 계산"
         >
-          <img src="/svgs/hover-calculater.svg" alt="" className="h-9 w-9" />
+          <img src="/svgs/common/actions/calculate.svg" alt="" className="h-9 w-9" />
           <span className="text-[11px] font-bold text-white">보험료 계산</span>
         </button>
       )}
@@ -49,7 +49,7 @@ export default function FloatingButtons({
           className="group flex h-[90px] w-[90px] flex-col items-center justify-center gap-1.5 rounded-full bg-white shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform duration-200 hover:scale-105"
           aria-label="상담 신청"
         >
-          <img src="/svgs/hover-counsel.svg" alt="" className="h-9 w-9" />
+          <img src="/svgs/common/actions/consult.svg" alt="" className="h-9 w-9" />
           <span className="text-[11px] font-bold text-gray-800">상담 신청</span>
         </button>
       )}
@@ -60,7 +60,7 @@ export default function FloatingButtons({
         className="group flex h-[90px] w-[90px] flex-col items-center justify-center gap-1.5 rounded-full bg-[#FEE500] shadow-[0_4px_20px_rgba(254,229,0,0.5)] transition-transform duration-200 hover:scale-105"
         aria-label="카카오톡 상담"
       >
-        <img src="/svgs/hover-kakao-talk.svg" alt="" className="h-9 w-9" />
+        <img src="/svgs/common/actions/kakao.svg" alt="" className="h-9 w-9" />
         <span className="text-[11px] font-bold text-gray-900">카카오톡 상담</span>
       </button>
 

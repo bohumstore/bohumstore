@@ -29,7 +29,7 @@ const featuredProducts: FeaturedProduct[] = [
       '비과세 (월 150만원 한도, 10년 유지 세법 충족 시)',
       '병력 무심사/전건 가입가능',
     ],
-    image: '/svgs/kb-triple-main-slider.svg',
+    image: '/svgs/home/trending/kb-triple-slider.svg',
     path: '/insurance/annuity/kb/triple-level-up',
   },
   {
@@ -42,20 +42,20 @@ const featuredProducts: FeaturedProduct[] = [
       '평생 연금 수령 보증',
       '실적배당형 + 최저연금 적립액 보증',
     ],
-    image: '/svgs/slogan/main/slogan-sun-sofa.svg',
+    image: '/svgs/slogan/main/slogan-moneybag.svg',
     path: '/insurance/annuity/ibk/lifetime',
   },
   {
     id: 'metlife-usd',
     badge: 'HOT',
     marketingText: '달러 vs 원화, 골라 받으세요!',
-    title: '(무)백만인을위한달러종신보험Plus',
+    title: '메트라이프 달러 종신보험',
     features: [
       '달러·원화 통화 선택 수령',
       '10년+1일 환급률 124.9% (40세 남 기준)',
       '환전수수료 최저 1$당 2원',
     ],
-    image: '/svgs/slogan/main/slogan-currency-cycle.svg',
+    image: '/svgs/slogan/slogan-currency-exchange.svg',
     path: '/insurance/whole-life/metlife/usd',
   },
 ];

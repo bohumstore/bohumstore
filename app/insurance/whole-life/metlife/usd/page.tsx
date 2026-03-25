@@ -1,7 +1,8 @@
-﻿'use client';
-import React, { useState } from 'react';
+'use client';
+import { useState } from 'react';
 import CalculatorConsultModal from './components/CalculatorConsultModal';
-import ProductHero from '@/components/product/ProductHero';
+import SloganSection from '@/components/product/SloganSection';
+import SloganCardView from '@/components/product/SloganCardView';
 import ProductInfo from './components/BodyTabViews/ProductInfo';
 import CoverageDetails from './components/BodyTabViews/CoverageDetails';
 import Surrender from './components/BodyTabViews/Surrender';
@@ -18,63 +19,66 @@ export default function MetLifeUSDWholeLifePage() {
 
   return (
     <ProductDetailTemplate
-      renderHero={({ onOpenPrivacy: _onOpenPrivacy, onModalStateChange }) => (
+      renderHero={({ onModalStateChange }) => (
         <>
-          <ProductHero
+          <SloganSection
             backgroundColor="#F5F3FF"
-            featureCardColor="#EDE9FE"
-            titleMobile={
-              <>
-                <span className="text-[#00529b] font-bold text-[24px]">달러 vs 원화, 골라 받으세요!</span>
+            sloganTitle={
+              <div>
+                <div className="heading-2 leading-tight">
+                  <span className="text-brand-primary">달러 VS 원화</span>
+                </div>
+                <div className="heading-2 text-text-primary leading-tight">
+                  원하는 화폐로 골라 받으세요!
+                </div>
+              </div>
+            }
+            descriptionText={
+              <div className="body-m">
+                <span className="font-bold">원화고정납입옵션</span>으로
                 <br />
-                <span className="text-text-primary">달러종신보험 Plus</span>
-              </>
+                환율 변동에도 흔들리지 않는 <span className="font-bold">안정적인 자산 설계</span>
+              </div>
             }
-            titleDesktop={
-              <>
-                <div className="heading-2 text-text-primary">
-                  달러 vs 원화, 골라 받으세요!
-                </div>
-                <div className="heading-2 text-text-primary">
-                  달러종신보험 Plus
-                </div>
-              </>
-            }
-            productName="(무)백만인을위한달러종신보험Plus"
-            mainImageSrc="/svgs/slogan/main/slogan-currency-cycle.svg"
-            mainImageAlt="달러종신보험 일러스트"
-            features={[
-              {
-                icon: '/svgs/slogan/slogan-guarantee.svg',
-                title: '$/₩ 통화 선택',
-                title_sub: '원하는 화폐로 수령',
-              },
-              {
-                icon: '/svgs/slogan/slogan-graph.svg',
-                title: '10년+1일 환급률',
-                title_sub: '124.9% (40세 남 기준)',
-              },
-              {
-                icon: '/svgs/slogan/slogan-age-range.svg',
-                title: '사망보장',
-                title_sub: '최대 150%',
-              },
-              {
-                icon: '/svgs/slogan/slogan-tax-exempt.svg',
-                title: '환전수수료',
-                title_sub: '최저 1$당 2원',
-              },
+            checkItems={[]}
+            bottomTags={[
+              { title: '위기속 달러강세', subtitle: '안정적 자산 보유' },
+              { title: '환전수수료 최저', subtitle: '1$당 2원' },
             ]}
-            onCalculateClick={() => {
-              setModalType('calculate');
-              setIsModalOpen(true);
-              onModalStateChange?.(true);
-            }}
-            onConsultClick={() => {
-              setModalType('consult');
-              setIsModalOpen(true);
-              onModalStateChange?.(true);
-            }}
+            illustrationSrc="/svgs/slogan/slogan-currency-exchange.svg"
+            illustrationAlt="달러종신보험 일러스트"
+            cardContent={
+              <SloganCardView
+                title=""
+                onCalculate={() => { setModalType('calculate'); setIsModalOpen(true); onModalStateChange?.(true); }}
+                onConsult={() => { setModalType('consult'); setIsModalOpen(true); onModalStateChange?.(true); }}
+              >
+                {/* 해약환급금 */}
+                <div className="text-center">
+                  <p className="body-m font-bold mb-2">10년+1일 해약환급금</p>
+                  <p className="text-3xl font-extrabold text-brand-primary">124.9%</p>
+                </div>
+
+                {/* 2열 정보 */}
+                <div className="flex justify-between gap-6 py-4">
+                  <div className="flex flex-col items-center">
+                    <div className="flex items-center justify-center gap-1.5 mb-1">
+                      <img src="/svgs/slogan/slogan-currency-choice.svg" alt="" className="w-5 h-5" />
+                      <span className="body-l text-text-muted">통화 선택</span>
+                    </div>
+                    <p className="heading-4 text-text-primary">$/₩ 자유</p>
+                  </div>
+                  <div className="w-[1px] h-16 bg-brand-secondary-hover"></div>
+                  <div className="flex flex-col items-center">
+                    <div className="flex items-center justify-center gap-1.5 mb-1">
+                      <img src="/svgs/slogan/slogan-death-benefit.svg" alt="" className="w-5 h-5" />
+                      <span className="body-l text-text-muted">사망보장</span>
+                    </div>
+                    <p className="heading-4 text-text-primary">최대 150%</p>
+                  </div>
+                </div>
+              </SloganCardView>
+            }
           />
           <CalculatorConsultModal
             isOpen={isModalOpen}

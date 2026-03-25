@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import Modal from '@/components/Modal';
 import request from '@/app/api/request';
 import FireworksEffect from '@/components/shared/FireworksEffect';
-import SelectField from '@/components/SelectField';
+import CustomSelect from '@/components/CustomSelect';
+import PrivacyConsent from '@/components/product/PrivacyConsent';
 import TextField from '@/components/TextField';
 import ToggleButtonGroup from '@/components/ToggleButtonGroup';
 import IconButton from '@/components/IconButton';
@@ -354,55 +355,36 @@ export default function Slogan({ onOpenPrivacy: _onOpenPrivacy, onModalStateChan
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="mb-1.5 block button-s text-text-secondary sm:text-sm">
                       상담 종류 <span className="text-status-red">*</span>
                     </label>
-                    <SelectField
+                    <CustomSelect
                       value={consultType}
-                      onChange={(e) => setConsultType(e.target.value)}
+                      onChange={(val) => setConsultType(val)}
                       className="w-full"
-                    >
-                      {consultTypeOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </SelectField>
+                      options={consultTypeOptions.map(t => ({ value: t, label: t }))}
+                    />
                   </div>
                   <div>
                     <label className="mb-1.5 block button-s text-text-secondary sm:text-sm">
                       상담 시간대 <span className="text-status-red">*</span>
                     </label>
-                    <SelectField
+                    <CustomSelect
                       value={consultTime}
-                      onChange={(e) => setConsultTime(e.target.value)}
+                      onChange={(val) => setConsultTime(val)}
                       className="w-full"
-                    >
-                      {consultTimeOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </SelectField>
+                      options={consultTimeOptions.map(t => ({ value: t, label: t }))}
+                    />
                   </div>
                 </div>
 
-                <div className="flex items-start gap-2 mt-4">
-                  <input
-                    type="checkbox"
-                    id="privacy-consent"
+                <div className="mt-4">
+                  <PrivacyConsent
                     checked={isChecked}
-                    onChange={(e) => setIsChecked(e.target.checked)}
-                    className="mt-1 w-4 h-4 text-button border-border-default rounded focus:ring-button"
+                    onChange={(checked) => setIsChecked(checked)}
                   />
-                  <label htmlFor="privacy-consent" className="body-s text-text-secondary cursor-pointer">
-                    [필수] 개인정보 수집·이용 및 제공에 동의합니다.
-                    <button type="button" onClick={_onOpenPrivacy} className="ml-1 text-text-muted underline hover:text-text-primary">
-                      자세히 보기
-                    </button>
-                  </label>
                 </div>
 
                 <div className="flex gap-3 pt-2">

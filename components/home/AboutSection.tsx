@@ -13,7 +13,7 @@ export default function AboutSection() {
       <div className={`flex gap-8 items-center ${isMobile ? 'flex-col' : 'flex-row'}`}>
         <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
           <Image
-            src="/svgs/main-about-shield.svg"
+            src="/svgs/home/about/shield.svg"
             alt="보험스토어 로고"
             width={isMobile ? 140 : 200}
             height={isMobile ? 140 : 200}
@@ -30,7 +30,7 @@ export default function AboutSection() {
         <div className={`bg-white rounded-[16px] px-5 py-6 shadow-md flex flex-col gap-3 ${isMobile ? 'w-full' : 'w-[360px]'}`}>
           <div className="flex items-center gap-4">
             <Image
-              src="/svgs/main-about-check.svg"
+              src="/svgs/home/about/check.svg"
               alt="점검 아이콘"
               width={66}
               height={66}
@@ -68,7 +68,7 @@ export default function AboutSection() {
           </div>
           <div className={`relative shrink-0 ${isMobile ? 'w-16 h-16' : 'w-20 h-20'}`}>
             <Image
-              src="/svgs/main-about-analyze.svg"
+              src="/svgs/home/about/analyze.svg"
               alt="분석 아이콘"
               fill
               className="object-contain"
@@ -83,7 +83,7 @@ export default function AboutSection() {
           </div>
           <div className={`relative shrink-0 ${isMobile ? 'w-16 h-16' : 'w-20 h-20'}`}>
             <Image
-              src="/svgs/main-about-recommend.svg"
+              src="/svgs/home/about/recommend.svg"
               alt="추천 아이콘"
               fill
               className="object-contain"
@@ -98,7 +98,7 @@ export default function AboutSection() {
           </div>
           <div className={`relative shrink-0 ${isMobile ? 'w-16 h-16' : 'w-20 h-20'}`}>
             <Image
-              src="/svgs/main-about-cut.svg"
+              src="/svgs/home/about/cut.svg"
               alt="절감 아이콘"
               fill
               className="object-contain"
@@ -113,7 +113,7 @@ export default function AboutSection() {
           </div>
           <div className={`relative shrink-0 ${isMobile ? 'w-16 h-16' : 'w-20 h-20'}`}>
             <Image
-              src="/svgs/main-about-chat.svg"
+              src="/svgs/home/about/chat.svg"
               alt="채팅 아이콘"
               fill
               className="object-contain"

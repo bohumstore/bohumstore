@@ -25,7 +25,7 @@ export default function ContactSection() {
            </Link>
            <div className={`absolute right-3 top-1/2 -translate-y-1/2 ${isMobile ? 'w-[100px] h-[85px]' : 'w-[140px] h-[120px]'}`}>
              <Image
-               src="/svgs/main-contact-call.svg"
+               src="/svgs/home/contact/call.svg"
                alt="Call Center Agent"
                fill
                className="object-contain"
@@ -46,7 +46,7 @@ export default function ContactSection() {
            </a>
            <div className={`absolute right-3 top-1/2 -translate-y-1/2 ${isMobile ? 'w-[90px] h-[75px]' : 'w-[120px] h-[100px]'}`}>
              <Image
-               src="/svgs/main-contact-chat.svg"
+               src="/svgs/home/contact/chat.svg"
                alt="Chat Icon"
                fill
                className="object-contain"

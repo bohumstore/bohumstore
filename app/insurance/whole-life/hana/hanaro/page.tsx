@@ -1,7 +1,9 @@
-﻿'use client';
-import React, { useState } from 'react';
+'use client';
+import { useState } from 'react';
+import Image from 'next/image';
 import CalculatorConsultModal from './components/CalculatorConsultModal';
-import ProductHero from '@/components/product/ProductHero';
+import SloganSection from '@/components/product/SloganSection';
+import SloganCardView from '@/components/product/SloganCardView';
 import Notice from './components/Notice';
 import ProductInfo from './components/BodyTabViews/ProductInfo';
 import CoverageDetails from './components/BodyTabViews/CoverageDetails';
@@ -19,63 +21,64 @@ export default function HanaHanaroWholeLifePage() {
 
   return (
     <ProductDetailTemplate
-      renderHero={({ onOpenPrivacy: _onOpenPrivacy, onModalStateChange }) => (
+      renderHero={({ onModalStateChange }) => (
         <>
-          <ProductHero
+          <SloganSection
             backgroundColor="#F5F3FF"
-            featureCardColor="#EDE9FE"
-            titleMobile={
-              <>
-                <span className="text-[#7c3aed] font-bold text-[24px]">간편심사형으로도 가입!</span>
-                <br />
-                <span className="text-text-primary">종신보험 보장 설계</span>
-              </>
+            brandLogo={
+              <Image src="/images/logos/hana-logo.png" alt="하나생명" width={88} height={40} />
             }
-            titleDesktop={
-              <>
-                <div className="heading-2 text-text-primary">
-                  간편심사형으로도 가입!
+            sloganTitle={
+              <div>
+                <div className="heading-2 text-text-primary leading-tight">
+                  (무)하나로 THE 연결된 종신보험
                 </div>
-                <div className="heading-2 text-text-primary">
-                  종신보험 보장 설계
+                <div className="heading-2 text-text-primary leading-tight">
+                  (해약환급금 일부지급형)
                 </div>
-              </>
+              </div>
             }
-            productName="(무)하나로THE연결된종신보험"
-            mainImageSrc="/svgs/slogan/main/slogan-document-protect.svg"
-            mainImageAlt="종신보험 일러스트"
-            features={[
-              {
-                icon: '/svgs/slogan/slogan-guarantee.svg',
-                title: '10년 환급률',
-                title_sub: '122.78% (5년납 기준)',
-              },
-              {
-                icon: '/svgs/slogan/slogan-age-range.svg',
-                title: '간편·일반 심사',
-                title_sub: '1형 15~69세 / 2형 30~65세',
-              },
-              {
-                icon: '/svgs/slogan/slogan-graph.svg',
-                title: '3대질병 진단시',
-                title_sub: '보험료 환급·납입면제',
-              },
-              {
-                icon: '/svgs/slogan/slogan-tax-exempt.svg',
-                title: '유지보너스',
-                title_sub: '약관 기준 제공',
-              },
+            checkItems={[
+              <>병력 걱정 없이 <span className="font-bold">간편심사형으로도 가입 가능</span></>,
+              <>3대 질병 진단시 <span className="font-bold">보험료 환급·납입면제</span> 선택</>,
+              <>10년 시점 환급금 <span className="font-bold">122.78%</span></>,
+              '유지보너스 제공',
+              '일반심사형/간편심사형 선택 가능',
+              <>1형(일반심사형): 만 <span className="font-bold">15~69세</span> / 2형(간편심사형): 만 <span className="font-bold">30~65세</span></>,
             ]}
-            onCalculateClick={() => {
-              setModalType('calculate');
-              setIsModalOpen(true);
-              onModalStateChange?.(true);
-            }}
-            onConsultClick={() => {
-              setModalType('consult');
-              setIsModalOpen(true);
-              onModalStateChange?.(true);
-            }}
+            bottomNote="* 이 상품은 사망을 보장하는 종신보험으로, 저축성보험(연금)이 아닙니다."
+            cardContent={
+              <SloganCardView
+                title=""
+                bottomInfoText="40세 남자 1형(일반심사형), 5년납 기준"
+                onCalculate={() => { setModalType('calculate'); setIsModalOpen(true); onModalStateChange?.(true); }}
+                onConsult={() => { setModalType('consult'); setIsModalOpen(true); onModalStateChange?.(true); }}
+              >
+                {/* 환급률 헤더 */}
+                <div className="flex w-80 h-6 justify-center bg-status-info text-white text-center rounded-md my-3 body-m font-bold">
+                  환급률
+                </div>
+
+                {/* 3열 비교 */}
+                <div className="grid grid-cols-3 gap-8 mb-4">
+                  <div className="text-center flex flex-col gap-1">
+                    <p className="body-l text-text-muted">7년 시점</p>
+                    <p className="heading-4 text-text-primary">100%</p>
+                    <p className="body-m text-text-muted">유지보너스 1</p>
+                  </div>
+                  <div className="text-center flex flex-col gap-1">
+                    <p className="body-l text-text-muted">10년 시점</p>
+                    <p className="heading-4 text-text-primary">122.78%</p>
+                    <p className="body-m text-text-muted">유지보너스 2</p>
+                  </div>
+                  <div className="text-center flex flex-col gap-1">
+                    <p className="body-l text-text-muted">10년 시점</p>
+                    <p className="heading-4 text-brand-primary">132.12%</p>
+                    <p className="body-m text-text-muted">유지보너스 3</p>
+                  </div>
+                </div>
+              </SloganCardView>
+            }
           />
           <CalculatorConsultModal
             isOpen={isModalOpen}

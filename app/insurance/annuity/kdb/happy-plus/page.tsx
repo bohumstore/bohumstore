@@ -1,7 +1,8 @@
-﻿'use client';
-import React, { useState } from 'react';
+'use client';
+import { useState } from 'react';
 import CalculatorConsultModal from './components/CalculatorConsultModal';
-import ProductHero from '@/components/product/ProductHero';
+import SloganSection from '@/components/product/SloganSection';
+import SloganCardView from '@/components/product/SloganCardView';
 import Notice from './components/Notice';
 import ProductInfo from './components/BodyTabViews/ProductInfo';
 import CoverageDetails from './components/BodyTabViews/CoverageDetails';
@@ -21,69 +22,101 @@ export default function KDBHappyPlusAnnuityPage() {
     <ProductDetailTemplate
       renderHero={({ onOpenPrivacy: _onOpenPrivacy, onModalStateChange }) => (
         <>
-          <ProductHero
+          <SloganSection
             backgroundColor="#e8ecf4"
-            titleMobile={
-              <>
-                <span className="text-status-red font-bold text-[24px]">20년까지 연단리 7%!</span>
-                <br />
-                <span className="text-text-primary">보증형 연금보험!</span>
-              </>
-            }
-            titleDesktop={
-              <>
-                <div className="heading-2 text-text-primary">
-                  20년까지 연단리 7%!
+            sloganTitle={
+              <div>
+                <div className="heading-2 text-text-primary leading-tight">
+                  20년까지 연단리 7%
                 </div>
-                <div className="heading-2 text-text-primary">
-                  보증형 연금보험!
+                <div className="heading-2 text-text-primary leading-tight">
+                  보증형 연금보험
                 </div>
-              </>
+              </div>
             }
-            productName="(무)KDB생명 해피플러스변액연금보험"
-            mainImageSrc="/svgs/slogan/main/slogan-pig.svg"
-            mainImageAlt="연금보험 돼지 일러스트"
-            features={[
-              {
-                icon: '/svgs/slogan/slogan-guarantee.svg',
-                title: '연단리 7%',
-                title_sub: '최저연금기준금액 보증',
-              },
-              {
-                icon: '/svgs/slogan/slogan-age-range.svg',
-                title: '가입 15~70세',
-                title_sub: '연금개시 55~80세',
-              },
-              {
-                icon: '/svgs/slogan/slogan-tax-exempt.svg',
-                title: '비과세 혜택',
-                subtitle: '(월 150만원 한도,\n10년 유지 시 세법 요건 충족)',
-                small: true,
-              },
-              {
-                icon: '/svgs/slogan/slogan-graph.svg',
-                title: '금액보증연금 보증',
-                title_sub: '최저사망적립액 보증',
-              },
+            illustrationSrc="/svgs/slogan/main/slogan-currency-cycle.svg"
+            illustrationAlt="연금보험 일러스트"
+            checkItems={[
+              <>연단리 7% 최저연금기준금액 보증 <span className="text-text-muted">(20년까지)</span></>,
+              <>가입 <span className="font-bold">15~70세</span>/연금개시 <span className="font-bold">55~80세</span></>,
+              <>비과세 <span className="text-text-muted">(월 150만원 한도, 10년 유지 세법요건 충족시)</span></>,
+              <><span className="font-bold">금액보증연금 보증</span> / <span className="font-bold">최저사망적립액 보증</span></>,
             ]}
-            onCalculateClick={() => {
-              setModalType('calculate');
-              setIsModalOpen(true);
-              onModalStateChange?.(true);
-            }}
-            onConsultClick={() => {
-              setModalType('consult');
-              setIsModalOpen(true);
-              onModalStateChange?.(true);
-            }}
+            bottomNote="* 대표계약기준(40세 남자, 10년납, 연금개시 나이 65세), 복리이자율로 환산시 4.21%)"
+            cardContent={
+              <SloganCardView
+                title=""
+                transparentMobileBackground={true}
+                onCalculate={() => { setModalType('calculate'); setIsModalOpen(true); onModalStateChange?.(true); }}
+                onConsult={() => { setModalType('consult'); setIsModalOpen(true); onModalStateChange?.(true); }}
+              >
+                {/* 3열 특징 카드 (데스크탑) */}
+                <div className="hidden md:grid grid-cols-3 gap-2 mb-4">
+                  {/* 생존 시 100세까지 */}
+                  <div className="flex flex-col w-[130px] h-[160px] px-2 py-4 shadow-lg rounded-lg items-center justify-center gap-3 bg-white">
+                    <div className="bg-status-info text-white body-s font-bold rounded-md px-2 py-0.5 text-center">생존 시 100세까지</div>
+                    <img src="/svgs/slogan/kdb-happy-plus/icon-100-years.svg" alt="" className="w-13 h-13" />
+                    <p className="caption-s text-text-muted text-center">최대 100세까지<br />안정적인 연금 지급</p>
+                    <p className="caption-s font-bold text-text-muted">피보험자 99세 계약 해당일</p>
+                  </div>
+
+                  {/* 보증금리 TOP */}
+                  <div className="flex flex-col w-[130px] h-[160px] px-2 py-4 shadow-lg rounded-lg items-center justify-center gap-3 bg-white">
+                    <div className="bg-status-info text-white body-s font-bold rounded-md px-2 py-0.5 text-center">보증금리 TOP</div>
+                    <img src="/svgs/slogan/kdb-happy-plus/icon-top-rate.svg" alt="" className="w-13 h-13" />
+                    <p className="caption-s text-text-muted text-center">20년 동안 <span className="font-bold">최대 연 7% 보증</span></p>
+                    <p className="caption-s text-text-muted text-center">20년~만기까지 연 <span className="font-bold">5%</span></p>
+                  </div>
+
+                  {/* 사망 시에도 보장 */}
+                  <div className="flex flex-col w-[130px] h-[160px] px-2 py-4 shadow-lg rounded-lg items-center justify-center gap-3 bg-white">
+                    <div className="bg-status-info text-white body-s font-bold rounded-md px-2 py-0.5 text-center">사망 시에도 보장</div>
+                    <img src="/svgs/slogan/kdb-happy-plus/icon-heart-shield.svg" alt="" className="w-14 h-14" />
+                    <p className="caption-s text-text-muted text-center">최저사망적립액 <span className="font-bold">보장</span><br />장래 공시이율과 <span className="font-bold">관계없이</span></p>
+                  </div>
+                </div>
+
+                {/* 2x1 특징 카드 (모바일) */}
+                <div className="flex flex-wrap justify-center gap-2 mb-4 md:hidden w-full">
+                  {/* 생존 시 100세까지 */}
+                  <div className="relative w-[calc(50%-4px)] max-w-[176px] h-[124px] bg-white rounded-2xl flex flex-col justify-between p-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.06)] overflow-hidden">
+                    <div className="z-10 text-brand-primary body-s font-bold mb-2 tracking-tight">생존 시<br />최대 100세까지</div>
+                    <img src="/svgs/slogan/kdb-happy-plus/icon-100-years.svg" alt="" className="absolute top-2.5 right-2 w-11 h-11 z-0" />
+                    <div className="z-10 mt-auto flex flex-col gap-0.5">
+                      <p className="text-[11px] xs:caption-s text-text-secondary leading-[1.3] truncate-lines-2">최대 100세까지<br />안정적인 연금 지급</p>
+                      <p className="text-[11px] xs:caption-s text-text-secondary font-bold tracking-tight">피보험자 99세 계약 해당일</p>
+                    </div>
+                  </div>
+
+                  {/* 보증금리 TOP */}
+                  <div className="relative w-[calc(50%-4px)] max-w-[176px] h-[124px] bg-white rounded-2xl flex flex-col justify-between p-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.06)] overflow-hidden">
+                    <div className="z-10 text-brand-primary body-s font-bold mb-2 tracking-tight">보증금리<br />TOP</div>
+                    <img src="/svgs/slogan/kdb-happy-plus/icon-top-rate.svg" alt="" className="absolute top-2.5 right-2 w-11 h-11 z-0" />
+                    <div className="z-10 mt-auto flex flex-col gap-0.5">
+                      <p className="text-[11px] xs:caption-s text-text-secondary leading-[1.3] truncate-lines-2">20년 동안 <span className="font-bold">최대 연 7% 보증</span></p>
+                      <p className="text-[11px] xs:caption-s text-text-secondary font-bold tracking-tight">20년 ~ 만기까지 연 <span className="text-[#222222] font-bold">5%</span></p>
+                    </div>
+                  </div>
+
+                  {/* 사망 시에도 보장 */}
+                  <div className="relative w-[calc(50%-4px)] max-w-[176px] h-[124px] bg-white rounded-2xl flex flex-col justify-between p-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.06)] overflow-hidden">
+                    <div className="z-10 text-brand-primary body-s font-bold mb-2 tracking-tight">사망 시에도<br />보장</div>
+                    <img src="/svgs/slogan/kdb-happy-plus/icon-heart-shield.svg" alt="" className="absolute top-2.5 right-2 w-11 h-11 z-0" />
+                    <div className="z-10 mt-auto flex flex-col gap-0.5 justify-end flex-grow">
+                      <p className="text-[11px] xs:caption-s text-text-secondary leading-[1.3] truncate-lines-2">최저사망적립액 <span className="text-[#222222] font-bold">보장</span><br />장래 공시이율과 <span className="text-[#222222] font-bold">관계없이</span></p>
+                    </div>
+                  </div>
+                </div>
+              </SloganCardView>
+            }
           />
           <CalculatorConsultModal
             isOpen={isModalOpen}
-            type={modalType}
             onClose={() => {
               setIsModalOpen(false);
               onModalStateChange?.(false);
             }}
+            type={modalType}
           />
         </>
       )}

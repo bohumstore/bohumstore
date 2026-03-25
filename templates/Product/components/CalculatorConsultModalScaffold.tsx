@@ -69,3 +69,43 @@ export function PreviewCard({
     </div>
   );
 }
+
+/**
+ * [추가] 모달 각 단계의 헤더 (타이틀 + 설명)
+ */
+interface StepHeaderProps {
+  title: string;
+  description?: string;
+  className?: string;
+}
+export function StepHeader({ title, description, className = 'mb-5' }: StepHeaderProps) {
+  return (
+    <div className={className}>
+      <h2 className="heading-4 text-text-primary">{title}</h2>
+      {description && <p className="body-l text-text-muted mt-1">{description}</p>}
+    </div>
+  );
+}
+
+/**
+ * [추가] 결과/미리보기 리스트 아이템
+ */
+interface InfoItemProps {
+  label: string;
+  value: string;
+  color?: string;
+  blur?: boolean;
+  className?: string;
+}
+export function InfoItem({ label, value, color = 'text-brand-primary', blur = false, className = '' }: InfoItemProps) {
+  return (
+    <div className={`flex justify-between items-center bg-white border border-border-default rounded-lg p-3 body-m ${className}`}>
+      <span className="text-text-secondary font-medium flex items-center shrink-0 mr-2">
+        <span className="text-brand-primary mr-1.5">▸</span>{label}
+      </span>
+      <span className={`font-bold ${color} ${blur ? 'blur-sm select-none' : ''}`}>
+        {value}
+      </span>
+    </div>
+  );
+}

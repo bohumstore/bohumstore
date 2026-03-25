@@ -24,13 +24,13 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
 
     const icon = isPrimary ? (
       <img
-        src="/svgs/slogan/slogan-counsel-apply.svg"
+        src="/svgs/common/actions/consult-badge.svg"
         alt="상담 신청 아이콘"
         className="w-[16px] h-[16px] object-contain"
       />
     ) : (
       <img
-        src="/svgs/slogan/slogan-counsel-kakaotalk.svg"
+        src="/svgs/common/actions/kakao-badge.svg"
         alt="채팅 상담 아이콘"
         className="w-[16px] h-[14px] object-contain"
       />

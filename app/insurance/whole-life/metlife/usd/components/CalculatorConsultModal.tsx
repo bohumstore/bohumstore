@@ -17,9 +17,10 @@ import { useInsuranceForm } from '@/hooks/useInsuranceForm';
 import { useOTP } from '@/hooks/useOTP';
 import TextField from '@/components/TextField';
 import Button from '@/components/shared/Button';
-import SelectField from '@/components/SelectField';
+import CustomSelect from '@/components/CustomSelect';
 import SelectChip from '@/components/SelectChip';
-import { ModalScrollBody, PreviewCard, StepSection } from '@/templates/Product/components/CalculatorConsultModalScaffold';
+import PrivacyConsent from '@/components/product/PrivacyConsent';
+import { ModalScrollBody, PreviewCard, StepSection, StepHeader, InfoItem } from '@/templates/Product/components/CalculatorConsultModalScaffold';
 
 const currentPath = '/insurance/whole-life/metlife/usd';
 const productConfig = getProductConfigByPath(currentPath);
@@ -210,12 +211,10 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
   ═══════════════════════════════════════════ */
   const renderStep1 = () => (
     <div className="space-y-5">
-      <div>
-        <div className="heading-4 text-text-primary">
-          {type === 'calculate' ? '달러환급액 계산 정보 입력' : '상담 신청 정보 입력'}
-        </div>
-        <p className="body-l text-text-muted mt-1">정확한 안내를 위해 필수 정보를 입력해주세요.</p>
-      </div>
+      <StepHeader 
+        title={type === 'calculate' ? '달러환급액 계산 정보 입력' : '상담 신청 정보 입력'} 
+        description="정확한 안내를 위해 필수 정보를 입력해주세요."
+      />
 
       <div className="grid grid-cols-2 gap-4">
         <div>
@@ -253,30 +252,36 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block button-s text-text-secondary mb-1.5">납입기간 <span className="text-status-red">*</span></label>
-          <SelectField value={paymentPeriod} onChange={handlePaymentPeriodChange} className="w-full">
-            <option value="" disabled>선택</option>
-            {['5년납', '7년납', '10년납'].map(p => {
-              const disabled = (p === '5년납' && is5YearDisabled) || (p === '7년납' && is7YearDisabled) || (p === '10년납' && is10YearDisabled);
-              return (
-                <option key={p} value={p} disabled={disabled}>
-                  {p}{disabled ? ' (가입불가)' : p === '7년납' ? ' ⭐추천' : ''}
-                </option>
-              );
+          <CustomSelect
+            value={paymentPeriod}
+            onChange={(val) => handlePaymentPeriodChange({ target: { value: val } } as any)}
+            className="w-full"
+            options={['5년납', '7년납', '10년납'].map(p => {
+              const isDisabled = (p === '5년납' && is5YearDisabled) || (p === '7년납' && is7YearDisabled) || (p === '10년납' && is10YearDisabled);
+              return {
+                value: p,
+                disabled: isDisabled,
+                label: isDisabled ? `${p} (가입불가)` : p === '7년납' ? (
+                  <span className="flex items-center gap-1">
+                    7년납 <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-brand-primary-soft text-brand-primary leading-none">추천</span>
+                  </span>
+                ) : p
+              };
             })}
-          </SelectField>
+          />
         </div>
         <div>
           <label className="block button-s text-text-secondary mb-1.5">월 납입금액 <span className="font-normal text-text-muted">(원화)</span> <span className="text-status-red">*</span></label>
-          <SelectField value={paymentAmount} onChange={handlePaymentAmountChange} className="w-full">
-            <option value="" disabled>선택</option>
-            {[
+          <CustomSelect
+            value={paymentAmount}
+            onChange={(val) => handlePaymentAmountChange({ target: { value: val } } as any)}
+            className="w-full"
+            options={[
               { krw: '30만원', usd: Math.round(300000 / BASE_EXCHANGE_RATE) },
               { krw: '50만원', usd: Math.round(500000 / BASE_EXCHANGE_RATE) },
               { krw: '100만원', usd: Math.round(1000000 / BASE_EXCHANGE_RATE) },
-            ].map(item => (
-              <option key={item.krw} value={item.krw}>{item.krw} (약 {item.usd}$)</option>
-            ))}
-          </SelectField>
+            ].map(item => ({ value: item.krw, label: `${item.krw} (약 ${item.usd}$)` }))}
+          />
           <p className="mt-1 caption-s text-brand-primary">기준환율 {BASE_EXCHANGE_RATE.toLocaleString()}원 / 실제 환율에 따라 변동</p>
         </div>
       </div>
@@ -284,26 +289,19 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
       {type === 'consult' && (
         <div>
           <label className="block button-s text-text-secondary mb-1.5">상담 시간대 <span className="text-status-red">*</span></label>
-          <SelectField value={consultTime} onChange={(e) => setConsultTime(e.target.value)} className="w-full">
-            {CONSULT_TIME_OPTIONS.map(t => (
-              <option key={t} value={t}>{t}</option>
-            ))}
-          </SelectField>
+          <CustomSelect
+            value={consultTime}
+            onChange={(val) => setConsultTime(val)}
+            className="w-full"
+            options={CONSULT_TIME_OPTIONS.map(t => ({ value: t, label: t }))}
+          />
         </div>
       )}
 
-      <div className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          id="privacy-consent"
-          checked={isChecked}
-          onChange={(e) => setIsChecked(e.target.checked)}
-          className="w-4 h-4 flex-shrink-0 text-button border-border-default rounded focus:ring-button"
-        />
-        <label htmlFor="privacy-consent" className="body-s text-text-secondary cursor-pointer leading-snug">
-          [필수] 개인정보 수집·이용 및 제공에 동의합니다.
-        </label>
-      </div>
+      <PrivacyConsent
+        checked={isChecked}
+        onChange={(checked) => setIsChecked(checked)}
+      />
 
       <button
         type="button"
@@ -340,7 +338,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
     if (isCalc) {
       return (
         <div className="space-y-5">
-          <div><div className="heading-4 text-text-primary">달러환급액 확인하기</div></div>
+          <StepHeader title="달러환급액 확인하기" />
 
           <PreviewCard
             className="rounded-2xl bg-section-bg p-5"
@@ -353,14 +351,14 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
                 <span className="ml-2 text-brand-primary font-extrabold">{name} 님</span>
               </>
             }
-            icon={<svg className="w-4 h-4 mr-1.5 text-brand-primary flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>}
+            icon={<img src="/svgs/common/icon/person.svg" className="w-4 h-4 mr-1.5" alt="user" />}
             hint={<><span className="text-brand-primary">→</span><span>인증하면 바로 알 수 있어요.</span></>}
             hintClassName="flex items-center gap-1 body-s text-text-muted"
           >
             <div className="flex items-center justify-between bg-brand-primary/10 rounded-lg px-3 py-2.5 body-m mb-2">
               <span className="text-text-secondary font-medium">10년+1일 해약환급률</span>
-              <span className="font-bold text-category-purple blur-sm">
-                {rate > 0 ? `${(rate * 100).toFixed(1)}%` : '000.0%'}
+              <span className="font-bold text-category-purple blur-sm select-none">
+                약 124.9%
               </span>
             </div>
             <div className="caption-r text-text-muted px-1 mb-2">
@@ -370,7 +368,10 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
           </PreviewCard>
 
           <div>
-            <p className="heading-5 text-text-primary mb-1 flex items-center">🔒 휴대폰 인증</p>
+            <p className="heading-5 text-text-primary mb-1 flex items-center gap-1">
+              <img src="/svgs/common/icon/verify.svg" className="w-5 h-5" alt="lock" />
+              휴대폰 인증
+            </p>
             <p className="body-s text-text-muted mb-3">정확한 환급금 확인을 위해 휴대폰 인증이 필요합니다.</p>
             <div className="flex gap-2 mb-3">
               <TextField type="text" value={phone} readOnly className="flex-1 bg-page-bg text-text-muted h-auto py-2.5" />
@@ -382,7 +383,15 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
             </div>
           </div>
 
-          <StepSection title="··· 상세 정보 보기" titleClassName="heading-5 text-text-primary mb-3 flex items-center">
+          <StepSection 
+            title={
+              <span className="flex items-center gap-1.5">
+                <img src="/svgs/common/icon/info.svg" className="w-4 h-4 ml-0.5" alt="info" />
+                상세 정보 보기
+              </span>
+            } 
+            titleClassName="heading-5 text-text-primary mb-3 flex items-center"
+          >
             <div className="space-y-2 select-none pointer-events-none">
               {[
                 { label: '보험사', value: '메트라이프생명', color: 'text-brand-primary' },
@@ -393,12 +402,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
                 { label: '10년+1일 이자', value: interestValueForAlimtalk || '약 000,000 원', color: 'text-category-health' },
                 { label: '10년+1일 예상 해약환급금', value: refundValueForAlimtalk || '약 000,000 원', color: 'text-status-red' },
               ].map(item => (
-                <div key={item.label} className="flex justify-between items-center bg-white border border-border-default rounded-lg p-3 body-m">
-                  <span className="text-text-secondary font-medium flex items-center shrink-0 mr-2">
-                    <span className="text-brand-primary mr-1.5">▸</span>{item.label}
-                  </span>
-                  <span className={`font-bold blur-sm ${item.color}`}>{item.value}</span>
-                </div>
+                <InfoItem key={item.label} label={item.label} value={item.value} blur color={item.color} />
               ))}
             </div>
             <div className="mt-3 caption-r text-text-muted leading-normal text-center">
@@ -407,10 +411,6 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
               * 휴대폰 인증 완료 후 상세정보를 확인하실 수 있어요.
             </div>
           </StepSection>
-
-          <Button variant="primary" size="full" onClick={handleVerifyOTP} disabled={verifying || code.length !== 6}>
-            {verifying ? '인증 처리중...' : '환급금 결과 확인하기'}
-          </Button>
         </div>
       );
     }
@@ -430,7 +430,10 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         </div>
 
         <div>
-          <p className="heading-5 text-text-primary mb-1 flex items-center">🔒 휴대폰 인증</p>
+          <p className="heading-5 text-text-primary mb-1 flex items-center">
+            <img src="/svgs/common/icon/verify.svg" className="w-5 h-5 mr-1" alt="lock" />
+            휴대폰 인증
+          </p>
           <p className="body-s text-text-muted mb-3">상담신청을 위해 휴대폰 인증이 필요해요.</p>
           <div className="flex gap-2 mb-3">
             <TextField type="text" value={phone} readOnly className="flex-1 bg-page-bg text-text-muted h-auto py-2.5" />
@@ -458,10 +461,9 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         <div className="text-center py-8 px-4">
           <FireworksEffect show={true} />
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-primary-soft mb-5">
-            <svg className="w-8 h-8 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+            <img src="/svgs/common/check/check-circle.svg" className="w-8 h-8" alt="check" />
           </div>
-          <div className="heading-4 text-text-primary mb-2">상담신청이 접수되었습니다!</div>
-          <p className="body-m text-text-secondary leading-relaxed">담당자가 입력하신 번호로 빠르게 안내해 드리겠습니다.</p>
+          <StepHeader title="상담신청이 접수되었습니다!" description="담당자가 입력하신 번호로 빠르게 안내해 드리겠습니다." className="text-center" />
         </div>
       );
     }
@@ -469,7 +471,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
     return (
       <div className="px-2 py-2 space-y-4">
         <FireworksEffect show={true} />
-        <div className="mb-2"><div className="heading-4 text-text-primary">달러환급액 산출 결과</div></div>
+        <StepHeader title="달러환급액 산출 결과" />
 
         <div className="rounded-xl bg-page-bg p-4">
           <div className="mb-3 flex items-center heading-5 text-text-primary">
@@ -492,10 +494,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
               { label: '10년+1일 이자', value: interestValueForAlimtalk, color: 'text-category-health' },
               { label: '10년+1일 예상 해약환급금', value: refundValueForAlimtalk, color: 'text-status-red' },
             ].map(item => (
-              <div key={item.label} className="flex justify-between bg-white border border-border-default p-3 rounded-lg body-m">
-                <span className="text-text-secondary font-medium"><span className="text-brand-primary mr-1">▸</span>{item.label}</span>
-                <span className={`font-bold ${item.color}`}>{item.value}</span>
-              </div>
+              <InfoItem key={item.label} label={item.label} value={item.value} color={item.color} />
             ))}
           </div>
 
@@ -515,12 +514,14 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         {step === 2 && renderStep2()}
         {step === 3 && renderStep3()}
 
-        <button
-          onClick={onClose}
-          className="w-full mt-3 py-3 body-m font-medium text-text-muted hover:text-text-primary transition text-center"
-        >
-          닫기
-        </button>
+        {step !== 2 && (
+          <button
+            onClick={onClose}
+            className="w-full mt-3 py-3 body-m font-medium text-text-muted hover:text-text-primary transition text-center"
+          >
+            닫기
+          </button>
+        )}
       </ModalScrollBody>
     </Modal>
   );

@@ -1,7 +1,9 @@
-﻿'use client';
-import React, { useState } from 'react';
+'use client';
+import { useState } from 'react';
+import Image from 'next/image';
 import CalculatorConsultModal from './components/CalculatorConsultModal';
-import ProductHero from '@/components/product/ProductHero';
+import SloganSection from '@/components/product/SloganSection';
+import SloganCardView from '@/components/product/SloganCardView';
 import Notice from './components/Notice';
 import ProductInfo from './components/BodyTabViews/ProductInfo';
 import CoverageDetails from './components/BodyTabViews/CoverageDetails';
@@ -19,63 +21,63 @@ export default function KBTripleLevelUpAnnuityPage() {
 
   return (
     <ProductDetailTemplate
-      renderHero={({ onOpenPrivacy: _onOpenPrivacy, onModalStateChange }) => (
+      renderHero={({ onModalStateChange }) => (
         <>
-          <ProductHero
+          <SloganSection
             backgroundColor="#e8ecf4"
-            titleMobile={
-              <>
-                <span className="text-status-red font-bold text-[24px]">트리플 레벨업 보증!</span>
-                <br />
-                <span className="text-text-primary">연금보험 무배당</span>
-              </>
+            brandLogo={
+              <div className="flex items-center gap-2">
+                <Image src="/images/logos/kb-life-logo-new.png" alt="KB 생명보험" width={100} height={40} />
+              </div>
             }
-            titleDesktop={
-              <>
-                <div className="heading-2 text-text-primary">
-                  트리플 레벨업 보증!
+            sloganTitle={
+              <div>
+                <div className="heading-2 text-text-primary leading-tight">
+                  KB 트리플 레벨업
                 </div>
-                <div className="heading-2 text-text-primary">
-                  연금보험 무배당
+                <div className="heading-2 text-text-primary leading-tight">
+                  연금보험 무배당(보증형)
                 </div>
-              </>
+              </div>
             }
-            productName="(무)KB 트리플 레벨업 연금보험"
-            mainImageSrc="/svgs/slogan/main/slogan-compare.svg"
-            mainImageAlt="연금보험 돼지 일러스트"
-            features={[
-              {
-                icon: '/svgs/slogan/slogan-guarantee.svg',
-                title: '7년/10년/연금개시',
-                title_sub: '3단계 적립액 보증',
-              },
-              {
-                icon: '/svgs/slogan/slogan-age-range.svg',
-                title: '가입 0~70세',
-                title_sub: '연금개시 45~85세',
-              },
-              {
-                icon: '/svgs/slogan/slogan-tax-exempt.svg',
-                title: '비과세 혜택',
-                subtitle: '(월 150만원 한도,\n10년 유지 시 세법 요건 충족)',
-                small: true,
-              },
-              {
-                icon: '/svgs/slogan/slogan-graph.svg',
-                title: '병력 무심사',
-                title_sub: '전건 가입가능',
-              },
+            checkItems={[
+              <><span className="font-bold">트리플 레벨업 보증</span>으로 <span className="font-bold">7년/10년/연금개시시점</span> 적립액 보증 <span className="text-text-muted body-s">(보증형에 한함)</span></>,
+              <>가입 <span className="font-bold">0~70세</span>/연금개시 <span className="font-bold">45~85세</span></>,
+              <><span className="font-bold">비과세</span> <span className="text-text-muted body-s">(월 150만원 한도, 10년 유지 세법요건 충족시)</span></>,
+              <><span className="font-bold">병력 무심사/전건 가입가능!</span></>,
             ]}
-            onCalculateClick={() => {
-              setModalType('calculate');
-              setIsModalOpen(true);
-              onModalStateChange?.(true);
-            }}
-            onConsultClick={() => {
-              setModalType('consult');
-              setIsModalOpen(true);
-              onModalStateChange?.(true);
-            }}
+            bottomNote="* 트리플 레벨업 보증률 반영(보증형에 한함)"
+            cardContent={
+              <SloganCardView
+                title=""
+                onCalculate={() => { setModalType('calculate'); setIsModalOpen(true); onModalStateChange?.(true); }}
+                onConsult={() => { setModalType('consult'); setIsModalOpen(true); onModalStateChange?.(true); }}
+              >
+                {/* 보증률 헤더 */}
+                <div className="flex w-80 h-6 justify-center bg-status-info text-white text-center rounded-md my-3 body-m font-bold">
+                  보증률
+                </div>
+
+                {/* 2열 비교 + 화살표 */}
+                <div className="flex items-center justify-center gap-4 md:gap-8 mb-5">
+                  <div className="text-center flex flex-col gap-1.5">
+                    <p className="body-l text-text-muted">7년 시점</p>
+                    <p className="heading-4 text-text-primary">100%</p>
+                  </div>
+                  <span className="text-text-muted text-2xl">→</span>
+                  <div className="text-center flex flex-col gap-1.5">
+                    <p className="body-l text-text-muted">10년 시점</p>
+                    <p className="heading-4 text-brand-primary">130%</p>
+                  </div>
+                </div>
+
+                {/* 연금개시시점 */}
+                <div className="flex flex-col gap-2 items-center w-64 border-t border-border-default pt-4">
+                  <p className="text-xl text-text-primary">연금개시시점 <span className="font-bold">2.0%</span></p>
+                  <p className="caption-r text-text-muted">계약자적립액 (연금을 개시하는 경우에 한함)</p>
+                </div>
+              </SloganCardView>
+            }
           />
           <CalculatorConsultModal
             isOpen={isModalOpen}

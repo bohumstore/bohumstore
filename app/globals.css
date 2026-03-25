@@ -296,13 +296,31 @@ html {
   }
 }
 
-/* 모바일: product-info-box 배경·보더 제거 (토글 아이템 배경으로 통일) */
+/* 모바일 */
 @media (max-width: 1023px) {
   .product-info-box {
     background-color: transparent;
     border: none;
     padding-left: 0;
     padding-right: 0;
+  }
+  .product-table-td, .product-table-td-center {
+    @apply p-2 text-[11px] leading-tight;
+  }
+  .product-table-th {
+    @apply p-2 text-xs;
+  }
+  .product-text {
+    @apply text-sm;
+  }
+  .product-caption {
+    @apply text-[10px];
+  }
+  .product-page-title {
+    @apply text-xl;
+  }
+  .product-section-title {
+    @apply text-lg;
   }
 }
 

@@ -9,10 +9,11 @@ import FireworksEffect from '@/components/shared/FireworksEffect';
 import { useInsuranceForm } from '@/hooks/useInsuranceForm';
 import { useOTP } from '@/hooks/useOTP';
 import TextField from '@/components/TextField';
-import SelectField from '@/components/SelectField';
 import SelectChip from '@/components/SelectChip';
+import PrivacyConsent from '@/components/product/PrivacyConsent';
 import Button from '@/components/shared/Button';
-import { ModalScrollBody, PreviewCard, StepSection } from '@/templates/Product/components/CalculatorConsultModalScaffold';
+import CustomSelect from '@/components/CustomSelect';
+import { ModalScrollBody, PreviewCard, StepSection, StepHeader, InfoItem } from '@/templates/Product/components/CalculatorConsultModalScaffold';
 
 const currentPath = '/insurance/annuity/kb/triple-level-up';
 const INSURANCE_COMPANY_ID = 1; // KB라이프
@@ -160,12 +161,10 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
   ═══════════════════════════════════════════ */
   const renderStep1 = () => (
     <div className="space-y-5">
-      <div>
-        <div className="heading-4 text-text-primary">
-          {type === 'calculate' ? '해약환급금 계산 정보 입력' : '상담 신청 정보 입력'}
-        </div>
-        <p className="body-l text-text-muted mt-1">정확한 안내를 위해 필수 정보를 입력해주세요.</p>
-      </div>
+      <StepHeader 
+        title={type === 'calculate' ? '해약환급금 계산 정보 입력' : '상담 신청 정보 입력'} 
+        description="정확한 안내를 위해 필수 정보를 입력해주세요."
+      />
 
       <div className="grid grid-cols-2 gap-4">
         <div>
@@ -203,59 +202,47 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block button-s text-text-secondary mb-1.5">납입기간 <span className="text-status-red">*</span></label>
-          <SelectField
+          <CustomSelect
             value={paymentPeriod}
-            onChange={handlePaymentPeriodChange}
+            onChange={(val) => handlePaymentPeriodChange({ target: { value: val } } as any)}
             className="w-full"
-          >
-            <option value="" disabled>선택</option>
-            {['5년', '7년', '10년'].map(p => (
-              <option key={p} value={p}>{p}</option>
-            ))}
-          </SelectField>
+            options={['5년', '7년', '10년'].map(p => ({
+              value: p,
+              label: p === '5년' ? (
+                <span className="flex items-center gap-1">
+                  5년 <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-brand-primary-soft text-brand-primary leading-none">추천</span>
+                </span>
+              ) : p
+            }))}
+          />
         </div>
         <div>
           <label className="block button-s text-text-secondary mb-1.5">월 납입금액 <span className="text-status-red">*</span></label>
-          <SelectField
+          <CustomSelect
             value={paymentAmount}
-            onChange={handlePaymentAmountChange}
+            onChange={(val) => handlePaymentAmountChange({ target: { value: val } } as any)}
             className="w-full"
-          >
-            <option value="" disabled>선택</option>
-            {['30만원', '50만원', '100만원'].map(a => (
-              <option key={a} value={a}>{a}</option>
-            ))}
-          </SelectField>
+            options={['30만원', '50만원', '100만원'].map(a => ({ value: a, label: a }))}
+          />
         </div>
       </div>
 
       {type === 'consult' && (
         <div>
           <label className="block button-s text-text-secondary mb-1.5">상담 시간대 <span className="text-status-red">*</span></label>
-          <SelectField
+          <CustomSelect
             value={consultTime}
-            onChange={(e) => setConsultTime(e.target.value)}
+            onChange={(val) => setConsultTime(val)}
             className="w-full"
-          >
-            {CONSULT_TIME_OPTIONS.map(t => (
-              <option key={t} value={t}>{t}</option>
-            ))}
-          </SelectField>
+            options={CONSULT_TIME_OPTIONS.map(t => ({ value: t, label: t }))}
+          />
         </div>
       )}
 
-      <div className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          id="privacy-consent"
-          checked={isChecked}
-          onChange={(e) => setIsChecked(e.target.checked)}
-          className="w-4 h-4 flex-shrink-0 text-button border-border-default rounded focus:ring-button"
-        />
-        <label htmlFor="privacy-consent" className="body-s text-text-secondary cursor-pointer leading-snug">
-          [필수] 개인정보 수집·이용 및 제공에 동의합니다.
-        </label>
-      </div>
+      <PrivacyConsent
+        checked={isChecked}
+        onChange={(checked) => setIsChecked(checked)}
+      />
 
       <button
         type="button"
@@ -286,76 +273,91 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
       /* ── 환급금 확인 인증 ── */
       return (
         <div className="space-y-5">
-          <div><div className="heading-4 text-text-primary">해약환급금 확인하기</div></div>
+          <StepHeader title="해약환급금 확인하기" />
 
           <PreviewCard
-            className="rounded-2xl bg-section-bg p-5"
+            className="rounded-2xl border border-border-default bg-white p-5 shadow-sm mb-6"
             headerClassName="body-m font-bold text-text-primary flex items-center mb-3"
-            titleClassName=""
+            titleClassName="flex items-center gap-1"
             bodyClassName="select-none"
             title={
               <>
-                환급금 예상 요약
-                <span className="ml-2 text-brand-primary font-extrabold">{name} 님</span>
+                <span className="text-text-primary">환급금 예상 요약</span>
+                <span className="text-brand-primary ml-1">{name} 님</span>
               </>
             }
-            icon={<svg className="w-4 h-4 mr-1.5 text-brand-primary flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>}
-            hint={<><span className="text-brand-primary">→</span><span>인증하면 바로 알 수 있어요.</span></>}
-            hintClassName="flex items-center gap-1 body-s text-text-muted"
+            icon={<img src="/svgs/common/icon/person.svg" className="w-4 h-4 mr-1.5" alt="user" />}
+            hint={<><span className="text-brand-primary mr-1">→</span><span>인증하면 바로 알 수 있어요.</span></>}
+            hintClassName="flex items-center body-s text-text-muted mt-3"
           >
-            <div className="flex items-center justify-between bg-brand-primary/10 rounded-lg px-3 py-2.5 body-m mb-2">
-              <span className="text-text-secondary font-medium">10년 시점 환급률</span>
-              <span className="font-bold text-category-purple blur-sm">
-                {rate > 0 ? `${Math.round(rate * 100)}%` : '000%'}
-              </span>
+            <div className="bg-page-bg rounded-lg px-4 py-3 body-m mb-2 flex flex-col gap-1">
+              <div className="flex items-center">
+                <span className="text-text-primary font-medium w-32 shrink-0">10년 시점 환급률</span>
+                <span className="font-bold flex gap-1 items-center text-brand-primary">
+                  <span className="blur-sm select-none">약 122.7%</span>
+                </span>
+              </div>
             </div>
-            <div className="caption-r text-text-muted px-1 mb-2">
+            <div className="caption-r text-text-muted px-1">
               총 납입액 {total > 0 ? total.toLocaleString('en-US') : '--'} 원 · {paymentPeriod || '--'}납
             </div>
           </PreviewCard>
 
-          <div>
-            <p className="heading-5 text-text-primary mb-1 flex items-center">🔒 휴대폰 인증</p>
+          <div className="mb-6">
+            <p className="heading-5 text-text-primary mb-1 flex items-center gap-1">
+              <img src="/svgs/common/icon/verify.svg" className="w-5 h-5" alt="lock" />
+              휴대폰 인증
+            </p>
             <p className="body-s text-text-muted mb-3">정확한 환급금 확인을 위해 휴대폰 인증이 필요합니다.</p>
             <div className="flex gap-2 mb-3">
-              <TextField type="text" value={phone} readOnly className="flex-1 bg-page-bg text-text-muted h-auto py-2.5" />
-              <Button variant="secondary" size="sm" onClick={handleSendOTP}>
-                {canResend ? '인증번호 받기' : '재발송'}
-              </Button>
+              <TextField type="text" value={phone} readOnly className="flex-1 bg-white border border-border-default text-text-primary h-auto py-2.5" />
+              <Button variant="primary" size="sm" onClick={handleSendOTP} className="shrink-0">{canResend ? '인증번호 받기' : '재발송'}</Button>
             </div>
-            <div className="relative mb-4">
-              <TextField type="text" inputMode="numeric" maxLength={6} ref={otpInputRef} value={code} onChange={e => setCode(e.target.value.replace(/[^0-9]/g, ''))} className="w-full h-auto py-2.5" placeholder="인증번호 6자리 입력" />
-              {!canResend && <span className="absolute right-3 top-1/2 -translate-y-1/2 body-m font-medium text-status-red">{formatTime(timer)}</span>}
+            <div className="relative">
+              <TextField type="text" inputMode="numeric" maxLength={6} ref={otpInputRef} value={code} onChange={e => setCode(e.target.value.replace(/[^0-9]/g, ''))} className="w-full h-auto py-2.5 bg-white" placeholder="인증번호 6자리 입력" />
+              {!canResend && <span className="absolute right-3 top-1/2 -translate-y-1/2 body-m font-medium text-brand-primary">{formatTime(timer)}</span>}
             </div>
           </div>
-
-          <StepSection title="··· 상세 정보 보기" titleClassName="heading-5 text-text-primary mb-3 flex items-center">
-            <div className="space-y-2 select-none pointer-events-none">
-              {[
-                { label: '보험사',                    value: 'KB라이프',                          color: 'text-brand-primary' },
-                { label: '상품명',                    value: 'KB트리플레벨업연금보험',                  color: 'text-brand-primary' },
-                { label: '납입기간/월보험료',            value: `${paymentPeriod} / ${paymentAmount}`, color: 'text-brand-primary' },
-                { label: '10년 시점 환급률',            value: rate > 0 ? `${Math.round(rate * 100)}%` : '000%', color: 'text-category-purple' },
-                { label: '10년 확정이자',              value: `${interestValue} 원`,                color: 'text-status-info' },
-                { label: '10년 시점 예상 해약환급금',    value: `${refundValue} 원`,                  color: 'text-status-red' },
-              ].map(item => (
-                <div key={item.label} className="flex justify-between items-center bg-white border border-border-default rounded-lg p-3 body-m">
-                  <span className="text-text-secondary font-medium flex items-center shrink-0 mr-2">
-                    <span className="text-brand-primary mr-1.5">▸</span>{item.label}
-                  </span>
-                  <span className={`font-bold blur-sm ${item.color}`}>{item.value}</span>
-                </div>
-              ))}
-            </div>
-            <div className="mt-3 caption-r text-text-muted leading-normal text-center">
-              * 실제 보험료 및 해약환급금은 가입시점 및 고객 정보에 따라 달라질 수 있어요.<br />
-              * 휴대폰 인증 완료 후 상세정보를 확인하실 수 있어요.
-            </div>
-          </StepSection>
 
           <Button variant="primary" size="full" onClick={handleVerifyOTP} disabled={verifying || code.length !== 6}>
             {verifying ? '인증 처리중...' : '환급금 결과 확인하기'}
           </Button>
+
+          <div className="flex justify-center mt-3 mb-6">
+            <button
+              onClick={onClose}
+              className="px-4 py-2 text-text-secondary body-m focus:outline-none hover:text-text-primary transition-colors"
+            >
+              닫기
+            </button>
+          </div>
+
+          <StepSection 
+            title={
+              <span className="flex items-center gap-1.5">
+                <img src="/svgs/common/icon/info.svg" className="w-4 h-4 ml-0.5" alt="info" />
+                상세 정보 보기
+              </span>
+            } 
+            titleClassName="heading-5 text-text-primary mb-3 flex items-center"
+          >
+            <div className="space-y-2 select-none pointer-events-none bg-page-bg rounded-xl p-4">
+              {[
+                { label: '보험사',                    value: 'KB라이프' },
+                { label: '상품명',                    value: 'KB트리플레벨업연금보험' },
+                { label: '납입기간/월보험료',            value: `${paymentPeriod} / ${paymentAmount}` },
+                { label: '10년 시점 환급률',            value: '약 122.7%' },
+                { label: '10년 확정이자',              value: '약 9,000,000 원' },
+                { label: '10년 시점 예상 해약환급금',    value: '약 45,000,000 원' },
+              ].map(item => (
+                <InfoItem key={item.label} label={item.label} value={item.value} blur className="!p-2 !bg-transparent !border-none" />
+              ))}
+            </div>
+            <div className="mt-4 caption-r text-text-muted leading-normal text-center">
+              * 실제 보험료 및 해약환급금은 가입시점 및 고객 정보에 따라 달라질 수 있어요.<br />
+              * 휴대폰 인증 완료 후 상세정보를 확인하실 수 있어요.
+            </div>
+          </StepSection>
         </div>
       );
     }
@@ -385,7 +387,10 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         </div>
 
         <div>
-          <p className="heading-5 text-text-primary mb-1 flex items-center">🔒 휴대폰 인증</p>
+          <p className="heading-5 text-text-primary mb-1 flex items-center">
+            <img src="/svgs/common/icon/verify.svg" className="w-5 h-5 mr-1" alt="lock" />
+            휴대폰 인증
+          </p>
           <p className="body-s text-text-muted mb-3">상담신청을 위해 휴대폰 인증이 필요해요.</p>
           <div className="flex gap-2 mb-3">
             <TextField type="text" value={phone} readOnly className="flex-1 bg-page-bg text-text-muted h-auto py-2.5" />
@@ -415,10 +420,9 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         <div className="text-center py-8 px-4">
           <FireworksEffect show={true} />
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-primary-soft mb-5">
-            <svg className="w-8 h-8 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+            <img src="/svgs/common/check/check-circle.svg" className="w-8 h-8" alt="check" />
           </div>
-          <div className="heading-4 text-text-primary mb-2">상담신청이 접수되었습니다!</div>
-          <p className="body-m text-text-secondary leading-relaxed">담당자가 입력하신 번호로 빠르게 안내해 드리겠습니다.</p>
+          <StepHeader title="상담신청이 접수되었습니다!" description="담당자가 입력하신 번호로 빠르게 안내해 드리겠습니다." className="text-center" />
         </div>
       );
     }
@@ -427,9 +431,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
     return (
       <div className="px-2 py-2 space-y-4">
         <FireworksEffect show={true} />
-        <div className="mb-2">
-          <div className="heading-4 text-text-primary">환급금 산출 결과</div>
-        </div>
+        <StepHeader title="환급금 산출 결과" />
 
         <div className="rounded-xl bg-page-bg p-4">
           <div className="mb-3 flex items-center heading-5 text-text-primary">
@@ -452,10 +454,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
               { label: '10년 확정이자', value: `${interestValue} 원`, color: 'text-status-info' },
               { label: '10년 시점 예상 해약환급금', value: `${refundValue} 원`, color: 'text-status-red' },
             ].map(item => (
-              <div key={item.label} className="flex justify-between bg-white border border-border-default p-3 rounded-lg body-m">
-                <span className="text-text-secondary font-medium"><span className="text-brand-primary mr-1">▸</span>{item.label}</span>
-                <span className={`font-bold ${item.color}`}>{item.value}</span>
-              </div>
+              <InfoItem key={item.label} label={item.label} value={item.value} color={item.color} />
             ))}
           </div>
 
@@ -475,12 +474,14 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         {step === 2 && renderStep2()}
         {step === 3 && renderStep3()}
 
-        <button
-          onClick={onClose}
-          className="w-full mt-3 py-3 body-m font-medium text-text-muted hover:text-text-primary transition text-center"
-        >
-          닫기
-        </button>
+        {step !== 2 && (
+          <button
+            onClick={onClose}
+            className="w-full mt-3 py-3 body-m font-medium text-text-muted hover:text-text-primary transition text-center"
+          >
+            닫기
+          </button>
+        )}
       </ModalScrollBody>
     </Modal>
   );

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Button from '@/components/shared/Button';
 import { useResponsive } from '@/hooks/useResponsive';
 import { useRef, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { Bars3Icon, XMarkIcon, ChevronRightIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 
 export default function Header() {
@@ -16,6 +17,16 @@ export default function Header() {
   const { isMobile } = useResponsive();
   const headerRef = useRef<HTMLElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsMobileMenuOpen(false);
+      setIsMegaMenuOpen(false);
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [pathname]);
 
   useEffect(() => {
     if (headerRef.current) {
@@ -188,7 +199,7 @@ export default function Header() {
                     </div>
                     <div className="absolute right-0 bottom-0 w-[240px] h-[220px]">
                       <Image
-                        src="/svgs/header-expanded-counsel.svg"
+                        src="/svgs/common/header/expanded-consult.svg"
                         alt="상담 캐릭터"
                         fill
                         className="object-contain object-right-bottom transition-transform duration-500 group-hover:scale-105"

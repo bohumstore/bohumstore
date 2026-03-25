@@ -1,4 +1,5 @@
-import React, { ReactNode, useEffect, useRef, useCallback } from 'react';
+import React, { ReactNode, useEffect, useRef, useCallback, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 
 interface ModalProps {
@@ -11,22 +12,19 @@ interface ModalProps {
 }
 
 export default function Modal({ title, open, onClose, children, hideHeader, hideFooter }: ModalProps) {
+  const [mounted, setMounted] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
-  const isClosingByBackRef = useRef(false);
 
-  // 닫기 버튼 클릭 시 히스토리도 함께 정리
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
+
   const handleClose = useCallback(() => {
-    if (isClosingByBackRef.current) {
-      // 뒤로가기로 닫히는 경우 onClose만 호출
-      onClose();
-    } else {
-      // 닫기 버튼으로 닫는 경우 히스토리도 뒤로
-      isClosingByBackRef.current = true;
-      window.history.back();
-    }
+    onClose();
   }, [onClose]);
 
-  // 모달이 열릴 때 배경 스크롤 완전 방지 및 뒤로가기 버튼 처리
+  // 모달이 열릴 때 배경 스크롤 완전 방지
   useEffect(() => {
     if (open) {
       // 현재 스크롤 위치 저장
@@ -41,23 +39,7 @@ export default function Modal({ title, open, onClose, children, hideHeader, hide
       document.body.style.overflow = 'hidden';
       document.body.style.width = '100%';
 
-      isClosingByBackRef.current = false;
-
-      // 히스토리에 모달 상태 추가 (뒤로가기 시 모달만 닫히도록)
-      // 히스토리 중복 추가 방지
-      if (!window.history.state?.modal) {
-        window.history.pushState({ modal: true }, '');
-      }
-
-      const handlePopState = (_e: PopStateEvent) => {
-        isClosingByBackRef.current = true;
-        onClose();
-      };
-
-      window.addEventListener('popstate', handlePopState);
-
       return () => {
-        window.removeEventListener('popstate', handlePopState);
         // body 스타일 복원
         document.body.style.position = '';
         document.body.style.top = '';
@@ -69,7 +51,7 @@ export default function Modal({ title, open, onClose, children, hideHeader, hide
         window.scrollTo(scrollX, scrollY);
       };
     }
-  }, [open, onClose]);
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -121,21 +103,26 @@ export default function Modal({ title, open, onClose, children, hideHeader, hide
     };
   }, [open]);
 
-  if (!open) return null;
-  return (
+  if (!open || !mounted) return null;
+
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex touch-none items-center justify-center bg-black/40"
+      className="fixed inset-0 z-[9999] flex touch-none items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity"
       onTouchMove={(e) => e.stopPropagation()}
     >
       <div
-        className="relative flex max-h-[90vh] w-full max-w-lg touch-auto flex-col overflow-hidden rounded-2xl bg-white text-text-primary shadow-2xl"
+        className="relative flex max-h-[90vh] w-[calc(100%-32px)] max-w-lg touch-auto flex-col overflow-hidden rounded-[20px] bg-white text-text-primary shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
         onTouchMove={(e) => e.stopPropagation()}
       >
         {!hideHeader && (
-          <div className="flex flex-shrink-0 items-center justify-between border-b border-gray-200 px-6 pb-2 pt-4">
-            <div className="text-lg font-bold">{title}</div>
-            <button onClick={handleClose} className="p-1 text-gray-400 hover:text-gray-700">
-              <XMarkIcon className="h-6 w-6" />
+          <div className="flex flex-shrink-0 items-center justify-between border-b border-border-default px-5 pb-4 pt-5 md:px-6 md:pb-5 md:pt-6">
+            <div className="heading-4 text-text-primary">{title}</div>
+            <button 
+              onClick={handleClose} 
+              className="p-1 text-text-muted transition-colors hover:text-text-primary active:scale-95"
+              aria-label="모달 닫기"
+            >
+              <XMarkIcon className="h-7 w-7" />
             </button>
           </div>
         )}
@@ -146,16 +133,17 @@ export default function Modal({ title, open, onClose, children, hideHeader, hide
           {children}
         </div>
         {!hideFooter && (
-          <div className="flex flex-shrink-0 border-t border-gray-200">
+          <div className="flex flex-shrink-0 px-5 pb-5 pt-3 md:px-6 md:pb-6 md:pt-4">
             <button
               onClick={handleClose}
-              className="flex-1 border-r border-gray-200 bg-[#ffe15a] py-4 text-base font-bold text-gray-900 transition hover:bg-yellow-200"
+              className="flex-1 rounded-xl bg-brand-primary py-3.5 text-center body-l font-bold text-white shadow-sm transition-colors hover:bg-brand-primary-hover active:scale-[0.98]"
             >
               닫기
             </button>
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

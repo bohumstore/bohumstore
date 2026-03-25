@@ -5,6 +5,7 @@ import Footer from '@/components/shared/Footer';
 import Tabs from '@/components/Tabs';
 import RequiredNotice from '@/components/shared/RequiredNotice';
 import FloatingButtons from '@/components/shared/FloatingButtons';
+import MobileStickyActionBar from '@/components/shared/MobileStickyActionBar';
 import { trackPageVisit } from '@/lib/visitorTracking';
 
 interface Tab {
@@ -73,9 +74,28 @@ export default function ProductDetailTemplate({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState(false);
+  const [isHeroActionsVisible, setIsHeroActionsVisible] = useState(true);
 
   useEffect(() => {
     trackPageVisit();
+  }, []);
+
+  useEffect(() => {
+    const anchor = document.querySelector<HTMLElement>('[data-hero-actions-anchor]');
+    if (!anchor) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroActionsVisible(entry.isIntersecting);
+      },
+      { 
+        threshold: 0,
+        rootMargin: '0px 0px 0px 0px'
+      }
+    );
+
+    observer.observe(anchor);
+    return () => observer.disconnect();
   }, []);
 
   // 햄버거 메뉴 상태 수신
@@ -122,7 +142,7 @@ export default function ProductDetailTemplate({
 
   // 플로팅 버튼 표시 여부
   const showFloating =
-    !isModalOpen && !showPrivacy && !showNotice && !isInputFocused && !isHeaderMenuOpen;
+    !isHeroActionsVisible && !isModalOpen && !showPrivacy && !showNotice && !isInputFocused && !isHeaderMenuOpen;
 
   return (
     <>
@@ -184,8 +204,12 @@ export default function ProductDetailTemplate({
 
         <Footer />
 
+        {/* 모바일 하단 스티키 액션 바에 가려지지 않도록 푸터 뒤 여백 확보 */}
+        <div className="h-20 md:hidden" />
+
         {/* 플로팅 버튼 */}
         <FloatingButtons visible={showFloating} showCalculator={true} showConsult={true} />
+        <MobileStickyActionBar visible={showFloating} showCalculator={true} showConsult={true} />
       </div>
     </>
   );

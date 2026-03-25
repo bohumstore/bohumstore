@@ -88,6 +88,7 @@ export default function MobileAccordionWrapper({ children }: { children: ReactNo
         if (tEvent.propertyName === 'max-height' && tEvent.target === contentWrapper) {
           if (isOpen) {
             contentWrapper.style.maxHeight = 'none';
+            contentWrapper.style.overflow = 'visible'; // 아코디언이 완전히 열리면 잘림 방지
           }
         }
       };
@@ -97,6 +98,8 @@ export default function MobileAccordionWrapper({ children }: { children: ReactNo
       if (isOpen) {
         contentWrapper.style.maxHeight = contentWrapper.scrollHeight + 50 + 'px';
         contentWrapper.style.opacity = '1';
+        // 애니메이션 도중에는 hidden 유지, 끝난 뒤 onTransitionEnd에서 visible 교체
+        contentWrapper.style.overflow = 'hidden';
       } else {
         // 닫힐 때는 현재 높이가 none일 경우 실제 픽셀 높이로 먼저 고정
         if (contentWrapper.style.maxHeight === 'none') {
