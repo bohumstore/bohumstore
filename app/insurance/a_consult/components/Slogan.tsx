@@ -98,10 +98,23 @@ export default function Slogan({ onOpenPrivacy: _onOpenPrivacy, onModalStateChan
     const by = parseInt(b.substring(0, 4));
     const bm = parseInt(b.substring(4, 6));
     const bd = parseInt(b.substring(6, 8));
+
+    // 생년월일에 6개월을 더한 날짜 계산 (보험기준일)
+    const birthDate = new Date(by, bm - 1, bd);
+    const insuranceBaseDate = new Date(birthDate);
+    insuranceBaseDate.setMonth(insuranceBaseDate.getMonth() + 6);
+
     const today = new Date();
-    let age = today.getFullYear() - by;
-    if (today.getMonth() + 1 < bm || (today.getMonth() + 1 === bm && today.getDate() < bd)) age -= 1;
-    return age;
+    let insuranceAge = today.getFullYear() - insuranceBaseDate.getFullYear();
+    if (
+      today.getMonth() < insuranceBaseDate.getMonth() ||
+      (today.getMonth() === insuranceBaseDate.getMonth() && today.getDate() < insuranceBaseDate.getDate())
+    ) {
+      insuranceAge -= 1;
+    }
+
+    // 보험연령은 만 나이(기준일 기준) + 1
+    return insuranceAge + 1;
   };
   const insuranceAge = getInsuranceAge(birth);
 
@@ -273,6 +286,35 @@ export default function Slogan({ onOpenPrivacy: _onOpenPrivacy, onModalStateChan
                 중복·불필요 특약을 <span className="ml-1 font-semibold text-text-primary">정리해요.</span>
               </li>
             </ul>
+
+            {/* 3월 보험 이슈 추가 (마스터 443311e 반영) */}
+            {(() => {
+              const currentDate = new Date();
+              const currentMonth = currentDate.getMonth() + 1;
+              const lastUpdatedMonth = 3;
+              if (currentMonth !== lastUpdatedMonth) return null;
+
+              return (
+                <div className="mt-2 p-4 bg-orange-50 border border-orange-100 rounded-xl text-left w-full max-w-md">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-[10px] text-white font-bold">!</span>
+                    <span className="body-m font-bold text-orange-700">3월 보험 상품 주요 이슈</span>
+                  </div>
+                  <div className="space-y-2">
+                    {[
+                      <>실손보험료 <span className="font-semibold text-red-500">최대 20% 인상</span> 예정!</>,
+                      <>암보험 <span className="font-semibold text-red-500">보험료 인상</span> 예정!</>,
+                      <>종신·연금보험 <span className="font-semibold text-red-500">공시이율 하향</span> 추세!</>,
+                    ].map((text, idx) => (
+                      <div key={idx} className="flex items-start gap-2 text-sm text-text-secondary">
+                        <span className="text-orange-500 flex-shrink-0 animate-pulse">▸</span>
+                        <span>{text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
           </div>
 
           <div className="flex w-full max-w-lg flex-1 justify-center lg:justify-end">
