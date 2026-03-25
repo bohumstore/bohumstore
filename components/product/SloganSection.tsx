@@ -81,18 +81,18 @@ export default function SloganSection({
     bottomNote ? <p className="caption-r text-text-muted absolute bottom-0">{bottomNote}</p> : null;
 
   /* ── 하단 태그 렌더 함수 ── */
-  const renderBottomTags = () => {
+  const renderBottomTags = (isMobile: boolean) => {
     if (!bottomTags || bottomTags.length === 0) return null;
     return (
-      <div className="inline-flex items-stretch bg-white rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+      <div className={`inline-flex items-stretch bg-white shadow-[0_2px_12px_rgba(0,0,0,0.06)] ${isMobile ? 'rounded-lg' : 'rounded-xl'}`}>
         {bottomTags.map((tag, i) => (
           <div key={i} className="flex items-center">
             {i > 0 && (
-              <div className="w-[2px] h-4 bg-brand-secondary-hover rounded-full" />
+              <div className={`w-[2px] bg-brand-secondary-hover rounded-full h-4`} />
             )}
-            <div className="px-4 py-2">
-              <div className="body-m text-[15px] font-bold text-text-primary">{tag.title}</div>
-              <div className="body-m text-text-secondary">{tag.subtitle}</div>
+            <div className={`${isMobile ? 'px-2.5 py-1.5' : 'px-4 py-2'}`}>
+              <div className={`${isMobile ? 'body-s' : 'body-m'} font-bold text-text-primary`}>{tag.title}</div>
+              <div className={`${isMobile ? 'body-s' : 'body-m'} text-text-secondary`}>{tag.subtitle}</div>
             </div>
           </div>
         ))}
@@ -110,7 +110,7 @@ export default function SloganSection({
           {renderLeftContent(true)}
           {/* 하단 태그 (모바일: 좌하단) */}
           <div className="absolute bottom-0 left-0 z-20">
-            {renderBottomTags()}
+            {renderBottomTags(true)}
           </div>
           {/* 일러스트 (모바일: 우하단) */}
           {illustrationSrc && (
@@ -150,7 +150,7 @@ export default function SloganSection({
               {renderBottomNoteDesktop()}
               {/* 하단 태그 (데스크탑: 좌하단) */}
               <div className="absolute bottom-8 left-0">
-                {renderBottomTags()}
+                {renderBottomTags(false)}
               </div>
               {/* 일러스트 (데스크탑: 우하단) */}
               {illustrationSrc && (
