@@ -3,8 +3,6 @@ import { supabase } from '../supabase';
 import { alimtalkSend, smsSend } from '@/lib/aligo';
 import aligoAuth from '../utils/aligoAuth';
 import { getCachedAligoToken } from '@/lib/aligoTokenCache';
-import { link } from 'fs';
-import { use } from 'react';
 
 export async function POST(req: Request) {
   const requestBody = await req.json();
@@ -19,8 +17,7 @@ export async function POST(req: Request) {
     counselType,
     companyId,
     productId,
-    insuranceType,
-    consultType, // 상담 종류 문자열 (예: "어린이보험")
+    consultType,
     counselTime,
     mounthlyPremium = null,
     paymentPeriod = null,
@@ -29,22 +26,19 @@ export async function POST(req: Request) {
     refundValue = null,
     monthlyPension = null,
     guaranteedPension = null,
-    performancePension = null,
-    templateId = null, // 고객용 템플릿 ID
-    adminTemplateId = null, // 관리자용 템플릿 ID
-    onlyClient = false, // 추가: 오직 고객용만 보낼지 여부
+    templateId = null,
+    adminTemplateId = null,
+    onlyClient = false,
   } = requestBody;
 
   // 고객용만 발송(후속 알림)인 경우: OTP 검증을 건너뛰고 바로 전송
   if (onlyClient) {
     try {
       // 상품/회사명 조회
-      const [productRes, companyRes] = await Promise.all([
+      const [productRes] = await Promise.all([
         supabase.from('product').select('name').eq('id', productId).single(),
-        supabase.from('company').select('name').eq('id', companyId).single(),
       ]);
       const productName = productRes.data?.name || '';
-      const companyName = companyRes.data?.name || '';
 
       // 토큰(가능 시) 부여
       let authForSend = aligoAuth as any;

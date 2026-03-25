@@ -1,6 +1,9 @@
-﻿'use client';
-import React from 'react';
-import Slogan from './components/Slogan';
+'use client';
+import { useState } from 'react';
+import Image from 'next/image';
+import CalculatorConsultModal from './components/CalculatorConsultModal';
+import SloganSection from '@/components/product/SloganSection';
+import SloganCardView from '@/components/product/SloganCardView';
 import Notice from './components/Notice';
 import ProductInfo from './components/BodyTabViews/ProductInfo';
 import CoverageDetails from './components/BodyTabViews/CoverageDetails';
@@ -8,6 +11,8 @@ import Surrender from './components/BodyTabViews/Surrender';
 import ProductDetailTemplate from '@/templates/Product/ProductDetailTemplate';
 
 export default function ShinhanMoreTheDreamPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'calculate' | 'consult'>('calculate');
   const tabs = [
     { label: '상품 정보', content: <ProductInfo /> },
     { label: '보장 내용', content: <CoverageDetails /> },
@@ -16,8 +21,74 @@ export default function ShinhanMoreTheDreamPage() {
 
   return (
     <ProductDetailTemplate
-      renderHero={({ onOpenPrivacy, onModalStateChange }) => (
-        <Slogan onOpenPrivacy={onOpenPrivacy} onModalStateChange={onModalStateChange} />
+      renderHero={({ onModalStateChange }) => (
+        <>
+          <SloganSection
+            backgroundColor="#F5F3FF"
+            brandLogo={
+              <div className="flex items-center gap-3">
+                <Image src="/images/logos/shinhan-life-logo.png" alt="신한라이프" width={88} height={40} />
+                <span className="body-m text-text-muted">신한라이프생명</span>
+              </div>
+            }
+            sloganTitle={
+              <div>
+                <div className="heading-2 text-text-primary leading-tight">
+                  모아더드림PLUS종신보험
+                </div>
+                <div className="heading-2 text-text-primary leading-tight">
+                  (해약환급금 일부 지급형)
+                </div>
+              </div>
+            }
+            checkItems={[
+              <>평생 든든한 <span className="font-bold">종신보장</span></>,
+              <>10년시점 해약환급금 <span className="font-bold">122.7%</span> <span className="text-text-muted body-s">(일반심사형 기준)</span></>,
+              <>설계·심사에 따라 가입금액 선택 가능</>,
+              <>납입완료보너스·장기유지보너스 제공 <span className="text-text-muted body-s">(약관기준)</span></>,
+              <>일반심사형: <span className="font-bold">만 15~70세</span> / 간편심사형: <span className="font-bold">만 30~69세</span><br /><span className="text-text-muted body-s">(단, 성별 및 납입기간별 가입나이 상이)</span></>,
+            ]}
+            cardContent={
+              <SloganCardView
+                title="10년 뒤, 환급률은 얼마나 될까요?"
+                bottomInfoText="50세 남자 일반 심사형, 5년납, 1억원 기준"
+                onCalculate={() => { setModalType('calculate'); setIsModalOpen(true); onModalStateChange?.(true); }}
+                onConsult={() => { setModalType('consult'); setIsModalOpen(true); onModalStateChange?.(true); }}
+              >
+                {/* 비용 비교 영역 */}
+                <div className="flex items-end justify-center gap-6 md:gap-10 mb-4">
+                  {/* 7년 시점 */}
+                  <div className="text-center flex flex-col gap-1.5">
+                    <p className="body-l text-text-muted">7년 시점</p>
+                    <p className="heading-4 text-text-primary">93.2%</p>
+                  </div>
+                  {/* 10년 시점 */}
+                  <div className="text-center flex flex-col gap-1.5">
+                    <p className="body-l text-text-muted">10년 시점</p>
+                    <p className="heading-4 text-brand-primary">122.7%</p>
+                  </div>
+                  {/* 보너스 */}
+                  <div className="text-center flex flex-col items-center gap-1.5">
+                    <span className="bg-status-green text-white body-s font-bold px-2.5 py-0.5 rounded-full">
+                      보너스
+                    </span>
+                    <p className="body-m font-bold text-status-green leading-tight">
+                      납입완료 보너스<br />장기유지 보너스
+                    </p>
+                  </div>
+                </div>
+              </SloganCardView>
+            }
+          />
+          <CalculatorConsultModal
+            isOpen={isModalOpen}
+            onClose={() => {
+              setIsModalOpen(false);
+              onModalStateChange?.(false);
+            }}
+            type={modalType}
+          />
+        </>
       )}
       tabs={tabs}
       documents={[
@@ -35,12 +106,6 @@ export default function ShinhanMoreTheDreamPage() {
         '본 상품은 무배당 상품으로, 배당금이 지급되지 않습니다.',
       ]}
       approvalNumber="준법감시인 심의필 43149호 (2025.08.26~2026.08.25)"
-      globalStyles={`
-        @keyframes jump-glow {
-          0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 #dc2626); }
-          30% { transform: scale(1.18) translateY(-6px); filter: drop-shadow(0 0 8px #fca5a5); }
-          60% { transform: scale(0.95) translateY(2px); filter: drop-shadow(0 0 0 #dc2626); }
-        }`}
     />
   );
 }

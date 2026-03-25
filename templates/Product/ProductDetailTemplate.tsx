@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState, ReactNode } from 'react';
 import Footer from '@/components/shared/Footer';
-import Modal from '@/components/Modal';
 import Tabs from '@/components/Tabs';
 import RequiredNotice from '@/components/shared/RequiredNotice';
 import FloatingButtons from '@/components/shared/FloatingButtons';
+import MobileStickyActionBar from '@/components/shared/MobileStickyActionBar';
 import { trackPageVisit } from '@/lib/visitorTracking';
 
 interface Tab {
@@ -24,9 +24,9 @@ interface ProductDetailTemplateProps {
    * - render prop 패턴: 개인정보 모달 열기 함수와 모달 상태 변경 함수를 전달받음
    * - 기존 Slogan 컴포넌트를 그대로 넘기면 됨
    */
-  renderHero: (props: {
+  renderHero: (_props: {
     onOpenPrivacy: () => void;
-    onModalStateChange: (isOpen: boolean) => void;
+    onModalStateChange: (_isOpen: boolean) => void;
   }) => ReactNode;
   /** 탭 데이터 배열 */
   tabs: Tab[];
@@ -41,7 +41,7 @@ interface ProductDetailTemplateProps {
    * - Notice 컴포넌트가 이미 자체 Modal을 감싸고 있으므로 render prop으로 전달
    * - open/onClose를 받아서 기존 Notice 컴포넌트를 그대로 렌더링
    */
-  renderNotice?: (props: { open: boolean; onClose: () => void }) => ReactNode;
+  renderNotice?: (_props: { open: boolean; onClose: () => void }) => ReactNode;
   /** 추가 CSS keyframes (jsx global) */
   globalStyles?: string;
 }
@@ -74,9 +74,28 @@ export default function ProductDetailTemplate({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState(false);
+  const [isHeroActionsVisible, setIsHeroActionsVisible] = useState(true);
 
   useEffect(() => {
     trackPageVisit();
+  }, []);
+
+  useEffect(() => {
+    const anchor = document.querySelector<HTMLElement>('[data-hero-actions-anchor]');
+    if (!anchor) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroActionsVisible(entry.isIntersecting);
+      },
+      { 
+        threshold: 0,
+        rootMargin: '0px 0px 0px 0px'
+      }
+    );
+
+    observer.observe(anchor);
+    return () => observer.disconnect();
   }, []);
 
   // 햄버거 메뉴 상태 수신
@@ -86,6 +105,22 @@ export default function ProductDetailTemplate({
     };
     window.addEventListener('headerMenuChange', handleMenuChange as EventListener);
     return () => window.removeEventListener('headerMenuChange', handleMenuChange as EventListener);
+  }, []);
+
+  // 플로팅 버튼 → 모달 연결
+  useEffect(() => {
+    const clickBtn = (selector: string) => {
+      const btn = document.querySelector<HTMLElement>(selector);
+      btn?.click();
+    };
+    const onCalc = () => clickBtn('[data-floating-calculate]');
+    const onConsult = () => clickBtn('[data-floating-consult]');
+    window.addEventListener('floatingCalculate', onCalc);
+    window.addEventListener('floatingConsult', onConsult);
+    return () => {
+      window.removeEventListener('floatingCalculate', onCalc);
+      window.removeEventListener('floatingConsult', onConsult);
+    };
   }, []);
 
   const handleFocus = (e: React.FocusEvent) => {
@@ -107,7 +142,7 @@ export default function ProductDetailTemplate({
 
   // 플로팅 버튼 표시 여부
   const showFloating =
-    !isModalOpen && !showPrivacy && !showNotice && !isInputFocused && !isHeaderMenuOpen;
+    !isHeroActionsVisible && !isModalOpen && !showPrivacy && !showNotice && !isInputFocused && !isHeaderMenuOpen;
 
   return (
     <>
@@ -169,8 +204,12 @@ export default function ProductDetailTemplate({
 
         <Footer />
 
+        {/* 모바일 하단 스티키 액션 바에 가려지지 않도록 푸터 뒤 여백 확보 */}
+        <div className="h-20 md:hidden" />
+
         {/* 플로팅 버튼 */}
-        <FloatingButtons visible={showFloating} showCalculator={true} />
+        <FloatingButtons visible={showFloating} showCalculator={true} showConsult={true} />
+        <MobileStickyActionBar visible={showFloating} showCalculator={true} showConsult={true} />
       </div>
     </>
   );

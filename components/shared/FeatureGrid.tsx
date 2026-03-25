@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { FeatureItem } from '../../types/product';
 
 interface FeatureGridProps {

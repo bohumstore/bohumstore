@@ -2,20 +2,23 @@ import React, { useState, useEffect, useRef } from 'react';
 import Modal from '@/components/Modal';
 import request from '@/app/api/request';
 import FireworksEffect from '@/components/shared/FireworksEffect';
-import SelectField from '@/components/SelectField';
+import CustomSelect from '@/components/CustomSelect';
+import PrivacyConsent from '@/components/product/PrivacyConsent';
 import TextField from '@/components/TextField';
 import ToggleButtonGroup from '@/components/ToggleButtonGroup';
 import IconButton from '@/components/IconButton';
+import Button from '@/components/shared/Button';
+import { CONSULT_TIME_SELECT_OPTIONS } from '@/constants/insurance';
 
 type SloganProps = {
   onOpenPrivacy?: () => void;
-  onModalStateChange?: (isOpen: boolean) => void;
+  onModalStateChange?: (_isOpen: boolean) => void;
 };
 
-export default function Slogan({ onModalStateChange }: SloganProps) {
-  const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [consentGiven, setConsentGiven] = useState(false);
+export default function Slogan({ onOpenPrivacy: _onOpenPrivacy, onModalStateChange }: SloganProps) {
+  const [step, setStep] = useState<1 | 2>(1);
   const [showConsultModal, setShowConsultModal] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
 
   const [name, setName] = useState('');
   const [gender, setGender] = useState('');
@@ -36,13 +39,7 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
     '어린이보험', '수술/입원비보험', '유병자/간편보험', '간호/간병보험',
     '종신/정기보험', '연금/변액연금보험', '운전자보험', '기타문의',
   ];
-  const consultTimeOptions = [
-    '- 상담 시간대 선택 -', '아무때나',
-    '오전 09:00 ~ 10:00', '오전 10:00 ~ 11:00', '오전 11:00 ~ 12:00',
-    '오후 12:00 ~ 01:00', '오후 01:00 ~ 02:00', '오후 02:00 ~ 03:00',
-    '오후 03:00 ~ 04:00', '오후 04:00 ~ 05:00', '오후 05:00 ~ 06:00',
-    '오후 06:00 이후',
-  ];
+  const consultTimeOptions = CONSULT_TIME_SELECT_OPTIONS;
 
   const nameInputRef = useRef<HTMLInputElement>(null);
   const birthInputRef = useRef<HTMLInputElement>(null);
@@ -66,14 +63,13 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
   // 모달 열릴 때 Step 결정
   useEffect(() => {
     if (showConsultModal) {
-      if (consultIsVerified) setStep(3);
-      else if (!consentGiven) setStep(1);
-      else if (consentGiven && step === 1) setStep(2);
+      if (consultIsVerified) setStep(2);
+      else setStep(1);
     } else {
       setStep(1);
-      setConsentGiven(false);
+      setIsChecked(false);
     }
-  }, [showConsultModal, consultIsVerified, consentGiven]);
+  }, [showConsultModal, consultIsVerified]);
 
   const formatTime = (sec: number) => {
     const m = Math.floor(sec / 60).toString().padStart(2, '0');
@@ -102,16 +98,30 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
     const by = parseInt(b.substring(0, 4));
     const bm = parseInt(b.substring(4, 6));
     const bd = parseInt(b.substring(6, 8));
+
+    // 생년월일에 6개월을 더한 날짜 계산 (보험기준일)
+    const birthDate = new Date(by, bm - 1, bd);
+    const insuranceBaseDate = new Date(birthDate);
+    insuranceBaseDate.setMonth(insuranceBaseDate.getMonth() + 6);
+
     const today = new Date();
-    let age = today.getFullYear() - by;
-    if (today.getMonth() + 1 < bm || (today.getMonth() + 1 === bm && today.getDate() < bd)) age -= 1;
-    return age;
+    let insuranceAge = today.getFullYear() - insuranceBaseDate.getFullYear();
+    if (
+      today.getMonth() < insuranceBaseDate.getMonth() ||
+      (today.getMonth() === insuranceBaseDate.getMonth() && today.getDate() < insuranceBaseDate.getDate())
+    ) {
+      insuranceAge -= 1;
+    }
+
+    // 보험연령은 만 나이(기준일 기준) + 1
+    return insuranceAge + 1;
   };
   const insuranceAge = getInsuranceAge(birth);
 
   // 슬로건 폼 제출 → 모달 오픈
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isChecked) { alert('개인정보 수집 및 이용에 동의해주세요.'); return; }
     if (!gender) { alert('성별을 선택해주세요.'); return; }
     if (!name) { alert('이름을 입력해주세요.'); return; }
     if (!birth || !/^\d{8}$/.test(birth)) { alert('생년월일을 8자리로 입력해주세요.'); return; }
@@ -173,7 +183,7 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
       });
       if (res.data.success) {
         setConsultIsVerified(true);
-        setStep(3);
+        setStep(2);
       } else { alert('인증에 실패했습니다.'); }
     } catch (e: any) {
       alert(e.error || '인증에 실패했습니다.');
@@ -181,87 +191,7 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
   };
 
   const renderStep1 = () => (
-    <div>
-      <div className="heading-4 text-text-primary mb-5">
-        보험료 계산 및 상품소개를 위한 개인정보 처리
-      </div>
-      <div className="body-m text-text-secondary leading-relaxed mb-6 space-y-0.5">
-        <p>입력하신 고객님의 정보는 동의한 범위에서만 사용됩니다.</p>
-        <p>동의 시 선택 동의가 포함되며, 개별 선택도 가능해요.</p>
-      </div>
-
-      <p className="body-m text-[#4f5b66] mb-3">[필수] 개인(신용) 정보 수집·이용에 관한 사항</p>
-
-      <div className="bg-[#f4f7fe] p-4 rounded-lg body-s text-text-secondary mb-6 max-h-[280px] overflow-y-auto space-y-4">
-        <div>
-          <p className="font-bold text-text-primary mb-1">[개인 정보 수집 및 이용 동의]</p>
-          <p>㈜ 메타리치 보험스토어는 상담신청 및 보험상품 소개를 위해 고객님의 개인정보 수집, 이용 및 제공에 대한 동의를 받고 있습니다.</p>
-        </div>
-        <div>
-          <p className="font-bold text-text-primary mb-1">▣ 개인정보 수집ㆍ이용 동의</p>
-          <p>당사 및 당사 업무수탁자는 「개인정보보호법」, 「정보통신망 이용촉진 및 정보 보호 등에 관한 법률」에 따라 귀하의 개인정보를 다음과 같이 수집·이용하고자 합니다.</p>
-          <p className="mt-2 font-semibold">1. 개인정보 수집 및 이용 목적</p>
-          <p>- 보험 상담 및 상품소개, 보험 리모델링 및 가입 권유를 위한 안내 및 서비스 제공</p>
-          <p className="mt-2 font-semibold">2. 개인정보 수집 및 이용 항목</p>
-          <p>- 이름, 성별, 생년월일, 연락처, IP주소</p>
-          <p className="mt-2 font-semibold">3. 개인정보 보유 및 이용기간</p>
-          <p>- 동의일로부터 5년</p>
-          <p className="mt-2 font-semibold">4. 동의를 거부할 권리 및 동의를 거부할 경우의 불이익</p>
-          <p>- 귀하는 개인정보 수집, 이용에 대한 동의를 거부할 권리가 있습니다.</p>
-          <p>- 동의 거부시 보험계약 상담 등의 서비스를 받으실 수 없습니다.</p>
-        </div>
-        <div>
-          <p className="font-bold text-text-primary mb-1">▣ 개인정보 제공에 관한 동의</p>
-          <p className="font-semibold">1. 제공 받는 자</p>
-          <p>- 당사 소속 설계사, 당사의 모집 위탁 계약을 체결한 자 (대리점, 설계사)</p>
-          <p className="mt-2 font-semibold">2. 개인정보를 제공받는 자의 이용 목적</p>
-          <p>- 보험 상품/서비스 소개 및 상담</p>
-          <p className="mt-2 font-semibold">3. 제공하는 정보</p>
-          <p>- 이름, 성별, 생년월일, 연락처</p>
-          <p className="mt-2 font-semibold">4. 제공받는 자의 개인정보 보유 및 이용 기간</p>
-          <p>- 동의일로부터 5년</p>
-          <p className="mt-2 font-semibold">5. 동의를 거부할 권리 및 동의를 거부할 경우의 불이익</p>
-          <p>- 귀하는 개인정보 수집, 이용에 대한 동의를 거부할 권리가 있습니다.</p>
-          <p>- 동의 거부 시 보험계약 상담 등의 서비스를 받으실 수 없습니다.</p>
-        </div>
-        <div>
-          <p className="font-bold text-text-primary mb-1">▣ 개인정보 활용에 관한 동의</p>
-          <p>㈜메타리치 보험스토어는 「개인정보보호법」및「신용정보의 이용 및 보호에 관한 법률」에 따라 당사 상품소개 및 홍보 등을 위하여 귀하의 개인(신용)정보를 다음과 같이 수집ㆍ이용하고자 합니다.</p>
-          <p className="text-status-info text-xs mt-1">* 동의 후 언제든지 동의 철회 중단을 요청하실 수 있습니다.</p>
-          <p className="mt-2 font-semibold">1. 수집항목</p>
-          <p>- 이름, 성별, 생년월일, 연락처, IP주소</p>
-          <p className="mt-2 font-semibold">2. 보유·이용기간</p>
-          <p>- 정보동의고객 : 동의일로부터 5년</p>
-          <p className="mt-2 font-semibold">3. 수집목적</p>
-          <p>상담신청에 대한 응대, 우편 · 전화 · 인터넷 · 방문 등을 통한 유익한 정보의 제공, 금융상품 소개 및 가입 권유, 재무설계서비스 및 기타 서비스의 제공 안내, 이벤트 · 행사의 안내 등 회사의 정상적인 영업에 관계된 행위</p>
-          <p className="text-text-muted text-xs mt-1">* 상담신청은 개인정보 활용 동의를 거부하셔도 전화로 상담을 진행할 수 있습니다.</p>
-        </div>
-        <div className="border-t border-border-default pt-3">
-          <p className="font-bold text-text-primary mb-1">※ 동의 철회를 위한 안내</p>
-          <p>본 동의를 하시더라도 당사 고객센터를 통해 동의를 철회하거나 가입 권유 목적의 연락에 대한 중단을 요청하실 수 있습니다.</p>
-        </div>
-      </div>
-
-      <div className="flex gap-3">
-        <button
-          onClick={() => { setConsentGiven(true); setStep(2); }}
-          className="flex-1 h-[44px] rounded-lg bg-button button-l text-text-inverse transition hover:bg-button-hover"
-        >
-          동의
-        </button>
-        <button
-          onClick={closeConsultModal}
-          className="flex-1 h-[44px] rounded-lg bg-[#f0f3fa] button-l text-[#4f5b66] transition hover:bg-border-default"
-        >
-          미동의
-        </button>
-      </div>
-    </div>
-  );
-
-  const renderStep2 = () => (
     <div className="space-y-5">
-      {/* 내 상담 정보 */}
       <div>
         <p className="heading-5 text-text-primary mb-3 flex items-center">
           <span className="mr-1.5">●</span> 내 상담 정보
@@ -272,7 +202,6 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
         </div>
       </div>
 
-      {/* 남길 말 */}
       <div>
         <p className="heading-5 text-text-primary mb-2">상담 전에 남길 말이 있나요? (선택)</p>
         <textarea
@@ -283,15 +212,14 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
         />
       </div>
 
-      {/* 휴대폰 인증 */}
       <div>
         <p className="heading-5 text-text-primary mb-1 flex items-center">🔒 휴대폰 인증</p>
         <p className="body-s text-text-muted mb-3">상담신청을 위해 휴대폰 인증이 필요해요.</p>
         <div className="flex gap-2 mb-3">
           <TextField type="text" value={phone} readOnly className="flex-1 bg-page-bg text-text-muted h-auto py-2.5" />
-          <button onClick={handleSendOTP} className="min-w-[100px] rounded-lg bg-button px-4 py-2.5 button-m text-text-inverse transition hover:bg-button-hover whitespace-nowrap">
+          <Button variant="secondary" size="sm" onClick={handleSendOTP}>
             {consultOtpResendAvailable ? '인증번호 받기' : '재발송'}
-          </button>
+          </Button>
         </div>
         <div className="relative mb-2">
           <TextField type="text" inputMode="numeric" maxLength={6} ref={consultOtpInputRef} value={consultOtpCode} onChange={e => setConsultOtpCode(e.target.value.replace(/[^0-9]/g, ''))} className="w-full h-auto py-2.5" placeholder="인증번호 6자리 입력" />
@@ -299,13 +227,18 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
         </div>
       </div>
 
-      <button onClick={handleVerifyOTP} disabled={verifying || consultOtpCode.length !== 6} className={`w-full h-[44px] rounded-lg button-l transition ${verifying || consultOtpCode.length !== 6 ? 'bg-button-disabled text-text-disabled cursor-not-allowed' : 'bg-button text-text-inverse hover:bg-button-hover'}`}>
+      <Button
+        variant="primary"
+        size="full"
+        onClick={handleVerifyOTP}
+        disabled={verifying || consultOtpCode.length !== 6}
+      >
         {verifying ? '인증 처리중...' : '상담 신청하기'}
-      </button>
+      </Button>
     </div>
   );
 
-  const renderStep3 = () => (
+  const renderStep2 = () => (
     <div className="text-center py-8 px-4">
       <FireworksEffect show={true} />
       <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-primary-soft mb-5">
@@ -323,7 +256,6 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
         className="w-full bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-50 py-8 md:py-10 lg:py-12"
       >
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-4 px-4 sm:gap-6 lg:flex-row lg:gap-16 lg:px-8">
-          {/* 왼쪽: 설명 */}
           <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left">
             <h1 className="heading-2 mb-3 leading-tight text-text-primary md:mb-4 md:heading-1">
               <span className="text-brand-primary">내 보험</span>,
@@ -354,9 +286,37 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
                 중복·불필요 특약을 <span className="ml-1 font-semibold text-text-primary">정리해요.</span>
               </li>
             </ul>
+
+            {/* 3월 보험 이슈 추가 (마스터 443311e 반영) */}
+            {(() => {
+              const currentDate = new Date();
+              const currentMonth = currentDate.getMonth() + 1;
+              const lastUpdatedMonth = 3;
+              if (currentMonth !== lastUpdatedMonth) return null;
+
+              return (
+                <div className="mt-2 p-4 bg-orange-50 border border-orange-100 rounded-xl text-left w-full max-w-md">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-[10px] text-white font-bold">!</span>
+                    <span className="body-m font-bold text-orange-700">3월 보험 상품 주요 이슈</span>
+                  </div>
+                  <div className="space-y-2">
+                    {[
+                      <>실손보험료 <span className="font-semibold text-red-500">최대 20% 인상</span> 예정!</>,
+                      <>암보험 <span className="font-semibold text-red-500">보험료 인상</span> 예정!</>,
+                      <>종신·연금보험 <span className="font-semibold text-red-500">공시이율 하향</span> 추세!</>,
+                    ].map((text, idx) => (
+                      <div key={idx} className="flex items-start gap-2 text-sm text-text-secondary">
+                        <span className="text-orange-500 flex-shrink-0 animate-pulse">▸</span>
+                        <span>{text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
           </div>
 
-          {/* 오른쪽: 정보 입력 폼 카드 */}
           <div className="flex w-full max-w-lg flex-1 justify-center lg:justify-end">
             <div
               id="calculator-box"
@@ -369,7 +329,6 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
                 className="flex flex-col gap-4 sm:gap-5"
                 onSubmit={handleFormSubmit}
               >
-                {/* 이름/성별 */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="mb-1.5 block button-s text-text-secondary">
@@ -403,7 +362,6 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
                   </div>
                 </div>
 
-                {/* 생년월일/연락처 */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="mb-1.5 block button-s text-text-secondary">
@@ -439,43 +397,38 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
                   </div>
                 </div>
 
-                {/* 상담 종류/시간대 */}
-                <div className="grid grid-cols-2 gap-3">
+                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="mb-1.5 block button-s text-text-secondary sm:text-sm">
                       상담 종류 <span className="text-status-red">*</span>
                     </label>
-                    <SelectField
+                    <CustomSelect
                       value={consultType}
-                      onChange={(e) => setConsultType(e.target.value)}
+                      onChange={(val) => setConsultType(val)}
                       className="w-full"
-                    >
-                      {consultTypeOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </SelectField>
+                      options={consultTypeOptions.map(t => ({ value: t, label: t }))}
+                    />
                   </div>
                   <div>
                     <label className="mb-1.5 block button-s text-text-secondary sm:text-sm">
                       상담 시간대 <span className="text-status-red">*</span>
                     </label>
-                    <SelectField
+                    <CustomSelect
                       value={consultTime}
-                      onChange={(e) => setConsultTime(e.target.value)}
+                      onChange={(val) => setConsultTime(val)}
                       className="w-full"
-                    >
-                      {consultTimeOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </SelectField>
+                      options={consultTimeOptions.map(t => ({ value: t, label: t }))}
+                    />
                   </div>
                 </div>
 
-                {/* 버튼들 */}
+                <div className="mt-4">
+                  <PrivacyConsent
+                    checked={isChecked}
+                    onChange={(checked) => setIsChecked(checked)}
+                  />
+                </div>
+
                 <div className="flex gap-3 pt-2">
                   <IconButton
                     type="submit"
@@ -501,12 +454,10 @@ export default function Slogan({ onModalStateChange }: SloganProps) {
         </div>
       </section>
 
-      {/* 멀티스텝 상담 모달: 약관동의 → 인증 → 완료 */}
       <Modal open={showConsultModal} onClose={closeConsultModal} hideHeader hideFooter>
         <div className="relative py-10 px-6">
           {step === 1 && renderStep1()}
           {step === 2 && renderStep2()}
-          {step === 3 && renderStep3()}
 
           <button
             onClick={closeConsultModal}

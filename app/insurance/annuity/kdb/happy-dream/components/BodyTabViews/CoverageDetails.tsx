@@ -1,11 +1,11 @@
 import React from 'react';
+import TabContentWrapper from '@/components/shared/TabContentWrapper';
 
 export default function CoverageDetails() {
   return (
-    <div className="space-y-6 px-8 py-6">
+    <TabContentWrapper>
       <h2 className="product-page-title">주계약</h2>
 
-      {/* 연금개시 전 보험기간 */}
       <div className="space-y-4">
         <h3 className="product-section-title">연금개시 전 보험기간</h3>
         <div className="mb-2 whitespace-nowrap text-right text-sm text-text-secondary">
@@ -14,14 +14,14 @@ export default function CoverageDetails() {
         <div className="product-info-box">
           <div className="space-y-4">
             <div className="overflow-x-auto">
-              <table className="product-table">
+              <table className="product-table min-w-[500px]">
                 <thead>
                   <tr className="product-table-header">
-                    <th className="product-table-th w-[150px]">
+                    <th className="product-table-th w-[25%]">
                       급부명칭
                     </th>
                     <th className="product-table-th">지급사유</th>
-                    <th className="product-table-th w-[120px]">
+                    <th className="product-table-th w-[20%]">
                       지급금액
                     </th>
                   </tr>
@@ -48,19 +48,18 @@ export default function CoverageDetails() {
         </div>
       </div>
 
-      {/* 연금개시 후 보험기간 */}
       <div className="space-y-4">
         <h3 className="product-section-title">연금개시 후 보험기간</h3>
         <div className="product-info-box">
           <div className="space-y-4">
             <div className="overflow-x-auto">
-              <table className="product-table">
+              <table className="product-table min-w-[500px]">
                 <thead>
                   <tr className="product-table-header">
-                    <th className="product-table-th w-[150px]">
+                    <th className="product-table-th w-[20%]">
                       급부명칭
                     </th>
-                    <th className="product-table-th w-[200px]">
+                    <th className="product-table-th w-[35%]">
                       지급사유
                     </th>
                     <th className="product-table-th">지급금액</th>
@@ -94,7 +93,6 @@ export default function CoverageDetails() {
         </div>
       </div>
 
-      {/* 기본 설명들 */}
       <div className="product-text space-y-3">
         <p>
           · 보험기간 중 피보험자의 사망으로 인하여 이 약관에서 규정하는 보험금 지급사유가 더 이상
@@ -188,7 +186,6 @@ export default function CoverageDetails() {
         </p>
       </div>
 
-      {/* 실적배당종신연금 연지급액 예시표 */}
       <div className="space-y-3">
         <h3 className="product-section-title">실적배당종신연금 연지급액 예시표</h3>
         <div className="product-info-box">
@@ -198,7 +195,7 @@ export default function CoverageDetails() {
               만원)
             </div>
             <div className="overflow-x-auto">
-              <table className="product-table">
+              <table className="product-table min-w-[900px]">
                 <thead>
                   <tr className="product-table-header">
                     <th className="product-table-th" rowSpan={4}>
@@ -616,7 +613,6 @@ export default function CoverageDetails() {
         </div>
       </div>
 
-      {/* 해약환급금 예시표 */}
       <div className="space-y-4">
         <h3 className="product-section-title">해약환급금 예시표</h3>
         <div className="product-info-box">
@@ -625,7 +621,7 @@ export default function CoverageDetails() {
               예시기준 : 남자 40세, 60세 연금개시, 기본보험료 30만원, 10년납, 채권형100% (단위: 원)
             </div>
             <div className="overflow-x-auto">
-              <table className="product-table">
+              <table className="product-table min-w-[900px]">
                 <thead>
                   <tr className="product-table-header">
                     <th className="product-table-th" rowSpan={3}>
@@ -931,7 +927,6 @@ export default function CoverageDetails() {
         </div>
       </div>
 
-      {/* 부가가능특약 */}
       <h2 className="product-page-title">부가가능특약</h2>
       <div className="space-y-3">
         <div className="product-info-box">
@@ -950,6 +945,6 @@ export default function CoverageDetails() {
           </div>
         </div>
       </div>
-    </div>
+    </TabContentWrapper>
   );
 }

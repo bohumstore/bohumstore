@@ -24,7 +24,7 @@ const setupProductData = async () => {
 
     // 1. 보험사 데이터 설정
     console.log('📋 보험사 데이터 설정 중...');
-    const { data: companies, error: companyError } = await supabase.from('company').upsert(
+    const { error: companyError } = await supabase.from('company').upsert(
       [
         {
           id: 1,
@@ -63,7 +63,7 @@ const setupProductData = async () => {
 
     // 2. 카테고리 데이터 설정
     console.log('📋 카테고리 데이터 설정 중...');
-    const { data: categories, error: categoryError } = await supabase.from('category').upsert(
+    const { error: categoryError } = await supabase.from('category').upsert(
       [
         {
           id: 1,
@@ -92,7 +92,7 @@ const setupProductData = async () => {
 
     // 3. 상품 데이터 설정
     console.log('📋 상품 데이터 설정 중...');
-    const { data: products, error: productError } = await supabase.from('product').upsert(
+    const { error: productError } = await supabase.from('product').upsert(
       [
         {
           id: 1,
@@ -148,7 +148,7 @@ const setupProductData = async () => {
 
     // 4. 상담 타입 데이터 설정
     console.log('📋 상담 타입 데이터 설정 중...');
-    const { data: counselTypes, error: counselTypeError } = await supabase
+    const { error: counselTypeError } = await supabase
       .from('counsel_type')
       .upsert(
         [

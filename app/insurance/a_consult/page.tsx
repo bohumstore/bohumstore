@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import Slogan from './components/Slogan';
 import Footer from '@/components/shared/Footer';
+import RequiredNotice from '@/components/shared/RequiredNotice';
 
 export default function ConsultPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +26,7 @@ export default function ConsultPage() {
     }
   };
 
-  const handleBlur = (e: React.FocusEvent) => {
+  const handleBlur = (_e: React.FocusEvent) => {
     setTimeout(() => {
       const active = document.activeElement as HTMLElement;
       if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) {
@@ -43,27 +44,9 @@ export default function ConsultPage() {
         onBlur={handleBlur}
       >
         <Slogan onModalStateChange={setIsModalOpen} />
-        {/* 필수안내사항 박스 */}
-        <div className="flex w-full justify-center">
-          <div className="mb-2 mt-6 w-full max-w-3xl px-6 py-0 text-xs text-gray-800 md:mb-4 md:mt-8 md:max-w-4xl md:text-sm lg:mb-6 lg:mt-10 lg:max-w-5xl">
-            <div className="mb-1 font-bold">[ 필수안내사항 ]</div>
-            <div>※ 본 광고는 심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.</div>
-            <div className="text-status-red">
-              ※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서
-            </div>
-            <div className="text-status-red">
-              ① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.
-            </div>
-            <div className="text-status-red">
-              ② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수
-              있습니다.
-            </div>
-            <div>※ ㈜메타리치 심의필 25120029호 (2025.12.04~2026.12.03)</div>
-          </div>
-        </div>
+        <RequiredNotice approvalNumber="25120029호 (2025.12.04~2026.12.03)" />
         <Footer />
 
-        {/* 플로팅 버튼 - 카톡상담 */}
         {!isModalOpen && !isInputFocused && !isHeaderMenuOpen && (
           <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 sm:bottom-6 sm:right-6 sm:gap-3">
             <button
@@ -79,7 +62,6 @@ export default function ConsultPage() {
               />
             </button>
 
-            {/* 맨 위로 버튼 */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="rounded-full border border-border-default bg-white p-3 text-text-secondary shadow-lg transition-all duration-200 hover:bg-page-bg hover:shadow-xl sm:p-4"

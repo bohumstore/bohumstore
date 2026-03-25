@@ -1,13 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export default function ContentProtection() {
-  const [isMounted, setIsMounted] = useState(false);
-
   useEffect(() => {
-    setIsMounted(true);
-
     // 개발 환경 체크
     const isDevelopment =
       process.env.NODE_ENV === 'development' ||

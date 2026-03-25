@@ -5,7 +5,6 @@ export default function CoverageDetails() {
     <div className="space-y-6 px-2 py-3 sm:px-4 md:px-8 md:py-4">
       <h2 className="product-page-title">보장내용</h2>
 
-      {/* 연금기준금액 상세설명 */}
       <div className="space-y-3">
         <h3 className="product-section-title">연금기준금액 상세설명</h3>
         <div className="product-info-box">
@@ -49,7 +48,6 @@ export default function CoverageDetails() {
         </div>
       </div>
 
-      {/* 복리이자율 정보 */}
       <div className="space-y-3">
         <h3 className="product-section-title">복리이자율 정보</h3>
         <div className="product-info-box">
@@ -66,7 +64,6 @@ export default function CoverageDetails() {
         </div>
       </div>
 
-      {/* 실적배당종신연금형 상세정보 */}
       <div className="space-y-3">
         <h3 className="product-section-title">실적배당종신연금형 상세정보</h3>
         <div className="product-info-box">
@@ -158,7 +155,7 @@ export default function CoverageDetails() {
                 <div>
                   <div className="mb-2 font-semibold">■ 장기유지 가산율</div>
                   <div className="overflow-x-auto">
-                    <table className="w-full border-collapse text-xs">
+                    <table className="product-table">
                       <thead>
                         <tr className="product-table-header">
                           <th className="product-table-th">유지기간</th>
@@ -198,7 +195,6 @@ export default function CoverageDetails() {
         </div>
       </div>
 
-      {/* 연금지급형태 상세정보 */}
       <div className="space-y-3">
         <h3 className="product-section-title">연금지급형태 상세정보</h3>
         <div className="product-info-box">
@@ -209,12 +205,12 @@ export default function CoverageDetails() {
               </div>
               <div className="space-y-3">
                 <div className="overflow-x-auto">
-                  <table className="w-full border-collapse text-xs">
+                  <table className="product-table">
                     <thead>
                       <tr className="product-table-header">
-                        <th className="border border-border-default p-2">연금지급형태</th>
-                        <th className="border border-border-default p-2">지급조건</th>
-                        <th className="border border-border-default p-2">지급내용</th>
+                        <th className="product-table-th">연금지급형태</th>
+                        <th className="product-table-th">지급조건</th>
+                        <th className="product-table-th">지급내용</th>
                       </tr>
                     </thead>
                     <tbody className="text-text-primary">
@@ -317,7 +313,6 @@ export default function CoverageDetails() {
               </div>
             </div>
 
-            {/* 주요 안내사항 */}
             <div className="product-text space-y-2 text-xs">
               <div>
                 ※ 일시생활자금 또는 2가지 이상의 연금지급형태를 선택하신 경우에는 연금개시시점의

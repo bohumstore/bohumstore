@@ -1,18 +1,14 @@
 import React from 'react';
-import { useState } from 'react';
+import ProductInfoBodyTabTemplate from '@/templates/Product/components/ProductInfoBodyTabTemplate';
 
 export default function ProductInfo() {
-  const [showResultModal, setShowResultModal] = useState(false);
-
   return (
-    <div className="space-y-8 px-8 py-6">
-      {/* 가입안내 제목 */}
-      <h2 className="product-page-title">가입안내</h2>
+    <ProductInfoBodyTabTemplate title="가입안내">
 
-      {/* 상품명 및 상품유형 */}
       <div className="space-y-4">
         <h3 className="product-section-title">상품명 및 상품유형</h3>
-        <div className="overflow-x-auto">
+        <div className="product-info-box">
+          <div className="overflow-x-auto">
           <table className="product-table">
             <thead>
               <tr className="product-table-header">
@@ -99,6 +95,7 @@ export default function ProductInfo() {
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
         <div className="product-info-box">
           <p>*최초 가입시 주계약은 보장형 계약으로 체결됩니다.</p>
@@ -106,15 +103,14 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 상품 구성 */}
       <div className="space-y-4">
         <h3 className="product-section-title">상품 구성</h3>
 
         <h4 className="product-small-title">· 주계약</h4>
         <p className="product-small-title">(무)하나로 THE 연결된 종신보험(보장형 계약)</p>
 
-        {/* 주계약 표 */}
-        <div className="overflow-x-auto">
+        <div className="product-info-box">
+          <div className="overflow-x-auto">
           <table className="product-table">
             <thead>
               <tr className="product-table-header">
@@ -198,11 +194,12 @@ export default function ProductInfo() {
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
 
-        {/* 선택특약 표 */}
         <h4 className="product-small-title mt-6">· 선택특약</h4>
-        <div className="overflow-x-auto">
+        <div className="product-info-box">
+          <div className="overflow-x-auto">
           <table className="product-table">
             <thead>
               <tr className="product-table-header">
@@ -265,6 +262,7 @@ export default function ProductInfo() {
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
 
         <div className="product-info-box">
@@ -275,17 +273,17 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 제도성 특약 */}
       <div className="space-y-4">
         <h4 className="product-small-title">· 제도성 특약</h4>
         <p className="product-small-title">(무)하나로 연결된 연금전환특약</p>
 
-        <div className="overflow-x-auto">
+        <div className="product-info-box">
+          <div className="overflow-x-auto">
           <table className="product-table">
             <tbody className="product-table-body">
               <tr>
                 <td
-                  className="w-[12%] product-table-th bg-product-primary text-white font-semibold"
+                  className="w-[12%] product-table-th"
                   colSpan={2}
                 >
                   상품유형
@@ -296,7 +294,7 @@ export default function ProductInfo() {
               </tr>
               <tr>
                 <td
-                  className="product-table-th bg-product-primary text-white font-semibold"
+                  className="product-table-th"
                   rowSpan={2}
                   colSpan={2}
                 >
@@ -313,7 +311,7 @@ export default function ProductInfo() {
               </tr>
               <tr>
                 <td
-                  className="product-table-th bg-product-primary text-white font-semibold"
+                  className="product-table-th"
                   colSpan={2}
                 >
                   연금지급개시나이
@@ -324,7 +322,7 @@ export default function ProductInfo() {
               </tr>
               <tr>
                 <td
-                  className="product-table-th bg-product-primary text-white font-semibold"
+                  className="product-table-th"
                   colSpan={2}
                 >
                   연금지급형태
@@ -339,12 +337,12 @@ export default function ProductInfo() {
               </tr>
               <tr>
                 <td
-                  className="w-[12%] product-table-th bg-product-primary text-white font-semibold"
+                  className="w-[12%] product-table-th"
                   rowSpan={3}
                 >
                   보험기간
                 </td>
-                <td className="w-[12%] product-table-th bg-product-primary text-white font-semibold">
+                <td className="w-[12%] product-table-th">
                   연금지급개시전
                 </td>
                 <td className="product-table-td-center" colSpan={2}>
@@ -353,7 +351,7 @@ export default function ProductInfo() {
               </tr>
               <tr>
                 <td
-                  className="product-table-th bg-product-primary text-white font-semibold"
+                  className="product-table-th"
                   rowSpan={2}
                 >
                   연금지급개시후
@@ -375,7 +373,7 @@ export default function ProductInfo() {
               </tr>
               <tr>
                 <td
-                  className="product-table-th bg-product-primary text-white font-semibold"
+                  className="product-table-th"
                   rowSpan={4}
                   colSpan={2}
                 >
@@ -409,6 +407,7 @@ export default function ProductInfo() {
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
 
         <div className="product-info-box">
@@ -420,7 +419,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 상품의 유용한 기능 */}
       <div className="space-y-4">
         <h3 className="product-section-title">상품의 유용한 기능</h3>
 
@@ -431,10 +429,10 @@ export default function ProductInfo() {
           방법에 따라 적립합니다.
         </p>
 
-        {/* (1) 납입기간 5년 */}
         <div className="space-y-2">
           <h4 className="product-small-title">(1) 보험료 납입기간이 5년인 경우</h4>
-          <div className="overflow-x-auto">
+          <div className="product-info-box">
+            <div className="overflow-x-auto">
             <table className="product-table">
               <thead>
                 <tr className="product-table-header">
@@ -477,13 +475,14 @@ export default function ProductInfo() {
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
 
-        {/* (2) 납입기간 7년 */}
         <div className="space-y-2">
           <h4 className="product-small-title">(2) 보험료 납입기간이 7년인 경우</h4>
-          <div className="overflow-x-auto">
+          <div className="product-info-box">
+            <div className="overflow-x-auto">
             <table className="product-table">
               <thead>
                 <tr className="product-table-header">
@@ -531,22 +530,23 @@ export default function ProductInfo() {
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
 
-        {/* (3) 납입기간 10년 */}
         <div className="space-y-2">
           <h4 className="product-small-title">(3) 보험료 납입기간이 10년인 경우</h4>
-          <div className="overflow-x-auto">
-            <table className="product-table">
-              <thead>
-                <tr className="bg-product-primary text-white">
-                  <th className="product-table-td-center">구분</th>
-                  <th className="product-table-td-center">발생일</th>
-                  <th className="product-table-td-center">금액</th>
-                </tr>
-              </thead>
-              <tbody className="text-text-primary">
+          <div className="product-info-box">
+            <div className="overflow-x-auto">
+              <table className="product-table">
+                <thead>
+                  <tr className="product-table-header">
+                    <th className="product-table-th">구분</th>
+                    <th className="product-table-th">발생일</th>
+                    <th className="product-table-th">금액</th>
+                  </tr>
+                </thead>
+                <tbody className="product-table-body">
                 <tr>
                   <td className="product-table-td-center">
                     유지보너스1
@@ -572,22 +572,23 @@ export default function ProductInfo() {
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
 
-        {/* (4) 납입기간 15년 */}
         <div className="space-y-2">
           <h4 className="product-small-title">(4) 보험료 납입기간이 15년인 경우</h4>
-          <div className="overflow-x-auto">
-            <table className="product-table">
-              <thead>
-                <tr className="bg-product-primary text-white">
-                  <th className="product-table-td-center">구분</th>
-                  <th className="product-table-td-center">발생일</th>
-                  <th className="product-table-td-center">금액</th>
-                </tr>
-              </thead>
-              <tbody className="text-text-primary">
+          <div className="product-info-box">
+            <div className="overflow-x-auto">
+              <table className="product-table">
+                <thead>
+                  <tr className="product-table-header">
+                    <th className="product-table-th">구분</th>
+                    <th className="product-table-th">발생일</th>
+                    <th className="product-table-th">금액</th>
+                  </tr>
+                </thead>
+                <tbody className="product-table-body">
                 <tr>
                   <td className="product-table-td-center">
                     유지보너스1
@@ -608,22 +609,23 @@ export default function ProductInfo() {
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
 
-        {/* (5) 납입기간 20년 */}
         <div className="space-y-2">
           <h4 className="product-small-title">(5) 보험료 납입기간이 20년인 경우</h4>
-          <div className="overflow-x-auto">
-            <table className="product-table">
-              <thead>
-                <tr className="bg-product-primary text-white">
-                  <th className="product-table-td-center">구분</th>
-                  <th className="product-table-td-center">발생일</th>
-                  <th className="product-table-td-center">금액</th>
-                </tr>
-              </thead>
-              <tbody className="text-text-primary">
+          <div className="product-info-box">
+            <div className="overflow-x-auto">
+              <table className="product-table">
+                <thead>
+                  <tr className="product-table-header">
+                    <th className="product-table-th">구분</th>
+                    <th className="product-table-th">발생일</th>
+                    <th className="product-table-th">금액</th>
+                  </tr>
+                </thead>
+                <tbody className="product-table-body">
                 <tr>
                   <td className="product-table-td-center">
                     유지보너스1
@@ -644,6 +646,7 @@ export default function ProductInfo() {
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
 
@@ -660,7 +663,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 선납할인 */}
       <div className="space-y-4">
         <h3 className="product-sub-title">선납할인</h3>
         <p className="product-text">
@@ -670,7 +672,6 @@ export default function ProductInfo() {
         </p>
       </div>
 
-      {/* 계약자적립액 인출 */}
       <div className="space-y-4">
         <h3 className="product-sub-title">계약자적립액 인출(보장형 계약)</h3>
         <div className="product-text space-y-2">
@@ -695,7 +696,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 추가납입보험료 */}
       <div className="space-y-4">
         <h3 className="product-sub-title">추가납입보험료(보장형 계약)</h3>
         <div className="product-text space-y-2">
@@ -717,7 +717,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 적립형 계약 전환 */}
       <div className="space-y-4">
         <h3 className="product-sub-title">적립형 계약 전환</h3>
         <div className="product-text space-y-2">
@@ -751,7 +750,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 보험료 예시 */}
       <div className="space-y-4">
         <h3 className="product-section-title">보험료 예시</h3>
         <p className="product-text">
@@ -767,13 +765,13 @@ export default function ProductInfo() {
           *일반형은 비교를 위한 종목으로 실제 판매하는 상품이 아닙니다.
         </p>
 
-        {/* 주계약 */}
         <div className="space-y-2">
-          <h4 className="text-base font-semibold text-text-primary">· 주계약</h4>
+          <h4 className="product-small-title">· 주계약</h4>
           <p className="text-right text-xs text-text-secondary">
             기준: 가입금액 5,000만원, 월납, 5년납 (단위:원)
           </p>
-          <div className="overflow-x-auto">
+          <div className="product-info-box">
+            <div className="overflow-x-auto">
             <table className="product-table">
               <thead>
                 <tr className="product-table-header">
@@ -848,21 +846,21 @@ export default function ProductInfo() {
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
 
-        {/* 선택특약 */}
-        <h4 className="mt-6 text-base font-semibold text-text-primary">· 선택특약</h4>
+        <h4 className="mt-6 product-small-title">· 선택특약</h4>
 
-        {/* (무)3대질병진단 보험료환급특약 */}
         <div className="space-y-2">
-          <h4 className="text-base font-semibold text-text-primary">
+          <h4 className="product-small-title">
             (무)3대질병진단 보험료환급특약
           </h4>
           <p className="text-right text-xs text-text-secondary">
             기준: 5년 만기, 전기납, 월납 (단위:원)
           </p>
-          <div className="overflow-x-auto">
+          <div className="product-info-box">
+            <div className="overflow-x-auto">
             <table className="product-table">
               <thead>
                 <tr className="product-table-header">
@@ -930,19 +928,20 @@ export default function ProductInfo() {
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
           <p className="text-xs text-text-secondary">
             * 가입금액: 주계약 해약환급금 일부지급형의 총보험료
           </p>
         </div>
 
-        {/* (무)3대질병 납입면제특약 */}
         <div className="space-y-2">
-          <h4 className="text-base font-semibold text-text-primary">(무)3대질병 납입면제특약</h4>
+          <h4 className="product-small-title">(무)3대질병 납입면제특약</h4>
           <p className="text-right text-xs text-text-secondary">
             기준: 5년 만기, 전기납, 월납 (단위:원)
           </p>
-          <div className="overflow-x-auto">
+          <div className="product-info-box">
+            <div className="overflow-x-auto">
             <table className="product-table">
               <thead>
                 <tr className="product-table-header">
@@ -1010,6 +1009,7 @@ export default function ProductInfo() {
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
           <p className="text-xs text-text-secondary">
             * 가입금액: 주계약 해약환급금 일부지급형의 총보험료
@@ -1020,7 +1020,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 종신보험 관련 유의사항 */}
       <div className="space-y-4">
         <h3 className="product-section-title">종신보험 관련 유의사항 안내</h3>
 
@@ -1033,12 +1032,13 @@ export default function ProductInfo() {
           <p>· 중도해약시 환급금이 이미 납부한 보험료보다 적거나 없을 수 있습니다.</p>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="product-table">
-            <thead>
-              <tr className="product-table-header">
-                <th className="product-table-th w-1/3">구분</th>
-                <th className="product-table-th">유의사항</th>
+        <div className="product-info-box">
+          <div className="overflow-x-auto">
+            <table className="product-table">
+              <thead>
+                <tr className="product-table-header">
+                  <th className="product-table-th w-1/3">구분</th>
+                  <th className="product-table-th">유의사항</th>
               </tr>
             </thead>
             <tbody className="product-table-body">
@@ -1065,8 +1065,9 @@ export default function ProductInfo() {
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
-    </div>
+    </ProductInfoBodyTabTemplate>
   );
 }

@@ -1,5 +1,6 @@
 'use client';
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 export default function DongyangNewAlddulPlusWholeLifePage() {
   useEffect(() => {
@@ -12,9 +13,9 @@ export default function DongyangNewAlddulPlusWholeLifePage() {
       <div className="text-center">
         <h1 className="mb-4 text-2xl font-bold">페이지 준비 중입니다</h1>
         <p className="mb-4 text-text-secondary">잠시 후 메인페이지로 이동합니다...</p>
-        <a href="/" className="text-brand-primary hover:underline">
+        <Link href="/" className="text-brand-primary hover:underline">
           메인페이지로 이동
-        </a>
+        </Link>
       </div>
     </div>
   );

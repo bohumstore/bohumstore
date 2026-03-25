@@ -5,7 +5,6 @@ export default function JoinNotice() {
     <div className="space-y-8 px-2 py-4 sm:px-4 md:px-8 md:py-6">
       <h2 className="product-page-title">가입시 알아두실 사항</h2>
 
-      {/* 일반금융소비자 권리 안내 */}
       <div className="space-y-4">
         <h3 className="product-section-title">일반금융소비자 권리 안내</h3>
         <div className="product-info-box">
@@ -16,7 +15,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 상품 특성 및 위험 안내 */}
       <div className="space-y-4">
         <h3 className="product-section-title">상품 특성 및 위험 안내</h3>
         <div className="product-info-box">
@@ -53,7 +51,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 계약 체결 시 주의사항 */}
       <div className="space-y-4">
         <h3 className="product-section-title">계약 체결 시 주의사항</h3>
         <div className="product-info-box">
@@ -87,7 +84,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 상품 특성 및 세제 안내 */}
       <div className="space-y-4">
         <h3 className="product-section-title">상품 특성 및 세제 안내</h3>
         <div className="product-info-box">
@@ -110,7 +106,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 금융소비자보호 및 세제 안내 */}
       <div className="space-y-4">
         <h3 className="product-section-title">금융소비자보호 및 세제 안내</h3>
         <div className="product-info-box">
@@ -131,7 +126,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 해약환급금 및 계약 변경 안내 */}
       <div className="space-y-4">
         <h3 className="product-section-title">해약환급금 및 계약 변경 안내</h3>
         <div className="product-info-box">
@@ -149,7 +143,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 안내자료 및 상품정보 */}
       <div className="space-y-4">
         <h3 className="product-section-title">안내자료 및 상품정보</h3>
         <div className="product-info-box">
@@ -169,7 +162,6 @@ export default function JoinNotice() {
         </div>
       </div>
 
-      {/* 민원·상담·분쟁조정 연락처 */}
       <div className="space-y-4">
         <h3 className="product-section-title">민원·상담·분쟁조정 연락처</h3>
         <div className="product-info-box">
@@ -190,7 +182,6 @@ export default function JoinNotice() {
         바랍니다.
       </div>
 
-      {/* 메타리치 보험스토어 안내 */}
       <div className="mt-8 space-y-2 border-t border-border-default pt-4 text-sm text-text-secondary">
         <div>
           ※ ㈜메타리치 보험스토어는 다수의 보험사와 계약 체결 및 대리·중개하는 대리점입니다.

@@ -1,12 +1,16 @@
-﻿'use client';
-import React from 'react';
-import Slogan from './components/Slogan';
+'use client';
+import { useState } from 'react';
+import CalculatorConsultModal from './components/CalculatorConsultModal';
+import SloganSection from '@/components/product/SloganSection';
+import SloganCardView from '@/components/product/SloganCardView';
 import ProductInfo from './components/BodyTabViews/ProductInfo';
 import CoverageDetails from './components/BodyTabViews/CoverageDetails';
 import Surrender from './components/BodyTabViews/Surrender';
 import ProductDetailTemplate from '@/templates/Product/ProductDetailTemplate';
 
 export default function MetLifeUSDWholeLifePage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'calculate' | 'consult'>('calculate');
   const tabs = [
     { label: '상품 정보', content: <ProductInfo /> },
     { label: '보장 내용', content: <CoverageDetails /> },
@@ -15,8 +19,76 @@ export default function MetLifeUSDWholeLifePage() {
 
   return (
     <ProductDetailTemplate
-      renderHero={({ onOpenPrivacy, onModalStateChange }) => (
-        <Slogan onOpenPrivacy={onOpenPrivacy} onModalStateChange={onModalStateChange} />
+      renderHero={({ onModalStateChange }) => (
+        <>
+          <SloganSection
+            backgroundColor="#F5F3FF"
+            sloganTitle={
+              <div>
+                <div className="heading-2 leading-tight">
+                  <span className="text-brand-primary">달러 VS 원화</span>
+                </div>
+                <div className="heading-2 text-text-primary leading-tight">
+                  원하는 화폐로 골라 받으세요!
+                </div>
+              </div>
+            }
+            descriptionText={
+              <div className="body-m">
+                <span className="font-bold">원화고정납입옵션</span>으로
+                <br />
+                환율 변동에도 흔들리지 않는 <span className="font-bold">안정적인 자산 설계</span>
+              </div>
+            }
+            checkItems={[]}
+            bottomTags={[
+              { title: '위기속 달러강세', subtitle: '안정적 자산 보유' },
+              { title: '환전수수료 최저', subtitle: '1$당 2원' },
+            ]}
+            illustrationSrc="/svgs/slogan/slogan-currency-exchange.svg"
+            illustrationAlt="달러종신보험 일러스트"
+            cardContent={
+              <SloganCardView
+                title=""
+                onCalculate={() => { setModalType('calculate'); setIsModalOpen(true); onModalStateChange?.(true); }}
+                onConsult={() => { setModalType('consult'); setIsModalOpen(true); onModalStateChange?.(true); }}
+              >
+                {/* 해약환급금 */}
+                <div className="text-center">
+                  <p className="body-m font-bold mb-2">10년+1일 해약환급금</p>
+                  <p className="text-3xl font-extrabold text-brand-primary">124.9%</p>
+                </div>
+
+                {/* 2열 정보 */}
+                <div className="flex justify-between gap-6 py-4">
+                  <div className="flex flex-col items-center">
+                    <div className="flex items-center justify-center gap-1.5 mb-1">
+                      <img src="/svgs/slogan/slogan-currency-choice.svg" alt="" className="w-5 h-5" />
+                      <span className="body-l text-text-muted">통화 선택</span>
+                    </div>
+                    <p className="heading-4 text-text-primary">$/₩ 자유</p>
+                  </div>
+                  <div className="w-[1px] h-16 bg-brand-secondary-hover"></div>
+                  <div className="flex flex-col items-center">
+                    <div className="flex items-center justify-center gap-1.5 mb-1">
+                      <img src="/svgs/slogan/slogan-death-benefit.svg" alt="" className="w-5 h-5" />
+                      <span className="body-l text-text-muted">사망보장</span>
+                    </div>
+                    <p className="heading-4 text-text-primary">최대 150%</p>
+                  </div>
+                </div>
+              </SloganCardView>
+            }
+          />
+          <CalculatorConsultModal
+            isOpen={isModalOpen}
+            onClose={() => {
+              setIsModalOpen(false);
+              onModalStateChange?.(false);
+            }}
+            type={modalType}
+          />
+        </>
       )}
       tabs={tabs}
       notices={[
@@ -33,16 +105,6 @@ export default function MetLifeUSDWholeLifePage() {
         '공시이율은 현재 공시이율에서 시장금리를 반영하여 매월 변동할 수 있습니다.',
       ]}
       approvalNumber="25120061호(2025.12.10~2026.12.09)"
-      globalStyles={`
-        @keyframes jump-glow {
-          0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 #dc2626); }
-          30% { transform: scale(1.18) translateY(-6px); filter: drop-shadow(0 0 8px #fca5a5); }
-          60% { transform: scale(0.95) translateY(2px); filter: drop-shadow(0 0 0 #dc2626); }
-        }
-        @keyframes pulse-glow {
-          0%, 100% { transform: scale(1); text-shadow: 0 0 0 transparent; }
-          50% { transform: scale(1.05); text-shadow: 0 0 20px rgba(234, 88, 12, 0.5); }
-        }`}
     />
   );
 }

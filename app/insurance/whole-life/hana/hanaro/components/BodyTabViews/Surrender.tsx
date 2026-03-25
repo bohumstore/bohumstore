@@ -1,8 +1,9 @@
 import React from 'react';
+import TabContentWrapper from '@/components/shared/TabContentWrapper';
 
 export default function Surrender() {
   return (
-    <div className="space-y-8 px-8 py-6">
+    <TabContentWrapper>
       <div className="mb-2">
         <div className="product-page-title">해약환급금 예시</div>
         <p className="product-text mb-6 mt-4">
@@ -12,14 +13,14 @@ export default function Surrender() {
         </p>
       </div>
 
-      {/* 5년납 */}
       <div className="space-y-4">
-        <h3 className="product-sub-title">보험료 납입기간이 5년납인 경우</h3>
+        <h3 className="product-section-title">보험료 납입기간이 5년납인 경우</h3>
         <div className="product-caption text-right">
           기준: 40세, 남자, 해약환급금 일부지급형, 주계약 가입금액 5,000만원, 종신, 5년납, 월납,
           특약제외(단위:만원)
         </div>
-        <div className="overflow-x-auto">
+        <div className="product-info-box">
+          <div className="overflow-x-auto">
           <table className="product-table text-center">
             <thead>
               <tr className="product-table-header align-middle">
@@ -216,17 +217,18 @@ export default function Surrender() {
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
 
-      {/* 7년납 */}
       <div className="space-y-4">
-        <h3 className="product-sub-title">보험료 납입기간이 7년납인 경우</h3>
+        <h3 className="product-section-title">보험료 납입기간이 7년납인 경우</h3>
         <div className="product-caption text-right">
           기준: 40세, 남자, 해약환급금 일부지급형, 주계약 가입금액 5,000만원, 종신, 7년납, 월납,
           특약제외(단위:만원)
         </div>
-        <div className="overflow-x-auto">
+        <div className="product-info-box">
+          <div className="overflow-x-auto">
           <table className="product-table text-center">
             <thead>
               <tr className="product-table-header align-middle">
@@ -423,10 +425,10 @@ export default function Surrender() {
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
 
-      {/* 주석 */}
       <div className="product-info-box">
         <p>
           ▶ 이 계약을 중도해지할 경우 해약환급금은 납입한 보험료에서 경과한 기간의 위험보험료,
@@ -456,8 +458,7 @@ export default function Surrender() {
         </p>
       </div>
 
-      {/* 간편심사 관련 안내 */}
-      <div className="mt-8 space-y-4">
+      <div className="space-y-4">
         <h3 className="product-section-title">◦ 간편심사 관련 안내</h3>
 
         <div className="product-text space-y-3">
@@ -475,19 +476,19 @@ export default function Surrender() {
           </p>
         </div>
 
-        {/* 비교표 */}
-        <div className="mt-6">
+        <div>
           <h4 className="product-small-title mb-4 text-center text-[#1e3a8a]">
             간편심사형 VS 일반심사형 비교
           </h4>
 
-          <div className="overflow-x-auto">
-            <table className="product-table">
-              <thead>
-                <tr className="product-table-header">
-                  <th className="product-table-th">구분</th>
-                  <th className="product-table-th">간편심사형</th>
-                  <th className="product-table-th">일반심사형</th>
+          <div className="product-info-box">
+            <div className="overflow-x-auto">
+              <table className="product-table">
+                <thead>
+                  <tr className="product-table-header">
+                    <th className="product-table-th">구분</th>
+                    <th className="product-table-th">간편심사형</th>
+                    <th className="product-table-th">일반심사형</th>
                 </tr>
               </thead>
               <tbody className="product-table-body">
@@ -511,11 +512,11 @@ export default function Surrender() {
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
 
-        {/* 3가지 질문 */}
-        <div className="mt-6 space-y-3 text-sm">
+        <div className="space-y-3 text-sm">
           <p className="font-semibold text-text-primary">
             *아래 3가지 질문을 통과하면 유병력자도 2형(간편심사형) 가입이 가능합니다.
           </p>
@@ -562,6 +563,6 @@ export default function Surrender() {
           </div>
         </div>
       </div>
-    </div>
+    </TabContentWrapper>
   );
 }

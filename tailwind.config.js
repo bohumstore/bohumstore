@@ -59,6 +59,10 @@ module.exports = {
           'primary-hover': 'var(--brand-primary-hover)',
           'primary-soft': 'var(--brand-primary-soft)',
           'primary-disabled': 'var(--brand-primary-disabled)',
+          secondary: 'var(--brand-secondary)',
+          'secondary-hover': 'var(--brand-secondary-hover)',
+          'secondary-soft': 'var(--brand-secondary-soft)',
+          'secondary-disabled': 'var(--brand-secondary-disabled)',
         },
         /* Border */
         'border-default': 'var(--border-default)',
@@ -82,6 +86,7 @@ module.exports = {
         'text-inverse': 'var(--text-inverse)',
         /* 제품 페이지 전용 */
         'product-primary': 'var(--product-primary)',
+        'product-primary-soft': 'var(--product-primary-soft)',
       },
     },
   },

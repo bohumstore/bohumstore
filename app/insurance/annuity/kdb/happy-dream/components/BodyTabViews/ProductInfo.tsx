@@ -1,12 +1,10 @@
 import React from 'react';
+import ProductInfoBodyTabTemplate from '@/templates/Product/components/ProductInfoBodyTabTemplate';
 
 export default function ProductInfo() {
   return (
-    <div className="space-y-8 px-8 py-6">
-      {/* 상품특징 제목 */}
-      <h2 className="product-page-title">상품특징</h2>
+    <ProductInfoBodyTabTemplate title="상품특징">
 
-      {/* 연금기준금액 */}
       <div className="space-y-4">
         <h3 className="product-section-title">연금기준금액</h3>
         <div className="product-info-box">
@@ -60,7 +58,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 실적배당 종신연금 보증지급 */}
       <div className="space-y-4">
         <h3 className="product-section-title">실적배당 종신연금 보증지급</h3>
         <div className="product-info-box">
@@ -97,7 +94,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 최저사망적립액 보증 */}
       <div className="space-y-4">
         <h3 className="product-section-title">최저사망적립액 보증</h3>
         <div className="product-info-box">
@@ -137,7 +133,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 경제적 상황에 따라 유연한 자금운용 */}
       <div className="space-y-4">
         <h3 className="product-section-title">경제적 상황에 따라 유연한 자금운용</h3>
         <div className="product-info-box">
@@ -163,7 +158,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 보험차익 비과세 혜택 */}
       <div className="space-y-4">
         <h3 className="product-section-title">보험차익 비과세 혜택</h3>
         <div className="product-info-box">
@@ -175,7 +169,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 선지급행복자금 */}
       <div className="space-y-4">
         <h3 className="product-section-title">선지급행복자금</h3>
         <div className="product-info-box">
@@ -254,7 +247,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 가입안내 */}
       <div className="space-y-4">
         <h3 className="product-section-title">가입안내</h3>
         <div className="product-info-box">
@@ -324,7 +316,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 보험료계산 안내 */}
       <div className="space-y-4">
         <div className="product-info-box">
           <div className="space-y-2 body-m">
@@ -335,6 +326,6 @@ export default function ProductInfo() {
           </div>
         </div>
       </div>
-    </div>
+    </ProductInfoBodyTabTemplate>
   );
 }

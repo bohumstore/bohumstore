@@ -69,7 +69,6 @@ export async function POST(request: NextRequest) {
     const resolvedProductType = (productType || 'happy-plus') as string;
     let candidatePaths: string[] = [];
     let monthlyPensionHeaderCandidates: string[] = [];
-    let performancePensionHeaderCandidates: string[] = [];
     let guaranteedAmountHeaderCandidates: string[] = [];
     const totalUntil100HeaderCandidates: string[] = [
       '100세까지 총 수령액',
@@ -84,7 +83,6 @@ export async function POST(request: NextRequest) {
       ];
       // 드림: 엑셀에서 월 연금액만 가져오고, 실적배당은 계산으로 처리
       monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금'];
-      performancePensionHeaderCandidates = []; // 엑셀에 없음 - 계산으로 처리
       guaranteedAmountHeaderCandidates = [
         '20년 보증기간 총액',
         '20년 보증 총액',
@@ -99,7 +97,6 @@ export async function POST(request: NextRequest) {
         path.join(process.cwd(), 'public', 'resources', 'data', 'ibk-lifetime-data.xlsx'),
       ];
       monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금'];
-      performancePensionHeaderCandidates = []; // 엑셀에 없음 - 계산으로 처리
       guaranteedAmountHeaderCandidates = [
         '20년 보증기간 총액',
         '20년 보증 총액',
@@ -114,7 +111,6 @@ export async function POST(request: NextRequest) {
         path.join(process.cwd(), 'public', 'resources', 'data', 'kdb-plus-data.xlsx'),
       ];
       monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금'];
-      performancePensionHeaderCandidates = []; // 엑셀에 없음 - 계산으로 처리
       guaranteedAmountHeaderCandidates = ['20년 보증기간 총액', '20년 보증 총액', '보증기간 총액'];
     }
 
@@ -219,7 +215,6 @@ export async function POST(request: NextRequest) {
     const paymentIndex = findIndexBySynonyms(headerSynonyms.payment);
     const pensionStartAgeIndex = findIndexBySynonyms(pensionStartAgeHeaderCandidates);
     const monthlyPensionIndex = findIndexBySynonyms(monthlyPensionHeaderCandidates);
-    const performancePensionIndex = findIndexBySynonyms(performancePensionHeaderCandidates);
     const guaranteedAmountIndex = findIndexBySynonyms(guaranteedAmountHeaderCandidates);
     const totalUntil100Index = findIndexBySynonyms(totalUntil100HeaderCandidates);
     const noticeIndex = findIndexBySynonyms(['안내']);

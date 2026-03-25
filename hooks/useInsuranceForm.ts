@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 
 // ── Types ──
 export interface InsuranceFormState {
@@ -106,7 +106,7 @@ export function useInsuranceForm(options?: InsuranceFormOptions) {
   }, []);
 
   const handlePaymentPeriodChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setPaymentPeriod(e.target.value);
       setIsVerified(false);
       onInputChange?.();
@@ -115,7 +115,7 @@ export function useInsuranceForm(options?: InsuranceFormOptions) {
   );
 
   const handlePaymentAmountChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setPaymentAmount(e.target.value);
       setIsVerified(false);
       onInputChange?.();
@@ -200,15 +200,23 @@ export function useInsuranceForm(options?: InsuranceFormOptions) {
     const birthYear = parseInt(birthValue.substring(0, 4));
     const birthMonth = parseInt(birthValue.substring(4, 6));
     const birthDay = parseInt(birthValue.substring(6, 8));
+
+    // 생년월일에 6개월을 더한 날짜 계산 (보험기준일)
+    const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
+    const insuranceBaseDate = new Date(birthDate);
+    insuranceBaseDate.setMonth(insuranceBaseDate.getMonth() + 6);
+
     const today = new Date();
-    let age = today.getFullYear() - birthYear;
+    let insuranceAge = today.getFullYear() - insuranceBaseDate.getFullYear();
     if (
-      today.getMonth() + 1 < birthMonth ||
-      (today.getMonth() + 1 === birthMonth && today.getDate() < birthDay)
+      today.getMonth() < insuranceBaseDate.getMonth() ||
+      (today.getMonth() === insuranceBaseDate.getMonth() && today.getDate() < insuranceBaseDate.getDate())
     ) {
-      age -= 1;
+      insuranceAge -= 1;
     }
-    return age;
+
+    // 보험연령은 만 나이(기준일 기준) + 1
+    return insuranceAge + 1;
   }, []);
 
   const insuranceAge = getInsuranceAge(birth);
