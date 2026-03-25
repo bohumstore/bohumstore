@@ -412,29 +412,21 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     }
   };
 
-  // 보험연령 계산 함수 (생년월일 + 6개월 기준)
+  // 보험연령 계산 함수
   const getInsuranceAge = (birth: string) => {
     if (!/^\d{8}$/.test(birth)) return '';
     const birthYear = parseInt(birth.substring(0, 4));
     const birthMonth = parseInt(birth.substring(4, 6));
     const birthDay = parseInt(birth.substring(6, 8));
-    
-    // 생년월일에 6개월을 더한 날짜 계산
-    const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
-    const insuranceBaseDate = new Date(birthDate);
-    insuranceBaseDate.setMonth(insuranceBaseDate.getMonth() + 6);
-    
-    // 현재 날짜와 보험기준일(생년월일+6개월)의 차이로 보험연령 계산
     const today = new Date();
-    let insuranceAge = today.getFullYear() - insuranceBaseDate.getFullYear();
+    let age = today.getFullYear() - birthYear;
     if (
-      today.getMonth() < insuranceBaseDate.getMonth() ||
-      (today.getMonth() === insuranceBaseDate.getMonth() && today.getDate() < insuranceBaseDate.getDate())
+      today.getMonth() + 1 < birthMonth ||
+      (today.getMonth() + 1 === birthMonth && today.getDate() < birthDay)
     ) {
-      insuranceAge -= 1;
+      age -= 1;
     }
-    
-    return insuranceAge + 1;
+    return age;
   };
 
   // 보험연령 계산

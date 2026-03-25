@@ -418,7 +418,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     }
   };
 
-  // 보험연령 계산 함수 (만 나이 + 1)
+  // 보험연령 계산 함수
   const getInsuranceAge = (birth: string) => {
     if (!/^\d{8}$/.test(birth)) return '';
     const birthYear = parseInt(birth.substring(0, 4));
@@ -432,8 +432,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     ) {
       age -= 1;
     }
-    // 보험연령은 만 나이 + 1
-    return age + 1;
+    return age;
   };
 
   // 보험연령 계산
