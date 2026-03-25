@@ -41,7 +41,7 @@
   ],
   "screenshots": [
     {
-      "src": "/kakao-img.png",
+      "src": "/images/icons/kakao-og.png",
       "sizes": "1000x500",
       "type": "image/png",
       "form_factor": "wide"
