@@ -72,34 +72,7 @@ export default function SloganSection({
         ))}
       </ul>
 
-      {/* 3월 보험 이슈 (마스터 443311e 반영) */}
-      {(() => {
-        const currentDate = new Date();
-        const currentMonth = currentDate.getMonth() + 1;
-        const lastUpdatedMonth = 3; // 3월 업데이트 반영
-        if (currentMonth !== lastUpdatedMonth) return null;
 
-        return (
-          <div className={`mt-4 p-4 bg-orange-50 border border-orange-100 rounded-xl text-left ${isMobile ? 'mb-6' : ''}`}>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-[10px] text-white font-bold">!</span>
-              <span className="body-m font-bold text-orange-700">3월 보험 상품 주요 이슈</span>
-            </div>
-            <div className="space-y-2">
-              {[
-                <>실손보험료 <span className="font-semibold text-red-500">최대 20% 인상</span> 예정!</>,
-                <>암보험 <span className="font-semibold text-red-500">보험료 인상</span> 예정!</>,
-                <>종신·연금보험 <span className="font-semibold text-red-500">공시이율 하향</span> 추세!</>,
-              ].map((text, idx) => (
-                <div key={idx} className="flex items-start gap-2 text-sm text-text-secondary">
-                  <span className="text-orange-500 flex-shrink-0 animate-pulse">▸</span>
-                  <span>{text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      })()}
     </>
   );
 
