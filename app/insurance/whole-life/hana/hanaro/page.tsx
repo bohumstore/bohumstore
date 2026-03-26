@@ -30,10 +30,10 @@ export default function HanaHanaroWholeLifePage() {
             }
             sloganTitle={
               <div>
-                <div className="heading-2 text-text-primary leading-tight">
+                <div className="heading-2 break-keep text-text-primary leading-tight">
                   (무)하나로 THE 연결된 종신보험
                 </div>
-                <div className="heading-2 text-text-primary leading-tight">
+                <div className="heading-2 break-keep text-text-primary leading-tight">
                   (해약환급금 일부지급형)
                 </div>
               </div>
@@ -55,12 +55,12 @@ export default function HanaHanaroWholeLifePage() {
                 onConsult={() => { setModalType('consult'); setIsModalOpen(true); onModalStateChange?.(true); }}
               >
                 {/* 환급률 헤더 */}
-                <div className="flex w-80 h-6 justify-center bg-status-info text-white text-center rounded-md my-3 body-m font-bold">
+                <div className="my-3 flex h-6 w-full max-w-80 justify-center rounded-md bg-status-info text-center text-white body-m font-bold">
                   환급률
                 </div>
 
                 {/* 3열 비교 */}
-                <div className="grid grid-cols-3 gap-8 mb-4">
+                <div className="zfold-compact-compare zfold-compact-grid mb-4 grid w-full grid-cols-3 gap-3 sm:gap-6">
                   <div className="text-center flex flex-col gap-1">
                     <p className="body-l text-text-muted">7년 시점</p>
                     <p className="heading-4 text-text-primary">100%</p>

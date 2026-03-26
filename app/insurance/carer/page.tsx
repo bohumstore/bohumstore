@@ -77,10 +77,10 @@ export default function CarerInsurancePage() {
         backgroundColor="#F0FDF4"
         sloganTitle={
           <div>
-            <div className="heading-2 text-[#16a34a] leading-tight">
+            <div className="heading-2 break-keep text-[#16a34a] leading-tight">
               병원비가 아니라 간병비!
             </div>
-            <div className="heading-2 text-text-primary leading-tight">
+            <div className="heading-2 break-keep text-text-primary leading-tight">
               전문 간병인보험
             </div>
           </div>
@@ -100,7 +100,7 @@ export default function CarerInsurancePage() {
             onCalculate={() => { setModalType('consult'); setIsModalOpen(true); }}
             onConsult={() => { setModalType('consult'); setIsModalOpen(true); }}
           >
-            <div className="flex items-end justify-center gap-6 md:gap-14 mb-4">
+            <div className="zfold-compact-compare mb-4 flex items-end justify-center gap-4 md:gap-14">
               <div className="text-center flex flex-col gap-1.5">
                 <p className="body-l text-text-muted">7년 시점</p>
                 <p className="heading-4 text-text-primary">12만원</p>
@@ -109,9 +109,9 @@ export default function CarerInsurancePage() {
                 <p className="body-l text-text-muted">10년 시점</p>
                 <p className="heading-4 text-brand-primary">360만원</p>
               </div>
-              <div className="text-center flex flex-col items-center gap-1.5">
+              <div className="text-center flex min-w-0 flex-col items-center gap-1.5">
                 <span className="bg-status-green text-white body-s font-bold px-2.5 py-0.5 rounded-full">보너스</span>
-                <p className="body-m font-bold text-status-green leading-tight">납입완료 보너스<br />장기유지 보너스</p>
+                <p className="body-m break-keep font-bold text-status-green leading-tight">납입완료 보너스<br />장기유지 보너스</p>
               </div>
             </div>
           </SloganCardView>

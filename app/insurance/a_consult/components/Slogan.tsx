@@ -179,6 +179,7 @@ export default function Slogan({ onOpenPrivacy: _onOpenPrivacy, onModalStateChan
         code: consultOtpCode, counselType: 2,
         companyId: null, productId: null,
         consultType, counselTime: consultTime,
+        consultMessage,
         templateId: 'UB_8715',
       });
       if (res.data.success) {

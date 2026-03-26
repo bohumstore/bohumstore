@@ -25,12 +25,12 @@ export default function Tabs({ tabs }: { tabs: Tab[] }) {
   return (
     <div>
       {/* ── 모바일: 필 버튼 스타일 탭 (lg 이하) - sticky ── */}
-      <nav className="flex lg:hidden bg-brand-secondary-hover -mx-3 sm:-mx-4 sticky top-[64px] z-30">
+      <nav className="zfold-tabs scrollbar-hide flex overflow-x-auto lg:hidden bg-brand-secondary-hover -mx-3 sm:-mx-4 sticky top-[64px] z-30">
         {tabs.map(({ label }) => (
           <button
             key={label}
             onClick={() => handleTabClick(label)}
-            className={`flex-1 py-3 text-center transition-all duration-200 heading-5 text-[0.9rem] ${
+            className={`zfold-tab-button flex-1 py-3 text-center transition-all duration-200 heading-5 break-keep leading-snug ${
               active === label
                 ? 'bg-brand-primary text-text-inverse'
                 : 'text-text-primary'

@@ -56,7 +56,7 @@ export default function SloganCardView({
         }`}
       >
         {/* 상단 제목 */}
-        {title && <div className="heading-5 text-center text-[18px] text-text-primary">{title}</div>}
+        {title && <div className="heading-5 text-center text-text-primary">{title}</div>}
 
         {title && showDivider && <div className="my-3 h-0.5 w-full bg-product-primary-soft"></div>}
 

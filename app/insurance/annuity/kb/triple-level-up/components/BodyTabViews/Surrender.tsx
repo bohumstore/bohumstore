@@ -9,7 +9,7 @@ export default function Surrender() {
         <h3 className="product-section-title">연금개시전 보험기간 (보증형)</h3>
         <div className="product-info-box">
           <div className="space-y-4">
-            <div className="whitespace-nowrap text-right text-sm text-text-secondary">
+            <div className="mb-2 break-keep text-right text-sm text-text-secondary">
               기준 : 주계약, 남자 40세, 보증형, 5년납, 60세 연금개시, 월보험료 50만원, 단위 : 만원
             </div>
             <div className="overflow-x-auto">
@@ -382,7 +382,7 @@ export default function Surrender() {
         <h3 className="product-section-title">연금지급액 예시 (보증형)</h3>
         <div className="product-info-box">
           <div className="space-y-4">
-            <div className="whitespace-nowrap text-right text-sm text-text-secondary">
+            <div className="mb-2 break-keep text-right text-sm text-text-secondary">
               기준 : 주계약, 남자 40세, 보증형, 5년납, 60세 연금개시, 월보험료 50만원, 단위 : 원
             </div>
             <div className="overflow-x-auto">

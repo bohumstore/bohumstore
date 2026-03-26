@@ -145,6 +145,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         phone, name, birth, gender, code, counselType: type === 'calculate' ? 1 : 2,
         companyId: INSURANCE_COMPANY_ID, productId: INSURANCE_PRODUCT_ID,
         counselTime: consultTime, consultType: type === 'consult' ? consultType : undefined,
+        consultMessage: type === 'consult' ? consultMessage : '',
         mounthlyPremium: paymentAmount, paymentPeriod,
         monthlyPension: calc.monthly, guaranteedPension: calc.guaranteed,
         pensionStartAge: calc.pensionStartAge, totalUntil100: calc.totalUntil100,

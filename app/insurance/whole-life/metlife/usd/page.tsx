@@ -25,10 +25,10 @@ export default function MetLifeUSDWholeLifePage() {
             backgroundColor="#F5F3FF"
             sloganTitle={
               <div>
-                <div className="heading-2 leading-tight">
+                <div className="heading-2 break-keep leading-tight">
                   <span className="text-brand-primary">달러 VS 원화</span>
                 </div>
-                <div className="heading-2 text-text-primary leading-tight">
+                <div className="heading-2 break-keep text-text-primary leading-tight">
                   원하는 화폐로 골라 받으세요!
                 </div>
               </div>

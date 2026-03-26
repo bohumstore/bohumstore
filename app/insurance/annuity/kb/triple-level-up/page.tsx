@@ -32,10 +32,10 @@ export default function KBTripleLevelUpAnnuityPage() {
             }
             sloganTitle={
               <div>
-                <div className="heading-2 text-text-primary leading-tight">
+                <div className="heading-2 break-keep text-text-primary leading-tight">
                   KB 트리플 레벨업
                 </div>
-                <div className="heading-2 text-text-primary leading-tight">
+                <div className="heading-2 break-keep text-text-primary leading-tight">
                   연금보험 무배당(보증형)
                 </div>
               </div>
@@ -54,7 +54,7 @@ export default function KBTripleLevelUpAnnuityPage() {
                 onConsult={() => { setModalType('consult'); setIsModalOpen(true); onModalStateChange?.(true); }}
               >
                 {/* 보증률 헤더 */}
-                <div className="flex w-80 h-6 justify-center bg-status-info text-white text-center rounded-md my-3 body-m font-bold">
+                <div className="my-3 flex h-6 w-full max-w-80 justify-center rounded-md bg-status-info text-center text-white body-m font-bold">
                   보증률
                 </div>
 

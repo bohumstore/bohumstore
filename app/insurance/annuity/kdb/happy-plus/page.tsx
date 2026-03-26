@@ -26,10 +26,10 @@ export default function KDBHappyPlusAnnuityPage() {
             backgroundColor="#e8ecf4"
             sloganTitle={
               <div>
-                <div className="heading-2 text-text-primary leading-tight">
+                <div className="heading-2 break-keep text-text-primary leading-tight">
                   20년까지 연단리 7%
                 </div>
-                <div className="heading-2 text-text-primary leading-tight">
+                <div className="heading-2 break-keep text-text-primary leading-tight">
                   보증형 연금보험
                 </div>
               </div>

@@ -65,7 +65,7 @@ export default function SloganSection({
               alt=""
               className="mt-0.5 flex-shrink-0 w-5 h-5"
             />
-            <span className={`body-m text-text-secondary`}>
+            <span className={`body-m break-keep text-text-secondary`}>
               {item}
             </span>
           </li>
@@ -114,7 +114,7 @@ export default function SloganSection({
           </div>
           {/* 일러스트 (모바일: 우하단) */}
           {illustrationSrc && (
-            <div className="pointer-events-none absolute -bottom-5 -right-5 z-10 h-[124px] w-[146px]">
+            <div className="pointer-events-none absolute -bottom-8 -right-5 z-10 h-[124px] w-[146px]">
               <Image
                 src={illustrationSrc}
                 alt={illustrationAlt}

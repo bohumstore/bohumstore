@@ -9,9 +9,9 @@ export default function Surrender() {
         <h3 className="product-section-title">해약환급금 예시</h3>
         <div className="product-info-box">
           <div className="space-y-4">
-            <div className="mb-2 whitespace-nowrap text-right text-sm text-text-secondary">
-              기준: 남자 40세, 일반심사형, 보험료형, 종신, 5년납, 월납, 30만원 (단위: 원, %)
-            </div>
+            <div className="mb-2 break-keep text-right text-sm text-text-secondary">
+          기준 : 40세 여자, 5년납, 해약환급금 보수형, 월보험료 50만원 (단위 : 원, %)
+        </div>
             <div className="overflow-x-auto">
               <table className="product-table">
                 <thead>

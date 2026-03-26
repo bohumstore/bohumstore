@@ -15,7 +15,7 @@ export default function Surrender() {
 
       <div className="space-y-4">
         <h3 className="product-section-title">보험료 납입기간이 5년납인 경우</h3>
-        <div className="product-caption text-right">
+        <div className="product-caption break-keep text-right">
           기준: 40세, 남자, 해약환급금 일부지급형, 주계약 가입금액 5,000만원, 종신, 5년납, 월납,
           특약제외(단위:만원)
         </div>

@@ -169,28 +169,29 @@
   }
 }
 
-/* 테이블 스크롤바 항상 표시 (모바일에서 스크롤 가능 여부 인지) */
+/* 테이블 스크롤바 가시성 강화 (모바일에서 스크롤 유도) */
 .overflow-x-auto {
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 #f1f5f9;
+  scrollbar-width: auto; /* 두께 증가 */
+  scrollbar-color: var(--brand-primary-disabled) #f1f5f9;
 }
 
 .overflow-x-auto::-webkit-scrollbar {
-  height: 8px;
+  height: 10px; /* 터치 가이드를 위해 조금 더 두껍게 */
 }
 
 .overflow-x-auto::-webkit-scrollbar-track {
   background: #f1f5f9;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 .overflow-x-auto::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
+  background: var(--brand-primary-disabled);
+  border-radius: 5px;
+  border: 2px solid #f1f5f9; /* 구분감 부여 */
 }
 
 .overflow-x-auto::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: var(--brand-primary);
 }
 
 body {
@@ -285,9 +286,9 @@ html {
     @apply text-base text-text-primary;
   }
 
-  /* Caption / Small Text */
+  /* Caption / Small Text - 모바일에서 잘림 방지 */
   .product-caption {
-    @apply text-xs text-text-disabled;
+    @apply text-xs text-text-disabled whitespace-normal break-keep;
   }
 
   /* Info Box */
@@ -303,6 +304,7 @@ html {
     border: none;
     padding-left: 0;
     padding-right: 0;
+    overflow: visible !important; /* 아코디언 전환 시 잘림 현상 방지 */
   }
   .product-table-td, .product-table-td-center {
     @apply p-2 text-[11px] leading-tight;
@@ -331,6 +333,48 @@ html {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Z Fold portrait-like narrow/tall screens */
+@media (max-width: 320px) and (min-aspect-ratio: 1/2) {
+  .zfold-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  .zfold-tab-button {
+    flex: 0 0 auto !important;
+    min-width: 118px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    white-space: nowrap;
+    word-break: keep-all;
+  }
+
+  .zfold-compact-compare {
+    gap: 0.625rem !important;
+  }
+
+  .zfold-compact-compare .body-l {
+    font-size: 0.875rem;
+    line-height: 1.35;
+  }
+
+  .zfold-compact-compare .heading-4 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .zfold-compact-compare .body-m {
+    font-size: 0.75rem;
+    line-height: 1.35;
+  }
+
+  .zfold-compact-grid .heading-4 {
+    font-size: 1.875rem;
+    line-height: 1.2;
+  }
 }
 
 /* ── 페이지 전환(Transition) 애니메이션 ── */

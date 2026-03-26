@@ -29,6 +29,7 @@ export async function POST(req: Request) {
     templateId = null,
     adminTemplateId = null,
     onlyClient = false,
+    consultMessage = '',
   } = requestBody;
 
   // 고객용만 발송(후속 알림)인 경우: OTP 검증을 건너뛰고 바로 전송
@@ -301,8 +302,8 @@ export async function POST(req: Request) {
           subject_1: subject,
           message_1:
             counselType === 1
-              ? `[보험료계산]\n${companyName ? companyName + '\n' : ''}${productDisplayName}\n${displayBirth}\n${displayName}\n${displayGenderKor}\n${phone}`
-              : `[상담/설계요청]\n${counselTime}\n${productDisplayName}\n${displayBirth}\n${displayName}\n${displayGenderKor}\n${phone}`,
+              ? `[보험료계산]\n${counselTime || '아무때나'}\n${companyName ? companyName + ' ' : ''}${productDisplayName}\n${displayBirth}\n${displayName}\n${displayGenderKor}\n${phone}${consultMessage ? `\n\n[추가내용]\n${consultMessage}` : ''}`
+              : `[상담/설계요청]\n${counselTime || '아무때나'}\n${companyName ? companyName + ' ' : ''}${productDisplayName}\n${displayBirth}\n${displayName}\n${displayGenderKor}\n${phone}${consultMessage ? `\n\n[추가내용]\n${consultMessage}` : ''}`,
           testMode: 'N',
         },
       };

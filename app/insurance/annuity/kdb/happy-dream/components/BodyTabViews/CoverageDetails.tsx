@@ -8,7 +8,7 @@ export default function CoverageDetails() {
 
       <div className="space-y-4">
         <h3 className="product-section-title">연금개시 전 보험기간</h3>
-        <div className="mb-2 whitespace-nowrap text-right text-sm text-text-secondary">
+        <div className="mb-2 break-keep text-right text-sm text-text-secondary">
           (기준 : 1구좌)
         </div>
         <div className="product-info-box">

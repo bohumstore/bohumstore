@@ -37,6 +37,7 @@ interface CalculatorConsultModalProps {
 
 export default function CalculatorConsultModal({ isOpen, onClose, type }: CalculatorConsultModalProps) {
   const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [consultMessage, setConsultMessage] = useState('');
 
   const {
     name, setName, gender, setGender, birth, phone,
@@ -169,6 +170,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         companyId: INSURANCE_COMPANY_ID, productId: INSURANCE_PRODUCT_ID,
         counselTime: consultTime,
         consultType: type === 'consult' ? consultType : undefined,
+        consultMessage: type === 'consult' ? consultMessage : '',
         mounthlyPremium: paymentAmount || '',
         paymentPeriod: paymentPeriod || '',
         tenYearReturnRate,
@@ -362,6 +364,19 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
             </div>
           </div>
 
+          <Button variant="primary" size="full" onClick={handleVerifyOTP} disabled={verifying || code.length !== 6}>
+            {verifying ? '인증 처리중...' : '환급금 결과 확인하기'}
+          </Button>
+
+          <div className="flex justify-center mt-3 mb-6">
+            <button
+              onClick={onClose}
+              className="px-4 py-2 text-text-secondary body-m focus:outline-none hover:text-text-primary transition-colors"
+            >
+              닫기
+            </button>
+          </div>
+
           <StepSection 
             title={
               <span className="flex items-center gap-1.5">
@@ -405,6 +420,16 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
             <p><span className="font-bold">{name}</span> · {insuranceAge}세</p>
             <p className="text-text-muted body-m">종신보험 · {consultTime}</p>
           </div>
+        </div>
+
+        <div>
+          <p className="heading-5 text-text-primary mb-2">상담 전에 남길 말이 있나요? (선택)</p>
+          <textarea
+            value={consultMessage}
+            onChange={e => setConsultMessage(e.target.value)}
+            className="w-full rounded-lg border border-border-default px-3 py-2.5 body-m outline-none focus:border-border-focus resize-none h-[72px]"
+            placeholder="미리 전달하고 싶은 내용을 작성해 주세요."
+          />
         </div>
 
         <div>

@@ -79,35 +79,49 @@ export default function MobileAccordionWrapper({ children }: { children: ReactNo
       contentWrapper.style.transition = 'max-height 0.35s ease, opacity 0.25s ease';
       contentWrapper.style.overflow = 'hidden';
 
+      // 기존 리스너 및 타이머 제거
       if ((contentWrapper as any)._onTransitionEnd) {
         contentWrapper.removeEventListener('transitionend', (contentWrapper as any)._onTransitionEnd);
       }
+      if ((contentWrapper as any)._fallbackTimeout) {
+        clearTimeout((contentWrapper as any)._fallbackTimeout);
+      }
 
-      const onTransitionEnd = (e: Event) => {
-        const tEvent = e as TransitionEvent;
-        if (tEvent.propertyName === 'max-height' && tEvent.target === contentWrapper) {
-          if (isOpen) {
-            contentWrapper.style.maxHeight = 'none';
-            contentWrapper.style.overflow = 'visible'; // 아코디언이 완전히 열리면 잘림 방지
-          }
+      const onTransitionEnd = (e?: Event) => {
+        if (e && (e as TransitionEvent).propertyName !== 'max-height') return;
+        
+        if (isOpen) {
+          contentWrapper.style.maxHeight = 'none';
+          contentWrapper.style.overflow = 'visible';
+          contentWrapper.style.height = 'auto'; // 확실한 확장 보장
         }
       };
+      
       (contentWrapper as any)._onTransitionEnd = onTransitionEnd;
       contentWrapper.addEventListener('transitionend', onTransitionEnd);
 
       if (isOpen) {
-        contentWrapper.style.maxHeight = contentWrapper.scrollHeight + 50 + 'px';
+        // scrollHeight만으로는 부족할 수 있으므로 추가 여백(80px) 확보 및 렌더링 대기
+        const targetHeight = contentWrapper.scrollHeight + 80;
+        contentWrapper.style.maxHeight = targetHeight + 'px';
         contentWrapper.style.opacity = '1';
-        // 애니메이션 도중에는 hidden 유지, 끝난 뒤 onTransitionEnd에서 visible 교체
         contentWrapper.style.overflow = 'hidden';
+
+        // transitionend가 발생하지 않는 상황을 대비한 폴백 (0.4초 후 강제 처리)
+        const timeoutId = setTimeout(() => onTransitionEnd(), 400);
+        (contentWrapper as any)._fallbackTimeout = timeoutId;
       } else {
-        // 닫힐 때는 현재 높이가 none일 경우 실제 픽셀 높이로 먼저 고정
+        if ((contentWrapper as any)._fallbackTimeout) {
+          clearTimeout((contentWrapper as any)._fallbackTimeout);
+        }
+        
         if (contentWrapper.style.maxHeight === 'none') {
           contentWrapper.style.maxHeight = contentWrapper.scrollHeight + 'px';
         }
-        void contentWrapper.offsetHeight; // 리플로우(reflow) 강제 발생시켜 다음 줄의 애니메이션이 동작하도록 함
+        void contentWrapper.offsetHeight;
         contentWrapper.style.maxHeight = '0px';
         contentWrapper.style.opacity = '0';
+        contentWrapper.style.overflow = 'hidden';
       }
 
       /* ── 헤더(타이틀) 영역 스타일 ── */

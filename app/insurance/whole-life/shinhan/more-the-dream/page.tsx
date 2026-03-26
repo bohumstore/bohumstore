@@ -33,10 +33,10 @@ export default function ShinhanMoreTheDreamPage() {
             }
             sloganTitle={
               <div>
-                <div className="heading-2 text-text-primary leading-tight">
+                <div className="heading-2 break-keep text-text-primary leading-tight">
                   모아더드림PLUS종신보험
                 </div>
-                <div className="heading-2 text-text-primary leading-tight">
+                <div className="heading-2 break-keep text-text-primary leading-tight">
                   (해약환급금 일부 지급형)
                 </div>
               </div>
@@ -56,7 +56,7 @@ export default function ShinhanMoreTheDreamPage() {
                 onConsult={() => { setModalType('consult'); setIsModalOpen(true); onModalStateChange?.(true); }}
               >
                 {/* 비용 비교 영역 */}
-                <div className="flex items-end justify-center gap-6 md:gap-10 mb-4">
+                <div className="zfold-compact-compare mb-4 flex items-end justify-center gap-4 md:gap-10">
                   {/* 7년 시점 */}
                   <div className="text-center flex flex-col gap-1.5">
                     <p className="body-l text-text-muted">7년 시점</p>
@@ -68,11 +68,11 @@ export default function ShinhanMoreTheDreamPage() {
                     <p className="heading-4 text-brand-primary">122.7%</p>
                   </div>
                   {/* 보너스 */}
-                  <div className="text-center flex flex-col items-center gap-1.5">
+                  <div className="text-center flex min-w-0 flex-col items-center gap-1.5">
                     <span className="bg-status-green text-white body-s font-bold px-2.5 py-0.5 rounded-full">
                       보너스
                     </span>
-                    <p className="body-m font-bold text-status-green leading-tight">
+                    <p className="body-m break-keep font-bold text-status-green leading-tight">
                       납입완료 보너스<br />장기유지 보너스
                     </p>
                   </div>

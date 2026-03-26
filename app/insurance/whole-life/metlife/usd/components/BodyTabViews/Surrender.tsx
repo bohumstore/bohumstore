@@ -9,7 +9,7 @@ export default function Surrender() {
         <h3 className="product-section-title">저해약환급금형Ⅰ</h3>
         <div className="product-info-box">
           <div className="space-y-4">
-            <div className="mb-2 whitespace-nowrap text-right text-sm text-text-secondary">
+            <div className="mb-2 break-keep text-right text-sm text-text-secondary">
               예시기준 : 주계약 가입금액 1만달러, 가입나이 40세, 5년납, 월납, 단위 : 달러(달러미만절사)
             </div>
             <div className="overflow-x-auto">
@@ -183,7 +183,7 @@ export default function Surrender() {
         <h3 className="product-section-title">저해약환급금형Ⅱ</h3>
         <div className="product-info-box">
           <div className="space-y-4">
-            <div className="mb-2 whitespace-nowrap text-right text-sm text-text-secondary">
+            <div className="mb-2 break-keep text-right text-sm text-text-secondary">
               예시기준 : 주계약 가입금액 1만달러, 가입나이 40세, 10년납, 월납, 단위 : 달러(달러미만절사)
             </div>
             <div className="overflow-x-auto">

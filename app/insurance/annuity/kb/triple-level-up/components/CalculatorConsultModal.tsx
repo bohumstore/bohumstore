@@ -129,6 +129,7 @@ export default function CalculatorConsultModal({ isOpen, onClose, type }: Calcul
         productId: INSURANCE_PRODUCT_ID,
         counselTime: consultTime,
         consultType: type === 'consult' ? consultType : undefined,
+        consultMessage: type === 'consult' ? consultMessage : '',
         mounthlyPremium: paymentAmount,
         paymentPeriod: paymentPeriod,
         tenYearReturnRate: rate ? Math.round(rate * 100).toString() : '-',
