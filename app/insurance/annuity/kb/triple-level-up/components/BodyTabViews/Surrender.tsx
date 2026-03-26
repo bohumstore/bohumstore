@@ -197,7 +197,7 @@ export default function Surrender() {
                     <td className="product-table-td-center">3,051</td>
                     <td className="product-table-td-center">101.7%</td>
                   </tr>
-                  <tr className="bg-red-50">
+                  <tr className="[&>td]:bg-red-50">
                     <td className="product-table-td-center">10년</td>
                     <td className="product-table-td-center">50</td>
                     <td className="product-table-td-center">3,000</td>
