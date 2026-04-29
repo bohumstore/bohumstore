@@ -253,3 +253,26 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   animation: slideInUp 0.6s ease-out both;
 }
 
+@keyframes profit-shine {
+  0%, 100% { 
+    transform: scale(1) rotateY(0deg); 
+    filter: brightness(1) drop-shadow(0 0 0 transparent);
+    color: rgb(219 39 119); /* text-pink-600 */
+  }
+  25% { 
+    transform: scale(1.1) rotateY(-15deg); 
+    filter: brightness(1.3) drop-shadow(0 0 12px rgba(219, 39, 119, 0.6));
+    color: rgb(190, 24, 93); /* darker pink */
+  }
+  50% { 
+    transform: scale(1.15) rotateY(0deg); 
+    filter: brightness(1.5) drop-shadow(0 0 20px rgba(219, 39, 119, 0.8));
+    color: rgb(244, 114, 182); /* lighter pink */
+  }
+  75% { 
+    transform: scale(1.1) rotateY(15deg); 
+    filter: brightness(1.3) drop-shadow(0 0 12px rgba(219, 39, 119, 0.6));
+    color: rgb(190, 24, 93); /* darker pink */
+  }
+}
+

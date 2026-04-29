@@ -7,6 +7,7 @@ export const INSURANCE_COMPANIES = {
   DONGYANG_LIFE: 5, // 동양생명 추가
   HANA_LIFE: 6, // 하나생명 추가
   METLIFE: 9, // 메트라이프생명 추가
+  IM_LIFE: 10, // IM라이프생명 추가
 } as const;
 
 // 상품 ID
@@ -19,6 +20,7 @@ export const INSURANCE_PRODUCTS = {
   DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE: 6, // 동양생명 new알뜰플러스종신보험
   HANA_HANARO: 7, // 하나생명 하나로THE연결된종신보험
   METLIFE_USD: 10, // 메트라이프생명 (무)백만인을위한달러종신보험Plus
+  IM_PLUS_PRO: 11, // IM라이프생명 IM Plus PRO연금보험
 } as const;
 
 // 상담 타입 ID
@@ -131,6 +133,18 @@ export const PRODUCT_CONFIGS = {
       '사망보험금 최대 150% 체증',
       '환전수수료 1$당 2원'
     ]
+  },
+  [INSURANCE_PRODUCTS.IM_PLUS_PRO]: {
+    name: 'IM Plus PRO연금보험 무배당 2604(보증비용부과형)',
+    companyId: INSURANCE_COMPANIES.IM_LIFE,
+    companyName: 'IM라이프생명',
+    category: '연금보험',
+    features: [
+      '10년시점 133% 환급률 보증 (5년납)',
+      '가입연령 0~70세 / 연금개시 45~85세',
+      '비과세 혜택 (월 150만원 한도)',
+      '병력 무심사 / 전건 가입가능'
+    ]
   }
 } as const;
 
@@ -167,6 +181,10 @@ export const PRODUCT_PATH_CONFIGS = {
   '/insurance/whole-life/metlife/usd': {
     productId: INSURANCE_PRODUCTS.METLIFE_USD,
     config: PRODUCT_CONFIGS[INSURANCE_PRODUCTS.METLIFE_USD]
+  },
+  '/insurance/annuity/im/plus-pro': {
+    productId: INSURANCE_PRODUCTS.IM_PLUS_PRO,
+    config: PRODUCT_CONFIGS[INSURANCE_PRODUCTS.IM_PLUS_PRO]
   }
 } as const;
 
@@ -185,6 +203,7 @@ export const ALIGO_TEMPLATE_IDS = {
   DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE: 'UB_8712', // 동양생명 new알뜰플러스종신보험 (종신보험 기본값)
   HANA_HANARO: 'UB_8712', // 하나생명 하나로THE연결된종신보험 (종신보험 기본값)
   METLIFE_USD: 'UB_8712', // 메트라이프생명 (무)백만인을위한달러종신보험Plus (종신보험 기본값)
+  IM_PLUS_PRO: 'UB_8705', // IM라이프생명 IM Plus PRO연금보험 (연금보험 기본값)
 } as const;
 
 // 경로별 상품 정보 조회 함수
@@ -206,6 +225,7 @@ export const getTemplateIdByPath = (path: string) => {
     case 6: return ALIGO_TEMPLATE_IDS.DONGYANG_NEW_ALDDUL_PLUS_WHOLE_LIFE; // 동양생명 new알뜰플러스종신보험
     case 7: return ALIGO_TEMPLATE_IDS.HANA_HANARO; // 하나생명 하나로THE연결된종신보험
     case 10: return ALIGO_TEMPLATE_IDS.METLIFE_USD; // 메트라이프생명 (무)백만인을위한달러종신보험Plus
+    case 11: return ALIGO_TEMPLATE_IDS.IM_PLUS_PRO; // IM라이프생명 IM Plus PRO연금보험
     default: return 'UB_8705'; // 기본값 (연금보험 기본값)
   }
 }; 

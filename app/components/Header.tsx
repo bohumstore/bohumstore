@@ -70,6 +70,7 @@ export default function Header() {
       title: "연금보험",
       id: "annuity",
       subItems: [
+        { name: "PlusPRO연금보험(보증형)", path: "/insurance/annuity/im/plus-pro" },
         { name: "KB트리플레벨업연금보험(보증형)", path: "/insurance/annuity/kb/triple-level-up" },
         { name: "KDB행복플러스연금보험(보증형)", path: "/insurance/annuity/kdb/happy-plus" }
       ]

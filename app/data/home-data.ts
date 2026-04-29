@@ -53,6 +53,23 @@ export const slogans: Slogan[] = [
     company: ''
   },
   {
+    id: 'im-plus-pro',
+    title: '10년시점 133% 환급률',
+    subtitle: '목돈마련과 노후준비를 동시에',
+    description: 'IM Plus PRO연금보험으로 7년/10년/연금개시시점 최저계약자적립액 보증을 받으세요.',
+    path: '/insurance/annuity/im/plus-pro',
+    color: 'from-pink-500 to-rose-600',
+    bgColor: 'bg-pink-50',
+    features: [
+      '10년시점 133% 환급률 보증 (5년납)',
+      '가입연령 0~70세 / 연금개시 45~85세',
+      '비과세 혜택 (월 150만원 한도)',
+      '병력 무심사 / 전건 가입가능'
+    ],
+    company: 'IM라이프생명',
+    logo: '/im-logo.png'
+  },
+  {
     id: 'kb-triple-level-up',
     title: '트리플 레벨업 보장',
     subtitle: '10년시점 130% 해약환급률 보증',
@@ -169,6 +186,17 @@ export const slogans: Slogan[] = [
 
 // 메인 상품 데이터
 export const mainProducts: MainProduct[] = [
+  {
+    id: 'im-plus-pro',
+    name: 'IM Plus PRO연금보험 무배당 2604(보증비용부과형)',
+    company: 'IM라이프생명',
+    logo: '/im-logo.png',
+    path: '/insurance/annuity/im/plus-pro',
+    description: '목돈마련과 노후준비 동시에, 최저계약자적립액 보증',
+    badge: 'NEW',
+    category: '연금보험',
+    highlight: '10년시점 133% 보증'
+  },
   {
     id: 'kb-triple-level-up',
     name: 'KB 트리플 레벨업 연금보험(보증형)',

@@ -266,6 +266,79 @@ export default function HomePage() {
                               </div>
                             </div>
                           </div>
+                        ) : slogan.id === 'im-plus-pro' ? (
+                          /* IM Plus PRO - 하이브리드 스타일 */
+                          <div className="max-w-7xl mx-auto px-4 lg:px-8 py-2 md:py-0">
+                            <div className="flex flex-col lg:flex-row items-center gap-6 md:gap-10 lg:gap-20">
+                              {/* 왼쪽: 메인 콘텐츠 */}
+                              <div className="flex-1 text-center lg:text-left">
+                                {/* 로고 + 회사명 */}
+                                <div className={`flex items-center justify-center lg:justify-start gap-2 md:gap-3 mb-2 md:mb-3 ${isActive ? 'animate-fade-in' : 'opacity-0'}`}>
+                                  {slogan.logo && (
+                                    <Image src={slogan.logo} alt={slogan.company} width={48} height={48} className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-contain" />
+                                  )}
+                                  <span className="text-sm md:text-base lg:text-lg text-gray-500 font-medium">{slogan.company}</span>
+                                </div>
+                                
+                                {/* 핵심 숫자 강조 */}
+                                <p className={`text-gray-500 text-xs md:text-sm lg:text-base mb-1 md:mb-2 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`}>5년납 연금보험</p>
+                                <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-2 md:mb-4 leading-tight ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.1s'}}>
+                                  10년시점 <span className="text-pink-500">133%</span> 환급률
+                                </h2>
+                                <p className={`text-sm md:text-base lg:text-lg text-gray-600 mb-3 md:mb-5 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
+                                  Plus PRO 연금보험으로 목돈마련과 노후준비를 동시에
+                                </p>
+                                
+                                {/* 체크리스트 */}
+                                <ul className={`space-y-2 md:space-y-3 mb-4 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.3s'}}>
+                                  {slogan.features.slice(0, 3).map((feature, idx) => (
+                                    <li key={idx} className="flex items-center justify-center lg:justify-start text-xs md:text-sm lg:text-base text-gray-700">
+                                      <span className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center text-xs mr-2 md:mr-3 flex-shrink-0">✓</span>
+                                      <span>{feature}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                                
+                                {/* 버튼 */}
+                                <div className={`${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.4s'}}>
+                                  <Link 
+                                    href={slogan.path}
+                                    className="inline-flex items-center px-6 md:px-8 py-3 md:py-4 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-xl text-sm md:text-base transition-all shadow-lg shadow-pink-500/25"
+                                  >
+                                    자세히 보기
+                                    <ArrowRightIcon className="w-4 h-4 md:w-5 md:h-5 ml-2" />
+                                  </Link>
+                                </div>
+                              </div>
+                              
+                              {/* 오른쪽: 핵심 정보 카드 */}
+                              <div className={`w-full max-w-sm md:max-w-md lg:max-w-lg ${isActive ? 'animate-fade-in' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
+                                <div className="bg-white rounded-2xl shadow-xl p-5 md:p-6 lg:p-8 border border-gray-100">
+                                  <div className="text-center mb-4 md:mb-5">
+                                    <div className="inline-block bg-pink-100 text-pink-700 text-xs md:text-sm font-bold px-3 py-1 rounded-full mb-2">NEW 출시</div>
+                                    <h3 className="text-base md:text-lg lg:text-xl font-bold text-gray-900">해약환급률 (5년납 기준)</h3>
+                                  </div>
+                                  
+                                  <div className="space-y-3 md:space-y-4">
+                                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-100">
+                                      <span className="text-gray-500 text-sm md:text-base">7년시점 <span className="text-pink-600">(보증)</span></span>
+                                      <span className="text-base md:text-lg font-bold text-gray-900">100%</span>
+                                    </div>
+                                    <div className="flex justify-between items-center py-3 md:py-4 bg-pink-50 rounded-xl px-3 md:px-4 -mx-2">
+                                      <span className="text-pink-700 text-sm md:text-base font-medium">10년시점 <span className="text-pink-600">(보증)</span></span>
+                                      <span className="text-2xl md:text-3xl font-black text-pink-600">133%</span>
+                                    </div>
+                                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-100">
+                                      <span className="text-gray-500 text-sm md:text-base">연금개시시점 <span className="text-pink-600">(보증)</span></span>
+                                      <span className="text-base md:text-lg font-bold text-gray-900">2.0%</span>
+                                    </div>
+                                  </div>
+                                  
+                                  <p className="text-xs md:text-sm text-gray-400 text-center mt-4">※ 남자 40세, 월 50만원, 60세 연금개시 기준</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         ) : slogan.id === 'kb-triple-level-up' ? (
                           /* KB 트리플 레벨업 - 하이브리드 스타일 */
                           <div className="max-w-7xl mx-auto px-4 lg:px-8 py-2 md:py-0">
@@ -371,6 +444,7 @@ export default function HomePage() {
                                         slogan.id === 'kdb-happy-dream' ? 'bg-purple-100 text-purple-600' :
                                         slogan.id === 'shinhan-more-the-dream' ? 'bg-red-100 text-red-600' :
                                         slogan.id === 'hana-hanaro' ? 'bg-teal-100 text-teal-600' :
+                                        slogan.id === 'im-plus-pro' ? 'bg-pink-100 text-pink-600' :
                                         'bg-gray-100 text-gray-600'
                                       }`}>✓</span>
                                       <span>{feature}</span>
@@ -389,6 +463,7 @@ export default function HomePage() {
                                       slogan.id === 'kdb-happy-dream' ? 'bg-purple-500 hover:bg-purple-600 shadow-purple-500/25' :
                                       slogan.id === 'shinhan-more-the-dream' ? 'bg-red-500 hover:bg-red-600 shadow-red-500/25' :
                                       slogan.id === 'hana-hanaro' ? 'bg-teal-500 hover:bg-teal-600 shadow-teal-500/25' :
+                                      slogan.id === 'im-plus-pro' ? 'bg-pink-500 hover:bg-pink-600 shadow-pink-500/25' :
                                       'bg-gray-700 hover:bg-gray-800 shadow-gray-500/25'
                                     }`}
                                   >
@@ -415,6 +490,7 @@ export default function HomePage() {
                                           slogan.id === 'kdb-happy-dream' ? 'bg-purple-500' :
                                           slogan.id === 'shinhan-more-the-dream' ? 'bg-red-500' :
                                           slogan.id === 'hana-hanaro' ? 'bg-teal-500' :
+                                          slogan.id === 'im-plus-pro' ? 'bg-pink-500' :
                                           'bg-gray-500'
                                         }`}></span>
                                         <span className="text-sm md:text-base text-gray-700">{feature}</span>

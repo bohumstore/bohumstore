@@ -1,5 +1,6 @@
 ﻿import React, { useState, useEffect, useRef } from 'react'
-import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
+import { CalculatorIcon, ChatBubbleLeftRightIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/outline";
+import { SparklesIcon, WalletIcon } from "@heroicons/react/24/solid";
 import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
 import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/insurance';
@@ -7,11 +8,11 @@ import FireworksEffect from '@/app/components/shared/FireworksEffect';
 import { trackPremiumCheck } from "@/app/utils/visitorTracking";
 
 // 현재 경로에 맞는 상품 정보 가져오기
-const currentPath = '/insurance/annuity/kb/triple-level-up';
+const currentPath = '/insurance/annuity/im/plus-pro';
 const productConfig = getProductConfigByPath(currentPath);
 
-const INSURANCE_COMPANY_ID = 1; // KB라이프
-const INSURANCE_PRODUCT_ID = 1; // KB 트리플 레벨업 연금보험 id 코드값
+const INSURANCE_COMPANY_ID = 10; // im라이프
+const INSURANCE_PRODUCT_ID = 11; // PlusPRO연금보험 id 코드값
 
 type SloganProps = {
   onOpenPrivacy: () => void
@@ -24,7 +25,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const [gender, setGender] = useState("");
   const [birth, setBirth] = useState("");
   const [phone, setPhone] = useState("");
-  const [paymentPeriod, setPaymentPeriod] = useState("");
+  const [paymentPeriod, setPaymentPeriod] = useState("5년");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [isChecked, setIsChecked] = useState(true);
 
@@ -173,14 +174,14 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   }
 
   const handlePostOTP = async () => {
-    const templateId = getTemplateIdByPath(currentPath)
+    const templateId = 'UB_8712'
     console.log(`[CLIENT] 인증번호 전송 시작: ${new Date().toISOString()}`);
     try {
       const response = await request.post('/api/postOTP', { 
         phone, 
         templateId,
-        companyName: "KB라이프",
-        productName: "트리플 레벨업 연금보험"
+        companyName: "im라이프",
+        productName: "PlusPRO연금보험"
       })
       console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
       setOtpSent(true)
@@ -355,7 +356,19 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const handleConsultSendOTP = async () => {
     setConsultOtpTimer(180);
     setConsultOtpResendAvailable(false);
-    await handlePostOTP();
+    try {
+      const response = await request.post('/api/postOTP', {
+        phone,
+        templateId: 'UB_8715',
+        companyName: "im라이프",
+        productName: "PlusPRO연금보험"
+      });
+      setOtpSent(true);
+      alert('인증번호가 전송되었습니다.');
+    } catch (e: any) {
+      console.error('[CLIENT] 상담용 인증번호 전송 실패:', e);
+      alert('인증번호 전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    }
     setTimeout(() => {
       consultOtpInputRef.current?.focus();
       consultOtpInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -454,19 +467,17 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   }
   const months = parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12;
   const total = (!isNaN(amount) && !isNaN(months) && amount > 0 && months > 0) ? amount * months : 0;
-  let rate = 1.3, interestRate = 0.3;
-  if (paymentPeriod.includes('5')) { rate = 1.3; interestRate = 0.3; }
-  else if (paymentPeriod.includes('7')) { rate = 1.25; interestRate = 0.25; }
-  else if (paymentPeriod.includes('10')) { rate = 1.2; interestRate = 0.2; }
+  const rate = 1.33; // 133%
+  const interestRate = 0.33; // 33%
   const interestValue = total ? (total * interestRate).toLocaleString('en-US') : '-';
   const refundValue = total ? (total * rate).toLocaleString('en-US') : '-';
 
   return (
     <>
       <section
-        className="w-full bg-[#ffe15a] py-6 md:py-6 lg:py-3 lg:min-h-[600px] lg:flex lg:items-center"
+        className="w-full bg-[#eaf4ff] py-6 md:py-6 lg:py-3 lg:min-h-[600px] lg:flex lg:items-center"
         style={{
-          backgroundImage: 'radial-gradient(#f8d34a 2px, transparent 2px)',
+          backgroundImage: 'radial-gradient(#dbeafe 2px, transparent 2px)',
           backgroundSize: '20px 20px',
         }}
       >
@@ -474,45 +485,44 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-              <span className="font-semibold">KB라이프생명</span>
+              <span className="font-semibold">IM라이프생명</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 lg:mb-4 leading-tight">
-              KB 트리플 레벨업<br />
-              연금보험 무배당(보증형)
+              <span>Plus PRO연금보험</span><br />
+              <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl">무배당 2604(보증비용부과형)</span>
             </h1>
             <ul className="mb-6 sm:mb-8 md:mb-10 lg:mb-8 space-y-1.5 sm:space-y-2 md:space-y-3 lg:space-y-2">
               <li className="flex items-start text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="hidden lg:block text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#22c55e] mt-0.5 sm:mt-1">✔</span>
+                <span className="hidden lg:block text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-blue-600 mt-0.5 sm:mt-1">✔</span>
                 <div className="text-center md:text-center lg:text-left leading-tight sm:leading-normal">
-                  <span className="text-[#e23c3c] font-semibold">트리플 레벨업 보증</span>으로<br />
-                  <span className="text-[#3a4ca8] font-semibold">7년/10년/연금개시시점</span> 적립액 보증<br />
-                  <span className="text-xs sm:text-xs md:text-sm lg:text-xs align-baseline text-gray-600">(보증형에 한함)</span>
+                  <span className="text-blue-700 font-semibold">목돈마련, 노후준비를 동시에!</span><br />
+                  <span className="text-rose-600 font-semibold">7년/10년/연금개시시점</span> <span className="text-sm">최저계약자적립액 보증</span><br />
                 </div>
               </li>
               <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
-                가입&nbsp;<span className="text-[#3a4ca8] font-semibold">0~70세</span>&nbsp;/&nbsp;연금개시&nbsp;<span className="text-[#3a4ca8] font-semibold">45~85세</span>
+                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-blue-600">✔</span>
+                가입연령:&nbsp;<span className="text-blue-700 font-semibold">0~70세</span><br />
+              </li>
+              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">  
+                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-blue-600">✔</span>
+                연금개시:&nbsp;<span className="text-blue-700 font-semibold">45~85세</span>(개인형)
               </li>
               <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
-                <span className="text-[#3a4ca8] font-semibold">비과세</span>&nbsp;<span className="text-xs sm:text-xs md:text-sm lg:text-xs align-baseline text-gray-600">(월 150만원 한도, 10년유지 세법요건 충족시)</span>
+                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-blue-600">✔</span>
+                <span className="text-rose-600 font-semibold">비과세</span>&nbsp;<span className="text-xs sm:text-xs md:text-sm lg:text-xs align-baseline text-gray-600">(월 150만원 한도, 10년유지 세법요건 충족시)</span>
               </li>
               <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start lg:pr-8">
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-[#22c55e]">✔</span>
-                <span className="text-[#e23c3c] font-semibold">병력 무심사</span>&nbsp;/&nbsp;<span className="text-[#e23c3c] font-semibold">전건 가입가능!</span>
+                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-blue-600">✔</span>
+                <span className="text-rose-600 font-semibold">병력 무심사</span>&nbsp;/&nbsp;<span className="text-rose-600 font-semibold">전건 가입가능!</span>
               </li>
             </ul>
               {/* 환급률/적립액 안내 UI */}
               <div className="relative">
                 {/* KB 상품 이미지 - 설명박스 위에 떠있게 배치 */}
-                <img 
-                  src="/kb-9-1.png" 
-                  alt="KB 트리플 레벨업 상품 안내" 
-                  className="absolute -top-12 right-0 md:-top-10 md:right-1 lg:-top-16 lg:right-2 h-auto z-20 rounded-lg w-[70px] sm:w-[75px] md:w-[80px] lg:w-[85px] xl:w-[90px] animate-[wobble-shake_2s_ease-in-out_infinite]"
-                />
-                <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-3 sm:mb-4 p-2 sm:p-3 md:p-4 lg:p-3 px-2 sm:px-3 md:px-4 lg:px-3 pt-3 sm:pt-4 md:pt-5 lg:pt-5 pb-3 sm:pb-4 md:pb-5 lg:pb-5">
-                <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-2 mb-2">
-                  <div className="text-center px-1 sm:px-2">
+                
+                <div className="w-full max-w-3xl lg:max-w-4xl mx-auto bg-white rounded-xl shadow-lg mb-3 sm:mb-4 p-4 sm:p-5 md:p-6 lg:p-6 px-4 sm:px-5 md:px-6 lg:px-6 pt-4 sm:pt-5 md:pt-6 lg:pt-6 pb-4 sm:pb-5 md:pb-6 lg:pb-6">
+                <div className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-4 lg:gap-6 mb-2">
+                  <div className="text-center px-2 sm:px-3 md:px-4">
                     <div className="text-orange-600 text-sm sm:text-base md:text-base font-bold mb-1 sm:mb-2 tracking-wide relative">
                       <span className="relative inline-block px-1" style={{
                         background: 'linear-gradient(transparent 70%, #fef3cd 70%, #fef3cd 100%, transparent 100%)'
@@ -520,17 +530,17 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                         보증 1
                       </span>
                     </div>
-                    <div className="inline-block bg-gradient-to-b from-[#ff8c1a] via-[#f97316] to-[#ea580c] text-white text-xs sm:text-sm md:text-base font-bold px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg mb-2 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
-                      boxShadow: '0 6px 12px rgba(234, 88, 12, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
-                    }}>7년 시점</div>
+                    <div className="inline-block bg-white text-gray-800 text-xs sm:text-sm md:text-base font-semibold px-3 py-1.5 rounded-md mb-2 border border-gray-200 whitespace-nowrap">7년 시점</div>
                     <div className="flex flex-col items-center">
-                      <img src="/images/Piggy_bank_perspective_matte.png" alt="저금통" className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 mb-1 sm:mb-2 mx-auto" />
-                      <div className="font-bold text-xs sm:text-xs md:text-sm">환급률</div>
+                      <div className="relative overflow-hidden mb-1 sm:mb-2 flex items-center justify-center rounded-full bg-orange-100 ring-1 ring-orange-200/60 w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 shadow-sm before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:animate-[shine-inline_1.5s_linear_infinite] before:skew-x-12">
+                        <img src="/images/im-img1.png" alt="보증 1" className="w-7 h-7 sm:w-9 sm:h-9 md:w-12 md:h-12 object-contain" />
+                      </div>
+                      <div className="font-bold text-xs sm:text-xs md:text-sm">기준 기본보험료</div>
                       <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#ff8c1a]">100%</div>
-                      <div className="text-xs text-gray-500 mt-1">* 5년납</div>
+                      <div className="text-xs text-gray-500 mt-1"></div>
                     </div>
                   </div>
-                  <div className="text-center px-1 sm:px-2">
+                  <div className="text-center px-2 sm:px-3 md:px-4">
                     <div className="text-pink-600 text-sm sm:text-base md:text-base font-bold mb-1 sm:mb-2 tracking-wide relative">
                       <span className="relative inline-block px-1" style={{
                         background: 'linear-gradient(transparent 70%, #fdf2f8 70%, #fdf2f8 100%, transparent 100%)'
@@ -538,19 +548,17 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                         보증 2
                       </span>
                     </div>
-                    <div className="inline-block bg-gradient-to-b from-[#e23c3c] via-[#dc2626] to-[#b91c1c] text-white text-xs sm:text-sm md:text-base font-bold px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg mb-2 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
-                      boxShadow: '0 6px 12px rgba(185, 28, 28, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
-                    }}>10년 시점</div>
+                    <div className="inline-block bg-white text-gray-800 text-xs sm:text-sm md:text-base font-semibold px-3 py-1.5 rounded-md mb-2 border border-gray-200 whitespace-nowrap">10년 시점</div>
                     <div className="flex flex-col items-center">
-                      <div className="relative overflow-hidden rounded-full w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 mb-1 sm:mb-2 mx-auto before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:animate-[shine-inline_1.5s_linear_infinite] before:skew-x-12">
-                        <img src="/images/Money_bag_perspective_matte.png" alt="돈자루" className="w-full h-full object-contain" />
+                      <div className="relative overflow-hidden mb-1 sm:mb-2 flex items-center justify-center rounded-full bg-rose-100 ring-1 ring-rose-200/60 w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 shadow-sm before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:animate-[shine-inline_1.5s_linear_infinite] before:skew-x-12">
+                        <img src="/images/im-img2.png" alt="보증 2" className="w-7 h-7 sm:w-9 sm:h-9 md:w-12 md:h-12 object-contain" />
                       </div>
-                      <div className="font-bold text-xs sm:text-xs md:text-sm">환급률</div>
-                      <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#e23c3c] animate-[jump-glow_1.2s_ease-in-out_infinite]">130%</div>
-                      <div className="text-xs text-gray-500 mt-1 whitespace-nowrap">* 5년납</div>
+                      <div className="font-bold text-xs sm:text-xs md:text-sm">기준 기본보험료</div>
+                      <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-pink-600 animate-[jump-glow_1.2s_ease-in-out_infinite]">133%</div>
+                      <div className="text-xs text-gray-500 mt-1 whitespace-nowrap"></div>
                     </div>
                   </div>
-                  <div className="text-center px-1 sm:px-2">
+                  <div className="text-center px-2 sm:px-3 md:px-4">
                     <div className="text-blue-600 text-sm sm:text-base md:text-base font-bold mb-1 sm:mb-2 tracking-wide relative">
                       <span className="relative inline-block px-1" style={{
                         background: 'linear-gradient(transparent 70%, #dbeafe 70%, #dbeafe 100%, transparent 100%)'
@@ -558,19 +566,19 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                         보증 3
                       </span>
                     </div>
-                    <div className="inline-block bg-gradient-to-b from-[#3a80e0] via-[#2563eb] to-[#1d4ed8] text-white text-xs sm:text-xs md:text-base font-bold px-1.5 sm:px-2 py-1.5 sm:py-2 rounded-lg mb-2 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
-                      boxShadow: '0 6px 12px rgba(29, 78, 216, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
-                    }}>연금개시 시점</div>
+                    <div className="inline-block bg-white text-gray-800 text-xs sm:text-xs md:text-base font-semibold px-2 py-1.5 rounded-md mb-2 border border-gray-200 whitespace-nowrap">연금개시 시점</div>
                     <div className="flex flex-col items-center">
-                      <img src="/images/Clock_perspective_matte.png" alt="시계" className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 mb-1 sm:mb-2 mx-auto" />
-                      <div className="font-bold text-xs sm:text-xs md:text-sm">계약자적립액</div>
-                      <div className="text-xl sm:text-2xl md:text-4xl font-extrabold text-[#3a80e0]">2.0%</div>
-                      <div className="text-xs text-gray-500 mt-1 text-center lg:whitespace-nowrap">(연금을 개시하는 경우에 한함)</div>
+                      <div className="relative overflow-hidden mb-1 sm:mb-2 flex items-center justify-center rounded-full bg-blue-100 ring-1 ring-blue-200/60 w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 shadow-sm before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:animate-[shine-inline_1.5s_linear_infinite] before:skew-x-12">
+                        <img src="/images/im-img3.png" alt="보증 3" className="w-7 h-7 sm:w-9 sm:h-9 md:w-12 md:h-12 object-contain" />
+                      </div>
+                      <div className="font-bold text-xs sm:text-xs md:text-sm">기준 기본보험료</div>
+                      <div className="text-[10px] sm:text-[11px] md:text-xs font-bold text-[#3a80e0] leading-tight mt-1">
+                        (연금개시전<br />
+                        보험기간-10)×2%
+                      </div>
+                      <div className="text-xs text-gray-500 mt-0.5"></div>
                     </div>
                   </div>
-                </div>
-                <div className="text-xs text-gray-500 text-center mt-1 sm:mt-2">
-                  <p>* 트리플 레벨업 보증률 반영 (보증형에 한함)</p>
                 </div>
               </div>
             </div>
@@ -581,7 +589,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-5 sm:p-6 md:p-7 relative flex flex-col">
               <div className="mb-5 sm:mb-6">
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-gradient-to-br from-[#f97316] to-[#ea580c] rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] rounded-lg flex items-center justify-center">
                     <CalculatorIcon className="w-4 h-4 text-white" />
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold text-gray-900">해약환급금 계산하기</h3>
@@ -594,11 +602,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">성별 <span className="text-red-500">*</span></label>
                     <div className="flex gap-2">
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#3b82f6] bg-[#3b82f6]/5 text-[#2563eb]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
                         <span className="text-sm font-medium">남자</span>
                       </label>
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#3b82f6] bg-[#3b82f6]/5 text-[#2563eb]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="F" checked={gender === "F"} onChange={handleGenderChange} className="sr-only" />
                         <span className="text-sm font-medium">여자</span>
                       </label>
@@ -606,7 +614,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">이름 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="홍길동" />
+                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#3b82f6]/20 focus:border-[#3b82f6] transition-all" placeholder="홍길동" />
                   </div>
                 </div>
 
@@ -614,25 +622,25 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">생년월일 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="19880818" maxLength={8} />
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#3b82f6]/20 focus:border-[#3b82f6] transition-all" placeholder="19880818" maxLength={8} />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">연락처 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="01012345678" />
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#3b82f6]/20 focus:border-[#3b82f6] transition-all" placeholder="01012345678" />
                   </div>
                 </div>
 
                 {/* 납입기간 */}
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1.5">납입기간</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {['5년', '7년', '10년'].map((period) => (
-                      <label key={period} className="relative cursor-pointer">
-                        {period === '5년' && (
-                          <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#f97316] to-[#ea580c] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
-                        )}
+                  <div className="flex justify-center">
+                    {['5년'].map((period) => (
+                      <label key={period} className="relative cursor-pointer w-2/3">
                         <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                        {period === '5년' && (
+                          <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#2563eb] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">고정</span>
+                        )}
+                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#3b82f6] bg-[#3b82f6]/5 text-[#2563eb] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
                           {period}
                         </div>
                       </label>
@@ -647,7 +655,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     {['30만원', '50만원', '70만원', '100만원', '130만원', '150만원'].map((amount) => (
                       <label key={amount} className="cursor-pointer">
                         <input type="radio" name="paymentAmount" value={amount} checked={paymentAmount === amount} onChange={handlePaymentAmountChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#3b82f6] bg-[#3b82f6]/5 text-[#2563eb] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
                           {amount}
                         </div>
                       </label>
@@ -657,16 +665,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 개인정보 동의 */}
                 <div className="flex items-center gap-2">
-                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-[#f97316] rounded border-gray-300 cursor-pointer focus:ring-[#f97316]" />
+                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-[#2563eb] rounded border-gray-300 cursor-pointer focus:ring-[#2563eb]" />
                   <span className="text-xs text-gray-600">
                     개인정보 수집 및 이용에 동의합니다. 
-                    <button type="button" onClick={onOpenPrivacy} className="text-[#f97316] underline ml-1 hover:text-[#ea580c]">자세히 보기</button>
+                    <button type="button" onClick={onOpenPrivacy} className="text-[#2563eb] underline ml-1 hover:text-[#1d4ed8]">자세히 보기</button>
                   </span>
                 </div>
 
                 {/* 버튼들 */}
                 <div className="flex flex-col gap-2 mt-1">
-                  <button type="submit" className="w-full bg-gradient-to-r from-[#f97316] to-[#ea580c] text-white font-bold rounded-xl py-3.5 text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#f97316]/25 cursor-pointer">
+                  <button type="submit" className="w-full bg-gradient-to-r from-[#3b82f6] to-[#1d4ed8] text-white font-bold rounded-xl py-3.5 text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#3b82f6]/25 cursor-pointer">
                     <CalculatorIcon className="w-5 h-5" />
                     해약환급금 확인하기
                   </button>
@@ -737,13 +745,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
-                    <span className="font-bold text-[#3a8094]">KB라이프</span>
+                    <span className="font-bold text-[#3a8094]">im라이프</span>
                   </div>
                 </div>
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
-                    <span className="font-bold text-[#3a8094]">KB트리플레벨업연금보험</span>
+                    <span className="font-bold text-[#3a8094]">PlusPRO연금보험</span>
                   </div>
                 </div>
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
@@ -816,13 +824,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
-                    <span className="font-bold text-[#3a8094]">KB라이프</span>
+                    <span className="font-bold text-[#3a8094]">im라이프</span>
                   </div>
                 </div>
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
-                    <span className="font-bold text-[#3a8094]">KB트리플레벨업연금보험</span>
+                    <span className="font-bold text-[#3a8094]">PlusPRO연금보험</span>
                   </div>
                 </div>
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
