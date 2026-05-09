@@ -11,6 +11,7 @@ import ProductInfo from "./components/BodyTabViews/ProductInfo";
 import CoverageDetails from "./components/BodyTabViews/CoverageDetails";
 import Surrender from "./components/BodyTabViews/Surrender";
 import { trackPageVisit } from "../../../../utils/visitorTracking";
+import TerminationNoticePopup from "@/app/components/TerminationNoticePopup";
 
 export default function IMPlusPROAnnuityPage() {
   const tabs = [
@@ -59,6 +60,11 @@ export default function IMPlusPROAnnuityPage() {
 
   return (
     <>
+      {/* 판매 종료 팝업 */}
+      <TerminationNoticePopup 
+        productName="IM Plus PRO 연금보험"
+        endDate="2026-05-15"
+      />
 
       <Notice open={showNotice} onClose={() => setShowNotice(false)} />
       <Modal title="개인정보 수집 및 이용 동의" open={showPrivacy} onClose={() => setShowPrivacy(false)}>

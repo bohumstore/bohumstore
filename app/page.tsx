@@ -6,6 +6,7 @@ import Image from "next/image";
 import { ArrowRightIcon, ChevronLeftIcon, ShieldCheckIcon, CurrencyDollarIcon, ChartBarIcon, PlayIcon, PauseIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import { trackPageVisit } from "./utils/visitorTracking";
 import { slogans, mainProducts, chatScenarios, type ChatScenario } from "./data/home-data";
+import TerminationNoticePopup from "./components/TerminationNoticePopup";
 
 // 보험 특징 - 이 컴포넌트 내에서만 사용하므로 여기 유지
 const insuranceFeatures = [
@@ -141,6 +142,11 @@ export default function HomePage() {
 
   return (
     <div className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full">
+      {/* 판매 종료 팝업 */}
+      <TerminationNoticePopup 
+        productName="IM Plus PRO 연금보험"
+        endDate="2026-05-15"
+      />
       
       {/* 슬로건 캐러셀 섹션 - 화면 전체를 채우는 히어로 배너 */}
       <section
