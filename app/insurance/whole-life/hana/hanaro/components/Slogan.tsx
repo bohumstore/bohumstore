@@ -478,23 +478,71 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const months = parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12;
   const total = (!isNaN(amount) && !isNaN(months) && amount > 0 && months > 0) ? amount * months : 0;
   
-  // 환급률 계산 (10년 시점 기준)
-  let rate = 1.2278, interestRate = 0.2278; // 기본값: 5년납
-  if (paymentPeriod.includes('5')) { 
-    rate = 1.2278; // 122.78%
-    interestRate = 0.2278; // 22.78%
-  }
-  else if (paymentPeriod.includes('7')) { 
-    rate = 1.1958; // 119.58%
-    interestRate = 0.1958; // 19.58%
-  }
-  else if (paymentPeriod.includes('10')) { 
-    rate = 1.1499; // 114.99%
-    interestRate = 0.1499; // 14.99%
-  }
+  // 실제 해약환급금 예시표 기반 계산 (10년 시점, 1형 일반심사형 기준)
+  // 기준: 40세 남자, 5,000만원 가입금액
+  const getRefundData = (period: string, monthlyAmount: string) => {
+    // 5년납 기준 데이터 (40세 남자, 1형)
+    if (period.includes('5')) {
+      if (monthlyAmount === '30만원') {
+        // 월 30만원 = 총 1,800만원 납입
+        // 예시표 기준: 47,220,000원 납입 시 56,914,266원 환급 (120.53%)
+        // 비율 계산: 1,800만원 / 4,722만원 = 0.381
+        const totalPaid = 18000000;
+        const refund = 21695437; // 56,914,266 * 0.381
+        return { totalPaid, refund, rate: 1.2053 };
+      } else if (monthlyAmount === '50만원') {
+        // 월 50만원 = 총 3,000만원 납입
+        // 비율: 3,000만원 / 4,722만원 = 0.635
+        const totalPaid = 30000000;
+        const refund = 36140559; // 56,914,266 * 0.635
+        return { totalPaid, refund, rate: 1.2047 };
+      } else if (monthlyAmount === '100만원') {
+        // 월 100만원 = 총 6,000만원 납입
+        // 비율: 6,000만원 / 4,722만원 = 1.271
+        const totalPaid = 60000000;
+        const refund = 72337044; // 56,914,266 * 1.271
+        return { totalPaid, refund, rate: 1.2056 };
+      }
+    }
+    // 7년납 기준 데이터 (40세 남자, 1형)
+    else if (period.includes('7')) {
+      if (monthlyAmount === '30만원') {
+        // 월 30만원 = 총 2,520만원 납입
+        // 예시표 기준: 49,770,000원 납입 시 58,559,382원 환급 (117.66%)
+        // 비율: 2,520만원 / 4,977만원 = 0.506
+        const totalPaid = 25200000;
+        const refund = 29647047; // 58,559,382 * 0.506
+        return { totalPaid, refund, rate: 1.1765 };
+      } else if (monthlyAmount === '50만원') {
+        // 월 50만원 = 총 4,200만원 납입
+        // 비율: 4,200만원 / 4,977만원 = 0.844
+        const totalPaid = 42000000;
+        const refund = 49424118; // 58,559,382 * 0.844
+        return { totalPaid, refund, rate: 1.1767 };
+      } else if (monthlyAmount === '100만원') {
+        // 월 100만원 = 총 8,400만원 납입
+        // 비율: 8,400만원 / 4,977만원 = 1.688
+        const totalPaid = 84000000;
+        const refund = 98856237; // 58,559,382 * 1.688
+        return { totalPaid, refund, rate: 1.1769 };
+      }
+    }
+    // 10년납 기준 (10년 시점 환급률 113.53%)
+    else if (period.includes('10')) {
+      const rate = 1.1353;
+      return { totalPaid: total, refund: total * rate, rate };
+    }
+    return { totalPaid: total, refund: total * 1.2053, rate: 1.2053 };
+  };
   
-  const interestValue = total ? (total * interestRate).toLocaleString('en-US') : '-';
-  const refundValue = total ? (total * rate).toLocaleString('en-US') : '-';
+  const refundData = getRefundData(paymentPeriod, paymentAmount);
+  const rate = refundData.rate;
+  const interestRate = rate - 1;
+  const actualRefund = refundData.refund;
+  const actualInterest = actualRefund - refundData.totalPaid;
+  
+  const interestValue = actualInterest > 0 ? actualInterest.toLocaleString('en-US') : '-';
+  const refundValue = actualRefund > 0 ? actualRefund.toLocaleString('en-US') : '-';
 
   return (
     <>
@@ -525,7 +573,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#22c55e] flex-shrink-0">✔</span>
-                <span className="leading-tight">10년 시점 환급금 <span className="text-orange-600 font-semibold">122.78%</span> <span className="text-[10px] sm:text-xs text-gray-500">(5년납,1형 기준)</span></span>
+                <span className="leading-tight">10년 시점 환급금 <span className="text-orange-600 font-semibold">120.53%</span> <span className="text-[10px] sm:text-xs text-gray-500">(5년납,1형 기준)</span></span>
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#22c55e] flex-shrink-0">✔</span>
@@ -566,7 +614,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     }}>10년 시점</div>
                     <div className="flex flex-col items-center">
                       <div className="font-bold text-xs sm:text-sm mb-0.5 sm:mb-1">환급률</div>
-                      <div className="text-base sm:text-lg md:text-xl font-extrabold text-[#f59e0b] animate-[jump-glow_1.2s_ease-in-out_infinite]">122.78%</div>
+                      <div className="text-base sm:text-lg md:text-xl font-extrabold text-[#f59e0b] animate-[jump-glow_1.2s_ease-in-out_infinite]">120.53%</div>
                       <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">유지보너스2</div>
                     </div>
                   </div>
@@ -578,7 +626,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     }}>15년 시점</div>
                     <div className="flex flex-col items-center">
                       <div className="font-bold text-xs sm:text-sm mb-0.5 sm:mb-1">환급률</div>
-                      <div className="text-base sm:text-lg md:text-xl font-extrabold text-[#14b8a6]">132.12%</div>
+                      <div className="text-base sm:text-lg md:text-xl font-extrabold text-[#14b8a6]">132.71%</div>
                       <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">유지보너스3</div>
                     </div>
                   </div>

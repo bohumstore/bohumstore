@@ -464,10 +464,18 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   return (
     <>
       <section
-        className="w-full bg-[#ffe15a] py-6 md:py-6 lg:py-3 lg:min-h-[600px] lg:flex lg:items-center"
+        className="w-full bg-gradient-to-br from-[#fff9e6] via-[#fff4cc] to-[#ffecb3] py-6 md:py-6 lg:py-3 lg:min-h-[600px] lg:flex lg:items-center relative overflow-hidden"
         style={{
-          backgroundImage: 'radial-gradient(#f8d34a 2px, transparent 2px)',
-          backgroundSize: '20px 20px',
+          backgroundImage: `
+            radial-gradient(circle at 18% 22%, rgba(245, 158, 11, 0.14) 0%, transparent 42%),
+            radial-gradient(circle at 82% 78%, rgba(251, 191, 36, 0.16) 0%, transparent 46%),
+            radial-gradient(circle at 50% 50%, rgba(252, 211, 77, 0.1) 0%, transparent 55%),
+            radial-gradient(2px 2px at 25% 35%, rgba(217, 119, 6, 0.25) 0%, transparent 100%),
+            radial-gradient(2px 2px at 65% 65%, rgba(217, 119, 6, 0.25) 0%, transparent 100%),
+            radial-gradient(2px 2px at 85% 25%, rgba(217, 119, 6, 0.25) 0%, transparent 100%)
+          `,
+          backgroundSize: '100% 100%, 100% 100%, 100% 100%, 90px 90px, 90px 90px, 90px 90px',
+          backgroundPosition: '0 0, 0 0, 0 0, 0 0, 45px 45px, 22px 68px',
         }}
       >
         <div className="max-w-6xl mx-auto flex flex-col md:flex-col lg:flex-row items-center md:items-center lg:items-start justify-center lg:justify-between gap-4 md:gap-8 lg:gap-12 px-4 md:px-6 lg:px-4 md:py-4 lg:py-4">
@@ -504,24 +512,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             </ul>
               {/* 환급률/적립액 안내 UI */}
               <div className="relative">
-                {/* KB 상품 이미지 - 설명박스 위에 떠있게 배치 */}
-                <img 
-                  src="/kb-9-1.png" 
-                  alt="KB 트리플 레벨업 상품 안내" 
-                  className="absolute -top-12 right-0 md:-top-10 md:right-1 lg:-top-16 lg:right-2 h-auto z-20 rounded-lg w-[70px] sm:w-[75px] md:w-[80px] lg:w-[85px] xl:w-[90px] animate-[wobble-shake_2s_ease-in-out_infinite]"
-                />
-                <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-3 sm:mb-4 p-2 sm:p-3 md:p-4 lg:p-3 px-2 sm:px-3 md:px-4 lg:px-3 pt-3 sm:pt-4 md:pt-5 lg:pt-5 pb-3 sm:pb-4 md:pb-5 lg:pb-5">
+                <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl mb-3 sm:mb-4 p-2 sm:p-3 md:p-4 lg:p-3 px-2 sm:px-3 md:px-4 lg:px-3 pt-3 sm:pt-4 md:pt-5 lg:pt-5 pb-3 sm:pb-4 md:pb-5 lg:pb-5 border-2 border-yellow-200">
                 <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-2 mb-2">
                   <div className="text-center px-1 sm:px-2">
                     <div className="text-orange-600 text-sm sm:text-base md:text-base font-bold mb-1 sm:mb-2 tracking-wide relative">
-                      <span className="relative inline-block px-1" style={{
-                        background: 'linear-gradient(transparent 70%, #fef3cd 70%, #fef3cd 100%, transparent 100%)'
-                      }}>
+                      <span className="relative inline-block px-2 py-1 bg-orange-100 rounded-full">
                         보증 1
                       </span>
                     </div>
-                    <div className="inline-block bg-gradient-to-b from-[#ff8c1a] via-[#f97316] to-[#ea580c] text-white text-xs sm:text-sm md:text-base font-bold px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg mb-2 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
-                      boxShadow: '0 6px 12px rgba(234, 88, 12, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
+                    <div className="inline-block bg-gradient-to-r from-[#ff8c1a] to-[#f97316] text-white text-xs sm:text-sm md:text-base font-bold px-2 sm:px-4 py-1.5 sm:py-2 rounded-full mb-2 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap shadow-lg" style={{
+                      boxShadow: '0 4px 15px rgba(249, 115, 22, 0.4)'
                     }}>7년 시점</div>
                     <div className="flex flex-col items-center">
                       <img src="/images/Piggy_bank_perspective_matte.png" alt="저금통" className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 mb-1 sm:mb-2 mx-auto" />
@@ -532,14 +532,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                   <div className="text-center px-1 sm:px-2">
                     <div className="text-pink-600 text-sm sm:text-base md:text-base font-bold mb-1 sm:mb-2 tracking-wide relative">
-                      <span className="relative inline-block px-1" style={{
-                        background: 'linear-gradient(transparent 70%, #fdf2f8 70%, #fdf2f8 100%, transparent 100%)'
-                      }}>
+                      <span className="relative inline-block px-2 py-1 bg-pink-100 rounded-full">
                         보증 2
                       </span>
                     </div>
-                    <div className="inline-block bg-gradient-to-b from-[#e23c3c] via-[#dc2626] to-[#b91c1c] text-white text-xs sm:text-sm md:text-base font-bold px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg mb-2 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
-                      boxShadow: '0 6px 12px rgba(185, 28, 28, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
+                    <div className="inline-block bg-gradient-to-r from-[#e23c3c] to-[#dc2626] text-white text-xs sm:text-sm md:text-base font-bold px-2 sm:px-4 py-1.5 sm:py-2 rounded-full mb-2 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap shadow-lg" style={{
+                      boxShadow: '0 4px 15px rgba(220, 38, 38, 0.4)'
                     }}>10년 시점</div>
                     <div className="flex flex-col items-center">
                       <div className="relative overflow-hidden rounded-full w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 mb-1 sm:mb-2 mx-auto before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:animate-[shine-inline_1.5s_linear_infinite] before:skew-x-12">
@@ -552,14 +550,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                   <div className="text-center px-1 sm:px-2">
                     <div className="text-blue-600 text-sm sm:text-base md:text-base font-bold mb-1 sm:mb-2 tracking-wide relative">
-                      <span className="relative inline-block px-1" style={{
-                        background: 'linear-gradient(transparent 70%, #dbeafe 70%, #dbeafe 100%, transparent 100%)'
-                      }}>
+                      <span className="relative inline-block px-2 py-1 bg-blue-100 rounded-full">
                         보증 3
                       </span>
                     </div>
-                    <div className="inline-block bg-gradient-to-b from-[#3a80e0] via-[#2563eb] to-[#1d4ed8] text-white text-xs sm:text-xs md:text-base font-bold px-1.5 sm:px-2 py-1.5 sm:py-2 rounded-lg mb-2 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
-                      boxShadow: '0 6px 12px rgba(29, 78, 216, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
+                    <div className="inline-block bg-gradient-to-r from-[#3a80e0] to-[#2563eb] text-white text-xs sm:text-xs md:text-base font-bold px-1.5 sm:px-2 py-1.5 sm:py-2 rounded-full mb-2 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap shadow-lg" style={{
+                      boxShadow: '0 4px 15px rgba(37, 99, 235, 0.4)'
                     }}>연금개시 시점</div>
                     <div className="flex flex-col items-center">
                       <img src="/images/Clock_perspective_matte.png" alt="시계" className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 mb-1 sm:mb-2 mx-auto" />

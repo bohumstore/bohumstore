@@ -458,18 +458,18 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const total = (!isNaN(amount) && !isNaN(months) && amount > 0 && months > 0) ? amount * months : 0;
   
   // 환급률 계산 (요구사항에 맞게 수정)
-  let rate = 1.227, interestRate = 0.227; // 기본값: 5년납
+  let rate = 1.205, interestRate = 0.205; // 기본값: 5년납
   if (paymentPeriod.includes('5')) { 
-    rate = 1.227; // 122.7%
-    interestRate = 0.227; // 22.7%
+    rate = 1.205; // 120.5%
+    interestRate = 0.205; // 20.5%
   }
   else if (paymentPeriod.includes('7')) { 
-    rate = 1.195; // 119.5%
-    interestRate = 0.195; // 19.5%
+    rate = 1.176; // 117.6%
+    interestRate = 0.176; // 17.6%
   }
   else if (paymentPeriod.includes('10')) { 
-    rate = 1.15; // 115%
-    interestRate = 0.15; // 15%
+    rate = 1.135; // 113.5%
+    interestRate = 0.135; // 13.5%
   }
   
   const interestValue = total ? (total * interestRate).toLocaleString('en-US') : '-';
@@ -479,10 +479,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     <>
       <section
         id="slogan-section"
-        className="w-full bg-[#fce7f3] py-6 md:py-10 lg:py-3"
+        className="w-full bg-gradient-to-br from-[#fff5f7] via-[#ffe8f0] to-[#ffd6e8] py-6 md:py-10 lg:py-3 relative overflow-hidden"
         style={{
-          backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(249, 168, 212, 0.1) 10px, rgba(249, 168, 212, 0.1) 12px)',
-          backgroundSize: '24px 24px',
+          backgroundImage: `
+            radial-gradient(circle at 15% 25%, rgba(251, 113, 133, 0.18) 0%, transparent 45%),
+            radial-gradient(circle at 85% 75%, rgba(251, 191, 36, 0.14) 0%, transparent 48%),
+            radial-gradient(circle at 50% 90%, rgba(248, 113, 113, 0.12) 0%, transparent 42%)
+          `,
         }}
       >
         <div className="max-w-6xl mx-auto flex flex-col md:flex-col lg:flex-row items-center md:items-center lg:items-start justify-center lg:justify-between gap-4 md:gap-8 lg:gap-12 px-4 md:px-6 lg:px-4 md:py-4 lg:py-4">
@@ -500,7 +503,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#0066cc] flex-shrink-0">✔</span>
-                <span className="leading-tight">10년시점 해약환급금 <span className="text-blue-600 font-semibold">122.7%</span> <span className="text-[10px] sm:text-xs text-gray-500">(일반심사형 기준)</span></span>
+                <span className="leading-tight">10년시점 해약환급금 <span className="text-blue-600 font-semibold">120.5%</span> <span className="text-[10px] sm:text-xs text-gray-500">(일반심사형 기준)</span></span>
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#0066cc] flex-shrink-0">✔</span>
@@ -534,7 +537,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                       boxShadow: '0 6px 12px rgba(29, 78, 216, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
                     }}>7년 시점</div>
                     <div className="flex flex-col items-center">
-                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#3b82f6]">93.2%</div>
+                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#3b82f6]">93.0%</div>
                     </div>
                   </div>
 
@@ -544,7 +547,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                       boxShadow: '0 6px 12px rgba(185, 28, 28, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
                     }}>10년 시점</div>
                     <div className="flex flex-col items-center">
-                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#ef4444] animate-[jump-glow_1.2s_ease-in-out_infinite]">122.7%</div>
+                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#ef4444] animate-[jump-glow_1.2s_ease-in-out_infinite]">120.5%</div>
                     </div>
                   </div>
 
@@ -571,7 +574,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-5 sm:p-6 md:p-7 relative flex flex-col">
               <div className="mb-5 sm:mb-6">
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-gradient-to-br from-[#8b5cf6] to-[#7c3aed] rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] rounded-lg flex items-center justify-center">
                     <CalculatorIcon className="w-4 h-4 text-white" />
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold text-gray-900">해약환급금 계산하기</h3>
@@ -584,11 +587,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">성별</label>
                     <div className="flex gap-2">
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#8b5cf6] bg-[#8b5cf6]/5 text-[#8b5cf6]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#2563eb] bg-[#2563eb]/5 text-[#2563eb]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
                         <span className="text-sm font-medium">남자</span>
                       </label>
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#8b5cf6] bg-[#8b5cf6]/5 text-[#8b5cf6]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#2563eb] bg-[#2563eb]/5 text-[#2563eb]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="F" checked={gender === "F"} onChange={handleGenderChange} className="sr-only" />
                         <span className="text-sm font-medium">여자</span>
                       </label>
@@ -596,7 +599,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">이름</label>
-                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#8b5cf6]/20 focus:border-[#8b5cf6] transition-all" placeholder="홍길동" />
+                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#2563eb]/20 focus:border-[#2563eb] transition-all" placeholder="홍길동" />
                   </div>
                 </div>
 
@@ -604,11 +607,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">생년월일</label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#8b5cf6]/20 focus:border-[#8b5cf6] transition-all" placeholder="19880818" maxLength={8} />
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#2563eb]/20 focus:border-[#2563eb] transition-all" placeholder="19880818" maxLength={8} />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">연락처</label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#8b5cf6]/20 focus:border-[#8b5cf6] transition-all" placeholder="01012345678" />
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#2563eb]/20 focus:border-[#2563eb] transition-all" placeholder="01012345678" />
                   </div>
                 </div>
 
@@ -622,7 +625,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                           <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
                         )}
                         <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#8b5cf6] bg-[#8b5cf6]/5 text-[#8b5cf6] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#2563eb] bg-[#2563eb]/5 text-[#2563eb] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
                           {period}
                         </div>
                       </label>
@@ -637,7 +640,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     {['30만원', '50만원', '100만원'].map((amount) => (
                       <label key={amount} className="cursor-pointer">
                         <input type="radio" name="paymentAmount" value={amount} checked={paymentAmount === amount} onChange={handlePaymentAmountChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#8b5cf6] bg-[#8b5cf6]/5 text-[#8b5cf6] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#2563eb] bg-[#2563eb]/5 text-[#2563eb] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
                           {amount}
                         </div>
                       </label>
@@ -647,16 +650,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 개인정보 동의 */}
                 <div className="flex items-center gap-2">
-                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-[#8b5cf6] rounded border-gray-300 cursor-pointer focus:ring-[#8b5cf6]" />
+                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-[#2563eb] rounded border-gray-300 cursor-pointer focus:ring-[#2563eb]" />
                   <span className="text-xs text-gray-600">
                     개인정보 수집 및 이용에 동의합니다. 
-                    <button type="button" onClick={onOpenPrivacy} className="text-[#8b5cf6] underline ml-1 hover:text-[#7c3aed]">자세히 보기</button>
+                    <button type="button" onClick={onOpenPrivacy} className="text-[#2563eb] underline ml-1 hover:text-[#1d4ed8]">자세히 보기</button>
                   </span>
                 </div>
 
                 {/* 버튼들 */}
                 <div className="flex flex-col gap-2 mt-1">
-                  <button type="submit" className="w-full bg-gradient-to-r from-[#8b5cf6] to-[#7c3aed] text-white font-bold rounded-xl py-3.5 text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#8b5cf6]/25 cursor-pointer">
+                  <button type="submit" className="w-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white font-bold rounded-xl py-3.5 text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#2563eb]/25 cursor-pointer">
                     <CalculatorIcon className="w-5 h-5" />
                     해약환급금 확인하기
                   </button>

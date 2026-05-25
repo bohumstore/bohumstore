@@ -87,10 +87,7 @@ export default function Notice({ open, onClose }: NoticeProps) {
         
         <div className="mb-4">
           <div className="font-bold mb-2">■ 예금자 보호에 관한 사항</div>
-          <div className="mb-1">- 이 보험계약은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금)에 기타지급금을 합한 금액이 1인당 5천만원까지(본 보험회사의 여타 보호상품과 합산) 보호됩니다.</div>
-          <div className="mb-1">- 이와 별도로 본 보험회사의 보호상품의 사고보험금을 합산한 금액이 1인당 5천만원까지 보호됩니다.</div>
-          <div className="mb-1 text-red-600">- 단, 2025년 9월 1일부터 해당 보호 한도가 1억원으로 상향됩니다.</div>
-          <div>- 다만, 보험계약자 및 보험료 납부자가 법인인 보험 계약은 「예금자보호법」에 따라 보호되지 않습니다.</div>
+          <div>이 보험계약은 예금자보호법에 따라 예금보험공사가 보호하되, 보호 한도는 본 보험회사에 있는 귀하의 모든 예금보호 대상 금융상품의 해약환급금(또는 만기 시 보험금)에 기타지급금을 합한 금액이 1인당 <span className="font-semibold">&quot;1억원까지&quot;</span>(본 보험회사의 여타 보호상품과 합산) 보호됩니다. 이와 별도로 본 보험회사 보호상품의 사고보험금을 합산한 금액이 1인당 <span className="font-semibold">&quot;1억원까지&quot;</span> 보호됩니다. 다만, 보험계약자 및 보험료납부자가 법인인 보험계약의 경우에는 보호되지 않습니다.</div>
         </div>
         
         <div className="mb-4">

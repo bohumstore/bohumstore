@@ -93,7 +93,7 @@ export default function ShinhanMoreTheDreamPage() {
             {/* 하단 버튼 */}
             <div className="flex flex-col md:flex-row gap-4 justify-center md:mt-10">
               <a 
-                href="/shinhan-morethedream.pdf" 
+                href="/shinhan-morethedream.pdf" data-remove="true" style={{display:'none'}} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer"
@@ -101,7 +101,7 @@ export default function ShinhanMoreTheDreamPage() {
                 상품설명서
               </a>
               <a 
-                href="/shinhan-morethedream2.pdf" 
+                href="/shinhan-morethedream2.pdf" style={{display:'none'}} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer"

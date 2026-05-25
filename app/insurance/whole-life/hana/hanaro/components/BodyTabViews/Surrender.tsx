@@ -14,7 +14,7 @@ export default function Surrender() {
       <div className="space-y-4">
         <h3 className="text-lg font-bold">보험료 납입기간이 5년납인 경우</h3>
         <div className="text-xs text-gray-600 text-right">
-          기준: 40세, 남자, 해약환급금 일부지급형, 주계약 가입금액 5,000만원, 종신, 5년납, 월납, 특약제외(단위:만원)
+          기준: 40세, 남자, 해약환급금 일부지급형, 주계약 가입금액 5,000만원, 종신, 5년납, 월납, 특약제외(단위:원)
         </div>
       <div className="overflow-x-auto">
         <table className="min-w-[700px] w-full text-center text-[10px] md:text-sm">
@@ -39,145 +39,145 @@ export default function Surrender() {
             <tr>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3개월</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,383,500</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">0</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,361,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">-</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">0.00%</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,535,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">0</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,511,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">-</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">0.00%</td>
             </tr>
             <tr>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6개월</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">4,767,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">4,722,000</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">947,350</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19.87%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">20.06%</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">5,070,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">5,022,000</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">974,250</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19.22%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19.40%</td>
             </tr>
             <tr>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9개월</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">7,150,500</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">7,083,000</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,032,150</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">28.42%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">28.69%</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">7,605,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">7,533,000</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,123,875</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">27.93%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">28.19%</td>
             </tr>
             <tr>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1년</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9,534,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9,444,000</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3,116,950</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32.69%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">33.00%</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">10,140,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">10,044,000</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3,273,500</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32.28%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32.59%</td>
             </tr>
             <tr>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3년</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">55,000,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">28,602,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">28,332,000</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">12,138,850</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">42.44%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">42.85%</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">55,000,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">30,420,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">30,132,000</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">12,836,250</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">42.20%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">42.60%</td>
             </tr>
             <tr>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">4년</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">57,500,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">38,136,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">37,776,000</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">16,828,050</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">44.13%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">44.55%</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">57,500,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">40,560,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">40,176,000</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">17,809,250</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">43.91%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">44.33%</td>
             </tr>
             <tr>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">5년</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">62,478,318</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,670,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">45,760,818</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">96.00%</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">62,827,831</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,700,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">48,658,831</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">95.97%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">62,052,084</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,220,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">45,334,584</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">96.01%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">62,373,180</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,220,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">48,204,180</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">95.99%</td>
             </tr>
             <tr>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">7년</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">67,616,500</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,670,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,670,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">67,166,500</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,220,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,220,000</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">100.00%</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">67,985,500</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,700,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,700,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">67,505,500</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,220,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,220,000</td>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">100.00%</td>
             </tr>
             <tr className="bg-red-50">
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">10년</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">83,160,726</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,670,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">58,529,226</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">122.78%</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">84,056,960</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,700,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">62,249,460</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">122.78%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">81,545,766</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,220,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">56,914,266</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">120.53%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">82,337,666</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,220,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">60,530,166</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">120.53%</td>
             </tr>
             <tr>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">15년</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87,528,522</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,670,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">62,980,522</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">132.12%</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">88,372,560</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,700,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">66,770,560</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">131.70%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87,214,509</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,220,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">62,666,509</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">132.71%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">88,037,915</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,220,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">66,435,915</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">132.29%</td>
             </tr>
             <tr>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">20년</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">88,663,814</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,670,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">66,848,314</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">140.23%</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">89,584,336</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,700,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">70,831,336</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">139.71%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">88,321,346</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,220,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">66,505,846</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">140.84%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">89,219,366</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,220,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">70,466,366</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">140.32%</td>
             </tr>
             <tr>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">40년</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">94,331,265</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,670,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">83,864,765</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">175.93%</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">95,633,600</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,700,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">88,005,100</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">173.58%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">93,846,750</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,220,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">83,380,250</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">176.58%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">95,117,250</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,220,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87,488,750</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">174.21%</td>
             </tr>
             <tr>
               <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">60년</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">102,349,453</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,670,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">99,227,453</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">208.15%</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">104,191,968</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,700,000</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">101,802,968</td>
-              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">200.79%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">101,663,971</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">47,220,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">98,541,971</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">208.69%</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">103,461,446</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,220,000</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">101,072,446</td>
+              <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">201.26%</td>
             </tr>
           </tbody>
         </table>
@@ -188,7 +188,7 @@ export default function Surrender() {
       <div className="space-y-4">
         <h3 className="text-lg font-bold">보험료 납입기간이 7년납인 경우</h3>
         <div className="text-xs text-gray-600 text-right">
-          기준: 40세, 남자, 해약환급금 일부지급형, 주계약 가입금액 5,000만원, 종신, 7년납, 월납, 특약제외(단위:만원)
+          기준: 40세, 남자, 해약환급금 일부지급형, 주계약 가입금액 5,000만원, 종신, 7년납, 월납, 특약제외(단위:원)
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-[700px] w-full text-center text-[10px] md:text-sm">
@@ -213,145 +213,145 @@ export default function Surrender() {
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3개월</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,776,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">0</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,777,500</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">-</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">0.00%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,891,500</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">0</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,893,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">-</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">0.00%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6개월</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3,552,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3,555,000</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">345,929</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9.74%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9.73%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3,783,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3,786,000</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">337,393</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">8.92%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">8.91%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9개월</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">5,328,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">5,332,500</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,130,018</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">21.21%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">21.19%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">5,674,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">5,679,000</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,168,589</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">20.59%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">20.58%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1년</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">7,104,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">7,110,000</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,914,107</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">26.94%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">26.92%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">50,000,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">7,566,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">7,572,000</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,999,786</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">26.43%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">26.41%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3년</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">55,000,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">21,312,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">21,330,000</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">8,433,321</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">39.57%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">39.54%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">55,000,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">22,698,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">22,716,000</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">8,909,857</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">39.25%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">39.22%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">5년</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">60,000,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">35,520,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">35,550,000</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">15,297,286</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">43.07%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">43.03%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">60,000,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">37,830,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">37,860,000</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">16,187,429</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">42.79%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">42.76%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6년</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">62,500,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">42,624,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">42,660,000</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">18,864,893</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">44.26%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">44.22%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">62,500,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">45,396,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">45,432,000</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,971,714</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">43.99%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">43.96%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">7년</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">69,674,500</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">49,728,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">49,728,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">69,716,500</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">49,770,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">49,770,000</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">100.00%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">70,247,500</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">52,962,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">52,962,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">70,289,500</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">53,004,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">53,004,000</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">100.00%</td>
               </tr>
               <tr className="bg-red-50">
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">10년</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">84,096,242</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">49,728,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">59,464,742</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">119.58%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">85,139,460</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">52,962,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">63,331,960</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">119.58%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">83,190,882</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">49,770,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">58,559,382</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">117.66%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">84,172,006</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">53,004,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">62,364,506</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">117.66%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">15년</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">89,127,800</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">49,728,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">64,579,800</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">129.87%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90,095,588</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">52,962,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">68,493,588</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">129.33%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">89,060,031</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">49,770,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">64,512,031</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">129.62%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90,022,191</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">53,004,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">68,420,191</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">129.08%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">20년</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90,408,013</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">49,728,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">68,592,513</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">137.94%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91,463,498</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">52,962,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">72,710,498</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">137.29%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90,334,103</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">49,770,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">68,518,603</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">137.67%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91,383,451</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">53,004,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">72,630,451</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">137.03%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">40년</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">96,798,921</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">49,728,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">86,332,421</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">173.61%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">98,292,198</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">52,962,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90,663,698</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">171.19%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">96,694,354</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">49,770,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">86,227,854</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">173.25%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">98,178,949</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">53,004,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90,550,449</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">170.84%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">60년</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">105,840,638</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">49,728,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">102,718,638</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">206.56%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">107,953,294</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">52,962,000</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">105,564,294</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">199.32%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">105,692,699</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">49,770,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">102,570,699</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">206.09%</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">107,793,072</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">53,004,000</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">105,404,072</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">198.86%</td>
               </tr>
             </tbody>
           </table>

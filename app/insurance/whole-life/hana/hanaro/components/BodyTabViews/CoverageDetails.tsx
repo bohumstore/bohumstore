@@ -13,28 +13,37 @@ export default function CoverageDetails() {
       
       {/* 보장내용표 */}
       <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse text-sm">
+        <table className="min-w-full border-collapse text-xs sm:text-sm">
           <thead>
             <tr className="bg-[#1e3a8a] text-white">
               <th className="border border-gray-300 p-2 md:p-3 text-center">급부명</th>
               <th className="border border-gray-300 p-2 md:p-3 text-center">지급사유</th>
-              <th className="border border-gray-300 p-2 md:p-3 text-center">기간</th>
-              <th className="border border-gray-300 p-2 md:p-3 text-center">지급금액</th>
+              <th className="border border-gray-300 p-2 md:p-3 text-center" colSpan={2}>지급금액</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td className="border border-gray-300 p-2 md:p-3 text-center font-semibold" rowSpan={3}>사망보험금</td>
-              <td className="border border-gray-300 p-2 md:p-3 text-center" rowSpan={3}>피보험자가 보험기간중 사망하였을 때</td>
-              <td className="border border-gray-300 p-2 md:p-3 text-center">계약일~<br/>계약일부터 1년경과시점 계약해당일 전일까지</td>
+              <td className="border border-gray-300 p-2 md:p-3 text-center align-middle" rowSpan={3}>사망보험금</td>
+              <td className="border border-gray-300 p-2 md:p-3 text-center align-middle" rowSpan={3}>
+                피보험자가 보험기간중<br/>사망하였을 때
+              </td>
+              <td className="border border-gray-300 p-2 md:p-3 text-center">
+                계약일~<br/>계약일부터 1년경과시점 계약해당일 전일까지
+              </td>
               <td className="border border-gray-300 p-2 md:p-3 text-center">5,000만원</td>
             </tr>
             <tr>
-              <td className="border border-gray-300 p-2 md:p-3 text-center">계약일부터 1년경과시점 계약해당일~<br/>계약일부터 11년경과시점 계약해당일 전일까지</td>
-              <td className="border border-gray-300 p-2 md:p-3 text-center">보험가입금액에 계약일로부터 1년이 지난<br/>계약해당일부터 매1년마다 '보험가입금액의 5%'를 더한 금액</td>
+              <td className="border border-gray-300 p-2 md:p-3 text-center">
+                계약일부터 1년경과시점 계약해당일~<br/>계약일부터 11년경과시점 계약해당일 전일까지
+              </td>
+              <td className="border border-gray-300 p-2 md:p-3 text-center">
+                보험가입금액에 계약일로부터 1년이 지난<br/>계약해당일부터 매1년마다 '보험가입금액의 5%'를 더한 금액
+              </td>
             </tr>
             <tr>
-              <td className="border border-gray-300 p-2 md:p-3 text-center">계약일부터 11년경과시점 계약해당일~<br/>종신까지</td>
+              <td className="border border-gray-300 p-2 md:p-3 text-center">
+                계약일부터 11년경과시점 계약해당일~<br/>종신까지
+              </td>
               <td className="border border-gray-300 p-2 md:p-3 text-center">7,500만원</td>
             </tr>
           </tbody>
