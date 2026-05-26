@@ -770,7 +770,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </div>
                   </div>
                 </div>
-                <div className="text-xs text-gray-500 text-center mt-2 sm:mt-4">
+                <div className="text-xs text-gray-700 text-center mt-2 sm:mt-4">
                   <p>※ 대표계약기준(40세 남자, 10년납, 연금개시 나이 65세), 복리이자율로 환산시 4.21%</p>
                 </div>
             </div>
@@ -785,7 +785,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold text-gray-900">연금액 계산하기</h3>
                 </div>
-                <p className="text-gray-500 text-xs sm:text-sm ml-10">간단한 정보 입력으로 예상 연금액을 확인하세요</p>
+                <p className="text-gray-700 text-xs sm:text-sm ml-10">간단한 정보 입력으로 예상 연금액을 확인하세요</p>
               </div>
               <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 성별/이름 */}
@@ -846,7 +846,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                               className="peer sr-only cursor-pointer"
                             />
                             <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${isDisabled 
-                                          ? 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed' 
+                                          ? 'bg-gray-100 border-gray-300 text-gray-600 cursor-not-allowed' 
                                           : 'cursor-pointer peer-checked:border-[#f59e0b] peer-checked:bg-[#f59e0b]/5 peer-checked:text-[#f59e0b] peer-checked:font-bold hover:border-[#f59e0b] hover:bg-gray-50 border-gray-200'
                                         }`}>
                               {period}
@@ -1056,7 +1056,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </div>
                   </div>
                 )}
-                <div className="text-xs text-gray-500 text-center mt-4">
+                <div className="text-xs text-gray-700 text-center mt-4">
                   * 실제 연금액은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
                   <br />
                   * 본 계산 결과는 참고용이며, 실제 계약 시 보험사 약관 및 상품설명서를 확인 바랍니다.
@@ -1153,7 +1153,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </div>
                   </div>
                 )}
-                <div className="text-xs text-gray-500 text-center mt-4">
+                <div className="text-xs text-gray-700 text-center mt-4">
                   * 실제 연금액은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
                   <div className="mt-0.5 text-[#3a8094]">* 휴대폰 인증 완료 후 상세 정보를 확인하실 수 있습니다.</div>
                 </div>
@@ -1175,7 +1175,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     type="button"
                     onClick={handleSendOTP}
                     disabled={!isAgeEligible}
-                    className={`${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#f97316] text-white hover:bg-[#ea580c]'} w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 rounded-md text-sm sm:text-base font-medium transition-colors min-w-[100px] sm:min-w-[120px]`}
+                    className={`${!isAgeEligible ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-[#f97316] text-white hover:bg-[#ea580c]'} w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 rounded-md text-sm sm:text-base font-medium transition-colors min-w-[100px] sm:min-w-[120px]`}
                   >
                     {otpResendAvailable ? '인증번호 전송' : '재발송'}
                   </button>
@@ -1205,7 +1205,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   type="button"
                   onClick={handleVerifyOTP}
                   disabled={!isAgeEligible || verifying || otpCode.length !== 6}
-                  className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(!isAgeEligible || verifying || otpCode.length !== 6) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                  className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(!isAgeEligible || verifying || otpCode.length !== 6) ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
                 >
                   {verifying ? '인증 처리중...' : '인증하고 결과 확인하기'}
                 </button>
@@ -1278,7 +1278,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <span className={`font-bold flex items-center gap-1 text-base ${consultIsVerified ? 'text-[#3a8094]' : 'text-[#7c3aed]'}`}>
                     {consultType}
                     {!consultIsVerified && (
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                      <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                     )}
                   </span>
                 </div>
@@ -1307,7 +1307,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <span className={`font-bold flex items-center gap-1 text-base ${consultIsVerified ? 'text-[#3a8094]' : 'text-[#7c3aed]'}`}>
                     {consultTime}
                     {!consultIsVerified && (
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                      <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                     )}
                   </span>
                 </div>
@@ -1381,7 +1381,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 type="button"
                 onClick={handleConsultVerifyOTP}
                 disabled={verifying || consultOtpCode.length !== 6}
-                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpCode.length !== 6) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpCode.length !== 6) ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
               >
                 {verifying ? '인증 처리중...' : '인증하고 상담신청'}
               </button>

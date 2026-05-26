@@ -96,7 +96,7 @@ export default function MegaMenu() {
                             className="text-gray-600 hover:text-blue-600 flex items-center"
                           >
                             {item.icon && (
-                              <span className="mr-2 text-gray-400">{item.icon}</span>
+                              <span className="mr-2 text-gray-600">{item.icon}</span>
                             )}
                             {item.name}
                           </Link>

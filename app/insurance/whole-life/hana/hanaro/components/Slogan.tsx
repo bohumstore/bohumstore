@@ -553,12 +553,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         <div className="max-w-6xl mx-auto flex flex-col md:flex-col lg:flex-row items-center md:items-center lg:items-start justify-center lg:justify-between gap-3 md:gap-6 lg:gap-12 px-3 md:px-6 lg:px-4 md:py-4 lg:py-4">
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
-            <div className="flex items-center gap-2 text-sm text-gray-500 mb-1.5">
+            <div className="flex items-center gap-2 text-sm text-gray-700 mb-1.5">
               <img src="/hana-logo.png" alt="하나생명 로고" className="h-6 sm:h-8 w-auto" style={{minWidth:'24px'}} />
             </div>
             <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-1 sm:mb-1.5 md:mb-2.5 lg:mb-2 leading-tight">(무)하나로 THE 연결된 종신보험<br /><span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">(해약환급금 일부지급형)</span></h1>
             
-            <p className="text-xs text-gray-500 mb-3 sm:mb-4 md:mb-5 lg:mb-5 text-center">
+            <p className="text-xs text-gray-700 mb-3 sm:mb-4 md:mb-5 lg:mb-5 text-center">
               * 이 상품은 사망을 보장하는 종신보험으로, 저축성보험(연금)이 아닙니다.
             </p>
 
@@ -569,15 +569,15 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#22c55e] flex-shrink-0">✔</span>
-                <span className="leading-tight">3대질병 진단시 <span className="text-rose-600 font-semibold">보험료 환급·납입면제</span> 선택 <span className="text-[10px] sm:text-xs text-gray-500">(특약가입시)</span></span>
+                <span className="leading-tight">3대질병 진단시 <span className="text-rose-600 font-semibold">보험료 환급·납입면제</span> 선택 <span className="text-[10px] sm:text-xs text-gray-700">(특약가입시)</span></span>
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#22c55e] flex-shrink-0">✔</span>
-                <span className="leading-tight">10년 시점 환급금 <span className="text-orange-600 font-semibold">120.53%</span> <span className="text-[10px] sm:text-xs text-gray-500">(5년납,1형 기준)</span></span>
+                <span className="leading-tight">10년 시점 환급금 <span className="text-orange-600 font-semibold">120.53%</span> <span className="text-[10px] sm:text-xs text-gray-700">(5년납,1형 기준)</span></span>
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#22c55e] flex-shrink-0">✔</span>
-                <span><span className="text-teal-600 font-semibold">유지보너스</span> 제공 <span className="text-[10px] sm:text-xs text-gray-500">(약관 기준)</span></span>
+                <span><span className="text-teal-600 font-semibold">유지보너스</span> 제공 <span className="text-[10px] sm:text-xs text-gray-700">(약관 기준)</span></span>
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#22c55e] flex-shrink-0">✔</span>
@@ -603,7 +603,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <div className="flex flex-col items-center">
                       <div className="font-bold text-xs sm:text-sm mb-0.5 sm:mb-1">환급률</div>
                       <div className="text-base sm:text-lg md:text-xl font-extrabold text-[#10b981]">100%</div>
-                      <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">유지보너스1</div>
+                      <div className="text-[10px] sm:text-xs text-gray-700 mt-0.5 sm:mt-1">유지보너스1</div>
                     </div>
                   </div>
 
@@ -615,7 +615,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <div className="flex flex-col items-center">
                       <div className="font-bold text-xs sm:text-sm mb-0.5 sm:mb-1">환급률</div>
                       <div className="text-base sm:text-lg md:text-xl font-extrabold text-[#f59e0b] animate-[jump-glow_1.2s_ease-in-out_infinite]">120.53%</div>
-                      <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">유지보너스2</div>
+                      <div className="text-[10px] sm:text-xs text-gray-700 mt-0.5 sm:mt-1">유지보너스2</div>
                     </div>
                   </div>
 
@@ -627,11 +627,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <div className="flex flex-col items-center">
                       <div className="font-bold text-xs sm:text-sm mb-0.5 sm:mb-1">환급률</div>
                       <div className="text-base sm:text-lg md:text-xl font-extrabold text-[#14b8a6]">132.71%</div>
-                      <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">유지보너스3</div>
+                      <div className="text-[10px] sm:text-xs text-gray-700 mt-0.5 sm:mt-1">유지보너스3</div>
                     </div>
                   </div>
                 </div>
-                <div className="text-[10px] sm:text-xs text-gray-500 text-center mt-1.5 sm:mt-3">
+                <div className="text-[10px] sm:text-xs text-gray-700 text-center mt-1.5 sm:mt-3">
                   <p>* 40세 남자, 1형(일반심사형), 5년납 기준</p>
                 </div>
             </div>
@@ -646,7 +646,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold text-gray-900">해약환급금 계산하기</h3>
                 </div>
-                <p className="text-gray-500 text-xs sm:text-sm ml-10">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
+                <p className="text-gray-700 text-xs sm:text-sm ml-10">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
               </div>
               <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 성별/이름 */}
@@ -854,7 +854,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                <div className="text-xs text-gray-500 text-center mt-4">
+                <div className="text-xs text-gray-700 text-center mt-4">
                   * 실제 보험료 및 해약환급금은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
                   <br />
                   * 본 계산 결과는 참고용이며, 실제 계약 시 보험사 약관 및 상품설명서를 확인 바랍니다.
@@ -933,7 +933,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                <div className="text-xs text-gray-500 text-center mt-4">
+                <div className="text-xs text-gray-700 text-center mt-4">
                   * 실제 보험료 및 해약환급금은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
                   <div className="mt-0.5 text-[#3a8094]">* 휴대폰 인증 완료 후 상세 정보를 확인하실 수 있습니다.</div>
                 </div>
@@ -955,7 +955,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     type="button"
                     onClick={handleSendOTP}
                     disabled={!isAgeEligible}
-                    className={`${!isAgeEligible ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#f97316] text-white hover:bg-[#ea580c]'} w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 rounded-md text-sm sm:text-base font-medium transition-colors min-w-[100px] sm:min-w-[120px]`}
+                    className={`${!isAgeEligible ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-[#f97316] text-white hover:bg-[#ea580c]'} w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 rounded-md text-sm sm:text-base font-medium transition-colors min-w-[100px] sm:min-w-[120px]`}
                   >
                     {otpResendAvailable ? '인증번호 전송' : '재발송'}
                   </button>
@@ -986,7 +986,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     type="button"
                     onClick={handleVerifyOTP}
                     disabled={verifying || otpCode.length !== 6}
-                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || otpCode.length !== 6) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || otpCode.length !== 6) ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
                   >
                     {verifying ? '인증 처리중...' : '인증하고 결과 확인하기'}
                   </button>
@@ -1074,7 +1074,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <span className={`font-bold flex items-center gap-1 text-sm sm:text-base ${consultIsVerified ? 'text-[#3a8094]' : 'text-[#7c3aed]'}`}>
                     {consultType}
                     {!consultIsVerified && (
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                      <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                     )}
                   </span>
                 </div>
@@ -1103,7 +1103,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <span className={`font-bold flex items-center gap-1 text-sm sm:text-base ${consultIsVerified ? 'text-[#3a8094]' : 'text-[#7c3aed]'}`}>
                     {consultTime}
                     {!consultIsVerified && (
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                      <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                     )}
                   </span>
                 </div>
@@ -1177,7 +1177,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 type="button"
                 onClick={handleConsultVerifyOTP}
                 disabled={verifying || consultOtpCode.length !== 6}
-                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpCode.length !== 6) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpCode.length !== 6) ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
               >
                 {verifying ? '인증 처리중...' : '인증하고 상담신청'}
               </button>

@@ -126,7 +126,7 @@ export default function Modal({ title, open, onClose, children }: ModalProps) {
       >
         <div className="flex items-center justify-between px-3 sm:px-6 pt-2 sm:pt-4 pb-1.5 sm:pb-2 border-b border-gray-200 flex-shrink-0">
           <div className="text-sm sm:text-lg md:text-xl font-bold">{title}</div>
-          <button onClick={handleClose} className="p-1 text-gray-400 hover:text-gray-700">
+          <button onClick={handleClose} className="p-1 text-gray-600 hover:text-gray-700">
             <XMarkIcon className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         </div>

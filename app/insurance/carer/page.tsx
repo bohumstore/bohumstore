@@ -116,7 +116,7 @@ export default function CarerInsurancePage() {
                   </div>
                   <div className="text-sm text-gray-600">
                     <p className="mb-2">가족이 직접 간병하는 경우에도 보험금 지급</p>
-                    <p className="text-xs text-gray-500">* 해당 내용은 보험사별, 상품별 상이할 수 있습니다.</p>
+                    <p className="text-xs text-gray-700">* 해당 내용은 보험사별, 상품별 상이할 수 있습니다.</p>
                   </div>
                 </div>
                 
@@ -257,7 +257,7 @@ export default function CarerInsurancePage() {
                     </div>
                     <div>
                       <h4 className="font-bold text-gray-800">김○○님 (50대 직장인)</h4>
-                      <p className="text-xs text-gray-500">어머니 뇌졸중으로 간병보험 이용</p>
+                      <p className="text-xs text-gray-700">어머니 뇌졸중으로 간병보험 이용</p>
                     </div>
                   </div>
                   <div className="text-sm text-gray-700 leading-relaxed">
@@ -277,7 +277,7 @@ export default function CarerInsurancePage() {
                     </div>
                     <div>
                       <h4 className="font-bold text-gray-800">박○○님 (40대 자영업자)</h4>
-                      <p className="text-xs text-gray-500">아버지 치매로 간병보험 이용</p>
+                      <p className="text-xs text-gray-700">아버지 치매로 간병보험 이용</p>
                     </div>
                   </div>
                   <div className="text-sm text-gray-700 leading-relaxed">
@@ -292,7 +292,7 @@ export default function CarerInsurancePage() {
               </div>
               
               <div className="text-center mt-6">
-                <p className="text-xs text-gray-500">* 개인정보 보호를 위해 이름은 일부만 표기했습니다</p>
+                <p className="text-xs text-gray-700">* 개인정보 보호를 위해 이름은 일부만 표기했습니다</p>
               </div>
             </div>
 

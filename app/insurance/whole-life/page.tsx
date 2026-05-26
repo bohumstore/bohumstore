@@ -187,7 +187,7 @@ export default function WholeLifePage() {
                                 <StarIcon className="w-5 h-5 fill-current" />
                                 <span className="font-medium">{product.rating}</span>
                               </div>
-                              <span className="text-gray-500 text-sm">({product.reviewCount})</span>
+                              <span className="text-gray-700 text-sm">({product.reviewCount})</span>
                             </div>
                             
                             <div className="flex items-center text-green-600 font-medium group-hover:text-green-700">
@@ -263,7 +263,7 @@ export default function WholeLifePage() {
       {/* 푸터 */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-400">
+          <p className="text-gray-600">
             &copy; 2024 보험스토어. All rights reserved.
           </p>
         </div>

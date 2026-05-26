@@ -161,7 +161,7 @@ export default function TerminationNoticePopup({ productName, endDate }: Termina
                   <span>마감일: <span className="font-semibold">2026.05.15 (금)</span></span>
                 </div>
               </div>
-              <p className="text-[10px] sm:text-xs text-gray-400 text-center mt-2 leading-relaxed">
+              <p className="text-[10px] sm:text-xs text-gray-600 text-center mt-2 leading-relaxed">
                 ※ 해당 보험사에 따라 변경 또는 조기마감 될 수 있습니다.
               </p>
             </div>

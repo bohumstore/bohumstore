@@ -275,7 +275,7 @@ export default function ProductInfo() {
             </ul>
             <p className="text-sm">
               (월납 기본보험료 × 가입후 경과월수 + 선납보험료) × 200% - 이미 납입한 추가납입보험료 합계액 + 계약자적립액 인출금액의 합계액
-              <span className="block text-xs text-gray-500 mt-1">* 다만, 경과월수는 가입할 때를 1개월로 하며, 보험료납입기간을 최고한도로 합니다.</span>
+              <span className="block text-xs text-gray-700 mt-1">* 다만, 경과월수는 가입할 때를 1개월로 하며, 보험료납입기간을 최고한도로 합니다.</span>
             </p>
           </div>
         </div>

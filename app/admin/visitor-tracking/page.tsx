@@ -346,21 +346,21 @@ export default function VisitorTrackingPage() {
         {stats && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-sm font-medium text-gray-500">전체 방문자</h3>
+              <h3 className="text-sm font-medium text-gray-700">전체 방문자</h3>
               <p className="text-2xl font-bold text-gray-900">{stats.totalVisitors?.toLocaleString() || 0}</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-sm font-medium text-gray-500">고유 방문자</h3>
+              <h3 className="text-sm font-medium text-gray-700">고유 방문자</h3>
               <p className="text-2xl font-bold text-gray-900">{stats.uniqueVisitors?.toLocaleString() || 0}</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-sm font-medium text-gray-500">기간</h3>
+              <h3 className="text-sm font-medium text-gray-700">기간</h3>
               <p className="text-lg font-semibold text-gray-900">
                 {stats.dateRange?.startDate ? format(new Date(stats.dateRange.startDate), 'MM/dd') : 'N/A'} - {stats.dateRange?.endDate ? format(new Date(stats.dateRange.endDate), 'MM/dd') : 'N/A'}
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-sm font-medium text-gray-500">상담 신청</h3>
+              <h3 className="text-sm font-medium text-gray-700">상담 신청</h3>
               <p className="text-2xl font-bold text-blue-600">
                 {getSafeStat(stats, '상담신청', 0)}
               </p>
@@ -372,37 +372,37 @@ export default function VisitorTrackingPage() {
         {stats && (
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xs font-medium text-gray-500">Google 검색</h3>
+              <h3 className="text-xs font-medium text-gray-700">Google 검색</h3>
               <p className="text-lg font-semibold text-green-600">
                 {(stats.trafficSourceStats?.['Google-PC'] || 0) + (stats.trafficSourceStats?.['Google-Mobile'] || 0)}
               </p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xs font-medium text-gray-500">네이버 검색</h3>
+              <h3 className="text-xs font-medium text-gray-700">네이버 검색</h3>
               <p className="text-lg font-semibold text-green-600">
                 {(stats.trafficSourceStats?.['Naver-PC'] || 0) + (stats.trafficSourceStats?.['Naver-Mobile'] || 0)}
               </p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xs font-medium text-gray-500">모바일</h3>
+              <h3 className="text-xs font-medium text-gray-700">모바일</h3>
               <p className="text-lg font-semibold text-blue-600">
                 {stats.deviceStats?.['mobile'] || 0}
               </p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xs font-medium text-gray-500">데스크톱</h3>
+              <h3 className="text-xs font-medium text-gray-700">데스크톱</h3>
               <p className="text-lg font-semibold text-blue-600">
                 {stats.deviceStats?.['desktop'] || 0}
               </p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xs font-medium text-gray-500">통신사</h3>
+              <h3 className="text-xs font-medium text-gray-700">통신사</h3>
               <p className="text-lg font-semibold text-purple-600">
                 {stats.carrierStats?.['SKT'] || stats.carrierStats?.['KT'] || stats.carrierStats?.['LG U+'] || 0}
               </p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xs font-medium text-gray-500">모바일기종</h3>
+              <h3 className="text-xs font-medium text-gray-700">모바일기종</h3>
               <p className="text-lg font-semibold text-orange-600">
                 {stats.deviceModelStats?.['iPhone'] || stats.deviceModelStats?.['Android'] || 0}
               </p>
@@ -544,15 +544,15 @@ export default function VisitorTrackingPage() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">방문시간</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-16">방문수</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-64">유입사이트</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[240px]">키워드</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">모바일기종</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">브라우저</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">상담유형</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">이름</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">전화번호</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider w-24">방문시간</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider w-16">방문수</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider w-64">유입사이트</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider w-[240px]">키워드</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider w-24">모바일기종</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider w-20">브라우저</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider w-24">상담유형</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider w-20">이름</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider w-24">전화번호</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">

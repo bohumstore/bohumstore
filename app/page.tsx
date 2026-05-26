@@ -199,7 +199,7 @@ export default function HomePage() {
                                 <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-2 md:mb-4 leading-tight ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.1s'}}>
                                   보험, <span className="text-blue-600">제대로</span> 알고<br /> 가입하고 계신가요?
                                 </h2>
-                                <p className={`text-sm md:text-base lg:text-lg text-gray-500 mb-4 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
+                                <p className={`text-sm md:text-base lg:text-lg text-gray-700 mb-4 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
                                   복잡한 보험, 전문가가 쉽게 설명해드립니다
                                 </p>
                                 
@@ -242,7 +242,7 @@ export default function HomePage() {
                                     <Image src="/favicon/favicon-96x96.png" alt="보험스토어" width={40} height={40} className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover border-2 border-white/30" />
                                     <div>
                                       <div className="font-bold text-white text-sm md:text-base">보험스토어 전문가</div>
-                                      <div className="text-[10px] md:text-xs text-slate-300 flex items-center gap-1">
+                                      <div className="text-[10px] md:text-xs text-slate-100 flex items-center gap-1">
                                         <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span>
                                         실시간 답변 중
                                       </div>
@@ -265,7 +265,7 @@ export default function HomePage() {
                                   
                                   {/* 입력창 */}
                                   <div className="bg-white p-2 md:p-3 border-t border-gray-100 flex gap-2">
-                                    <div className="flex-1 bg-gray-100 rounded-full h-8 md:h-9 flex items-center px-3 text-[10px] md:text-xs text-gray-400">메시지를 입력하세요...</div>
+                                    <div className="flex-1 bg-gray-100 rounded-full h-8 md:h-9 flex items-center px-3 text-[10px] md:text-xs text-gray-600">메시지를 입력하세요...</div>
                                     <div className="w-8 h-8 md:w-9 md:h-9 bg-[#FEE500] rounded-full flex items-center justify-center text-[#3A1D1D] text-sm font-bold">↑</div>
                                   </div>
                                 </div>
@@ -283,11 +283,11 @@ export default function HomePage() {
                                   {slogan.logo && (
                                     <Image src={slogan.logo} alt={slogan.company} width={48} height={48} className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-contain" />
                                   )}
-                                  <span className="text-sm md:text-base lg:text-lg text-gray-500 font-medium">{slogan.company}</span>
+                                  <span className="text-sm md:text-base lg:text-lg text-gray-700 font-medium">{slogan.company}</span>
                                 </div>
                                 
                                 {/* 핵심 숫자 강조 */}
-                                <p className={`text-gray-500 text-xs md:text-sm lg:text-base mb-1 md:mb-2 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`}>5년납 연금보험</p>
+                                <p className={`text-gray-700 text-xs md:text-sm lg:text-base mb-1 md:mb-2 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`}>5년납 연금보험</p>
                                 <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-2 md:mb-4 leading-tight ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.1s'}}>
                                   10년시점 <span className="text-pink-500">133%</span> 환급률
                                 </h2>
@@ -327,7 +327,7 @@ export default function HomePage() {
                                   
                                   <div className="space-y-3 md:space-y-4">
                                     <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-100">
-                                      <span className="text-gray-500 text-sm md:text-base">7년시점 <span className="text-pink-600">(보증)</span></span>
+                                      <span className="text-gray-700 text-sm md:text-base">7년시점 <span className="text-pink-600">(보증)</span></span>
                                       <span className="text-base md:text-lg font-bold text-gray-900">100%</span>
                                     </div>
                                     <div className="flex justify-between items-center py-3 md:py-4 bg-pink-50 rounded-xl px-3 md:px-4 -mx-2">
@@ -335,12 +335,12 @@ export default function HomePage() {
                                       <span className="text-2xl md:text-3xl font-black text-pink-600">133%</span>
                                     </div>
                                     <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-100">
-                                      <span className="text-gray-500 text-sm md:text-base">연금개시시점 <span className="text-pink-600">(보증)</span></span>
+                                      <span className="text-gray-700 text-sm md:text-base">연금개시시점 <span className="text-pink-600">(보증)</span></span>
                                       <span className="text-base md:text-lg font-bold text-gray-900">2.0%</span>
                                     </div>
                                   </div>
                                   
-                                  <p className="text-xs md:text-sm text-gray-400 text-center mt-4">※ 남자 40세, 월 50만원, 60세 연금개시 기준</p>
+                                  <p className="text-xs md:text-sm text-gray-600 text-center mt-4">※ 남자 40세, 월 50만원, 60세 연금개시 기준</p>
                                 </div>
                               </div>
                             </div>
@@ -356,11 +356,11 @@ export default function HomePage() {
                                   {slogan.logo && (
                                     <Image src={slogan.logo} alt={slogan.company} width={48} height={48} className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-contain" />
                                   )}
-                                  <span className="text-sm md:text-base lg:text-lg text-gray-500 font-medium">{slogan.company}</span>
+                                  <span className="text-sm md:text-base lg:text-lg text-gray-700 font-medium">{slogan.company}</span>
                                 </div>
                                 
                                 {/* 핵심 숫자 강조 */}
-                                <p className={`text-gray-500 text-xs md:text-sm lg:text-base mb-1 md:mb-2 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`}>5년납 연금보험</p>
+                                <p className={`text-gray-700 text-xs md:text-sm lg:text-base mb-1 md:mb-2 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`}>5년납 연금보험</p>
                                 <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-2 md:mb-4 leading-tight ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.1s'}}>
                                   10년시점 <span className="text-yellow-500">130%</span> 환급률
                                 </h2>
@@ -400,11 +400,11 @@ export default function HomePage() {
                                   
                                   <div className="space-y-3 md:space-y-4">
                                     <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-100">
-                                      <span className="text-gray-500 text-sm md:text-base">5년 납입완료</span>
+                                      <span className="text-gray-700 text-sm md:text-base">5년 납입완료</span>
                                       <span className="text-base md:text-lg font-bold text-gray-900">44.1%</span>
                                     </div>
                                     <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-100">
-                                      <span className="text-gray-500 text-sm md:text-base">7년시점 <span className="text-yellow-600">(보증)</span></span>
+                                      <span className="text-gray-700 text-sm md:text-base">7년시점 <span className="text-yellow-600">(보증)</span></span>
                                       <span className="text-base md:text-lg font-bold text-gray-900">100%</span>
                                     </div>
                                     <div className="flex justify-between items-center py-3 md:py-4 bg-yellow-50 rounded-xl px-3 md:px-4 -mx-2">
@@ -413,7 +413,7 @@ export default function HomePage() {
                                     </div>
                                   </div>
                                   
-                                  <p className="text-xs md:text-sm text-gray-400 text-center mt-4">※ 남자 40세, 월 50만원, 60세 연금개시 기준</p>
+                                  <p className="text-xs md:text-sm text-gray-600 text-center mt-4">※ 남자 40세, 월 50만원, 60세 연금개시 기준</p>
                                 </div>
                               </div>
                             </div>
@@ -428,7 +428,7 @@ export default function HomePage() {
                                   {slogan.logo && (
                                     <Image src={slogan.logo} alt={slogan.company} width={48} height={48} className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-contain" />
                                   )}
-                                  <span className="text-sm md:text-base lg:text-lg text-gray-500 font-medium">{slogan.company}</span>
+                                  <span className="text-sm md:text-base lg:text-lg text-gray-700 font-medium">{slogan.company}</span>
                                 </div>
                                 
                                 {/* 타이틀 */}
@@ -504,7 +504,7 @@ export default function HomePage() {
                                     ))}
                                   </div>
                                   
-                                  <p className="text-xs md:text-sm text-gray-400 text-center mt-4">※ 상세 내용은 상품 페이지에서 확인하세요</p>
+                                  <p className="text-xs md:text-sm text-gray-600 text-center mt-4">※ 상세 내용은 상품 페이지에서 확인하세요</p>
                                 </div>
                               </div>
                             </div>
@@ -591,8 +591,8 @@ export default function HomePage() {
                         className="w-12 h-12 object-contain"
                       />
                       <div>
-                        <p className="text-sm text-gray-500">{product.company}</p>
-                        <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">
+                        <p className="text-sm text-gray-700">{product.company}</p>
+                        <span className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded">
                           {product.category}
                         </span>
                       </div>
@@ -616,7 +616,7 @@ export default function HomePage() {
                     <p className="text-sm text-gray-600 mb-3 leading-relaxed">
                       {product.description}
                       {product.descriptionNote && (
-                        <span className="text-xs text-gray-400 ml-1">{product.descriptionNote}</span>
+                        <span className="text-xs text-gray-600 ml-1">{product.descriptionNote}</span>
                       )}
                     </p>
                     <div className="flex items-center gap-2 mb-3">
@@ -692,7 +692,7 @@ export default function HomePage() {
 
       {/* 푸터 - KDB 해피플러스와 동일한 스타일 */}
       <footer className="w-full bg-[#f8f8f8] border-t border-gray-200 py-8 mt-4">
-        <div className="max-w-5xl mx-auto px-4 text-center text-gray-500 text-xs flex flex-col gap-1.5">
+        <div className="max-w-5xl mx-auto px-4 text-center text-gray-700 text-xs flex flex-col gap-1.5">
           <div className="flex justify-center items-center gap-4 mb-2">
             <Image src="/metarich-logo1.png" alt="MetaRich 로고" width={100} height={32} style={{objectFit:'contain',height:'32px'}} />
             <span className="h-6 w-px bg-gray-300 mx-1 inline-block" />

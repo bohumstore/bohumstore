@@ -395,7 +395,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               보험, <span className="text-blue-600">제대로</span> 알고<br />
               가입하고 계신가요?
             </h1>
-            <p className="text-base md:text-lg text-gray-500 mb-5 md:mb-6">복잡한 보험, 전문가가 쉽게 설명해드립니다</p>
+            <p className="text-base md:text-lg text-gray-700 mb-5 md:mb-6">복잡한 보험, 전문가가 쉽게 설명해드립니다</p>
             
             <ul className="space-y-2 md:space-y-3 text-left mb-4 lg:mb-6">
                 <li className="flex items-center text-sm md:text-base lg:text-lg text-gray-700">
@@ -459,7 +459,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold text-gray-900">무료 상담 신청</h3>
                 </div>
-                <p className="text-gray-500 text-xs sm:text-sm ml-10">간단한 정보 입력으로 맞춤 상담을 받아보세요</p>
+                <p className="text-gray-700 text-xs sm:text-sm ml-10">간단한 정보 입력으로 맞춤 상담을 받아보세요</p>
               </div>
               <form className="flex flex-col gap-4 sm:gap-5" onSubmit={handleInsuranceCostCalculate}>
                 {/* 성별/이름 */}
@@ -591,9 +591,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <span className="text-lg text-blue-600 font-bold align-middle">&nbsp;님</span>
               {insuranceAge !== '' && (
                 <span className="font-bold ml-2 flex items-center">
-                  <span className="text-lg text-gray-500">보험연령 </span>
+                  <span className="text-lg text-gray-700">보험연령 </span>
                   <span className="text-2xl font-extrabold text-red-500 mx-1">{insuranceAge}</span>
-                  <span className="text-lg text-gray-500">세</span>
+                  <span className="text-lg text-gray-700">세</span>
                 </span>
               )}
             </h3>
@@ -702,7 +702,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 type="button"
                 onClick={handleConsultVerifyOTP}
                 disabled={verifying || consultOtpCode.length !== 6}
-                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpCode.length !== 6) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpCode.length !== 6) ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
               >
                 {verifying ? '인증 처리중...' : '인증하고 상담신청'}
               </button>

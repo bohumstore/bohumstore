@@ -4,7 +4,7 @@ import Image from 'next/image'
 export default function Footer() {
   return (
     <footer className="w-full bg-[#f8f8f8] border-t border-gray-200 py-8 mt-4">
-      <div className="max-w-5xl mx-auto px-4 text-center text-gray-500 text-xs flex flex-col gap-1.5">
+      <div className="max-w-5xl mx-auto px-4 text-center text-gray-700 text-xs flex flex-col gap-1.5">
         <div className="flex justify-center items-center gap-4 mb-2">
           <Image src="/metarich-logo1.png" alt="MetaRich 로고" width={100} height={32} style={{objectFit:'contain',height:'32px'}} />
           <span className="h-6 w-px bg-gray-300 mx-1 inline-block" />

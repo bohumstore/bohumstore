@@ -120,7 +120,7 @@ export default function Header() {
               <span className="font-bold text-lg text-gray-800">전체 메뉴</span>
               <button 
                 onClick={closeMenu}
-                className="p-2 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
+                className="p-2 text-gray-700 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
               >
                 <XMarkIcon className="w-6 h-6" />
               </button>
@@ -140,7 +140,7 @@ export default function Header() {
                       {expandedMenu === item.id ? (
                         <ChevronUpIcon className="w-5 h-5 text-blue-600" />
                       ) : (
-                        <ChevronDownIcon className="w-5 h-5 text-gray-400 group-hover:text-blue-600" />
+                        <ChevronDownIcon className="w-5 h-5 text-gray-600 group-hover:text-blue-600" />
                       )}
                     </button>
                     
@@ -175,7 +175,7 @@ export default function Header() {
                     className="flex items-center justify-between px-6 py-4 hover:bg-blue-50 transition-colors group"
                   >
                     <span className="font-bold text-gray-800 group-hover:text-blue-700">상담신청</span>
-                    <ArrowRightIcon className="w-5 h-5 text-gray-400 group-hover:text-blue-700" />
+                    <ArrowRightIcon className="w-5 h-5 text-gray-600 group-hover:text-blue-700" />
                   </Link>
                 </li>
               </ul>
@@ -183,7 +183,7 @@ export default function Header() {
 
             {/* 하단 정보 (옵션) */}
             <div className="p-6 bg-gray-50 border-t border-gray-100">
-              <div className="text-xs text-gray-500 text-center">
+              <div className="text-xs text-gray-700 text-center">
                 © Bohumstore. All rights reserved.
               </div>
             </div>
