@@ -37,6 +37,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     '간호/간병보험',
     '종신/정기보험',
     '연금/변액연금보험',
+    '일시납연금보험',
     '운전자보험',
     '기타문의'
   ];
@@ -370,7 +371,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const currentMonth = currentDate.getMonth() + 1; // 0-11을 1-12로 변환
   
   // 이슈 업데이트 관리: 내용 업데이트 완료 시 이 값을 현재 월로 변경
-  const lastUpdatedMonth = 3; // ★ 이슈 내용이 업데이트된 월 (3월 = 내용 표시, 4월 되면 자동으로 업데이트중)
+  const lastUpdatedMonth = 6; // ★ 이슈 내용이 업데이트된 월 (3월 = 내용 표시, 4월 되면 자동으로 업데이트중)
   const isUpdating = currentMonth !== lastUpdatedMonth;
 
   return (
@@ -432,11 +433,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="space-y-2 sm:space-y-2.5">
                   <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
                     <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
-                    <span>실손보험료 <span className="font-semibold text-red-500">최대 20% 인상</span> 예정!</span>
+                    <span>KB라이프 <span className="font-semibold text-red-500">10년시점 130% 환급률 보증</span></span>
                   </div>
                   <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
                     <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
-                    <span>암보험 <span className="font-semibold text-red-500">보험료 인상</span> 예정!</span>
+                    <span>IBK연금보험 <span className="font-semibold text-red-500">연단리 8% 최저보증</span></span>
                   </div>
                   <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
                     <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>

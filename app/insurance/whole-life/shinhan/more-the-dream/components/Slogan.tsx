@@ -516,7 +516,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#0066cc] flex-shrink-0">✔</span>
                 <span className="leading-tight">
-                  일반심사형: 만 <span className="text-indigo-600 font-semibold">15~70세</span> / 간편심사형: 만 <span className="text-purple-600 font-semibold">30~69세</span><br />
+                  일반심사형: 만 <span className="text-indigo-600 font-semibold">15~70세</span> / 간편심사형: <span className="text-purple-600 font-semibold">30~70세</span><br />
                   <span className="text-[10px] sm:text-xs text-gray-700">(단, 성별 및 납입기간별 가입나이 상이)</span>
                 </span>
               </li>
@@ -535,9 +535,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div className="text-center px-0.5 sm:px-1">
                     <div className="inline-block bg-gradient-to-b from-[#3b82f6] via-[#2563eb] to-[#1d4ed8] text-white text-xs sm:text-sm md:text-base font-bold px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-lg mb-2 sm:mb-2.5 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
                       boxShadow: '0 6px 12px rgba(29, 78, 216, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
-                    }}>7년 시점</div>
+                    }}>완납(5년)시점</div>
                     <div className="flex flex-col items-center">
-                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#3b82f6]">93.0%</div>
+                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#3b82f6]">90%</div>
                     </div>
                   </div>
 

@@ -152,7 +152,7 @@ export const slogans: Slogan[] = [
   },
   {
     id: 'shinhan-more-the-dream',
-    title: '10년시점 122.7% 환급률',
+    title: '10년시점 120.5% 환급률',
     subtitle: '단기납으로 빠른 완납',
     description: '신한 모아더드림 Plus 종신보험으로 짧은 기간에 높은 보장을 받으세요.',
     path: '/insurance/whole-life/shinhan/more-the-dream',
@@ -168,16 +168,16 @@ export const slogans: Slogan[] = [
   },
   {
     id: 'hana-hanaro',
-    title: '10년시점 122.78% 환급률',
+    title: '10년시점 120.53% 환급률',
     subtitle: '간편심사형 가입 가능',
-    description: '하나생명 하나로 THE 연결된 종신보험으로 높은 환급률과 간편한 가입을 경험하세요.',
+    description: '하나생명 하나로 THE 연결된 종신보험으로 보장성 중심 설계와 간편심사형 가입을 확인하세요.',
     path: '/insurance/whole-life/hana/hanaro',
     color: 'from-teal-500 to-teal-600',
     bgColor: 'bg-teal-50',
     features: [
       '간편심사형으로도 가입 가능',
-      '3대질병 진단시 보험료 환급',
-      '유지보너스 제공'
+      '사망을 주된 보장으로 하는 보장성 종신보험',
+      '해약환급금 일부지급형'
     ],
     company: '하나생명',
     logo: '/hana-logo.png'
@@ -250,7 +250,7 @@ export const mainProducts: MainProduct[] = [
     description: '15~70세 전연령 가입 가능, 단기납 완료 후 높은 환급률',
     badge: '',
     category: '종신보험',
-    highlight: '10년시점 122.7%'
+    highlight: '10년시점 120.5%'
   },
   {
     id: 'hana-hanaro',
@@ -258,11 +258,10 @@ export const mainProducts: MainProduct[] = [
     company: '하나생명',
     logo: '/hana-logo.png',
     path: '/insurance/whole-life/hana/hanaro',
-    description: '간편심사형 가입 가능, 3대질병 진단시 보험료 환급',
-    descriptionNote: '(※특약 가입시)',
+    description: '간편심사형 가입 가능, 보장성 중심의 종신보험',
     badge: '',
     category: '종신보험',
-    highlight: '10년시점 122.78%'
+    highlight: '10년시점 120.53%'
   },
   {
     id: 'kdb-happy-plus',
