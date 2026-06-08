@@ -12,8 +12,8 @@ import { getRefundRate, Gender } from '../data/refundRateTable';
 const currentPath = '/insurance/oneshot/aia/dollar';
 const productConfig = getProductConfigByPath(currentPath);
 
-const INSURANCE_COMPANY_ID = 1; // AIA생명
-const INSURANCE_PRODUCT_ID = 99; // AIA 달러연금보험 id 코드값
+const INSURANCE_COMPANY_ID = 11; // AIA생명
+const INSURANCE_PRODUCT_ID = 12; // AIA달러로받는연금보험II
 
 // 기준환율 (원/달러)
 const BASE_EXCHANGE_RATE = 1500;
@@ -489,8 +489,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const rate = refundRateFromTable ? refundRateFromTable / 100 : 1.5696;
   const interestRate = rate - 1; // 이자율 = 환급률 - 100%
   
-  const interestValue = lumpSum ? (lumpSum * interestRate).toFixed(2) : '-';
-  const refundValue = lumpSum ? (lumpSum * rate).toFixed(2) : '-';
+  const interestValue = lumpSum ? parseFloat((lumpSum * interestRate).toFixed(2)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '-';
+  const refundValue = lumpSum ? parseFloat((lumpSum * rate).toFixed(2)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '-';
   
   // 원화 환산 값
   const lumpSumKRW = lumpSum ? Math.round(lumpSum * BASE_EXCHANGE_RATE).toLocaleString('ko-KR') : '-';
@@ -499,13 +499,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   
   // 알림톡용 달러 환산 포함 값
   const lumpSumForAlimtalk = lumpSum 
-    ? `${lumpSumKRW} 원 (약 $${lumpSum.toLocaleString()})` 
+    ? `$${lumpSum.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (약 ${lumpSumKRW}원)` 
     : '-';
   const interestValueForAlimtalk = lumpSum 
-    ? `${interestValueKRW} 원 (약 $${parseFloat(interestValue).toLocaleString()})` 
+    ? `$${interestValue} (약 ${interestValueKRW}원)` 
     : '-';
   const refundValueForAlimtalk = lumpSum 
-    ? `${refundValueKRW} 원 (약 $${parseFloat(refundValue).toLocaleString()})` 
+    ? `$${refundValue} (약 ${refundValueKRW}원)` 
     : '-';
 
   return (
@@ -530,17 +530,17 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <div className="w-full bg-white rounded-xl shadow-lg p-3 sm:p-4 mb-3 border-2 border-pink-100">
               {/* 공시이율 */}
               <div className="flex flex-col sm:flex-row items-center justify-between mb-3 pb-3 border-b border-gray-200 gap-2">
-                <div className="flex-1">
-                  <div className="text-xs sm:text-sm mb-1">
+                <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center sm:justify-start">
+                  <div className="text-xs sm:text-sm">
                     <span className="bg-yellow-400 text-gray-900 font-bold px-2 py-0.5 rounded">10년 확정 공시이율</span>
                     <span className="text-gray-600 text-[10px] sm:text-xs ml-1">(가입시점)</span>
                   </div>
-                  <div className="flex items-baseline gap-1 justify-center sm:justify-start">
+                  <div className="flex items-baseline gap-1">
                     <span className="text-3xl sm:text-4xl font-extrabold text-red-500">5.27</span>
                     <span className="text-xl sm:text-2xl font-bold text-red-500">%</span>
                   </div>
+                  <div className="text-[10px] sm:text-xs text-gray-500">기준일자: 2026.6.1~15</div>
                 </div>
-                <div className="text-[10px] sm:text-xs text-gray-500">기준일자: 2026.6.1~15</div>
               </div>
 
               {/* 추가 혜택 */}

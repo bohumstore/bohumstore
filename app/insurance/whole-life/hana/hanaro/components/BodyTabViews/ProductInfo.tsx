@@ -412,7 +412,7 @@ export default function ProductInfo() {
       <div className="space-y-4">
         <h3 className="text-lg font-bold">계약자적립액 인출(보장형 계약)</h3>
         <div className="space-y-2 text-sm md:text-base">
-          <p>⁻ 계약자는 보험계약 성립 후부터 보험년도 기준 연 12회에 한하여 계약자적립액의 일부를 인출할 수 있습니다.</p>
+          <p>⁻ 계약자는 계약일 이후 1개월이 지난 후부터 보험년도 기준 연 12회에 한하여 계약자적립액의 일부를 인출할 수 있습니다.</p>
           <p className="font-semibold">&lt;1회인출 한도&gt;=인출 당시 유지보너스에 의한 계약자적립액과 추가납입보험료에 의한 계약자적립액의 합산금액 이내</p>
           <p>⁻ 계약일부터 10년 이내에 인출하는 경우 계약일부터 각 인출시점까지의 인출금액의 합계는 계약자가 실제 납입한 보험료 총액(총납입한 기본보험료와 총납입한 추가납입보험료의 합계)을 초과할 수 없으며, 보험가입금액을 감액한 경우 감액후 기본보험료와 기본보험료 감액비율과 동일비율로 감액된 추가납입보험료 및 계약자적립액의 인출금액을 적용합니다.</p>
           <p>⁻ 계약자적립액을 인출할 경우 계약자적립액에서 인출금액을 차감하므로 해약환급금이 감소할 수 있습니다.</p>
@@ -449,34 +449,67 @@ export default function ProductInfo() {
 
       {/* 보험료 예시 */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">보험료 예시</h3>
-        <p className="text-sm md:text-base">이 상품은 "해약환급금 일부지급형"으로 보험료 납입기간 중 계약을 해지하는 경우 "일반형"의 해약환급금 대비 적은 해약환급금을 지급하는 대신 "일반형"보다 낮은 보험료로 동일한 보장을 받을 수 있도록 한 상품입니다.</p>
-        <p className="text-sm md:text-base">아래 예시는 '해약환급금 일부지급형'과 '일반형'을 비교하였으니 보험료를 확인하시기 바랍니다.</p>
-        <p className="text-sm text-gray-600">*일반형은 비교를 위한 종목으로 실제 판매하는 상품이 아닙니다.</p>
-
-        {/* 주계약 */}
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">보험료 예시(주계약)</h3>
+        
+        {/* 5년납 */}
         <div className="space-y-2">
-          <h4 className="text-base font-semibold text-gray-600">· 주계약</h4>
-          <p className="text-xs text-gray-600 text-right">기준: 가입금액 5,000만원, 월납, 5년납 (단위:원)</p>
+          <h4 className="text-base font-semibold">5년납</h4>
+          <p className="text-xs text-gray-600 text-right">기준 : 해약환급금일부지급형, 가입금액5,000만원, 5년납, 월납, 특약제외 (단위 : 원)</p>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-xs sm:text-sm">
               <thead>
                 <tr className="bg-[#1e3a8a] text-white">
-                  <th className="border border-gray-300 p-2 text-center" rowSpan={3}>구분</th>
-                  <th className="border border-gray-300 p-2 text-center" colSpan={4}>1형(일반심사형)</th>
-                  <th className="border border-gray-300 p-2 text-center" colSpan={4}>2형(간편심사형)</th>
-                </tr>
-                <tr className="bg-[#1e3a8a] text-white">
-                  <th className="border border-gray-300 p-2 text-center" colSpan={2}>해약환급금 일부지급형</th>
-                  <th className="border border-gray-300 p-2 text-center" colSpan={2}>일반형*</th>
-                  <th className="border border-gray-300 p-2 text-center" colSpan={2}>해약환급금 일부지급형</th>
-                  <th className="border border-gray-300 p-2 text-center" colSpan={2}>일반형*</th>
+                  <th className="border border-gray-300 p-2 text-center" rowSpan={2}>구분</th>
+                  <th className="border border-gray-300 p-2 text-center" colSpan={2}>일반심사형</th>
+                  <th className="border border-gray-300 p-2 text-center" colSpan={2}>간편심사형</th>
                 </tr>
                 <tr className="bg-[#1e3a8a] text-white">
                   <th className="border border-gray-300 p-2 text-center">남자</th>
                   <th className="border border-gray-300 p-2 text-center">여자</th>
                   <th className="border border-gray-300 p-2 text-center">남자</th>
                   <th className="border border-gray-300 p-2 text-center">여자</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">30세</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">533,500</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">508,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">567,500</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">535,500</td>
+                </tr>
+                <tr>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">40세</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">592,500</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">563,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">631,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">594,500</td>
+                </tr>
+                <tr>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">50세</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">663,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">628,500</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">707,500</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">664,500</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* 7년납 */}
+        <div className="space-y-2">
+          <h4 className="text-base font-semibold">7년납</h4>
+          <p className="text-xs text-gray-600 text-right">기준 : 해약환급금일부지급형, 가입금액5,000만원, 7년납, 월납, 특약제외 (단위 : 원)</p>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr className="bg-[#1e3a8a] text-white">
+                  <th className="border border-gray-300 p-2 text-center" rowSpan={2}>구분</th>
+                  <th className="border border-gray-300 p-2 text-center" colSpan={2}>일반심사형</th>
+                  <th className="border border-gray-300 p-2 text-center" colSpan={2}>간편심사형</th>
+                </tr>
+                <tr className="bg-[#1e3a8a] text-white">
                   <th className="border border-gray-300 p-2 text-center">남자</th>
                   <th className="border border-gray-300 p-2 text-center">여자</th>
                   <th className="border border-gray-300 p-2 text-center">남자</th>
@@ -488,174 +521,168 @@ export default function ProductInfo() {
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">30세</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">709,500</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">676,500</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">725,500</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">691,500</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">753,500</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">712,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">770,500</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">728,000</td>
                 </tr>
                 <tr>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">40세</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">787,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">756,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">804,500</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">765,500</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">845,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">797,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">855,500</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">807,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">748,500</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">837,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">789,500</td>
                 </tr>
                 <tr>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">50세</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">878,500</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">834,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">898,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">852,500</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">935,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">889,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">955,500</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">900,500</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">880,500</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <p className="text-xs text-gray-600">* 보험료는 가입금액에 비례하여 변동됩니다.</p>
         </div>
 
         {/* 선택특약 */}
-        <h4 className="text-base font-semibold text-gray-600 mt-6">· 선택특약</h4>
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3 mt-8">보험료 예시(특약)</h3>
 
         {/* (무)3대질병진단 보험료환급특약 */}
         <div className="space-y-2">
-          <h4 className="text-base font-semibold">(무)3대질병진단 보험료환급특약</h4>
-          <p className="text-xs text-gray-600 text-right">기준: 5년 만기, 전기납, 월납 (단위:원)</p>
+          <p className="text-xs text-gray-600 text-right">기준 : 주계약 가입금액 5천만원, 납입기간 5년, 특약 5년 만기, 전기납, 월납 (단위 : 원)</p>
           <div className="overflow-x-auto">
-            <table className="min-w-[600px] w-full border-collapse text-[10px] sm:text-xs md:text-sm">
+            <table className="min-w-[700px] w-full border-collapse text-[10px] sm:text-xs md:text-sm">
               <thead>
                 <tr className="bg-[#1e3a8a] text-white">
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center" rowSpan={2} colSpan={2}>구분</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={3}>남자</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={3}>여자</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center" rowSpan={3}>구분</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={4}>(무)3대질병진단 보험료환급특약<br/>(1형 일반심사형)</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={4}>(무)3대질병진단 보험료환급특약<br/>(2형 간편심사형)</th>
                 </tr>
                 <tr className="bg-[#1e3a8a] text-white">
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center">30세</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center">40세</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center">50세</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center">30세</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center">40세</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center">50세</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={2}>남자</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={2}>여자</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={2}>남자</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={2}>여자</th>
+                </tr>
+                <tr className="bg-[#1e3a8a] text-white">
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">가입금액</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">보험료</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">가입금액</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">보험료</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">가입금액</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">보험료</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">가입금액</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">보험료</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center" rowSpan={2}>1형(일반심사형)</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">가입금액</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">30세</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">42,570,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">47,220,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">52,710,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">40,590,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">44,910,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">50,040,000</td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">보험료</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">5,662</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">13,835</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">31,679</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">40,590,000</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">4,424</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">8,129</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">14,912</td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center" rowSpan={2}>2형(간편심사형)</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">가입금액</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">45,210,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">50,220,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">56,100,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">7,821</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">42,720,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">47,370,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">53,830,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">5,383</td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">보험료</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">7,821</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">40세</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">47,220,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">13,835</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">44,910,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">8,129</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">50,220,000</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">20,138</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">48,695</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">5,383</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">47,370,000</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">10,137</td>
+                </tr>
+                <tr>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">50세</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">52,710,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">31,679</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">50,040,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">14,912</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">56,100,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">48,695</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">52,830,000</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">21,924</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p className="text-xs text-gray-600">* 가입금액: 주계약 해약환급금 일부지급형의 총보험료</p>
         </div>
 
         {/* (무)3대질병 납입면제특약 */}
         <div className="space-y-2">
-          <h4 className="text-base font-semibold">(무)3대질병 납입면제특약</h4>
-          <p className="text-xs text-gray-600 text-right">기준: 5년 만기, 전기납, 월납 (단위:원)</p>
+          <p className="text-xs text-gray-600 text-right">기준 : 주계약 가입금액 5천만원, 납입기간 5년, 특약 5년 만기, 전기납, 월납 (단위 : 원)</p>
           <div className="overflow-x-auto">
-            <table className="min-w-[600px] w-full border-collapse text-[10px] sm:text-xs md:text-sm">
+            <table className="min-w-[700px] w-full border-collapse text-[10px] sm:text-xs md:text-sm">
               <thead>
                 <tr className="bg-[#1e3a8a] text-white">
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center" rowSpan={2} colSpan={2}>구분</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={3}>남자</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={3}>여자</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center" rowSpan={3}>구분</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={4}>(무)3대질병 납입면제특약<br/>(1형 일반심사형)</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={4}>(무)3대질병 납입면제특약<br/>(2형 간편심사형)</th>
                 </tr>
                 <tr className="bg-[#1e3a8a] text-white">
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center">30세</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center">40세</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center">50세</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center">30세</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center">40세</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 text-center">50세</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={2}>남자</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={2}>여자</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={2}>남자</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center" colSpan={2}>여자</th>
+                </tr>
+                <tr className="bg-[#1e3a8a] text-white">
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">가입금액</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">보험료</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">가입금액</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">보험료</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">가입금액</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">보험료</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">가입금액</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 text-center">보험료</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center" rowSpan={2}>1형(일반심사형)</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">가입금액</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">30세</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">709,500</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">787,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">878,500</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">676,500</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">748,500</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">834,000</td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">보험료</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">2,036</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">5,751</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">14,030</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">676,500</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">2,772</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">8,021</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">13,388</td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center" rowSpan={2}>2형(간편심사형)</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">가입금액</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">753,500</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">837,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">935,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">3,019</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">712,000</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">789,500</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">880,500</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">3,903</td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">보험료</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">3,019</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">40세</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">787,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">5,751</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">748,500</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">8,021</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">837,000</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">8,665</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">21,988</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 text-center">3,903</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">789,500</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">10,830</td>
+                </tr>
+                <tr>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">50세</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">878,500</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">14,030</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">834,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">13,388</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">935,000</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">21,988</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 text-center">880,500</td>
                   <td className="border border-gray-300 p-1 sm:p-2 text-center">19,390</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p className="text-xs text-gray-600">* 가입금액: 주계약 해약환급금 일부지급형의 총보험료</p>
-          <p className="text-xs text-red-600">* (무)3대질병진단 보험료환급특약과 (무)3대질병 납입면제특약은 동시에 선택할 수 없습니다.</p>
+          <div className="space-y-1">
+            <p className="text-xs text-gray-600">* 가입금액 : 주계약(해약환급금 일부지급형)의 보험료</p>
+            <p className="text-xs text-red-600">* (무)3대질병진단 보험료환급특약과 (무)3대질병 납입면제특약은 동시에 선택할 수 없습니다.</p>
+          </div>
         </div>
       </div>
     </div>
