@@ -47,10 +47,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const [showConsultTypeDropdown, setShowConsultTypeDropdown] = useState(false);
   const [showConsultTimeDropdown, setShowConsultTimeDropdown] = useState(false);
-  const [consultType, setConsultType] = useState('연금보험');
+  const [consultType, setConsultType] = useState('더!행복플러스연금보험');
   const [consultTime, setConsultTime] = useState('아무때나');
   const [pensionAmounts, setPensionAmounts] = useState({ monthly: 0, guaranteed: 0, totalUntil100: 0, pensionStartAge: 0, notice: '' });
-  const consultTypeOptions = ['연금보험'];
+  const consultTypeOptions = ['더!행복플러스연금보험'];
   const consultTimeOptions = [
     '아무때나',
     '오전 09:00 ~ 10:00',

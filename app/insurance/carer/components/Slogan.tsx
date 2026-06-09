@@ -45,9 +45,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const [showConsultTypeDropdown, setShowConsultTypeDropdown] = useState(false);
   const [showConsultTimeDropdown, setShowConsultTimeDropdown] = useState(false);
-  const [consultType, setConsultType] = useState('간병인보험');
+  const [consultType, setConsultType] = useState('간병인종합보험');
   const [consultTime, setConsultTime] = useState('아무때나');
-  const consultTypeOptions = ['간병인보험'];
+  const consultTypeOptions = ['간병인종합보험'];
   const consultTimeOptions = [
     '아무때나',
     '오전 09:00 ~ 10:00',

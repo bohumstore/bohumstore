@@ -485,6 +485,18 @@ export async function POST(req: Request) {
           // 달러($) 포함된 값은 이미 완성된 형태이므로 " 원" 추가 안함
           base.var9 = interestValue != null ? (String(interestValue).includes('$') ? String(interestValue) : `${interestValue} 원`) : '-';
           base.var10 = refundValue != null ? (String(refundValue).includes('$') ? String(refundValue) : `${refundValue} 원`) : '-';
+        } else if (clientTemplateId === "UI_4888") {
+          // UI_4888 order: 고객명, 성별, 생년월일, 회사명, 상품명, 납입기간, 일시납보험료, 환급률, 확정이자, 해약환급금
+          base.var1 = displayName;
+          base.var2 = displayGenderKor || '';
+          base.var3 = String(displayBirth || '');
+          base.var4 = companyName;
+          base.var5 = productDisplayName;
+          base.var6 = String(paymentPeriod || '');
+          base.var7 = String(mounthlyPremium || '');
+          base.var8 = tenYearReturnRate != null ? `${tenYearReturnRate} %` : '-';
+          base.var9 = String(interestValue || '-');
+          base.var10 = String(refundValue || '-');
         } else if (clientTemplateId === "UB_8715") {
           // UB_8715 order: 고객명, 성별, 생년월일, 보험종류, 상담시간
           base.var1 = displayName;

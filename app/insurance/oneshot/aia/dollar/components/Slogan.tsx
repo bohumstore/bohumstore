@@ -49,9 +49,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const [showConsultTypeDropdown, setShowConsultTypeDropdown] = useState(false);
   const [showConsultTimeDropdown, setShowConsultTimeDropdown] = useState(false);
-  const [consultType, setConsultType] = useState('연금보험');
+  const [consultType, setConsultType] = useState('AIA달러보험');
   const [consultTime, setConsultTime] = useState('아무때나');
-  const consultTypeOptions = ['연금보험'];
+  const consultTypeOptions = ['AIA달러보험'];
   const consultTimeOptions = [
     '아무때나',
     '오전 09:00 ~ 10:00',
@@ -182,7 +182,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   }
 
   const handlePostOTP = async () => {
-    const templateId = 'UB_8712'
+    const templateId = 'UI_4888'
     console.log(`[CLIENT] 인증번호 전송 시작: ${new Date().toISOString()}`);
     try {
       const response = await request.post('/api/postOTP', { 
@@ -252,7 +252,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       tenYearReturnRate: rate ? (rate * 100).toFixed(2) : '-', // 환급률 (소수점 둘째 자리까지)
       interestValue: interestValueForAlimtalk, // 확정이자(달러 환산 포함)
       refundValue: refundValueForAlimtalk,    // 예상해약환급금(달러 환산 포함)
-      templateId: "UB_8712"
+      templateId: "UI_4888"
     });
     if (res.data.success) {
       // 방문자 추적: 환급금 확인
