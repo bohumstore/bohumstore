@@ -52,35 +52,47 @@ export default function Header() {
   const menuItems = [
     {
       title: "건강보험",
+      titleMain: "건강보험",
+      titleSub: null,
       id: "health",
       subItems: [
-        { name: "간병인보험", path: "/insurance/carer" }
+        { name: "간병인보험", path: "/insurance/carer", badge: null }
       ]
     },
     {
       title: "종신보험",
+      titleMain: "종신보험",
+      titleSub: "환급률↑",
+      titleSubColor: "text-rose-500",
       id: "whole-life",
       subItems: [
-        { name: "메트라이프달러종신보험Plus", path: "/insurance/whole-life/metlife/usd" },
-        { name: "신한모아더드림Plus종신보험", path: "/insurance/whole-life/shinhan/more-the-dream" },
-        { name: "하나로THE연결된종신보험", path: "/insurance/whole-life/hana/hanaro" }
+        { name: "메트라이프달러종신보험Plus", path: "/insurance/whole-life/metlife/usd", badge: "달러" },
+        { name: "신한모아더드림Plus종신보험", path: "/insurance/whole-life/shinhan/more-the-dream", badge: null },
+        { name: "하나로THE연결된종신보험", path: "/insurance/whole-life/hana/hanaro", badge: null }
       ]
     },
     {
       title: "연금보험",
-      id: "annuity",
+      titleMain: "연금보험",
+      titleSub: "환급률↑",
+      titleSubColor: "text-rose-500",
+      id: "annuity-refund",
       subItems: [
-        { name: "PlusPRO연금보험(보증형)", path: "/insurance/annuity/im/plus-pro" },
-        { name: "KB트리플레벨업연금보험(보증형)", path: "/insurance/annuity/kb/triple-level-up" },
-        { name: "KDB행복플러스연금보험(보증형)", path: "/insurance/annuity/kdb/happy-plus" }
+        // { name: "메트라이프달러연금보험", path: "/insurance/annuity/metlife/only-dollar", badge: "달러" }, // 심의필 대기중
+        { name: "PlusPRO연금보험(보증형)", path: "/insurance/annuity/im/plus-pro", badge: null },
+        { name: "KB트리플레벨업연금보험(보증형)", path: "/insurance/annuity/kb/triple-level-up", badge: null }
       ]
     },
     {
-      title: "변액연금보험",
-      id: "variable-annuity",
+      title: "연금보험",
+      titleMain: "연금보험",
+      titleSub: "연금액↑",
+      titleSubColor: "text-sky-600",
+      id: "annuity-pension",
       subItems: [
-        { name: "IBK평생보증받는변액연금보험", path: "/insurance/annuity/ibk/lifetime" },
-        { name: "KDB행복드림변액연금보험", path: "/insurance/annuity/kdb/happy-dream" }
+        { name: "IBK평생보증받는변액연금보험", path: "/insurance/annuity/ibk/lifetime", badge: null },
+        { name: "KDB행복드림변액연금보험", path: "/insurance/annuity/kdb/happy-dream", badge: null },
+        { name: "KDB행복플러스연금보험(보증형)", path: "/insurance/annuity/kdb/happy-plus", badge: null }
       ]
     }
   ];
@@ -136,11 +148,20 @@ export default function Header() {
                       onClick={() => toggleSubMenu(item.id)}
                       className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 transition-colors group"
                     >
-                      <span className="font-bold text-gray-800 group-hover:text-blue-600 transition-colors">{item.title}</span>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-base font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
+                          {item.titleMain}
+                        </span>
+                        {item.titleSub && (
+                          <span className={`text-sm font-semibold ${item.titleSubColor}`}>
+                            {item.titleSub}
+                          </span>
+                        )}
+                      </div>
                       {expandedMenu === item.id ? (
                         <ChevronUpIcon className="w-5 h-5 text-blue-600" />
                       ) : (
-                        <ChevronDownIcon className="w-5 h-5 text-gray-600 group-hover:text-blue-600" />
+                        <ChevronDownIcon className="w-5 h-5 text-gray-400 group-hover:text-blue-600" />
                       )}
                     </button>
                     
@@ -156,9 +177,14 @@ export default function Header() {
                             <Link 
                               href={subItem.path}
                               onClick={closeMenu}
-                              className="block py-2.5 text-sm text-gray-600 hover:text-blue-600 hover:font-medium transition-colors pl-2 border-l-2 border-transparent hover:border-blue-300"
+                              className="flex items-center gap-2 py-2.5 text-sm text-gray-600 hover:text-blue-600 hover:font-medium transition-colors pl-2 border-l-2 border-transparent hover:border-blue-300"
                             >
-                              {subItem.name}
+                              <span>{subItem.name}</span>
+                              {subItem.badge && (
+                                <span className="px-1.5 py-0.5 text-[10px] font-medium bg-gray-200 text-gray-700 rounded">
+                                  {subItem.badge}
+                                </span>
+                              )}
                             </Link>
                           </li>
                         ))}
