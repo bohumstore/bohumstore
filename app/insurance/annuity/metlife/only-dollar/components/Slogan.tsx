@@ -528,12 +528,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center sm:justify-start">
                   <div className="text-xs sm:text-sm">
                     <span className="bg-blue-500 text-white font-bold px-2 py-0.5 rounded">공시이율</span>
-                    <span className="text-gray-600 text-[10px] sm:text-xs ml-1">(2026.5월)</span>
+                    <span className="text-gray-600 text-[10px] sm:text-xs ml-1">(2026.6월)</span>
                   </div>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl sm:text-4xl font-extrabold text-blue-600">4.66</span>
+                    <span className="text-3xl sm:text-4xl font-extrabold text-blue-600">4.69</span>
                     <span className="text-xl sm:text-2xl font-bold text-blue-600">%</span>
                   </div>
+                  <p className="text-[10px] text-gray-600 whitespace-nowrap">※ 공시이율은 매월 변동됩니다.</p>
                 </div>
               </div>
 

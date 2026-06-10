@@ -137,7 +137,7 @@ export default function CoverageDetails() {
           <h3 className="text-lg font-bold text-[#1e3a8a]">◉ 보증형</h3>
           <div className="text-right text-xs text-gray-600">
             <p>단위 : 달러 (달러미만절사)</p>
-            <p>예시기준 : 남자 40세, 10년납, 60세연금지급개시, 월보험료 1,000달러</p>
+            <p>예시기준 : 남자 40세, 5년납, 60세연금지급개시, 월보험료 200달러</p>
           </div>
         </div>
         
@@ -145,135 +145,57 @@ export default function CoverageDetails() {
           <table className="w-full border-collapse text-xs md:text-sm">
             <thead>
               <tr className="bg-[#1e3a8a] text-white">
-                <th className="border border-gray-300 p-2" colSpan={3}>구분</th>
-                <th className="border border-gray-300 p-2">2026년 04월<br/>현재 공시이율<br/>(연 4.66%) 가정</th>
-                <th className="border border-gray-300 p-2">현재 공시이율과<br/>평균공시이율(2.50%)<br/>중 낮은 이율 가정</th>
-                <th className="border border-gray-300 p-2">최저보증이율<br/>(5년 이내 1.0%,<br/>5년 초과 0.7%) 가정</th>
+                <th className="border border-gray-300 p-2" colSpan={4} rowSpan={2}>연금지급 개시 후 적립이율</th>
+                <th className="border border-gray-300 p-2" colSpan={3}>연금수령액</th>
               </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-gray-300 p-2 text-center" colSpan={3}>연금개시시점의 예상 계약자적립액</td>
-                <td className="border border-gray-300 p-2 text-center font-bold">192,800</td>
-                <td className="border border-gray-300 p-2 text-center font-bold">174,000</td>
-                <td className="border border-gray-300 p-2 text-center font-bold">174,000</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2 text-center" rowSpan={2}>종신연금형</td>
-                <td className="border border-gray-300 p-2 text-center" rowSpan={2}>개인연금형<br/>보증지급기간<br/>10년(조기집중<br/>배수 3배)</td>
-                <td className="border border-gray-300 p-2 text-center">보증기간이내</td>
-                <td className="border border-gray-300 p-2 text-center">16,534</td>
-                <td className="border border-gray-300 p-2 text-center">12,036</td>
-                <td className="border border-gray-300 p-2 text-center">9,599</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2 text-center">보증기간이후</td>
-                <td className="border border-gray-300 p-2 text-center">5,511</td>
-                <td className="border border-gray-300 p-2 text-center">4,012</td>
-                <td className="border border-gray-300 p-2 text-center">3,199</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2 text-center" rowSpan={2}>상속연금형</td>
-                <td className="border border-gray-300 p-2 text-center" colSpan={2}>피보험자 생존시</td>
-                <td className="border border-gray-300 p-2 text-center">8,939</td>
-                <td className="border border-gray-300 p-2 text-center">4,328</td>
-                <td className="border border-gray-300 p-2 text-center">1,211</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2 text-center" colSpan={2}>피보험자 사망시</td>
-                <td className="border border-gray-300 p-2 text-center">192,800</td>
-                <td className="border border-gray-300 p-2 text-center">174,000</td>
-                <td className="border border-gray-300 p-2 text-center">174,000</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2 text-center" rowSpan={2}>확정연금형</td>
-                <td className="border border-gray-300 p-2 text-center" colSpan={2}>확정연금(10년)</td>
-                <td className="border border-gray-300 p-2 text-center">23,347</td>
-                <td className="border border-gray-300 p-2 text-center">19,299</td>
-                <td className="border border-gray-300 p-2 text-center">17,861</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2 text-center" colSpan={2}>확정연금(20년)</td>
-                <td className="border border-gray-300 p-2 text-center">14,287</td>
-                <td className="border border-gray-300 p-2 text-center">10,835</td>
-                <td className="border border-gray-300 p-2 text-center">9,242</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        
-        <div className="space-y-2 text-sm text-gray-600">
-          <p>※ 상기 연금개시시점의 예상 계약자적립액은 연금개시시점의 최저계약자적립액 보증을 반영하여 예시한 금액입니다.</p>
-          <p>※ 연금개시시점의 최저계약자적립액 보증은 연금을 개시하는 경우에만 적용되며 연금을 개시하지 않을 경우 보증되지 않습니다.</p>
-        </div>
-      </div>
-
-      {/* 미보증형 */}
-      <div className="space-y-4">
-        <div className="flex justify-between items-start">
-          <h3 className="text-lg font-bold text-[#1e3a8a]">◉ 미보증형</h3>
-          <div className="text-right text-xs text-gray-600">
-            <p>단위 : 달러 (달러미만절사)</p>
-            <p>예시기준 : 남자 40세, 10년납, 60세연금지급개시, 월보험료 1,000달러</p>
-          </div>
-        </div>
-        
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-xs md:text-sm">
-            <thead>
               <tr className="bg-[#1e3a8a] text-white">
-                <th className="border border-gray-300 p-2" colSpan={3}>구분</th>
-                <th className="border border-gray-300 p-2">2026년 04월<br/>현재 공시이율<br/>(연 4.66%) 가정</th>
-                <th className="border border-gray-300 p-2">현재 공시이율과<br/>평균공시이율(2.50%)<br/>중 낮은 이율 가정</th>
-                <th className="border border-gray-300 p-2">최저보증이율<br/>(5년 이내 1.0%,<br/>5년 초과 0.7%) 가정</th>
+                <th className="border border-gray-300 p-2">최저보증이율 가정<br/>(5년이내 1.0%<br/>5년초과 0.7%)</th>
+                <th className="border border-gray-300 p-2">평균공시이율과 현<br/>재공시이율 중 낮은<br/>이율 2.5% 가정</th>
+                <th className="border border-gray-300 p-2">현재 공시이율 4.69%<br/>가정</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border border-gray-300 p-2 text-center" colSpan={3}>연금개시시점의 예상 계약자적립액</td>
-                <td className="border border-gray-300 p-2 text-center font-bold">220,042</td>
-                <td className="border border-gray-300 p-2 text-center font-bold">159,415</td>
-                <td className="border border-gray-300 p-2 text-center font-bold">122,008</td>
-              </tr>
-              <tr>
                 <td className="border border-gray-300 p-2 text-center" rowSpan={2}>종신연금형</td>
-                <td className="border border-gray-300 p-2 text-center" rowSpan={2}>개인연금형<br/>보증지급기간<br/>10년(조기집중<br/>배수 3배)</td>
-                <td className="border border-gray-300 p-2 text-center">보증기간이내</td>
-                <td className="border border-gray-300 p-2 text-center">18,871</td>
-                <td className="border border-gray-300 p-2 text-center">11,027</td>
-                <td className="border border-gray-300 p-2 text-center">6,731</td>
+                <td className="border border-gray-300 p-2 text-center" rowSpan={2}>개인연금형</td>
+                <td className="border border-gray-300 p-2 text-center" rowSpan={2}>23년보증,조기집<br/>중배수3.0배</td>
+                <td className="border border-gray-300 p-2 text-center">보증지급기간이내</td>
+                <td className="border border-gray-300 p-2 text-center">714</td>
+                <td className="border border-gray-300 p-2 text-center">909</td>
+                <td className="border border-gray-300 p-2 text-center">1,317</td>
               </tr>
               <tr>
-                <td className="border border-gray-300 p-2 text-center">보증기간이후</td>
-                <td className="border border-gray-300 p-2 text-center">6,290</td>
-                <td className="border border-gray-300 p-2 text-center">3,675</td>
-                <td className="border border-gray-300 p-2 text-center">2,243</td>
+                <td className="border border-gray-300 p-2 text-center">보증지급기간이후</td>
+                <td className="border border-gray-300 p-2 text-center">238</td>
+                <td className="border border-gray-300 p-2 text-center">303</td>
+                <td className="border border-gray-300 p-2 text-center">439</td>
               </tr>
               <tr>
-                <td className="border border-gray-300 p-2 text-center" rowSpan={2}>상속연금형</td>
-                <td className="border border-gray-300 p-2 text-center" colSpan={2}>피보험자 생존시</td>
-                <td className="border border-gray-300 p-2 text-center">10,202</td>
-                <td className="border border-gray-300 p-2 text-center">3,965</td>
-                <td className="border border-gray-300 p-2 text-center">849</td>
+                <td className="border border-gray-300 p-2 text-center" colSpan={2} rowSpan={2}>상속연금형</td>
+                <td className="border border-gray-300 p-2 text-center" colSpan={2}>연금연액</td>
+                <td className="border border-gray-300 p-2 text-center">129</td>
+                <td className="border border-gray-300 p-2 text-center">462</td>
+                <td className="border border-gray-300 p-2 text-center">980</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-2 text-center" colSpan={2}>피보험자 사망시</td>
-                <td className="border border-gray-300 p-2 text-center">220,042</td>
-                <td className="border border-gray-300 p-2 text-center">159,415</td>
-                <td className="border border-gray-300 p-2 text-center">122,008</td>
+                <td className="border border-gray-300 p-2 text-center">18,600</td>
+                <td className="border border-gray-300 p-2 text-center">18,600</td>
+                <td className="border border-gray-300 p-2 text-center">21,004</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-2 text-center" rowSpan={2}>확정연금형</td>
-                <td className="border border-gray-300 p-2 text-center" colSpan={2}>확정연금(10년)</td>
-                <td className="border border-gray-300 p-2 text-center">26,646</td>
-                <td className="border border-gray-300 p-2 text-center">17,681</td>
-                <td className="border border-gray-300 p-2 text-center">12,524</td>
+                <td className="border border-gray-300 p-2 text-center" rowSpan={2}>기간선택형</td>
+                <td className="border border-gray-300 p-2 text-center" colSpan={2}>10년</td>
+                <td className="border border-gray-300 p-2 text-center">1,909</td>
+                <td className="border border-gray-300 p-2 text-center">2,063</td>
+                <td className="border border-gray-300 p-2 text-center">2,546</td>
               </tr>
               <tr>
-                <td className="border border-gray-300 p-2 text-center" colSpan={2}>확정연금(20년)</td>
-                <td className="border border-gray-300 p-2 text-center">16,306</td>
-                <td className="border border-gray-300 p-2 text-center">9,926</td>
-                <td className="border border-gray-300 p-2 text-center">6,480</td>
+                <td className="border border-gray-300 p-2 text-center" colSpan={2}>20년</td>
+                <td className="border border-gray-300 p-2 text-center">987</td>
+                <td className="border border-gray-300 p-2 text-center">1,158</td>
+                <td className="border border-gray-300 p-2 text-center">1,560</td>
               </tr>
             </tbody>
           </table>
@@ -283,15 +205,13 @@ export default function CoverageDetails() {
       {/* 연금지급 관련 알아두실 사항 */}
       <div className="space-y-4">
         <h3 className="text-lg font-bold text-[#1e3a8a]">연금지급 관련 알아두실 사항</h3>
-        <div className="space-y-3 text-sm">
-          <p className="text-red-600">※ 위의 예시금액이 미래의 수익을 보장하는 것은 아닙니다.</p>
-          <p className="text-red-600">※ 위의 예시금액은 납입한 보험료 중 위험보험료와 사업비 등을 공제하고 최저보증이율, 평균공시이율과 공시이율 중 낮은 이율, 현재공시이율(2026년 04월 연복리 4.66%)을 기준으로 계산된 금액이며, 공시이율이 변동하는 경우 연금액도 변동됩니다.</p>
-          <p className="text-red-600">※ 가입하시는 저축성보험은 객관적인 외부지표 금리*와 운용자산이익률**을 가중평균하여 산출된 공시기준 이율에서 향후 예상수익 등을 고려한 조정률을 가감하여 매월 회사가 결정하는 공시이율에 연동되는 상품입니다.</p>
-          <p className="text-gray-600">2026년 04월 현재 공시이율은 4.66%이며, 공시이율이 변동될 경우 적립부분 적용이율도 변동됩니다.</p>
-          <p className="text-gray-600 text-xs">*외부지표금리는 국고채, 회사채, 통화안정증권과 양도성예금증서 등을 고려하여 산출</p>
-          <p className="text-gray-600 text-xs">**운용자산이익률은 직전 12개월간의 운용자산에 대한 투자영업수익과 투자영업비용 등을 고려하여 산출</p>
-          <p className="text-gray-600">※ 이 계약의 공시이율의 최저보증이율은 계약일로부터 5년이내 연복리 1.0%, 5년초과 연복리 0.7%입니다.</p>
-          <p className="text-gray-600">※ 상기 예시된 금액은 세전기준입니다.</p>
+        <div className="space-y-2 text-sm">
+          <p className="text-gray-700">● 위의 연금지급개시 시 계약자적립액은 가입 당시의 주계약 납입보험료를 기준으로 작성된 것이므로, 계약내용의 변경이 있을 경우 또는 공시이율이 변동 될 경우 계약자적립액이 달라질 수 있습니다.</p>
+          <p className="text-gray-700">● 연금액의 계산은 『공시이율』을 적용하여 계산되기 때문에 공시이율이 변경되면 연금액도 변경됩니다.</p>
+          <p className="text-gray-700">● 공시이율은 계약일 기준으로 5년 이내에는 연복리 1.0%, 5년 초과하는 경우에는 연복리 0.7%를 최저보증이율로 적용합니다.</p>
+          <p className="text-gray-700">● 위의 적립이율은 현재(2026년 6월 기준)의 공시이율(4.69%)과 최저보증이율(5년이내 1.0%, 5년초과 0.7%)로 예시하였습니다. 보장내용에 관련된 사항은 보험계약자의 오해를 방지하기 위해 보험금 지급에 관한 약관내용의 일부를 선별하여 요약한 것이므로 보다 자세한 내용은 약관을 필히 확인하시기 바립니다.</p>
+          <p className="text-gray-700">● 상기 연금개시시점의 계약자적립액은 "연금개시시점"과 "계약일로부터 30년 경과시점의 연계약해당일" 중 먼저 도래하는 시점의 최저계약자적립액 보증을 반영하여 예시한 금액입니다.</p>
+          <p className="text-gray-700">● "연금개시시점"과 "계약일로부터 30년 경과시점의 연계약해당일" 중 "연금개시시점"이 먼저 도래하는 경우, "연금개시시점"의 최저계약자적립액 보증은 연금을 개시할 경우에만 적용되며 연금을 개시하지 않을 경우 보증되지 않습니다.</p>
         </div>
       </div>
     </div>
