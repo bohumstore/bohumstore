@@ -529,17 +529,26 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             {/* 핵심 정보 박스 */}
             <div className="w-full bg-white rounded-xl shadow-lg p-3 sm:p-4 mb-3 border-2 border-pink-100">
               {/* 공시이율 */}
-              <div className="flex flex-col sm:flex-row items-center justify-between mb-3 pb-3 border-b border-gray-200 gap-2">
-                <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center sm:justify-start">
-                  <div className="text-xs sm:text-sm">
-                    <span className="bg-yellow-400 text-gray-900 font-bold px-2 py-0.5 rounded">10년 확정 공시이율</span>
-                    <span className="text-gray-600 text-[10px] sm:text-xs ml-1">(가입시점)</span>
+              <div className="mb-3 pb-3 border-b border-gray-200">
+                <div className="flex flex-col gap-1">
+                  {/* 메인 공시이율 정보 */}
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <div className="text-xs sm:text-sm">
+                      <span className="bg-yellow-400 text-gray-900 font-bold px-2 py-0.5 rounded">10년 확정 공시이율</span>
+                    </div>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl sm:text-4xl font-extrabold text-red-500">5.27</span>
+                      <span className="text-xl sm:text-2xl font-bold text-red-500">%</span>
+                    </div>
+                    <div className="text-[10px] sm:text-xs text-gray-500">
+                      기준일자: <span className="text-gray-700 font-semibold">2026.6.1~15</span>
+                    </div>
                   </div>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-3xl sm:text-4xl font-extrabold text-red-500">5.27</span>
-                    <span className="text-xl sm:text-2xl font-bold text-red-500">%</span>
+                  
+                  {/* 변동 안내 */}
+                  <div className="text-[10px] sm:text-xs text-orange-600 font-medium">
+                    ※ 공시이율은 15일마다 변동 / 가입 시점 이율로 10년간 확정 적용됩니다.
                   </div>
-                  <div className="text-[10px] sm:text-xs text-gray-500">기준일자: 2026.6.1~15</div>
                 </div>
               </div>
 
@@ -710,7 +719,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                       </div>
                     </div>
                   </div>
-                  <p className="text-[10px] text-gray-600 mt-2 text-center">※ 달러 환산 금액은 기준환율 {BASE_EXCHANGE_RATE.toLocaleString()}원 적용 / 실제 환율에 따라 변동됩니다.</p>
+                  <p className="text-[10px] text-orange-600 font-medium mt-2 text-center leading-relaxed">
+                    ※ 원화 금액은 계산 편의를 위해 기준환율 {BASE_EXCHANGE_RATE.toLocaleString()}원을 적용한 참고값입니다.<br/>
+                    실제 환율은 시장 상황에 따라 변동되며, 환율 변동에 따라 원화 기준 금액이 달라질 수 있습니다.
+                  </p>
                 </div>
 
                 {/* 개인정보 동의 */}
