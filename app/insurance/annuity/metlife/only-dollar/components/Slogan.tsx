@@ -518,7 +518,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 (무)오로지연금을위한 달러연금보험
               </h1>
               <div className="text-base font-semibold text-blue-600">(보증비용부과형)(보증형)</div>
-              <p className="text-xs text-gray-700 mt-1">7년/10년/연금개시시점 최저계약자적립액을 보증하는 달러연금보험</p>
+              <p className="text-xs text-gray-700 mt-1">7년/10년/min(30년, 연금개시시점)<br className="sm:hidden" /> 최저계약자적립액을 보증하는 달러연금보험</p>
             </div>
 
             {/* 핵심 정보 박스 */}
@@ -541,8 +541,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               {/* 추가 혜택 */}
               <div className="space-y-2">
                 <div>
-                  <div className="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">✓ 최저계약자적립액 <span className="text-blue-600">7년/10년/연금개시시점 보증!</span></div>
-                  <div className="text-[10px] sm:text-xs text-gray-600 pl-3 sm:pl-4">7년 100%, 10년 130%, 연금개시시점 min 130% + 매년 2.5%p 보증 (5년납 보증형 기준)</div>
+                  <div className="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">✓ 최저계약자적립액 <span className="text-blue-600">7년/10년/min(30년, 연금개시시점) 보증!</span></div>
+                  <div className="text-[10px] sm:text-xs text-gray-600 pl-3 sm:pl-4">7년 100%, 10년 130%,<br className="sm:hidden" /> min(30년, 연금개시시점) 130%+매년 2.5% 보증<br className="sm:hidden" />(5년납 보증형 기준)</div>
                 </div>
                 <div>
                   <div className="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">✓ 가입 <span className="text-blue-600">0~70세</span> / 전건 <span className="text-blue-600">무진단·무심사!</span></div>
@@ -615,7 +615,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 </div>
               </div>
               <div className="text-xs text-gray-500 text-center mt-3">
-                *5년납 보증형 최저계약자 적립액 보증 비율 예시
+                *5년납 보증형 최저계약자 적립액 보증 비율 예시<br />
+                (단, 연금개시시점 보증은 연금개시하는 경우에만 보증)
               </div>
             </div>
 

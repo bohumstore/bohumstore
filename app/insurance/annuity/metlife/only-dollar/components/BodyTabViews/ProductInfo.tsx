@@ -206,7 +206,10 @@ export default function ProductInfo() {
             </tbody>
           </table>
         </div>
-        <p className="text-sm text-gray-600">* 기본보험료 총액 비례 : 계약자가 납입하기로 한 기본보험료 총액에 비례하여 부과합니다.</p>
+        <div className="space-y-2 text-sm text-gray-600">
+          <p>* 기본보험료 총액 비례 : 계약자가 납입하기로 한 기본보험료 총액에 비례하여 부과합니다.</p>
+          <p>* 최저계약자적립액 보증비용은 세 번째 최저계약자적립액 보증시점 [min(연금개시전 보험기간, 30년 경과시점)] 이내에만 부과합니다.</p>
+        </div>
       </div>
 
       {/* 추가납입보험료 */}
