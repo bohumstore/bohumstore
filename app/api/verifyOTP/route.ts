@@ -392,7 +392,7 @@ export async function POST(req: Request) {
           tpl_code: clientTemplateId,
           sender: "010-8897-7486",
           receiver_1: phone,
-          subject_1: subject,
+          subject_1: counselType === 1 ? "보험료계산 - 고객전송" : "상담/설계요청 - 고객전송",
           message_1: (() => {
             if (counselType === 2 || clientTemplateId === "UB_8715") {
               return (
@@ -430,6 +430,25 @@ export async function POST(req: Request) {
 
 
 `
+              );
+            }
+            if (clientTemplateId === "UI_4888") {
+              return (
+`[고객정보]
+고객명: ${displayName}
+성별: ${displayGenderKor}
+생년월일: ${displayBirth}
+ 
+[보험정보]
+보험사: ${companyName}
+상품명: ${productDisplayName}
+납입기간: ${paymentPeriod}
+일시납보험료: ${mounthlyPremium}
+ 
+[10년 시점] (돈)
+예상 환급률: ${tenYearReturnRate != null ? tenYearReturnRate + ' %' : '-'}
+예상 확정이자: ${interestValue || '-'}
+예상 해약환급금: ${refundValue || '-'}`
               );
             }
             // UB_8705
@@ -495,8 +514,8 @@ export async function POST(req: Request) {
           base.var6 = String(paymentPeriod || '');
           base.var7 = String(mounthlyPremium || '');
           base.var8 = tenYearReturnRate != null ? `${tenYearReturnRate} %` : '-';
-          base.var9 = String(interestValue || '-');
-          base.var10 = String(refundValue || '-');
+          base.var9 = interestValue || '-';
+          base.var10 = refundValue || '-';
         } else if (clientTemplateId === "UB_8715") {
           // UB_8715 order: 고객명, 성별, 생년월일, 보험종류, 상담시간
           base.var1 = displayName;
@@ -509,18 +528,18 @@ export async function POST(req: Request) {
       })(),
     }
     
-    console.log("[DEBUG] 고객용 알림톡 요청 데이터:", toClientReq.body);
+    console.log("[DEBUG] 고객용 알림톡 요청 데이터:", JSON.stringify(toClientReq.body, null, 2));
     
     try {
       const clientSendPromise = alimtalkSend(toClientReq, authForSend);
       const promises: Promise<any>[] = [clientSendPromise];
       if (adminSendPromise) promises.push(adminSendPromise);
       const results = await Promise.all(promises);
-      console.log("알림톡 전송 결과(병렬):", results);
+      console.log("알림톡 전송 결과(병렬):", JSON.stringify(results, null, 2));
       const clientResult = results[0];
       const clientOk = clientResult && typeof clientResult.code === 'number' && clientResult.code === 0;
       if (!clientOk) {
-        console.error('[ALIMTALK] 고객 전송 실패:', clientResult);
+        console.error('[ALIMTALK] 고객 전송 실패:', JSON.stringify(clientResult, null, 2));
         return NextResponse.json({ error: "알림톡 전송 실패", detail: clientResult }, { status: 502 });
       }
       // 관리자 실패는 서비스 흐름에 영향 주지 않음 (로깅만)

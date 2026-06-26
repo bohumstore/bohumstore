@@ -221,7 +221,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const handleVerifyOTP = async () => {
   const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-  if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 70) return;
+  if (isNaN(ageForVerify) || ageForVerify < 0 || ageForVerify > 80) return;
   if (otpCode.length !== 6) {
     alert("6자리 인증번호를 입력해주세요.");
     return;
@@ -296,7 +296,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const handleSendOTP = async () => {
     const ageForOtp = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-    if (isNaN(ageForOtp) || ageForOtp < 15 || ageForOtp > 70) return;
+    if (isNaN(ageForOtp) || ageForOtp < 0 || ageForOtp > 80) return;
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리

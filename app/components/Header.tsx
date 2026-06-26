@@ -94,6 +94,16 @@ export default function Header() {
         { name: "KDB행복드림변액연금보험", path: "/insurance/annuity/kdb/happy-dream", badge: null },
         { name: "KDB행복플러스연금보험(보증형)", path: "/insurance/annuity/kdb/happy-plus", badge: null }
       ]
+    },
+    {
+      title: "일시납연금",
+      titleMain: "일시납연금",
+      titleSub: "달러",
+      titleSubColor: "text-orange-500",
+      id: "oneshot-annuity",
+      subItems: [
+        { name: "AIA달러로받는연금보험II", path: "/insurance/oneshot/aia/dollar", badge: "달러" }
+      ]
     }
   ];
 

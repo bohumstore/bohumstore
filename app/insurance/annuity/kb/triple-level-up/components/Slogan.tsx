@@ -220,7 +220,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const handleVerifyOTP = async () => {
   const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-  if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 70) return;
+  if (isNaN(ageForVerify) || ageForVerify < 0 || ageForVerify > 70) return;
   if (otpCode.length !== 6) {
     alert("6자리 인증번호를 입력해주세요.");
     return;
@@ -295,7 +295,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const handleSendOTP = async () => {
     const ageForOtp = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-    if (isNaN(ageForOtp) || ageForOtp < 15 || ageForOtp > 70) return;
+    if (isNaN(ageForOtp) || ageForOtp < 0 || ageForOtp > 70) return;
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
@@ -439,10 +439,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   // 보험연령 계산
   const insuranceAge = getInsuranceAge(birth);
-  // 연령 적합성 (15~70세)
+  // 연령 적합성 (0~70세)
   const isAgeKnown = insuranceAge !== '';
   const numericInsuranceAge = isAgeKnown ? Number(insuranceAge) : NaN;
-  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 15 && numericInsuranceAge <= 70;
+  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 0 && numericInsuranceAge <= 70;
 
   // 총 납입액, 환급률, 확정이자, 해약환급금 계산
   let amount = 0;

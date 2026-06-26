@@ -151,20 +151,21 @@ export const slogans: Slogan[] = [
     logo: '/kdb-logo.png'
   },
   {
-    id: 'shinhan-more-the-dream',
-    title: '10년시점 120.5% 환급률',
-    subtitle: '단기납으로 빠른 완납',
-    description: '신한 모아더드림 Plus 종신보험으로 짧은 기간에 높은 보장을 받으세요.',
-    path: '/insurance/whole-life/shinhan/more-the-dream',
-    color: 'from-red-500 to-red-600',
+    id: 'aia-dollar-oneshot',
+    title: '10년 확정이율 5.27%',
+    subtitle: '10년시점 해약환급률 156.96%',
+    description: 'AIA생명 달러 일시납 연금보험으로 확정금리와 높은 환급률을 동시에 누리세요.',
+    path: '/insurance/oneshot/aia/dollar',
+    color: 'from-[#e31837] to-[#b01229]',
     bgColor: 'bg-red-50',
     features: [
-      '15~70세 전연령 가입 가능',
-      '단기납으로 빠른 완납',
-      '종신보장으로 평생 보호'
+      '10년 확정이율 5.27% (2026.6월 기준)',
+      '10년시점 해약환급률 156.96%',
+      '연금개시시점 5% 추가보너스 지급',
+      '달러로 받아 환차익 기대'
     ],
-    company: '신한라이프생명',
-    logo: '/shinhan-life-logo.png'
+    company: 'AIA생명',
+    logo: '/images/aia-logo.png'
   },
   {
     id: 'hana-hanaro',
@@ -242,15 +243,15 @@ export const mainProducts: MainProduct[] = [
     highlight: '연단리 7% 보증'
   },
   {
-    id: 'shinhan-more-the-dream',
-    name: '신한 모아더드림 Plus 종신보험',
-    company: '신한라이프생명',
-    logo: '/shinhan-life-logo.png',
-    path: '/insurance/whole-life/shinhan/more-the-dream',
-    description: '15~70세 전연령 가입 가능, 단기납 완료 후 높은 환급률',
-    badge: '',
-    category: '종신보험',
-    highlight: '10년시점 120.5%'
+    id: 'aia-dollar-oneshot',
+    name: 'AIA 달러 일시납 연금보험',
+    company: 'AIA생명',
+    logo: '/images/aia-logo.png',
+    path: '/insurance/oneshot/aia/dollar',
+    description: '10년 확정이율 5.27%, 10년시점 해약환급률 156.96%',
+    badge: 'NEW',
+    category: '달러 일시납연금',
+    highlight: '10년시점 156.96%'
   },
   {
     id: 'hana-hanaro',

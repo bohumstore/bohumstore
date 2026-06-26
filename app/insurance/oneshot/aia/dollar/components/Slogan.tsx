@@ -1,4 +1,5 @@
 ﻿import React, { useState, useEffect, useRef } from 'react'
+import Image from 'next/image';
 import { CalculatorIcon, ChatBubbleLeftRightIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/outline";
 import { SparklesIcon, WalletIcon } from "@heroicons/react/24/solid";
 import Modal from '@/app/components/Modal';
@@ -49,9 +50,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const [showConsultTypeDropdown, setShowConsultTypeDropdown] = useState(false);
   const [showConsultTimeDropdown, setShowConsultTimeDropdown] = useState(false);
-  const [consultType, setConsultType] = useState('AIA달러보험');
+  const [consultType, setConsultType] = useState('AIA일시납달러연금보험');
   const [consultTime, setConsultTime] = useState('아무때나');
-  const consultTypeOptions = ['AIA달러보험'];
+  const consultTypeOptions = ['AIA일시납달러연금보험'];
   const consultTimeOptions = [
     '아무때나',
     '오전 09:00 ~ 10:00',
@@ -149,7 +150,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       return false;
     }
 
-    // 보험연령 안내는 모달에서 처리 (이 상품: 15~70세)
+    // 보험연령 안내는 모달에서 처리 (이 상품: 0~80세)
     const formInsuranceAge = Number(getInsuranceAge(birth));
 
     if (!phone) { 
@@ -229,7 +230,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const handleVerifyOTP = async () => {
   const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-  if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 70) return;
+  if (isNaN(ageForVerify) || ageForVerify < 0 || ageForVerify > 80) return;
   if (otpCode.length !== 6) {
     alert("6자리 인증번호를 입력해주세요.");
     return;
@@ -304,7 +305,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const handleSendOTP = async () => {
     const ageForOtp = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-    if (isNaN(ageForOtp) || ageForOtp < 15 || ageForOtp > 70) return;
+    if (isNaN(ageForOtp) || ageForOtp < 0 || ageForOtp > 80) return;
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
@@ -472,10 +473,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   // 보험연령 계산
   const insuranceAge = getInsuranceAge(birth);
-  // 연령 적합성 (15~70세)
+  // 연령 적합성 (0~80세)
   const isAgeKnown = insuranceAge !== '';
   const numericInsuranceAge = isAgeKnown ? Number(insuranceAge) : NaN;
-  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 15 && numericInsuranceAge <= 70;
+  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 0 && numericInsuranceAge <= 80;
 
   // 일시납 금액 및 환급금 계산 (달러 기준)
   const lumpSum = lumpSumAmount ? parseFloat(lumpSumAmount.replace(/[^0-9.]/g, '')) : 0;
@@ -518,7 +519,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left max-w-2xl">
             {/* 상품명 텍스트 영역 */}
             <div className="mb-3">
-              <div className="text-sm font-bold text-gray-800 mb-1">AIA생명</div>
+              <div className="flex items-center justify-center md:justify-center lg:justify-start gap-2 mb-1">
+                <Image 
+                  src="/images/aia-logo.png" 
+                  alt="AIA생명 로고" 
+                  width={60} 
+                  height={20} 
+                  className="h-5 w-auto"
+                />
+                <span className="text-sm font-bold text-gray-800">AIA생명</span>
+              </div>
               <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight mb-1">
                 (무)AIA 달러로 받는 연금보험 II
               </h1>
@@ -780,7 +790,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         <div className="space-y-2 sm:space-y-3">
           {isAgeKnown && !isAgeEligible && (
             <div className="bg-red-50 border border-red-200 text-red-700 rounded p-1.5 sm:p-2 text-xs sm:text-sm">
-              이 상품은 15세~70세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
+              이 상품은 0세~80세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
               계산 기능은 이용하실 수 없습니다.
             </div>
           )}
