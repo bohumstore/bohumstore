@@ -3,6 +3,7 @@ import "./globals.css";
 import ContentProtection from "./components/ContentProtection";
 import BodyClassManager from "./components/BodyClassManager";
 import Header from "./components/Header";
+import { OrganizationStructuredData, WebsiteStructuredData } from "./components/shared/StructuredData";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -273,6 +274,8 @@ export default function RootLayout({
         {/* END OF BORAWARE LOG SCRIPT */}
       </head>
       <body className="antialiased">
+        <OrganizationStructuredData />
+        <WebsiteStructuredData />
         <BodyClassManager />
         <ContentProtection />
         <Header />

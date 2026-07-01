@@ -152,8 +152,15 @@ export default function Header() {
             <div className="flex-1 overflow-y-auto py-4">
               <ul className="flex flex-col">
                 {/* 상품 메뉴들 */}
-                {menuItems.map((item) => (
-                  <li key={item.id} className="border-b border-gray-50 last:border-none">
+                {menuItems.map((item, index) => (
+                  <li key={item.id}>
+                    {/* 구분선 (첫 번째 항목 제외) */}
+                    {index > 0 && (
+                      <div className="mx-6 my-3">
+                        <div className="border-t-2 border-gray-200"></div>
+                      </div>
+                    )}
+                    
                     <button
                       onClick={() => toggleSubMenu(item.id)}
                       className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 transition-colors group"
@@ -164,7 +171,7 @@ export default function Header() {
                         </span>
                         {item.titleSub && (
                           <span className={`text-sm font-semibold ${item.titleSubColor}`}>
-                            {item.titleSub}
+                            ({item.titleSub})
                           </span>
                         )}
                       </div>
