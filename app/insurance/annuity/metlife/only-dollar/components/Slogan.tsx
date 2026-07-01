@@ -687,66 +687,46 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 월 납입금액 */}
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1.5">월 납입금액 <span className="text-gray-600 font-normal">(원화/달러)</span></label>
+                  <label className="block text-xs font-medium text-gray-600 mb-1.5">월 납입금액 <span className="text-gray-600 font-normal">(원화 기준)</span></label>
                   <div className="grid grid-cols-3 gap-2">
                     {(() => {
-                      // 납입기간별 옵션 설정
-                      let options = [];
+                      // 원화 기준 옵션 (30/50/70/100/130/150만원)
+                      const krwOptions = [300000, 500000, 700000, 1000000, 1300000, 1500000];
+                      
+                      // 납입기간별 최소 금액 필터링
+                      let filteredOptions = krwOptions;
                       if (paymentPeriod === '5년납') {
-                        options = [
-                          { usd: '200', krw: Math.round(200 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '300', krw: Math.round(300 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '400', krw: Math.round(400 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '500', krw: Math.round(500 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '700', krw: Math.round(700 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '1000', krw: Math.round(1000 * BASE_EXCHANGE_RATE / 1000) * 1000 }
-                        ];
+                        // 최소 $200 = 약 30만원
+                        filteredOptions = krwOptions.filter(krw => krw >= 300000);
                       } else if (paymentPeriod === '7년납') {
-                        options = [
-                          { usd: '150', krw: Math.round(150 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '200', krw: Math.round(200 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '300', krw: Math.round(300 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '500', krw: Math.round(500 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '700', krw: Math.round(700 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '1000', krw: Math.round(1000 * BASE_EXCHANGE_RATE / 1000) * 1000 }
-                        ];
+                        // 최소 $150 = 약 22.5만원
+                        filteredOptions = krwOptions;
                       } else if (paymentPeriod === '10년납') {
-                        options = [
-                          { usd: '100', krw: Math.round(100 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '150', krw: Math.round(150 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '200', krw: Math.round(200 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '300', krw: Math.round(300 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '500', krw: Math.round(500 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '1000', krw: Math.round(1000 * BASE_EXCHANGE_RATE / 1000) * 1000 }
-                        ];
-                      } else {
-                        // 기본값 (납입기간 미선택시)
-                        options = [
-                          { usd: '100', krw: Math.round(100 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '200', krw: Math.round(200 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '300', krw: Math.round(300 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '500', krw: Math.round(500 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '700', krw: Math.round(700 * BASE_EXCHANGE_RATE / 1000) * 1000 },
-                          { usd: '1000', krw: Math.round(1000 * BASE_EXCHANGE_RATE / 1000) * 1000 }
-                        ];
+                        // 최소 $100 = 약 15만원
+                        filteredOptions = krwOptions;
                       }
-                      return options.map((item) => (
-                        <label key={item.usd} className="cursor-pointer">
-                          <input type="radio" name="paymentAmount" value={item.usd} checked={paymentAmount === item.usd} onChange={handlePaymentAmountChange} className="peer sr-only" />
-                          <div className={`w-full text-center py-2 text-sm border-2 rounded-lg transition-all ${paymentAmount === item.usd ? 'border-[#0ea5e9] bg-[#0ea5e9]/5 text-[#0ea5e9] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
-                            <div>${item.usd}</div>
-                            <div className={`text-xs ${paymentAmount === item.usd ? 'text-[#0ea5e9]/70' : 'text-gray-600'}`}>{(item.krw / 10000).toLocaleString()}만원</div>
-                          </div>
-                        </label>
-                      ));
+                      
+                      return filteredOptions.map((krw) => {
+                        const usd = Math.round(krw / BASE_EXCHANGE_RATE);
+                        const usdStr = usd.toString();
+                        return (
+                          <label key={krw} className="cursor-pointer">
+                            <input type="radio" name="paymentAmount" value={usdStr} checked={paymentAmount === usdStr} onChange={handlePaymentAmountChange} className="peer sr-only" />
+                            <div className={`w-full text-center py-2 text-sm border-2 rounded-lg transition-all ${paymentAmount === usdStr ? 'border-[#0ea5e9] bg-[#0ea5e9]/5 text-[#0ea5e9] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                              <div className="font-bold">${usd}</div>
+                              <div className={`text-xs ${paymentAmount === usdStr ? 'text-[#0ea5e9]/70' : 'text-gray-600'}`}>약 {(krw / 10000).toLocaleString()}만원</div>
+                            </div>
+                          </label>
+                        );
+                      });
                     })()}
                   </div>
-                  <p className="text-[10px] text-[#0ea5e9] mt-2 text-center">※ 원화 환산 금액은 기준환율 {BASE_EXCHANGE_RATE.toLocaleString()}원 적용 / 실제 환율에 따라 변동됩니다.</p>
+                  <p className="text-[10px] text-[#0ea5e9] mt-2 text-center">※ 달러 환산은 기준환율 {BASE_EXCHANGE_RATE.toLocaleString()}원 적용 / 실제 환율에 따라 변동됩니다.</p>
                   {paymentPeriod && (
                     <p className="text-[10px] text-gray-600 mt-1 text-center">
-                      {paymentPeriod === '5년납' && '※ 최소 납입액: $200'}
-                      {paymentPeriod === '7년납' && '※ 최소 납입액: $150'}
-                      {paymentPeriod === '10년납' && '※ 최소 납입액: $100'}
+                      {paymentPeriod === '5년납' && '※ 최소 납입액: 약 30만원 ($200)'}
+                      {paymentPeriod === '7년납' && '※ 최소 납입액: 약 22.5만원 ($150)'}
+                      {paymentPeriod === '10년납' && '※ 최소 납입액: 약 15만원 ($100)'}
                     </p>
                   )}
                 </div>

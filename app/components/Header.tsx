@@ -74,18 +74,6 @@ export default function Header() {
     {
       title: "연금보험",
       titleMain: "연금보험",
-      titleSub: "환급률↑",
-      titleSubColor: "text-rose-500",
-      id: "annuity-refund",
-      subItems: [
-        // { name: "메트라이프달러연금보험", path: "/insurance/annuity/metlife/only-dollar", badge: "달러" }, // 심의필 대기중
-        { name: "PlusPRO연금보험(보증형)", path: "/insurance/annuity/im/plus-pro", badge: null },
-        { name: "KB트리플레벨업연금보험(보증형)", path: "/insurance/annuity/kb/triple-level-up", badge: null }
-      ]
-    },
-    {
-      title: "연금보험",
-      titleMain: "연금보험",
       titleSub: "연금액↑",
       titleSubColor: "text-sky-600",
       id: "annuity-pension",
@@ -93,6 +81,18 @@ export default function Header() {
         { name: "IBK평생보증받는변액연금보험", path: "/insurance/annuity/ibk/lifetime", badge: null },
         { name: "KDB행복드림변액연금보험", path: "/insurance/annuity/kdb/happy-dream", badge: null },
         { name: "KDB행복플러스연금보험(보증형)", path: "/insurance/annuity/kdb/happy-plus", badge: null }
+      ]
+    },
+    {
+      title: "연금보험",
+      titleMain: "연금보험",
+      titleSub: "환급률↑",
+      titleSubColor: "text-rose-500",
+      id: "annuity-refund",
+      subItems: [
+        { name: "오로지연금을위한달러연금보험", path: "/insurance/annuity/metlife/only-dollar", badge: "달러" },
+        { name: "PlusPRO연금보험(보증형)", path: "/insurance/annuity/im/plus-pro", badge: null },
+        { name: "KB트리플레벨업연금보험(보증형)", path: "/insurance/annuity/kb/triple-level-up", badge: null }
       ]
     },
     {

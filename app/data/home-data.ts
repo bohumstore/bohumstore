@@ -53,21 +53,38 @@ export const slogans: Slogan[] = [
     company: ''
   },
   {
-    id: 'im-plus-pro',
-    title: '10년시점 133% 환급률',
-    subtitle: '목돈마련과 노후준비를 동시에',
-    description: 'IM Plus PRO연금보험으로 7년/10년/연금개시시점 최저계약자적립액 보증을 받으세요.',
-    path: '/insurance/annuity/im/plus-pro',
-    color: 'from-pink-500 to-rose-600',
-    bgColor: 'bg-pink-50',
+    id: 'metlife-dollar-annuity',
+    title: '10년시점 130% 환급률',
+    subtitle: '달러로 준비하는 안정적인 연금',
+    description: '메트라이프 오로지연금을위한 달러연금보험으로 공시이율 4.69%와 최저계약자적립액 보증을 받으세요.',
+    path: '/insurance/annuity/metlife/only-dollar',
+    color: 'from-[#00529b] to-[#0284c7]',
+    bgColor: 'bg-blue-50',
     features: [
-      '10년시점 133% 환급률 보증 (5년납)',
-      '가입연령 0~70세 / 연금개시 45~85세',
-      '비과세 혜택 (월 150만원 한도)',
-      '병력 무심사 / 전건 가입가능'
+      '공시이율 4.69% (2026.6월)',
+      '10년시점 130% 환급률 보증 (5년납)',
+      '가입 0~70세 / 전건 무진단·무심사',
+      '추가납입 & 중도인출 & 연금전환 가능'
     ],
-    company: 'IM라이프생명',
-    logo: '/im-logo.png'
+    company: '메트라이프생명',
+    logo: '/metlife-logo.png'
+  },
+  {
+    id: 'aia-dollar-oneshot',
+    title: '10년 확정이율 5.27%',
+    subtitle: '10년시점 해약환급률 156.96%',
+    description: 'AIA생명 달러 일시납 연금보험으로 확정금리와 높은 환급률을 동시에 누리세요.',
+    path: '/insurance/oneshot/aia/dollar',
+    color: 'from-[#e31837] to-[#b01229]',
+    bgColor: 'bg-red-50',
+    features: [
+      '10년 확정이율 5.27% (2026.6월 기준)',
+      '10년시점 해약환급률 156.96%',
+      '연금개시시점 5% 추가보너스 지급',
+      '달러로 받아 환차익 기대'
+    ],
+    company: 'AIA생명',
+    logo: '/images/aia-logo.png'
   },
   {
     id: 'kb-triple-level-up',
@@ -101,6 +118,23 @@ export const slogans: Slogan[] = [
     ],
     company: '메트라이프생명',
     logo: '/metlife-logo.png'
+  },
+  {
+    id: 'im-plus-pro',
+    title: '10년시점 133% 환급률',
+    subtitle: '목돈마련과 노후준비를 동시에',
+    description: 'IM Plus PRO연금보험으로 7년/10년/연금개시시점 최저계약자적립액 보증을 받으세요.',
+    path: '/insurance/annuity/im/plus-pro',
+    color: 'from-pink-500 to-rose-600',
+    bgColor: 'bg-pink-50',
+    features: [
+      '10년시점 133% 환급률 보증 (5년납)',
+      '가입연령 0~70세 / 연금개시 45~85세',
+      '비과세 혜택 (월 150만원 한도)',
+      '병력 무심사 / 전건 가입가능'
+    ],
+    company: 'IM라이프생명',
+    logo: '/im-logo.png'
   },
   {
     id: 'ibk-lifetime',
@@ -151,23 +185,6 @@ export const slogans: Slogan[] = [
     logo: '/kdb-logo.png'
   },
   {
-    id: 'aia-dollar-oneshot',
-    title: '10년 확정이율 5.27%',
-    subtitle: '10년시점 해약환급률 156.96%',
-    description: 'AIA생명 달러 일시납 연금보험으로 확정금리와 높은 환급률을 동시에 누리세요.',
-    path: '/insurance/oneshot/aia/dollar',
-    color: 'from-[#e31837] to-[#b01229]',
-    bgColor: 'bg-red-50',
-    features: [
-      '10년 확정이율 5.27% (2026.6월 기준)',
-      '10년시점 해약환급률 156.96%',
-      '연금개시시점 5% 추가보너스 지급',
-      '달러로 받아 환차익 기대'
-    ],
-    company: 'AIA생명',
-    logo: '/images/aia-logo.png'
-  },
-  {
     id: 'hana-hanaro',
     title: '10년시점 120.53% 환급률',
     subtitle: '간편심사형 가입 가능',
@@ -188,15 +205,15 @@ export const slogans: Slogan[] = [
 // 메인 상품 데이터
 export const mainProducts: MainProduct[] = [
   {
-    id: 'im-plus-pro',
-    name: 'IM Plus PRO연금보험 무배당 2604(보증비용부과형)',
-    company: 'IM라이프생명',
-    logo: '/im-logo.png',
-    path: '/insurance/annuity/im/plus-pro',
-    description: '목돈마련과 노후준비 동시에, 최저계약자적립액 보증',
+    id: 'metlife-dollar-annuity',
+    name: '메트라이프 오로지연금을위한 달러연금보험',
+    company: '메트라이프생명',
+    logo: '/metlife-logo.png',
+    path: '/insurance/annuity/metlife/only-dollar',
+    description: '공시이율 4.69%, 달러로 준비하는 안정적인 연금',
     badge: 'NEW',
-    category: '연금보험',
-    highlight: '10년시점 133% 보증'
+    category: '달러연금보험',
+    highlight: '10년시점 130% 보증'
   },
   {
     id: 'kb-triple-level-up',
@@ -274,6 +291,28 @@ export const mainProducts: MainProduct[] = [
     badge: '',
     category: '연금보험',
     highlight: '연단리 7% 보증'
+  },
+  {
+    id: 'shinhan-more-the-dream',
+    name: '신한 모아더드림Plus 종신보험',
+    company: '신한라이프생명',
+    logo: '/shinhan-life-logo.png',
+    path: '/insurance/whole-life/shinhan/more-the-dream',
+    description: '10년시점 120.5% 환급률, 일반심사형/간편심사형 선택 가능',
+    badge: '',
+    category: '종신보험',
+    highlight: '10년시점 120.5%'
+  },
+  {
+    id: 'im-plus-pro',
+    name: 'IM Plus PRO연금보험 무배당 2604(보증비용부과형)',
+    company: 'IM라이프생명',
+    logo: '/im-logo.png',
+    path: '/insurance/annuity/im/plus-pro',
+    description: '목돈마련과 노후준비 동시에, 최저계약자적립액 보증',
+    badge: '',
+    category: '연금보험',
+    highlight: '10년시점 133% 보증'
   }
 ];
 

@@ -627,6 +627,10 @@ export default function HomePage() {
                         product.id === 'ibk-lifetime' ? 'text-orange-600 bg-orange-50' :
                         product.id === 'hana-hanaro' ? 'text-teal-600 bg-teal-50' :
                         product.id === 'metlife-usd' ? 'text-[#00529b] bg-[#00529b]/10' :
+                        product.id === 'metlife-dollar-annuity' ? 'text-[#00529b] bg-[#00529b]/10' :
+                        product.id === 'aia-dollar-oneshot' ? 'text-[#e31837] bg-red-50' :
+                        product.id === 'shinhan-more-the-dream' ? 'text-[#2563eb] bg-blue-50' :
+                        product.id === 'im-plus-pro' ? 'text-pink-600 bg-pink-50' :
                         'text-red-600 bg-red-50'
                       }`}>
                         {product.highlight}
