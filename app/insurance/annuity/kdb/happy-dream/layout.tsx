@@ -1,12 +1,18 @@
 import { Metadata } from 'next';
-import { generateProductMetadata, productMetadataMap } from '@/app/utils/metadata';
+import { createInsuranceMetadata } from '@/src/lib/seo/createInsuranceMetadata';
+import InsuranceStructuredData from '@/src/components/seo/InsuranceStructuredData';
 
-export const metadata: Metadata = generateProductMetadata(productMetadataMap['kdb-happy-dream']);
+export const metadata: Metadata = createInsuranceMetadata('kdb-happy-dream');
 
 export default function KDBHappyDreamLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <InsuranceStructuredData productKey="kdb-happy-dream" />
+      {children}
+    </>
+  );
 }

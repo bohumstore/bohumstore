@@ -1,12 +1,18 @@
 import { Metadata } from 'next';
-import { generateProductMetadata, productMetadataMap } from '@/app/utils/metadata';
+import { createInsuranceMetadata } from '@/src/lib/seo/createInsuranceMetadata';
+import InsuranceStructuredData from '@/src/components/seo/InsuranceStructuredData';
 
-export const metadata: Metadata = generateProductMetadata(productMetadataMap['im-plus-pro']);
+export const metadata: Metadata = createInsuranceMetadata('im-plus-pro');
 
 export default function IMPlusProLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <InsuranceStructuredData productKey="im-plus-pro" />
+      {children}
+    </>
+  );
 }

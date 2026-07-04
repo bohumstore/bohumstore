@@ -227,15 +227,15 @@ export const mainProducts: MainProduct[] = [
     highlight: '10년시점 130% 보증'
   },
   {
-    id: 'metlife-usd',
-    name: '메트라이프 달러종신보험Plus',
-    company: '메트라이프생명',
-    logo: '/metlife-logo.png',
-    path: '/insurance/whole-life/metlife/usd',
-    description: '달러/원화 선택 수령, 원화고정납입옵션으로 환율 걱정 無',
-    badge: 'TOP',
-    category: '달러종신보험',
-    highlight: '10년시점 124.9%'
+    id: 'aia-dollar-oneshot',
+    name: 'AIA 달러 일시납 연금보험',
+    company: 'AIA생명',
+    logo: '/images/aia-logo.png',
+    path: '/insurance/oneshot/aia/dollar',
+    description: '10년 확정이율 5.27%, 10년시점 해약환급률 156.96%',
+    badge: 'NEW',
+    category: '달러 일시납연금',
+    highlight: '10년시점 156.96%'
   },
   {
     id: 'ibk-lifetime',
@@ -260,15 +260,15 @@ export const mainProducts: MainProduct[] = [
     highlight: '연단리 7% 보증'
   },
   {
-    id: 'aia-dollar-oneshot',
-    name: 'AIA 달러 일시납 연금보험',
-    company: 'AIA생명',
-    logo: '/images/aia-logo.png',
-    path: '/insurance/oneshot/aia/dollar',
-    description: '10년 확정이율 5.27%, 10년시점 해약환급률 156.96%',
-    badge: 'NEW',
-    category: '달러 일시납연금',
-    highlight: '10년시점 156.96%'
+    id: 'metlife-usd',
+    name: '메트라이프 달러종신보험Plus',
+    company: '메트라이프생명',
+    logo: '/metlife-logo.png',
+    path: '/insurance/whole-life/metlife/usd',
+    description: '달러/원화 선택 수령, 원화고정납입옵션으로 환율 걱정 無',
+    badge: 'TOP',
+    category: '달러종신보험',
+    highlight: '10년시점 124.9%'
   },
   {
     id: 'hana-hanaro',

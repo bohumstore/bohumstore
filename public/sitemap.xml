@@ -3,7 +3,7 @@
   <!-- 메인 페이지 -->
   <url>
     <loc>https://bohumstore.net/</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,7 +11,7 @@
   <!-- 상담 페이지 -->
   <url>
     <loc>https://bohumstore.net/insurance/a_consult</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -19,7 +19,7 @@
   <!-- 달러 연금보험 (최신 상품) -->
   <url>
     <loc>https://bohumstore.net/insurance/annuity/metlife/only-dollar</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
@@ -27,7 +27,7 @@
   <!-- 달러 일시납 연금보험 (최신 상품) -->
   <url>
     <loc>https://bohumstore.net/insurance/oneshot/aia/dollar</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -35,31 +35,31 @@
   <!-- 연금보험 상품들 -->
   <url>
     <loc>https://bohumstore.net/insurance/annuity/kb/triple-level-up</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://bohumstore.net/insurance/annuity/im/plus-pro</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://bohumstore.net/insurance/annuity/ibk/lifetime</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bohumstore.net/insurance/annuity/kdb/happy-plus</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bohumstore.net/insurance/annuity/kdb/happy-dream</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -67,19 +67,19 @@
   <!-- 종신보험 상품들 -->
   <url>
     <loc>https://bohumstore.net/insurance/whole-life/metlife/usd</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://bohumstore.net/insurance/whole-life/shinhan/more-the-dream</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bohumstore.net/insurance/whole-life/hana/hanaro</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -87,7 +87,7 @@
   <!-- 간병보험 -->
   <url>
     <loc>https://bohumstore.net/insurance/carer</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

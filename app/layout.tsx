@@ -14,9 +14,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "보험스토어 | 연금보험, 종신보험, 저축보험 비교 및 상담",
-  description: "연금보험, 종신보험, 저축보험 비교 및 전문 상담 플랫폼",
-  keywords: "보험, 보험비교, 보험상담, 맞춤형보험, 온라인보험, 보험가입, 보험추천, 연금보험, 변액연금보험, 확정형연금보험, 보증형연금보험, 8%연금보험, 7%연금보험, 고이율연금보험, 세제혜택연금보험, 단기납연금보험, 종신보험, 고환급종신보험, 저해지환급형종신보험, 간편가입종신보험, 단기납종신보험, 10년환급형종신보험, 15년환급형종신보험, 저축보험, 고이율저축보험, 세제혜택저축보험, 변액저축보험, 해약환급금, 환급률, 보험환급률, 납입기간, 납입완료보너스, 장기유지보너스, 암보험, 유사암보험, 고진단비암보험, 무해지암보험, 치매보험, 간병보험, 노후간병보험, 어린이보험, 태아보험, 자녀보험, 생명보험, 손해보험, 변액보험, 재테크보험, 노후대비보험, 절세보험",
+  title: "보험스토어 | 연금보험 비교 · 종신보험 비교 · 저축보험 비교",
+  description: "연금보험, 변액연금보험, 달러연금보험, 종신보험, 저축보험 환급률 비교 및 보험료 계산. 보험사별 상품을 비교하고 전문 상담을 받아보세요.",
+  keywords: "보험스토어, 보험비교, 보험상담, 연금보험, 연금보험비교, 변액연금보험, 달러연금보험, 종신보험, 종신보험비교, 저축보험, 환급률, 해약환급금, 보험료계산, 최저보증연금, 단기납종신보험, 간병보험, 암보험",
   authors: [{ name: "보험스토어" }],
   creator: "보험스토어",
   publisher: "보험스토어",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
       openGraph: {
       title: "보험스토어 | Bohumstore",
-      description: "연금보험, 종신보험, 저축보험 비교 및 상담",
+      description: "연금보험 비교 · 종신보험 비교 · 저축보험 비교 및 상담",
     url: "https://bohumstore.net",
     siteName: "보험스토어",
           images: [
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
           url: "https://bohumstore.net/kakao-img.png",
           width: 1000,
           height: 500,
-          alt: "보험스토어 - 연금보험, 종신보험, 저축보험 비교 및 상담",
+          alt: "보험스토어 - 연금보험 비교 · 종신보험 비교 · 저축보험 비교 및 상담",
         },
       ],
     type: "website",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "보험스토어 | Bohumstore",
-    description: "연금보험, 종신보험, 저축보험 비교 및 상담",
+    description: "연금보험 비교 · 종신보험 비교 · 저축보험 비교 및 상담",
     images: ["https://bohumstore.net/kakao-img.png"],
   },
   manifest: "/manifest.json",

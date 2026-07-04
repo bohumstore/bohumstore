@@ -1,12 +1,18 @@
 import { Metadata } from 'next';
-import { generateProductMetadata, productMetadataMap } from '@/app/utils/metadata';
+import { createInsuranceMetadata } from '@/src/lib/seo/createInsuranceMetadata';
+import InsuranceStructuredData from '@/src/components/seo/InsuranceStructuredData';
 
-export const metadata: Metadata = generateProductMetadata(productMetadataMap['shinhan-more-the-dream']);
+export const metadata: Metadata = createInsuranceMetadata('shinhan-more-the-dream');
 
 export default function ShinhanMoreTheDreamLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <InsuranceStructuredData productKey="shinhan-more-the-dream" />
+      {children}
+    </>
+  );
 }
