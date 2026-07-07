@@ -1051,35 +1051,44 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1.5">납입기간</label>
                   {isAgeKnown && Number(insuranceAge) >= 66 && Number(insuranceAge) <= 68 ? (
-                    // 66~68세: 7년납 자동 적용 (버튼 숨김)
-                    <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 text-center">
-                      <p className="text-sm text-orange-700 font-medium">7년납</p>
+                    // 66~68세: 7년납 자동 적용
+                    <div className="grid grid-cols-3 gap-2">
+                      <div className="col-span-3">
+                        <div className="w-full text-center py-2.5 text-sm border-2 border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b] font-bold rounded-lg">
+                          7년
+                        </div>
+                      </div>
                     </div>
                   ) : (
                     <div className="grid grid-cols-3 gap-2">
-                      {availablePaymentPeriods.length > 0 ? availablePaymentPeriods.map((period) => (
-                        <label key={period} className="relative cursor-pointer">
-                          {period === '10년' && (
-                            <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
-                          )}
-                          <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
-                          <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
-                            {period}
-                          </div>
-                        </label>
-                      )) : (
-                        ['10년', '15년', '20년'].map((period) => (
-                          <label key={period} className="relative cursor-pointer">
-                            {period === '10년' && (
+                      {['10년', '15년', '20년'].map((period) => {
+                        const isAvailable = availablePaymentPeriods.includes(period);
+                        return (
+                          <label key={period} className={`relative ${isAvailable ? 'cursor-pointer' : 'cursor-not-allowed'}`}>
+                            {period === '10년' && isAvailable && (
                               <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
                             )}
-                            <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
-                            <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                            <input 
+                              type="radio" 
+                              name="paymentPeriod" 
+                              value={period} 
+                              checked={paymentPeriod === period} 
+                              onChange={handlePaymentPeriodChange} 
+                              disabled={!isAvailable}
+                              className="peer sr-only" 
+                            />
+                            <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${
+                              !isAvailable 
+                                ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed' 
+                                : paymentPeriod === period 
+                                  ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b] font-bold' 
+                                  : 'border-gray-200 hover:border-gray-300'
+                            }`}>
                               {period}
                             </div>
                           </label>
-                        ))
-                      )}
+                        );
+                      })}
                     </div>
                   )}
                 </div>
