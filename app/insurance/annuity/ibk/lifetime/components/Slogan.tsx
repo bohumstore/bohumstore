@@ -325,7 +325,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         
         setIsVerified(true);
         setOtpSent(false);
-        alert("인증이 완료되었습니다!");
+        // alert 제거: 바로 결과 표시
       } else {
         alert("인증에 실패했습니다.");
       }
@@ -566,7 +566,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         // Supabase에 데이터 저장
         const supabaseResult = await saveToSupabase(2); // 2: 상담신청
         
-        alert("인증이 완료되었습니다!");
+        // alert 제거: 바로 결과 표시
         setConsultIsVerified(true);
       } else {
         alert("인증에 실패했습니다.");
@@ -649,23 +649,52 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     fetchEligibility();
   }, [gender, insuranceAge, isAgeEligible, name]);
 
-  // 연금개시연령 계산 함수 (정확한 로직)
+  // 연금개시연령 계산 함수 (IBK연금 규칙)
   const getPensionStartAge = (age: number, paymentPeriod: string) => {
     // 납입기간에서 년수 추출
     const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
     
-    // 고객 연령 + 납입기간 = 납입완료 시점
-    const completionAge = age + years;
+    // 0~40세
+    if (age >= 0 && age <= 40) {
+      if (years === 10 || years === 15 || years === 20) return 65;
+    }
     
-    // 최소 연금개시연령 (65세, 70세, 75세, 80세 중 선택)
-    let minStartAge = 65;
-    if (completionAge >= 80) minStartAge = 80;
-    else if (completionAge >= 75) minStartAge = 75;
-    else if (completionAge >= 70) minStartAge = 70;
-    else if (completionAge >= 65) minStartAge = 65;
+    // 41~45세
+    if (age >= 41 && age <= 45) {
+      if (years === 10 || years === 15 || years === 20) return 70;
+    }
     
-    // 최종 연금개시연령: 납입완료 시점과 최소 연금개시연령 중 더 늦은 시점
-    return Math.max(completionAge, minStartAge);
+    // 46~50세
+    if (age >= 46 && age <= 50) {
+      if (years === 10 || years === 15) return 70;
+      if (years === 20) return 75;
+    }
+    
+    // 51~55세
+    if (age >= 51 && age <= 55) {
+      if (years === 10) return 70;
+      if (years === 15) return 75;
+      if (years === 20) return 80;
+    }
+    
+    // 56~60세
+    if (age >= 56 && age <= 60) {
+      if (years === 10) return 75;
+      if (years === 15) return 80;
+    }
+    
+    // 61~65세
+    if (age >= 61 && age <= 65) {
+      if (years === 10) return 80;
+    }
+    
+    // 66~68세
+    if (age >= 66 && age <= 68) {
+      if (years === 7) return 80;
+    }
+    
+    // 기본값 (매칭되지 않는 경우)
+    return 65;
   };
 
   // 현재 선택된 납입기간에 대한 연금개시연령 (우선순위: Excel > 계산식)
@@ -726,10 +755,30 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     return () => { canceled = true; };
   }, [gender, birth, paymentPeriod, paymentAmount]);
 
-  // 납입기간 버튼 비활성화 여부 확인 (연금개시연령이 80세를 초과하는 경우)
-  const ageLimit10 = Number(insuranceAge) + 10 > 80;
-  const ageLimit15 = Number(insuranceAge) + 15 > 80;
-  const ageLimit20 = Number(insuranceAge) + 20 > 80;
+  // 납입기간 선택 가능 여부 (연령별 제한)
+  const getAvailablePaymentPeriods = (age: number): string[] => {
+    if (age >= 0 && age <= 55) {
+      return ['10년', '15년', '20년'];
+    } else if (age >= 56 && age <= 60) {
+      return ['10년', '15년'];
+    } else if (age >= 61 && age <= 65) {
+      return ['10년'];
+    } else if (age >= 66 && age <= 68) {
+      return ['7년']; // 7년납 자동 적용
+    }
+    return [];
+  };
+  
+  const availablePaymentPeriods = isAgeKnown ? getAvailablePaymentPeriods(Number(insuranceAge)) : [];
+  
+  // 66~68세는 7년납 자동 적용
+  useEffect(() => {
+    if (isAgeKnown && Number(insuranceAge) >= 66 && Number(insuranceAge) <= 68) {
+      if (paymentPeriod !== '7년') {
+        setPaymentPeriod('7년');
+      }
+    }
+  }, [insuranceAge, isAgeKnown]);
 
   // 연금액 계산 함수 (변액연금용 - 실적배당 포함)
   const calculatePensionAmount = (age: number, paymentPeriod: string, paymentAmount: string): { monthly: number; performance: number; totalUntil100: number } => {
@@ -991,29 +1040,55 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   </div>
                 </div>
 
+                {/* 69세 이상 안내 */}
+                {isAgeKnown && Number(insuranceAge) > 68 && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-center">
+                    <p className="text-sm text-red-700 font-medium">이 상품은 68세까지 가입 가능합니다.</p>
+                  </div>
+                )}
+
                 {/* 납입기간 */}
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1.5">납입기간</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {['10년', '15년', '20년'].map((period) => (
-                      <label key={period} className="relative cursor-pointer">
-                        {period === '10년' && (
-                          <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
-                        )}
-                        <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
-                          {period}
-                        </div>
-                      </label>
-                    ))}
-                  </div>
+                  {isAgeKnown && Number(insuranceAge) >= 66 && Number(insuranceAge) <= 68 ? (
+                    // 66~68세: 7년납 자동 적용 (버튼 숨김)
+                    <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 text-center">
+                      <p className="text-sm text-orange-700 font-medium">7년납</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-3 gap-2">
+                      {availablePaymentPeriods.length > 0 ? availablePaymentPeriods.map((period) => (
+                        <label key={period} className="relative cursor-pointer">
+                          {period === '10년' && (
+                            <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
+                          )}
+                          <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
+                          <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                            {period}
+                          </div>
+                        </label>
+                      )) : (
+                        ['10년', '15년', '20년'].map((period) => (
+                          <label key={period} className="relative cursor-pointer">
+                            {period === '10년' && (
+                              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
+                            )}
+                            <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
+                            <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                              {period}
+                            </div>
+                          </label>
+                        ))
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* 월 납입금액 */}
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1.5">월 납입금액</label>
                   <div className="grid grid-cols-3 gap-2">
-                    {['30만원', '50만원', '100만원'].map((amount) => (
+                    {['30만원', '50만원', '70만원', '100만원', '130만원', '150만원'].map((amount) => (
                       <label key={amount} className="cursor-pointer">
                         <input type="radio" name="paymentAmount" value={amount} checked={paymentAmount === amount} onChange={handlePaymentAmountChange} className="peer sr-only" />
                         <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>

@@ -46,11 +46,17 @@ export async function POST(request: NextRequest) {
 				sheetName = '30k';
 			} else if (cleanMonthlyPayment === 500000) {
 				sheetName = '50k';
+			} else if (cleanMonthlyPayment === 700000) {
+				sheetName = '70k';
 			} else if (cleanMonthlyPayment === 1000000) {
 				sheetName = '100k';
+			} else if (cleanMonthlyPayment === 1300000) {
+				sheetName = '130k';
+			} else if (cleanMonthlyPayment === 1500000) {
+				sheetName = '150k';
 			} else {
 				return NextResponse.json(
-					{ error: '지원하지 않는 월납입액입니다. (30만원, 50만원, 100만원만 지원)' },
+					{ error: '지원하지 않는 월납입액입니다. (30만원, 50만원, 70만원, 100만원, 130만원, 150만원만 지원)' },
 					{ status: 400 }
 				);
 			}
@@ -68,6 +74,7 @@ export async function POST(request: NextRequest) {
 			'총 수령액(100세)'
 		];
 		const pensionStartAgeHeaderCandidates: string[] = ['연금개시연령', '연금개시연령(세)'];
+		const yearlyPensionHeaderCandidates: string[] = ['연지급 연금액', '연지급연금액', '연 연금액', '연연금액'];
 
 		if (resolvedProductType === 'happy-dream') {
 			candidatePaths = [
@@ -88,10 +95,12 @@ export async function POST(request: NextRequest) {
 			];
 		} else if (resolvedProductType === 'ibk-lifetime') {
 			candidatePaths = [
+				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'ibk', 'lifetime', 'ibk_0~68_20260707.xlsx'),
 				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'ibk', 'lifetime', 'ibk_lifetime_0-68.xlsx'),
+				path.join(process.cwd(), 'public', 'ibk_0~68_20260707.xlsx'),
 				path.join(process.cwd(), 'public', 'ibk_lifetime_0-68.xlsx')
 			];
-			monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금'];
+			monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금', '월연금'];
 			performancePensionHeaderCandidates = []; // 엑셀에 없음 - 계산으로 처리
 			guaranteedAmountHeaderCandidates = [
 				'20년 보증기간 총액',
@@ -225,6 +234,7 @@ export async function POST(request: NextRequest) {
 		const performancePensionIndex = findIndexBySynonyms(performancePensionHeaderCandidates);
 		const guaranteedAmountIndex = findIndexBySynonyms(guaranteedAmountHeaderCandidates);
 		const totalUntil100Index = findIndexBySynonyms(totalUntil100HeaderCandidates);
+		const yearlyPensionIndex = findIndexBySynonyms(yearlyPensionHeaderCandidates);
 		const noticeIndex = findIndexBySynonyms(['안내']);
 
 		// 필수 컬럼 확인
@@ -236,9 +246,9 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		// 적격성 확인 모드: 각 납입기간별(10/15/20)로 해당 연령/성별 데이터가 비어있지 않은지 반환
+		// 적격성 확인 모드: 각 납입기간별(7/10/15/20)로 해당 연령/성별 데이터가 비어있지 않은지 반환
 		if (mode === 'eligibility') {
-			const periodsToCheck = [10, 15, 20];
+			const periodsToCheck = [7, 10, 15, 20];
 			const mapped = mapGender(gender);
 			const ageInt = parseInt(age.toString());
 			const isNonEmpty = (v: any) => {
@@ -329,10 +339,23 @@ export async function POST(request: NextRequest) {
 		};
 		const pensionStartAge = pensionStartAgeIndex !== -1 ? parseNumber(matchedRow[pensionStartAgeIndex]) : 0;
 		const monthlyPension = monthlyPensionIndex !== -1 ? parseNumber(matchedRow[monthlyPensionIndex]) : 0;
+		const yearlyPension = yearlyPensionIndex !== -1 ? parseNumber(matchedRow[yearlyPensionIndex]) : 0;
+		
 		// 실적배당 연금액은 엑셀에 없으므로 계산으로 처리 (월 연금액의 15% 가정)
 		const performancePension = monthlyPension > 0 ? Math.round(monthlyPension * 1.15) : 0;
-		const guaranteedAmount = guaranteedAmountIndex !== -1 ? parseNumber(matchedRow[guaranteedAmountIndex]) : 0;
-		const totalUntil100 = totalUntil100Index !== -1 ? parseNumber(matchedRow[totalUntil100Index]) : 0;
+		
+		// 20년 보증기간 총액: 엑셀에 있으면 사용, 없으면 연지급 연금액 × 20으로 계산
+		let guaranteedAmount = guaranteedAmountIndex !== -1 ? parseNumber(matchedRow[guaranteedAmountIndex]) : 0;
+		if (guaranteedAmount === 0 && yearlyPension > 0) {
+			guaranteedAmount = yearlyPension * 20;
+		}
+		
+		// 100세까지 총 수령액: 엑셀에 있으면 사용, 없으면 연지급 연금액 × (100 - 연금개시연령 + 1)로 계산
+		let totalUntil100 = totalUntil100Index !== -1 ? parseNumber(matchedRow[totalUntil100Index]) : 0;
+		if (totalUntil100 === 0 && yearlyPension > 0 && pensionStartAge > 0) {
+			totalUntil100 = yearlyPension * (100 - pensionStartAge + 1);
+		}
+		
 		const notice = noticeIndex !== -1 ? (matchedRow[noticeIndex] || '') : '';
 
 		// 숫자 포맷팅 (3자리 콤마 + 원)

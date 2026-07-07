@@ -262,7 +262,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       
       setIsVerified(true);
       setOtpSent(false);
-      alert("인증이 완료되었습니다!");
+      // alert 제거: 바로 결과 표시
     } else {
       alert("인증에 실패했습니다.");
     }
@@ -400,7 +400,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         templateId: "UB_8715"
       });
       if (res.data.success) {
-        alert("인증이 완료되었습니다!");
+        // alert 제거: 바로 결과 표시
         setConsultIsVerified(true);
         // 중복 발송 방지를 위해 추가 onlyClient 후속 발송 제거
       } else {
