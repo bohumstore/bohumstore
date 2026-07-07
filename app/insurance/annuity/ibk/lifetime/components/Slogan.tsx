@@ -537,10 +537,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     setVerifying(true);
     try {
       // 납입기간과 월납입금액이 있는 경우에만 연금액 계산
-      let pensionAmounts = { monthly: 0, performance: 0 } as any;
-      if (paymentPeriod && paymentAmount) {
-        pensionAmounts = calculatePensionAmount(Number(insuranceAge), paymentPeriod, paymentAmount);
-      }
       const payload = {
         phone,
         name,
@@ -554,8 +550,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         counselTime: consultTime,
         mounthlyPremium: paymentAmount || '',
         paymentPeriod: paymentPeriod || '',
-        monthlyPension: pensionAmounts.monthly, // 월 연금액
-        performancePension: pensionAmounts.performance, // 실적배당 연금액
+        monthlyPension: excelResult?.monthlyPension || 0, // 월 연금액
+        performancePension: excelResult?.performancePension || 0, // 실적배당 연금액
+        guaranteedPension: excelResult?.guaranteedAmount || 0, // 20년 보증기간 총액
+        pensionStartAge: excelResult?.pensionStartAge || getPensionStartAge(Number(insuranceAge), paymentPeriod), // 연금개시연령
+        totalUntil100: excelResult?.totalUntil100 || 0, // 100세까지 총 수령액
         templateId: "UB_8715", // 고객용 상담신청 완료 전송용 템플릿
         adminTemplateId: "UA_8332" // 관리자용 상담신청 접수 전송용 템플릿
       };

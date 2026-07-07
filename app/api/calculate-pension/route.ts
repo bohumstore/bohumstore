@@ -235,6 +235,18 @@ export async function POST(request: NextRequest) {
 		const yearlyPensionIndex = findIndexBySynonyms(yearlyPensionHeaderCandidates);
 		const noticeIndex = findIndexBySynonyms(['안내']);
 
+		// IBK연금 디버깅 로그
+		if (resolvedProductType === 'ibk-lifetime') {
+			console.log('[API][IBK] 헤더 인덱스:', {
+				yearlyPensionIndex,
+				guaranteedAmountIndex,
+				totalUntil100Index,
+				monthlyPensionIndex,
+				pensionStartAgeIndex
+			});
+			console.log('[API][IBK] 헤더 행:', headerRow);
+		}
+
 		// 필수 컬럼 확인
 		if (genderIndex === -1 || ageIndex === -1 || periodIndex === -1) {
 			console.error('[API] 필수 컬럼 인덱스:', { genderIndex, ageIndex, periodIndex, paymentIndex, headerRow });
@@ -339,19 +351,42 @@ export async function POST(request: NextRequest) {
 		const monthlyPension = monthlyPensionIndex !== -1 ? parseNumber(matchedRow[monthlyPensionIndex]) : 0;
 		const yearlyPension = yearlyPensionIndex !== -1 ? parseNumber(matchedRow[yearlyPensionIndex]) : 0;
 		
+		// IBK연금 디버깅 로그
+		if (resolvedProductType === 'ibk-lifetime') {
+			console.log('[API][IBK] 매칭된 행 데이터:', {
+				monthlyPension,
+				yearlyPension,
+				pensionStartAge,
+				matchedRow: matchedRow.slice(0, 10) // 처음 10개 컬럼만
+			});
+		}
+		
 		// 실적배당 연금액은 엑셀에 없으므로 계산으로 처리 (월 연금액의 15% 가정)
 		const performancePension = monthlyPension > 0 ? Math.round(monthlyPension * 1.15) : 0;
 		
-		// 20년 보증기간 총액: 엑셀에 있으면 사용, 없으면 연지급 연금액 × 20으로 계산
-		let guaranteedAmount = guaranteedAmountIndex !== -1 ? parseNumber(matchedRow[guaranteedAmountIndex]) : 0;
-		if (guaranteedAmount === 0 && yearlyPension > 0) {
-			guaranteedAmount = yearlyPension * 20;
-		}
+		// IBK연금: 20년 보증기간 총액과 100세까지 총 수령액은 엑셀 값을 사용하지 않고 무조건 계산
+		let guaranteedAmount = 0;
+		let totalUntil100 = 0;
 		
-		// 100세까지 총 수령액: 엑셀에 있으면 사용, 없으면 연지급 연금액 × (100 - 연금개시연령 + 1)로 계산
-		let totalUntil100 = totalUntil100Index !== -1 ? parseNumber(matchedRow[totalUntil100Index]) : 0;
-		if (totalUntil100 === 0 && yearlyPension > 0 && pensionStartAge > 0) {
-			totalUntil100 = yearlyPension * (100 - pensionStartAge + 1);
+		if (resolvedProductType === 'ibk-lifetime') {
+			// IBK연금은 무조건 계산 (엑셀 컬럼이 비어있음)
+			if (yearlyPension > 0) {
+				guaranteedAmount = yearlyPension * 20;
+			}
+			if (yearlyPension > 0 && pensionStartAge > 0) {
+				totalUntil100 = yearlyPension * (100 - pensionStartAge + 1);
+			}
+		} else {
+			// 다른 상품: 엑셀에 있으면 사용, 없으면 계산
+			guaranteedAmount = guaranteedAmountIndex !== -1 ? parseNumber(matchedRow[guaranteedAmountIndex]) : 0;
+			if (guaranteedAmount === 0 && yearlyPension > 0) {
+				guaranteedAmount = yearlyPension * 20;
+			}
+			
+			totalUntil100 = totalUntil100Index !== -1 ? parseNumber(matchedRow[totalUntil100Index]) : 0;
+			if (totalUntil100 === 0 && yearlyPension > 0 && pensionStartAge > 0) {
+				totalUntil100 = yearlyPension * (100 - pensionStartAge + 1);
+			}
 		}
 		
 		const notice = noticeIndex !== -1 ? (matchedRow[noticeIndex] || '') : '';
