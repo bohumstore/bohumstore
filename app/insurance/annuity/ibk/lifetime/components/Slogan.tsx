@@ -1062,7 +1062,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   ) : (
                     <div className="grid grid-cols-3 gap-2">
                       {['10년', '15년', '20년'].map((period) => {
-                        const isAvailable = availablePaymentPeriods.includes(period);
+                        // 생년월일 입력 전에는 모두 활성화, 입력 후에는 연령별 제한 적용
+                        const isAvailable = !isAgeKnown || availablePaymentPeriods.includes(period);
                         return (
                           <label key={period} className={`relative ${isAvailable ? 'cursor-pointer' : 'cursor-not-allowed'}`}>
                             {period === '10년' && isAvailable && (
