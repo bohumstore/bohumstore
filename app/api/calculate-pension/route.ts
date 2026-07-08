@@ -101,8 +101,8 @@ export async function POST(request: NextRequest) {
 			];
 		} else if (resolvedProductType === 'ibk-lifetime') {
 			candidatePaths = [
-				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'ibk', 'lifetime', 'ibk_0~68_20260707.xlsx'),
-				path.join(process.cwd(), 'public', 'ibk_0~68_20260707.xlsx')
+				path.join(process.cwd(), 'public', 'ibk_0~68_20260707.xlsx'),
+				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'ibk', 'lifetime', 'ibk_0~68_20260707.xlsx')
 			];
 			monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금', '월연금'];
 			performancePensionHeaderCandidates = []; // 엑셀에 없음 - 계산으로 처리
