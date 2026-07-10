@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from "next/image";
 import Link from "next/link";
-import { Bars3Icon, XMarkIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon, ChevronDownIcon, ChevronUpIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,15 +51,6 @@ export default function Header() {
 
   const menuItems = [
     {
-      title: "건강보험",
-      titleMain: "건강보험",
-      titleSub: null,
-      id: "health",
-      subItems: [
-        { name: "간병인보험", path: "/insurance/carer", badge: null }
-      ]
-    },
-    {
       title: "종신보험",
       titleMain: "종신보험",
       titleSub: "환급률↑",
@@ -103,6 +94,15 @@ export default function Header() {
       id: "oneshot-annuity",
       subItems: [
         { name: "AIA달러로받는연금보험II", path: "/insurance/oneshot/aia/dollar", badge: "달러" }
+      ]
+    },
+    {
+      title: "건강보험",
+      titleMain: "건강보험",
+      titleSub: null,
+      id: "health",
+      subItems: [
+        { name: "간병인보험", path: "/insurance/carer", badge: null }
       ]
     }
   ];
@@ -165,13 +165,19 @@ export default function Header() {
                       onClick={() => toggleSubMenu(item.id)}
                       className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 transition-colors group"
                     >
-                      <div className="flex items-baseline gap-2">
+                      <div className="flex items-center gap-2">
                         <span className="text-base font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
                           {item.titleMain}
                         </span>
                         {item.titleSub && (
-                          <span className={`text-sm font-semibold ${item.titleSubColor}`}>
-                            ({item.titleSub})
+                          <span className={`px-2 py-0.5 text-[11px] font-semibold rounded ${
+                            item.titleSubColor === 'text-rose-500' 
+                              ? 'bg-rose-100 text-rose-600' 
+                              : item.titleSubColor === 'text-sky-600'
+                              ? 'bg-sky-100 text-sky-600'
+                              : 'bg-orange-100 text-orange-600'
+                          }`}>
+                            {item.titleSub}
                           </span>
                         )}
                       </div>
@@ -211,24 +217,42 @@ export default function Header() {
                 ))}
 
                 {/* 상담신청 메뉴 (단독) */}
-                <li className="border-t border-gray-100 mt-2">
-                  <Link 
-                    href="/insurance/a_consult"
-                    onClick={closeMenu}
-                    className="flex items-center justify-between px-6 py-4 hover:bg-blue-50 transition-colors group"
-                  >
-                    <span className="font-bold text-gray-800 group-hover:text-blue-700">상담신청</span>
-                    <ArrowRightIcon className="w-5 h-5 text-gray-600 group-hover:text-blue-700" />
-                  </Link>
+                <li className="mt-6 px-6">
+                  <div className="space-y-2">
+                    <div className="relative">
+                      <div className="absolute -top-3 sm:-top-4 left-0 right-0 flex justify-center z-10">
+                        <span className="bg-gradient-to-r from-red-500 to-rose-500 text-white text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-lg animate-bounce whitespace-nowrap">
+                          무료 상담
+                        </span>
+                      </div>
+                      <Link 
+                        href="/insurance/a_consult"
+                        onClick={closeMenu}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl py-3.5 text-base transition flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25"
+                      >
+                        <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-5 h-5'>
+                          <path strokeLinecap='round' strokeLinejoin='round' d='M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z' />
+                        </svg>
+                        상담신청
+                      </Link>
+                    </div>
+                    <a 
+                      href="https://pf.kakao.com/_lrubxb/chat" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-full bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-3.5 text-base flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer shadow-lg shadow-[#fee500]/25"
+                    >
+                      <ChatBubbleLeftRightIcon className="w-5 h-5" />
+                      채팅상담
+                    </a>
+                  </div>
                 </li>
               </ul>
             </div>
 
-            {/* 하단 정보 (옵션) */}
-            <div className="p-6 bg-gray-50 border-t border-gray-100">
-              <div className="text-xs text-gray-700 text-center">
-                © Bohumstore. All rights reserved.
-              </div>
+            {/* 하단 간결한 문구 */}
+            <div className="p-4 text-center border-t border-gray-100">
+              <div className="text-[10px] text-gray-500">© 보험스토어</div>
             </div>
           </div>
         </div>

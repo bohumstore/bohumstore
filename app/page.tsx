@@ -33,6 +33,7 @@ export default function HomePage() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [currentScenario, setCurrentScenario] = useState(chatScenarios[0]);
   const [isTransitioning, setIsTransitioning] = useState(true);
+  const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState(false);
   const dragStartXRef = useRef<number | null>(null);
   const lastXRef = useRef<number | null>(null);
   const draggingRef = useRef(false);
@@ -55,6 +56,15 @@ export default function HomePage() {
   useEffect(() => {
     // 페이지 방문 시 자동 추적
     trackPageVisit();
+  }, []);
+
+  // 햄버거 메뉴 상태 수신
+  useEffect(() => {
+    const handleMenuChange = (e: CustomEvent<{ isOpen: boolean }>) => {
+      setIsHeaderMenuOpen(e.detail.isOpen);
+    };
+    window.addEventListener('headerMenuChange', handleMenuChange as EventListener);
+    return () => window.removeEventListener('headerMenuChange', handleMenuChange as EventListener);
   }, []);
 
   // 슬라이드가 변경될 때마다 시나리오 랜덤 변경 (첫 번째 슬라이드일 때)
@@ -709,7 +719,8 @@ export default function HomePage() {
         </div>
       </footer>
       {/* 플로팅 버튼 모음 */}
-      <div className="fixed bottom-6 right-4 sm:right-8 z-50 flex flex-col gap-2 sm:gap-3">
+      {!isHeaderMenuOpen && (
+        <div className="fixed bottom-6 right-4 sm:right-8 z-50 flex flex-col gap-2 sm:gap-3">
         {/* 상담 신청 버튼 */}
         <Link
           href="/insurance/a_consult"
@@ -741,6 +752,7 @@ export default function HomePage() {
           </svg>
         </button>
       </div>
+      )}
     </div>
   );
 }

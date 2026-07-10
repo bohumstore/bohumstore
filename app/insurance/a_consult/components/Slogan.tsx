@@ -371,7 +371,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const currentMonth = currentDate.getMonth() + 1; // 0-11을 1-12로 변환
   
   // 이슈 업데이트 관리: 내용 업데이트 완료 시 이 값을 현재 월로 변경
-  const lastUpdatedMonth = 6; // ★ 이슈 내용이 업데이트된 월 (3월 = 내용 표시, 4월 되면 자동으로 업데이트중)
+  const lastUpdatedMonth = 7; // ★ 이슈 내용이 업데이트된 월 (7월 = 내용 표시, 8월 되면 자동으로 업데이트중)
   const isUpdating = currentMonth !== lastUpdatedMonth;
 
   return (
@@ -433,15 +433,15 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="space-y-2 sm:space-y-2.5">
                   <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
                     <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
-                    <span>KB라이프 <span className="font-semibold text-red-500">10년시점 130% 환급률 보증</span></span>
-                  </div>
-                  <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
-                    <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
                     <span>IBK연금보험 <span className="font-semibold text-red-500">연단리 8% 최저보증</span></span>
                   </div>
                   <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
                     <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
-                    <span>종신·연금보험 <span className="font-semibold text-red-500">공시이율 하향</span> 추세!</span>
+                    <span>KB라이프 <span className="font-semibold text-red-500">10년시점 130% 환급률 보증</span></span>
+                  </div>
+                  <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
+                    <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
+                    <span>AIA 일시납 달러 연금 <span className="font-semibold text-red-500">10년거치형 / 생활자금형</span></span>
                   </div>
                 </div>
               )}
@@ -537,10 +537,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 버튼들 */}
                 <div className="flex gap-2 pt-2">
-                  <div className="relative flex-1">
-                    <span className="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-red-500 to-rose-500 text-white text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-lg z-10 animate-bounce whitespace-nowrap">
-                      무료 상담
-                    </span>
+                  <div className="flex-1">
                     <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl py-3.5 text-base transition flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 cursor-pointer">
                       <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-5 h-5'>
                         <path strokeLinecap='round' strokeLinejoin='round' d='M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z' />
