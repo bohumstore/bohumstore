@@ -36,9 +36,16 @@ export async function POST(request: NextRequest) {
 		// 월납입액에서 콤마 제거하고 정수로 변환
 		const cleanMonthlyPayment = parseInt(monthlyPayment.toString().replace(/,/g, ''));
 		
+		// 제품 유형 먼저 결정
+		const resolvedProductType = (productType || 'happy-plus') as string;
+		
 		// 시트 선택 로직
 		let sheetName = '';
-		if (mode === 'eligibility') {
+		
+		// IBK 연금은 단일 시트 'Search Results' 사용 (모든 월납입액 데이터가 한 시트에 있음)
+		if (resolvedProductType === 'ibk-lifetime') {
+			sheetName = 'Search Results';
+		} else if (mode === 'eligibility') {
 			// 적격성 확인은 30만원 시트를 기본으로 사용 (없으면 첫 시트로 대체)
 			sheetName = '30k';
 		} else {
@@ -63,7 +70,6 @@ export async function POST(request: NextRequest) {
 		}
 
 		// 제품 유형별 엑셀 파일 경로 결정 및 컬럼 헤더 매핑
-		const resolvedProductType = (productType || 'happy-plus') as string;
 		let candidatePaths: string[] = [];
 		let monthlyPensionHeaderCandidates: string[] = [];
 		let performancePensionHeaderCandidates: string[] = [];
@@ -95,8 +101,8 @@ export async function POST(request: NextRequest) {
 			];
 		} else if (resolvedProductType === 'ibk-lifetime') {
 			candidatePaths = [
-				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'ibk', 'lifetime', 'ibk_0~68_20260707.xlsx'),
-				path.join(process.cwd(), 'public', 'ibk_0~68_20260707.xlsx')
+				path.join(process.cwd(), 'public', 'ibk_0~68_20260707.xlsx'),
+				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'ibk', 'lifetime', 'ibk_0~68_20260707.xlsx')
 			];
 			monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금', '월연금'];
 			performancePensionHeaderCandidates = []; // 엑셀에 없음 - 계산으로 처리
@@ -242,9 +248,15 @@ export async function POST(request: NextRequest) {
 				guaranteedAmountIndex,
 				totalUntil100Index,
 				monthlyPensionIndex,
-				pensionStartAgeIndex
+				pensionStartAgeIndex,
+				genderIndex,
+				ageIndex,
+				periodIndex,
+				paymentIndex
 			});
 			console.log('[API][IBK] 헤더 행:', headerRow);
+			console.log('[API][IBK] 전체 데이터 행 수:', jsonData.length);
+			console.log('[API][IBK] 헤더 행 인덱스:', headerRowIndex);
 		}
 
 		// 필수 컬럼 확인
@@ -298,10 +310,11 @@ export async function POST(request: NextRequest) {
 
 			 // 데이터 행에서 일치하는 행 찾기
 		 console.log('[API] 데이터 매칭 시작');
-		 console.log('[API] 검색 조건:', { gender, age, paymentPeriod, cleanMonthlyPayment });
+		 console.log('[API] 검색 조건:', { gender, age, paymentPeriod, cleanMonthlyPayment, mappedGender });
 		 console.log('[API] 헤더 행 인덱스:', headerRowIndex);
 		 
 		 let matchedRow: any[] | null = null;
+		 let matchAttempts = 0;
 		 for (let i = headerRowIndex + 1; i < jsonData.length; i++) {
 			 const row = jsonData[i] as any[];
 			 if (row.length <= Math.max(genderIndex, ageIndex, periodIndex)) {
@@ -325,8 +338,24 @@ export async function POST(request: NextRequest) {
 
 			 const periodMatches = rowPeriod === parseInt(paymentPeriod.toString().replace(/[^0-9]/g, ''));
 			 const paymentMatches = paymentIndex === -1 ? true : rowPayment === cleanMonthlyPayment;
+			 
+			 // IBK 디버깅: 처음 5개 행만 로그
+			 if (resolvedProductType === 'ibk-lifetime' && matchAttempts < 5) {
+				 console.log(`[API][IBK] 행 ${i} 비교:`, {
+					 rowGender, rowAge, rowPeriod, rowPayment,
+					 genderMatch: rowGender === mappedGender,
+					 ageMatch: rowAge === parseInt(age.toString()),
+					 periodMatch: periodMatches,
+					 paymentMatch: paymentMatches
+				 });
+				 matchAttempts++;
+			 }
+			 
 			 if (rowGender === mappedGender && rowAge === parseInt(age.toString()) && periodMatches && paymentMatches) {
 				 matchedRow = row;
+				 if (resolvedProductType === 'ibk-lifetime') {
+					 console.log(`[API][IBK] 매칭 성공! 행 ${i}`);
+				 }
 				 break;
 			 }
 		 }
@@ -359,6 +388,11 @@ export async function POST(request: NextRequest) {
 				pensionStartAge,
 				matchedRow: matchedRow.slice(0, 10) // 처음 10개 컬럼만
 			});
+			console.log('[API][IBK] 원본 셀 값:', {
+				monthlyPensionCell: monthlyPensionIndex !== -1 ? matchedRow[monthlyPensionIndex] : 'N/A',
+				yearlyPensionCell: yearlyPensionIndex !== -1 ? matchedRow[yearlyPensionIndex] : 'N/A',
+				pensionStartAgeCell: pensionStartAgeIndex !== -1 ? matchedRow[pensionStartAgeIndex] : 'N/A'
+			});
 		}
 		
 		// 실적배당 연금액은 엑셀에 없으므로 계산으로 처리 (월 연금액의 15% 가정)
@@ -376,6 +410,12 @@ export async function POST(request: NextRequest) {
 			if (yearlyPension > 0 && pensionStartAge > 0) {
 				totalUntil100 = yearlyPension * (100 - pensionStartAge + 1);
 			}
+			console.log('[API][IBK] 계산된 값:', {
+				performancePension,
+				guaranteedAmount,
+				totalUntil100,
+				calculation: `yearlyPension(${yearlyPension}) * 20 = ${guaranteedAmount}, yearlyPension(${yearlyPension}) * (100 - ${pensionStartAge} + 1) = ${totalUntil100}`
+			});
 		} else {
 			// 다른 상품: 엑셀에 있으면 사용, 없으면 계산
 			guaranteedAmount = guaranteedAmountIndex !== -1 ? parseNumber(matchedRow[guaranteedAmountIndex]) : 0;
