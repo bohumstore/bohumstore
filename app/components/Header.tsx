@@ -19,7 +19,7 @@ export default function Header() {
     if (isMenuOpen) {
       // 메뉴가 열릴 때 현재 상태를 히스토리에 추가
       window.history.pushState({ menuOpen: true }, '');
-      
+
       const handlePopState = () => {
         // 뒤로가기 실행 시 메뉴 닫기
         setIsMenuOpen(false);
@@ -35,7 +35,7 @@ export default function Header() {
   }, [isMenuOpen]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  
+
   const toggleSubMenu = (menu: string) => {
     if (expandedMenu === menu) {
       setExpandedMenu(null);
@@ -116,7 +116,7 @@ export default function Header() {
         </Link>
 
         {/* 햄버거 메뉴 버튼 (우측 끝) */}
-        <button 
+        <button
           onClick={toggleMenu}
           className="absolute right-4 md:right-12 p-1 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors flex flex-col items-center"
           aria-label="메뉴 열기"
@@ -130,7 +130,7 @@ export default function Header() {
       {isMenuOpen && (
         <div className="fixed inset-0 z-50 flex justify-end">
           {/* 배경 dim 처리 (클릭 시 닫힘) */}
-          <div 
+          <div
             className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
             onClick={closeMenu}
           ></div>
@@ -140,7 +140,7 @@ export default function Header() {
             {/* 사이드바 헤더 */}
             <div className="flex items-center justify-between p-5 border-b border-gray-100">
               <span className="font-bold text-lg text-gray-800">전체 메뉴</span>
-              <button 
+              <button
                 onClick={closeMenu}
                 className="p-2 text-gray-700 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
               >
@@ -160,7 +160,7 @@ export default function Header() {
                         <div className="border-t-2 border-gray-200"></div>
                       </div>
                     )}
-                    
+
                     <button
                       onClick={() => toggleSubMenu(item.id)}
                       className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 transition-colors group"
@@ -170,13 +170,12 @@ export default function Header() {
                           {item.titleMain}
                         </span>
                         {item.titleSub && (
-                          <span className={`px-2 py-0.5 text-[11px] font-semibold rounded ${
-                            item.titleSubColor === 'text-rose-500' 
-                              ? 'bg-rose-100 text-rose-600' 
-                              : item.titleSubColor === 'text-sky-600'
-                              ? 'bg-sky-100 text-sky-600'
-                              : 'bg-orange-100 text-orange-600'
-                          }`}>
+                          <span className={`px-2 py-0.5 text-[11px] font-semibold rounded ${item.titleSubColor === 'text-rose-500'
+                            ? 'bg-red-50 text-red-600'
+                            : item.titleSubColor === 'text-sky-600'
+                              ? 'bg-blue-50 text-blue-600'
+                              : 'bg-orange-50 text-orange-600'
+                            }`}>
                             {item.titleSub}
                           </span>
                         )}
@@ -187,24 +186,23 @@ export default function Header() {
                         <ChevronDownIcon className="w-5 h-5 text-gray-400 group-hover:text-blue-600" />
                       )}
                     </button>
-                    
+
                     {/* 서브 메뉴 */}
-                    <div 
-                      className={`bg-gray-50 overflow-hidden transition-all duration-100 ${
-                        expandedMenu === item.id ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
-                      }`}
+                    <div
+                      className={`bg-gray-50 overflow-hidden transition-all duration-100 ${expandedMenu === item.id ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                        }`}
                     >
                       <ul className="py-2 px-6 space-y-1">
                         {item.subItems.map((subItem, idx) => (
                           <li key={idx}>
-                            <Link 
+                            <Link
                               href={subItem.path}
                               onClick={closeMenu}
                               className="flex items-center gap-2 py-2.5 text-sm text-gray-600 hover:text-blue-600 hover:font-medium transition-colors pl-2 border-l-2 border-transparent hover:border-blue-300"
                             >
                               <span>{subItem.name}</span>
                               {subItem.badge && (
-                                <span className="px-1.5 py-0.5 text-[10px] font-medium bg-gray-200 text-gray-700 rounded">
+                                <span className="px-1.5 py-0.5 text-[10px] font-medium rounded bg-orange-50 text-orange-600">
                                   {subItem.badge}
                                 </span>
                               )}
@@ -225,7 +223,7 @@ export default function Header() {
                           무료 상담
                         </span>
                       </div>
-                      <Link 
+                      <Link
                         href="/insurance/a_consult"
                         onClick={closeMenu}
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl py-3.5 text-base transition flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25"
@@ -236,9 +234,9 @@ export default function Header() {
                         상담신청
                       </Link>
                     </div>
-                    <a 
-                      href="https://pf.kakao.com/_lrubxb/chat" 
-                      target="_blank" 
+                    <a
+                      href="https://pf.kakao.com/_lrubxb/chat"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="w-full bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-3.5 text-base flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer shadow-lg shadow-[#fee500]/25"
                     >
