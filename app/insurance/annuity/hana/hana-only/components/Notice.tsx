@@ -86,11 +86,6 @@ export default function Notice({ open, onClose }: NoticeProps) {
         </div>
 
         <div className="mb-4">
-          <br />
-          <img src="/1m.png" alt="예금자보호 안내" className="w-full max-w-28 mx-auto" />
-        </div>
-
-        <div className="mb-4">
           <div className="text-sm text-gray-600">
             <hr className="my-3 border-gray-300" />
             <div className="mb-1">※ ㈜메타리치 보험스토어는 다수의 보험사와 계약 체결 및 대리·중개하는 대리점입니다.</div>

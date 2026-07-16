@@ -28,12 +28,7 @@ export default function CoverageDetails() {
                   <td className="border border-gray-300 p-2 text-center font-semibold">고도재해장해<br />보험금</td>
                   <td className="border border-gray-300 p-2">연금개시전 보험기간 중 피보험자가 재해를 원인으로 장해분류표에서 정한 장해지급률 중 80%이상에 해당하는 장해상태가 되었을 때</td>
                   <td className="border border-gray-300 p-2">
-                    <div className="space-y-1">
-                      <div><strong>적립형</strong></div>
-                      <div>구좌당 1,000만원 X 해당 장해지급률</div>
-                      <div className="mt-2"><strong>거치형</strong></div>
-                      <div>구좌당 1,000만원 X 해당 장해지급률</div>
-                    </div>
+                    <div>구좌당 1,000만원 X 해당 장해지급률</div>
                   </td>
                 </tr>
               </tbody>
@@ -146,7 +141,7 @@ export default function CoverageDetails() {
 
           <div>
             <h4 className="font-semibold text-base mb-2">보증이율</h4>
-            <p className="text-sm text-gray-700 mb-3">최저연금기준금액을 산출하기 위하여 적용하는 이율로 연금개시전 보험기간에 따라 연단리 4%~7% 적용</p>
+            <p className="text-sm text-gray-700 mb-3">최저연금기준금액을 산출하기 위하여 적용하는 이율로 연금개시전 보험기간에 따라 연단리 5%~7% 적용</p>
 
             <div className="mb-4">
               <div className="font-semibold text-sm mb-2">보증이율(연단리) 예시표</div>
@@ -155,7 +150,6 @@ export default function CoverageDetails() {
                   <thead>
                     <tr className="bg-gray-200">
                       <th className="border border-gray-300 p-2 text-center">연금개시전<br />보험기간</th>
-                      <th className="border border-gray-300 p-2 text-center">5년이상~<br />15년미만</th>
                       <th className="border border-gray-300 p-2 text-center">15년이상~<br />20년미만</th>
                       <th className="border border-gray-300 p-2 text-center">20년이상~<br />25년미만</th>
                       <th className="border border-gray-300 p-2 text-center">25년 이상</th>
@@ -164,7 +158,6 @@ export default function CoverageDetails() {
                   <tbody>
                     <tr>
                       <td className="border border-gray-300 p-2 text-center font-semibold">보증이율(연단리)</td>
-                      <td className="border border-gray-300 p-2 text-center text-emerald-600 font-bold">4%</td>
                       <td className="border border-gray-300 p-2 text-center text-emerald-600 font-bold">5%</td>
                       <td className="border border-gray-300 p-2 text-center text-emerald-600 font-bold">6%</td>
                       <td className="border border-gray-300 p-2 text-center text-emerald-600 font-bold">7%</td>
@@ -182,7 +175,6 @@ export default function CoverageDetails() {
                   <thead>
                     <tr className="bg-gray-200">
                       <th className="border border-gray-300 p-2 text-center" rowSpan={2}>연금개시전 보험기간</th>
-                      <th className="border border-gray-300 p-2 text-center">10년</th>
                       <th className="border border-gray-300 p-2 text-center">15년</th>
                       <th className="border border-gray-300 p-2 text-center">20년</th>
                       <th className="border border-gray-300 p-2 text-center">25년</th>
@@ -190,15 +182,7 @@ export default function CoverageDetails() {
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="border border-gray-300 p-2 text-center font-semibold">거치형</td>
-                      <td className="border border-gray-300 p-2 text-center">3.42%</td>
-                      <td className="border border-gray-300 p-2 text-center">3.80%</td>
-                      <td className="border border-gray-300 p-2 text-center">4.02%</td>
-                      <td className="border border-gray-300 p-2 text-center">4.12%</td>
-                    </tr>
-                    <tr>
                       <td className="border border-gray-300 p-2 text-center font-semibold">적립형</td>
-                      <td className="border border-gray-300 p-2 text-center">-</td>
                       <td className="border border-gray-300 p-2 text-center">3.94%</td>
                       <td className="border border-gray-300 p-2 text-center">4.17%</td>
                       <td className="border border-gray-300 p-2 text-center">4.28%</td>
@@ -206,7 +190,7 @@ export default function CoverageDetails() {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-gray-600 mt-2">**상기 보증이율 예시는 연단리 이율을 연복리 이율로 환산한 근삿값입니다.(40세, 남자, 거치형: 일시납, 적립형: 5년납 기준)</p>
+              <p className="text-xs text-gray-600 mt-2">**상기 보증이율 예시는 연단리 이율을 연복리 이율로 환산한 근삿값입니다.(40세, 남자, 적립형: 5년납 기준)</p>
             </div>
 
 

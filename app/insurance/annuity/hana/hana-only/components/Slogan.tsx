@@ -757,11 +757,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   // 납입기간 선택 가능 여부 (연령별 제한)
   const getAvailablePaymentPeriods = (age: number): string[] => {
     if (age >= 0 && age <= 55) {
-      return ['10년', '15년', '20년'];
+      return ['10년', '12년', '15년', '20년'];
     } else if (age >= 56 && age <= 60) {
-      return ['10년', '15년'];
+      return ['10년', '12년', '15년'];
     } else if (age >= 61 && age <= 65) {
-      return ['10년'];
+      return ['10년', '12년'];
     } else if (age >= 66 && age <= 68) {
       return ['7년']; // 7년납 자동 적용
     }
@@ -873,6 +873,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               (무)하나뿐인 변액연금보험
             </h1>
 
+            {/* 원금 손실 경고 문구 */}
+            <p className="text-xs sm:text-sm text-red-300 mb-3 sm:mb-4 text-center md:text-center lg:text-left">
+              ※ 원금 손실이 발생할 수 있는 상품입니다
+            </p>
+
             {/* 간단한 특징 설명 */}
             <ul className="mb-1 space-y-1 sm:space-y-1.5 md:space-y-2.5 lg:space-y-2">
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
@@ -892,10 +897,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <span>월납 <span className="text-[#c4b5fd] font-bold">20만원</span>부터 가입 가능</span>
               </li>
             </ul>
-            <p className="text-xs sm:text-sm text-white/70 mt-1 mb-2 text-center md:text-center lg:text-left">(※ 적립형 기준)</p>
 
             {/* 간단한 보증 내용 박스 */}
-            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-3 sm:mb-4 p-4 sm:p-5 md:p-6 lg:p-4 px-4 sm:px-5 md:px-6 lg:px-4 pt-5 sm:pt-6 md:pt-7 lg:pt-6 pb-5 sm:pb-6 md:pb-7 lg:pb-6">
+            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mt-4 sm:mt-5 md:mt-6 mb-3 sm:mb-4 p-4 sm:p-5 md:p-6 lg:p-4 px-4 sm:px-5 md:px-6 lg:px-4 pt-5 sm:pt-6 md:pt-7 lg:pt-6 pb-5 sm:pb-6 md:pb-7 lg:pb-6">
               <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 lg:gap-4 mb-2 sm:mb-3">
                 {/* 1. 보증이율 */}
                 <div className="text-center p-3 sm:p-4 md:p-5 bg-white rounded-xl shadow-sm border-2 border-gray-100 hover:border-emerald-200 transition-all duration-300 flex flex-col justify-between min-h-[140px] sm:min-h-[160px] md:min-h-[180px]">
@@ -935,7 +939,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <thead>
                     <tr className="bg-gray-100">
                       <th className="border border-gray-300 p-1 sm:p-1.5">연금개시전 보험기간</th>
-                      <th className="border border-gray-300 p-1 sm:p-1.5">5년이상~<br />15년미만</th>
                       <th className="border border-gray-300 p-1 sm:p-1.5">15년이상~<br />20년미만</th>
                       <th className="border border-gray-300 p-1 sm:p-1.5">20년이상~<br />25년미만</th>
                       <th className="border border-gray-300 p-1 sm:p-1.5">25년이상</th>
@@ -944,7 +947,6 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <tbody>
                     <tr>
                       <td className="border border-gray-300 p-1 sm:p-1.5 font-semibold">보증이율</td>
-                      <td className="border border-gray-300 p-1 sm:p-1.5 text-emerald-600 font-bold">4%</td>
                       <td className="border border-gray-300 p-1 sm:p-1.5 text-emerald-600 font-bold">5%</td>
                       <td className="border border-gray-300 p-1 sm:p-1.5 text-emerald-600 font-bold">6%</td>
                       <td className="border border-gray-300 p-1 sm:p-1.5 text-emerald-600 font-bold">7%</td>
@@ -956,6 +958,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
               {/* CSS 애니메이션 스타일 */}
               <style jsx>{`
+                @keyframes jump-simple {
+                  0%, 100% { transform: translateY(0) scale(1); }
+                  50% { transform: translateY(-8px) scale(1.05); }
+                }
+                
                 @keyframes shine1 {
                   0% { transform: translateX(-100%) skewX(-12deg); }
                   25% { transform: translateX(100%) skewX(-12deg); }
@@ -1051,8 +1058,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                       </div>
                     </div>
                   ) : (
-                    <div className="grid grid-cols-3 gap-2">
-                      {['10년', '15년', '20년'].map((period) => {
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                      {['10년', '12년', '15년', '20년'].map((period) => {
                         // 생년월일 입력 전에는 모두 활성화, 입력 후에는 연령별 제한 적용
                         const isAvailable = !isAgeKnown || availablePaymentPeriods.includes(period);
                         return (

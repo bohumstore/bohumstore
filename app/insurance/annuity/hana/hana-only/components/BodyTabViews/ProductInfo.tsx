@@ -8,8 +8,7 @@ export default function ProductInfo() {
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">보험종류</h3>
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-2 text-sm">
-            <div>• (무)하나뿐인 변액연금보험 – 적립형</div>
-            <div>• (무)하나뿐인 변액연금보험 – 거치형</div>
+            <div>• 하나생명 (무)하나뿐인 변액연금보험 – 적립형</div>
           </div>
         </div>
       </div>
@@ -23,34 +22,29 @@ export default function ProductInfo() {
               <table className="w-full border-collapse text-xs sm:text-sm">
                 <thead>
                   <tr className="bg-gray-200">
-                    <th className="border border-gray-300 p-2" rowSpan={2}>구분</th>
-                    <th className="border border-gray-300 p-2" colSpan={2}>내용</th>
-                  </tr>
-                  <tr className="bg-gray-200">
-                    <th className="border border-gray-300 p-2">적립형</th>
-                    <th className="border border-gray-300 p-2">거치형</th>
+                    <th className="border border-gray-300 p-2">구분</th>
+                    <th className="border border-gray-300 p-2">내용</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td className="border border-gray-300 p-2 font-semibold text-center">연금개시나이(Y)</td>
-                    <td className="border border-gray-300 p-2 text-center" colSpan={2}>30세 ~ 85세</td>
+                    <td className="border border-gray-300 p-2 text-center">30세 ~ 85세</td>
                   </tr>
                   <tr>
                     <td className="border border-gray-300 p-2 font-semibold text-center" rowSpan={2}>보험기간</td>
-                    <td className="border border-gray-300 p-2" colSpan={2}>
+                    <td className="border border-gray-300 p-2">
                       <strong>연금개시전:</strong> 보험계약일부터 연금개시나이(Y) 계약해당일 전일까지
                     </td>
                   </tr>
                   <tr>
-                    <td className="border border-gray-300 p-2" colSpan={2}>
+                    <td className="border border-gray-300 p-2">
                       <strong>연금개시후:</strong> 연금개시나이(Y) 계약해당일부터 종신까지
                     </td>
                   </tr>
                   <tr>
                     <td className="border border-gray-300 p-2 font-semibold text-center">가입나이</td>
-                    <td className="border border-gray-300 p-2 text-center">0세 ~ (Y-M-최소거치기간)세<br/>(최대 68세)</td>
-                    <td className="border border-gray-300 p-2 text-center">0세 ~ (Y-5)세<br/>(최대 80세)</td>
+                    <td className="border border-gray-300 p-2 text-center">0세 ~ (Y-M-최소거치기간)세<br />(최대 68세)</td>
                   </tr>
                 </tbody>
               </table>
@@ -68,21 +62,14 @@ export default function ProductInfo() {
               <table className="w-full border-collapse text-xs sm:text-sm">
                 <thead>
                   <tr className="bg-gray-200">
-                    <th className="border border-gray-300 p-2">구분</th>
                     <th className="border border-gray-300 p-2">보험료 납입기간(M)</th>
                     <th className="border border-gray-300 p-2">보험료 납입주기</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="border border-gray-300 p-2 font-semibold text-center">적립형</td>
                     <td className="border border-gray-300 p-2 text-center">5년납/7년납/10년납/12년납 이상</td>
                     <td className="border border-gray-300 p-2 text-center">월납</td>
-                  </tr>
-                  <tr>
-                    <td className="border border-gray-300 p-2 font-semibold text-center">거치형</td>
-                    <td className="border border-gray-300 p-2 text-center">일시납</td>
-                    <td className="border border-gray-300 p-2 text-center">일시납</td>
                   </tr>
                 </tbody>
               </table>
@@ -97,7 +84,6 @@ export default function ProductInfo() {
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <div>
-              <div className="mb-3 text-sm font-semibold">(1) 적립형</div>
               <div className="text-sm mb-3">보험계약을 체결할 때 또는 보험계약을 변경할 때 보험료 납입기간 중 매월 납입하기로 한 보험료를 말합니다.</div>
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse text-xs sm:text-sm">
@@ -134,30 +120,6 @@ export default function ProductInfo() {
               </div>
               <div className="text-sm text-gray-700 mt-2">※ 1구좌 기준 : 최저 20만원 이상 1,000만원 이하</div>
             </div>
-
-            <div>
-              <div className="mb-3 text-sm font-semibold">(2) 거치형</div>
-              <div className="text-sm mb-3">보험계약을 체결할 때 납입하기로 한 보험료를 말하며, 1,000만원을 최소보험료로 합니다.</div>
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse text-xs sm:text-sm">
-                  <thead>
-                    <tr className="bg-gray-200">
-                      <th className="border border-gray-300 p-2">구분</th>
-                      <th className="border border-gray-300 p-2">기본보험료</th>
-                      <th className="border border-gray-300 p-2">최소거치기간</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-gray-300 p-2 font-semibold text-center">일시납</td>
-                      <td className="border border-gray-300 p-2 text-center">1,000만원 이상</td>
-                      <td className="border border-gray-300 p-2 text-center">5년</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div className="text-sm text-gray-700 mt-2">※ 1구좌 기준 : 최저 1,000만원 이상 1억원 이하</div>
-            </div>
           </div>
         </div>
       </div>
@@ -168,21 +130,10 @@ export default function ProductInfo() {
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <div className="space-y-4">
             <div>
-              <div className="mb-3 text-sm font-semibold">적립형</div>
               <div className="text-sm mb-3">연금개시전 보험기간 중 기본보험료 납입주기와 달리 수시로 납입할 수 있는 보험료를 말하며, 납입기간 중에는 해당월의 기본보험료가 납입된 경우에 한하여 추가납입보험료를 납입할 수 있습니다.</div>
               <div className="p-3 rounded border border-gray-300 text-sm">
-                <strong>1회 납입 가능한 추가납입보험료 납입한도</strong><br/>
+                <strong>1회 납입 가능한 추가납입보험료 납입한도</strong><br />
                 = 해당월까지 납입한 기본보험료 총액(선납포함)의 200% - 이미 납입한 추가납입보험료의 합계 + 계약자적립액의 인출금액(자동인출금액 포함)의 합계
-              </div>
-              <div className="text-sm text-gray-700 mt-2">※ 계약자적립액의 인출금액(자동인출금액 포함)은 기본보험료에 의한 계약자적립액 인출금액과 추가납입보험료에 의한 계약자적립액의 인출금액을 포함</div>
-            </div>
-
-            <div>
-              <div className="mb-3 text-sm font-semibold">거치형</div>
-              <div className="text-sm mb-3">연금개시전 보험기간 중 수시로 납입할 수 있는 보험료를 말합니다.</div>
-              <div className="p-3 rounded border border-gray-300 text-sm">
-                <strong>추가납입보험료 총납입한도</strong><br/>
-                = 기본보험료의 200% + 계약자적립액의 인출금액(자동인출금액 포함)의 합계
               </div>
               <div className="text-sm text-gray-700 mt-2">※ 계약자적립액의 인출금액(자동인출금액 포함)은 기본보험료에 의한 계약자적립액 인출금액과 추가납입보험료에 의한 계약자적립액의 인출금액을 포함</div>
             </div>
