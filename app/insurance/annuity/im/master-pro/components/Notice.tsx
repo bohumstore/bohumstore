@@ -9,7 +9,7 @@ interface NoticeProps {
 export default function Notice({ open, onClose }: NoticeProps) {
   return (
     <Modal title="가입시 알아두실 사항" open={open} onClose={onClose}>
-      <div className="overflow-y-auto px-6 py-4 text-[15px] leading-relaxed" style={{maxHeight:'60vh'}}>
+      <div className="overflow-y-auto px-6 py-4 text-[15px] leading-relaxed" style={{ maxHeight: '60vh' }}>
         <div className="mb-4">
           <div className="font-bold mb-2">보험계약 청약</div>
           <div>보험계약 청약시 보험상품명, 보험기간, 보험료 납입기간, 피보험자 등을 반드시 확인하시고 보험상품 내용을 설명 받으시기 바랍니다. 또한 해당 보험약관을 참조하시기 바랍니다.</div>
@@ -25,15 +25,15 @@ export default function Notice({ open, onClose }: NoticeProps) {
         </div>
         <div className="mb-4">
           <div className="font-bold mb-2">설명의무 관련 안내</div>
-          <div>회사 및 모집종사자는 해당 상품에 대해 충분히 설명할 의무가 있으며, 가입자는 가입에 앞서 이에 대한 충분한 설명을 받으시기 바랍니다.</div>
+          <div>회사 및 모집종사자는 해당 상품에 대해 충분히 설명할 의무가 있으며, 가입자는 가입에 앞서 이에 대한 충분한 설명을 받으시기 바랍니다 .</div>
         </div>
         <div className="mb-4">
           <div className="font-bold mb-2">품질보증제도</div>
           <div className="mb-2">보험계약자는 다음의 경우 계약성립일로부터 3개월 이내에 계약을 취소할 수 있으며, 이 경우 이미 납입한 보험료를 돌려드리며, 보험료를 받은 기간에 대하여 소정의 이자를 더하여 지급합니다.</div>
           <div className="ml-4">
-            ①보험계약 청약시 약관과 계약자 보관용 청약서(청약서 부본)를 전달받지 못한 경우<br/>
-            ②약관의 중요한 내용을 설명 받지 못한 경우<br/>
-            ③청약서에 자필서명(전자서명 포함)을 하지 아니한 경우
+            ①보험계약 청약시 약관과 계약자 보관용 청약서 청약서 부본를 전달받지 못한 경우<br />
+            ②약관의 중요한 내용을 설명 받지 못한 경우<br />
+            ③청약서에 자필서명 전자서명 포함을 하지 아니한 경우
           </div>
         </div>
         <div className="mb-4">
@@ -46,7 +46,7 @@ export default function Notice({ open, onClose }: NoticeProps) {
           <div className="mb-2">보험수익자가 고의로 피보험자를 해친 경우</div>
           <div className="mb-2">보험계약자가 고의로 피보험자를 해친 경우</div>
           <div className="text-sm text-gray-600 mt-2">
-            ※ 일반사망보험금의 경우 '고의적 사고 및 2년 이내 자살시' 지급 제한<br/>
+            ※ 일반사망보험금의 경우 '고의적 사고 및 2년 이내 자살시' 지급 제한<br />
             ※ 자세한 사항은 해당약관 참조
           </div>
         </div>
@@ -60,7 +60,7 @@ export default function Notice({ open, onClose }: NoticeProps) {
         </div>
         <div className="mb-4">
           <div className="font-bold mb-2 text-red-600">예금자보호안내</div>
-          <div className="text-red-600">이 보험계약은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금)에 기타지급금을 합한 금액이 1인당 "1억원까지"(본 보험회사의 여타 보호상품과 합산) 보호됩니다. 이와 별도로 본 보험회사 보호상품의 사고보험금을 합산한 금액이 1인당 "1억원까지" 보호됩니다. 다만, 보험계약자 및 보험료납부자가 법인인 보험계약의 경우에는 보호되지 않습니다.</div>
+          <div className="text-red-600">이 보험계약은 약관에서 보험회사가 최저보증하는 최저사망적립액, 평생연금 및 특약 에 한하여 예금자보호법에 따라 보호됩니다. 보호 한도는 해약환급금(또는 만기 시 보험금)에 기타지급금을 합하여 1인당 "1억원까지"(본 보험회사의 여타 보호상품과 합산)이며, 이와 별도로 본 보험회사 보호상품의 사고보험금을 합산하여 1인당 "1억원까지"입니다. 다만, 보험계약자 및 보험료납부자가 법인인 보험계약의 경우에는 보호되지 않습니다.</div>
         </div>
         <div className="mb-4">
           <div className="font-bold mb-2">보험상담 및 분쟁조정절차 안내</div>
@@ -75,16 +75,24 @@ export default function Notice({ open, onClose }: NoticeProps) {
           <div>보험계약과 관련하여 보다 자세한 내용을 알고 싶으신 경우 아래를 참조하여 확인하시기 바랍니다.</div>
           <div className="mt-2">본 안내장은 보험계약자의 이해를 돕기 위한 요약 자료입니다. 보험계약자께서는 본 상품에 대한 자세한 내용과 본 상품에 제시된 보장내용, 보험기간 등을 변경하여 보험설계를 하실 경우, 당사의 상품과 유사한 다른 회사의 상품을 비교하실 경우 아래에서 확인하실 수 있습니다.</div>
           <div className="mt-2">
-            보험상품 및 가격공시실 : www.imlifeins.co.kr (당사홈페이지)<br/>
+            보험상품 및 가격공시실 : www.imlifeins.co.kr (당사홈페이지)<br />
             보험상품 비교·공시 : www.klia.or.kr (생명보험협회)
           </div>
           <div className="mt-2">그 외 보험료 산출 기초가 되는 사항은 이 보험상품의 상품요약서에서 자세히 확인하실 수 있습니다.</div>
         </div>
         <div className="mb-4">
-          <br/>
+          <div className="font-bold mb-2 text-red-600">변액보험 가입시 주요 RISK</div>
+          <div className="text-red-600 space-y-2">
+            <div><span className="font-semibold">투자원금에 대한 손실위험 :</span> 변액보험은 실적 배당 상품으로 원리금 전액이 보장 또는 보호되지 않으므로, 투자금액의 손실 내지 감소의 위험을 전적으로 계약자가 부담합니다.</div>
+            <div><span className="font-semibold">시장위험 및 개별위험 :</span> 채권, 주식, 수익증권 및 파생상품 등에 투자함으로써 유가증권의 가격 변동, 이자율 등 기타 거시 경제지표의 변화에 따른 위험이 있습니다.</div>
+            <div><span className="font-semibold">환위험(환율변동 위험) :</span> 해외에 투자하는 펀드의 경우 해외주식이나 채권 등 해외 유가증권에 투자함으로써 환율변동에 따라 자산가치가 변동하는 위험에 노출될 수 있기 때문에 환헷지를 실행할 수 있습니다. 환헷지 실행시 선물 및 선도환 계약과 보험계약의 만기가 다를 수 있고, 빈번한 보험관련 입출금 및 자산 가격의 변동성 등으로 인해 정확한 환헷지 대상금액을 확정하기 어려워 일부 자산은 환위험에 노출될 수 있습니다.</div>
+          </div>
+        </div>
+        <div className="mb-4">
+          <br />
           <img src="/1m.png" alt="예금자보호 안내" className="w-full max-w-28 mx-auto" />
         </div>
-        
+
         <div className="mb-4">
           <div className="text-sm text-gray-600">
             <hr className="my-3 border-gray-300" />

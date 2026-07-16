@@ -1,0 +1,14 @@
+보험종류 */}
+      <div className="space-y-4">
+        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">보험종류</h3>
+        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+          <div className="space-y-2 text-sm">
+            <div>• (무)하나뿐인 변액연금보험 – 적립형</div>
+            <div>• (무)하나뿐인 변액연금보험 – 거치형</div>
+          </div>
+        </div>
+      </div>
+
+      {/* 연금개시나이, 보험기간, 가입나이 */}
+      <div className="space-y-4">
+        <h3 className="text-xl font-bold borde

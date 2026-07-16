@@ -83,16 +83,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       alert('개인정보 수집 및 이용에 동의해주세요.');
       return false;
     }
-    if (!gender) { 
-      alert('성별을 선택해주세요.'); 
+    if (!gender) {
+      alert('성별을 선택해주세요.');
       return false;
     }
-    if (!name) { 
-      alert('이름을 입력해주세요.'); 
+    if (!name) {
+      alert('이름을 입력해주세요.');
       return false;
     }
-    if (!birth) { 
-      alert('생년월일을 입력해주세요.'); 
+    if (!birth) {
+      alert('생년월일을 입력해주세요.');
       return false;
     }
     if (!/^\d{8}$/.test(birth)) {
@@ -103,13 +103,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const birthMonth = parseInt(birth.substring(4, 6));
     const birthDay = parseInt(birth.substring(6, 8));
     const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
-    
+
     if (birthYear < 1900 || birthYear > new Date().getFullYear() ||
-        birthMonth < 1 || birthMonth > 12 ||
-        birthDay < 1 || birthDay > 31 ||
-        birthDate.getFullYear() !== birthYear ||
-        birthDate.getMonth() !== birthMonth - 1 ||
-        birthDate.getDate() !== birthDay) {
+      birthMonth < 1 || birthMonth > 12 ||
+      birthDay < 1 || birthDay > 31 ||
+      birthDate.getFullYear() !== birthYear ||
+      birthDate.getMonth() !== birthMonth - 1 ||
+      birthDate.getDate() !== birthDay) {
       alert('올바른 생년월일을 입력해주세요.');
       return false;
     }
@@ -117,8 +117,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     // 보험연령 안내는 모달에서 처리 (이 상품: 15~70세)
     const formInsuranceAge = Number(getInsuranceAge(birth));
 
-    if (!phone) { 
-      alert('연락처를 입력해주세요.'); 
+    if (!phone) {
+      alert('연락처를 입력해주세요.');
       return false;
     }
     if (!/^\d{11}$/.test(phone)) {
@@ -144,8 +144,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const handlePostOTP = async () => {
     const templateId = 'UA_7754';
     try {
-      await request.post('/api/postOTP', { 
-        phone, 
+      await request.post('/api/postOTP', {
+        phone,
         templateId,
         companyName: "보험스토어",
         productName: "상담신청"
@@ -213,12 +213,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       return;
     }
     if (consultType === '- 상담 종류 선택 -') {
-        alert('상담 종류를 선택해주세요.');
-        return;
+      alert('상담 종류를 선택해주세요.');
+      return;
     }
     if (consultTime === '- 상담 시간대 선택 -') {
-        alert('상담 시간대를 선택해주세요.');
-        return;
+      alert('상담 시간대를 선택해주세요.');
+      return;
     }
     setConsultIsVerified(false);
     setConsultOtpCode("");
@@ -282,64 +282,64 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   // 상담 신청 폼 제출 핸들러
   const handleInsuranceCostCalculate = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // 필수 필드 검증
     if (!name.trim()) {
       alert('이름을 입력해주세요.');
       nameInputRef.current?.focus();
       return;
     }
-    
+
     if (!gender) {
       alert('성별을 선택해주세요.');
       return;
     }
-    
+
     if (birth.length !== 8) {
       alert('생년월일을 8자리로 입력해주세요. (예: 19880818)');
       birthInputRef.current?.focus();
       return;
     }
-    
+
     // 생년월일 유효성 검사
     const birthYear = parseInt(birth.substring(0, 4));
     const birthMonth = parseInt(birth.substring(4, 6));
     const birthDay = parseInt(birth.substring(6, 8));
     if (birthYear < 1900 || birthYear > new Date().getFullYear() ||
-        birthMonth < 1 || birthMonth > 12 ||
-        birthDay < 1 || birthDay > 31) {
+      birthMonth < 1 || birthMonth > 12 ||
+      birthDay < 1 || birthDay > 31) {
       alert('생년월일을 올바르게 입력해 주세요. (예: 19880818)');
       birthInputRef.current?.focus();
       return;
     }
-    
+
     if (phone.length < 10 || phone.length > 11) {
       alert('연락처를 올바르게 입력해 주세요. (예: 01012345678)');
       phoneInputRef.current?.focus();
       return;
     }
-    
+
     if (!phone.startsWith('010')) {
       alert('연락처를 올바르게 입력해 주세요. (010으로 시작)');
       phoneInputRef.current?.focus();
       return;
     }
-    
+
     if (consultType === '- 상담 종류 선택 -') {
       alert('상담 종류를 선택해주세요.');
       return;
     }
-    
+
     if (consultTime === '- 상담 시간대 선택 -') {
       alert('상담 시간대를 선택해주세요.');
       return;
     }
-    
+
     if (!isChecked) {
       alert('개인정보 수집 및 이용에 동의해주세요.');
       return;
     }
-    
+
     // 모든 검증 통과 시 상담 모달 열기
     handleOpenConsultModal(e);
   };
@@ -369,7 +369,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth() + 1; // 0-11을 1-12로 변환
-  
+
   // 이슈 업데이트 관리: 내용 업데이트 완료 시 이 값을 현재 월로 변경
   const lastUpdatedMonth = 7; // ★ 이슈 내용이 업데이트된 월 (7월 = 내용 표시, 8월 되면 자동으로 업데이트중)
   const isUpdating = currentMonth !== lastUpdatedMonth;
@@ -391,28 +391,28 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               </span>
               <span className="text-gray-600">{currentYear}년 {currentMonth}월</span>
             </div>
-            
+
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-3 md:mb-4 leading-tight">
               보험, <span className="text-blue-600">제대로</span> 알고<br />
               가입하고 계신가요?
             </h1>
             <p className="text-base md:text-lg text-gray-700 mb-5 md:mb-6">복잡한 보험, 전문가가 쉽게 설명해드립니다</p>
-            
+
             <ul className="space-y-2 md:space-y-3 text-left mb-4 lg:mb-6">
-                <li className="flex items-center text-sm md:text-base lg:text-lg text-gray-700">
-                    <span className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs mr-2 md:mr-3 flex-shrink-0">✓</span>
-                    <span>내 보험료가 적절한지 <span className="font-semibold text-gray-900">무료 분석</span></span>
-                </li>
-                <li className="flex items-center text-sm md:text-base lg:text-lg text-gray-700">
-                    <span className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs mr-2 md:mr-3 flex-shrink-0">✓</span>
-                    <span>여러 보험사 상품 <span className="font-semibold text-gray-900">객관적 비교</span></span>
-                </li>
-                <li className="flex items-center text-sm md:text-base lg:text-lg text-gray-700">
-                    <span className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs mr-2 md:mr-3 flex-shrink-0">✓</span>
-                    <span>불필요한 특약 <span className="font-semibold text-gray-900">정리 컨설팅</span></span>
-                </li>
+              <li className="flex items-center text-sm md:text-base lg:text-lg text-gray-700">
+                <span className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs mr-2 md:mr-3 flex-shrink-0">✓</span>
+                <span>내 보험료가 적절한지 <span className="font-semibold text-gray-900">무료 분석</span></span>
+              </li>
+              <li className="flex items-center text-sm md:text-base lg:text-lg text-gray-700">
+                <span className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs mr-2 md:mr-3 flex-shrink-0">✓</span>
+                <span>여러 보험사 상품 <span className="font-semibold text-gray-900">객관적 비교</span></span>
+              </li>
+              <li className="flex items-center text-sm md:text-base lg:text-lg text-gray-700">
+                <span className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs mr-2 md:mr-3 flex-shrink-0">✓</span>
+                <span>불필요한 특약 <span className="font-semibold text-gray-900">정리 컨설팅</span></span>
+              </li>
             </ul>
-            
+
             {/* 이 달의 보험 이슈 */}
             <div className="w-full max-w-[360px] sm:max-w-sm md:max-w-md lg:max-w-md mx-auto lg:mx-0 bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-5 border border-orange-100 shadow-sm">
               <div className="flex items-center gap-2 mb-2 sm:mb-3">
@@ -447,7 +447,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               )}
             </div>
           </div>
-          
+
           {/* 오른쪽: 상담 신청 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full max-w-lg">
             <div id="calculator-box" className="w-full bg-white rounded-2xl shadow-xl p-5 sm:p-6 md:p-8 border border-gray-100">
@@ -530,7 +530,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="flex items-center gap-2 mb-2">
                   <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-blue-600 rounded border-gray-300 cursor-pointer focus:ring-blue-500" />
                   <span className="text-xs text-gray-600">
-                    개인정보 수집 및 이용에 동의합니다. 
+                    개인정보 수집 및 이용에 동의합니다.
                     <button type="button" onClick={onOpenPrivacy} className="text-blue-600 underline ml-1 hover:text-blue-800">자세히 보기</button>
                   </span>
                 </div>
@@ -560,7 +560,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         title={
           <span className="flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-blue-600">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
             </svg>
             상담 신청하기
           </span>
@@ -618,9 +618,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                       value={consultType}
                       onChange={(e) => setConsultType(e.target.value)}
                       className="font-bold text-blue-600 text-sm sm:text-base bg-transparent border-none focus:outline-none cursor-pointer text-right"
+                      style={{ textAlignLast: 'center' }}
                     >
                       {consultTypeOptions.map((opt) => (
-                        <option key={opt} value={opt}>{opt}</option>
+                        <option key={opt} value={opt} style={{ textAlign: 'center' }}>{opt}</option>
                       ))}
                     </select>
                   )}
@@ -636,9 +637,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                       value={consultTime}
                       onChange={(e) => setConsultTime(e.target.value)}
                       className="font-bold text-blue-600 text-sm sm:text-base bg-transparent border-none focus:outline-none cursor-pointer text-right"
+                      style={{ textAlignLast: 'center' }}
                     >
                       {consultTimeOptions.map((opt) => (
-                        <option key={opt} value={opt}>{opt}</option>
+                        <option key={opt} value={opt} style={{ textAlign: 'center' }}>{opt}</option>
                       ))}
                     </select>
                   )}
