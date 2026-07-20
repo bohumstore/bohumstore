@@ -146,7 +146,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       return false;
     }
 
-    // 보험연령 안내는 모달에서 처리 (이 상품: 15~70세)
+    // 보험연령 안내는 모달에서 처리 (이 상품: 31~50세)
     const formInsuranceAge = Number(getInsuranceAge(birth));
 
     if (!phone) {
@@ -221,7 +221,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const handleVerifyOTP = async () => {
     const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-    if (isNaN(ageForVerify) || ageForVerify < 0 || ageForVerify > 80) return;
+    if (isNaN(ageForVerify) || ageForVerify < 31 || ageForVerify > 50) return;
     if (otpCode.length !== 6) {
       alert("6자리 인증번호를 입력해주세요.");
       return;
@@ -296,7 +296,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const handleSendOTP = async () => {
     const ageForOtp = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-    if (isNaN(ageForOtp) || ageForOtp < 0 || ageForOtp > 80) return;
+    if (isNaN(ageForOtp) || ageForOtp < 31 || ageForOtp > 50) return;
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
@@ -452,10 +452,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   // 보험연령 계산
   const insuranceAge = getInsuranceAge(birth);
-  // 연령 적합성 (15~70세)
+  // 연령 적합성 (31~50세)
   const isAgeKnown = insuranceAge !== '';
   const numericInsuranceAge = isAgeKnown ? Number(insuranceAge) : NaN;
-  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 15 && numericInsuranceAge <= 70;
+  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 31 && numericInsuranceAge <= 50;
 
   // 총 납입액, 환급률, 확정이자, 해약환급금 계산
   let amount = 0;
@@ -484,65 +484,78 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           {/* 왼쪽: 간단한 슬로건 디자인 */}
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
             {/* iM라이프생명 로고 */}
-            <div className="mb-4 flex items-center gap-3">
-              <div className="bg-white px-3 py-2 rounded-lg shadow-md">
-                <img src="/im-logo.png" alt="iM라이프생명" className="h-6 w-auto" />
+            <div className="mb-3 sm:mb-4 flex items-center gap-3">
+              <div className="bg-white px-3 sm:px-4 py-2 rounded-lg shadow-md">
+                <img src="/im-logo.png" alt="iM라이프생명" className="h-5 sm:h-6 md:h-7 w-auto" />
               </div>
-              <span className="text-white text-base font-bold">iM라이프생명</span>
+              <span className="text-white text-sm sm:text-base md:text-lg font-bold" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>iM라이프생명</span>
             </div>
 
             {/* 메인 슬로건 */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 leading-tight">
               iM 마스터PRO<br />
               변액연금보험 무배당 2606
             </h1>
 
             {/* 간단한 특징 설명 */}
-            <ul className="mb-6 space-y-2">
-              <li className="flex items-center text-base text-white justify-center md:justify-center lg:justify-start">
-                <span className="text-lg mr-2 text-yellow-300 flex-shrink-0">✓</span>
-                <span>펀드 성과 무관 <span className="font-bold text-yellow-300">최대 30년 연단리 7%</span> 보증</span>
+            <ul className="mb-4 sm:mb-5 md:mb-6 space-y-1.5 sm:space-y-2">
+              <li className="flex items-center text-sm sm:text-base md:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-base sm:text-lg md:text-xl mr-1.5 sm:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
+                <span>펀드 성과 무관 <span className="font-bold text-[#ffd700]">최대 30년 연단리 7%</span> 보증</span>
               </li>
-              <li className="flex items-center text-base text-white justify-center md:justify-center lg:justify-start">
-                <span className="text-lg mr-2 text-yellow-300 flex-shrink-0">✓</span>
-                <span>30년 이후에도 <span className="font-bold text-yellow-300">연단리 5%</span> 계속 보증</span>
+              <li className="flex items-center text-sm sm:text-base md:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-base sm:text-lg md:text-xl mr-1.5 sm:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
+                <span>30년 이후에도 <span className="font-bold text-[#a7f3d0]">연단리 5%</span> 계속 보증</span>
               </li>
-              <li className="flex items-center text-base text-white justify-center md:justify-center lg:justify-start">
-                <span className="text-lg mr-2 text-yellow-300 flex-shrink-0">✓</span>
-                <span><span className="font-bold text-yellow-300">평생연금 플러스</span> + <span className="font-bold text-yellow-300">장기유지보너스</span></span>
+              <li className="flex items-center text-sm sm:text-base md:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-base sm:text-lg md:text-xl mr-1.5 sm:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
+                <span><span className="font-bold text-[#fde047]">평생연금 플러스</span> + <span className="font-bold text-[#fde047]">장기유지보너스</span></span>
               </li>
-              <li className="flex items-center text-base text-white justify-center md:justify-center lg:justify-start">
-                <span className="text-lg mr-2 text-yellow-300 flex-shrink-0">✓</span>
-                <span>가입 <span className="font-bold text-yellow-300">31~50세</span> / 연금개시 <span className="font-bold text-yellow-300">51~80세</span></span>
+              <li className="flex items-center text-sm sm:text-base md:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-base sm:text-lg md:text-xl mr-1.5 sm:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
+                <span>가입 <span className="font-bold text-[#fbbf24]">31~50세</span> / 연금개시 <span className="font-bold text-[#fbbf24]">51~80세</span></span>
               </li>
             </ul>
 
             {/* 핵심 혜택 박스 */}
-            <div className="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl p-4 sm:p-6 md:p-7">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-5">
+            <div className="w-full max-w-2xl mx-auto bg-white rounded-xl sm:rounded-2xl shadow-md sm:shadow-lg p-4 sm:p-6 md:p-7 border border-gray-200">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4 mb-4 sm:mb-5">
                 {/* 7% */}
-                <div className="text-center bg-indigo-50 rounded-xl p-3 sm:p-4 border-2 border-indigo-200">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-indigo-700 mb-1 sm:mb-2" style={{ animation: 'jump-simple 1.2s ease-in-out infinite' }}>7%</div>
-                  <div className="text-[10px] sm:text-xs text-gray-700 font-medium leading-tight">연단리 보증<br />(최초 30년)</div>
+                <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 border-2 border-indigo-600 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex flex-col items-center gap-1.5 sm:gap-2">
+                    <div className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-indigo-600" style={{ animation: 'pulse-scale 1.5s ease-in-out infinite' }}>7<span className="text-xl sm:text-2xl md:text-3xl">%</span></div>
+                    <div className="h-px w-8 sm:w-10 bg-indigo-600"></div>
+                    <div className="text-[10px] sm:text-[11px] md:text-xs text-indigo-600 font-medium text-center leading-tight sm:leading-snug">연단리 보증<br />(최초 30년)</div>
+                  </div>
                 </div>
                 {/* 5% */}
-                <div className="text-center bg-indigo-50 rounded-xl p-3 sm:p-4 border-2 border-indigo-200">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-indigo-700 mb-1 sm:mb-2">5%</div>
-                  <div className="text-[10px] sm:text-xs text-gray-700 font-medium leading-tight">연단리 보증<br />(30년 이후)</div>
+                <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 border-2 border-gray-400 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex flex-col items-center gap-1.5 sm:gap-2">
+                    <div className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-600">5<span className="text-xl sm:text-2xl md:text-3xl">%</span></div>
+                    <div className="h-px w-8 sm:w-10 bg-gray-500"></div>
+                    <div className="text-[10px] sm:text-[11px] md:text-xs text-gray-600 font-medium text-center leading-tight sm:leading-snug">연단리 보증<br />(30년 이후)</div>
+                  </div>
                 </div>
                 {/* 5% 플러스 */}
-                <div className="text-center bg-indigo-50 rounded-xl p-3 sm:p-4 border-2 border-indigo-200">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-indigo-700 mb-1 sm:mb-2">5%</div>
-                  <div className="text-[10px] sm:text-xs text-gray-700 font-medium leading-tight">평생연금<br />플러스</div>
+                <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 border-2 border-gray-400 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex flex-col items-center gap-1.5 sm:gap-2">
+                    <div className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-600">5<span className="text-xl sm:text-2xl md:text-3xl">%</span></div>
+                    <div className="h-px w-8 sm:w-10 bg-gray-500"></div>
+                    <div className="text-[10px] sm:text-[11px] md:text-xs text-gray-600 font-medium text-center leading-tight sm:leading-snug">평생연금<br />플러스</div>
+                  </div>
                 </div>
                 {/* 1% */}
-                <div className="text-center bg-indigo-50 rounded-xl p-3 sm:p-4 border-2 border-indigo-200">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-indigo-700 mb-1 sm:mb-2">1%</div>
-                  <div className="text-[10px] sm:text-xs text-gray-700 font-medium leading-tight">장기유지<br />보너스</div>
+                <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 border-2 border-gray-400 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex flex-col items-center gap-1.5 sm:gap-2">
+                    <div className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-600">1<span className="text-xl sm:text-2xl md:text-3xl">%</span></div>
+                    <div className="h-px w-8 sm:w-10 bg-gray-500"></div>
+                    <div className="text-[10px] sm:text-[11px] md:text-xs text-gray-600 font-medium text-center leading-tight sm:leading-snug">장기유지<br />보너스</div>
+                  </div>
                 </div>
               </div>
-              <div className="text-center text-[10px] sm:text-xs text-red-700 bg-red-50 rounded-xl py-2 sm:py-3 px-3 sm:px-4 border border-red-200 font-medium">
-                이 상품은 실적배당형 상품으로 운용결과에 따라 납입원금의 손실이 발생할 수 있으며, 그 손실은 가입자에게 귀속됩니다.
+              <div className="text-center text-[10px] sm:text-[11px] md:text-xs text-red-700 bg-red-50/80 rounded-lg py-2.5 sm:py-3 px-3 sm:px-4 border border-red-200/50 font-medium leading-relaxed">
+                이 상품은 실적배당형 상품으로 운용결과에 따라 납입원금의 손실이 발생할 수 있으며,<br className="hidden sm:inline" />
+                그 손실은 가입자에게 귀속됩니다.
               </div>
             </div>
 
@@ -552,65 +565,73 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 0%, 100% { transform: translateY(0) scale(1); }
                 50% { transform: translateY(-8px) scale(1.05); }
               }
+              @keyframes pulse-scale {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.15); }
+              }
+              @keyframes pulse-glow {
+                0%, 100% { opacity: 0.3; }
+                50% { opacity: 0.6; }
+              }
             `}</style>
           </div>
           {/* 오른쪽: 환급금 확인 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
             <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-5 sm:p-6 md:p-7 relative flex flex-col">
-              <div className="mb-5 sm:mb-6">
+              <div className="mb-4 sm:mb-5 md:mb-6">
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-indigo-700 rounded-lg flex items-center justify-center">
-                    <CalculatorIcon className="w-4 h-4 text-white" />
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-indigo-700 rounded-lg flex items-center justify-center">
+                    <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">해약환급금 계산하기</h3>
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">해약환급금 계산하기</h3>
                 </div>
-                <p className="text-gray-700 text-xs sm:text-sm ml-10">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
+                <p className="text-gray-700 text-xs sm:text-sm ml-9 sm:ml-10">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
               </div>
               <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 성별/이름 */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">성별 <span className="text-red-500">*</span></label>
-                    <div className="flex gap-2">
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-indigo-500 bg-indigo-50 text-indigo-700' : 'border-gray-200 hover:border-gray-300'}`}>
+                    <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5">성별 <span className="text-red-500">*</span></label>
+                    <div className="flex gap-1.5 sm:gap-2">
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-indigo-500 bg-indigo-50 text-indigo-700' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
-                        <span className="text-sm font-medium">남자</span>
+                        <span className="text-xs sm:text-sm font-medium">남자</span>
                       </label>
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-indigo-500 bg-indigo-50 text-indigo-700' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-indigo-500 bg-indigo-50 text-indigo-700' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="F" checked={gender === "F"} onChange={handleGenderChange} className="sr-only" />
-                        <span className="text-sm font-medium">여자</span>
+                        <span className="text-xs sm:text-sm font-medium">여자</span>
                       </label>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">이름 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" placeholder="홍길동" />
+                    <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5">이름 <span className="text-red-500">*</span></label>
+                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" placeholder="홍길동" />
                   </div>
                 </div>
 
                 {/* 생년월일/연락처 */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">생년월일 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" placeholder="19880818" maxLength={8} />
+                    <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5">생년월일 <span className="text-red-500">*</span></label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" placeholder="19880818" maxLength={8} />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">연락처 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" placeholder="01012345678" />
+                    <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5">연락처 <span className="text-red-500">*</span></label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" placeholder="01012345678" />
                   </div>
                 </div>
 
                 {/* 납입기간 */}
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1.5">납입기간</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {['10년', '15년', '20년'].map((period) => (
+                  <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5">납입기간</label>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2">
+                    {['10년', '12년', '15년', '20년'].map((period) => (
                       <label key={period} className="relative cursor-pointer">
                         <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
                         {period === '10년' && (
-                          <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-700 text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
+                          <span className="absolute -top-2.5 sm:-top-3 left-1/2 -translate-x-1/2 bg-indigo-700 text-white text-[10px] sm:text-xs font-bold px-2 sm:px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
                         )}
-                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-indigo-500 bg-indigo-50 text-indigo-700 font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-indigo-500 bg-indigo-50 text-indigo-700 font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
                           {period}
                         </div>
                       </label>
@@ -620,12 +641,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 월 납입금액 */}
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1.5">월 납입금액</label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5">월 납입금액</label>
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                     {['30만원', '50만원', '70만원', '100만원', '130만원', '150만원'].map((amount) => (
                       <label key={amount} className="cursor-pointer">
                         <input type="radio" name="paymentAmount" value={amount} checked={paymentAmount === amount} onChange={handlePaymentAmountChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-indigo-500 bg-indigo-50 text-indigo-700 font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-indigo-500 bg-indigo-50 text-indigo-700 font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
                           {amount}
                         </div>
                       </label>
@@ -644,19 +665,19 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 버튼들 */}
                 <div className="flex flex-col gap-2 mt-1">
-                  <button type="submit" className="w-full bg-indigo-700 text-white font-bold rounded-xl py-3.5 text-base hover:bg-indigo-800 transition flex items-center justify-center gap-2 shadow-lg cursor-pointer">
-                    <CalculatorIcon className="w-5 h-5" />
+                  <button type="submit" className="w-full bg-indigo-700 text-white font-bold rounded-xl py-3 sm:py-3.5 text-sm sm:text-base hover:bg-indigo-800 transition flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+                    <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                     해약환급금 확인하기
                   </button>
-                  <div className="flex gap-2">
-                    <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-3 text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
-                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-4 h-4'>
+                  <div className="flex gap-1.5 sm:gap-2">
+                    <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm flex items-center justify-center gap-1 sm:gap-1.5 hover:opacity-95 transition cursor-pointer">
+                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-3.5 h-3.5 sm:w-4 sm:h-4'>
                         <path strokeLinecap='round' strokeLinejoin='round' d='M2.25 12a9.75 9.75 0 1 1 19.5 0v3.375a2.625 2.625 0 0 1-2.625 2.625h-1.125a.375.375 0 0 1-.375-.375V15a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 0 .75-.75V12a8.25 8.25 0 1 0-16.5 0v1.5a.75.75 0 0 0 .75.75h.75A.75.75 0 0 1 6 15v2.625a.375.375 0 0 1-.375.375H4.5A2.625 2.625 0 0 1 1.875 15.375V12Z' />
                       </svg>
                       상담신청
                     </button>
-                    <a href="https://pf.kakao.com/_lrubxb/chat" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-3 text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
-                      <ChatBubbleLeftRightIcon className="w-4 h-4" />
+                    <a href="https://pf.kakao.com/_lrubxb/chat" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm flex items-center justify-center gap-1 sm:gap-1.5 hover:opacity-95 transition cursor-pointer">
+                      <ChatBubbleLeftRightIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       채팅상담
                     </a>
                   </div>
@@ -688,7 +709,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         <div className="space-y-2 sm:space-y-3">
           {isAgeKnown && !isAgeEligible && (
             <div className="bg-red-50 border border-red-200 text-red-700 rounded p-1.5 sm:p-2 text-xs sm:text-sm">
-              이 상품은 15세~70세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
+              이 상품은 31세~50세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
               계산 기능은 이용하실 수 없습니다.
             </div>
           )}

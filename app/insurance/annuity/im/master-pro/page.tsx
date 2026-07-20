@@ -77,12 +77,12 @@ export default function IMMasterProPage() {
       >
         <Slogan onOpenPrivacy={() => setShowPrivacy(true)} onModalStateChange={setIsModalOpen} />
         {/* 상품 상세 영역 (탭/강조타이틀/설명/특약/일러스트/하단버튼) */}
-        <section className="w-full bg-white py-6 sm:py-8 lg:py-10">
+        <section className="w-full bg-white py-4 sm:py-6 md:py-8 lg:py-10">
           <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
             <Tabs tabs={tabs} />
             {/* 하단 버튼 */}
-            <div className="flex justify-center mt-6">
-              <button type="button" onClick={() => setShowNotice(true)} className="border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
+            <div className="flex justify-center mt-4 sm:mt-5 md:mt-6">
+              <button type="button" onClick={() => setShowNotice(true)} className="border border-[#e0e0e0] rounded-md px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
                 가입시 알아두실 사항
               </button>
             </div>
@@ -90,28 +90,28 @@ export default function IMMasterProPage() {
         </section>
         {/* 유의사항 박스 */}
         <div className="w-full flex justify-center">
-          <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mb-2 md:mb-4 lg:mb-6 mt-6 md:mt-8 lg:mt-10 px-6 py-0 text-xs md:text-sm text-gray-800">
-            <div className="mb-1 font-bold">[ 유의사항 ]</div>
-            <div>- 위 내용은 상품의 내용을 요약한 것이므로 계약체결전 반드시 해당 보험약관 및 상품설명서를 확인하시기 바랍니다.</div>
-            <div>- 본 상품은 투자형 보험상품으로 은행의 예금, 적금과는 다른 상품입니다.</div>
-            <div className="text-red-600 font-medium">- 본 상품은 실적배당형 상품으로 운용결과에 따라 납입원금의 손실이 발생할 수 있으며, 그 손실은 가입자에게 귀속됩니다.</div>
+          <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mb-2 md:mb-4 lg:mb-6 mt-4 sm:mt-6 md:mt-8 lg:mt-10 px-4 sm:px-6 py-0 text-[11px] sm:text-xs md:text-sm text-gray-800 leading-relaxed">
+            <div className="mb-1.5 sm:mb-2 font-bold text-xs sm:text-sm">[ 유의사항 ]</div>
+            <div className="mb-1">- 위 내용은 상품의 내용을 요약한 것이므로 계약체결전 반드시 해당 보험약관 및 상품설명서를 확인하시기 바랍니다.</div>
+            <div className="mb-1">- 본 상품은 투자형 보험상품으로 은행의 예금, 적금과는 다른 상품입니다.</div>
+            <div className="text-red-600 font-medium mb-1">- 본 상품은 실적배당형 상품으로 운용결과에 따라 납입원금의 손실이 발생할 수 있으며, 그 손실은 가입자에게 귀속됩니다.</div>
             <div className="text-orange-600 font-medium">- 중도해지시 해약환급금에 대한 최저보증이 없으므로 원금손실이 발생할 수 있으며, 그 손실은 모두 계약자에게 귀속됩니다.</div>
           </div>
         </div>
         {/* 구분선 */}
         <div className="w-full flex justify-center">
-          <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl px-6">
-            <hr className="border-gray-300 my-4" />
+          <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl px-4 sm:px-6">
+            <hr className="border-gray-300 my-3 sm:my-4" />
           </div>
         </div>
         {/* 필수안내사항 박스 */}
         <div className="w-full flex justify-center">
-          <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mb-2 md:mb-4 lg:mb-6 mt-6 md:mt-8 lg:mt-10 px-6 py-0 text-xs md:text-sm text-gray-800">
-            <div className="mb-1 font-bold">[ 필수안내사항 ]</div>
-            <div>※ 본 광고는 심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.</div>
-            <div className="text-red-500">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
-            <div className="text-red-500">① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.</div>
-            <div className="text-red-500">② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</div>
+          <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mb-2 md:mb-4 lg:mb-6 mt-4 sm:mt-6 md:mt-8 lg:mt-10 px-4 sm:px-6 py-0 text-[11px] sm:text-xs md:text-sm text-gray-800 leading-relaxed">
+            <div className="mb-1.5 sm:mb-2 font-bold text-xs sm:text-sm">[ 필수안내사항 ]</div>
+            <div className="mb-1">※ 본 광고는 심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.</div>
+            <div className="text-red-500 mb-1">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
+            <div className="text-red-500 mb-1">① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.</div>
+            <div className="text-red-500 mb-1">② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</div>
             <div>※ 준법감시인(제0000-000호) (2026.00.00~2027.00.00)</div>
           </div>
         </div>
