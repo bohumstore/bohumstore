@@ -17,34 +17,20 @@ export default function Surrender() {
           <table className="min-w-[700px] w-full text-center text-[10px] md:text-sm">
             <thead>
               <tr className="bg-[#1e3a8a] text-white align-middle">
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={3}>경과<br className="md:hidden" />기간</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={3}>납입<br className="md:hidden" />보험료(A)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={3}>특별계정<br className="md:hidden" />투입금액<br className="md:hidden" />누계</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={4}>투자수익률 -1.00% 가정시<br />(순수익률 -4.70%)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={4}>투자수익률 2.50% 가정시<br />(순수익률 -1.20%)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={4}>투자수익률 3.75% 가정시<br />(순수익률 0.05%)</th>
-              </tr>
-              <tr className="bg-[#1e3a8a] text-white">
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>해약환급금(B)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>계약자적립액(C)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>해약환급금(B)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>계약자적립액(C)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>해약환급금(B)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>계약자적립액(C)</th>
+                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={2}>경과<br className="md:hidden" />기간</th>
+                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={2}>납입<br className="md:hidden" />보험료(A)</th>
+                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={2}>특별계정<br className="md:hidden" />투입금액<br className="md:hidden" />누계</th>
+                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>투자수익률 -1.00% 가정시<br />(순수익률 -4.70%)</th>
+                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>투자수익률 2.50% 가정시<br />(순수익률 -1.20%)</th>
+                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>투자수익률 3.75% 가정시<br />(순수익률 0.05%)</th>
               </tr>
               <tr className="bg-[#1e3a8a] text-white">
                 <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">금액</th>
                 <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">환급률<br />(B/A)</th>
                 <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">금액</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">적립률<br />(C/A)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">금액</th>
                 <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">환급률<br />(B/A)</th>
                 <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">금액</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">적립률<br />(C/A)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">금액</th>
                 <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">환급률<br />(B/A)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">금액</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">적립률<br />(C/A)</th>
               </tr>
             </thead>
             <tbody>
@@ -54,16 +40,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">823</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">127</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">14.1%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">819</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.0%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">132</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">14.7%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">824</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.6%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">133</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">14.8%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">826</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6개월</td>
@@ -71,16 +51,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,647</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">963</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">53.5%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,630</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.6%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">979</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">54.4%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,646</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.4%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">985</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">54.7%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,652</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9개월</td>
@@ -88,16 +62,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,471</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,789</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">66.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,430</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.0%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,824</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">67.6%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,466</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.3%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,837</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">68.0%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,478</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1년</td>
@@ -105,16 +73,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3,294</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,606</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">72.4%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3,222</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">89.5%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,667</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">74.1%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3,283</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.2%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,689</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">74.7%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3,304</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2년</td>
@@ -122,16 +84,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6,589</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">5,783</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">80.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6,296</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87.4%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6,012</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">83.5%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6,525</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.6%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6,095</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">84.7%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6,608</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3년</td>
@@ -139,16 +95,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9,884</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">8,818</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">81.6%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9,228</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">85.4%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9,318</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">86.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9,728</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.1%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9,501</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">88.0%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9,911</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">4년</td>
@@ -156,16 +106,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">13,179</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">11,718</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">81.4%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">12,026</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">83.5%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">12,584</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87.4%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">12,892</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">89.5%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">12,906</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">89.6%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">13,214</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">5년</td>
@@ -173,16 +117,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">16,474</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">14,489</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">80.5%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">14,694</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">81.6%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">15,811</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87.8%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">16,017</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">89.0%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">16,310</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.6%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">16,515</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6년</td>
@@ -190,16 +128,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,769</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">17,138</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">79.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">17,240</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">79.8%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,000</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">88.0%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,103</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">88.4%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,713</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,816</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.7%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">7년</td>
@@ -207,16 +139,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">23,064</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,429</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">77.1%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,658</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">78.0%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">22,151</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87.9%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">22,380</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">88.8%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">23,079</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.6%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">23,308</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">92.5%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">8년</td>
@@ -224,16 +150,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">26,359</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">21,596</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">75.0%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">21,952</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">76.2%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">25,265</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87.7%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">25,621</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">89.0%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">26,408</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.7%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">26,764</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">92.9%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9년</td>
@@ -241,16 +161,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">29,654</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">23,642</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">73.0%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">24,120</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">74.4%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">28,343</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87.5%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">28,821</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">89.0%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">29,700</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.7%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">30,178</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">93.1%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">10년</td>
@@ -258,16 +172,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,949</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">25,570</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">71.0%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">26,170</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">72.7%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">31,385</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87.2%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">31,985</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">88.8%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,955</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.5%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">33,555</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">93.2%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">15년</td>
@@ -275,14 +183,8 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,949</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">27,070</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">75.2%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">27,070</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">75.2%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">35,570</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">98.8%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">35,570</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">98.8%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">39,570</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">109.9%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">39,570</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">109.9%</td>
               </tr>
@@ -292,12 +194,6 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,949</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">27,070</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">75.2%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">27,070</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">75.2%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,570</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.5%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,570</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.5%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,570</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.5%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,570</td>
@@ -317,34 +213,20 @@ export default function Surrender() {
           <table className="min-w-[700px] w-full text-center text-[10px] md:text-sm">
             <thead>
               <tr className="bg-[#1e3a8a] text-white align-middle">
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={3}>경과<br className="md:hidden" />기간</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={3}>납입<br className="md:hidden" />보험료(A)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={3}>특별계정<br className="md:hidden" />투입금액<br className="md:hidden" />누계</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={4}>투자수익률 -1.00% 가정시<br />(순수익률 -4.70%)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={4}>투자수익률 2.50% 가정시<br />(순수익률 -1.20%)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={4}>투자수익률 3.75% 가정시<br />(순수익률 0.05%)</th>
-              </tr>
-              <tr className="bg-[#1e3a8a] text-white">
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>해약환급금(B)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>계약자적립액(C)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>해약환급금(B)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>계약자적립액(C)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>해약환급금(B)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>계약자적립액(C)</th>
+                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={2}>경과<br className="md:hidden" />기간</th>
+                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={2}>납입<br className="md:hidden" />보험료(A)</th>
+                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" rowSpan={2}>특별계정<br className="md:hidden" />투입금액<br className="md:hidden" />누계</th>
+                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>투자수익률 -1.00% 가정시<br />(순수익률 -4.70%)</th>
+                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>투자수익률 2.50% 가정시<br />(순수익률 -1.20%)</th>
+                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>투자수익률 3.75% 가정시<br />(순수익률 0.05%)</th>
               </tr>
               <tr className="bg-[#1e3a8a] text-white">
                 <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">금액</th>
                 <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">환급률<br />(B/A)</th>
                 <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">금액</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">적립률<br />(C/A)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">금액</th>
                 <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">환급률<br />(B/A)</th>
                 <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">금액</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">적립률<br />(C/A)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">금액</th>
                 <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">환급률<br />(B/A)</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">금액</th>
-                <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">적립률<br />(C/A)</th>
               </tr>
             </thead>
             <tbody>
@@ -354,16 +236,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">823</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">127</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">14.1%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">819</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.0%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">132</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">14.7%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">824</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.6%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">133</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">14.8%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">826</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6개월</td>
@@ -371,16 +247,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,647</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">963</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">53.5%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,630</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.6%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">979</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">54.4%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,646</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.4%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">985</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">54.7%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,652</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9개월</td>
@@ -388,16 +258,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,471</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,789</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">66.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,430</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.0%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,824</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">67.6%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,466</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.3%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1,837</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">68.0%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,478</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">1년</td>
@@ -405,16 +269,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3,295</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,606</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">72.4%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3,222</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">89.5%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,667</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">74.1%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3,283</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.2%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2,689</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">74.7%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3,304</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2년</td>
@@ -422,16 +280,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6,590</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">5,783</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">80.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6,296</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87.4%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6,013</td>
+                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6,012</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">83.5%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6,526</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.6%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6,095</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">84.7%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6,608</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">3년</td>
@@ -439,16 +291,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9,885</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">8,818</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">81.6%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9,228</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">85.4%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9,318</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">86.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9,729</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.1%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9,501</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">88.0%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">9,912</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">4년</td>
@@ -456,16 +302,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">13,180</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">11,718</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">81.4%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">12,026</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">83.5%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">12,584</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87.4%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">12,892</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">89.5%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">12,906</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">89.6%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">13,214</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">5년</td>
@@ -473,16 +313,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">16,475</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">14,490</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">80.5%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">14,695</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">81.6%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">15,812</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87.8%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">16,017</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">89.0%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">16,310</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.6%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">16,516</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.8%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">6년</td>
@@ -490,16 +324,10 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,770</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">17,138</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">79.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">17,241</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">79.8%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,001</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">88.0%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,103</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">88.4%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,714</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,816</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.7%</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">7년</td>
@@ -507,14 +335,8 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">23,065</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,670</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">78.1%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">19,670</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">78.1%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">22,152</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87.9%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">22,152</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87.9%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">23,116</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.7%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">23,116</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.7%</td>
               </tr>
@@ -524,14 +346,8 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">26,360</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">21,987</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">76.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">21,987</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">76.3%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">25,163</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87.4%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">25,163</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">87.4%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">26,416</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.7%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">26,416</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.7%</td>
               </tr>
@@ -541,14 +357,8 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">29,655</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">24,197</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">74.7%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">24,197</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">74.7%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">28,137</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">86.8%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">28,137</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">86.8%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">29,714</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.7%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">29,714</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.7%</td>
               </tr>
@@ -558,14 +368,8 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,950</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">26,306</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">73.1%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">26,306</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">73.1%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">31,074</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">86.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">31,074</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">86.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">33,011</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.7%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">33,011</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.7%</td>
               </tr>
@@ -575,14 +379,8 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,770</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">20,625</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">57.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">20,625</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">57.3%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">29,036</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">80.7%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">29,036</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">80.7%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,791</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.1%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,791</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">91.1%</td>
               </tr>
@@ -592,14 +390,8 @@ export default function Surrender() {
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,589</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">16,136</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">44.8%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">16,136</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">44.8%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">27,120</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">75.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">27,120</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">75.3%</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,570</td>
-                <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.5%</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">32,570</td>
                 <td className="border border-gray-300 p-0.5 text-[10px] md:text-sm">90.5%</td>
               </tr>

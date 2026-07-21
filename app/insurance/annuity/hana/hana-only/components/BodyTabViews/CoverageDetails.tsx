@@ -139,6 +139,13 @@ export default function CoverageDetails() {
             <p className="text-sm text-gray-700">기준 기본보험료 및 기준 추가납입보험료를 납입시점(기본보험료를 선납한 경우에는 납입시점이 아닌 해당회차 월계약해당일)부터 보증이율을 적용하여 단리로 계산한 금액을 말합니다.</p>
           </div>
 
+          <div className="p-3 rounded border border-gray-200">
+            <div className="text-sm text-gray-700 space-y-1">
+              <div>※ 최저연금지급액 보증비용: 매년 특별계정 계약자적립액의 3.50%(가입시부터 종신까지 차감)</div>
+              <div className="text-red-600">※ 중도해지 시 또는 연금개시 후 피보험자 사망 시 최저연금지급액은 보증하지 않습니다.</div>
+            </div>
+          </div>
+
           <div>
             <h4 className="font-semibold text-base mb-2">보증이율</h4>
             <p className="text-sm text-gray-700 mb-3">최저연금기준금액을 산출하기 위하여 적용하는 이율로 연금개시전 보험기간에 따라 연단리 5%~7% 적용</p>
@@ -175,7 +182,6 @@ export default function CoverageDetails() {
                   <thead>
                     <tr className="bg-gray-200">
                       <th className="border border-gray-300 p-2 text-center" rowSpan={2}>연금개시전 보험기간</th>
-                      <th className="border border-gray-300 p-2 text-center">15년</th>
                       <th className="border border-gray-300 p-2 text-center">20년</th>
                       <th className="border border-gray-300 p-2 text-center">25년</th>
                     </tr>
@@ -183,7 +189,6 @@ export default function CoverageDetails() {
                   <tbody>
                     <tr>
                       <td className="border border-gray-300 p-2 text-center font-semibold">적립형</td>
-                      <td className="border border-gray-300 p-2 text-center">3.94%</td>
                       <td className="border border-gray-300 p-2 text-center">4.17%</td>
                       <td className="border border-gray-300 p-2 text-center">4.28%</td>
                     </tr>
@@ -205,15 +210,16 @@ export default function CoverageDetails() {
             <div>
               <h4 className="font-semibold text-base mb-2">최저사망적립액</h4>
               <p className="text-sm text-gray-700 mb-2">피보험자가 사망하는 경우 특별계정의 운용실적과 관계없이 지급되는 최소금액을 말합니다.</p>
-              <div className="pl-4 text-sm text-gray-700">
+              <div className="pl-4 text-sm text-gray-700 space-y-1">
+                <p>- 연금개시전 보험기간: 기준 기본보험료 및 기준 추가납입보험료를 납입시점(기본보험료를 선납한 경우에는 납입시점이 아닌 해당회차 월계약해당일)부터 4%를 적용하여 사망시점까지 단리로 계산한 금액을 말합니다.</p>
                 <p>- 연금개시후 보험기간: 연금개시시점의 연금기준금액에서 사망 시점까지 지급한 연금액의 합계를 차감한 금액을 말하며, 이 금액이 '0'보다 작은 경우 최저사망적립액은 '0'으로 합니다.</p>
               </div>
             </div>
 
             <div className="p-3 rounded border border-gray-200">
               <div className="text-sm text-gray-700 space-y-1">
-                <div>※ 최저사망적립액 보증비용: 매년 특별계정 계약자적립액의 0.10% (가입시부터 종신까지 차감)</div>
-                <div className="text-red-600">※ 중도해지시 최저사망적립액은 보증하지 않습니다.</div>
+                <div>※ 최저사망적립액 보증비용: 매년 특별계정 계약자적립액의 0.20%(가입시부터 종신까지 차감)</div>
+                <div className="text-red-600">※ 중도해지 시 최저사망적립액은 보증하지 않습니다.</div>
               </div>
             </div>
           </div>

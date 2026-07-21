@@ -899,14 +899,30 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             </ul>
 
             {/* 간단한 보증 내용 박스 */}
-            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mt-4 sm:mt-5 md:mt-6 mb-3 sm:mb-4 p-4 sm:p-5 md:p-6 lg:p-4 px-4 sm:px-5 md:px-6 lg:px-4 pt-5 sm:pt-6 md:pt-7 lg:pt-6 pb-5 sm:pb-6 md:pb-7 lg:pb-6">
+            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mt-4 sm:mt-5 md:mt-6 mb-3 sm:mb-4 p-4 sm:p-5 md:p-6 lg:p-4 px-4 sm:px-5 md:px-6 lg:px-4 pt-5 sm:pt-6 md:pt-7 lg:pt-6 pb-5 sm:pb-6 md:pb-7 lg:pb-6 relative">
+              {/* 보증비용 안내 - 우측 상단 */}
+              <button
+                onClick={() => {
+                  const modal = document.getElementById('guarantee-cost-modal');
+                  if (modal) {
+                    modal.classList.remove('hidden');
+                  }
+                }}
+                className="absolute top-3 sm:top-4 right-3 sm:right-4 flex items-center gap-1 text-gray-500 hover:text-blue-600 transition-colors group"
+                aria-label="보증비용 안내"
+              >
+                <span className="text-[10px] sm:text-xs font-medium">보증비용</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 sm:w-[18px] sm:h-[18px]">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                </svg>
+              </button>
               <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 lg:gap-4 mb-2 sm:mb-3">
                 {/* 1. 보증이율 */}
-                <div className="text-center p-3 sm:p-4 md:p-5 bg-white rounded-xl shadow-sm border-2 border-gray-100 hover:border-emerald-200 transition-all duration-300 flex flex-col justify-between min-h-[140px] sm:min-h-[160px] md:min-h-[180px]">
-                  <div className="mb-2">
-                    <div className="inline-block bg-emerald-50 text-emerald-700 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-lg mb-2">보증이율</div>
+                <div className="text-center p-3 sm:p-4 md:p-5 bg-white rounded-xl shadow-sm border-2 border-gray-100 hover:border-emerald-200 transition-all duration-300 flex flex-col justify-between min-h-[120px] sm:min-h-[130px] md:min-h-[140px]">
+                  <div className="mb-1.5">
+                    <div className="inline-block bg-emerald-50 text-emerald-700 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-lg mb-1.5">보증이율</div>
                   </div>
-                  <div className="flex items-center justify-center mb-3">
+                  <div className="flex items-center justify-center mb-1.5">
                     <div className="text-xs sm:text-sm text-gray-600 mr-2 font-semibold leading-tight">
                       최대<br />연단리
                     </div>
@@ -918,11 +934,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 </div>
 
                 {/* 2. 최저보증 */}
-                <div className="text-center p-3 sm:p-4 md:p-5 bg-white rounded-xl shadow-sm border-2 border-gray-100 hover:border-blue-200 transition-all duration-300 flex flex-col justify-between min-h-[140px] sm:min-h-[160px] md:min-h-[180px]">
-                  <div className="mb-2">
-                    <div className="inline-block bg-blue-50 text-blue-700 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-lg mb-2">최저보증</div>
+                <div className="text-center p-3 sm:p-4 md:p-5 bg-white rounded-xl shadow-sm border-2 border-gray-100 hover:border-blue-200 transition-all duration-300 flex flex-col justify-between min-h-[120px] sm:min-h-[130px] md:min-h-[140px]">
+                  <div className="mb-1.5">
+                    <div className="inline-block bg-blue-50 text-blue-700 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-lg mb-1.5">최저보증</div>
                   </div>
-                  <div className="flex-1 flex items-center justify-center mb-3">
+                  <div className="flex-1 flex items-center justify-center mb-1.5">
                     <div className="text-sm sm:text-base text-gray-700 leading-tight font-semibold">
                       최저사망적립액<br />최저연금지급액
                     </div>
@@ -933,8 +949,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 </div>
 
               </div>
-              <div className="text-xs text-gray-700 text-center mt-4">
-                <div className="font-semibold mb-2">보증이율(연단리) 예시표</div>
+              <div className="text-xs text-gray-700 text-center mt-3">
+                <div className="font-semibold mb-1.5">보증이율(연단리) 예시표</div>
                 <table className="w-full text-[10px] sm:text-xs">
                   <thead>
                     <tr className="bg-gray-100">
@@ -953,44 +969,73 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </tr>
                   </tbody>
                 </table>
-                <p className="mt-2 text-[9px] sm:text-[10px] text-gray-600">※ 연복리 환산시 보증이율은 연단리 보증이율과 다르며, 가입조건별 상이합니다.</p>
+                <p className="mt-1.5 text-[9px] sm:text-[10px] text-gray-600">※ 연복리 환산시 보증이율은 연단리 보증이율과 다르며, 가입조건별 상이합니다.</p>
               </div>
-
-              {/* CSS 애니메이션 스타일 */}
-              <style jsx>{`
-                @keyframes jump-simple {
-                  0%, 100% { transform: translateY(0) scale(1); }
-                  50% { transform: translateY(-8px) scale(1.05); }
-                }
-                
-                @keyframes shine1 {
-                  0% { transform: translateX(-100%) skewX(-12deg); }
-                  25% { transform: translateX(100%) skewX(-12deg); }
-                  100% { transform: translateX(100%) skewX(-12deg); }
-                }
-                
-                @keyframes shine2 {
-                  0% { transform: translateX(-100%) skewX(-12deg); }
-                  25% { transform: translateX(100%) skewX(-12deg); }
-                  100% { transform: translateX(100%) skewX(-12deg); }
-                }
-                
-                @keyframes shine3 {
-                  0% { transform: translateX(-100%) skewX(-12deg); }
-                  25% { transform: translateX(100%) skewX(-12deg); }
-                  100% { transform: translateX(100%) skewX(-12deg); }
-                }
-                
-                /* 1→2→3 순서로 이어지는 효과 */
-                .shine2 {
-                  animation-delay: 1.33s;
-                }
-                
-                .shine3 {
-                  animation-delay: 2.66s;
-                }
-              `}</style>
             </div>
+
+            {/* 보증비용 안내 모달 */}
+            <div id="guarantee-cost-modal" className="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                const modal = document.getElementById('guarantee-cost-modal');
+                if (modal) modal.classList.add('hidden');
+              }
+            }}>
+              <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full p-5 sm:p-6 relative">
+                <button
+                  onClick={() => {
+                    const modal = document.getElementById('guarantee-cost-modal');
+                    if (modal) modal.classList.add('hidden');
+                  }}
+                  className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+                <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4 text-center">보증비용 안내</h3>
+                <div className="text-xs sm:text-sm text-gray-700 space-y-2.5 leading-relaxed text-left">
+                  <div>※ 최저연금지급액 보증비용: 매년 특별계정 계약자적립액의 3.50%(가입시부터 종신까지 차감)</div>
+                  <div>※ 중도해지 시 또는 연금개시 후 피보험자 사망 시 최저연금지급액은 보증하지 않습니다.</div>
+                  <div>※ 최저사망적립액 보증비용: 매년 특별계정 계약자적립액의 0.20%(가입시부터 종신까지 차감)</div>
+                  <div>※ 중도해지 시 최저사망적립액은 보증하지 않습니다.</div>
+                </div>
+              </div>
+            </div>
+
+            {/* CSS 애니메이션 스타일 */}
+            <style jsx>{`
+              @keyframes jump-simple {
+                0%, 100% { transform: translateY(0) scale(1); }
+                50% { transform: translateY(-8px) scale(1.05); }
+              }
+              
+              @keyframes shine1 {
+                0% { transform: translateX(-100%) skewX(-12deg); }
+                25% { transform: translateX(100%) skewX(-12deg); }
+                100% { transform: translateX(100%) skewX(-12deg); }
+              }
+              
+              @keyframes shine2 {
+                0% { transform: translateX(-100%) skewX(-12deg); }
+                25% { transform: translateX(100%) skewX(-12deg); }
+                100% { transform: translateX(100%) skewX(-12deg); }
+              }
+              
+              @keyframes shine3 {
+                0% { transform: translateX(-100%) skewX(-12deg); }
+                25% { transform: translateX(100%) skewX(-12deg); }
+                100% { transform: translateX(100%) skewX(-12deg); }
+              }
+              
+              /* 1→2→3 순서로 이어지는 효과 */
+              .shine2 {
+                animation-delay: 1.33s;
+              }
+              
+              .shine3 {
+                animation-delay: 2.66s;
+              }
+            `}</style>
           </div>
           {/* 오른쪽: 보험료 확인 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
