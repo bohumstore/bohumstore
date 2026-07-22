@@ -212,9 +212,49 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     }
   }
 
-  const handleInsuranceCostCalculate = (e: React.FormEvent) => {
+  const handleInsuranceCostCalculate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
+
+    // 엑셀 기반 연금액 계산 (서버 API) - 모달 열기 전에 먼저 조회
+    try {
+      let monthlyPayment = 0;
+      if (paymentAmount.includes('만원')) {
+        const num = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+        monthlyPayment = num * 10000;
+      } else {
+        monthlyPayment = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+      }
+      const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+      const resp = await fetch('/api/calculate-pension/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: name,
+          gender,
+          age: Number(insuranceAge),
+          paymentPeriod: years,
+          monthlyPayment,
+          productType: 'hana-only'
+        })
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data?.success && data?.data?.pensionStartAge) {
+          setExcelResult({
+            pensionStartAge: data.data.pensionStartAge || 0,
+            monthlyPension: data.data.monthlyPension || 0,
+            performancePension: data.data.performancePension || 0,
+            guaranteedAmount: data.data.guaranteedAmount || 0,
+            totalUntil100: data.data.totalUntil100 || 0,
+            notice: data.data.notice || ''
+          });
+        }
+      }
+    } catch (e) {
+      console.error('[HANA] 연금액 계산 실패:', e);
+    }
+
     setCounselType(1);
     setShowResultModal(true);
   }
@@ -265,7 +305,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             age: Number(insuranceAge),
             paymentPeriod: years,
             monthlyPayment,
-            productType: 'ibk-lifetime'
+            productType: 'hana-only'
           })
         });
         if (resp.ok) {
@@ -299,6 +339,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         mounthlyPremium: paymentAmount, // 실제 선택값
         paymentPeriod: paymentPeriod,   // 실제 선택값
         monthlyPension: currentExcel?.monthlyPension || 0,
+        yearlyPension: currentExcel?.monthlyPension ? currentExcel.monthlyPension * 12 : 0,
         performancePension: currentExcel?.performancePension || 0,
         guaranteedPension: currentExcel?.guaranteedAmount || 0,
         pensionStartAge: currentExcel?.pensionStartAge || getPensionStartAge(Number(insuranceAge), paymentPeriod),
@@ -551,6 +592,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         mounthlyPremium: paymentAmount || '',
         paymentPeriod: paymentPeriod || '',
         monthlyPension: excelResult?.monthlyPension || 0, // 월 연금액
+        yearlyPension: excelResult?.monthlyPension ? excelResult.monthlyPension * 12 : 0, // 연지급 연금액
         performancePension: excelResult?.performancePension || 0, // 실적배당 연금액
         guaranteedPension: excelResult?.guaranteedAmount || 0, // 20년 보증기간 총액
         pensionStartAge: excelResult?.pensionStartAge || getPensionStartAge(Number(insuranceAge), paymentPeriod), // 연금개시연령
@@ -558,7 +600,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         templateId: "UB_8715", // 고객용 상담신청 완료 전송용 템플릿
         adminTemplateId: "UA_8332" // 관리자용 상담신청 접수 전송용 템플릿
       };
-      console.log('[IBK][CONSULT] verifyOTP payload', payload);
+      console.log('[HANA][CONSULT] verifyOTP payload', payload);
 
       const res = await request.post("/api/verifyOTP", payload);
       if (res.data.success) {
@@ -627,7 +669,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             age: Number(insuranceAge),
             paymentPeriod: 10, // dummy
             monthlyPayment: 300000, // 적격성 모드에서는 30만원 시트를 기준으로 판정
-            productType: 'ibk-lifetime',
+            productType: 'hana-only',
             mode: 'eligibility'
           })
         });
@@ -731,7 +773,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             age,
             paymentPeriod: years,
             monthlyPayment,
-            productType: 'ibk-lifetime'
+            productType: 'hana-only'
           })
         });
         if (!resp.ok) return;
@@ -842,6 +884,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   // 연금액 계산
   const pensionAmounts = {
     monthly: excelResult?.monthlyPension || 0,
+    yearly: excelResult?.monthlyPension ? excelResult.monthlyPension * 12 : 0,
     performance: excelResult?.performancePension || 0,
     totalUntil100: excelResult?.totalUntil100 || 0
   };
@@ -865,7 +908,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <div className="bg-white/90 px-4 py-2 rounded-lg shadow-md backdrop-blur-sm">
                 <img src="/hana-logo.png" alt="하나생명" className="h-6 sm:h-8 md:h-10 lg:h-8 w-auto" />
               </div>
-              <span className="text-white text-sm sm:text-base md:text-lg font-bold" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>하나생명</span>
+
             </div>
 
             {/* 메인 슬로건 */}
@@ -1279,6 +1322,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
+                {/* 연지급 연금액 */}
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연지급 연금액</span>
+                    <span className="font-bold">
+                      <span className="text-[#8b5cf6]">{isVerified ? `약 ${pensionAmounts.yearly.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
+                      {isVerified && <span className="text-[#3a8094]"> 원</span>}
+                    </span>
+                  </div>
+                </div>
                 {/* 20년 보증기간 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
@@ -1367,6 +1420,15 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>월 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#3b82f6]">인증 후 확인가능</span>
+                    </span>
+                  </div>
+                </div>
+                {/* 연지급 연금액 */}
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연지급 연금액</span>
+                    <span className="font-bold">
+                      <span className="text-[#8b5cf6]">인증 후 확인가능</span>
                     </span>
                   </div>
                 </div>

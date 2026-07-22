@@ -7,11 +7,11 @@ import { mapGender } from '@/app/utils/genderMapping';
 export async function POST(request: NextRequest) {
 	try {
 		console.log('[API] 연금액 계산 요청 시작');
-		
+
 		const { customerName, gender, age, paymentPeriod, monthlyPayment, productType, mode } = await request.json();
 		console.log('[API] 요청 데이터:', { customerName, gender, age, paymentPeriod, monthlyPayment, productType, mode });
 
-			// 입력값 검증
+		// 입력값 검증
 		if (mode === 'eligibility') {
 			if (!gender || !age) {
 				console.log('[API] 적격성 모드 필수 입력값 누락:', { gender, age });
@@ -30,20 +30,20 @@ export async function POST(request: NextRequest) {
 			}
 		}
 
-		 // 성별 매핑 (M -> 남, F -> 여)
-		 const mappedGender = mapGender(gender);
+		// 성별 매핑 (M -> 남, F -> 여)
+		const mappedGender = mapGender(gender);
 
 		// 월납입액에서 콤마 제거하고 정수로 변환
 		const cleanMonthlyPayment = parseInt(monthlyPayment.toString().replace(/,/g, ''));
-		
+
 		// 제품 유형 먼저 결정
 		const resolvedProductType = (productType || 'happy-plus') as string;
-		
+
 		// 시트 선택 로직
 		let sheetName = '';
-		
-		// IBK 연금은 단일 시트 'Search Results' 사용 (모든 월납입액 데이터가 한 시트에 있음)
-		if (resolvedProductType === 'ibk-lifetime') {
+
+		// IBK 연금과 하나생명은 단일 시트 'Search Results' 사용 (모든 월납입액 데이터가 한 시트에 있음)
+		if (resolvedProductType === 'ibk-lifetime' || resolvedProductType === 'hana-only') {
 			sheetName = 'Search Results';
 		} else if (mode === 'eligibility') {
 			// 적격성 확인은 30만원 시트를 기본으로 사용 (없으면 첫 시트로 대체)
@@ -115,6 +115,22 @@ export async function POST(request: NextRequest) {
 				'20년보증기간총액',
 				'20년보증기간연금액'
 			];
+		} else if (resolvedProductType === 'hana-only') {
+			candidatePaths = [
+				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'hana', 'hana-only', 'components', 'hana_0~68_20260717.xlsx'),
+				path.join(process.cwd(), 'public', 'hana_0~68_20260717.xlsx')
+			];
+			monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금', '월연금'];
+			performancePensionHeaderCandidates = []; // 엑셀에 없음 - 계산으로 처리
+			guaranteedAmountHeaderCandidates = [
+				'20년 보증기간 총액',
+				'20년 보증 총액',
+				'보증기간 총액',
+				'20년 보증기간 연금액',
+				'보증기간 연금액',
+				'20년보증기간총액',
+				'20년보증기간연금액'
+			];
 		} else {
 			candidatePaths = [
 				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'kdb', 'happy-plus', 'kdb_plus_15-70.xlsx'),
@@ -157,7 +173,7 @@ export async function POST(request: NextRequest) {
 				{ status: 500 }
 			);
 		}
-		
+
 		let worksheet = workbook.Sheets[sheetName];
 		if (!worksheet) {
 			// 시트명이 달라졌을 경우 첫 번째 시트를 사용 (로그 남김)
@@ -190,7 +206,7 @@ export async function POST(request: NextRequest) {
 		let headerRow: string[] = [];
 		for (let r = 0; r < Math.min(jsonData.length, 10); r++) {
 			const row = (jsonData[r] as any[]).map(cell => normalize(cell));
-			const hasAll = 
+			const hasAll =
 				headerSynonyms.gender.some(k => row.some(cell => cell.includes(normalize(k)))) &&
 				headerSynonyms.age.some(k => row.some(cell => cell.includes(normalize(k)))) &&
 				headerSynonyms.period.some(k => row.some(cell => cell.includes(normalize(k))));
@@ -308,57 +324,57 @@ export async function POST(request: NextRequest) {
 			return NextResponse.json({ success: true, eligibility });
 		}
 
-			 // 데이터 행에서 일치하는 행 찾기
-		 console.log('[API] 데이터 매칭 시작');
-		 console.log('[API] 검색 조건:', { gender, age, paymentPeriod, cleanMonthlyPayment, mappedGender });
-		 console.log('[API] 헤더 행 인덱스:', headerRowIndex);
-		 
-		 let matchedRow: any[] | null = null;
-		 let matchAttempts = 0;
-		 for (let i = headerRowIndex + 1; i < jsonData.length; i++) {
-			 const row = jsonData[i] as any[];
-			 if (row.length <= Math.max(genderIndex, ageIndex, periodIndex)) {
-				 continue;
-			 }
+		// 데이터 행에서 일치하는 행 찾기
+		console.log('[API] 데이터 매칭 시작');
+		console.log('[API] 검색 조건:', { gender, age, paymentPeriod, cleanMonthlyPayment, mappedGender });
+		console.log('[API] 헤더 행 인덱스:', headerRowIndex);
 
-			 const rawGender = String(row[genderIndex] ?? '').trim();
-			 const rowGender = rawGender.startsWith('남') ? '남' : rawGender.startsWith('여') ? '여' : rawGender;
-			 const rowAge = parseInt(row[ageIndex]);
-			 const rowPeriod = parseInt(row[periodIndex]);
-			 // 월 납입액 정규화(옵션): 결제액 컬럼이 있는 경우에만 비교
-			 let rowPayment: number | null = null;
-			 if (paymentIndex !== -1) {
-				 const rawPayment = String(row[paymentIndex] ?? '');
-				 let parsed = parseInt(rawPayment.replace(/[^0-9]/g, ''));
-				 if (rawPayment.includes('만원') || [30,50,100].includes(parsed)) {
-					 parsed = parsed * 10000;
-				 }
-				 rowPayment = parsed;
-			 }
+		let matchedRow: any[] | null = null;
+		let matchAttempts = 0;
+		for (let i = headerRowIndex + 1; i < jsonData.length; i++) {
+			const row = jsonData[i] as any[];
+			if (row.length <= Math.max(genderIndex, ageIndex, periodIndex)) {
+				continue;
+			}
 
-			 const periodMatches = rowPeriod === parseInt(paymentPeriod.toString().replace(/[^0-9]/g, ''));
-			 const paymentMatches = paymentIndex === -1 ? true : rowPayment === cleanMonthlyPayment;
-			 
-			 // IBK 디버깅: 처음 5개 행만 로그
-			 if (resolvedProductType === 'ibk-lifetime' && matchAttempts < 5) {
-				 console.log(`[API][IBK] 행 ${i} 비교:`, {
-					 rowGender, rowAge, rowPeriod, rowPayment,
-					 genderMatch: rowGender === mappedGender,
-					 ageMatch: rowAge === parseInt(age.toString()),
-					 periodMatch: periodMatches,
-					 paymentMatch: paymentMatches
-				 });
-				 matchAttempts++;
-			 }
-			 
-			 if (rowGender === mappedGender && rowAge === parseInt(age.toString()) && periodMatches && paymentMatches) {
-				 matchedRow = row;
-				 if (resolvedProductType === 'ibk-lifetime') {
-					 console.log(`[API][IBK] 매칭 성공! 행 ${i}`);
-				 }
-				 break;
-			 }
-		 }
+			const rawGender = String(row[genderIndex] ?? '').trim();
+			const rowGender = rawGender.startsWith('남') ? '남' : rawGender.startsWith('여') ? '여' : rawGender;
+			const rowAge = parseInt(row[ageIndex]);
+			const rowPeriod = parseInt(row[periodIndex]);
+			// 월 납입액 정규화(옵션): 결제액 컬럼이 있는 경우에만 비교
+			let rowPayment: number | null = null;
+			if (paymentIndex !== -1) {
+				const rawPayment = String(row[paymentIndex] ?? '');
+				let parsed = parseInt(rawPayment.replace(/[^0-9]/g, ''));
+				if (rawPayment.includes('만원') || [30, 50, 100].includes(parsed)) {
+					parsed = parsed * 10000;
+				}
+				rowPayment = parsed;
+			}
+
+			const periodMatches = rowPeriod === parseInt(paymentPeriod.toString().replace(/[^0-9]/g, ''));
+			const paymentMatches = paymentIndex === -1 ? true : rowPayment === cleanMonthlyPayment;
+
+			// IBK 디버깅: 처음 5개 행만 로그
+			if (resolvedProductType === 'ibk-lifetime' && matchAttempts < 5) {
+				console.log(`[API][IBK] 행 ${i} 비교:`, {
+					rowGender, rowAge, rowPeriod, rowPayment,
+					genderMatch: rowGender === mappedGender,
+					ageMatch: rowAge === parseInt(age.toString()),
+					periodMatch: periodMatches,
+					paymentMatch: paymentMatches
+				});
+				matchAttempts++;
+			}
+
+			if (rowGender === mappedGender && rowAge === parseInt(age.toString()) && periodMatches && paymentMatches) {
+				matchedRow = row;
+				if (resolvedProductType === 'ibk-lifetime') {
+					console.log(`[API][IBK] 매칭 성공! 행 ${i}`);
+				}
+				break;
+			}
+		}
 
 		if (!matchedRow) {
 			console.log('[API] 매칭된 행을 찾을 수 없음');
@@ -367,7 +383,7 @@ export async function POST(request: NextRequest) {
 				{ status: 404 }
 			);
 		}
-		
+
 		// 결과 데이터 추출 (숫자 정규화 파서 적용)
 		const parseNumber = (v: any): number => {
 			if (v === null || v === undefined) return 0;
@@ -379,7 +395,7 @@ export async function POST(request: NextRequest) {
 		const pensionStartAge = pensionStartAgeIndex !== -1 ? parseNumber(matchedRow[pensionStartAgeIndex]) : 0;
 		const monthlyPension = monthlyPensionIndex !== -1 ? parseNumber(matchedRow[monthlyPensionIndex]) : 0;
 		const yearlyPension = yearlyPensionIndex !== -1 ? parseNumber(matchedRow[yearlyPensionIndex]) : 0;
-		
+
 		// IBK연금 디버깅 로그
 		if (resolvedProductType === 'ibk-lifetime') {
 			console.log('[API][IBK] 매칭된 행 데이터:', {
@@ -394,27 +410,31 @@ export async function POST(request: NextRequest) {
 				pensionStartAgeCell: pensionStartAgeIndex !== -1 ? matchedRow[pensionStartAgeIndex] : 'N/A'
 			});
 		}
-		
+
 		// 실적배당 연금액은 엑셀에 없으므로 계산으로 처리 (월 연금액의 15% 가정)
 		const performancePension = monthlyPension > 0 ? Math.round(monthlyPension * 1.15) : 0;
-		
-		// IBK연금: 20년 보증기간 총액과 100세까지 총 수령액은 엑셀 값을 사용하지 않고 무조건 계산
+
+		// IBK연금과 하나생명: 20년 보증기간 총액과 100세까지 총 수령액은 엑셀 값을 사용하지 않고 무조건 계산
 		let guaranteedAmount = 0;
 		let totalUntil100 = 0;
-		
-		if (resolvedProductType === 'ibk-lifetime') {
-			// IBK연금은 무조건 계산 (엑셀 컬럼이 비어있음)
-			if (yearlyPension > 0) {
-				guaranteedAmount = yearlyPension * 20;
+
+		if (resolvedProductType === 'ibk-lifetime' || resolvedProductType === 'hana-only') {
+			// IBK연금과 하나생명은 무조건 계산 (엑셀 컬럼이 비어있음)
+			// 연지급 연금액이 없으면 월 연금액 * 12로 계산
+			const calculatedYearlyPension = yearlyPension > 0 ? yearlyPension : (monthlyPension * 12);
+
+			if (calculatedYearlyPension > 0) {
+				guaranteedAmount = calculatedYearlyPension * 20;
 			}
-			if (yearlyPension > 0 && pensionStartAge > 0) {
-				totalUntil100 = yearlyPension * (100 - pensionStartAge + 1);
+			if (calculatedYearlyPension > 0 && pensionStartAge > 0) {
+				totalUntil100 = calculatedYearlyPension * (100 - pensionStartAge);
 			}
-			console.log('[API][IBK] 계산된 값:', {
+			console.log(`[API][${resolvedProductType}] 계산된 값:`, {
 				performancePension,
 				guaranteedAmount,
 				totalUntil100,
-				calculation: `yearlyPension(${yearlyPension}) * 20 = ${guaranteedAmount}, yearlyPension(${yearlyPension}) * (100 - ${pensionStartAge} + 1) = ${totalUntil100}`
+				calculatedYearlyPension,
+				calculation: `yearlyPension(${calculatedYearlyPension}) * 20 = ${guaranteedAmount}, yearlyPension(${calculatedYearlyPension}) * (100 - ${pensionStartAge}) = ${totalUntil100}`
 			});
 		} else {
 			// 다른 상품: 엑셀에 있으면 사용, 없으면 계산
@@ -422,13 +442,13 @@ export async function POST(request: NextRequest) {
 			if (guaranteedAmount === 0 && yearlyPension > 0) {
 				guaranteedAmount = yearlyPension * 20;
 			}
-			
+
 			totalUntil100 = totalUntil100Index !== -1 ? parseNumber(matchedRow[totalUntil100Index]) : 0;
 			if (totalUntil100 === 0 && yearlyPension > 0 && pensionStartAge > 0) {
 				totalUntil100 = yearlyPension * (100 - pensionStartAge + 1);
 			}
 		}
-		
+
 		const notice = noticeIndex !== -1 ? (matchedRow[noticeIndex] || '') : '';
 
 		// 숫자 포맷팅 (3자리 콤마 + 원)

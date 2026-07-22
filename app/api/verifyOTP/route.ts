@@ -9,7 +9,7 @@ import { use } from "react";
 export async function POST(req: Request) {
   const requestBody = await req.json();
   console.log("[API] 받은 요청 데이터:", requestBody);
-  
+
   const {
     phone,
     name,
@@ -28,6 +28,7 @@ export async function POST(req: Request) {
     interestValue = null,
     refundValue = null,
     monthlyPension = null,
+    yearlyPension = null,
     guaranteedPension = null,
     performancePension = null,
     templateId = null, // 고객용 템플릿 ID
@@ -51,7 +52,7 @@ export async function POST(req: Request) {
       try {
         const token = await getCachedAligoToken(aligoAuth);
         if (token) authForSend = { ...aligoAuth, token };
-      } catch {}
+      } catch { }
 
       const genderKor = gender === 'M' ? '남' : gender === 'F' ? '여' : gender;
       const toClientReq = {
@@ -62,7 +63,7 @@ export async function POST(req: Request) {
           receiver_1: phone,
           subject_1: '상담/설계요청 - 고객전송',
           message_1:
-`고객명: ${name}
+            `고객명: ${name}
 성별: ${genderKor}
 생년월일: ${birth}
 
@@ -171,7 +172,7 @@ export async function POST(req: Request) {
   // companyId/productId가 없으면(상담 신청) consultType 사용, 있으면 DB 조회
   let productDisplayName = '';
   let companyName = '';
-  
+
   if (companyId && productId) {
     // 특정 상품 가입: DB에서 조회
     const [productResult, companyResult] = await Promise.all([
@@ -220,7 +221,7 @@ export async function POST(req: Request) {
   } catch {
     // 토큰 획득 실패 시 기본 키로 전송 계속
   }
-  
+
   if (counselType === 1 || counselType === 2) {
     console.log("[DEBUG] counselType:", counselType);
     console.log("[DEBUG] user:", user);
@@ -276,7 +277,7 @@ export async function POST(req: Request) {
       const day = String(lastDate.getDate()).padStart(2, '0');
       duplicateLabel = `[${month}-${day} 중복]`;
       console.log("[DEBUG] 중복 신청 감지:", duplicateLabel);
-      
+
       // 중복 신청 시 SMS 알림 발송
       try {
         const duplicateSmsReq = {
@@ -286,14 +287,14 @@ export async function POST(req: Request) {
             userid: authForSend.userid,
             sender: "010-8897-7486",
             receiver: "010-8897-7486",
-            msg: counselType === 1 
+            msg: counselType === 1
               ? `🔄 중복신청 알림\n[보험료계산] ${duplicateLabel}\n${name}(${phone})\n${companyName ? companyName + ' ' : ''}${productDisplayName}`
               : `🔄 중복신청 알림\n[상담신청] ${duplicateLabel}\n${name}(${phone})\n${counselTime}\n${companyName ? companyName + ' ' : ''}${productDisplayName}`,
             testmode_yn: "N"
           }
         };
         console.log("[DEBUG] 중복 SMS 발송 요청:", duplicateSmsReq.body);
-        
+
         // SMS는 비동기로 발송 (실패해도 메인 로직에 영향 없음)
         smsSend(duplicateSmsReq, authForSend)
           .then((result) => {
@@ -313,11 +314,11 @@ export async function POST(req: Request) {
       const toAdminReq = {
         headers: { "content-type": "application/json" },
         body: {
-          tpl_code:   tplCode,
-          sender:     "010-8897-7486",
+          tpl_code: tplCode,
+          sender: "010-8897-7486",
           receiver_1: "010-8897-7486",
-          subject_1:  subject,
-          message_1:  counselType === 1
+          subject_1: subject,
+          message_1: counselType === 1
             ? `[보험료계산]\n${companyName ? companyName + '\n' : ''}${productDisplayName}\n${displayBirth}\n${displayName}\n${displayGenderKor}\n${phone}`
             : `[상담/설계요청]\n${counselTime}\n${productDisplayName}\n${displayBirth}\n${displayName}\n${displayGenderKor}\n${phone}`,
           testMode: "N",
@@ -349,6 +350,11 @@ export async function POST(req: Request) {
     console.log("[DEBUG] counselType:", counselType);
     // 숫자 가공: 전달되지 않으면 안전한 기본/계산값으로 대체
     const monthlyPensionNum = typeof monthlyPension === 'number' ? monthlyPension : parseInt(String(monthlyPension || '0').replace(/[^0-9]/g, '')) || 0;
+    const yearlyPensionNum = (() => {
+      const raw = typeof yearlyPension === 'number' ? yearlyPension : parseInt(String(yearlyPension || '0').replace(/[^0-9]/g, ''));
+      if (!isNaN(raw) && raw > 0) return raw;
+      return monthlyPensionNum > 0 ? monthlyPensionNum * 12 : 0; // 월 연금액 * 12
+    })();
     const pensionStartAgeNum = (() => {
       const v = typeof (requestBody as any).pensionStartAge === 'number' ? (requestBody as any).pensionStartAge : parseInt(String((requestBody as any).pensionStartAge || '0').replace(/[^0-9]/g, '')) || 0;
       return v;
@@ -396,7 +402,7 @@ export async function POST(req: Request) {
           message_1: (() => {
             if (counselType === 2 || clientTemplateId === "UB_8715") {
               return (
-`고객명: ${displayName}
+                `고객명: ${displayName}
 성별: ${displayGenderKor}
 생년월일: ${displayBirth}
 
@@ -413,7 +419,7 @@ export async function POST(req: Request) {
             }
             if (clientTemplateId === "UB_8712") {
               return (
-`고객명: ${displayName}
+                `고객명: ${displayName}
 성별: ${displayGenderKor}
 생년월일: ${displayBirth}
 
@@ -434,7 +440,7 @@ export async function POST(req: Request) {
             }
             if (clientTemplateId === "UI_4888") {
               return (
-`[고객정보]
+                `[고객정보]
 고객명: ${displayName}
 성별: ${displayGenderKor}
 생년월일: ${displayBirth}
@@ -453,7 +459,7 @@ export async function POST(req: Request) {
             }
             // UB_8705
             return (
-`고객명: ${displayName}
+              `고객명: ${displayName}
 성별: ${displayGenderKor}
 생년월일: ${displayBirth}
 
@@ -466,6 +472,7 @@ export async function POST(req: Request) {
 
 [예상 연금 수령액] (돈)
 월 연금액: ${monthlyPensionNum ? `${monthlyPensionNum.toLocaleString()} 원` : '-'}
+연지급 연금액: ${yearlyPensionNum ? `${yearlyPensionNum.toLocaleString()} 원` : '-'}
 20년 보증기간 총액: ${guaranteedPensionNum ? `${guaranteedPensionNum.toLocaleString()} 원` : '-'}
 100세까지 총 수령액: ${totalUntil100Num ? `${totalUntil100Num.toLocaleString()} 원` : '-'}
 
@@ -527,9 +534,9 @@ export async function POST(req: Request) {
         return base;
       })(),
     }
-    
+
     console.log("[DEBUG] 고객용 알림톡 요청 데이터:", JSON.stringify(toClientReq.body, null, 2));
-    
+
     try {
       const clientSendPromise = alimtalkSend(toClientReq, authForSend);
       const promises: Promise<any>[] = [clientSendPromise];

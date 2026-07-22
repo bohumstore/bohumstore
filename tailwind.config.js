@@ -14,17 +14,17 @@ module.exports = {
       },
       keyframes: {
         'jump-glow': {
-          '0%, 100%': { 
-            transform: 'scale(1)', 
-            filter: 'drop-shadow(0 0 0 #3a80e0)' 
+          '0%, 100%': {
+            transform: 'scale(1)',
+            filter: 'drop-shadow(0 0 0 #3a80e0)'
           },
-          '30%': { 
-            transform: 'scale(1.18) translateY(-6px)', 
-            filter: 'drop-shadow(0 0 8px #87b7f0)' 
+          '30%': {
+            transform: 'scale(1.18) translateY(-6px)',
+            filter: 'drop-shadow(0 0 8px #87b7f0)'
           },
-          '60%': { 
-            transform: 'scale(0.95) translateY(2px)', 
-            filter: 'drop-shadow(0 0 0 #3a80e0)' 
+          '60%': {
+            transform: 'scale(0.95) translateY(2px)',
+            filter: 'drop-shadow(0 0 0 #3a80e0)'
           }
         }
       },
