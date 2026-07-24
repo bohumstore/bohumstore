@@ -69,7 +69,8 @@ export default function Header() {
       titleSubColor: "text-sky-600",
       id: "annuity-pension",
       subItems: [
-        { name: "IBK평생보증받는변액연금보험", path: "/insurance/annuity/ibk/lifetime", badge: null },
+        { name: "IBK평생보증받는변액연금보험", path: "/insurance/annuity/ibk/lifetime", badge: "HOT" },
+        { name: "하나뿐인변액연금보험", path: "/insurance/annuity/hana/hana-only", badge: null },
         { name: "KDB행복드림변액연금보험", path: "/insurance/annuity/kdb/happy-dream", badge: null },
         { name: "KDB행복플러스연금보험(보증형)", path: "/insurance/annuity/kdb/happy-plus", badge: null }
       ]
@@ -83,7 +84,7 @@ export default function Header() {
       subItems: [
         { name: "오로지연금을위한달러연금보험", path: "/insurance/annuity/metlife/only-dollar", badge: "달러" },
         { name: "PlusPRO연금보험(보증형)", path: "/insurance/annuity/im/plus-pro", badge: null },
-        { name: "KB트리플레벨업연금보험(보증형)", path: "/insurance/annuity/kb/triple-level-up", badge: null }
+        { name: "KB트리플레벨업연금보험(보증형)", path: "/insurance/annuity/kb/triple-level-up", badge: "HOT" }
       ]
     },
     {
@@ -202,8 +203,13 @@ export default function Header() {
                             >
                               <span>{subItem.name}</span>
                               {subItem.badge && (
-                                <span className="px-1.5 py-0.5 text-[10px] font-medium rounded bg-orange-50 text-orange-600">
-                                  {subItem.badge}
+                                <span className={`px-1 py-0 text-[8px] font-bold rounded ${subItem.badge === 'HOT' ? 'bg-red-500 text-white relative overflow-hidden' :
+                                  'bg-orange-50 text-orange-600'
+                                  }`}>
+                                  {subItem.badge === 'HOT' && (
+                                    <span className="absolute inset-0 shine-effect"></span>
+                                  )}
+                                  <span className="relative z-10">{subItem.badge}</span>
                                 </span>
                               )}
                             </Link>
@@ -263,6 +269,27 @@ export default function Header() {
         }
         .animate-slide-in-right {
           animation: slideInRight 0.1s ease-out forwards;
+        }
+        @keyframes shine {
+          0% {
+            left: -150%;
+            opacity: 0;
+          }
+          50% {
+            opacity: 0.5;
+          }
+          100% {
+            left: 150%;
+            opacity: 0;
+          }
+        }
+        .shine-effect {
+          background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.2) 30%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.2) 70%, transparent 100%);
+          animation: shine 2.5s ease-in-out infinite;
+          width: 60%;
+          height: 100%;
+          transform: skewX(-20deg);
+          top: 0;
         }
       `}</style>
     </>

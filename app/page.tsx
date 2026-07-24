@@ -41,12 +41,12 @@ export default function HomePage() {
 
   // 무한 루프용 슬라이드 배열: [마지막복제, ...원본들..., 첫번째복제]
   const extendedSlogans = [slogans[slogans.length - 1], ...slogans, slogans[0]];
-  
+
   // 실제 슬라이드 인덱스 (0 ~ slogans.length - 1)
-  const currentSloganIndex = displayIndex === 0 
-    ? slogans.length - 1 
-    : displayIndex === extendedSlogans.length - 1 
-      ? 0 
+  const currentSloganIndex = displayIndex === 0
+    ? slogans.length - 1
+    : displayIndex === extendedSlogans.length - 1
+      ? 0
       : displayIndex - 1;
 
   const today = new Date();
@@ -91,7 +91,7 @@ export default function HomePage() {
   // 경계에서 실제 위치로 점프
   useEffect(() => {
     if (!isTransitioning) return;
-    
+
     const handleTransitionEnd = () => {
       if (displayIndex === 0) {
         // 첫번째 복제본(마지막 슬라이드)에서 실제 마지막 슬라이드로 점프
@@ -153,11 +153,11 @@ export default function HomePage() {
   return (
     <div className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full">
       {/* 판매 종료 팝업 */}
-      <TerminationNoticePopup 
+      <TerminationNoticePopup
         productName="IM Plus PRO 연금보험"
         endDate="2026-05-15"
       />
-      
+
       {/* 슬로건 캐러셀 섹션 - 화면 전체를 채우는 히어로 배너 */}
       <section
         className="w-full relative overflow-hidden"
@@ -171,7 +171,7 @@ export default function HomePage() {
       >
         {/* 슬로건 캐러셀 */}
         <div className="relative w-full overflow-hidden group">
-          <div 
+          <div
             className={`flex h-full ${isTransitioning ? 'transition-transform duration-500 ease-in-out' : ''}`}
             style={{ transform: `translateX(-${displayIndex * 100}%)` }}
           >
@@ -180,13 +180,13 @@ export default function HomePage() {
               return (
                 <div key={`${slogan.id}-${index}`} className="w-full flex-shrink-0 relative">
                   <div className={`w-full ${slogan.id === 'consult-main' ? 'min-h-[500px] md:min-h-[560px]' : 'min-h-[480px] md:min-h-[520px]'} lg:min-h-[520px] ${slogan.id === 'consult-main' ? 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50' :
-                                                                 'bg-gradient-to-b from-slate-50 to-white'} relative overflow-hidden`} 
-                       style={{
-                         backgroundImage: slogan.id === 'consult-main' ?
-                           `radial-gradient(circle at 20% 80%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+                    'bg-gradient-to-b from-slate-50 to-white'} relative overflow-hidden`}
+                    style={{
+                      backgroundImage: slogan.id === 'consult-main' ?
+                        `radial-gradient(circle at 20% 80%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
                             radial-gradient(circle at 80% 20%, rgba(79, 70, 229, 0.1) 0%, transparent 50%)` :
- 'none'
-                       }}>
+                        'none'
+                    }}>
                     {/* 슬로건 내용 */}
                     <div className="relative z-10 h-full flex items-center">
                       <div className="w-full px-4 md:px-8 lg:px-12 py-6 md:py-8">
@@ -204,17 +204,17 @@ export default function HomePage() {
                                   </span>
                                   <span className="text-gray-600">{currentYear}년 {currentMonth}월</span>
                                 </div>
-                                
+
                                 {/* 타이틀 */}
-                                <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-2 md:mb-4 leading-tight ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.1s'}}>
+                                <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-2 md:mb-4 leading-tight ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.1s' }}>
                                   보험, <span className="text-blue-600">제대로</span> 알고<br /> 가입하고 계신가요?
                                 </h2>
-                                <p className={`text-sm md:text-base lg:text-lg text-gray-700 mb-4 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
+                                <p className={`text-sm md:text-base lg:text-lg text-gray-700 mb-4 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
                                   복잡한 보험, 전문가가 쉽게 설명해드립니다
                                 </p>
-                                
+
                                 {/* 체크리스트 */}
-                                <ul className={`space-y-2 md:space-y-3 mb-4 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.3s'}}>
+                                <ul className={`space-y-2 md:space-y-3 mb-4 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.3s' }}>
                                   <li className="flex items-center justify-center lg:justify-start text-xs md:text-sm lg:text-base text-gray-700">
                                     <span className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs mr-2 md:mr-3 flex-shrink-0">✓</span>
                                     <span>내 보험료가 적절한지 <span className="font-semibold text-gray-900">무료 분석</span></span>
@@ -228,13 +228,13 @@ export default function HomePage() {
                                     <span>불필요한 특약 <span className="font-semibold text-gray-900">정리 컨설팅</span></span>
                                   </li>
                                 </ul>
-                                
+
                                 {/* 버튼 */}
-                                <div className={`${isActive ? 'animate-slide-in-up' : 'opacity-0'} relative inline-block`} style={{animationDelay: '0.4s'}}>
+                                <div className={`${isActive ? 'animate-slide-in-up' : 'opacity-0'} relative inline-block`} style={{ animationDelay: '0.4s' }}>
                                   <span className="absolute -top-3 left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full shadow-md z-10 animate-bounce whitespace-nowrap">
                                     📢 {currentMonth}월 이슈 확인!
                                   </span>
-                                  <Link 
+                                  <Link
                                     href="/insurance/a_consult"
                                     className="inline-flex items-center px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-orange-400 to-rose-400 hover:from-orange-500 hover:to-rose-500 text-white font-bold rounded-xl text-sm md:text-base transition-all shadow-lg shadow-orange-400/25"
                                   >
@@ -243,9 +243,9 @@ export default function HomePage() {
                                   </Link>
                                 </div>
                               </div>
-                              
+
                               {/* 오른쪽: 채팅 UI */}
-                              <div className={`w-full max-w-xs md:max-w-sm lg:max-w-lg ${isActive ? 'animate-fade-in' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
+                              <div className={`w-full max-w-xs md:max-w-sm lg:max-w-lg ${isActive ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
                                 <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
                                   {/* 채팅 헤더 */}
                                   <div className="bg-gradient-to-r from-slate-700 to-slate-800 p-3 md:p-4 flex items-center gap-3">
@@ -258,13 +258,13 @@ export default function HomePage() {
                                       </div>
                                     </div>
                                   </div>
-                                  
+
                                   {/* 채팅 내용 - 전문가 입장에서 보는 화면 (전문가=오른쪽, 고객=왼쪽) */}
                                   <div className="p-3 md:p-4 lg:p-5 space-y-2 md:space-y-2.5 lg:space-y-3 bg-gray-50 md:min-h-[180px]">
                                     {Array.isArray(currentScenario) && currentScenario.map((msg, idx) => (
                                       <div key={idx} className={`flex ${msg.role === 'expert' ? 'justify-end' : 'justify-start'}`}>
-                                        <div className={`${msg.role === 'expert' 
-                                          ? 'bg-amber-100 text-amber-900 rounded-br-sm' 
+                                        <div className={`${msg.role === 'expert'
+                                          ? 'bg-amber-100 text-amber-900 rounded-br-sm'
                                           : 'bg-white text-gray-800 rounded-bl-sm border border-gray-100'} 
                                           px-2.5 py-1.5 md:px-3 md:py-2 rounded-xl text-[11px] md:text-xs lg:text-sm shadow-sm max-w-[85%]`}>
                                           {msg.text}
@@ -272,7 +272,7 @@ export default function HomePage() {
                                       </div>
                                     ))}
                                   </div>
-                                  
+
                                   {/* 입력창 */}
                                   <div className="bg-white p-2 md:p-3 border-t border-gray-100 flex gap-2">
                                     <div className="flex-1 bg-gray-100 rounded-full h-8 md:h-9 flex items-center px-3 text-[10px] md:text-xs text-gray-600">메시지를 입력하세요...</div>
@@ -295,18 +295,18 @@ export default function HomePage() {
                                   )}
                                   <span className="text-sm md:text-base lg:text-lg text-gray-700 font-medium">{slogan.company}</span>
                                 </div>
-                                
+
                                 {/* 핵심 숫자 강조 */}
                                 <p className={`text-gray-700 text-xs md:text-sm lg:text-base mb-1 md:mb-2 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`}>5년납 연금보험</p>
-                                <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-2 md:mb-4 leading-tight ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.1s'}}>
+                                <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-2 md:mb-4 leading-tight ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.1s' }}>
                                   10년시점 <span className="text-pink-500">133%</span> 환급률
                                 </h2>
-                                <p className={`text-sm md:text-base lg:text-lg text-gray-600 mb-3 md:mb-5 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
+                                <p className={`text-sm md:text-base lg:text-lg text-gray-600 mb-3 md:mb-5 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
                                   Plus PRO 연금보험으로 목돈마련과 노후준비를 동시에
                                 </p>
-                                
+
                                 {/* 체크리스트 */}
-                                <ul className={`space-y-2 md:space-y-3 mb-4 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.3s'}}>
+                                <ul className={`space-y-2 md:space-y-3 mb-4 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.3s' }}>
                                   {slogan.features.slice(0, 3).map((feature, idx) => (
                                     <li key={idx} className="flex items-center justify-center lg:justify-start text-xs md:text-sm lg:text-base text-gray-700">
                                       <span className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center text-xs mr-2 md:mr-3 flex-shrink-0">✓</span>
@@ -314,10 +314,10 @@ export default function HomePage() {
                                     </li>
                                   ))}
                                 </ul>
-                                
+
                                 {/* 버튼 */}
-                                <div className={`${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.4s'}}>
-                                  <Link 
+                                <div className={`${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.4s' }}>
+                                  <Link
                                     href={slogan.path}
                                     className="inline-flex items-center px-6 md:px-8 py-3 md:py-4 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-xl text-sm md:text-base transition-all shadow-lg shadow-pink-500/25"
                                   >
@@ -326,15 +326,15 @@ export default function HomePage() {
                                   </Link>
                                 </div>
                               </div>
-                              
+
                               {/* 오른쪽: 핵심 정보 카드 */}
-                              <div className={`w-full max-w-sm md:max-w-md lg:max-w-lg ${isActive ? 'animate-fade-in' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
+                              <div className={`w-full max-w-sm md:max-w-md lg:max-w-lg ${isActive ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
                                 <div className="bg-white rounded-2xl shadow-xl p-5 md:p-6 lg:p-8 border border-gray-100">
                                   <div className="text-center mb-4 md:mb-5">
                                     <div className="inline-block bg-pink-100 text-pink-700 text-xs md:text-sm font-bold px-3 py-1 rounded-full mb-2">NEW 출시</div>
                                     <h3 className="text-base md:text-lg lg:text-xl font-bold text-gray-900">해약환급률 (5년납 기준)</h3>
                                   </div>
-                                  
+
                                   <div className="space-y-3 md:space-y-4">
                                     <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-100">
                                       <span className="text-gray-700 text-sm md:text-base">7년시점 <span className="text-pink-600">(보증)</span></span>
@@ -349,7 +349,7 @@ export default function HomePage() {
                                       <span className="text-base md:text-lg font-bold text-gray-900">2.0%</span>
                                     </div>
                                   </div>
-                                  
+
                                   <p className="text-xs md:text-sm text-gray-600 text-center mt-4">※ 남자 40세, 월 50만원, 60세 연금개시 기준</p>
                                 </div>
                               </div>
@@ -368,18 +368,18 @@ export default function HomePage() {
                                   )}
                                   <span className="text-sm md:text-base lg:text-lg text-gray-700 font-medium">{slogan.company}</span>
                                 </div>
-                                
+
                                 {/* 핵심 숫자 강조 */}
                                 <p className={`text-gray-700 text-xs md:text-sm lg:text-base mb-1 md:mb-2 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`}>5년납 연금보험</p>
-                                <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-2 md:mb-4 leading-tight ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.1s'}}>
+                                <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-2 md:mb-4 leading-tight ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.1s' }}>
                                   10년시점 <span className="text-yellow-500">130%</span> 환급률
                                 </h2>
-                                <p className={`text-sm md:text-base lg:text-lg text-gray-600 mb-3 md:mb-5 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
+                                <p className={`text-sm md:text-base lg:text-lg text-gray-600 mb-3 md:mb-5 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
                                   트리플 레벨업 연금보험으로 단기간에 높은 보장
                                 </p>
-                                
+
                                 {/* 체크리스트 */}
-                                <ul className={`space-y-2 md:space-y-3 mb-4 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.3s'}}>
+                                <ul className={`space-y-2 md:space-y-3 mb-4 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.3s' }}>
                                   {slogan.features.slice(0, 3).map((feature, idx) => (
                                     <li key={idx} className="flex items-center justify-center lg:justify-start text-xs md:text-sm lg:text-base text-gray-700">
                                       <span className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center text-xs mr-2 md:mr-3 flex-shrink-0">✓</span>
@@ -387,10 +387,10 @@ export default function HomePage() {
                                     </li>
                                   ))}
                                 </ul>
-                                
+
                                 {/* 버튼 */}
-                                <div className={`${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.4s'}}>
-                                  <Link 
+                                <div className={`${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.4s' }}>
+                                  <Link
                                     href={slogan.path}
                                     className="inline-flex items-center px-6 md:px-8 py-3 md:py-4 bg-yellow-500 hover:bg-yellow-600 text-white font-bold rounded-xl text-sm md:text-base transition-all shadow-lg shadow-yellow-500/25"
                                   >
@@ -399,15 +399,15 @@ export default function HomePage() {
                                   </Link>
                                 </div>
                               </div>
-                              
+
                               {/* 오른쪽: 핵심 정보 카드 */}
-                              <div className={`w-full max-w-sm md:max-w-md lg:max-w-lg ${isActive ? 'animate-fade-in' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
+                              <div className={`w-full max-w-sm md:max-w-md lg:max-w-lg ${isActive ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
                                 <div className="bg-white rounded-2xl shadow-xl p-5 md:p-6 lg:p-8 border border-gray-100">
                                   <div className="text-center mb-4 md:mb-5">
                                     <div className="inline-block bg-yellow-100 text-yellow-700 text-xs md:text-sm font-bold px-3 py-1 rounded-full mb-2">BEST 상품</div>
                                     <h3 className="text-base md:text-lg lg:text-xl font-bold text-gray-900">해약환급률 (5년납 기준)</h3>
                                   </div>
-                                  
+
                                   <div className="space-y-3 md:space-y-4">
                                     <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-100">
                                       <span className="text-gray-700 text-sm md:text-base">5년 납입완료</span>
@@ -422,7 +422,7 @@ export default function HomePage() {
                                       <span className="text-2xl md:text-3xl font-black text-yellow-600">130%</span>
                                     </div>
                                   </div>
-                                  
+
                                   <p className="text-xs md:text-sm text-gray-600 text-center mt-4">※ 남자 40세, 월 50만원, 60세 연금개시 기준</p>
                                 </div>
                               </div>
@@ -440,80 +440,80 @@ export default function HomePage() {
                                   )}
                                   <span className="text-sm md:text-base lg:text-lg text-gray-700 font-medium">{slogan.company}</span>
                                 </div>
-                                
+
                                 {/* 타이틀 */}
-                                <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-2 md:mb-4 leading-tight whitespace-pre-line ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.1s'}}>
+                                <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-2 md:mb-4 leading-tight whitespace-pre-line ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.1s' }}>
                                   {slogan.title}
                                 </h2>
-                                <p className={`text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-3 md:mb-5 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
+                                <p className={`text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 mb-3 md:mb-5 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
                                   {slogan.subtitle}
                                 </p>
-                                
+
                                 {/* 체크리스트 */}
-                                <ul className={`space-y-2 md:space-y-3 mb-4 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.3s'}}>
+                                <ul className={`space-y-2 md:space-y-3 mb-4 md:mb-6 ${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.3s' }}>
                                   {slogan.features.slice(0, 3).map((feature, idx) => (
                                     <li key={idx} className="flex items-center justify-center lg:justify-start text-xs md:text-sm lg:text-base text-gray-700">
-                                      <span className={`w-5 h-5 md:w-6 md:h-6 rounded-full flex items-center justify-center text-xs mr-2 md:mr-3 flex-shrink-0 ${
-                                        slogan.id === 'metlife-usd' ? 'bg-blue-100 text-blue-600' :
-                                        slogan.id === 'ibk-lifetime' ? 'bg-orange-100 text-orange-600' :
-                                        slogan.id === 'kdb-happy-plus' ? 'bg-green-100 text-green-600' :
-                                        slogan.id === 'kdb-happy-dream' ? 'bg-purple-100 text-purple-600' :
-                                        slogan.id === 'shinhan-more-the-dream' ? 'bg-red-100 text-red-600' :
-                                        slogan.id === 'hana-hanaro' ? 'bg-teal-100 text-teal-600' :
-                                        slogan.id === 'im-plus-pro' ? 'bg-pink-100 text-pink-600' :
-                                        'bg-gray-100 text-gray-600'
-                                      }`}>✓</span>
+                                      <span className={`w-5 h-5 md:w-6 md:h-6 rounded-full flex items-center justify-center text-xs mr-2 md:mr-3 flex-shrink-0 ${slogan.id === 'metlife-usd' ? 'bg-blue-100 text-blue-600' :
+                                          slogan.id === 'ibk-lifetime' ? 'bg-orange-100 text-orange-600' :
+                                            slogan.id === 'kdb-happy-plus' ? 'bg-green-100 text-green-600' :
+                                              slogan.id === 'kdb-happy-dream' ? 'bg-purple-100 text-purple-600' :
+                                                slogan.id === 'shinhan-more-the-dream' ? 'bg-red-100 text-red-600' :
+                                                  slogan.id === 'hana-hanaro' ? 'bg-teal-100 text-teal-600' :
+                                                    slogan.id === 'hana-only' ? 'bg-emerald-100 text-emerald-600' :
+                                                      slogan.id === 'im-plus-pro' ? 'bg-pink-100 text-pink-600' :
+                                                        'bg-gray-100 text-gray-600'
+                                        }`}>✓</span>
                                       <span>{feature}</span>
                                     </li>
                                   ))}
                                 </ul>
-                                
+
                                 {/* 버튼 */}
-                                <div className={`${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{animationDelay: '0.4s'}}>
-                                  <Link 
+                                <div className={`${isActive ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.4s' }}>
+                                  <Link
                                     href={slogan.path}
-                                    className={`inline-flex items-center px-6 md:px-8 py-3 md:py-4 text-white font-bold rounded-xl text-sm md:text-base transition-all shadow-lg ${
-                                      slogan.id === 'metlife-usd' ? 'bg-[#00529b] hover:bg-[#003d7a] shadow-blue-500/25' :
-                                      slogan.id === 'ibk-lifetime' ? 'bg-orange-500 hover:bg-orange-600 shadow-orange-500/25' :
-                                      slogan.id === 'kdb-happy-plus' ? 'bg-green-500 hover:bg-green-600 shadow-green-500/25' :
-                                      slogan.id === 'kdb-happy-dream' ? 'bg-purple-500 hover:bg-purple-600 shadow-purple-500/25' :
-                                      slogan.id === 'shinhan-more-the-dream' ? 'bg-red-500 hover:bg-red-600 shadow-red-500/25' :
-                                      slogan.id === 'hana-hanaro' ? 'bg-teal-500 hover:bg-teal-600 shadow-teal-500/25' :
-                                      slogan.id === 'im-plus-pro' ? 'bg-pink-500 hover:bg-pink-600 shadow-pink-500/25' :
-                                      'bg-gray-700 hover:bg-gray-800 shadow-gray-500/25'
-                                    }`}
+                                    className={`inline-flex items-center px-6 md:px-8 py-3 md:py-4 text-white font-bold rounded-xl text-sm md:text-base transition-all shadow-lg ${slogan.id === 'metlife-usd' ? 'bg-[#00529b] hover:bg-[#003d7a] shadow-blue-500/25' :
+                                        slogan.id === 'ibk-lifetime' ? 'bg-orange-500 hover:bg-orange-600 shadow-orange-500/25' :
+                                          slogan.id === 'kdb-happy-plus' ? 'bg-green-500 hover:bg-green-600 shadow-green-500/25' :
+                                            slogan.id === 'kdb-happy-dream' ? 'bg-purple-500 hover:bg-purple-600 shadow-purple-500/25' :
+                                              slogan.id === 'shinhan-more-the-dream' ? 'bg-red-500 hover:bg-red-600 shadow-red-500/25' :
+                                                slogan.id === 'hana-hanaro' ? 'bg-teal-500 hover:bg-teal-600 shadow-teal-500/25' :
+                                                  slogan.id === 'hana-only' ? 'bg-emerald-500 hover:bg-emerald-600 shadow-emerald-500/25' :
+                                                    slogan.id === 'im-plus-pro' ? 'bg-pink-500 hover:bg-pink-600 shadow-pink-500/25' :
+                                                      'bg-gray-700 hover:bg-gray-800 shadow-gray-500/25'
+                                      }`}
                                   >
                                     자세히 보기
                                     <ArrowRightIcon className="w-4 h-4 md:w-5 md:h-5 ml-2" />
                                   </Link>
                                 </div>
                               </div>
-                              
+
                               {/* 오른쪽: 핵심 정보 카드 */}
-                              <div className={`w-full max-w-sm md:max-w-md lg:max-w-lg ${isActive ? 'animate-fade-in' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
+                              <div className={`w-full max-w-sm md:max-w-md lg:max-w-lg ${isActive ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
                                 <div className="bg-white rounded-2xl shadow-xl p-5 md:p-6 lg:p-8 border border-gray-100">
                                   <div className="text-center mb-4 md:mb-5">
                                     <h3 className="text-base md:text-lg lg:text-xl font-bold text-gray-900">주요 특징</h3>
                                   </div>
-                                  
+
                                   <div className="space-y-3 md:space-y-4">
                                     {slogan.features.map((feature, idx) => (
                                       <div key={idx} className={`flex items-center py-2 md:py-3 ${idx < slogan.features.length - 1 ? 'border-b border-gray-100' : ''}`}>
-                                        <span className={`w-2 h-2 rounded-full mr-3 flex-shrink-0 ${
-                                          slogan.id === 'metlife-usd' ? 'bg-blue-500' :
-                                          slogan.id === 'ibk-lifetime' ? 'bg-orange-500' :
-                                          slogan.id === 'kdb-happy-plus' ? 'bg-green-500' :
-                                          slogan.id === 'kdb-happy-dream' ? 'bg-purple-500' :
-                                          slogan.id === 'shinhan-more-the-dream' ? 'bg-red-500' :
-                                          slogan.id === 'hana-hanaro' ? 'bg-teal-500' :
-                                          slogan.id === 'im-plus-pro' ? 'bg-pink-500' :
-                                          'bg-gray-500'
-                                        }`}></span>
+                                        <span className={`w-2 h-2 rounded-full mr-3 flex-shrink-0 ${slogan.id === 'metlife-usd' ? 'bg-blue-500' :
+                                            slogan.id === 'ibk-lifetime' ? 'bg-orange-500' :
+                                              slogan.id === 'kdb-happy-plus' ? 'bg-green-500' :
+                                                slogan.id === 'kdb-happy-dream' ? 'bg-purple-500' :
+                                                  slogan.id === 'shinhan-more-the-dream' ? 'bg-red-500' :
+                                                    slogan.id === 'hana-hanaro' ? 'bg-teal-500' :
+                                                      slogan.id === 'hana-only' ? 'bg-emerald-500' :
+                                                        slogan.id === 'im-plus-pro' ? 'bg-pink-500' :
+                                                          'bg-gray-500'
+                                          }`}></span>
                                         <span className="text-sm md:text-base text-gray-700">{feature}</span>
                                       </div>
                                     ))}
                                   </div>
-                                  
+
                                   <p className="text-xs md:text-sm text-gray-600 text-center mt-4">※ 상세 내용은 상품 페이지에서 확인하세요</p>
                                 </div>
                               </div>
@@ -533,7 +533,7 @@ export default function HomePage() {
           >
             <ChevronLeftIcon className="w-5 h-5 md:w-6 md:h-6" />
           </button>
-          
+
           <button
             onClick={goToNext}
             className="absolute right-2 md:right-4 lg:right-8 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-700 hover:text-gray-900 p-2 md:p-3 rounded-full shadow-lg backdrop-blur-sm transition-all hover:scale-110 z-20 border border-white/20"
@@ -565,11 +565,10 @@ export default function HomePage() {
                     setIsTransitioning(true);
                     setDisplayIndex(index + 1);
                   }}
-                  className={`w-3 h-3 md:w-4 md:h-4 rounded-full transition-all duration-300 ${
-                    index === currentSloganIndex
+                  className={`w-3 h-3 md:w-4 md:h-4 rounded-full transition-all duration-300 ${index === currentSloganIndex
                       ? `bg-gradient-to-r ${currentSlogan.color} w-8 md:w-12 shadow-lg`
                       : 'bg-white/60 hover:bg-white/80 hover:scale-110'
-                  }`}
+                    }`}
                   aria-label={`${index + 1}번 슬라이드로 이동`}
                 />
               ))}
@@ -585,19 +584,19 @@ export default function HomePage() {
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">이 달의 추천 상품</h2>
             <p className="text-gray-600">지금 가장 반응 좋은 상품만 엄선했어요</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {mainProducts.map((product) => (
+            {mainProducts.filter(p => !p.hidden).map((product) => (
               <Link key={product.id} href={product.path} className="group">
                 <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-all hover:-translate-y-1 hover:border-blue-200">
                   {/* 상품 헤더 */}
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <Image 
-                        src={product.logo} 
-                        alt={product.company} 
-                        width={48} 
-                        height={48} 
+                      <Image
+                        src={product.logo}
+                        alt={product.company}
+                        width={48}
+                        height={48}
                         className="w-12 h-12 object-contain"
                       />
                       <div>
@@ -608,18 +607,17 @@ export default function HomePage() {
                       </div>
                     </div>
                     {product.badge && (
-                      <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
-                        product.badge === 'BEST' ? 'bg-yellow-100 text-yellow-800' :
-                        product.badge === 'NEW' ? 'bg-green-100 text-green-800' :
-                        product.badge === 'HOT' ? 'bg-red-100 text-red-800' :
-                        product.badge === 'TOP' ? 'bg-[#00529b]/10 text-[#00529b]' :
-                        'bg-blue-100 text-blue-800'
-                      }`}>
+                      <span className={`text-xs font-semibold px-3 py-1 rounded-full ${product.badge === 'BEST' ? 'bg-yellow-100 text-yellow-800' :
+                          product.badge === 'NEW' ? 'bg-green-100 text-green-800' :
+                            product.badge === 'HOT' ? 'bg-red-100 text-red-800' :
+                              product.badge === 'TOP' ? 'bg-[#00529b]/10 text-[#00529b]' :
+                                'bg-blue-100 text-blue-800'
+                        }`}>
                         {product.badge}
                       </span>
                     )}
                   </div>
-                  
+
                   {/* 상품 정보 */}
                   <div className="mb-4">
                     <h3 className="font-bold text-gray-900 mb-2 text-lg leading-tight">{product.name}</h3>
@@ -630,24 +628,24 @@ export default function HomePage() {
                       )}
                     </p>
                     <div className="flex items-center gap-2 mb-3">
-                      <span className={`text-xs font-medium px-2 py-1 rounded ${
-                        product.id === 'kb-triple-level-up' ? 'text-yellow-600 bg-yellow-50' :
-                        product.id === 'kdb-happy-plus' ? 'text-green-600 bg-green-50' :
-                        product.id === 'kdb-happy-dream' ? 'text-purple-600 bg-purple-50' :
-                        product.id === 'ibk-lifetime' ? 'text-orange-600 bg-orange-50' :
-                        product.id === 'hana-hanaro' ? 'text-teal-600 bg-teal-50' :
-                        product.id === 'metlife-usd' ? 'text-[#00529b] bg-[#00529b]/10' :
-                        product.id === 'metlife-dollar-annuity' ? 'text-[#00529b] bg-[#00529b]/10' :
-                        product.id === 'aia-dollar-oneshot' ? 'text-[#e31837] bg-red-50' :
-                        product.id === 'shinhan-more-the-dream' ? 'text-[#2563eb] bg-blue-50' :
-                        product.id === 'im-plus-pro' ? 'text-pink-600 bg-pink-50' :
-                        'text-red-600 bg-red-50'
-                      }`}>
+                      <span className={`text-xs font-medium px-2 py-1 rounded ${product.id === 'kb-triple-level-up' ? 'text-yellow-600 bg-yellow-50' :
+                          product.id === 'kdb-happy-plus' ? 'text-green-600 bg-green-50' :
+                            product.id === 'kdb-happy-dream' ? 'text-purple-600 bg-purple-50' :
+                              product.id === 'ibk-lifetime' ? 'text-orange-600 bg-orange-50' :
+                                product.id === 'hana-hanaro' ? 'text-teal-600 bg-teal-50' :
+                                  product.id === 'hana-only' ? 'text-emerald-600 bg-emerald-50' :
+                                    product.id === 'metlife-usd' ? 'text-[#00529b] bg-[#00529b]/10' :
+                                      product.id === 'metlife-dollar-annuity' ? 'text-[#00529b] bg-[#00529b]/10' :
+                                        product.id === 'aia-dollar-oneshot' ? 'text-[#e31837] bg-red-50' :
+                                          product.id === 'shinhan-more-the-dream' ? 'text-[#2563eb] bg-blue-50' :
+                                            product.id === 'im-plus-pro' ? 'text-pink-600 bg-pink-50' :
+                                              'text-red-600 bg-red-50'
+                        }`}>
                         {product.highlight}
                       </span>
                     </div>
                   </div>
-                  
+
                   {/* 자세히 보기 버튼 */}
                   <div className="flex justify-end">
                     <div className="flex items-center text-gray-600 text-sm font-medium group-hover:text-gray-800 transition-colors duration-200">
@@ -669,7 +667,7 @@ export default function HomePage() {
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">왜 보험스토어인가요?</h2>
             <p className="text-gray-600">고객을 위한 특별한 서비스를 제공합니다</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {insuranceFeatures.map((feature, index) => (
               <div key={index} className="text-center bg-white p-6 rounded-xl border border-gray-200 hover:shadow-md transition-shadow">
@@ -708,9 +706,9 @@ export default function HomePage() {
       <footer className="w-full bg-[#f8f8f8] border-t border-gray-200 py-8 mt-4">
         <div className="max-w-5xl mx-auto px-4 text-center text-gray-700 text-xs flex flex-col gap-1.5">
           <div className="flex justify-center items-center gap-4 mb-2">
-            <Image src="/metarich-logo1.png" alt="MetaRich 로고" width={100} height={32} style={{objectFit:'contain',height:'32px'}} />
+            <Image src="/metarich-logo1.png" alt="MetaRich 로고" width={100} height={32} style={{ objectFit: 'contain', height: '32px' }} />
             <span className="h-6 w-px bg-gray-300 mx-1 inline-block" />
-            <Image src="/bohumstore-logo.png" alt="보험스토어 로고" width={100} height={32} style={{objectFit:'contain',height:'32px'}} />
+            <Image src="/bohumstore-logo.png" alt="보험스토어 로고" width={100} height={32} style={{ objectFit: 'contain', height: '32px' }} />
           </div>
           <div>(주)메타리치보험대리점 | 대리점등록번호: 제2023070016호</div>
           <div>보험스토어 | 서지후 | 등록번호: 제20060383110008호</div>
@@ -721,37 +719,37 @@ export default function HomePage() {
       {/* 플로팅 버튼 모음 */}
       {!isHeaderMenuOpen && (
         <div className="fixed bottom-6 right-4 sm:right-8 z-50 flex flex-col gap-2 sm:gap-3">
-        {/* 상담 신청 버튼 */}
-        <Link
-          href="/insurance/a_consult"
-          className="bg-white text-blue-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_4px_25px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-blue-50 border border-blue-100 flex flex-col items-center gap-1 min-w-[50px] group"
-          aria-label="상담 신청"
-        >
-          <span className="text-xs font-bold text-gray-600 group-hover:text-blue-600 transition-colors">상담</span>
-          <ChatBubbleLeftRightIcon className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse text-blue-500" />
-        </Link>
+          {/* 상담 신청 버튼 */}
+          <Link
+            href="/insurance/a_consult"
+            className="bg-white text-blue-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_4px_25px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-blue-50 border border-blue-100 flex flex-col items-center gap-1 min-w-[50px] group"
+            aria-label="상담 신청"
+          >
+            <span className="text-xs font-bold text-gray-600 group-hover:text-blue-600 transition-colors">상담</span>
+            <ChatBubbleLeftRightIcon className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse text-blue-500" />
+          </Link>
 
-        {/* 카톡 상담 버튼 */}
-        <button 
-          onClick={() => window.open('https://pf.kakao.com/_lrubxb/chat', '_blank')}
-          className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_4px_25px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1 min-w-[50px]"
-          aria-label="카톡상담"
-        >
-          <span className="text-xs font-semibold">카톡</span>
-          <img src="/kakaotalk.png" alt="카톡상담" className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
+          {/* 카톡 상담 버튼 */}
+          <button
+            onClick={() => window.open('https://pf.kakao.com/_lrubxb/chat', '_blank')}
+            className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_4px_25px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1 min-w-[50px]"
+            aria-label="카톡상담"
+          >
+            <span className="text-xs font-semibold">카톡</span>
+            <img src="/kakaotalk.png" alt="카톡상담" className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
 
-        {/* 맨 위로 버튼 */}
-        <button 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="bg-white text-gray-600 rounded-full p-2 sm:p-3 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_4px_25px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-gray-50 border border-gray-200"
-          aria-label="맨 위로"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-          </svg>
-        </button>
-      </div>
+          {/* 맨 위로 버튼 */}
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="bg-white text-gray-600 rounded-full p-2 sm:p-3 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_4px_25px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-gray-50 border border-gray-200"
+            aria-label="맨 위로"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+            </svg>
+          </button>
+        </div>
       )}
     </div>
   );

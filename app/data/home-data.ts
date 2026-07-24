@@ -25,6 +25,7 @@ export interface MainProduct {
   category: string;
   highlight: string;
   descriptionNote?: string;
+  hidden?: boolean;
 }
 
 export interface ChatMessage {
@@ -199,6 +200,23 @@ export const slogans: Slogan[] = [
     ],
     company: '하나생명',
     logo: '/hana-logo.png'
+  },
+  {
+    id: 'hana-only',
+    title: '연단리 7% 보증',
+    subtitle: '변액연금의 높은 수익성',
+    description: '하나뿐인 변액연금보험으로 최저사망적립액과 최저연금지급액을 보증받으세요.',
+    path: '/insurance/annuity/hana/hana-only',
+    color: 'from-emerald-500 to-emerald-600',
+    bgColor: 'bg-emerald-50',
+    features: [
+      '최대 연단리 7% 보증이율 적용',
+      '최저사망적립액 및 최저연금지급액 보증',
+      '가입나이 0~68세 / 연금개시 30~85세',
+      '월납 20만원부터 가입 가능'
+    ],
+    company: '하나생명',
+    logo: '/hana-logo.png'
   }
 ];
 
@@ -247,6 +265,17 @@ export const mainProducts: MainProduct[] = [
     badge: 'HOT',
     category: '변액연금',
     highlight: '연단리 8% 보증'
+  },
+  {
+    id: 'hana-only',
+    name: '하나뿐인 변액연금보험',
+    company: '하나생명',
+    logo: '/hana-logo.png',
+    path: '/insurance/annuity/hana/hana-only',
+    description: '최대 연단리 7% 보증, 최저사망적립액 및 최저연금지급액 보증',
+    badge: 'NEW',
+    category: '변액연금',
+    highlight: '연단리 7% 보증'
   },
   {
     id: 'kdb-happy-dream',
@@ -312,7 +341,8 @@ export const mainProducts: MainProduct[] = [
     description: '목돈마련과 노후준비 동시에, 최저계약자적립액 보증',
     badge: '',
     category: '연금보험',
-    highlight: '10년시점 133% 보증'
+    highlight: '10년시점 133% 보증',
+    hidden: true
   }
 ];
 
