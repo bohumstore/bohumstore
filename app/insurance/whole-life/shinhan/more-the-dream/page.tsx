@@ -15,8 +15,8 @@ import { trackPageVisit } from "../../../../utils/visitorTracking";
 
 export default function ShinhanMoreTheDreamPage() {
   const tabs = [
-    { label: '상품 정보',      content: <ProductInfo /> },
-    { label: '보장 내용',      content: <CoverageDetails /> },
+    { label: '상품 정보', content: <ProductInfo /> },
+    { label: '보장 내용', content: <CoverageDetails /> },
     { label: '해약환급금 예시표', content: <Surrender /> },
   ];
 
@@ -80,7 +80,7 @@ export default function ShinhanMoreTheDreamPage() {
       <Modal title="개인정보 수집 및 이용 동의" open={showPrivacy} onClose={() => setShowPrivacy(false)}>
         <PrivacyConsent />
       </Modal>
-      <div 
+      <div
         className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full"
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -92,18 +92,18 @@ export default function ShinhanMoreTheDreamPage() {
             <Tabs tabs={tabs} />
             {/* 하단 버튼 */}
             <div className="flex flex-col md:flex-row gap-4 justify-center md:mt-10">
-              <a 
-                href="/shinhan-morethedream.pdf" data-remove="true" style={{display:'none'}} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="/shinhan-morethedream.pdf" data-remove="true" style={{ display: 'none' }}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer"
               >
                 상품설명서
               </a>
-              <a 
-                href="/shinhan-morethedream2.pdf" style={{display:'none'}} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="/shinhan-morethedream2.pdf" style={{ display: 'none' }}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer"
               >
                 약관
@@ -141,48 +141,48 @@ export default function ShinhanMoreTheDreamPage() {
             <div className="text-red-500">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
             <div className="text-red-500">① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.</div>
             <div className="text-red-500">② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</div>
-            <div>※ 준법감시인 심의필 202606-41 (2026.06.09~2027.06.)</div>
+            <div>※ 준법감시인 심의필 202606-41 (2026.06.09~2027.06.08)</div>
           </div>
         </div>
         <Footer />
-        
+
         {/* 오른쪽 하단 플로팅 액션 버튼들 - 모달이 열렸을 때는 숨김 */}
         {!isModalOpen && !showPrivacy && !showNotice && !isInputFocused && !isHeaderMenuOpen && (
-        <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 flex flex-col gap-2 sm:gap-3 z-50">
-          {/* 계산하기 버튼 */}
-          <button
-            onClick={() => {
-              const calculatorBox = document.getElementById('calculator-box');
-              if (calculatorBox) {
-                calculatorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }
-            }}
-            className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
-            aria-label="계산하기"
-          >
-            <span className="text-xs font-semibold">계산</span>
-            <img src="/Calculator.png" alt="계산하기" className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
-          {/* 카톡상담 버튼 */}
-          <button 
-            onClick={() => window.open('https://pf.kakao.com/_lrubxb/chat', '_blank')}
-            className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
-            aria-label="카톡상담"
-          >
-            <span className="text-xs font-semibold">카톡</span>
-            <img src="/kakaotalk.png" alt="카톡상담" className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
-          {/* 맨 위로 버튼 */}
-          <button 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="bg-white text-gray-600 rounded-full p-3 sm:p-4 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200"
-            aria-label="맨 위로"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-            </svg>
-          </button>
-        </div>
+          <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 flex flex-col gap-2 sm:gap-3 z-50">
+            {/* 계산하기 버튼 */}
+            <button
+              onClick={() => {
+                const calculatorBox = document.getElementById('calculator-box');
+                if (calculatorBox) {
+                  calculatorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+              }}
+              className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
+              aria-label="계산하기"
+            >
+              <span className="text-xs font-semibold">계산</span>
+              <img src="/Calculator.png" alt="계산하기" className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+            {/* 카톡상담 버튼 */}
+            <button
+              onClick={() => window.open('https://pf.kakao.com/_lrubxb/chat', '_blank')}
+              className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
+              aria-label="카톡상담"
+            >
+              <span className="text-xs font-semibold">카톡</span>
+              <img src="/kakaotalk.png" alt="카톡상담" className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+            {/* 맨 위로 버튼 */}
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="bg-white text-gray-600 rounded-full p-3 sm:p-4 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200"
+              aria-label="맨 위로"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+              </svg>
+            </button>
+          </div>
         )}
       </div>
     </>
