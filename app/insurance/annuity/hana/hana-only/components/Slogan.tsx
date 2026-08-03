@@ -731,7 +731,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
     // 66~68세
     if (age >= 66 && age <= 68) {
-      if (years === 7) return 80;
+      if (years === 12) return 85;
     }
 
     // 기본값 (매칭되지 않는 경우)
@@ -796,27 +796,25 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     return () => { canceled = true; };
   }, [gender, birth, paymentPeriod, paymentAmount]);
 
-  // 납입기간 선택 가능 여부 (연령별 제한)
+  // 납입기간 선택 가능 여부 (연령별 제한) - 엑셀 데이터 기반
   const getAvailablePaymentPeriods = (age: number): string[] => {
-    if (age >= 0 && age <= 55) {
+    if (age >= 0 && age <= 60) {
       return ['10년', '12년', '15년', '20년'];
-    } else if (age >= 56 && age <= 60) {
-      return ['10년', '12년', '15년'];
     } else if (age >= 61 && age <= 65) {
-      return ['10년', '12년'];
+      return ['10년', '12년', '15년'];
     } else if (age >= 66 && age <= 68) {
-      return ['7년']; // 7년납 자동 적용
+      return ['12년']; // 66~68세는 12년납만 가능
     }
     return [];
   };
 
   const availablePaymentPeriods = isAgeKnown ? getAvailablePaymentPeriods(Number(insuranceAge)) : [];
 
-  // 66~68세는 7년납 자동 적용
+  // 66~68세는 12년납 자동 적용
   useEffect(() => {
     if (isAgeKnown && Number(insuranceAge) >= 66 && Number(insuranceAge) <= 68) {
-      if (paymentPeriod !== '7년') {
-        setPaymentPeriod('7년');
+      if (paymentPeriod !== '12년') {
+        setPaymentPeriod('12년');
       }
     }
   }, [insuranceAge, isAgeKnown]);
@@ -1137,11 +1135,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1.5">납입기간</label>
                   {isAgeKnown && Number(insuranceAge) >= 66 && Number(insuranceAge) <= 68 ? (
-                    // 66~68세: 7년납 자동 적용
+                    // 66~68세: 12년납 자동 적용
                     <div className="grid grid-cols-3 gap-2">
                       <div className="col-span-3">
                         <div className="w-full text-center py-2.5 text-sm border-2 border-[#00a884] bg-[#00a884]/5 text-[#00a884] font-bold rounded-lg">
-                          7년
+                          12년
                         </div>
                       </div>
                     </div>

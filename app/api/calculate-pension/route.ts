@@ -284,9 +284,9 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		// 적격성 확인 모드: 각 납입기간별(7/10/15/20)로 해당 연령/성별 데이터가 비어있지 않은지 반환
+		// 적격성 확인 모드: 각 납입기간별(10/12/15/20)로 해당 연령/성별 데이터가 비어있지 않은지 반환
 		if (mode === 'eligibility') {
-			const periodsToCheck = [7, 10, 15, 20];
+			const periodsToCheck = [10, 12, 15, 20];
 			const mapped = mapGender(gender);
 			const ageInt = parseInt(age.toString());
 			const isNonEmpty = (v: any) => {
