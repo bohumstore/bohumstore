@@ -14,7 +14,7 @@ const currentPath = '/insurance/annuity/hana/hana-only';
 const productConfig = getProductConfigByPath(currentPath);
 
 const INSURANCE_COMPANY_ID = 6; // 하나생명
-const INSURANCE_PRODUCT_ID = 14; // 하나생명 하나온리 연금보험
+const INSURANCE_PRODUCT_ID = 14; // 하나생명 하나뿐인변액연금보험
 
 type SloganProps = {
   onOpenPrivacy: () => void

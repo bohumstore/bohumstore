@@ -49,6 +49,11 @@ const setupProductData = async () => {
           id: 5,
           name: '동양생명',
           created_at: new Date().toISOString()
+        },
+        {
+          id: 6,
+          name: '하나생명',
+          created_at: new Date().toISOString()
         }
       ], { onConflict: 'id' });
 
@@ -132,6 +137,13 @@ const setupProductData = async () => {
           company_id: 5,
           category_id: 2, // 종신보험
           created_at: new Date().toISOString()
+        },
+        {
+          id: 14,
+          name: '하나생명 하나뿐인변액연금보험',
+          company_id: 6,
+          category_id: 3, // 변액연금보험
+          created_at: new Date().toISOString()
         }
       ], { onConflict: 'id' });
 
@@ -168,7 +180,7 @@ const setupProductData = async () => {
 
     console.log('🎉 모든 데이터 설정이 완료되었습니다!');
     console.log('\n📊 설정된 데이터:');
-    console.log('- 보험사: KB라이프, KDB생명, IBK연금보험, 신한라이프, 동양생명');
+    console.log('- 보험사: KB라이프, KDB생명, IBK연금보험, 신한라이프, 동양생명, 하나생명');
     console.log('- 카테고리: 연금보험, 종신보험, 변액연금보험');
     console.log('- 상품:');
     console.log('  * KB라이프 트리플 레벨업 연금보험 (ID: 1) - 변액연금보험');
@@ -177,6 +189,7 @@ const setupProductData = async () => {
     console.log('  * IBK 평생연금받는 변액연금보험 (ID: 4) - 변액연금보험');
     console.log('  * 신한 모아더드림 Plus 종신보험 (ID: 5) - 종신보험');
     console.log('  * 동양생명 테스트 상품 (ID: 6) - 종신보험');
+    console.log('  * 하나생명 하나뿐인변액연금보험 (ID: 14) - 변액연금보험');
     console.log('- 상담 타입: 보험료 확인, 상담신청');
 
   } catch (error) {
@@ -213,7 +226,7 @@ const checkData = async () => {
 // 메인 실행
 const main = async () => {
   const command = process.argv[2];
-  
+
   if (command === 'check') {
     await checkData();
   } else {
