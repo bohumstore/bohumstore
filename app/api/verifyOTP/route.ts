@@ -311,6 +311,10 @@ export async function POST(req: Request) {
     // 관리자/고객 발송을 병렬 처리하여 전체 대기시간을 단축
     const adminSendPromise = ((): Promise<any> | null => {
       if (onlyClient) return null;
+
+      // 중복 설계 시 메시지 끝에 "재설계" 표시 추가
+      const duplicateSuffix = existingCounsel ? '\n\n재설계' : '';
+
       const toAdminReq = {
         headers: { "content-type": "application/json" },
         body: {
@@ -319,8 +323,8 @@ export async function POST(req: Request) {
           receiver_1: "010-8897-7486",
           subject_1: subject,
           message_1: counselType === 1
-            ? `[보험료계산]\n${companyName ? companyName + '\n' : ''}${productDisplayName}\n${displayBirth}\n${displayName}\n${displayGenderKor}\n${phone}`
-            : `[상담/설계요청]\n${counselTime}\n${productDisplayName}\n${displayBirth}\n${displayName}\n${displayGenderKor}\n${phone}`,
+            ? `[보험료계산]\n${companyName ? companyName + '\n' : ''}${productDisplayName}\n${displayBirth}\n${displayName}\n${displayGenderKor}\n${phone}${duplicateSuffix}`
+            : `[상담/설계요청]\n${counselTime}\n${productDisplayName}\n${displayBirth}\n${displayName}\n${displayGenderKor}\n${phone}${duplicateSuffix}`,
           testMode: "N",
         },
       };
