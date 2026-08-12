@@ -584,106 +584,106 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 </div>
                 <p className="text-gray-700 text-[11px] sm:text-xs md:text-sm ml-9 sm:ml-10">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
               </div>
-              <form className="flex flex-col gap-2.5 sm:gap-3 md:gap-4" onSubmit={handleInsuranceCostCalculate}:
-              {/* 성별/이름 */}
-              <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-3">
-                <div>
-                  <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">성별 <span className="text-red-500">*</span></label>
-                  <div className="flex gap-1.5 sm:gap-2">
-                    <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316]' : 'border-gray-200 hover:border-gray-300'}`}>
-                      <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
-                      <span className="text-xs sm:text-sm font-medium">남자</span>
-                    </label>
-                    <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316]' : 'border-gray-200 hover:border-gray-300'}`}>
-                      <input type="radio" name="gender" value="F" checked={gender === "F"} onChange={handleGenderChange} className="sr-only" />
-                      <span className="text-xs sm:text-sm font-medium">여자</span>
-                    </label>
+              <form className="flex flex-col gap-2.5 sm:gap-3 md:gap-4" onSubmit={handleInsuranceCostCalculate}>
+                {/* 성별/이름 */}
+                <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-3">
+                  <div>
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">성별 <span className="text-red-500">*</span></label>
+                    <div className="flex gap-1.5 sm:gap-2">
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316]' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
+                        <span className="text-xs sm:text-sm font-medium">남자</span>
+                      </label>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316]' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <input type="radio" name="gender" value="F" checked={gender === "F"} onChange={handleGenderChange} className="sr-only" />
+                        <span className="text-xs sm:text-sm font-medium">여자</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">이름 <span className="text-red-500">*</span></label>
+                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="홍길동" />
                   </div>
                 </div>
+
+                {/* 생년월일/연락처 */}
+                <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-3">
+                  <div>
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">생년월일 <span className="text-red-500">*</span></label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="19880818" maxLength={8} />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">연락처 <span className="text-red-500">*</span></label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="01012345678" />
+                  </div>
+                </div>
+
+                {/* 납입기간 */}
                 <div>
-                  <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">이름 <span className="text-red-500">*</span></label>
-                  <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="홍길동" />
+                  <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">납입기간</label>
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                    {['5년', '7년', '10년'].map((period) => (
+                      <label key={period} className="relative cursor-pointer">
+                        {period === '5년' && (
+                          <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#f97316] to-[#ea580c] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
+                        )}
+                        <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
+                        <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                          {period}
+                        </div>
+                      </label>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              {/* 생년월일/연락처 */}
-              <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-3">
+                {/* 월 납입금액 */}
                 <div>
-                  <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">생년월일 <span className="text-red-500">*</span></label>
-                  <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="19880818" maxLength={8} />
+                  <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">월 납입금액</label>
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                    {['30만원', '50만원', '70만원', '100만원', '130만원', '150만원'].map((amount) => (
+                      <label key={amount} className="cursor-pointer">
+                        <input type="radio" name="paymentAmount" value={amount} checked={paymentAmount === amount} onChange={handlePaymentAmountChange} className="peer sr-only" />
+                        <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                          {amount}
+                        </div>
+                      </label>
+                    ))}
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">연락처 <span className="text-red-500">*</span></label>
-                  <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="01012345678" />
+
+                {/* 개인정보 동의 */}
+                <div className="flex items-center gap-2">
+                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#f97316] rounded border-gray-300 cursor-pointer focus:ring-[#f97316]" />
+                  <span className="text-[10px] sm:text-xs text-gray-600">
+                    개인정보 수집 및 이용에 동의합니다.
+                    <button type="button" onClick={onOpenPrivacy} className="text-[#f97316] underline ml-1 hover:text-[#ea580c]">자세히 보기</button>
+                  </span>
                 </div>
-              </div>
 
-              {/* 납입기간 */}
-              <div>
-                <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">납입기간</label>
-                <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                  {['5년', '7년', '10년'].map((period) => (
-                    <label key={period} className="relative cursor-pointer">
-                      {period === '5년' && (
-                        <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#f97316] to-[#ea580c] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
-                      )}
-                      <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
-                      <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
-                        {period}
-                      </div>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* 월 납입금액 */}
-              <div>
-                <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">월 납입금액</label>
-                <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                  {['30만원', '50만원', '70만원', '100만원', '130만원', '150만원'].map((amount) => (
-                    <label key={amount} className="cursor-pointer">
-                      <input type="radio" name="paymentAmount" value={amount} checked={paymentAmount === amount} onChange={handlePaymentAmountChange} className="peer sr-only" />
-                      <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
-                        {amount}
-                      </div>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* 개인정보 동의 */}
-              <div className="flex items-center gap-2">
-                <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#f97316] rounded border-gray-300 cursor-pointer focus:ring-[#f97316]" />
-                <span className="text-[10px] sm:text-xs text-gray-600">
-                  개인정보 수집 및 이용에 동의합니다.
-                  <button type="button" onClick={onOpenPrivacy} className="text-[#f97316] underline ml-1 hover:text-[#ea580c]">자세히 보기</button>
-                </span>
-              </div>
-
-              {/* 버튼들 */}
-              <div className="flex flex-col gap-1.5 sm:gap-2 mt-1">
-                <button type="submit" className="w-full bg-gradient-to-r from-[#f97316] to-[#ea580c] text-white font-bold rounded-xl py-3 sm:py-3.5 text-sm sm:text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#f97316]/25 cursor-pointer">
-                  <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                  해약환급금 확인하기
-                </button>
-                <div className="flex gap-1.5 sm:gap-2">
-                  <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
-                    <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-3.5 h-3.5 sm:w-4 sm:h-4'>
-                      <path strokeLinecap='round' strokeLinejoin='round' d='M2.25 12a9.75 9.75 0 1 1 19.5 0v3.375a2.625 2.625 0 0 1-2.625 2.625h-1.125a.375.375 0 0 1-.375-.375V15a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 0 .75-.75V12a8.25 8.25 0 1 0-16.5 0v1.5a.75.75 0 0 0 .75.75h.75A.75.75 0 0 1 6 15v2.625a.375.375 0 0 1-.375.375H4.5A2.625 2.625 0 0 1 1.875 15.375V12Z' />
-                    </svg>
-                    상담신청
+                {/* 버튼들 */}
+                <div className="flex flex-col gap-1.5 sm:gap-2 mt-1">
+                  <button type="submit" className="w-full bg-gradient-to-r from-[#f97316] to-[#ea580c] text-white font-bold rounded-xl py-3 sm:py-3.5 text-sm sm:text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#f97316]/25 cursor-pointer">
+                    <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                    해약환급금 확인하기
                   </button>
-                  <a href="https://pf.kakao.com/_lrubxb/chat" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
-                    <ChatBubbleLeftRightIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    채팅상담
-                  </a>
+                  <div className="flex gap-1.5 sm:gap-2">
+                    <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
+                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-3.5 h-3.5 sm:w-4 sm:h-4'>
+                        <path strokeLinecap='round' strokeLinejoin='round' d='M2.25 12a9.75 9.75 0 1 1 19.5 0v3.375a2.625 2.625 0 0 1-2.625 2.625h-1.125a.375.375 0 0 1-.375-.375V15a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 0 .75-.75V12a8.25 8.25 0 1 0-16.5 0v1.5a.75.75 0 0 0 .75.75h.75A.75.75 0 0 1 6 15v2.625a.375.375 0 0 1-.375.375H4.5A2.625 2.625 0 0 1 1.875 15.375V12Z' />
+                      </svg>
+                      상담신청
+                    </button>
+                    <a href="https://pf.kakao.com/_lrubxb/chat" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
+                      <ChatBubbleLeftRightIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      채팅상담
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </section >
+      </section >
       <Modal
         title={
           counselType === 1 ? (
@@ -926,181 +926,181 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           )}
         </div>
       </Modal>
-  {/* 상담신청 모달 */ }
-  <Modal
-    title={
-      <span className="flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-[#fa5a5a]">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z" />
-        </svg>
-        상담 신청하기
-      </span>
-    }
-    open={showConsultModal}
-    onClose={handleCloseConsultModal}
-  >
-    <div className="space-y-3">
-      {/* 안내문구 */}
-      {consultIsVerified ? (
-        <>
-          <FireworksEffect show={true} />
-          <div className="bg-[#f8f8ff] rounded p-3 mb-1 text-center">
-            <div className="text-lg text-black font-bold">상담신청이 접수되었습니다.</div>
-            <div className="text-sm text-gray-600 mt-1">담당자가 선택하신 상담 시간에 연락드릴 예정입니다.</div>
-          </div>
-        </>
-      ) : (
-        <div className="text-sm text-gray-700 bg-[#f8f8ff] rounded p-2 mb-1 text-center font-semibold">
-          상담신청을 위해 아래 정보를 입력해 주세요.
-        </div>
-      )}
-      <div className="bg-gray-50 rounded-lg p-2.5 mb-0.5">
-        <h3 className="mb-2 flex items-center">
-          <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name}</span>
-          <span className="text-lg text-[#7c3aed] font-bold align-middle">&nbsp;님</span>
-          {insuranceAge !== '' && (
-            <span className="font-bold ml-2 flex items-center">
-              <span className="text-lg text-[#3a8094]">보험연령 </span>
-              <span className="text-2xl font-extrabold text-[#ef4444] mx-1">{insuranceAge}</span>
-              <span className="text-lg text-[#3a8094]">세</span>
-            </span>
+      {/* 상담신청 모달 */}
+      <Modal
+        title={
+          <span className="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-[#fa5a5a]">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z" />
+            </svg>
+            상담 신청하기
+          </span>
+        }
+        open={showConsultModal}
+        onClose={handleCloseConsultModal}
+      >
+        <div className="space-y-3">
+          {/* 안내문구 */}
+          {consultIsVerified ? (
+            <>
+              <FireworksEffect show={true} />
+              <div className="bg-[#f8f8ff] rounded p-3 mb-1 text-center">
+                <div className="text-lg text-black font-bold">상담신청이 접수되었습니다.</div>
+                <div className="text-sm text-gray-600 mt-1">담당자가 선택하신 상담 시간에 연락드릴 예정입니다.</div>
+              </div>
+            </>
+          ) : (
+            <div className="text-sm text-gray-700 bg-[#f8f8ff] rounded p-2 mb-1 text-center font-semibold">
+              상담신청을 위해 아래 정보를 입력해 주세요.
+            </div>
           )}
-        </h3>
-        <div className="grid grid-cols-1 gap-1 sm:gap-1.5">
-          <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>이름</span>
-              <span className="font-bold text-[#3a8094] text-sm sm:text-base">{name}</span>
-            </div>
-          </div>
-          <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연락처</span>
-              <span className="font-bold text-[#3a8094] text-sm sm:text-base">{phone}</span>
-            </div>
-          </div>
-          <div className={`bg-white p-1.5 sm:p-2 rounded border border-gray-200 relative ${consultIsVerified ? '' : 'cursor-pointer select-none'}`}
-            onClick={consultIsVerified ? undefined : () => setShowConsultTypeDropdown(v => !v)}
-            tabIndex={consultIsVerified ? -1 : 0}
-            onBlur={consultIsVerified ? undefined : () => setTimeout(() => setShowConsultTypeDropdown(false), 100)}
-            aria-disabled={consultIsVerified}
-          >
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상담종류</span>
-              <span className={`font-bold flex items-center gap-1 text-sm sm:text-base ${consultIsVerified ? 'text-[#3a8094]' : 'text-[#7c3aed]'}`}>
-                {consultType}
-                {!consultIsVerified && (
-                  <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-                )}
-              </span>
-            </div>
-            {!consultIsVerified && showConsultTypeDropdown && (
-              <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10">
-                {consultTypeOptions.map(opt => (
-                  <div
-                    key={opt}
-                    className={`px-4 py-2 text-sm cursor-pointer hover:bg-blue-50 ${consultType === opt ? 'text-[#7c3aed] font-bold' : 'text-gray-700'}`}
-                    onClick={e => { e.stopPropagation(); setConsultType(opt); setShowConsultTypeDropdown(false); }}
-                  >
-                    {opt}
-                  </div>
-                ))}
+          <div className="bg-gray-50 rounded-lg p-2.5 mb-0.5">
+            <h3 className="mb-2 flex items-center">
+              <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name}</span>
+              <span className="text-lg text-[#7c3aed] font-bold align-middle">&nbsp;님</span>
+              {insuranceAge !== '' && (
+                <span className="font-bold ml-2 flex items-center">
+                  <span className="text-lg text-[#3a8094]">보험연령 </span>
+                  <span className="text-2xl font-extrabold text-[#ef4444] mx-1">{insuranceAge}</span>
+                  <span className="text-lg text-[#3a8094]">세</span>
+                </span>
+              )}
+            </h3>
+            <div className="grid grid-cols-1 gap-1 sm:gap-1.5">
+              <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>이름</span>
+                  <span className="font-bold text-[#3a8094] text-sm sm:text-base">{name}</span>
+                </div>
               </div>
-            )}
-          </div>
-          <div className={`bg-white p-1.5 sm:p-2 rounded border border-gray-200 relative ${consultIsVerified ? '' : 'cursor-pointer select-none'}`}
-            onClick={consultIsVerified ? undefined : () => setShowConsultTimeDropdown(v => !v)}
-            tabIndex={consultIsVerified ? -1 : 0}
-            onBlur={consultIsVerified ? undefined : () => setTimeout(() => setShowConsultTimeDropdown(false), 100)}
-            aria-disabled={consultIsVerified}
-          >
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상담시간대</span>
-              <span className={`font-bold flex items-center gap-1 text-sm sm:text-base ${consultIsVerified ? 'text-[#3a8094]' : 'text-[#7c3aed]'}`}>
-                {consultTime}
-                {!consultIsVerified && (
-                  <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-                )}
-              </span>
-            </div>
-            {!consultIsVerified && showConsultTimeDropdown && (
-              <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto overscroll-contain">
-                {consultTimeOptions.map(opt => (
-                  <div
-                    key={opt}
-                    className={`px-4 py-2 text-sm cursor-pointer hover:bg-blue-50 ${consultTime === opt ? 'text-[#7c3aed] font-bold' : 'text-gray-700'}`}
-                    onClick={e => { e.stopPropagation(); setConsultTime(opt); setShowConsultTimeDropdown(false); }}
-                  >
-                    {opt}
-                  </div>
-                ))}
+              <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연락처</span>
+                  <span className="font-bold text-[#3a8094] text-sm sm:text-base">{phone}</span>
+                </div>
               </div>
-            )}
+              <div className={`bg-white p-1.5 sm:p-2 rounded border border-gray-200 relative ${consultIsVerified ? '' : 'cursor-pointer select-none'}`}
+                onClick={consultIsVerified ? undefined : () => setShowConsultTypeDropdown(v => !v)}
+                tabIndex={consultIsVerified ? -1 : 0}
+                onBlur={consultIsVerified ? undefined : () => setTimeout(() => setShowConsultTypeDropdown(false), 100)}
+                aria-disabled={consultIsVerified}
+              >
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상담종류</span>
+                  <span className={`font-bold flex items-center gap-1 text-sm sm:text-base ${consultIsVerified ? 'text-[#3a8094]' : 'text-[#7c3aed]'}`}>
+                    {consultType}
+                    {!consultIsVerified && (
+                      <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                    )}
+                  </span>
+                </div>
+                {!consultIsVerified && showConsultTypeDropdown && (
+                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10">
+                    {consultTypeOptions.map(opt => (
+                      <div
+                        key={opt}
+                        className={`px-4 py-2 text-sm cursor-pointer hover:bg-blue-50 ${consultType === opt ? 'text-[#7c3aed] font-bold' : 'text-gray-700'}`}
+                        onClick={e => { e.stopPropagation(); setConsultType(opt); setShowConsultTypeDropdown(false); }}
+                      >
+                        {opt}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className={`bg-white p-1.5 sm:p-2 rounded border border-gray-200 relative ${consultIsVerified ? '' : 'cursor-pointer select-none'}`}
+                onClick={consultIsVerified ? undefined : () => setShowConsultTimeDropdown(v => !v)}
+                tabIndex={consultIsVerified ? -1 : 0}
+                onBlur={consultIsVerified ? undefined : () => setTimeout(() => setShowConsultTimeDropdown(false), 100)}
+                aria-disabled={consultIsVerified}
+              >
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상담시간대</span>
+                  <span className={`font-bold flex items-center gap-1 text-sm sm:text-base ${consultIsVerified ? 'text-[#3a8094]' : 'text-[#7c3aed]'}`}>
+                    {consultTime}
+                    {!consultIsVerified && (
+                      <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                    )}
+                  </span>
+                </div>
+                {!consultIsVerified && showConsultTimeDropdown && (
+                  <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded shadow z-10 max-h-48 overflow-y-auto overscroll-contain">
+                    {consultTimeOptions.map(opt => (
+                      <div
+                        key={opt}
+                        className={`px-4 py-2 text-sm cursor-pointer hover:bg-blue-50 ${consultTime === opt ? 'text-[#7c3aed] font-bold' : 'text-gray-700'}`}
+                        onClick={e => { e.stopPropagation(); setConsultTime(opt); setShowConsultTimeDropdown(false); }}
+                      >
+                        {opt}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      {/* 상담 안내 박스 */}
-      <div className="bg-[#f8f8ff] rounded p-2 text-xs text-gray-600 text-center mb-1">
-        📢 상담 중 궁금한 점은 언제든 말씀해 주세요.
-      </div>
-      {/* 휴대폰 인증 안내 */}
-      {!consultIsVerified && (
-        <div className="bg-gray-50 rounded-lg p-1.5 sm:p-2 mt-0">
-          <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-1">휴대폰 인증</h3>
-          <p className="text-xs sm:text-sm text-gray-600 mb-1">상담신청을 위해 휴대폰 인증이 필요합니다.</p>
-          <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2 mb-2 sm:mb-2.5 items-stretch sm:items-center">
-            <input
-              type="text"
-              value={phone}
-              readOnly
-              className="flex-1 px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base bg-gray-100"
-            />
-            <button
-              type="button"
-              onClick={handleConsultSendOTP}
-              className="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 bg-[#f97316] text-white rounded-md text-sm sm:text-base font-medium 
+          {/* 상담 안내 박스 */}
+          <div className="bg-[#f8f8ff] rounded p-2 text-xs text-gray-600 text-center mb-1">
+            📢 상담 중 궁금한 점은 언제든 말씀해 주세요.
+          </div>
+          {/* 휴대폰 인증 안내 */}
+          {!consultIsVerified && (
+            <div className="bg-gray-50 rounded-lg p-1.5 sm:p-2 mt-0">
+              <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-1">휴대폰 인증</h3>
+              <p className="text-xs sm:text-sm text-gray-600 mb-1">상담신청을 위해 휴대폰 인증이 필요합니다.</p>
+              <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2 mb-2 sm:mb-2.5 items-stretch sm:items-center">
+                <input
+                  type="text"
+                  value={phone}
+                  readOnly
+                  className="flex-1 px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base bg-gray-100"
+                />
+                <button
+                  type="button"
+                  onClick={handleConsultSendOTP}
+                  className="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 bg-[#f97316] text-white rounded-md text-sm sm:text-base font-medium 
                            hover:bg-[#ea580c] transition-colors min-w-[100px] sm:min-w-[120px]"
-            >
-              {consultOtpResendAvailable ? '인증번호 전송' : '재발송'}
-            </button>
-            {!consultOtpResendAvailable && (
-              <div className="min-w-[60px] flex items-center justify-center text-[#3a8094] font-medium text-sm">
-                {formatTime(consultOtpTimer)}
+                >
+                  {consultOtpResendAvailable ? '인증번호 전송' : '재발송'}
+                </button>
+                {!consultOtpResendAvailable && (
+                  <div className="min-w-[60px] flex items-center justify-center text-[#3a8094] font-medium text-sm">
+                    {formatTime(consultOtpTimer)}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-          <div className="flex gap-1.5 sm:gap-2 mb-2 sm:mb-3">
-            <input
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              ref={consultOtpInputRef}
-              value={consultOtpCode}
-              onChange={e => setConsultOtpCode(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
-              onFocus={(e) => {
-                if (window.innerWidth < 768) {
-                  setTimeout(() => {
-                    e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                  }, 300);
-                }
-              }}
-              maxLength={6}
-              className="flex-1 px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
-              placeholder="6자리 인증번호 입력"
-            />
-          </div>
-          <button
-            type="button"
-            onClick={handleConsultVerifyOTP}
-            disabled={verifying || consultOtpCode.length !== 6}
-            className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpCode.length !== 6) ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
-          >
-            {verifying ? '인증 처리중...' : '인증하고 상담신청'}
-          </button>
+              <div className="flex gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  ref={consultOtpInputRef}
+                  value={consultOtpCode}
+                  onChange={e => setConsultOtpCode(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
+                  onFocus={(e) => {
+                    if (window.innerWidth < 768) {
+                      setTimeout(() => {
+                        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }, 300);
+                    }
+                  }}
+                  maxLength={6}
+                  className="flex-1 px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-[#3a8094] focus:border-[#3a8094]"
+                  placeholder="6자리 인증번호 입력"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={handleConsultVerifyOTP}
+                disabled={verifying || consultOtpCode.length !== 6}
+                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 ${(verifying || consultOtpCode.length !== 6) ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-[#3a8094] text-white hover:bg-[#2c6070]'}`}
+              >
+                {verifying ? '인증 처리중...' : '인증하고 상담신청'}
+              </button>
+            </div>
+          )}
         </div>
-      )}
-    </div>
-  </Modal>
+      </Modal>
     </>
   );
 }
