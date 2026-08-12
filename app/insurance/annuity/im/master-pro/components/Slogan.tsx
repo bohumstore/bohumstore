@@ -577,21 +577,21 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           </div>
           {/* 오른쪽: 환급금 확인 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
-            <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-5 sm:p-6 md:p-7 relative flex flex-col">
-              <div className="mb-4 sm:mb-5 md:mb-6">
+            <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-4 sm:p-5 md:p-6 relative flex flex-col">
+              <div className="mb-4 sm:mb-5">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-7 h-7 sm:w-8 sm:h-8 bg-indigo-700 rounded-lg flex items-center justify-center">
                     <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
                   <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">해약환급금 계산하기</h3>
                 </div>
-                <p className="text-gray-700 text-xs sm:text-sm ml-9 sm:ml-10">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
+                <p className="text-gray-700 text-[11px] sm:text-xs md:text-sm ml-9 sm:ml-10">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
               </div>
-              <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleInsuranceCostCalculate}>
+              <form className="flex flex-col gap-2.5 sm:gap-3 md:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 성별/이름 */}
-                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-3">
                   <div>
-                    <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5">성별 <span className="text-red-500">*</span></label>
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">성별 <span className="text-red-500">*</span></label>
                     <div className="flex gap-1.5 sm:gap-2">
                       <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-indigo-500 bg-indigo-50 text-indigo-700' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
@@ -604,26 +604,26 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5">이름 <span className="text-red-500">*</span></label>
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">이름 <span className="text-red-500">*</span></label>
                     <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" placeholder="홍길동" />
                   </div>
                 </div>
 
                 {/* 생년월일/연락처 */}
-                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-3">
                   <div>
-                    <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5">생년월일 <span className="text-red-500">*</span></label>
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">생년월일 <span className="text-red-500">*</span></label>
                     <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" placeholder="19880818" maxLength={8} />
                   </div>
                   <div>
-                    <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5">연락처 <span className="text-red-500">*</span></label>
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">연락처 <span className="text-red-500">*</span></label>
                     <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" placeholder="01012345678" />
                   </div>
                 </div>
 
                 {/* 납입기간 */}
                 <div>
-                  <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5">납입기간</label>
+                  <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">납입기간</label>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2">
                     {['10년', '12년', '15년', '20년'].map((period) => (
                       <label key={period} className="relative cursor-pointer">
@@ -641,7 +641,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 월 납입금액 */}
                 <div>
-                  <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1.5">월 납입금액</label>
+                  <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">월 납입금액</label>
                   <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                     {['30만원', '50만원', '70만원', '100만원', '130만원', '150만원'].map((amount) => (
                       <label key={amount} className="cursor-pointer">
@@ -656,15 +656,15 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 개인정보 동의 */}
                 <div className="flex items-center gap-2">
-                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-indigo-600 rounded border-gray-300 cursor-pointer focus:ring-indigo-500" />
-                  <span className="text-xs text-gray-600">
+                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-600 rounded border-gray-300 cursor-pointer focus:ring-indigo-500" />
+                  <span className="text-[10px] sm:text-xs text-gray-600">
                     개인정보 수집 및 이용에 동의합니다.
                     <button type="button" onClick={onOpenPrivacy} className="text-indigo-600 underline ml-1 hover:text-indigo-700">자세히 보기</button>
                   </span>
                 </div>
 
                 {/* 버튼들 */}
-                <div className="flex flex-col gap-2 mt-1">
+                <div className="flex flex-col gap-1.5 sm:gap-2 mt-1">
                   <button type="submit" className="w-full bg-indigo-700 text-white font-bold rounded-xl py-3 sm:py-3.5 text-sm sm:text-base hover:bg-indigo-800 transition flex items-center justify-center gap-2 shadow-lg cursor-pointer">
                     <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                     해약환급금 확인하기

@@ -1,18 +1,20 @@
 ﻿import React, { useState, useEffect, useRef } from 'react'
-import { CalculatorIcon, ChatBubbleLeftRightIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/outline";
-import { SparklesIcon, WalletIcon } from "@heroicons/react/24/solid";
+import { CalculatorIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import Modal from '@/app/components/Modal';
 import request from '@/app/api/request';
+import { supabase } from '@/app/api/supabase';
+import { queryUsers, createUser, queryCounsel, createCounsel } from '@/app/utils/mcpClient';
 import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/insurance';
+import { calculateAnnuityStartAge } from '@/app/utils/annuityCalculator';
 import FireworksEffect from '@/app/components/shared/FireworksEffect';
-import { trackPremiumCheck } from "@/app/utils/visitorTracking";
+import { trackSimplifiedVisitor } from "@/app/utils/visitorTracking";
 
 // 현재 경로에 맞는 상품 정보 가져오기
-const currentPath = '/insurance/annuity/im/plus-pro';
+const currentPath = '/insurance/annuity/ibk/lifetime';
 const productConfig = getProductConfigByPath(currentPath);
 
-const INSURANCE_COMPANY_ID = 10; // im라이프
-const INSURANCE_PRODUCT_ID = 11; // PlusPRO연금보험 id 코드값
+const INSURANCE_COMPANY_ID = 3; // IBK 연금보험
+const INSURANCE_PRODUCT_ID = 4; // IBK 평생연금받는 변액연금보험 id 코드값
 
 type SloganProps = {
   onOpenPrivacy: () => void
@@ -20,12 +22,12 @@ type SloganProps = {
 }
 
 export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProps) {
-  const [counselType, setCounselType] = useState(1); // 1: 환급금 확인, 2: 상담신청
+  const [counselType, setCounselType] = useState(1); // 1: 보험료 확인, 2: 상담신청
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [birth, setBirth] = useState("");
   const [phone, setPhone] = useState("");
-  const [paymentPeriod, setPaymentPeriod] = useState("5년");
+  const [paymentPeriod, setPaymentPeriod] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [isChecked, setIsChecked] = useState(true);
 
@@ -46,9 +48,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const [showConsultTypeDropdown, setShowConsultTypeDropdown] = useState(false);
   const [showConsultTimeDropdown, setShowConsultTimeDropdown] = useState(false);
-  const [consultType, setConsultType] = useState('IM Plus PRO연금보험');
+  const [consultType, setConsultType] = useState('평생보증받는변액연금보험');
   const [consultTime, setConsultTime] = useState('아무때나');
-  const consultTypeOptions = ['IM Plus PRO연금보험'];
+  const consultTypeOptions = ['평생보증받는변액연금보험'];
   const consultTimeOptions = [
     '아무때나',
     '오전 09:00 ~ 10:00',
@@ -110,6 +112,17 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     onModalStateChange?.(isAnyModalOpen);
   }, [showResultModal, showConsultModal, onModalStateChange]);
 
+  // ====== 엑셀 기반 계산/적격성 상태 ======
+  const [excelResult, setExcelResult] = useState<{
+    pensionStartAge: number;
+    monthlyPension: number;
+    performancePension: number;
+    guaranteedAmount: number;
+    totalUntil100: number;
+    notice?: string;
+  } | null>(null);
+  const [eligibility, setEligibility] = useState<{ [key: string]: boolean }>({});
+
   const validateForm = () => {
     if (!isChecked) {
       alert('개인정보 수집 및 이용에 동의해주세요.');
@@ -146,7 +159,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       return false;
     }
 
-    // 보험연령 안내는 모달에서 처리 (이 상품: 15~70세)
+    // 보험연령 안내는 모달에서 처리 (이 상품: 0~68세)
+    // 여기서는 형식 검증까지만 수행하고 나이로 차단하지 않음
     const formInsuranceAge = Number(getInsuranceAge(birth));
 
     if (!phone) {
@@ -174,14 +188,14 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   }
 
   const handlePostOTP = async () => {
-    const templateId = 'UB_8712'
+    const templateId = getTemplateIdByPath(currentPath)
     console.log(`[CLIENT] 인증번호 전송 시작: ${new Date().toISOString()}`);
     try {
       const response = await request.post('/api/postOTP', {
         phone,
         templateId,
-        companyName: "im라이프",
-        productName: "PlusPRO연금보험"
+        companyName: "IBK연금보험",
+        productName: "IBK연금액 평생보증받는변액연금보험"
       })
       console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
       setOtpSent(true)
@@ -220,8 +234,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   };
 
   const handleVerifyOTP = async () => {
+    // 연령(0~68) 외는 계산 차단
+    if (verifying) return;
     const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-    if (isNaN(ageForVerify) || ageForVerify < 0 || ageForVerify > 80) return;
+    if (isNaN(ageForVerify) || ageForVerify < 0 || ageForVerify > 68) return;
     if (otpCode.length !== 6) {
       alert("6자리 인증번호를 입력해주세요.");
       return;
@@ -229,7 +245,48 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
     setVerifying(true);
     try {
-      const res = await request.post("/api/verifyOTP", {
+      // 엑셀 기반 연금액 계산 (서버 API) - 항상 최신 입력값으로 재조회
+      let currentExcel = null as typeof excelResult;
+      try {
+        let monthlyPayment = 0;
+        if (paymentAmount.includes('만원')) {
+          const num = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+          monthlyPayment = num * 10000;
+        } else {
+          monthlyPayment = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+        }
+        const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+        const resp = await fetch('/api/calculate-pension/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            customerName: name,
+            gender,
+            age: Number(insuranceAge),
+            paymentPeriod: years,
+            monthlyPayment,
+            productType: 'ibk-lifetime'
+          })
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data.success) {
+            currentExcel = {
+              pensionStartAge: data.data.pensionStartAge || 0,
+              monthlyPension: data.data.monthlyPension || 0,
+              performancePension: data.data.performancePension || 0,
+              guaranteedAmount: data.data.guaranteedAmount || 0,
+              totalUntil100: data.data.totalUntil100 || 0,
+              notice: data.data.notice || ''
+            };
+            setExcelResult(currentExcel);
+          }
+        }
+      } catch (e) {
+        // ignore
+      }
+
+      const requestData = {
         phone,
         name,
         birth,
@@ -241,22 +298,27 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         counselTime: consultTime,
         mounthlyPremium: paymentAmount, // 실제 선택값
         paymentPeriod: paymentPeriod,   // 실제 선택값
-        tenYearReturnRate: rate ? Math.round(rate * 100) : '-', // 환급률
-        interestValue, // 확정이자(실제 값)
-        refundValue,    // 예상해약환급금(실제 값)
-        templateId: "UB_8712"
-      });
+        monthlyPension: currentExcel?.monthlyPension || 0,
+        performancePension: currentExcel?.performancePension || 0,
+        guaranteedPension: currentExcel?.guaranteedAmount || 0,
+        pensionStartAge: currentExcel?.pensionStartAge || getPensionStartAge(Number(insuranceAge), paymentPeriod),
+        totalUntil100: currentExcel?.totalUntil100 || 0,
+        templateId: "UB_8705", // 고객용 연금액 계산 결과 전송용 템플릿 (요청에 따라 고정)
+        adminTemplateId: "UA_8331" // 관리자용 연금액 계산 결과 전송용 템플릿
+      };
+
+      console.log("[CLIENT] API 요청 데이터:", requestData);
+
+      const res = await request.post("/api/verifyOTP", requestData);
       if (res.data.success) {
-        // 방문자 추적: 환급금 확인
+        // 방문자 추적: 보험료 확인
         try {
-          await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
+          await trackSimplifiedVisitor({
             phone,
             name,
-            counsel_type_id: 1, // 환급금 확인
-            utm_source: 'direct',
-            utm_campaign: 'premium_calculation'
+            counsel_type_id: 1 // 보험료 확인
           });
-          console.log("[CLIENT] 방문자 추적 성공: 환급금 확인");
+          console.log("[CLIENT] 방문자 추적 성공: 보험료 확인");
         } catch (trackingError) {
           console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
         }
@@ -281,7 +343,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const numbers = value.replace(/[^0-9]/g, '').slice(0, 8);
     setBirth(numbers);
     setIsVerified(false);
+    setExcelResult(null);
     if (numbers.length === 8) {
+      // 생년월일 8자리 입력 시 연락처로 이동
       setTimeout(() => phoneInputRef.current?.focus(), 0);
     }
   }
@@ -295,8 +359,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   };
 
   const handleSendOTP = async () => {
+    // 연령(0~68) 외는 OTP 전송 차단
     const ageForOtp = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-    if (isNaN(ageForOtp) || ageForOtp < 0 || ageForOtp > 80) return;
+    if (isNaN(ageForOtp) || ageForOtp < 0 || ageForOtp > 68) return;
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
@@ -318,25 +383,32 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     setShowResultModal(false);
     setOtpTimer(0);
     setOtpResendAvailable(true);
+    // 입력 재계산 시 이전 엑셀 결과 잔존 방지
+    setExcelResult(null);
   };
 
   // 입력값 변경 시 인증상태 초기화
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGender(e.target.value);
     setIsVerified(false);
+    setExcelResult(null);
+    // 성별 선택 후 이름으로 포커스 이동
     setTimeout(() => nameInputRef.current?.focus(), 0);
   };
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
     setIsVerified(false);
+    setExcelResult(null);
   };
   const handlePaymentPeriodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentPeriod(e.target.value);
     setIsVerified(false);
+    setExcelResult(null);
   };
   const handlePaymentAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentAmount(e.target.value);
     setIsVerified(false);
+    setExcelResult(null);
   };
 
   const handleOpenConsultModal = () => {
@@ -356,48 +428,120 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const handleConsultSendOTP = async () => {
     setConsultOtpTimer(180);
     setConsultOtpResendAvailable(false);
-    try {
-      const response = await request.post('/api/postOTP', {
-        phone,
-        templateId: 'UB_8715',
-        companyName: "im라이프",
-        productName: "PlusPRO연금보험"
-      });
-      setOtpSent(true);
-      alert('인증번호가 전송되었습니다.');
-    } catch (e: any) {
-      console.error('[CLIENT] 상담용 인증번호 전송 실패:', e);
-      alert('인증번호 전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
-    }
+    await handlePostOTP();
     setTimeout(() => {
       consultOtpInputRef.current?.focus();
       consultOtpInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 300);
   };
 
+  // Supabase에 사용자 생성 및 상담 기록 저장
+  const saveToSupabase = async (counselType: number) => {
+    try {
+      // 1. 사용자 생성 또는 조회
+      let userId: number;
+
+      // 기존 사용자 조회
+      const { data: existingUser, error: userError } = await supabase
+        .from('user')
+        .select('id')
+        .eq('phone', phone)
+        .single();
+
+      if (existingUser) {
+        userId = existingUser.id;
+        console.log('기존 사용자 발견:', userId);
+      } else {
+        // 새 사용자 생성
+        const { data: newUser, error: createError } = await supabase
+          .from('user')
+          .insert({
+            name,
+            phone,
+            birth,
+            gender
+          })
+          .select('id')
+          .single();
+
+        if (createError) {
+          console.error('사용자 생성 오류:', createError);
+          return;
+        }
+
+        userId = newUser.id;
+        console.log('새 사용자 생성:', userId);
+      }
+
+      // 2. 상담 기록 생성
+      const { data: counselRecord, error: counselError } = await supabase
+        .from('counsel')
+        .insert({
+          user_id: userId,
+          company_id: INSURANCE_COMPANY_ID,
+          product_id: INSURANCE_PRODUCT_ID,
+          counsel_type_id: counselType
+        })
+        .select()
+        .single();
+
+      if (counselError) {
+        console.error('상담 기록 생성 오류:', counselError);
+        return;
+      }
+
+      console.log('상담 기록 생성 완료:', counselRecord);
+      return { userId, counselId: counselRecord.id };
+
+    } catch (error) {
+      console.error('Supabase 저장 오류:', error);
+    }
+  };
+
+  // MCP를 사용한 데이터 조회 함수들
+  const handleQueryUsers = async () => {
+    try {
+      const result = await queryUsers(10);
+      console.log('MCP 사용자 조회 결과:', result);
+      alert(`사용자 조회 완료: ${JSON.stringify(result, null, 2)}`);
+    } catch (error) {
+      console.error('MCP 사용자 조회 오류:', error);
+      alert('사용자 조회에 실패했습니다.');
+    }
+  };
+
+  const handleQueryCounsel = async () => {
+    try {
+      const result = await queryCounsel(10);
+      console.log('MCP 상담 조회 결과:', result);
+      alert(`상담 조회 완료: ${JSON.stringify(result, null, 2)}`);
+    } catch (error) {
+      console.error('MCP 상담 조회 오류:', error);
+      alert('상담 조회에 실패했습니다.');
+    }
+  };
+
   const handleConsultVerifyOTP = async () => {
+    if (verifying) return;
     if (consultOtpCode.length !== 6) {
       alert("6자리 인증번호를 입력해주세요.");
       return;
     }
+
+    // 기본 필수 데이터만 확인 (납입기간, 월납입금액 제외)
+    if (!name || !birth || !gender || !phone) {
+      alert("필수 정보가 누락되었습니다. 모든 정보를 입력해주세요.");
+      return;
+    }
+
     setVerifying(true);
     try {
-      // 납입기간과 월납입금액이 있는 경우에만 계산값 사용
-      let tenYearReturnRate = '-';
-      let interestValue = '-';
-      let refundValue = '-';
-
-      if (paymentPeriod && paymentAmount) {
-        tenYearReturnRate = rate ? Math.round(rate * 100).toString() : '-';
-        interestValue = total ? (total * interestRate).toLocaleString('ko-KR') : '-';
-        refundValue = total ? (total * rate).toLocaleString('ko-KR') : '-';
-      }
-
-      const res = await request.post("/api/verifyOTP", {
+      // 납입기간과 월납입금액이 있는 경우에만 연금액 계산
+      const payload = {
         phone,
         name,
         birth,
-        gender, // 추가: 성별도 함께 전달
+        gender,
         code: consultOtpCode,
         counselType: 2,
         companyId: INSURANCE_COMPANY_ID,
@@ -406,12 +550,21 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         counselTime: consultTime,
         mounthlyPremium: paymentAmount || '',
         paymentPeriod: paymentPeriod || '',
-        tenYearReturnRate,
-        interestValue,
-        refundValue,
-        templateId: "UB_8715"
-      });
+        monthlyPension: excelResult?.monthlyPension || 0, // 월 연금액
+        performancePension: excelResult?.performancePension || 0, // 실적배당 연금액
+        guaranteedPension: excelResult?.guaranteedAmount || 0, // 20년 보증기간 총액
+        pensionStartAge: excelResult?.pensionStartAge || getPensionStartAge(Number(insuranceAge), paymentPeriod), // 연금개시연령
+        totalUntil100: excelResult?.totalUntil100 || 0, // 100세까지 총 수령액
+        templateId: "UB_8715", // 고객용 상담신청 완료 전송용 템플릿
+        adminTemplateId: "UA_8332" // 관리자용 상담신청 접수 전송용 템플릿
+      };
+      console.log('[IBK][CONSULT] verifyOTP payload', payload);
+
+      const res = await request.post("/api/verifyOTP", payload);
       if (res.data.success) {
+        // Supabase에 데이터 저장
+        const supabaseResult = await saveToSupabase(2); // 2: 상담신청
+
         // alert 제거: 바로 결과 표시
         setConsultIsVerified(true);
       } else {
@@ -423,7 +576,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     } finally {
       setVerifying(false);
     }
-  };
+  }
 
   // 보험연령 계산 함수 (생년월일 + 6개월 기준)
   const getInsuranceAge = (birth: string) => {
@@ -452,10 +605,228 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   // 보험연령 계산
   const insuranceAge = getInsuranceAge(birth);
-  // 연령 적합성 (15~70세)
+  // 연령 적합성 (0~68세)
   const isAgeKnown = insuranceAge !== '';
   const numericInsuranceAge = isAgeKnown ? Number(insuranceAge) : NaN;
-  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 15 && numericInsuranceAge <= 70;
+  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 0 && numericInsuranceAge <= 68;
+
+  // 엑셀 적격성 조회: 성별/연령 입력 시 호출
+  useEffect(() => {
+    const fetchEligibility = async () => {
+      if (!gender || !isAgeEligible) {
+        setEligibility({});
+        return;
+      }
+      try {
+        const resp = await fetch('/api/calculate-pension/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            customerName: name || '-',
+            gender,
+            age: Number(insuranceAge),
+            paymentPeriod: 10, // dummy
+            monthlyPayment: 300000, // 적격성 모드에서는 30만원 시트를 기준으로 판정
+            productType: 'ibk-lifetime',
+            mode: 'eligibility'
+          })
+        });
+        if (!resp.ok) {
+          setEligibility({});
+          return;
+        }
+        const data = await resp.json();
+        if (data.success && data.eligibility) {
+          setEligibility(data.eligibility);
+        } else {
+          setEligibility({});
+        }
+      } catch (e) {
+        setEligibility({});
+      }
+    };
+    fetchEligibility();
+  }, [gender, insuranceAge, isAgeEligible, name]);
+
+  // 연금개시연령 계산 함수 (IBK연금 규칙)
+  const getPensionStartAge = (age: number, paymentPeriod: string) => {
+    // 납입기간에서 년수 추출
+    const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+
+    // 0~40세
+    if (age >= 0 && age <= 40) {
+      if (years === 10 || years === 15 || years === 20) return 65;
+    }
+
+    // 41~45세
+    if (age >= 41 && age <= 45) {
+      if (years === 10 || years === 15 || years === 20) return 70;
+    }
+
+    // 46~50세
+    if (age >= 46 && age <= 50) {
+      if (years === 10 || years === 15) return 70;
+      if (years === 20) return 75;
+    }
+
+    // 51~55세
+    if (age >= 51 && age <= 55) {
+      if (years === 10) return 70;
+      if (years === 15) return 75;
+      if (years === 20) return 80;
+    }
+
+    // 56~60세
+    if (age >= 56 && age <= 60) {
+      if (years === 10) return 75;
+      if (years === 15) return 80;
+    }
+
+    // 61~65세
+    if (age >= 61 && age <= 65) {
+      if (years === 10) return 80;
+    }
+
+    // 66~68세
+    if (age >= 66 && age <= 68) {
+      if (years === 7) return 80;
+    }
+
+    // 기본값 (매칭되지 않는 경우)
+    return 65;
+  };
+
+  // 현재 선택된 납입기간에 대한 연금개시연령 (우선순위: Excel > 계산식)
+  const currentPensionStartAge = paymentPeriod
+    ? (excelResult && typeof excelResult.pensionStartAge === 'number' && excelResult.pensionStartAge > 0
+      ? excelResult.pensionStartAge
+      : getPensionStartAge(Number(insuranceAge), paymentPeriod))
+    : null;
+
+  // 입력 완료 시(성별/생년월일/납입기간/월납입) Excel 기반 연금개시연령을 선반영
+  useEffect(() => {
+    let canceled = false;
+    const prefetchExcel = async () => {
+      if (!gender || !/^\d{8}$/.test(birth) || !paymentPeriod || !paymentAmount) return;
+      const age = Number(getInsuranceAge(birth));
+      if (isNaN(age)) return;
+      try {
+        // 월 납입액 계산 (만원 처리)
+        let monthlyPayment = 0;
+        if (paymentAmount.includes('만원')) {
+          const num = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+          monthlyPayment = isNaN(num) ? 0 : num * 10000;
+        } else {
+          monthlyPayment = parseInt(paymentAmount.replace(/[^0-9]/g, '')) || 0;
+        }
+        const years = parseInt(paymentPeriod.replace(/[^0-9]/g, '')) || 0;
+        if (age < 0 || age > 68 || years <= 0 || monthlyPayment <= 0) return;
+
+        const resp = await fetch('/api/calculate-pension/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            customerName: name,
+            gender,
+            age,
+            paymentPeriod: years,
+            monthlyPayment,
+            productType: 'ibk-lifetime'
+          })
+        });
+        if (!resp.ok) return;
+        const data = await resp.json();
+        if (!canceled && data?.success && data?.data?.pensionStartAge) {
+          setExcelResult(prev => ({
+            pensionStartAge: data.data.pensionStartAge || 0,
+            monthlyPension: data.data.monthlyPension || 0,
+            performancePension: data.data.performancePension || 0,
+            guaranteedAmount: data.data.guaranteedAmount || 0,
+            totalUntil100: data.data.totalUntil100 || 0,
+            notice: data.data.notice || ''
+          }));
+        }
+      } catch (e) {
+        // ignore
+      }
+    };
+    prefetchExcel();
+    return () => { canceled = true; };
+  }, [gender, birth, paymentPeriod, paymentAmount]);
+
+  // 납입기간 선택 가능 여부 (연령별 제한)
+  const getAvailablePaymentPeriods = (age: number): string[] => {
+    if (age >= 0 && age <= 55) {
+      return ['10년', '15년', '20년'];
+    } else if (age >= 56 && age <= 60) {
+      return ['10년', '15년'];
+    } else if (age >= 61 && age <= 65) {
+      return ['10년'];
+    } else if (age >= 66 && age <= 68) {
+      return ['7년']; // 7년납 자동 적용
+    }
+    return [];
+  };
+
+  const availablePaymentPeriods = isAgeKnown ? getAvailablePaymentPeriods(Number(insuranceAge)) : [];
+
+  // 66~68세는 7년납 자동 적용
+  useEffect(() => {
+    if (isAgeKnown && Number(insuranceAge) >= 66 && Number(insuranceAge) <= 68) {
+      if (paymentPeriod !== '7년') {
+        setPaymentPeriod('7년');
+      }
+    }
+  }, [insuranceAge, isAgeKnown]);
+
+  // 연금액 계산 함수 (변액연금용 - 실적배당 포함)
+  const calculatePensionAmount = (age: number, paymentPeriod: string, paymentAmount: string): { monthly: number; performance: number; totalUntil100: number } => {
+    if (!age || !paymentPeriod || !paymentAmount) return { monthly: 0, performance: 0, totalUntil100: 0 };
+
+    // 월 납입액 계산 (만원 단위 처리)
+    let monthlyPayment = 0;
+    if (paymentAmount.includes('만원')) {
+      const num = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+      monthlyPayment = num * 10000; // 만원을 원으로 변환
+    } else {
+      monthlyPayment = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+    }
+
+    const paymentYears = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+    const pensionStartAge = getPensionStartAge(age, paymentPeriod);
+
+    if (!pensionStartAge) return { monthly: 0, performance: 0, totalUntil100: 0 };
+
+    // 총 납입액
+    const totalPayment = monthlyPayment * 12 * paymentYears;
+
+    // 20년간 7% 단리 이자 계산 (복리 4.32% 환산 - 변액연금은 약간 높음)
+    const simpleInterest = totalPayment * 0.07 * 20;
+    const compoundRate = 0.0432; // 복리 4.32%
+
+    // 복리로 환산된 총액
+    const compoundTotal = totalPayment * Math.pow(1 + compoundRate, 20);
+
+    // 연금개시연령에 따른 연금 지급기간 (남성 기준)
+    const lifeExpectancy = 82; // 남성 평균수명
+    const pensionYears = Math.max(1, lifeExpectancy - pensionStartAge);
+
+    // 월 연금액 계산 (총액을 연금 지급기간으로 나누고 12로 나눔)
+    const monthlyPension = Math.round(compoundTotal / pensionYears / 12);
+
+    // 실적배당 연금액 (기본 연금액 + 실적배당)
+    const performanceBonus = Math.round(monthlyPension * 0.15); // 15% 실적배당 가정
+    const performancePension = monthlyPension + performanceBonus;
+
+    // 100세까지 생존 시 총 받는 금액
+    const totalPensionUntil100 = monthlyPension * 12 * (100 - pensionStartAge);
+
+    return {
+      monthly: monthlyPension,
+      performance: performancePension,
+      totalUntil100: totalPensionUntil100
+    };
+  };
 
   // 총 납입액, 환급률, 확정이자, 해약환급금 계산
   let amount = 0;
@@ -467,185 +838,266 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   }
   const months = parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12;
   const total = (!isNaN(amount) && !isNaN(months) && amount > 0 && months > 0) ? amount * months : 0;
-  const rate = 1.33; // 133%
-  const interestRate = 0.33; // 33%
-  const interestValue = total ? (total * interestRate).toLocaleString('en-US') : '-';
-  const refundValue = total ? (total * rate).toLocaleString('en-US') : '-';
+
+  // 연금액 계산
+  const pensionAmounts = {
+    monthly: excelResult?.monthlyPension || 0,
+    performance: excelResult?.performancePension || 0,
+    totalUntil100: excelResult?.totalUntil100 || 0
+  };
+  const guaranteedAmount = excelResult?.guaranteedAmount || (pensionAmounts.monthly ? pensionAmounts.monthly * 12 * 20 : 0);
 
   return (
     <>
       <section
-        className="w-full bg-[#eaf4ff] py-6 md:py-6 lg:py-3 lg:min-h-[600px] lg:flex lg:items-center"
+        className="w-full bg-[#1e293b] py-6 md:py-10 lg:py-3"
         style={{
-          backgroundImage: 'radial-gradient(#dbeafe 2px, transparent 2px)',
+          backgroundImage: 'radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px)',
           backgroundSize: '20px 20px',
         }}
       >
         <div className="max-w-6xl mx-auto flex flex-col md:flex-col lg:flex-row items-center md:items-center lg:items-start justify-center lg:justify-between gap-4 md:gap-8 lg:gap-12 px-4 md:px-6 lg:px-4 md:py-4 lg:py-4">
-          {/* 왼쪽: 상품 설명/이미지 */}
+          {/* 왼쪽: 간단한 슬로건 디자인 */}
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
-            <div className="flex items-center gap-2 text-sm text-gray-700 mb-2">
-              <span className="font-semibold">IM라이프생명</span>
+            {/* 로고 및 보험사명 */}
+            <div className="flex items-center gap-1.5 mb-2 sm:mb-3 md:mb-4">
+              <div className="bg-white rounded-md p-1 shadow-sm">
+                <img src="/IBK-logo.png" alt="IBK연금보험" className="h-4 sm:h-5 md:h-6 w-auto" />
+              </div>
+              <span className="text-xs sm:text-sm md:text-base font-semibold text-white">IBK연금보험</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 lg:mb-4 leading-tight">
-              <span>Plus PRO연금보험</span><br />
-              <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl">무배당 2604(보증비용부과형)</span>
+
+            {/* 메인 슬로건 */}
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6 lg:mb-4 leading-tight">
+              (무) IBK 연금액<br />
+              평생보증받는 변액연금보험
             </h1>
-            <ul className="mb-6 sm:mb-8 md:mb-10 lg:mb-8 space-y-1.5 sm:space-y-2 md:space-y-3 lg:space-y-2">
-              <li className="flex items-start text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="hidden lg:block text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-blue-600 mt-0.5 sm:mt-1">✔</span>
-                <div className="text-center md:text-center lg:text-left leading-tight sm:leading-normal">
-                  <span className="text-blue-700 font-semibold">목돈마련, 노후준비를 동시에!</span><br />
-                  <span className="text-rose-600 font-semibold">7년/10년/연금개시시점</span> <span className="text-sm">최저계약자적립액 보증</span><br />
-                </div>
+
+            {/* 간단한 특징 설명 */}
+            <ul className="mb-3 sm:mb-5 md:mb-8 lg:mb-8 space-y-1 sm:space-y-1.5 md:space-y-2.5 lg:space-y-2">
+              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
+                <span>최대 <span className="text-[#fbbf24] font-semibold">20년</span>동안 <span className="text-[#fbbf24] font-semibold">연단리 8%</span>!</span>
               </li>
-              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-blue-600">✔</span>
-                가입연령:&nbsp;<span className="text-blue-700 font-semibold">0~70세</span><br />
+              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
+                <span>가입 <span className="text-[#60a5fa] font-semibold">0~68세</span> / 연금개시 <span className="text-[#60a5fa] font-semibold">30~80세</span></span>
               </li>
-              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-blue-600">✔</span>
-                연금개시:&nbsp;<span className="text-blue-700 font-semibold">45~85세</span>(개인형)
+              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
+                <span><span className="text-[#22d3ee] font-semibold">실적배당</span> 종신연금 <span className="text-[#22d3ee] font-semibold">보증지급</span></span>
               </li>
-              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start">
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-blue-600">✔</span>
-                <span className="text-rose-600 font-semibold">비과세</span>&nbsp;<span className="text-xs sm:text-xs md:text-sm lg:text-xs align-baseline text-gray-600">(월 150만원 한도, 10년유지 세법요건 충족시)</span>
-              </li>
-              <li className="flex items-center text-base sm:text-lg md:text-xl lg:text-lg text-gray-800 justify-center md:justify-center lg:justify-start lg:pr-8">
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-xl mr-1.5 sm:mr-2 md:mr-3 lg:mr-2 text-blue-600">✔</span>
-                <span className="text-rose-600 font-semibold">병력 무심사</span>&nbsp;/&nbsp;<span className="text-rose-600 font-semibold">전건 가입가능!</span>
+              <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
+                <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
+                <span>최저사망계약자적립액 <span className="text-[#a78bfa] font-semibold">보증</span></span>
               </li>
             </ul>
-            {/* 환급률/적립액 안내 UI */}
-            <div className="relative">
-              {/* KB 상품 이미지 - 설명박스 위에 떠있게 배치 */}
 
-              <div className="w-full max-w-3xl lg:max-w-4xl mx-auto bg-white rounded-xl shadow-lg mb-3 sm:mb-4 p-4 sm:p-5 md:p-6 lg:p-6 px-4 sm:px-5 md:px-6 lg:px-6 pt-4 sm:pt-5 md:pt-6 lg:pt-6 pb-4 sm:pb-5 md:pb-6 lg:pb-6">
-                <div className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-4 lg:gap-6 mb-2">
-                  <div className="text-center px-2 sm:px-3 md:px-4">
-                    <div className="text-orange-600 text-sm sm:text-base md:text-base font-bold mb-1 sm:mb-2 tracking-wide relative">
-                      <span className="relative inline-block px-1" style={{
-                        background: 'linear-gradient(transparent 70%, #fef3cd 70%, #fef3cd 100%, transparent 100%)'
-                      }}>
-                        보증 1
-                      </span>
+            {/* 간단한 보증 내용 박스 */}
+            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-3 sm:mb-4 p-4 sm:p-5 md:p-6 lg:p-4 px-4 sm:px-5 md:px-6 lg:px-4 pt-5 sm:pt-6 md:pt-7 lg:pt-6 pb-5 sm:pb-6 md:pb-7 lg:pb-6">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 lg:gap-3 mb-2 sm:mb-3">
+                {/* 1. 높은 보증이율 */}
+                <div className="text-center p-1.5 sm:p-2 md:p-3 lg:p-3 bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg shadow-md border border-orange-200 transition-all duration-300 flex flex-col justify-between min-h-[120px] sm:min-h-[140px] md:min-h-[160px] relative overflow-hidden">
+                  {/* 유리 반사 효과 1 */}
+                  <div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent transform -skew-x-12 -translate-x-full pointer-events-none"
+                    style={{
+                      animation: 'shine1 4s ease-in-out infinite'
+                    }}
+                  ></div>
+
+                  <div className="relative z-10">
+                    <div className="inline-block bg-gradient-to-r from-orange-600 to-orange-700 text-white text-[10px] sm:text-xs md:text-sm font-bold px-1.5 sm:px-2 md:px-3 py-1 sm:py-1.5 rounded-full mb-1 sm:mb-2 shadow-md">높은 보증이율</div>
+                  </div>
+                  <div className="flex items-center justify-center mb-2 relative z-10">
+                    <div className="text-[10px] sm:text-xs text-gray-700 mr-1 sm:mr-2 font-semibold leading-tight">
+                      최대<br />연단리
                     </div>
-                    <div className="inline-block bg-white text-gray-800 text-xs sm:text-sm md:text-base font-semibold px-3 py-1.5 rounded-md mb-2 border border-gray-200 whitespace-nowrap">7년 시점</div>
-                    <div className="flex flex-col items-center">
-                      <div className="relative overflow-hidden mb-1 sm:mb-2 flex items-center justify-center rounded-full bg-orange-100 ring-1 ring-orange-200/60 w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 shadow-sm before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:animate-[shine-inline_1.5s_linear_infinite] before:skew-x-12">
-                        <img src="/images/im-img1.png" alt="보증 1" className="w-7 h-7 sm:w-9 sm:h-9 md:w-12 md:h-12 object-contain" />
-                      </div>
-                      <div className="font-bold text-xs sm:text-xs md:text-sm">기준 기본보험료</div>
-                      <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#ff8c1a]">100%</div>
-                      <div className="text-xs text-gray-700 mt-1"></div>
+                    <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-orange-600 animate-[jump-glow_1.2s_ease-in-out_infinite]">8%</div>
+                  </div>
+                  <div className="text-[10px] sm:text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-1 sm:p-1.5 relative z-10">
+                    20년까지 연단리 8%<br />이후 5% 보증
+                  </div>
+                </div>
+
+                {/* 2. 무심사 가입 */}
+                <div className="text-center p-1.5 sm:p-2 md:p-3 lg:p-3 bg-gradient-to-br from-green-100 to-green-200 rounded-lg shadow-md border border-green-200 transition-all duration-300 flex flex-col justify-between min-h-[120px] sm:min-h-[140px] md:min-h-[160px] relative overflow-hidden">
+                  {/* 유리 반사 효과 2 */}
+                  <div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent transform -skew-x-12 -translate-x-full pointer-events-none"
+                    style={{
+                      animation: 'shine2 4s ease-in-out infinite'
+                    }}
+                  ></div>
+
+                  <div className="relative z-10">
+                    <div className="inline-block bg-gradient-to-r from-green-600 to-green-700 text-white text-[10px] sm:text-xs md:text-sm font-bold px-1.5 sm:px-2 md:px-3 py-1 sm:py-1.5 rounded-full mb-1 sm:mb-2 shadow-md">무심사 가입</div>
+                  </div>
+                  <div className="flex-1 flex items-center justify-center relative z-10">
+                    <div className="text-[10px] sm:text-xs text-gray-700 leading-tight font-medium">
+                      질병여부 상관없이<br />무진단·무심사
                     </div>
                   </div>
-                  <div className="text-center px-2 sm:px-3 md:px-4">
-                    <div className="text-pink-600 text-sm sm:text-base md:text-base font-bold mb-1 sm:mb-2 tracking-wide relative">
-                      <span className="relative inline-block px-1" style={{
-                        background: 'linear-gradient(transparent 70%, #fdf2f8 70%, #fdf2f8 100%, transparent 100%)'
-                      }}>
-                        보증 2
-                      </span>
-                    </div>
-                    <div className="inline-block bg-white text-gray-800 text-xs sm:text-sm md:text-base font-semibold px-3 py-1.5 rounded-md mb-2 border border-gray-200 whitespace-nowrap">10년 시점</div>
-                    <div className="flex flex-col items-center">
-                      <div className="relative overflow-hidden mb-1 sm:mb-2 flex items-center justify-center rounded-full bg-rose-100 ring-1 ring-rose-200/60 w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 shadow-sm before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:animate-[shine-inline_1.5s_linear_infinite] before:skew-x-12">
-                        <img src="/images/im-img2.png" alt="보증 2" className="w-7 h-7 sm:w-9 sm:h-9 md:w-12 md:h-12 object-contain" />
-                      </div>
-                      <div className="font-bold text-xs sm:text-xs md:text-sm">기준 기본보험료</div>
-                      <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-pink-600 animate-[jump-glow_1.2s_ease-in-out_infinite]">133%</div>
-                      <div className="text-xs text-gray-700 mt-1 whitespace-nowrap"></div>
+                  <div className="text-[10px] sm:text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-1 sm:p-1.5 relative z-10">
+                    당뇨, 암, 고혈압 등<br />가입제한 없음
+                  </div>
+                </div>
+
+                {/* 3. 조기연금개시 */}
+                <div className="text-center p-1.5 sm:p-2 md:p-3 lg:p-3 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg shadow-md border border-blue-200 transition-all duration-300 flex flex-col justify-between min-h-[120px] sm:min-h-[140px] md:min-h-[160px] relative overflow-hidden">
+                  {/* 유리 반사 효과 3 */}
+                  <div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent transform -skew-x-12 -translate-x-full pointer-events-none"
+                    style={{
+                      animation: 'shine3 4s ease-in-out infinite'
+                    }}
+                  ></div>
+
+                  <div className="relative z-10">
+                    <div className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 text-white text-[10px] sm:text-xs md:text-sm font-bold px-1.5 sm:px-2 md:px-3 py-1 sm:py-1.5 rounded-full mb-1 sm:mb-2 shadow-md">조기연금개시</div>
+                  </div>
+                  <div className="flex-1 flex items-center justify-center relative z-10">
+                    <div className="text-[10px] sm:text-xs text-gray-700 leading-tight font-medium">
+                      30세부터<br />연금개시 가능
                     </div>
                   </div>
-                  <div className="text-center px-2 sm:px-3 md:px-4">
-                    <div className="text-blue-600 text-sm sm:text-base md:text-base font-bold mb-1 sm:mb-2 tracking-wide relative">
-                      <span className="relative inline-block px-1" style={{
-                        background: 'linear-gradient(transparent 70%, #dbeafe 70%, #dbeafe 100%, transparent 100%)'
-                      }}>
-                        보증 3
-                      </span>
-                    </div>
-                    <div className="inline-block bg-white text-gray-800 text-xs sm:text-xs md:text-base font-semibold px-2 py-1.5 rounded-md mb-2 border border-gray-200 whitespace-nowrap">연금개시 시점</div>
-                    <div className="flex flex-col items-center">
-                      <div className="relative overflow-hidden mb-1 sm:mb-2 flex items-center justify-center rounded-full bg-blue-100 ring-1 ring-blue-200/60 w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 shadow-sm before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:animate-[shine-inline_1.5s_linear_infinite] before:skew-x-12">
-                        <img src="/images/im-img3.png" alt="보증 3" className="w-7 h-7 sm:w-9 sm:h-9 md:w-12 md:h-12 object-contain" />
-                      </div>
-                      <div className="font-bold text-xs sm:text-xs md:text-sm">기준 기본보험료</div>
-                      <div className="text-[10px] sm:text-[11px] md:text-xs font-bold text-[#3a80e0] leading-tight mt-1">
-                        (연금개시전<br />
-                        보험기간-10)×2%
-                      </div>
-                      <div className="text-xs text-gray-700 mt-0.5"></div>
-                    </div>
+                  <div className="text-[10px] sm:text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-1 sm:p-1.5 relative z-10">
+                    미보증형은<br />45세부터 가능
                   </div>
                 </div>
               </div>
-            </div>
+              <div className="text-xs text-gray-700 text-center mt-4">
+                <p>※ 대표계약기준(40세, 10년납, 65세 연금개시), 복리이자율로 환산시 연복리 4.5%</p>
+              </div>
 
+              {/* CSS 애니메이션 스타일 */}
+              <style jsx>{`
+                @keyframes shine1 {
+                  0% { transform: translateX(-100%) skewX(-12deg); }
+                  25% { transform: translateX(100%) skewX(-12deg); }
+                  100% { transform: translateX(100%) skewX(-12deg); }
+                }
+                
+                @keyframes shine2 {
+                  0% { transform: translateX(-100%) skewX(-12deg); }
+                  25% { transform: translateX(100%) skewX(-12deg); }
+                  100% { transform: translateX(100%) skewX(-12deg); }
+                }
+                
+                @keyframes shine3 {
+                  0% { transform: translateX(-100%) skewX(-12deg); }
+                  25% { transform: translateX(100%) skewX(-12deg); }
+                  100% { transform: translateX(100%) skewX(-12deg); }
+                }
+                
+                /* 1→2→3 순서로 이어지는 효과 */
+                .shine2 {
+                  animation-delay: 1.33s;
+                }
+                
+                .shine3 {
+                  animation-delay: 2.66s;
+                }
+              `}</style>
+            </div>
           </div>
-          {/* 오른쪽: 환급금 확인 카드 */}
+          {/* 오른쪽: 보험료 확인 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
             <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-4 sm:p-5 md:p-6 relative flex flex-col">
               <div className="mb-4 sm:mb-5">
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] rounded-lg flex items-center justify-center">
-                    <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-[#f59e0b] to-[#d97706] rounded-lg flex items-center justify-center">
+                    <CalculatorIcon className="w-4 h-4 text-white" />
                   </div>
-                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">해약환급금 계산하기</h3>
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">연금액 계산하기</h3>
                 </div>
-                <p className="text-gray-700 text-[11px] sm:text-xs md:text-sm ml-9 sm:ml-10">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
+                <p className="text-gray-700 text-[11px] sm:text-xs md:text-sm ml-9 sm:ml-10">간단한 정보 입력으로 예상 연금액을 확인하세요</p>
               </div>
               <form className="flex flex-col gap-2.5 sm:gap-3 md:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 성별/이름 */}
                 <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-3">
                   <div>
-                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">성별 <span className="text-red-500">*</span></label>
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">성별</label>
                     <div className="flex gap-1.5 sm:gap-2">
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#3b82f6] bg-[#3b82f6]/5 text-[#2563eb]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
                         <span className="text-xs sm:text-sm font-medium">남자</span>
                       </label>
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#3b82f6] bg-[#3b82f6]/5 text-[#2563eb]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="F" checked={gender === "F"} onChange={handleGenderChange} className="sr-only" />
                         <span className="text-xs sm:text-sm font-medium">여자</span>
                       </label>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">이름 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#3b82f6]/20 focus:border-[#3b82f6] transition-all" placeholder="홍길동" />
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">이름</label>
+                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#f59e0b]/20 focus:border-[#f59e0b] transition-all" placeholder="홍길동" />
                   </div>
                 </div>
 
                 {/* 생년월일/연락처 */}
                 <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-3">
                   <div>
-                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">생년월일 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#3b82f6]/20 focus:border-[#3b82f6] transition-all" placeholder="19880818" maxLength={8} />
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">생년월일</label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#f59e0b]/20 focus:border-[#f59e0b] transition-all" placeholder="19880818" maxLength={8} />
                   </div>
                   <div>
-                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">연락처 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#3b82f6]/20 focus:border-[#3b82f6] transition-all" placeholder="01012345678" />
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">연락처</label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#f59e0b]/20 focus:border-[#f59e0b] transition-all" placeholder="01012345678" />
                   </div>
                 </div>
+
+                {/* 69세 이상 안내 */}
+                {isAgeKnown && Number(insuranceAge) > 68 && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-center">
+                    <p className="text-sm text-red-700 font-medium">이 상품은 68세까지 가입 가능합니다.</p>
+                  </div>
+                )}
 
                 {/* 납입기간 */}
                 <div>
                   <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">납입기간</label>
-                  <div className="flex justify-center">
-                    {['5년'].map((period) => (
-                      <label key={period} className="relative cursor-pointer w-2/3">
-                        <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
-                        {period === '5년' && (
-                          <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#2563eb] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">고정</span>
-                        )}
-                        <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#3b82f6] bg-[#3b82f6]/5 text-[#2563eb] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
-                          {period}
+                  {isAgeKnown && Number(insuranceAge) >= 66 && Number(insuranceAge) <= 68 ? (
+                    // 66~68세: 7년납 자동 적용
+                    <div className="grid grid-cols-3 gap-2">
+                      <div className="col-span-3">
+                        <div className="w-full text-center py-2.5 text-sm border-2 border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b] font-bold rounded-lg">
+                          7년
                         </div>
-                      </label>
-                    ))}
-                  </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-3 gap-2">
+                      {['10년', '15년', '20년'].map((period) => {
+                        // 생년월일 입력 전에는 모두 활성화, 입력 후에는 연령별 제한 적용
+                        const isAvailable = !isAgeKnown || availablePaymentPeriods.includes(period);
+                        return (
+                          <label key={period} className={`relative ${isAvailable ? 'cursor-pointer' : 'cursor-not-allowed'}`}>
+                            {period === '10년' && isAvailable && (
+                              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
+                            )}
+                            <input
+                              type="radio"
+                              name="paymentPeriod"
+                              value={period}
+                              checked={paymentPeriod === period}
+                              onChange={handlePaymentPeriodChange}
+                              disabled={!isAvailable}
+                              className="peer sr-only"
+                            />
+                            <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${!isAvailable
+                              ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
+                              : paymentPeriod === period
+                                ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b] font-bold'
+                                : 'border-gray-200 hover:border-gray-300'
+                              }`}>
+                              {period}
+                            </div>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
 
                 {/* 월 납입금액 */}
@@ -655,7 +1107,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     {['30만원', '50만원', '70만원', '100만원', '130만원', '150만원'].map((amount) => (
                       <label key={amount} className="cursor-pointer">
                         <input type="radio" name="paymentAmount" value={amount} checked={paymentAmount === amount} onChange={handlePaymentAmountChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#3b82f6] bg-[#3b82f6]/5 text-[#2563eb] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
                           {amount}
                         </div>
                       </label>
@@ -665,18 +1117,18 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 개인정보 동의 */}
                 <div className="flex items-center gap-2">
-                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#2563eb] rounded border-gray-300 cursor-pointer focus:ring-[#2563eb]" />
+                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#f59e0b] rounded border-gray-300 cursor-pointer focus:ring-[#f59e0b]" />
                   <span className="text-[10px] sm:text-xs text-gray-600">
                     개인정보 수집 및 이용에 동의합니다.
-                    <button type="button" onClick={onOpenPrivacy} className="text-[#2563eb] underline ml-1 hover:text-[#1d4ed8]">자세히 보기</button>
+                    <button type="button" onClick={onOpenPrivacy} className="text-[#f59e0b] underline ml-1 hover:text-[#d97706]">자세히 보기</button>
                   </span>
                 </div>
 
                 {/* 버튼들 */}
                 <div className="flex flex-col gap-1.5 sm:gap-2 mt-1">
-                  <button type="submit" className="w-full bg-gradient-to-r from-[#3b82f6] to-[#1d4ed8] text-white font-bold rounded-xl py-3 sm:py-3.5 text-sm sm:text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#3b82f6]/25 cursor-pointer">
+                  <button type="submit" className="w-full bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white font-bold rounded-xl py-3 sm:py-3.5 text-sm sm:text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#f59e0b]/25 cursor-pointer">
                     <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                    해약환급금 확인하기
+                    연금액 확인하기
                   </button>
                   <div className="flex gap-1.5 sm:gap-2">
                     <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
@@ -701,7 +1153,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           counselType === 1 ? (
             <span className="flex items-center gap-2">
               <CalculatorIcon className="w-6 h-6 text-[#3a8094]" />
-              환급금 확인하기
+              연금액 확인하기
             </span>
           ) : (
             <span className="flex items-center gap-2">
@@ -718,20 +1170,20 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         <div className="space-y-2 sm:space-y-3">
           {isAgeKnown && !isAgeEligible && (
             <div className="bg-red-50 border border-red-200 text-red-700 rounded p-1.5 sm:p-2 text-xs sm:text-sm">
-              이 상품은 15세~70세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
+              이 상품은 0세~68세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
               계산 기능은 이용하실 수 없습니다.
             </div>
           )}
-          {/* 환급금 산출 완료 안내 박스 (인증 후) */}
+          {/* 보험료 산출 완료 안내 박스 (인증 후) */}
           {isVerified && (
             <>
               <FireworksEffect show={true} />
               <div className="bg-[#f8f8ff] rounded p-2 sm:p-2.5 mb-1.5 sm:mb-2 text-center">
-                <div className="text-base sm:text-lg text-black font-bold">환급금 산출이 완료되었습니다.</div>
+                <div className="text-base sm:text-lg text-black font-bold">연금액 산출이 완료되었습니다.</div>
               </div>
-              {/* 환급금 결과값 UI (상세 정보) */}
+              {/* 보험료 결과값 UI (상세 정보) */}
               <div className="bg-gray-50 rounded-lg p-1.5 sm:p-2">
-                <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center">
+                <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-1.5 sm:mb-2 flex items-center">
                   <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name}</span>
                   <span className="text-lg text-[#7c3aed] font-bold align-middle">&nbsp;님</span>
                   {insuranceAge !== '' && (
@@ -745,13 +1197,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
-                    <span className="font-bold text-[#3a8094]">im라이프</span>
+                    <span className="font-bold text-[#3a8094]">IBK연금보험</span>
                   </div>
                 </div>
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
-                    <span className="font-bold text-[#3a8094]">PlusPRO연금보험</span>
+                    <span className="font-bold text-[#3a8094]">IBK연금액 평생보증받는변액연금보험</span>
                   </div>
                 </div>
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
@@ -772,34 +1224,47 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 10년 시점 환급률 */}
+                {/* 연금개시연령 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 환급률</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연금개시연령</span>
                     <span className="font-bold">
-                      <span className="text-[#7c3aed]">{rate ? Math.round(rate * 100) : '-'}</span>{' '}<span className="text-[#3a8094]">%</span>
+                      <span className="text-[#7c3aed]">{currentPensionStartAge || '-'}</span>{' '}<span className="text-[#3a8094]">세</span>
                     </span>
                   </div>
                 </div>
-                {/* 10년 확정이자 */}
+                {/* 월 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 확정이자</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>월 연금액</span>
                     <span className="font-bold">
-                      <span className="text-[#3b82f6]">{interestValue}</span>{' '}<span className="text-[#3a8094]">원</span>
+                      <span className="text-[#3b82f6]">{isVerified ? `약 ${pensionAmounts.monthly.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
+                      {isVerified && <span className="text-[#3a8094]"> 원</span>}
                     </span>
                   </div>
                 </div>
+                {/* 20년 보증기간 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 예상 해약환급금</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
                     <span className="font-bold">
-                      <span className="text-[#ef4444]">{refundValue}</span>{' '}<span className="text-[#3a8094]">원</span>
+                      <span className="text-[#ef4444]">{isVerified ? `약 ${guaranteedAmount.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
+                      {isVerified && <span className="text-[#3a8094]"> 원</span>}
+                    </span>
+                  </div>
+                </div>
+                {/* 100세까지 생존 시 총 받는 금액 */}
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
+                    <span className="font-bold">
+                      <span className="text-[#10b981]">{isVerified ? `약 ${pensionAmounts.totalUntil100?.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
+                      {isVerified && <span className="text-[#3a8094]"> 원</span>}
                     </span>
                   </div>
                 </div>
                 <div className="text-xs text-gray-700 text-center mt-4">
-                  * 실제 보험료 및 해약환급금은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
+                  * 실제 연금액은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
                   <br />
                   * 본 계산 결과는 참고용이며, 실제 계약 시 보험사 약관 및 상품설명서를 확인 바랍니다.
                 </div>
@@ -808,7 +1273,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           )}
           {!isVerified && (
             <>
-              {/* 환급금 계산 결과 */}
+              {/* 보험료 계산 결과 */}
               <div className="bg-gray-50 rounded-lg p-2">
                 <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center">
                   <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name}</span>
@@ -824,13 +1289,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
-                    <span className="font-bold text-[#3a8094]">im라이프</span>
+                    <span className="font-bold text-[#3a8094]">{isVerified ? "IBK연금보험" : "인증 후 확인가능"}</span>
                   </div>
                 </div>
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
-                    <span className="font-bold text-[#3a8094]">PlusPRO연금보험</span>
+                    <span className="font-bold text-[#3a8094]">{isVerified ? "더!행복드림변액연금보험" : "인증 후 확인가능"}</span>
                   </div>
                 </div>
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
@@ -851,34 +1316,42 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 10년 시점 환급률 */}
+                {/* 연금개시연령 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 환급률</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>연금개시연령</span>
                     <span className="font-bold">
-                      <span className="text-[#7c3aed]">?</span>{' '}<span className="text-[#3a8094]">%</span>
+                      <span className="text-[#7c3aed]">{currentPensionStartAge || '?'}</span>{' '}<span className="text-[#3a8094]">세</span>
                     </span>
                   </div>
                 </div>
-                {/* 10년 확정이자 */}
+                {/* 월 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 확정이자</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>월 연금액</span>
                     <span className="font-bold">
-                      <span className="text-[#3b82f6]">?</span>{' '}<span className="text-[#3a8094]">원</span>
+                      <span className="text-[#3b82f6]">인증 후 확인가능</span>
                     </span>
                   </div>
                 </div>
+                {/* 20년 보증기간 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>10년 시점 예상 해약환급금</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
+                    <span className="font-bold"><span className="text-[#ef4444]">인증 후 확인가능</span></span>
+                  </div>
+                </div>
+                {/* 100세까지 생존 시 총 받는 금액 */}
+                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
                     <span className="font-bold">
-                      <span className="text-[#ef4444]">?</span>{' '}<span className="text-[#3a8094]">원</span>
+                      <span className="text-[#10b981]">인증 후 확인가능</span>
                     </span>
                   </div>
                 </div>
                 <div className="text-xs text-gray-700 text-center mt-4">
-                  * 실제 보험료 및 해약환급금은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
+                  * 실제 연금액은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
                   <div className="mt-0.5 text-[#3a8094]">* 휴대폰 인증 완료 후 상세 정보를 확인하실 수 있습니다.</div>
                 </div>
               </div>
@@ -886,7 +1359,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <div className="bg-gray-50 rounded-lg p-1.5 sm:p-2 mt-0">
                 <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-1">휴대폰 인증</h3>
                 <p className="text-xs sm:text-sm text-gray-600 mb-1">
-                  정확한 환급금 확인을 위해 휴대폰 인증이 필요합니다.
+                  정확한 보험료 확인을 위해 휴대폰 인증이 필요합니다.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2 mb-2 sm:mb-3 items-stretch sm:items-center">
                   <input
@@ -951,13 +1424,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         open={showConsultModal}
         onClose={handleCloseConsultModal}
       >
-        <div className="space-y-3">
+        <div className="space-y-2 sm:space-y-2.5">
           {/* 안내문구 */}
           {consultIsVerified ? (
             <>
               <FireworksEffect show={true} />
-              <div className="bg-[#f8f8ff] rounded p-3 mb-1 text-center">
-                <div className="text-lg text-black font-bold">상담신청이 접수되었습니다.</div>
+              <div className="bg-[#f8f8ff] rounded p-2 sm:p-2.5 mb-1 text-center">
+                <div className="text-base sm:text-lg text-black font-bold">상담신청이 접수되었습니다.</div>
                 <div className="text-sm text-gray-600 mt-1">담당자가 선택하신 상담 시간에 연락드릴 예정입니다.</div>
               </div>
             </>
@@ -966,8 +1439,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               상담신청을 위해 아래 정보를 입력해 주세요.
             </div>
           )}
-          <div className="bg-gray-50 rounded-lg p-2.5 mb-0.5">
-            <h3 className="mb-2 flex items-center">
+          <div className="bg-gray-50 rounded-lg p-1.5 sm:p-2 mb-0.5">
+            <h3 className="mb-1.5 sm:mb-2 flex items-center">
               <span className="text-2xl text-[#7c3aed] font-extrabold align-middle">{name}</span>
               <span className="text-lg text-[#7c3aed] font-bold align-middle">&nbsp;님</span>
               {insuranceAge !== '' && (
@@ -1113,6 +1586,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           )}
         </div>
       </Modal>
+
+
     </>
   );
 }
+

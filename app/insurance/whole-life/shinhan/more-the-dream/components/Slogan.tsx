@@ -29,10 +29,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const [isChecked, setIsChecked] = useState(true);
 
   const [showResultModal, setShowResultModal] = useState(false)
-  const [otpSent, setOtpSent]   = useState(false)
-  const [otpCode, setOtpCode]   = useState("")
+  const [otpSent, setOtpSent] = useState(false)
+  const [otpCode, setOtpCode] = useState("")
   const [verifying, setVerifying] = useState(false)
-  const [errorMsg, setErrorMsg]  = useState("")
+  const [errorMsg, setErrorMsg] = useState("")
   const [otpTimer, setOtpTimer] = useState(0);
   const [otpResendAvailable, setOtpResendAvailable] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
@@ -114,16 +114,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       alert('개인정보 수집 및 이용에 동의해주세요.');
       return false;
     }
-    if (!gender) { 
-      alert('성별을 선택해주세요.'); 
+    if (!gender) {
+      alert('성별을 선택해주세요.');
       return false;
     }
-    if (!name) { 
-      alert('이름을 입력해주세요.'); 
+    if (!name) {
+      alert('이름을 입력해주세요.');
       return false;
     }
-    if (!birth) { 
-      alert('생년월일을 입력해주세요.'); 
+    if (!birth) {
+      alert('생년월일을 입력해주세요.');
       return false;
     }
     if (!/^\d{8}$/.test(birth)) {
@@ -134,13 +134,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const birthMonth = parseInt(birth.substring(4, 6));
     const birthDay = parseInt(birth.substring(6, 8));
     const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
-    
+
     if (birthYear < 1900 || birthYear > new Date().getFullYear() ||
-        birthMonth < 1 || birthMonth > 12 ||
-        birthDay < 1 || birthDay > 31 ||
-        birthDate.getFullYear() !== birthYear ||
-        birthDate.getMonth() !== birthMonth - 1 ||
-        birthDate.getDate() !== birthDay) {
+      birthMonth < 1 || birthMonth > 12 ||
+      birthDay < 1 || birthDay > 31 ||
+      birthDate.getFullYear() !== birthYear ||
+      birthDate.getMonth() !== birthMonth - 1 ||
+      birthDate.getDate() !== birthDay) {
       alert('올바른 생년월일을 입력해주세요.');
       return false;
     }
@@ -148,8 +148,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     // 보험연령 안내는 모달에서 처리 (이 상품: 15~70세)
     const formInsuranceAge = Number(getInsuranceAge(birth));
 
-    if (!phone) { 
-      alert('연락처를 입력해주세요.'); 
+    if (!phone) {
+      alert('연락처를 입력해주세요.');
       return false;
     }
     if (!/^\d{11}$/.test(phone)) {
@@ -176,8 +176,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const templateId = 'UA_7754'; // 임시로 기존 작동하는 템플릿 사용
     console.log(`[CLIENT] 인증번호 전송 시작: ${new Date().toISOString()}`);
     try {
-      const response = await request.post('/api/postOTP', { 
-        phone, 
+      const response = await request.post('/api/postOTP', {
+        phone,
         templateId,
         companyName: productConfig?.config.companyName || "신한라이프생명",
         productName: productConfig?.config.name || "모아더드림Plus종신보험"
@@ -219,59 +219,59 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   };
 
   const handleVerifyOTP = async () => {
-  const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-  if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 70) return;
-  if (otpCode.length !== 6) {
-    alert("6자리 인증번호를 입력해주세요.");
-    return;
-  }
-
-  setVerifying(true);
-  try {
-    const res = await request.post("/api/verifyOTP", {
-      phone,
-      name,
-      birth,
-      gender,
-      code: otpCode,
-      counselType: counselType,
-      companyId: INSURANCE_COMPANY_ID,
-      productId: INSURANCE_PRODUCT_ID,
-      counselTime: consultTime,
-      mounthlyPremium: paymentAmount, // 실제 선택값
-      paymentPeriod: paymentPeriod,   // 실제 선택값
-      tenYearReturnRate: rate ? (rate * 100).toFixed(1) : '-', // 환급률 (소수점 첫째 자리까지)
-      interestValue, // 확정이자(실제 값)
-      refundValue,   // 예상해약환급금(실제 값)
-      templateId: "UB_8712"
-    });
-    if (res.data.success) {
-      // 방문자 추적: 환급금 확인
-      try {
-        await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
-          phone,
-          name,
-          counsel_type_id: 1, // 환급금 확인
-          utm_source: 'direct',
-          utm_campaign: 'premium_calculation'
-        });
-        console.log("[CLIENT] 방문자 추적 성공: 환급금 확인");
-      } catch (trackingError) {
-        console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
-      }
-      
-      setIsVerified(true);
-      setOtpSent(false);
-      // alert 제거: 바로 결과 표시
-    } else {
-      alert("인증에 실패했습니다.");
+    const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
+    if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 70) return;
+    if (otpCode.length !== 6) {
+      alert("6자리 인증번호를 입력해주세요.");
+      return;
     }
-  } catch (e: any) {
-    alert(e.error || "인증에 실패했습니다.");
-  } finally {
-    setVerifying(false);
-  }
-};
+
+    setVerifying(true);
+    try {
+      const res = await request.post("/api/verifyOTP", {
+        phone,
+        name,
+        birth,
+        gender,
+        code: otpCode,
+        counselType: counselType,
+        companyId: INSURANCE_COMPANY_ID,
+        productId: INSURANCE_PRODUCT_ID,
+        counselTime: consultTime,
+        mounthlyPremium: paymentAmount, // 실제 선택값
+        paymentPeriod: paymentPeriod,   // 실제 선택값
+        tenYearReturnRate: rate ? (rate * 100).toFixed(1) : '-', // 환급률 (소수점 첫째 자리까지)
+        interestValue, // 확정이자(실제 값)
+        refundValue,   // 예상해약환급금(실제 값)
+        templateId: "UB_8712"
+      });
+      if (res.data.success) {
+        // 방문자 추적: 환급금 확인
+        try {
+          await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
+            phone,
+            name,
+            counsel_type_id: 1, // 환급금 확인
+            utm_source: 'direct',
+            utm_campaign: 'premium_calculation'
+          });
+          console.log("[CLIENT] 방문자 추적 성공: 환급금 확인");
+        } catch (trackingError) {
+          console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
+        }
+
+        setIsVerified(true);
+        setOtpSent(false);
+        // alert 제거: 바로 결과 표시
+      } else {
+        alert("인증에 실패했습니다.");
+      }
+    } catch (e: any) {
+      alert(e.error || "인증에 실패했습니다.");
+    } finally {
+      setVerifying(false);
+    }
+  };
 
 
   const handleBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -374,13 +374,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       let tenYearReturnRate = '-';
       let interestValue = '-';
       let refundValue = '-';
-      
+
       if (paymentPeriod && paymentAmount) {
         tenYearReturnRate = rate ? (rate * 100).toFixed(1) : '-';
         interestValue = total ? (total * interestRate).toLocaleString('ko-KR') : '-';
         refundValue = total ? (total * rate).toLocaleString('ko-KR') : '-';
       }
-      
+
       const res = await request.post("/api/verifyOTP", {
         phone,
         name,
@@ -420,12 +420,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const birthYear = parseInt(birth.substring(0, 4));
     const birthMonth = parseInt(birth.substring(4, 6));
     const birthDay = parseInt(birth.substring(6, 8));
-    
+
     // 생년월일에 6개월을 더한 날짜 계산
     const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
     const insuranceBaseDate = new Date(birthDate);
     insuranceBaseDate.setMonth(insuranceBaseDate.getMonth() + 6);
-    
+
     // 현재 날짜와 보험기준일(생년월일+6개월)의 차이로 보험연령 계산
     const today = new Date();
     let insuranceAge = today.getFullYear() - insuranceBaseDate.getFullYear();
@@ -435,7 +435,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     ) {
       insuranceAge -= 1;
     }
-    
+
     return insuranceAge + 1;
   };
 
@@ -456,22 +456,22 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   }
   const months = parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12;
   const total = (!isNaN(amount) && !isNaN(months) && amount > 0 && months > 0) ? amount * months : 0;
-  
+
   // 환급률 계산 (요구사항에 맞게 수정)
   let rate = 1.205, interestRate = 0.205; // 기본값: 5년납
-  if (paymentPeriod.includes('5')) { 
+  if (paymentPeriod.includes('5')) {
     rate = 1.205; // 120.5%
     interestRate = 0.205; // 20.5%
   }
-  else if (paymentPeriod.includes('7')) { 
+  else if (paymentPeriod.includes('7')) {
     rate = 1.176; // 117.6%
     interestRate = 0.176; // 17.6%
   }
-  else if (paymentPeriod.includes('10')) { 
+  else if (paymentPeriod.includes('10')) {
     rate = 1.135; // 113.5%
     interestRate = 0.135; // 13.5%
   }
-  
+
   const interestValue = total ? (total * interestRate).toLocaleString('en-US') : '-';
   const refundValue = total ? (total * rate).toLocaleString('en-US') : '-';
 
@@ -492,7 +492,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
             <div className="flex items-center gap-2 text-sm text-gray-700 mb-2">
-              <img src="/shinhan-life-logo.png" alt="신한라이프 로고" className="h-6 w-auto" style={{minWidth:'24px'}} />
+              <img src="/shinhan-life-logo.png" alt="신한라이프 로고" className="h-6 w-auto" style={{ minWidth: '24px' }} />
               <span>신한라이프생명</span>
             </div>
             <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 lg:mb-4 leading-tight">모아더드림Plus종신보험<br />(해약환급금 일부지급형)</h1>
@@ -524,108 +524,108 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             {/* 환급률/보너스 안내 UI */}
             <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-3 sm:mb-4 p-4 sm:p-5 md:p-7 lg:p-6 px-4 sm:px-5 md:px-7 lg:px-6 pt-5 sm:pt-6 md:pt-8 lg:pt-7 pb-5 sm:pb-6 md:pb-8 lg:pb-7"
             >
-                <div className="text-center mb-3 sm:mb-4">
-                  <span className="text-xs text-gray-700 font-medium px-2 py-1 bg-gray-50 rounded">
-                    [50세 남자 일반심사형, 5년납, 1억원 기준]
-                  </span>
-                </div>
-              
-                <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-5 lg:gap-4 mb-3 sm:mb-4">
-                  {/* 1. 7년 시점 */}
-                  <div className="text-center px-0.5 sm:px-1">
-                    <div className="inline-block bg-gradient-to-b from-[#3b82f6] via-[#2563eb] to-[#1d4ed8] text-white text-xs sm:text-sm md:text-base font-bold px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-lg mb-2 sm:mb-2.5 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
-                      boxShadow: '0 6px 12px rgba(29, 78, 216, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
-                    }}>완납(5년)시점</div>
-                    <div className="flex flex-col items-center">
-                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#3b82f6]">90%</div>
-                    </div>
-                  </div>
-
-                  {/* 2. 10년 시점 */}
-                  <div className="text-center px-0.5 sm:px-1">
-                    <div className="inline-block bg-gradient-to-b from-[#ef4444] via-[#dc2626] to-[#b91c1c] text-white text-xs sm:text-sm md:text-base font-bold px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-lg mb-2 sm:mb-2.5 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
-                      boxShadow: '0 6px 12px rgba(185, 28, 28, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
-                    }}>10년 시점</div>
-                    <div className="flex flex-col items-center">
-                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#ef4444] animate-[jump-glow_1.2s_ease-in-out_infinite]">120.5%</div>
-                    </div>
-                  </div>
-
-                  {/* 3. 보너스 */}
-                  <div className="text-center px-0.5 sm:px-1">
-                    <div className="inline-block bg-gradient-to-b from-[#10b981] via-[#059669] to-[#047857] text-white text-xs sm:text-sm md:text-base font-bold px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-lg mb-2 sm:mb-2.5 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
-                      boxShadow: '0 6px 12px rgba(4, 120, 87, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
-                    }}>보너스</div>
-                    <div className="flex flex-col items-center">
-                      <div className="text-xs sm:text-sm font-bold text-emerald-600 leading-tight">
-                        납입완료보너스<br />
-                        장기유지보너스
-                      </div>
-                    </div>
-                  </div>
-                  
-                </div>
+              <div className="text-center mb-3 sm:mb-4">
+                <span className="text-xs text-gray-700 font-medium px-2 py-1 bg-gray-50 rounded">
+                  [50세 남자 일반심사형, 5년납, 1억원 기준]
+                </span>
               </div>
-              
+
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-5 lg:gap-4 mb-3 sm:mb-4">
+                {/* 1. 7년 시점 */}
+                <div className="text-center px-0.5 sm:px-1">
+                  <div className="inline-block bg-gradient-to-b from-[#3b82f6] via-[#2563eb] to-[#1d4ed8] text-white text-xs sm:text-sm md:text-base font-bold px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-lg mb-2 sm:mb-2.5 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
+                    boxShadow: '0 6px 12px rgba(29, 78, 216, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
+                  }}>완납(5년)시점</div>
+                  <div className="flex flex-col items-center">
+                    <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#3b82f6]">90%</div>
+                  </div>
+                </div>
+
+                {/* 2. 10년 시점 */}
+                <div className="text-center px-0.5 sm:px-1">
+                  <div className="inline-block bg-gradient-to-b from-[#ef4444] via-[#dc2626] to-[#b91c1c] text-white text-xs sm:text-sm md:text-base font-bold px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-lg mb-2 sm:mb-2.5 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
+                    boxShadow: '0 6px 12px rgba(185, 28, 28, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
+                  }}>10년 시점</div>
+                  <div className="flex flex-col items-center">
+                    <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#ef4444] animate-[jump-glow_1.2s_ease-in-out_infinite]">120.5%</div>
+                  </div>
+                </div>
+
+                {/* 3. 보너스 */}
+                <div className="text-center px-0.5 sm:px-1">
+                  <div className="inline-block bg-gradient-to-b from-[#10b981] via-[#059669] to-[#047857] text-white text-xs sm:text-sm md:text-base font-bold px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-lg mb-2 sm:mb-2.5 transform translate-y-0 hover:translate-y-[-2px] transition-transform whitespace-nowrap" style={{
+                    boxShadow: '0 6px 12px rgba(4, 120, 87, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
+                  }}>보너스</div>
+                  <div className="flex flex-col items-center">
+                    <div className="text-xs sm:text-sm font-bold text-emerald-600 leading-tight">
+                      납입완료보너스<br />
+                      장기유지보너스
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
           </div>
-          
+
           {/* 오른쪽: 환급금 확인 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
-            <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-5 sm:p-6 md:p-7 relative flex flex-col">
-              <div className="mb-5 sm:mb-6">
+            <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-4 sm:p-5 md:p-6 relative flex flex-col">
+              <div className="mb-4 sm:mb-5">
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] rounded-lg flex items-center justify-center">
-                    <CalculatorIcon className="w-4 h-4 text-white" />
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] rounded-lg flex items-center justify-center">
+                    <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">해약환급금 계산하기</h3>
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">해약환급금 계산하기</h3>
                 </div>
-                <p className="text-gray-700 text-xs sm:text-sm ml-10">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
+                <p className="text-gray-700 text-[11px] sm:text-xs md:text-sm ml-9 sm:ml-10">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
               </div>
-              <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleInsuranceCostCalculate}>
+              <form className="flex flex-col gap-2.5 sm:gap-3 md:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 성별/이름 */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">성별</label>
-                    <div className="flex gap-2">
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#2563eb] bg-[#2563eb]/5 text-[#2563eb]' : 'border-gray-200 hover:border-gray-300'}`}>
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">성별</label>
+                    <div className="flex gap-1.5 sm:gap-2">
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#2563eb] bg-[#2563eb]/5 text-[#2563eb]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
-                        <span className="text-sm font-medium">남자</span>
+                        <span className="text-xs sm:text-sm font-medium">남자</span>
                       </label>
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#2563eb] bg-[#2563eb]/5 text-[#2563eb]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#2563eb] bg-[#2563eb]/5 text-[#2563eb]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="F" checked={gender === "F"} onChange={handleGenderChange} className="sr-only" />
-                        <span className="text-sm font-medium">여자</span>
+                        <span className="text-xs sm:text-sm font-medium">여자</span>
                       </label>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">이름</label>
-                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#2563eb]/20 focus:border-[#2563eb] transition-all" placeholder="홍길동" />
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">이름</label>
+                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#2563eb]/20 focus:border-[#2563eb] transition-all" placeholder="홍길동" />
                   </div>
                 </div>
 
                 {/* 생년월일/연락처 */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">생년월일</label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#2563eb]/20 focus:border-[#2563eb] transition-all" placeholder="19880818" maxLength={8} />
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">생년월일</label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#2563eb]/20 focus:border-[#2563eb] transition-all" placeholder="19880818" maxLength={8} />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">연락처</label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#2563eb]/20 focus:border-[#2563eb] transition-all" placeholder="01012345678" />
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">연락처</label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#2563eb]/20 focus:border-[#2563eb] transition-all" placeholder="01012345678" />
                   </div>
                 </div>
 
                 {/* 납입기간 */}
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1.5">납입기간</label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">납입기간</label>
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                     {['5년', '7년', '10년'].map((period) => (
                       <label key={period} className="relative cursor-pointer">
                         {period === '5년' && (
                           <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
                         )}
                         <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#2563eb] bg-[#2563eb]/5 text-[#2563eb] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#2563eb] bg-[#2563eb]/5 text-[#2563eb] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
                           {period}
                         </div>
                       </label>
@@ -635,12 +635,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 월 납입금액 */}
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1.5">월 납입금액</label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">월 납입금액</label>
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                     {['30만원', '50만원', '100만원'].map((amount) => (
                       <label key={amount} className="cursor-pointer">
                         <input type="radio" name="paymentAmount" value={amount} checked={paymentAmount === amount} onChange={handlePaymentAmountChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#2563eb] bg-[#2563eb]/5 text-[#2563eb] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#2563eb] bg-[#2563eb]/5 text-[#2563eb] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
                           {amount}
                         </div>
                       </label>
@@ -650,28 +650,28 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 개인정보 동의 */}
                 <div className="flex items-center gap-2">
-                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-[#2563eb] rounded border-gray-300 cursor-pointer focus:ring-[#2563eb]" />
-                  <span className="text-xs text-gray-600">
-                    개인정보 수집 및 이용에 동의합니다. 
+                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#2563eb] rounded border-gray-300 cursor-pointer focus:ring-[#2563eb]" />
+                  <span className="text-[10px] sm:text-xs text-gray-600">
+                    개인정보 수집 및 이용에 동의합니다.
                     <button type="button" onClick={onOpenPrivacy} className="text-[#2563eb] underline ml-1 hover:text-[#1d4ed8]">자세히 보기</button>
                   </span>
                 </div>
 
                 {/* 버튼들 */}
-                <div className="flex flex-col gap-2 mt-1">
-                  <button type="submit" className="w-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white font-bold rounded-xl py-3.5 text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#2563eb]/25 cursor-pointer">
-                    <CalculatorIcon className="w-5 h-5" />
+                <div className="flex flex-col gap-1.5 sm:gap-2 mt-1">
+                  <button type="submit" className="w-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white font-bold rounded-xl py-3 sm:py-3.5 text-sm sm:text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#2563eb]/25 cursor-pointer">
+                    <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                     해약환급금 확인하기
                   </button>
-                  <div className="flex gap-2">
-                    <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-3 text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
-                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-4 h-4'>
+                  <div className="flex gap-1.5 sm:gap-2">
+                    <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
+                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-3.5 h-3.5 sm:w-4 sm:h-4'>
                         <path strokeLinecap='round' strokeLinejoin='round' d='M2.25 12a9.75 9.75 0 1 1 19.5 0v3.375a2.625 2.625 0 0 1-2.625 2.625h-1.125a.375.375 0 0 1-.375-.375V15a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 0 .75-.75V12a8.25 8.25 0 1 0-16.5 0v1.5a.75.75 0 0 0 .75.75h.75A.75.75 0 0 1 6 15v2.625a.375.375 0 0 1-.375.375H4.5A2.625 2.625 0 0 1 1.875 15.375V12Z' />
                       </svg>
                       상담신청
                     </button>
-                    <a href="https://pf.kakao.com/_lrubxb/chat" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-3 text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
-                      <ChatBubbleLeftRightIcon className="w-4 h-4" />
+                    <a href="https://pf.kakao.com/_lrubxb/chat" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
+                      <ChatBubbleLeftRightIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       채팅상담
                     </a>
                   </div>
@@ -681,7 +681,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           </div>
         </div>
       </section>
-      <Modal 
+      <Modal
         title={
           counselType === 1 ? (
             <span className="flex items-center gap-2">
@@ -691,7 +691,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           ) : (
             <span className="flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-[#fa5a5a]">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z"/>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z" />
               </svg>
               상담 신청하기
             </span>
@@ -935,7 +935,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         title={
           <span className="flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-[#fa5a5a]">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z"/>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z" />
             </svg>
             상담 신청하기
           </span>

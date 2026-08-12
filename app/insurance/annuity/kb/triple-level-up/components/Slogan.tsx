@@ -29,10 +29,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const [isChecked, setIsChecked] = useState(true);
 
   const [showResultModal, setShowResultModal] = useState(false)
-  const [otpSent, setOtpSent]   = useState(false)
-  const [otpCode, setOtpCode]   = useState("")
+  const [otpSent, setOtpSent] = useState(false)
+  const [otpCode, setOtpCode] = useState("")
   const [verifying, setVerifying] = useState(false)
-  const [errorMsg, setErrorMsg]  = useState("")
+  const [errorMsg, setErrorMsg] = useState("")
   const [otpTimer, setOtpTimer] = useState(0);
   const [otpResendAvailable, setOtpResendAvailable] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
@@ -114,16 +114,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       alert('개인정보 수집 및 이용에 동의해주세요.');
       return false;
     }
-    if (!gender) { 
-      alert('성별을 선택해주세요.'); 
+    if (!gender) {
+      alert('성별을 선택해주세요.');
       return false;
     }
-    if (!name) { 
-      alert('이름을 입력해주세요.'); 
+    if (!name) {
+      alert('이름을 입력해주세요.');
       return false;
     }
-    if (!birth) { 
-      alert('생년월일을 입력해주세요.'); 
+    if (!birth) {
+      alert('생년월일을 입력해주세요.');
       return false;
     }
     if (!/^\d{8}$/.test(birth)) {
@@ -134,13 +134,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const birthMonth = parseInt(birth.substring(4, 6));
     const birthDay = parseInt(birth.substring(6, 8));
     const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
-    
+
     if (birthYear < 1900 || birthYear > new Date().getFullYear() ||
-        birthMonth < 1 || birthMonth > 12 ||
-        birthDay < 1 || birthDay > 31 ||
-        birthDate.getFullYear() !== birthYear ||
-        birthDate.getMonth() !== birthMonth - 1 ||
-        birthDate.getDate() !== birthDay) {
+      birthMonth < 1 || birthMonth > 12 ||
+      birthDay < 1 || birthDay > 31 ||
+      birthDate.getFullYear() !== birthYear ||
+      birthDate.getMonth() !== birthMonth - 1 ||
+      birthDate.getDate() !== birthDay) {
       alert('올바른 생년월일을 입력해주세요.');
       return false;
     }
@@ -148,8 +148,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     // 보험연령 안내는 모달에서 처리 (이 상품: 15~70세)
     const formInsuranceAge = Number(getInsuranceAge(birth));
 
-    if (!phone) { 
-      alert('연락처를 입력해주세요.'); 
+    if (!phone) {
+      alert('연락처를 입력해주세요.');
       return false;
     }
     if (!/^\d{11}$/.test(phone)) {
@@ -176,8 +176,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const templateId = getTemplateIdByPath(currentPath)
     console.log(`[CLIENT] 인증번호 전송 시작: ${new Date().toISOString()}`);
     try {
-      const response = await request.post('/api/postOTP', { 
-        phone, 
+      const response = await request.post('/api/postOTP', {
+        phone,
         templateId,
         companyName: "KB라이프",
         productName: "트리플 레벨업 연금보험"
@@ -219,59 +219,59 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   };
 
   const handleVerifyOTP = async () => {
-  const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-  if (isNaN(ageForVerify) || ageForVerify < 0 || ageForVerify > 70) return;
-  if (otpCode.length !== 6) {
-    alert("6자리 인증번호를 입력해주세요.");
-    return;
-  }
-
-  setVerifying(true);
-  try {
-    const res = await request.post("/api/verifyOTP", {
-      phone,
-      name,
-      birth,
-      gender,
-      code: otpCode,
-      counselType: counselType,
-      companyId: INSURANCE_COMPANY_ID,
-      productId: INSURANCE_PRODUCT_ID,
-      counselTime: consultTime,
-      mounthlyPremium: paymentAmount, // 실제 선택값
-      paymentPeriod: paymentPeriod,   // 실제 선택값
-      tenYearReturnRate: rate ? Math.round(rate * 100) : '-', // 환급률
-      interestValue, // 확정이자(실제 값)
-      refundValue,    // 예상해약환급금(실제 값)
-      templateId: "UB_8712"
-    });
-    if (res.data.success) {
-      // 방문자 추적: 환급금 확인
-      try {
-        await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
-          phone,
-          name,
-          counsel_type_id: 1, // 환급금 확인
-          utm_source: 'direct',
-          utm_campaign: 'premium_calculation'
-        });
-        console.log("[CLIENT] 방문자 추적 성공: 환급금 확인");
-      } catch (trackingError) {
-        console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
-      }
-      
-      setIsVerified(true);
-      setOtpSent(false);
-      // alert 제거: 바로 결과 표시
-    } else {
-      alert("인증에 실패했습니다.");
+    const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
+    if (isNaN(ageForVerify) || ageForVerify < 0 || ageForVerify > 70) return;
+    if (otpCode.length !== 6) {
+      alert("6자리 인증번호를 입력해주세요.");
+      return;
     }
-  } catch (e: any) {
-    alert(e.error || "인증에 실패했습니다.");
-  } finally {
-    setVerifying(false);
-  }
-};
+
+    setVerifying(true);
+    try {
+      const res = await request.post("/api/verifyOTP", {
+        phone,
+        name,
+        birth,
+        gender,
+        code: otpCode,
+        counselType: counselType,
+        companyId: INSURANCE_COMPANY_ID,
+        productId: INSURANCE_PRODUCT_ID,
+        counselTime: consultTime,
+        mounthlyPremium: paymentAmount, // 실제 선택값
+        paymentPeriod: paymentPeriod,   // 실제 선택값
+        tenYearReturnRate: rate ? Math.round(rate * 100) : '-', // 환급률
+        interestValue, // 확정이자(실제 값)
+        refundValue,    // 예상해약환급금(실제 값)
+        templateId: "UB_8712"
+      });
+      if (res.data.success) {
+        // 방문자 추적: 환급금 확인
+        try {
+          await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
+            phone,
+            name,
+            counsel_type_id: 1, // 환급금 확인
+            utm_source: 'direct',
+            utm_campaign: 'premium_calculation'
+          });
+          console.log("[CLIENT] 방문자 추적 성공: 환급금 확인");
+        } catch (trackingError) {
+          console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
+        }
+
+        setIsVerified(true);
+        setOtpSent(false);
+        // alert 제거: 바로 결과 표시
+      } else {
+        alert("인증에 실패했습니다.");
+      }
+    } catch (e: any) {
+      alert(e.error || "인증에 실패했습니다.");
+    } finally {
+      setVerifying(false);
+    }
+  };
 
 
   const handleBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -373,13 +373,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       let tenYearReturnRate = '-';
       let interestValue = '-';
       let refundValue = '-';
-      
+
       if (paymentPeriod && paymentAmount) {
         tenYearReturnRate = rate ? Math.round(rate * 100).toString() : '-';
         interestValue = total ? (total * interestRate).toLocaleString('ko-KR') : '-';
         refundValue = total ? (total * rate).toLocaleString('ko-KR') : '-';
       }
-      
+
       const res = await request.post("/api/verifyOTP", {
         phone,
         name,
@@ -418,12 +418,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const birthYear = parseInt(birth.substring(0, 4));
     const birthMonth = parseInt(birth.substring(4, 6));
     const birthDay = parseInt(birth.substring(6, 8));
-    
+
     // 생년월일에 6개월을 더한 날짜 계산
     const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
     const insuranceBaseDate = new Date(birthDate);
     insuranceBaseDate.setMonth(insuranceBaseDate.getMonth() + 6);
-    
+
     // 현재 날짜와 보험기준일(생년월일+6개월)의 차이로 보험연령 계산
     const today = new Date();
     let insuranceAge = today.getFullYear() - insuranceBaseDate.getFullYear();
@@ -433,7 +433,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     ) {
       insuranceAge -= 1;
     }
-    
+
     return insuranceAge + 1;
   };
 
@@ -510,9 +510,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <span className="text-[#e23c3c] font-semibold">병력 무심사</span>&nbsp;/&nbsp;<span className="text-[#e23c3c] font-semibold">전건 가입가능!</span>
               </li>
             </ul>
-              {/* 환급률/적립액 안내 UI */}
-              <div className="relative">
-                <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl mb-3 sm:mb-4 p-2 sm:p-3 md:p-4 lg:p-3 px-2 sm:px-3 md:px-4 lg:px-3 pt-3 sm:pt-4 md:pt-5 lg:pt-5 pb-3 sm:pb-4 md:pb-5 lg:pb-5 border-2 border-yellow-200">
+            {/* 환급률/적립액 안내 UI */}
+            <div className="relative">
+              <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl mb-3 sm:mb-4 p-2 sm:p-3 md:p-4 lg:p-3 px-2 sm:px-3 md:px-4 lg:px-3 pt-3 sm:pt-4 md:pt-5 lg:pt-5 pb-3 sm:pb-4 md:pb-5 lg:pb-5 border-2 border-yellow-200">
                 <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-2 mb-2">
                   <div className="text-center px-1 sm:px-2">
                     <div className="text-orange-600 text-sm sm:text-base md:text-base font-bold mb-1 sm:mb-2 tracking-wide relative">
@@ -574,61 +574,61 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           </div>
           {/* 오른쪽: 환급금 확인 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
-            <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-5 sm:p-6 md:p-7 relative flex flex-col">
-              <div className="mb-5 sm:mb-6">
+            <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-4 sm:p-5 md:p-6 relative flex flex-col">
+              <div className="mb-4 sm:mb-5">
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-gradient-to-br from-[#f97316] to-[#ea580c] rounded-lg flex items-center justify-center">
-                    <CalculatorIcon className="w-4 h-4 text-white" />
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-[#f97316] to-[#ea580c] rounded-lg flex items-center justify-center">
+                    <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">해약환급금 계산하기</h3>
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">해약환급금 계산하기</h3>
                 </div>
-                <p className="text-gray-700 text-xs sm:text-sm ml-10">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
+                <p className="text-gray-700 text-[11px] sm:text-xs md:text-sm ml-9 sm:ml-10">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
               </div>
-              <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleInsuranceCostCalculate}>
+              <form className="flex flex-col gap-2.5 sm:gap-3 md:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 성별/이름 */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">성별 <span className="text-red-500">*</span></label>
-                    <div className="flex gap-2">
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316]' : 'border-gray-200 hover:border-gray-300'}`}>
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">성별 <span className="text-red-500">*</span></label>
+                    <div className="flex gap-1.5 sm:gap-2">
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
-                        <span className="text-sm font-medium">남자</span>
+                        <span className="text-xs sm:text-sm font-medium">남자</span>
                       </label>
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="F" checked={gender === "F"} onChange={handleGenderChange} className="sr-only" />
-                        <span className="text-sm font-medium">여자</span>
+                        <span className="text-xs sm:text-sm font-medium">여자</span>
                       </label>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">이름 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="홍길동" />
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">이름 <span className="text-red-500">*</span></label>
+                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="홍길동" />
                   </div>
                 </div>
 
                 {/* 생년월일/연락처 */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">생년월일 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="19880818" maxLength={8} />
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">생년월일 <span className="text-red-500">*</span></label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="19880818" maxLength={8} />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">연락처 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="01012345678" />
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">연락처 <span className="text-red-500">*</span></label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all" placeholder="01012345678" />
                   </div>
                 </div>
 
                 {/* 납입기간 */}
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1.5">납입기간</label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">납입기간</label>
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                     {['5년', '7년', '10년'].map((period) => (
                       <label key={period} className="relative cursor-pointer">
                         {period === '5년' && (
                           <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#f97316] to-[#ea580c] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
                         )}
                         <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
                           {period}
                         </div>
                       </label>
@@ -638,12 +638,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 월 납입금액 */}
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1.5">월 납입금액</label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">월 납입금액</label>
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                     {['30만원', '50만원', '70만원', '100만원', '130만원', '150만원'].map((amount) => (
                       <label key={amount} className="cursor-pointer">
                         <input type="radio" name="paymentAmount" value={amount} checked={paymentAmount === amount} onChange={handlePaymentAmountChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#f97316] bg-[#f97316]/5 text-[#f97316] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
                           {amount}
                         </div>
                       </label>
@@ -653,28 +653,28 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 개인정보 동의 */}
                 <div className="flex items-center gap-2">
-                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-[#f97316] rounded border-gray-300 cursor-pointer focus:ring-[#f97316]" />
-                  <span className="text-xs text-gray-600">
-                    개인정보 수집 및 이용에 동의합니다. 
+                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#f97316] rounded border-gray-300 cursor-pointer focus:ring-[#f97316]" />
+                  <span className="text-[10px] sm:text-xs text-gray-600">
+                    개인정보 수집 및 이용에 동의합니다.
                     <button type="button" onClick={onOpenPrivacy} className="text-[#f97316] underline ml-1 hover:text-[#ea580c]">자세히 보기</button>
                   </span>
                 </div>
 
                 {/* 버튼들 */}
-                <div className="flex flex-col gap-2 mt-1">
-                  <button type="submit" className="w-full bg-gradient-to-r from-[#f97316] to-[#ea580c] text-white font-bold rounded-xl py-3.5 text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#f97316]/25 cursor-pointer">
-                    <CalculatorIcon className="w-5 h-5" />
+                <div className="flex flex-col gap-1.5 sm:gap-2 mt-1">
+                  <button type="submit" className="w-full bg-gradient-to-r from-[#f97316] to-[#ea580c] text-white font-bold rounded-xl py-3 sm:py-3.5 text-sm sm:text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#f97316]/25 cursor-pointer">
+                    <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                     해약환급금 확인하기
                   </button>
-                  <div className="flex gap-2">
-                    <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-3 text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
-                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-4 h-4'>
+                  <div className="flex gap-1.5 sm:gap-2">
+                    <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
+                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-3.5 h-3.5 sm:w-4 sm:h-4'>
                         <path strokeLinecap='round' strokeLinejoin='round' d='M2.25 12a9.75 9.75 0 1 1 19.5 0v3.375a2.625 2.625 0 0 1-2.625 2.625h-1.125a.375.375 0 0 1-.375-.375V15a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 0 .75-.75V12a8.25 8.25 0 1 0-16.5 0v1.5a.75.75 0 0 0 .75.75h.75A.75.75 0 0 1 6 15v2.625a.375.375 0 0 1-.375.375H4.5A2.625 2.625 0 0 1 1.875 15.375V12Z' />
                       </svg>
                       상담신청
                     </button>
-                    <a href="https://pf.kakao.com/_lrubxb/chat" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-3 text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
-                      <ChatBubbleLeftRightIcon className="w-4 h-4" />
+                    <a href="https://pf.kakao.com/_lrubxb/chat" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
+                      <ChatBubbleLeftRightIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       채팅상담
                     </a>
                   </div>
@@ -684,7 +684,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           </div>
         </div>
       </section>
-      <Modal 
+      <Modal
         title={
           counselType === 1 ? (
             <span className="flex items-center gap-2">
@@ -694,7 +694,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           ) : (
             <span className="flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-[#fa5a5a]">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z"/>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z" />
               </svg>
               상담 신청하기
             </span>
@@ -931,7 +931,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         title={
           <span className="flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-[#fa5a5a]">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z"/>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z" />
             </svg>
             상담 신청하기
           </span>

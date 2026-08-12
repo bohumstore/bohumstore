@@ -32,10 +32,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const [isChecked, setIsChecked] = useState(true);
 
   const [showResultModal, setShowResultModal] = useState(false)
-  const [otpSent, setOtpSent]   = useState(false)
-  const [otpCode, setOtpCode]   = useState("")
+  const [otpSent, setOtpSent] = useState(false)
+  const [otpCode, setOtpCode] = useState("")
   const [verifying, setVerifying] = useState(false)
-  const [errorMsg, setErrorMsg]  = useState("")
+  const [errorMsg, setErrorMsg] = useState("")
   const [otpTimer, setOtpTimer] = useState(0);
   const [otpResendAvailable, setOtpResendAvailable] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
@@ -88,12 +88,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const birthYear = parseInt(birth.substring(0, 4));
     const birthMonth = parseInt(birth.substring(4, 6));
     const birthDay = parseInt(birth.substring(6, 8));
-    
+
     // 생년월일에 6개월을 더한 날짜 계산
     const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
     const insuranceBaseDate = new Date(birthDate);
     insuranceBaseDate.setMonth(insuranceBaseDate.getMonth() + 6);
-    
+
     // 현재 날짜와 보험기준일(생년월일+6개월)의 차이로 보험연령 계산
     const today = new Date();
     let insuranceAge = today.getFullYear() - insuranceBaseDate.getFullYear();
@@ -103,7 +103,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     ) {
       insuranceAge -= 1;
     }
-    
+
     return insuranceAge + 1;
   };
 
@@ -244,16 +244,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       alert('개인정보 수집 및 이용에 동의해주세요.');
       return false;
     }
-    if (!gender) { 
-      alert('성별을 선택해주세요.'); 
+    if (!gender) {
+      alert('성별을 선택해주세요.');
       return false;
     }
-    if (!name) { 
-      alert('이름을 입력해주세요.'); 
+    if (!name) {
+      alert('이름을 입력해주세요.');
       return false;
     }
-    if (!birth) { 
-      alert('생년월일을 입력해주세요.'); 
+    if (!birth) {
+      alert('생년월일을 입력해주세요.');
       return false;
     }
     if (!/^\d{8}$/.test(birth)) {
@@ -264,13 +264,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const birthMonth = parseInt(birth.substring(4, 6));
     const birthDay = parseInt(birth.substring(6, 8));
     const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
-    
+
     if (birthYear < 1900 || birthYear > new Date().getFullYear() ||
-        birthMonth < 1 || birthMonth > 12 ||
-        birthDay < 1 || birthDay > 31 ||
-        birthDate.getFullYear() !== birthYear ||
-        birthDate.getMonth() !== birthMonth - 1 ||
-        birthDate.getDate() !== birthDay) {
+      birthMonth < 1 || birthMonth > 12 ||
+      birthDay < 1 || birthDay > 31 ||
+      birthDate.getFullYear() !== birthYear ||
+      birthDate.getMonth() !== birthMonth - 1 ||
+      birthDate.getDate() !== birthDay) {
       alert('올바른 생년월일을 입력해주세요.');
       return false;
     }
@@ -278,8 +278,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     // 보험연령 안내는 모달에서 처리 (이 상품: 15~70세)
     const formInsuranceAge = Number(getInsuranceAge(birth));
 
-    if (!phone) { 
-      alert('연락처를 입력해주세요.'); 
+    if (!phone) {
+      alert('연락처를 입력해주세요.');
       return false;
     }
     if (!/^\d{11}$/.test(phone)) {
@@ -306,8 +306,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const templateId = getTemplateIdByPath(currentPath)
     console.log(`[CLIENT] 인증번호 전송 시작: ${new Date().toISOString()}`);
     try {
-      const response = await request.post('/api/postOTP', { 
-        phone, 
+      const response = await request.post('/api/postOTP', {
+        phone,
         templateId,
         companyName: "KDB생명",
         productName: "더!행복드림변액연금보험"
@@ -335,87 +335,87 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   }
 
   const handleVerifyOTP = async () => {
-  const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-  if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 70) return;
-  if (otpCode.length !== 6) {
-    alert("6자리 인증번호를 입력해주세요.");
-    return;
-  }
-
-  setVerifying(true);
-  try {
-    // 서버에서 엑셀 기반 연금액 계산
-    const pension = await fetchExcelPension(Number(insuranceAge), paymentPeriod, paymentAmount, gender);
-    
-    const requestData = {
-      phone,
-      name,
-      birth,
-      gender,
-      code: otpCode,
-      counselType: counselType,
-      companyId: INSURANCE_COMPANY_ID,
-      productId: INSURANCE_PRODUCT_ID,
-      counselTime: consultTime,
-      mounthlyPremium: paymentAmount,
-      paymentPeriod: paymentPeriod,
-      monthlyPension: pension.monthly,
-      performancePension: pension.performance,
-      guaranteedPension: pension.guaranteed,
-      totalUntil100: pension.totalUntil100,
-      pensionStartAge: pension.pensionStartAge,
-      templateId: "UB_8705",
-      adminTemplateId: "UA_8331"
-    };
-    
-    console.log("[CLIENT] API 요청 데이터:", requestData);
-    
-    const res = await request.post("/api/verifyOTP", requestData);
-    if (res.data.success) {
-      // 방문자 추적: 보험료 확인
-      try {
-        await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
-          phone,
-          name,
-          counsel_type_id: 1, // 보험료 확인
-          utm_source: 'direct',
-          utm_campaign: 'premium_calculation'
-        });
-        console.log("[CLIENT] 방문자 추적 성공: 보험료 확인");
-      } catch (trackingError) {
-        console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
-      }
-      
-      // Supabase에 데이터 저장 (보험료 확인: counselType = 1)
-      const supabaseResult = await saveToSupabase(1);
-      // 인증 직후 모달 표시용 결과 최신화 (엑셀 기반 값 반영)
-      setServerPension({
-        monthly: pension.monthly,
-        performance: pension.performance,
-        guaranteed: pension.guaranteed,
-        totalUntil100: pension.totalUntil100,
-        pensionStartAge: pension.pensionStartAge,
-        notice: pension.notice
-      });
-      setVerifiedPension({
-        monthly: pension.monthly,
-        performance: pension.performance,
-        guaranteed: pension.guaranteed,
-        totalUntil100: pension.totalUntil100,
-        pensionStartAge: pension.pensionStartAge,
-      });
-      setIsVerified(true);
-      setOtpSent(false);
-      // alert 제거: 바로 결과 표시
-    } else {
-      alert("인증에 실패했습니다.");
+    const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
+    if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 70) return;
+    if (otpCode.length !== 6) {
+      alert("6자리 인증번호를 입력해주세요.");
+      return;
     }
-  } catch (e: any) {
-    alert(e.error || "인증에 실패했습니다.");
-  } finally {
-    setVerifying(false);
-  }
-};
+
+    setVerifying(true);
+    try {
+      // 서버에서 엑셀 기반 연금액 계산
+      const pension = await fetchExcelPension(Number(insuranceAge), paymentPeriod, paymentAmount, gender);
+
+      const requestData = {
+        phone,
+        name,
+        birth,
+        gender,
+        code: otpCode,
+        counselType: counselType,
+        companyId: INSURANCE_COMPANY_ID,
+        productId: INSURANCE_PRODUCT_ID,
+        counselTime: consultTime,
+        mounthlyPremium: paymentAmount,
+        paymentPeriod: paymentPeriod,
+        monthlyPension: pension.monthly,
+        performancePension: pension.performance,
+        guaranteedPension: pension.guaranteed,
+        totalUntil100: pension.totalUntil100,
+        pensionStartAge: pension.pensionStartAge,
+        templateId: "UB_8705",
+        adminTemplateId: "UA_8331"
+      };
+
+      console.log("[CLIENT] API 요청 데이터:", requestData);
+
+      const res = await request.post("/api/verifyOTP", requestData);
+      if (res.data.success) {
+        // 방문자 추적: 보험료 확인
+        try {
+          await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
+            phone,
+            name,
+            counsel_type_id: 1, // 보험료 확인
+            utm_source: 'direct',
+            utm_campaign: 'premium_calculation'
+          });
+          console.log("[CLIENT] 방문자 추적 성공: 보험료 확인");
+        } catch (trackingError) {
+          console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
+        }
+
+        // Supabase에 데이터 저장 (보험료 확인: counselType = 1)
+        const supabaseResult = await saveToSupabase(1);
+        // 인증 직후 모달 표시용 결과 최신화 (엑셀 기반 값 반영)
+        setServerPension({
+          monthly: pension.monthly,
+          performance: pension.performance,
+          guaranteed: pension.guaranteed,
+          totalUntil100: pension.totalUntil100,
+          pensionStartAge: pension.pensionStartAge,
+          notice: pension.notice
+        });
+        setVerifiedPension({
+          monthly: pension.monthly,
+          performance: pension.performance,
+          guaranteed: pension.guaranteed,
+          totalUntil100: pension.totalUntil100,
+          pensionStartAge: pension.pensionStartAge,
+        });
+        setIsVerified(true);
+        setOtpSent(false);
+        // alert 제거: 바로 결과 표시
+      } else {
+        alert("인증에 실패했습니다.");
+      }
+    } catch (e: any) {
+      alert(e.error || "인증에 실패했습니다.");
+    } finally {
+      setVerifying(false);
+    }
+  };
 
   const handleBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -562,13 +562,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       alert("6자리 인증번호를 입력해주세요.");
       return;
     }
-    
+
     // 기본 필수 데이터만 확인 (납입기간, 월납입금액 제외)
     if (!name || !birth || !gender || !phone) {
       alert("필수 정보가 누락되었습니다. 모든 정보를 입력해주세요.");
       return;
     }
-    
+
     setVerifying(true);
     try {
       // 납입기간과 월납입금액이 있는 경우에만 연금액 계산
@@ -577,7 +577,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         const p = await fetchExcelPension(Number(insuranceAge), paymentPeriod, paymentAmount, gender);
         calculatedPensionAmounts = { monthly: p.monthly, performance: p.performance, totalUntil100: p.totalUntil100, pensionStartAge: p.pensionStartAge, notice: p.notice } as any;
       }
-      
+
       const res = await request.post("/api/verifyOTP", {
         phone,
         name,
@@ -620,7 +620,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   }
   const months = parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12;
   const total = (!isNaN(amount) && !isNaN(months) && amount > 0 && months > 0) ? amount * months : 0;
-  
+
   // 연금액 계산 (미리 표시용 - 기본 로직 제거, 서버 값 도착 후 표시)
   const [serverPension, setServerPension] = useState<{ monthly: number; performance: number; guaranteed: number; totalUntil100: number; pensionStartAge: number | null; notice?: string } | null>(null);
   // 인증 직후 확정된 값(카톡에 사용한 것과 동일)을 별도로 보관하여 프리페치 레이스에 영향받지 않도록 함
@@ -708,119 +708,119 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <span>최저사망적립액 보증 / 선지급행복자금</span>
               </li>
             </ul>
-              {/* 보증 내용 박스 */}
-              <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-3 sm:mb-4 p-4 sm:p-5 md:p-6 lg:p-4 px-4 sm:px-5 md:px-6 lg:px-4 pt-5 sm:pt-6 md:pt-7 lg:pt-6 pb-5 sm:pb-6 md:pb-7 lg:pb-6">
-                <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 lg:gap-3 mb-2 sm:mb-3">
-                  {/* 1. 생존 시 최대 100세까지 */}
-                  <div className="text-center p-1.5 sm:p-2 md:p-3 lg:p-3 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg shadow-md border border-purple-200 transition-all duration-300 flex flex-col justify-between min-h-[120px] sm:min-h-[140px] md:min-h-[160px]">
-                    <div>
-                      <div className="inline-block bg-gradient-to-r from-purple-600 to-purple-700 text-white text-[10px] sm:text-xs md:text-sm font-bold px-1.5 sm:px-2 md:px-3 py-1 sm:py-1.5 rounded-full mb-1 sm:mb-2 shadow-md">생존 시 최대 100세까지</div>
-                    </div>
-                    <div className="flex-1 flex items-center justify-center">
-                      <div className="text-[10px] sm:text-xs text-gray-700 leading-tight font-medium">
-                        (예시) 100세<br />최종연금지급일
+            {/* 보증 내용 박스 */}
+            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-3 sm:mb-4 p-4 sm:p-5 md:p-6 lg:p-4 px-4 sm:px-5 md:px-6 lg:px-4 pt-5 sm:pt-6 md:pt-7 lg:pt-6 pb-5 sm:pb-6 md:pb-7 lg:pb-6">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 lg:gap-3 mb-2 sm:mb-3">
+                {/* 1. 생존 시 최대 100세까지 */}
+                <div className="text-center p-1.5 sm:p-2 md:p-3 lg:p-3 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg shadow-md border border-purple-200 transition-all duration-300 flex flex-col justify-between min-h-[120px] sm:min-h-[140px] md:min-h-[160px]">
+                  <div>
+                    <div className="inline-block bg-gradient-to-r from-purple-600 to-purple-700 text-white text-[10px] sm:text-xs md:text-sm font-bold px-1.5 sm:px-2 md:px-3 py-1 sm:py-1.5 rounded-full mb-1 sm:mb-2 shadow-md">생존 시 최대 100세까지</div>
                   </div>
+                  <div className="flex-1 flex items-center justify-center">
+                    <div className="text-[10px] sm:text-xs text-gray-700 leading-tight font-medium">
+                      (예시) 100세<br />최종연금지급일
                     </div>
-                    <div className="text-[10px] sm:text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-1 sm:p-1.5">
-                      = 피보험자의 99세<br />계약 해당일
                   </div>
-                    </div>
-
-                  {/* 2. 보증금리 Top */}
-                  <div className="text-center p-1.5 sm:p-2 md:p-3 lg:p-3 bg-gradient-to-br from-pink-100 to-pink-200 rounded-lg shadow-md border border-pink-200 transition-all duration-300 relative overflow-hidden flex flex-col justify-between min-h-[120px] sm:min-h-[140px] md:min-h-[160px]">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent animate-shine-strong"></div>
-                    <div className="relative z-10">
-                                              <div className="inline-block bg-gradient-to-r from-pink-600 to-pink-700 text-white text-[10px] sm:text-xs md:text-sm font-bold px-1.5 sm:px-2 md:px-3 py-1 sm:py-1.5 rounded-full mb-1 sm:mb-2 shadow-md">보증금리 Top</div>
-                      <div className="flex items-center justify-center mb-2">
-                        <div className="text-[10px] sm:text-xs text-gray-700 mr-1 sm:mr-2 font-semibold leading-tight">
-                          최대<br />연단리
-                        </div>
-                        <div className="text-2xl sm:text-3xl md:text-4xl font-black text-orange-600 drop-shadow-2xl animate-bounce">7%</div>
-                      </div>
-                    </div>
-                                          <div className="text-[10px] sm:text-xs text-gray-600 space-y-0.5 sm:space-y-1 leading-tight relative z-10 mt-auto">
-                        <div className="bg-white/60 rounded-lg p-0.5 sm:p-1 font-medium">계약일로부터<br />20년: 7%</div>
-                        <div className="bg-white/60 rounded-lg p-0.5 sm:p-1 font-medium">20년~연금개시까지: <span className="text-blue-600 font-bold">6%</span></div>
-                      </div>
-                  </div>
-
-                  {/* 3. 사망 시에도 보장 */}
-                  <div className="text-center p-1.5 sm:p-2 md:p-3 lg:p-3 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg shadow-md border border-indigo-200 transition-all duration-300 flex flex-col justify-between min-h-[120px] sm:min-h-[140px] md:min-h-[160px]">
-                    <div>
-                                              <div className="inline-block bg-gradient-to-r from-indigo-600 to-indigo-700 text-white text-[10px] sm:text-xs md:text-sm font-bold px-1.5 sm:px-2 md:px-3 py-1 sm:py-1.5 rounded-full mb-1 sm:mb-2 shadow-md">사망시에도<br />보장</div>
-                    </div>
-                    <div className="flex-1 flex items-center justify-center">
-                      <div className="text-[10px] sm:text-xs font-bold text-gray-800 leading-tight">
-                        최저 사망적립액<br />보장
-                      </div>
-                    </div>
-                    <div className="text-[10px] sm:text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-1 sm:p-1.5">
-                      장래 공시이율과<br />관계없이
-                    </div>
+                  <div className="text-[10px] sm:text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-1 sm:p-1.5">
+                    = 피보험자의 99세<br />계약 해당일
                   </div>
                 </div>
-                <div className="text-xs text-gray-700 text-center mt-4">
-                  <p>※ 대표계약기준(40세 남자, 10년납, 연금개시 나이 65세), 복리이자율로 환산시 4.32%</p>
+
+                {/* 2. 보증금리 Top */}
+                <div className="text-center p-1.5 sm:p-2 md:p-3 lg:p-3 bg-gradient-to-br from-pink-100 to-pink-200 rounded-lg shadow-md border border-pink-200 transition-all duration-300 relative overflow-hidden flex flex-col justify-between min-h-[120px] sm:min-h-[140px] md:min-h-[160px]">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent animate-shine-strong"></div>
+                  <div className="relative z-10">
+                    <div className="inline-block bg-gradient-to-r from-pink-600 to-pink-700 text-white text-[10px] sm:text-xs md:text-sm font-bold px-1.5 sm:px-2 md:px-3 py-1 sm:py-1.5 rounded-full mb-1 sm:mb-2 shadow-md">보증금리 Top</div>
+                    <div className="flex items-center justify-center mb-2">
+                      <div className="text-[10px] sm:text-xs text-gray-700 mr-1 sm:mr-2 font-semibold leading-tight">
+                        최대<br />연단리
+                      </div>
+                      <div className="text-2xl sm:text-3xl md:text-4xl font-black text-orange-600 drop-shadow-2xl animate-bounce">7%</div>
+                    </div>
+                  </div>
+                  <div className="text-[10px] sm:text-xs text-gray-600 space-y-0.5 sm:space-y-1 leading-tight relative z-10 mt-auto">
+                    <div className="bg-white/60 rounded-lg p-0.5 sm:p-1 font-medium">계약일로부터<br />20년: 7%</div>
+                    <div className="bg-white/60 rounded-lg p-0.5 sm:p-1 font-medium">20년~연금개시까지: <span className="text-blue-600 font-bold">6%</span></div>
+                  </div>
                 </div>
+
+                {/* 3. 사망 시에도 보장 */}
+                <div className="text-center p-1.5 sm:p-2 md:p-3 lg:p-3 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg shadow-md border border-indigo-200 transition-all duration-300 flex flex-col justify-between min-h-[120px] sm:min-h-[140px] md:min-h-[160px]">
+                  <div>
+                    <div className="inline-block bg-gradient-to-r from-indigo-600 to-indigo-700 text-white text-[10px] sm:text-xs md:text-sm font-bold px-1.5 sm:px-2 md:px-3 py-1 sm:py-1.5 rounded-full mb-1 sm:mb-2 shadow-md">사망시에도<br />보장</div>
+                  </div>
+                  <div className="flex-1 flex items-center justify-center">
+                    <div className="text-[10px] sm:text-xs font-bold text-gray-800 leading-tight">
+                      최저 사망적립액<br />보장
+                    </div>
+                  </div>
+                  <div className="text-[10px] sm:text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-1 sm:p-1.5">
+                    장래 공시이율과<br />관계없이
+                  </div>
+                </div>
+              </div>
+              <div className="text-xs text-gray-700 text-center mt-4">
+                <p>※ 대표계약기준(40세 남자, 10년납, 연금개시 나이 65세), 복리이자율로 환산시 4.32%</p>
+              </div>
             </div>
           </div>
           {/* 오른쪽: 보험료 확인 카드 */}
           <div className="flex-1 flex justify-center lg:justify-end w-full lg:ml-8 lg:self-center">
-            <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-5 sm:p-6 md:p-7 relative flex flex-col">
-              <div className="mb-5 sm:mb-6">
+            <div id="calculator-box" className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-2xl p-4 sm:p-5 md:p-6 relative flex flex-col">
+              <div className="mb-4 sm:mb-5">
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-gradient-to-br from-[#c084fc] to-[#9333ea] rounded-lg flex items-center justify-center">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-[#c084fc] to-[#9333ea] rounded-lg flex items-center justify-center">
                     <CalculatorIcon className="w-4 h-4 text-white" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">연금액 계산하기</h3>
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">연금액 계산하기</h3>
                 </div>
-                <p className="text-gray-700 text-xs sm:text-sm ml-10">간단한 정보 입력으로 예상 연금액을 확인하세요</p>
+                <p className="text-gray-700 text-[11px] sm:text-xs md:text-sm ml-9 sm:ml-10">간단한 정보 입력으로 예상 연금액을 확인하세요</p>
               </div>
-              <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleInsuranceCostCalculate}>
+              <form className="flex flex-col gap-2.5 sm:gap-3 md:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 성별/이름 */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">성별 <span className="text-red-500">*</span></label>
-                    <div className="flex gap-2">
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#c084fc] bg-[#c084fc]/5 text-[#c084fc]' : 'border-gray-200 hover:border-gray-300'}`}>
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">성별 <span className="text-red-500">*</span></label>
+                    <div className="flex gap-1.5 sm:gap-2">
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "M" ? 'border-[#c084fc] bg-[#c084fc]/5 text-[#c084fc]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="M" checked={gender === "M"} onChange={handleGenderChange} className="sr-only" />
-                        <span className="text-sm font-medium">남자</span>
+                        <span className="text-xs sm:text-sm font-medium">남자</span>
                       </label>
-                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#c084fc] bg-[#c084fc]/5 text-[#c084fc]' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <label className={`flex-1 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg border-2 cursor-pointer transition-all ${gender === "F" ? 'border-[#c084fc] bg-[#c084fc]/5 text-[#c084fc]' : 'border-gray-200 hover:border-gray-300'}`}>
                         <input type="radio" name="gender" value="F" checked={gender === "F"} onChange={handleGenderChange} className="sr-only" />
-                        <span className="text-sm font-medium">여자</span>
+                        <span className="text-xs sm:text-sm font-medium">여자</span>
                       </label>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">이름 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#c084fc]/20 focus:border-[#c084fc] transition-all" placeholder="홍길동" />
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">이름 <span className="text-red-500">*</span></label>
+                    <input type="text" inputMode="text" ref={nameInputRef} value={name} onChange={handleNameChange} onFocus={handleInputFocus} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); birthInputRef.current?.focus(); } }} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#c084fc]/20 focus:border-[#c084fc] transition-all" placeholder="홍길동" />
                   </div>
                 </div>
 
                 {/* 생년월일/연락처 */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">생년월일 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#c084fc]/20 focus:border-[#c084fc] transition-all" placeholder="19880818" maxLength={8} />
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">생년월일 <span className="text-red-500">*</span></label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#c084fc]/20 focus:border-[#c084fc] transition-all" placeholder="19880818" maxLength={8} />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">연락처 <span className="text-red-500">*</span></label>
-                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#c084fc]/20 focus:border-[#c084fc] transition-all" placeholder="01012345678" />
+                    <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">연락처 <span className="text-red-500">*</span></label>
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" ref={phoneInputRef} value={phone} onChange={handlePhoneChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#c084fc]/20 focus:border-[#c084fc] transition-all" placeholder="01012345678" />
                   </div>
                 </div>
 
                 {/* 납입기간 */}
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1.5">납입기간</label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">납입기간</label>
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                     {['10년', '15년', '20년'].map((period) => (
                       <label key={period} className="relative cursor-pointer">
                         {period === '10년' && (
                           <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#c084fc] to-[#9333ea] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
                         )}
                         <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#c084fc] bg-[#c084fc]/5 text-[#c084fc] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#c084fc] bg-[#c084fc]/5 text-[#c084fc] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
                           {period}
                         </div>
                       </label>
@@ -830,12 +830,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
                 {/* 월 납입금액 */}
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1.5">월 납입금액</label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">월 납입금액</label>
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                     {['30만원', '50만원', '100만원'].map((amount) => (
                       <label key={amount} className="cursor-pointer">
                         <input type="radio" name="paymentAmount" value={amount} checked={paymentAmount === amount} onChange={handlePaymentAmountChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#c084fc] bg-[#c084fc]/5 text-[#c084fc] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#c084fc] bg-[#c084fc]/5 text-[#c084fc] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
                           {amount}
                         </div>
                       </label>
@@ -844,29 +844,29 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 </div>
 
                 {/* 개인정보 동의 */}
-                <div className="flex items-center gap-2 mb-4">
-                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-[#c084fc] rounded border-gray-300 cursor-pointer focus:ring-[#c084fc]" />
-                  <span className="text-xs text-gray-600">
-                    개인정보 수집 및 이용에 동의합니다. 
+                <div className="flex items-center gap-2 mb-2.5 sm:mb-3 md:mb-4">
+                  <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#c084fc] rounded border-gray-300 cursor-pointer focus:ring-[#c084fc]" />
+                  <span className="text-[10px] sm:text-xs text-gray-600">
+                    개인정보 수집 및 이용에 동의합니다.
                     <button type="button" onClick={onOpenPrivacy} className="text-[#c084fc] underline ml-1 hover:text-[#9333ea]">자세히 보기</button>
                   </span>
                 </div>
 
                 {/* 버튼들 */}
-                <div className="flex flex-col gap-2 mt-1">
-                  <button type="submit" className="w-full bg-gradient-to-r from-[#c084fc] to-[#9333ea] text-white font-bold rounded-xl py-3.5 text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#c084fc]/25 cursor-pointer">
-                    <CalculatorIcon className="w-5 h-5" />
+                <div className="flex flex-col gap-1.5 sm:gap-2 mt-1">
+                  <button type="submit" className="w-full bg-gradient-to-r from-[#c084fc] to-[#9333ea] text-white font-bold rounded-xl py-3 sm:py-3.5 text-sm sm:text-base hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-[#c084fc]/25 cursor-pointer">
+                    <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                     연금액 확인하기
                   </button>
-                  <div className="flex gap-2">
-                    <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-3 text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
-                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-4 h-4'>
+                  <div className="flex gap-1.5 sm:gap-2">
+                    <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
+                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-3.5 h-3.5 sm:w-4 sm:h-4'>
                         <path strokeLinecap='round' strokeLinejoin='round' d='M2.25 12a9.75 9.75 0 1 1 19.5 0v3.375a2.625 2.625 0 0 1-2.625 2.625h-1.125a.375.375 0 0 1-.375-.375V15a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 0 .75-.75V12a8.25 8.25 0 1 0-16.5 0v1.5a.75.75 0 0 0 .75.75h.75A.75.75 0 0 1 6 15v2.625a.375.375 0 0 1-.375.375H4.5A2.625 2.625 0 0 1 1.875 15.375V12Z' />
                       </svg>
                       상담신청
                     </button>
-                    <a href="https://pf.kakao.com/_lrubxb/chat" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-3 text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
-                      <ChatBubbleLeftRightIcon className="w-4 h-4" />
+                    <a href="https://pf.kakao.com/_lrubxb/chat" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:opacity-95 transition cursor-pointer">
+                      <ChatBubbleLeftRightIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       채팅상담
                     </a>
                   </div>
@@ -876,7 +876,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           </div>
         </div>
       </section>
-      <Modal 
+      <Modal
         title={
           counselType === 1 ? (
             <span className="flex items-center gap-2">
@@ -886,7 +886,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           ) : (
             <span className="flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-[#fa5a5a]">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z"/>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z" />
               </svg>
               상담 신청하기
             </span>
@@ -978,8 +978,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <span className="font-bold">
                       <span className="text-[#ef4444]">
                         {isVerified ? (
-                          (serverPension?.guaranteed || 0) > 0 ? 
-                            `약 ${serverPension?.guaranteed?.toLocaleString('en-US')}` : 
+                          (serverPension?.guaranteed || 0) > 0 ?
+                            `약 ${serverPension?.guaranteed?.toLocaleString('en-US')}` :
                             '별도 상담 문의'
                         ) : "인증 후 확인가능"}
                       </span>
@@ -1152,7 +1152,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         title={
           <span className="flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-[#fa5a5a]">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z"/>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z" />
             </svg>
             상담 신청하기
           </span>

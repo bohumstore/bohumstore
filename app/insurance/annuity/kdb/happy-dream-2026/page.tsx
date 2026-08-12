@@ -13,7 +13,7 @@ import Surrender from "./components/BodyTabViews/Surrender";
 import { supabase } from "../../../../api/supabase";
 import { trackPageVisit } from "../../../../utils/visitorTracking";
 
-export default function KDBHappyPlusAnnuityPage() {
+export default function KDBHappyDream2026AnnuityPage() {
   const tabs = [
     { label: '상품 정보', content: <ProductInfo /> },
     { label: '보장 내용', content: <CoverageDetails /> },
@@ -81,7 +81,7 @@ export default function KDBHappyPlusAnnuityPage() {
         <PrivacyConsent />
       </Modal>
       <div
-        className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full"
+        className="font-sans bg-[#f8f8f8] flex flex-col items-center w-full"
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
@@ -92,10 +92,10 @@ export default function KDBHappyPlusAnnuityPage() {
             <Tabs tabs={tabs} />
             {/* 하단 버튼 */}
             {/* <div className="flex flex-col md:flex-row gap-4 justify-center mt-8">
-                <a href="/kdb-happyplus-guide.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
+                <a href="/kdb-happydream-guide.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
                 상품요약서
               </a>
-                <a href="/kdb-happyplus-guide2.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
+                <a href="/kdb-happydream-guide2.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-semibold text-gray-700 bg-white hover:bg-gray-100 transition text-center cursor-pointer">
                 상품약관
               </a>
             </div> */}
@@ -124,7 +124,7 @@ export default function KDBHappyPlusAnnuityPage() {
             <div className="text-red-500">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
             <div className="text-red-500">① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.</div>
             <div className="text-red-500">② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</div>
-            <div>※ ㈜메타리치 심의필 25080086호 (2025.08.13~2026.08.12)</div>
+            <div>※ 준법감시 심의필 00000000호 (0000.00.00~0000.00.00)</div>
           </div>
         </div>
         <Footer />

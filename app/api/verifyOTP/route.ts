@@ -277,35 +277,7 @@ export async function POST(req: Request) {
       const day = String(lastDate.getDate()).padStart(2, '0');
       duplicateLabel = `[${month}-${day} 중복]`;
       console.log("[DEBUG] 중복 신청 감지:", duplicateLabel);
-
-      // 중복 신청 시 SMS 알림 발송
-      try {
-        const duplicateSmsReq = {
-          headers: { "content-type": "application/json" },
-          body: {
-            key: authForSend.apikey,
-            userid: authForSend.userid,
-            sender: "010-8897-7486",
-            receiver: "010-8897-7486",
-            msg: counselType === 1
-              ? `🔄 중복신청 알림\n[보험료계산] ${duplicateLabel}\n${name}(${phone})\n${companyName ? companyName + ' ' : ''}${productDisplayName}`
-              : `🔄 중복신청 알림\n[상담신청] ${duplicateLabel}\n${name}(${phone})\n${counselTime}\n${companyName ? companyName + ' ' : ''}${productDisplayName}`,
-            testmode_yn: "N"
-          }
-        };
-        console.log("[DEBUG] 중복 SMS 발송 요청:", duplicateSmsReq.body);
-
-        // SMS는 비동기로 발송 (실패해도 메인 로직에 영향 없음)
-        smsSend(duplicateSmsReq, authForSend)
-          .then((result) => {
-            console.log("[DEBUG] 중복 SMS 발송 성공:", result);
-          })
-          .catch((err) => {
-            console.error("[DEBUG] 중복 SMS 발송 실패:", err);
-          });
-      } catch (smsErr) {
-        console.error("[DEBUG] 중복 SMS 발송 오류:", smsErr);
-      }
+      // 알림톡에 "재설계" 표시가 추가되므로 별도 SMS는 발송하지 않음
     }
 
     // 관리자/고객 발송을 병렬 처리하여 전체 대기시간을 단축
