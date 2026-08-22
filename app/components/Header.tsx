@@ -49,6 +49,19 @@ export default function Header() {
     setExpandedMenu(null);
   };
 
+  // 보험사 아이콘 매핑 함수
+  const getInsuranceIcon = (productName: string): string | null => {
+    if (productName.includes('메트라이프') || productName.includes('MetLife') || productName.includes('백만인') || productName.includes('오로지')) return '/metlife_icon.png';
+    if (productName.includes('신한')) return '/shinhan_icon.png';
+    if (productName.includes('하나')) return '/hana_icon.png';
+    if (productName.includes('IBK')) return '/ibk_icon.png';
+    if (productName.includes('KDB') || productName.includes('더!')) return '/kdb_icon.png';
+    if (productName.includes('KB')) return '/kb_icon.png';
+    if (productName.includes('AIA')) return '/aia_icon.png';
+    if (productName.includes('IM') || productName.includes('PRO')) return '/im_icon.png';
+    return null;
+  };
+
   const menuItems = [
     {
       title: "종신보험",
@@ -57,8 +70,8 @@ export default function Header() {
       titleSubColor: "text-rose-500",
       id: "whole-life",
       subItems: [
-        { name: "메트라이프달러종신보험Plus", path: "/insurance/whole-life/metlife/usd", badge: "달러" },
-        { name: "신한모아더드림Plus종신보험", path: "/insurance/whole-life/shinhan/more-the-dream", badge: null },
+        { name: "원화고정납입달러종신보험", path: "/insurance/whole-life/metlife/usd", badge: "달러" },
+        { name: "신한 모아더드림Plus종신보험", path: "/insurance/whole-life/shinhan/more-the-dream", badge: null },
         { name: "하나로THE연결된종신보험", path: "/insurance/whole-life/hana/hanaro", badge: null }
       ]
     },
@@ -69,10 +82,10 @@ export default function Header() {
       titleSubColor: "text-sky-600",
       id: "annuity-pension",
       subItems: [
-        { name: "IBK평생보증받는변액연금보험", path: "/insurance/annuity/ibk/lifetime", badge: null },
+        { name: "8%평생보증변액연금보험", path: "/insurance/annuity/ibk/lifetime", badge: null },
         { name: "하나뿐인변액연금보험", path: "/insurance/annuity/hana/hana-only", badge: null },
-        { name: "KDB행복드림변액연금보험", path: "/insurance/annuity/kdb/happy-dream", badge: null },
-        { name: "KDB행복플러스연금보험(보증형)", path: "/insurance/annuity/kdb/happy-plus", badge: null }
+        { name: "7%평생보증변액연금보험", path: "/insurance/annuity/kdb/happy-dream", badge: null },
+        { name: "7%평생보증연금보험", path: "/insurance/annuity/kdb/happy-plus", badge: null }
       ]
     },
     {
@@ -83,8 +96,8 @@ export default function Header() {
       id: "annuity-refund",
       subItems: [
         { name: "오로지연금을위한달러연금보험", path: "/insurance/annuity/metlife/only-dollar", badge: "달러" },
-        { name: "PlusPRO연금보험(보증형)", path: "/insurance/annuity/im/plus-pro", badge: null },
-        { name: "KB트리플레벨업연금보험(보증형)", path: "/insurance/annuity/kb/triple-level-up", badge: null }
+        { name: "iM PlusPRO연금보험(보증형)", path: "/insurance/annuity/im/plus-pro", badge: null },
+        { name: "KB 트리플레벨업연금보험(보증형)", path: "/insurance/annuity/kb/triple-level-up", badge: null }
       ]
     },
     {
@@ -94,7 +107,7 @@ export default function Header() {
       titleSubColor: "text-orange-500",
       id: "oneshot-annuity",
       subItems: [
-        { name: "AIA달러로받는연금보험II", path: "/insurance/oneshot/aia/dollar", badge: "달러" }
+        { name: "AIA 달러로받는연금보험III", path: "/insurance/oneshot/aia/dollar", badge: "달러" }
       ]
     },
     {
@@ -194,27 +207,37 @@ export default function Header() {
                         }`}
                     >
                       <ul className="py-2 px-6 space-y-1">
-                        {item.subItems.map((subItem, idx) => (
-                          <li key={idx}>
-                            <Link
-                              href={subItem.path}
-                              onClick={closeMenu}
-                              className="flex items-center gap-2 py-2.5 text-sm text-gray-600 hover:text-blue-600 hover:font-medium transition-colors pl-2 border-l-2 border-transparent hover:border-blue-300"
-                            >
-                              <span>{subItem.name}</span>
-                              {subItem.badge && (
-                                <span className={`px-1 py-0 text-[8px] font-bold rounded ${subItem.badge === 'HOT' ? 'bg-red-500 text-white relative overflow-hidden' :
-                                  'bg-orange-50 text-orange-600'
-                                  }`}>
-                                  {subItem.badge === 'HOT' && (
-                                    <span className="absolute inset-0 shine-effect"></span>
-                                  )}
-                                  <span className="relative z-10">{subItem.badge}</span>
-                                </span>
-                              )}
-                            </Link>
-                          </li>
-                        ))}
+                        {item.subItems.map((subItem, idx) => {
+                          const iconPath = getInsuranceIcon(subItem.name);
+                          return (
+                            <li key={idx}>
+                              <Link
+                                href={subItem.path}
+                                onClick={closeMenu}
+                                className="flex items-center gap-2 py-2.5 text-sm text-gray-600 hover:text-blue-600 hover:font-medium transition-colors pl-2 border-l-2 border-transparent hover:border-blue-300"
+                              >
+                                <Image
+                                  src={iconPath || '/bobi.png'}
+                                  alt=""
+                                  width={20}
+                                  height={20}
+                                  className="w-5 h-5 object-contain flex-shrink-0"
+                                />
+                                <span>{subItem.name}</span>
+                                {subItem.badge && (
+                                  <span className={`px-1 py-0 text-[8px] font-bold rounded ${subItem.badge === 'HOT' ? 'bg-red-500 text-white relative overflow-hidden' :
+                                    'bg-orange-50 text-orange-600'
+                                    }`}>
+                                    {subItem.badge === 'HOT' && (
+                                      <span className="absolute inset-0 shine-effect"></span>
+                                    )}
+                                    <span className="relative z-10">{subItem.badge}</span>
+                                  </span>
+                                )}
+                              </Link>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   </li>

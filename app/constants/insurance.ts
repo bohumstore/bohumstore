@@ -44,7 +44,7 @@ export const PRODUCT_CONFIGS = {
     ]
   },
   [INSURANCE_PRODUCTS.IBK_LIFETIME_ANNUITY]: {
-    name: 'IBK 평생보증받는 변액연금보험',
+    name: '8%평생보증변액연금보험',
     companyId: INSURANCE_COMPANIES.IBK_LIFE,
     companyName: 'IBK연금보험',
     category: '연금보험',
@@ -56,7 +56,7 @@ export const PRODUCT_CONFIGS = {
     ]
   },
   [INSURANCE_PRODUCTS.KDB_HAPPY_DREAM]: {
-    name: 'KDB 더!행복드림변액연금보험',
+    name: '7%평생보증변액연금보험',
     companyId: INSURANCE_COMPANIES.KDB_LIFE,
     companyName: 'KDB생명',
     category: '연금보험',
@@ -70,7 +70,7 @@ export const PRODUCT_CONFIGS = {
   },
 
   [INSURANCE_PRODUCTS.KDB_HAPPY_PLUS_GUARANTEED]: {
-    name: 'KDB 더!행복플러스연금보험(보증형)',
+    name: '7%평생보증연금보험',
     companyId: INSURANCE_COMPANIES.KDB_LIFE,
     companyName: 'KDB생명',
     category: '연금보험',
@@ -82,7 +82,7 @@ export const PRODUCT_CONFIGS = {
       '최저사망적립액 보증'
     ]
   },
-  
+
   [INSURANCE_PRODUCTS.SHINHAN_MORE_THE_DREAM]: {
     name: '신한라이프 모아더드림Plus종신보험',
     companyId: INSURANCE_COMPANIES.SHINHAN_LIFE,
@@ -122,7 +122,7 @@ export const PRODUCT_CONFIGS = {
     ]
   },
   [INSURANCE_PRODUCTS.METLIFE_USD]: {
-    name: '(무)백만인을위한달러종신보험Plus',
+    name: '원화고정납입달러종신보험',
     companyId: INSURANCE_COMPANIES.METLIFE,
     companyName: '메트라이프생명',
     category: '달러종신보험',
@@ -215,7 +215,7 @@ export const getProductConfigByPath = (path: string) => {
 export const getTemplateIdByPath = (path: string) => {
   const productConfig = getProductConfigByPath(path);
   if (!productConfig) return 'UB_8705'; // 기본값 (연금보험 기본값)
-  
+
   switch (productConfig.productId) {
     case 1: return ALIGO_TEMPLATE_IDS.KB_TRIPLE_LEVEL_UP;
     case 2: return ALIGO_TEMPLATE_IDS.KDB_HAPPY_DREAM;

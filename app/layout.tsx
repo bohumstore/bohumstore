@@ -31,19 +31,19 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-      openGraph: {
-      title: "보험스토어 | Bohumstore",
-      description: "연금보험 비교 · 종신보험 비교 · 저축보험 비교 및 상담",
+  openGraph: {
+    title: "보험스토어 | Bohumstore",
+    description: "연금보험 비교 · 종신보험 비교 · 저축보험 비교 및 상담",
     url: "https://bohumstore.net",
     siteName: "보험스토어",
-          images: [
-        {
-          url: "https://bohumstore.net/kakao-img.png",
-          width: 1000,
-          height: 500,
-          alt: "보험스토어 - 연금보험 비교 · 종신보험 비교 · 저축보험 비교 및 상담",
-        },
-      ],
+    images: [
+      {
+        url: "https://bohumstore.net/kakao-img.png",
+        width: 1000,
+        height: 500,
+        alt: "보험스토어 - 연금보험 비교 · 종신보험 비교 · 저축보험 비교 및 상담",
+      },
+    ],
     type: "website",
     locale: "ko_KR",
   },
@@ -109,12 +109,12 @@ export default function RootLayout({
         {/* <meta name="apple-mobile-web-app-capable" content="yes" /> */}
         {/* <meta name="apple-mobile-web-app-status-bar-style" content="default" /> */}
         {/* <meta name="apple-mobile-web-app-title" content="보험스토어" /> */}
-        
+
         {/* Self-hosted Pretendard preload */}
         <link rel="preload" href="/fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/Pretendard-Medium.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/Pretendard-Bold.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        
+
         {/* 네이버 앱 웹뷰 보정 (경량) */}
         <script
           dangerouslySetInnerHTML={{
@@ -140,125 +140,10 @@ export default function RootLayout({
                   });
                 } catch(e) {}
               })();
-                // 네이버 앱 웹뷰만 간단히 감지
-                var isNaverApp = /NAVER/i.test(navigator.userAgent) || 
-                                navigator.userAgent.includes('NAVER(inapp');
-                
-                if (isNaverApp) {
-                  // 네이버 앱 웹뷰에서 시스템 폰트 강제 적용
-                  
-                  // 1. 네이버 앱 웹뷰 전용 극강 스타일 적용
-                  var naverAppStyle = document.createElement('style');
-                  naverAppStyle.id = 'naver-app-font-override';
-                  naverAppStyle.textContent = \`
-                    /* 네이버 앱 웹뷰 전용 극강 폰트 강제 적용 */
-                    *, *::before, *::after {
-                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif !important;
-                      -webkit-font-smoothing: antialiased !important;
-                      -moz-osx-font-smoothing: grayscale !important;
-                    }
-                    
-                    /* 슬로건 영역 핵심 요소들 강제 적용 */
-                    h1, h2, h3, h4, h5, h6 {
-                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif !important;
-                      font-weight: 700 !important;
-                    }
-                    
-                    .font-bold, strong, b, [class*="font-bold"] {
-                      font-weight: 700 !important;
-                    }
-                    
-                    .font-semibold, [class*="font-semibold"] {
-                      font-weight: 600 !important;
-                    }
-                    
-                    .font-medium, [class*="font-medium"] {
-                      font-weight: 500 !important;
-                    }
-                    
-                    /* Tailwind 텍스트 크기별 굵기 강제 */
-                    .text-3xl, .text-4xl, .text-5xl, [class*="text-3xl"], [class*="text-4xl"], [class*="text-5xl"] {
-                      font-weight: 700 !important;
-                    }
-                    
-                    .text-2xl, [class*="text-2xl"] {
-                      font-weight: 600 !important;
-                    }
-                    
-                    .text-lg, .text-xl, [class*="text-lg"], [class*="text-xl"] {
-                      font-weight: 500 !important;
-                    }
-                    
-                    /* 회사명, 상품명, 설명 문구 특별 강화 */
-                    span, p, div, li {
-                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif !important;
-                    }
-                    
-                    .text-gray-800, .text-gray-900, [class*="text-gray-800"], [class*="text-gray-900"] {
-                      font-weight: 500 !important;
-                    }
-                  \`;
-                  document.head.appendChild(naverAppStyle);
-                  
-                  // 2. 네이버 앱에서는 외부 폰트 차단되므로 시스템 폰트만 사용
-                  // (외부 폰트 로딩 시도하지 않음)
-                  
-                  // 3. DOM 로드 후 한 번만 적용 (성능 최적화)
-                  document.addEventListener('DOMContentLoaded', function() {
-                    setTimeout(function() {
-                      // body 스타일 적용
-                      document.body.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif';
-                      
-                      // 한 번만 모든 요소에 적용
-                      var allElements = document.querySelectorAll('*');
-                      for (var i = 0; i < allElements.length; i++) {
-                        var element = allElements[i];
-                        element.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif';
-                        
-                        // 슬로건 영역 핵심 요소 굵기 강제 적용
-                        var className = element.className || '';
-                        var tagName = element.tagName;
-                        
-                        // 제목들 (h1, h2 등) - 가장 굵게
-                        if (tagName && tagName.match(/^H[1-6]$/)) {
-                          element.style.fontWeight = '700';
-                        }
-                        // font-bold 클래스
-                        else if (className.includes('font-bold')) {
-                          element.style.fontWeight = '700';
-                        }
-                        // 큰 텍스트들
-                        else if (className.includes('text-3xl') || className.includes('text-4xl') || className.includes('text-5xl')) {
-                          element.style.fontWeight = '700';
-                        }
-                        // 중간 텍스트들
-                        else if (className.includes('text-2xl')) {
-                          element.style.fontWeight = '600';
-                        }
-                        // 설명 문구들
-                        else if (className.includes('text-lg') || className.includes('text-xl')) {
-                          element.style.fontWeight = '500';
-                        }
-                        // 회사명, 상품 설명 등
-                        else if (className.includes('text-gray-800') || className.includes('text-gray-900')) {
-                          element.style.fontWeight = '500';
-                        }
-                        // font-medium, font-semibold
-                        else if (className.includes('font-semibold')) {
-                          element.style.fontWeight = '600';
-                        }
-                        else if (className.includes('font-medium')) {
-                          element.style.fontWeight = '500';
-                        }
-                      }
-                    }, 200);
-                  });
-                }
-              })();
             `
           }}
         />
-        
+
         {/* BORAWARE LOG SCRIPT */}
         <script
           dangerouslySetInnerHTML={{

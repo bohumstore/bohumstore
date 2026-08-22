@@ -72,15 +72,15 @@ export const slogans: Slogan[] = [
   },
   {
     id: 'aia-dollar-oneshot',
-    title: '10년 확정이율 5.27%',
-    subtitle: '10년시점 해약환급률 156.96%',
+    title: '10년 확정이율 5.79%',
+    subtitle: '10년시점 해약환급률 157.87%',
     description: 'AIA생명 달러 일시납 연금보험으로 확정금리와 높은 환급률을 동시에 누리세요.',
     path: '/insurance/oneshot/aia/dollar',
     color: 'from-[#e31837] to-[#b01229]',
     bgColor: 'bg-red-50',
     features: [
-      '10년 확정이율 5.27% (2026.6월 기준)',
-      '10년시점 해약환급률 156.96%',
+      '10년 확정이율 5.79% (2026.8월 기준)',
+      '10년시점 해약환급률 157.87%',
       '연금개시시점 5% 추가보너스 지급',
       '달러로 받아 환차익 기대'
     ],
@@ -246,14 +246,14 @@ export const mainProducts: MainProduct[] = [
   },
   {
     id: 'aia-dollar-oneshot',
-    name: 'AIA 달러 일시납 연금보험',
+    name: 'AIA 달러 일시납 연금보험 III',
     company: 'AIA생명',
     logo: '/images/aia-logo.png',
     path: '/insurance/oneshot/aia/dollar',
-    description: '10년 확정이율 5.27%, 10년시점 해약환급률 156.96%',
+    description: '10년 확정이율 5.79%, 10년시점 해약환급률 157.87%',
     badge: 'NEW',
     category: '달러 일시납연금',
-    highlight: '10년시점 156.96%'
+    highlight: '10년시점 157.87%'
   },
   {
     id: 'ibk-lifetime',

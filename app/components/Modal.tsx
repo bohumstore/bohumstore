@@ -30,7 +30,7 @@ export default function Modal({ title, open, onClose, children }: ModalProps) {
       // 현재 스크롤 위치 저장
       const scrollY = window.scrollY;
       const scrollX = window.scrollX;
-      
+
       // body 고정하여 배경 스크롤 완전 차단
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
@@ -38,22 +38,22 @@ export default function Modal({ title, open, onClose, children }: ModalProps) {
       document.body.style.right = '0';
       document.body.style.overflow = 'hidden';
       document.body.style.width = '100%';
-      
+
       isClosingByBackRef.current = false;
-      
+
       // 히스토리에 모달 상태 추가 (뒤로가기 시 모달만 닫히도록)
       // 히스토리 중복 추가 방지
       if (!window.history.state?.modal) {
         window.history.pushState({ modal: true }, '');
       }
-      
+
       const handlePopState = (e: PopStateEvent) => {
         isClosingByBackRef.current = true;
         onClose();
       };
-      
+
       window.addEventListener('popstate', handlePopState);
-      
+
       return () => {
         window.removeEventListener('popstate', handlePopState);
         // body 스타일 복원
@@ -82,16 +82,16 @@ export default function Modal({ title, open, onClose, children }: ModalProps) {
 
     const scrollToElement = (target: HTMLElement) => {
       if (!isMobile) return;
-      
+
       // 모달 컨테이너 내에서의 상대 위치 계산
       const containerRect = container.getBoundingClientRect();
       const targetRect = target.getBoundingClientRect();
-      
+
       // 타겟이 컨테이너 중앙에 오도록 스크롤 위치 계산
       const targetCenterY = targetRect.top + targetRect.height / 2;
       const containerCenterY = containerRect.top + containerRect.height / 2;
       const scrollOffset = targetCenterY - containerCenterY;
-      
+
       container.scrollBy({ top: scrollOffset, behavior: 'smooth' });
     };
 
@@ -116,11 +116,11 @@ export default function Modal({ title, open, onClose, children }: ModalProps) {
 
   if (!open) return null;
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-1 sm:p-4 touch-none"
       onTouchMove={(e) => e.stopPropagation()}
     >
-      <div 
+      <div
         className="bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] sm:max-h-[92vh] overflow-hidden flex flex-col relative touch-auto"
         onTouchMove={(e) => e.stopPropagation()}
       >
