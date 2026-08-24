@@ -83,9 +83,9 @@ export default function Header() {
       id: "annuity-pension",
       subItems: [
         { name: "8%평생보증변액연금보험", path: "/insurance/annuity/ibk/lifetime", badge: null },
-        { name: "하나뿐인변액연금보험", path: "/insurance/annuity/hana/hana-only", badge: null },
         { name: "7%평생보증변액연금보험", path: "/insurance/annuity/kdb/happy-dream", badge: null },
-        { name: "7%평생보증연금보험", path: "/insurance/annuity/kdb/happy-plus", badge: null }
+        { name: "하나뿐인변액연금보험", path: "/insurance/annuity/hana/hana-only", badge: null },
+        { name: "7%평생보증연금보험(비변액)", path: "/insurance/annuity/kdb/happy-plus", badge: null }
       ]
     },
     {

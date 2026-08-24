@@ -566,7 +566,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <div className="space-y-2">
                 <div>
                   <div className="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">✓ 연금개시 시 계약 해당일에 <span className="text-red-500">5% 추가 보너스</span> 지급!</div>
-                  <div className="text-[10px] sm:text-xs text-gray-600 pl-3 sm:pl-4">일시납 보험료의 5%를 계약자 적립액에 가산, 연금강화형에 한함<br /><span className="text-blue-600">(단, 연금개시 전 보험기간이 15년 미만일경우, 보험료의 2%)</span></div>
+                  <div className="text-[10px] sm:text-xs text-gray-600 pl-3 sm:pl-4">일시납 보험료의 5%를 계약자적립액에 가산, <span className="text-red-500 font-bold">연금강화형에 한함</span><br /><span className="text-blue-600">(단, 연금개시 전 보험기간이 15년 미만일 경우, 보험료의 2%)</span></div>
                 </div>
                 <div>
                   <div className="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">✓ 연금전용 알릴의무로 <span className="text-red-500">3개월이내 이력만</span> 고지!</div>
