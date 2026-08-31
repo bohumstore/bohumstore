@@ -14,7 +14,7 @@ const currentPath = '/insurance/oneshot/aia/dollar';
 const productConfig = getProductConfigByPath(currentPath);
 
 const INSURANCE_COMPANY_ID = 11; // AIA생명
-const INSURANCE_PRODUCT_ID = 12; // AIA달러로받는연금보험II
+const INSURANCE_PRODUCT_ID = 12; // AIA달러로받는연금보험III
 
 // 기준환율 (원/달러)
 const BASE_EXCHANGE_RATE = 1500;
@@ -150,7 +150,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       return false;
     }
 
-    // 보험연령 안내는 모달에서 처리 (이 상품: 0~80세)
+    // 보험연령 안내는 모달에서 처리 (이 상품: 0~85세)
     const formInsuranceAge = Number(getInsuranceAge(birth));
 
     if (!phone) {
@@ -190,7 +190,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         phone,
         templateId,
         companyName: "AIA생명",
-        productName: "AIA 달러로 받는 연금보험 II"
+        productName: "AIA 달러로 받는 연금보험 III"
       })
       console.log(`[CLIENT] 인증번호 전송 성공: ${new Date().toISOString()}`);
       setOtpSent(true)
@@ -230,7 +230,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const handleVerifyOTP = async () => {
     const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-    if (isNaN(ageForVerify) || ageForVerify < 0 || ageForVerify > 80) return;
+    if (isNaN(ageForVerify) || ageForVerify < 0 || ageForVerify > 85) return;
     if (otpCode.length !== 6) {
       alert("6자리 인증번호를 입력해주세요.");
       return;
@@ -305,7 +305,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const handleSendOTP = async () => {
     const ageForOtp = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-    if (isNaN(ageForOtp) || ageForOtp < 0 || ageForOtp > 80) return;
+    if (isNaN(ageForOtp) || ageForOtp < 0 || ageForOtp > 85) return;
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
@@ -382,7 +382,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         phone,
         templateId: 'UB_8715',
         companyName: "AIA생명",
-        productName: "AIA 달러로 받는 연금보험 II"
+        productName: "AIA 달러로 받는 연금보험 III"
       });
       setOtpSent(true);
       alert('인증번호가 전송되었습니다.');
@@ -473,10 +473,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   // 보험연령 계산
   const insuranceAge = getInsuranceAge(birth);
-  // 연령 적합성 (0~80세)
+  // 연령 적합성 (0~85세)
   const isAgeKnown = insuranceAge !== '';
   const numericInsuranceAge = isAgeKnown ? Number(insuranceAge) : NaN;
-  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 0 && numericInsuranceAge <= 80;
+  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 0 && numericInsuranceAge <= 85;
 
   // 일시납 금액 및 환급금 계산 (달러 기준)
   const lumpSum = lumpSumAmount ? parseFloat(lumpSumAmount.replace(/[^0-9.]/g, '')) : 0;
@@ -486,8 +486,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     ? getRefundRate(numericInsuranceAge, gender as Gender)
     : null;
 
-  // 환급률 (소수점 형태, 예: 1.5696 = 156.96%)
-  const rate = refundRateFromTable ? refundRateFromTable / 100 : 1.5696;
+  // 환급률 (소수점 형태, 예: 1.5787 = 157.87%)
+  const rate = refundRateFromTable ? refundRateFromTable / 100 : 1.5787;
   const interestRate = rate - 1; // 이자율 = 환급률 - 100%
 
   const interestValue = lumpSum ? parseFloat((lumpSum * interestRate).toFixed(2)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '-';
@@ -523,14 +523,14 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <Image
                   src="/images/aia-logo.png"
                   alt="AIA생명 로고"
-                  width={60}
-                  height={20}
-                  className="h-5 w-auto"
+                  width={80}
+                  height={28}
+                  className="h-7 w-auto"
                 />
                 <span className="text-sm font-bold text-gray-800">AIA생명</span>
               </div>
               <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight mb-1">
-                (무)AIA 달러로 받는 연금보험 II
+                (무)AIA 달러로 받는 연금보험 III
               </h1>
               <div className="text-base font-semibold text-pink-600">(10년 이율 확정형)</div>
               <p className="text-xs text-gray-700 mt-1">가입 시점 금리로 10년 동안 확정 지급하는 달러연금보험</p>
@@ -547,11 +547,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                       <span className="bg-yellow-400 text-gray-900 font-bold px-2 py-0.5 rounded">10년 확정 공시이율</span>
                     </div>
                     <div className="flex items-baseline gap-1">
-                      <span className="text-3xl sm:text-4xl font-extrabold text-red-500">5.27</span>
+                      <span className="text-3xl sm:text-4xl font-extrabold text-red-500">5.79</span>
                       <span className="text-xl sm:text-2xl font-bold text-red-500">%</span>
                     </div>
                     <div className="text-[10px] sm:text-xs text-gray-500">
-                      기준일자: <span className="text-gray-700 font-semibold">2026.6.1~15</span>
+                      기준일자: <span className="text-gray-700 font-semibold">2026.8.16~31</span>
                     </div>
                   </div>
 
@@ -565,8 +565,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               {/* 추가 혜택 */}
               <div className="space-y-2">
                 <div>
-                  <div className="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">✓ 연금개시 시점에 <span className="text-red-500">5% 추가 보너스</span> 지급!</div>
-                  <div className="text-[10px] sm:text-xs text-gray-600 pl-3 sm:pl-4">연금개시 시점의 계약 해당일, 일시납 보험료의 5%를 계약자 적립액에 가산, 연금강화형에 한함</div>
+                  <div className="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">✓ 연금개시 시 계약 해당일에 <span className="text-red-500">5% 추가 보너스</span> 지급!</div>
+                  <div className="text-[10px] sm:text-xs text-gray-600 pl-3 sm:pl-4">일시납 보험료의 5%를 계약자적립액에 가산, <span className="text-red-500 font-bold">연금강화형에 한함</span><br /><span className="text-blue-600">(단, 연금개시 전 보험기간이 15년 미만일 경우, 보험료의 2%)</span></div>
                 </div>
                 <div>
                   <div className="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">✓ 연금전용 알릴의무로 <span className="text-red-500">3개월이내 이력만</span> 고지!</div>
@@ -603,7 +603,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <tr className="border-t-2 border-gray-300">
                     <td className="bg-white py-3 sm:py-4 px-2 sm:px-4 text-center border-r-2 border-gray-300" rowSpan={2}>
                       <div className="text-[10px] sm:text-xs text-gray-700 mb-1 sm:mb-2 font-semibold">10년시점 확정<br /><span className="text-red-500">해약환급률</span></div>
-                      <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-red-500 animate-pulse-scale">156.96%</div>
+                      <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-red-500 animate-pulse-scale">157.87%</div>
                       <style jsx>{`
                         @keyframes pulse-scale {
                           0%, 100% {
@@ -620,11 +620,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </td>
                     <td className="bg-white py-2 sm:py-3 px-2 sm:px-4 text-center border-r border-gray-200 border-b border-gray-200">
                       <div className="text-[10px] sm:text-xs text-gray-700 mb-0.5 sm:mb-1 font-semibold"><span className="text-red-500">매월생활비</span></div>
-                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-pink-500">$180.<sup className="text-xs sm:text-sm md:text-base">99</sup></div>
+                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-pink-500">$189.<sup className="text-xs sm:text-sm md:text-base">68</sup></div>
                     </td>
                     <td className="bg-white py-2 sm:py-3 px-2 sm:px-4 text-center border-b border-gray-200">
                       <div className="text-[10px] sm:text-xs text-gray-700 mb-0.5 sm:mb-1 font-semibold"><span className="text-red-500">매월생활비</span></div>
-                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-pink-500">$218.<sup className="text-xs sm:text-sm md:text-base">49</sup></div>
+                      <div className="text-lg sm:text-xl md:text-2xl font-extrabold text-pink-500">$229.<sup className="text-xs sm:text-sm md:text-base">28</sup></div>
                     </td>
                   </tr>
                   <tr>
@@ -648,7 +648,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 </tbody>
               </table>
               <div className="bg-gray-100 py-1.5 sm:py-2 px-2 sm:px-4 text-[9px] sm:text-[10px] text-gray-600 text-center border-t border-gray-300">
-                40세 남자, 일시납 보험료 $67,500, 60세 연금개시 (공시이율 기준 : 2026.6.1~15)
+                40세 남자, 일시납 보험료 $66,600, 60세 연금개시 (공시이율 기준 : 2026.8.16~31)
               </div>
             </div>
 
@@ -790,7 +790,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         <div className="space-y-2 sm:space-y-3">
           {isAgeKnown && !isAgeEligible && (
             <div className="bg-red-50 border border-red-200 text-red-700 rounded p-1.5 sm:p-2 text-xs sm:text-sm">
-              이 상품은 0세~80세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
+              이 상품은 0세~85세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
               계산 기능은 이용하실 수 없습니다.
             </div>
           )}
@@ -823,7 +823,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
-                    <span className="font-bold text-[#3a8094] text-xs">(무)AIA 달러로 받는 연금보험 II</span>
+                    <span className="font-bold text-[#3a8094] text-xs">(무)AIA 달러로 받는 연금보험 III</span>
                   </div>
                 </div>
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
@@ -904,7 +904,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
-                    <span className="font-bold text-[#3a8094] text-xs">(무)AIA 달러로 받는 연금보험 II</span>
+                    <span className="font-bold text-[#3a8094] text-xs">(무)AIA 달러로 받는 연금보험 III</span>
                   </div>
                 </div>
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">

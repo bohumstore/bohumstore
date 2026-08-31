@@ -420,31 +420,20 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <span className="text-sm sm:text-base font-bold text-gray-800">{currentMonth}월 보험 이슈</span>
                 <span className="ml-auto px-2 sm:px-2.5 py-0.5 sm:py-1 bg-red-500 text-white text-[10px] sm:text-xs font-medium rounded-full animate-pulse">HOT</span>
               </div>
-              {isUpdating ? (
-                <div className="flex items-center justify-center gap-2 sm:gap-3 py-4 sm:py-5">
-                  <div className="flex gap-1.5">
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
-                  </div>
-                  <span className="text-sm sm:text-base text-orange-600 font-medium animate-pulse">{currentMonth}월 보험 이슈 확인 및 업데이트중...</span>
+              <div className="space-y-2 sm:space-y-2.5">
+                <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
+                  <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
+                  <span>IBK변액연금보험 <span className="font-semibold text-red-500">연단리 8% 최저보증</span></span>
                 </div>
-              ) : (
-                <div className="space-y-2 sm:space-y-2.5">
-                  <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
-                    <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
-                    <span>IBK연금보험 <span className="font-semibold text-red-500">연단리 8% 최저보증</span></span>
-                  </div>
-                  <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
-                    <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
-                    <span>KB라이프 <span className="font-semibold text-red-500">10년시점 130% 환급률 보증</span></span>
-                  </div>
-                  <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
-                    <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
-                    <span>AIA 일시납 달러 연금 <span className="font-semibold text-red-500">10년거치형 / 생활자금형</span></span>
-                  </div>
+                <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
+                  <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
+                  <span>KB라이프 <span className="font-semibold text-red-500">10년시점 130% 환급률 보증</span></span>
                 </div>
-              )}
+                <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
+                  <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
+                  <span>AIA 일시납 달러 <span className="font-semibold text-red-500">10년시점 157.87% 환급률 보증</span></span>
+                </div>
+              </div>
             </div>
           </div>
 

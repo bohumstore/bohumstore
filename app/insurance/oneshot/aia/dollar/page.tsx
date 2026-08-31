@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useEffect, useState } from "react";
 import React from "react";
 import Slogan from "./components/Slogan";
@@ -61,7 +61,7 @@ export default function IMPlusPROAnnuityPage() {
   return (
     <>
       {/* 판매 종료 팝업 */}
-      <TerminationNoticePopup 
+      <TerminationNoticePopup
         productName="IM Plus PRO 연금보험"
         endDate="2026-05-15"
       />
@@ -70,7 +70,7 @@ export default function IMPlusPROAnnuityPage() {
       <Modal title="개인정보 수집 및 이용 동의" open={showPrivacy} onClose={() => setShowPrivacy(false)}>
         <PrivacyConsent />
       </Modal>
-      <div 
+      <div
         className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full"
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -99,6 +99,7 @@ export default function IMPlusPROAnnuityPage() {
             <div>- 이율확정기간 중 중도 해지 시 가입시점의 공시이율이 아닌, 해지 시점의 공시이율을 적용하여 MVA가 반영되며, 해지 시점 공시이율에 따라 손실이 발생할 수 있습니다.</div>
             <div>- 외화보험은 보험료 납부 혹은 보험금 수령을 위해 원화를 외화로 환전하기 때문에 환전 수수료 등 거래 비용이 발생할 수 있습니다.</div>
             <div>- 외화보험상품의 경우 한국은행 외국환거래업무 취급세칙에 따라 보험계약대출이 제한될 수 있습니다.</div>
+            <div>- 신계약 청약 권유 시 기존 계약의 중도인출 또는 보험계약대출을 통한 보험료 납입을 유도해서는 안 됩니다.</div>
           </div>
         </div>
         {/* 구분선 */}
@@ -115,50 +116,50 @@ export default function IMPlusPROAnnuityPage() {
             <div className="text-red-500">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
             <div className="text-red-500">① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.</div>
             <div className="text-red-500">② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</div>
-            <div>※ AIA생명 준법감시인확인필 : COM-2026-06-0068(2026.06.23~2027.06.22)</div>
+            <div>※ AIA생명 준법감시인확인필 : COM-2026-08-0094(2026.08.31~2027.08.30)</div>
           </div>
         </div>
         <Footer />
-        
+
         {/* 맨 위로 & 계산하기 버튼 - 모달이 열렸을 때는 숨김 */}
         {!isModalOpen && !showPrivacy && !showNotice && !isInputFocused && !isHeaderMenuOpen && (
-        <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 flex flex-col gap-2 sm:gap-3">
-          {/* 계산하기 버튼 */}
-          <button 
-            onClick={() => {
-              const calculatorBox = document.getElementById('calculator-box');
-              if (calculatorBox) {
-                calculatorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }
-            }}
-            className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
-            aria-label="계산하기"
-          >
-            <span className="text-xs font-semibold">계산</span>
-            <img src="/Calculator.png" alt="계산하기" className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
+          <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 flex flex-col gap-2 sm:gap-3">
+            {/* 계산하기 버튼 */}
+            <button
+              onClick={() => {
+                const calculatorBox = document.getElementById('calculator-box');
+                if (calculatorBox) {
+                  calculatorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+              }}
+              className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
+              aria-label="계산하기"
+            >
+              <span className="text-xs font-semibold">계산</span>
+              <img src="/Calculator.png" alt="계산하기" className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
 
-          {/* 카톡상담 버튼 */}
-          <button 
-            onClick={() => window.open('https://pf.kakao.com/_lrubxb/chat', '_blank')}
-            className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
-            aria-label="카톡상담"
-          >
-            <span className="text-xs font-semibold">카톡</span>
-            <img src="/kakaotalk.png" alt="카톡상담" className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
-          
-          {/* 맨 위로 버튼 */}
-          <button 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="bg-white text-gray-600 rounded-full p-3 sm:p-4 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200"
-            aria-label="맨 위로"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-            </svg>
-          </button>
-        </div>
+            {/* 카톡상담 버튼 */}
+            <button
+              onClick={() => window.open('https://pf.kakao.com/_lrubxb/chat', '_blank')}
+              className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
+              aria-label="카톡상담"
+            >
+              <span className="text-xs font-semibold">카톡</span>
+              <img src="/kakaotalk.png" alt="카톡상담" className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+
+            {/* 맨 위로 버튼 */}
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="bg-white text-gray-600 rounded-full p-3 sm:p-4 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200"
+              aria-label="맨 위로"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+              </svg>
+            </button>
+          </div>
         )}
       </div>
     </>
