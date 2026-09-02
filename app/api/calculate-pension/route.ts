@@ -33,8 +33,8 @@ export async function POST(request: NextRequest) {
 		// 성별 매핑 (M -> 남, F -> 여)
 		const mappedGender = mapGender(gender);
 
-		// 월납입액에서 콤마 제거하고 정수로 변환
-		const cleanMonthlyPayment = parseInt(monthlyPayment.toString().replace(/,/g, ''));
+		// 월납입액에서 콤마 제거하고 정수로 변환 (eligibility 모드에서는 불필요)
+		const cleanMonthlyPayment = monthlyPayment ? parseInt(monthlyPayment.toString().replace(/,/g, '')) : 0;
 
 		// 제품 유형 먼저 결정
 		const resolvedProductType = (productType || 'happy-plus') as string;
@@ -42,9 +42,9 @@ export async function POST(request: NextRequest) {
 		// 시트 선택 로직
 		let sheetName = '';
 
-		// IBK 연금과 하나생명은 단일 시트 'Search Results' 사용 (모든 월납입액 데이터가 한 시트에 있음)
-		if (resolvedProductType === 'ibk-lifetime' || resolvedProductType === 'hana-only') {
-			sheetName = 'Search Results';
+		// IBK 연금, 하나생명, KDB 행복드림/플러스 시리즈는 단일 시트 'search results' 사용 (모든 월납입액 데이터가 한 시트에 있음)
+		if (resolvedProductType === 'ibk-lifetime' || resolvedProductType === 'hana-only' || resolvedProductType === 'happy-dream' || resolvedProductType === 'happy-dream-2026' || resolvedProductType === 'happy-plus' || resolvedProductType === 'happy-plus-2026') {
+			sheetName = 'search results';
 		} else if (mode === 'eligibility') {
 			// 적격성 확인은 30만원 시트를 기본으로 사용 (없으면 첫 시트로 대체)
 			sheetName = '30k';
@@ -75,28 +75,46 @@ export async function POST(request: NextRequest) {
 		let performancePensionHeaderCandidates: string[] = [];
 		let guaranteedAmountHeaderCandidates: string[] = [];
 		const totalUntil100HeaderCandidates: string[] = [
+			'100세까지총수령액',
 			'100세까지 총 수령액',
 			'100세총수령액',
 			'총 수령액(100세)'
 		];
 		const pensionStartAgeHeaderCandidates: string[] = ['연금개시연령', '연금개시연령(세)'];
-		const yearlyPensionHeaderCandidates: string[] = ['연지급 연금액', '연지급연금액', '연 연금액', '연연금액'];
+		const yearlyPensionHeaderCandidates: string[] = ['연지급연금액', '연지급 연금액', '연 연금액', '연연금액'];
 
 		if (resolvedProductType === 'happy-dream') {
 			candidatePaths = [
-				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'kdb', 'happy-dream', 'kdb_dream_15-70.xlsx'),
-				path.join(process.cwd(), 'public', 'kdb_dream_15-70.xlsx')
+				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'kdb', 'happy-dream', 'kdb_dream_15-60.xlsx'),
+				path.join(process.cwd(), 'public', 'kdb_dream_15-60.xlsx')
 			];
-			// 드림: 엑셀에서 월 연금액만 가져오고, 실적배당은 계산으로 처리
-			monthlyPensionHeaderCandidates = ['월 연금액', '월연금액', '월 연금'];
+			// 드림: 단일 시트에 모든 데이터 포함
+			monthlyPensionHeaderCandidates = ['월연금액', '월 연금액', '월 연금'];
 			performancePensionHeaderCandidates = []; // 엑셀에 없음 - 계산으로 처리
 			guaranteedAmountHeaderCandidates = [
+				'20년보증기간총액',
 				'20년 보증기간 총액',
 				'20년 보증 총액',
 				'보증기간 총액',
 				'20년 보증기간 연금액',
 				'보증기간 연금액',
+				'20년보증기간연금액'
+			];
+		} else if (resolvedProductType === 'happy-dream-2026') {
+			candidatePaths = [
+				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'kdb', 'happy-dream-2026', 'kdb_dream_15-60.xlsx'),
+				path.join(process.cwd(), 'public', 'kdb_dream_15-60.xlsx')
+			];
+			// 드림 2026: 단일 시트에 모든 데이터 포함
+			monthlyPensionHeaderCandidates = ['월연금액', '월 연금액', '월 연금'];
+			performancePensionHeaderCandidates = []; // 엑셀에 없음 - 계산으로 처리
+			guaranteedAmountHeaderCandidates = [
 				'20년보증기간총액',
+				'20년 보증기간 총액',
+				'20년 보증 총액',
+				'보증기간 총액',
+				'20년 보증기간 연금액',
+				'보증기간 연금액',
 				'20년보증기간연금액'
 			];
 		} else if (resolvedProductType === 'ibk-lifetime') {
@@ -129,6 +147,38 @@ export async function POST(request: NextRequest) {
 				'20년 보증기간 연금액',
 				'보증기간 연금액',
 				'20년보증기간총액',
+				'20년보증기간연금액'
+			];
+		} else if (resolvedProductType === 'happy-plus') {
+			candidatePaths = [
+				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'kdb', 'happy-plus', 'kdb_plus_15-70.xlsx'),
+				path.join(process.cwd(), 'public', 'kdb_plus_15-70.xlsx')
+			];
+			monthlyPensionHeaderCandidates = ['월연금액', '월 연금액', '월 연금'];
+			performancePensionHeaderCandidates = []; // 엑셀에 없음 - 계산으로 처리
+			guaranteedAmountHeaderCandidates = [
+				'20년보증기간총액',
+				'20년 보증기간 총액',
+				'20년 보증 총액',
+				'보증기간 총액',
+				'20년 보증기간 연금액',
+				'보증기간 연금액',
+				'20년보증기간연금액'
+			];
+		} else if (resolvedProductType === 'happy-plus-2026') {
+			candidatePaths = [
+				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'kdb', 'happy-plus-2026', 'kdb_plus_15-70.xlsx'),
+				path.join(process.cwd(), 'public', 'kdb_plus_15-70.xlsx')
+			];
+			monthlyPensionHeaderCandidates = ['월연금액', '월 연금액', '월 연금'];
+			performancePensionHeaderCandidates = []; // 엑셀에 없음 - 계산으로 처리
+			guaranteedAmountHeaderCandidates = [
+				'20년보증기간총액',
+				'20년 보증기간 총액',
+				'20년 보증 총액',
+				'보증기간 총액',
+				'20년 보증기간 연금액',
+				'보증기간 연금액',
 				'20년보증기간연금액'
 			];
 		} else {
@@ -197,7 +247,7 @@ export async function POST(request: NextRequest) {
 		const normalize = (v: any) => String(v ?? '').replace(/\s+/g, '').trim();
 		const headerSynonyms = {
 			gender: ['성별'],
-			age: ['가입연령', '가입나이', '가입연령(세)'],
+			age: ['가입연령', '가입나이', '가입연령(세)', '연령'],
 			period: ['납입기간', '납입기간(년)', '납입기간(년수)'],
 			payment: ['월납입액', '월보험료', '월 보험료', '월납입보험료']
 		};
@@ -284,9 +334,9 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		// 적격성 확인 모드: 각 납입기간별(10/12/15/20)로 해당 연령/성별 데이터가 비어있지 않은지 반환
+		// 적격성 확인 모드: 각 납입기간별(5/10/12/15/20)로 해당 연령/성별 데이터가 비어있지 않은지 반환
 		if (mode === 'eligibility') {
-			const periodsToCheck = [10, 12, 15, 20];
+			const periodsToCheck = [5, 10, 12, 15, 20];
 			const mapped = mapGender(gender);
 			const ageInt = parseInt(age.toString());
 			const isNonEmpty = (v: any) => {
@@ -414,7 +464,7 @@ export async function POST(request: NextRequest) {
 		// 실적배당 연금액은 엑셀에 없으므로 계산으로 처리 (월 연금액의 15% 가정)
 		const performancePension = monthlyPension > 0 ? Math.round(monthlyPension * 1.15) : 0;
 
-		// IBK연금과 하나생명: 20년 보증기간 총액과 100세까지 총 수령액은 엑셀 값을 사용하지 않고 무조건 계산
+		// IBK연금, 하나생명, KDB 행복드림 시리즈: 20년 보증기간 총액과 100세까지 총 수령액 처리
 		let guaranteedAmount = 0;
 		let totalUntil100 = 0;
 
@@ -436,6 +486,17 @@ export async function POST(request: NextRequest) {
 				calculatedYearlyPension,
 				calculation: `yearlyPension(${calculatedYearlyPension}) * 20 = ${guaranteedAmount}, yearlyPension(${calculatedYearlyPension}) * (100 - ${pensionStartAge}) = ${totalUntil100}`
 			});
+		} else if (resolvedProductType === 'happy-dream' || resolvedProductType === 'happy-dream-2026') {
+			// KDB 행복드림 시리즈: 엑셀에 있으면 사용, 없으면 계산
+			guaranteedAmount = guaranteedAmountIndex !== -1 ? parseNumber(matchedRow[guaranteedAmountIndex]) : 0;
+			if (guaranteedAmount === 0 && yearlyPension > 0) {
+				guaranteedAmount = yearlyPension * 20;
+			}
+
+			totalUntil100 = totalUntil100Index !== -1 ? parseNumber(matchedRow[totalUntil100Index]) : 0;
+			if (totalUntil100 === 0 && yearlyPension > 0 && pensionStartAge > 0) {
+				totalUntil100 = yearlyPension * (100 - pensionStartAge);
+			}
 		} else {
 			// 다른 상품: 엑셀에 있으면 사용, 없으면 계산
 			guaranteedAmount = guaranteedAmountIndex !== -1 ? parseNumber(matchedRow[guaranteedAmountIndex]) : 0;

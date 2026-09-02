@@ -109,10 +109,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   // 보험연령 계산
   const insuranceAge = getInsuranceAge(birth);
-  // 연령 적합성 (15~70세)
+  // 연령 적합성 (15~60세)
   const isAgeKnown = insuranceAge !== '';
   const numericInsuranceAge = isAgeKnown ? Number(insuranceAge) : NaN;
-  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 15 && numericInsuranceAge <= 70;
+  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 15 && numericInsuranceAge <= 60;
 
   // 연금개시연령 계산 함수 (기본 로직)
   const getPensionStartAge = (age: number, paymentPeriod: string) => {
@@ -151,6 +151,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     }
   };
 
+  // 엑셀 데이터 기반 납입기간 적격성 확인 (초기값: 모두 활성화)
+  const [periodEligibility, setPeriodEligibility] = useState<Record<string, boolean>>({ '10': true, '15': true, '20': true });
+
   // 현재 선택된 납입기간에 대한 연금개시연령 (엑셀 데이터 기반)
   const [currentPensionStartAge, setCurrentPensionStartAge] = useState<number | null>(null);
 
@@ -158,6 +161,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   useEffect(() => {
     const run = async () => {
       if (!paymentPeriod || !paymentAmount || !gender || !insuranceAge) {
+        setCurrentPensionStartAge(null);
+        return;
+      }
+      // 비활성화된 납입기간이면 연금개시연령 표시 안함
+      const periodYears = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+      if (!periodEligibility[String(periodYears)]) {
         setCurrentPensionStartAge(null);
         return;
       }
@@ -171,18 +180,80 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         }
         const excelAge = await getPensionStartAgeFromExcel(Number(insuranceAge), paymentPeriod, monthlyPayment);
         if (excelAge !== null) setCurrentPensionStartAge(excelAge);
-        else setCurrentPensionStartAge(getPensionStartAge(Number(insuranceAge), paymentPeriod));
+        else setCurrentPensionStartAge(null);
       } catch (e) {
-        setCurrentPensionStartAge(getPensionStartAge(Number(insuranceAge), paymentPeriod));
+        setCurrentPensionStartAge(null);
       }
     };
     run();
-  }, [paymentPeriod, paymentAmount, gender, insuranceAge]);
+  }, [paymentPeriod, paymentAmount, gender, insuranceAge, periodEligibility]);
 
-  // 납입기간 버튼 비활성화 여부
-  const is10YearDisabled = Number(insuranceAge) + 10 > 80;
-  const is15YearDisabled = Number(insuranceAge) + 15 > 80;
-  const is20YearDisabled = Number(insuranceAge) + 20 > 80;
+  useEffect(() => {
+    const checkEligibility = async () => {
+      if (!gender || !insuranceAge || Number(insuranceAge) < 15 || Number(insuranceAge) > 60) {
+        setPeriodEligibility({ '10': true, '15': true, '20': true });
+        return;
+      }
+
+      const age = Number(insuranceAge);
+
+      // 기본 연령 제한 검증 (완납 시 80세 초과 방지)
+      const baseEligibility = {
+        '10': age + 10 <= 80,
+        '15': age + 15 <= 80,
+        '20': age + 20 <= 80
+      };
+
+      try {
+        const response = await fetch('/api/calculate-pension/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            gender,
+            age: age,
+            productType: 'happy-dream',
+            mode: 'eligibility'
+          })
+        });
+        if (response.ok) {
+          const result = await response.json();
+          console.log('[Eligibility Check] API 응답:', result);
+          console.log('[Eligibility Check] 기본 연령 제한:', baseEligibility);
+          if (result.success && result.eligibility) {
+            // 엑셀 데이터 존재 여부 AND 연령 제한 모두 충족해야 활성화
+            const finalEligibility = {
+              '10': result.eligibility['10'] && baseEligibility['10'],
+              '15': result.eligibility['15'] && baseEligibility['15'],
+              '20': result.eligibility['20'] && baseEligibility['20']
+            };
+            console.log('[Eligibility Check] 최종 적격성:', finalEligibility);
+            setPeriodEligibility(finalEligibility);
+            return;
+          }
+        } else {
+          console.error('[Eligibility Check] API 응답 실패:', response.status);
+          const errorText = await response.text();
+          console.error('[Eligibility Check] 에러 내용:', errorText);
+          // API 오류 시 모두 비활성화
+          setPeriodEligibility({ '10': false, '15': false, '20': false });
+          return;
+        }
+      } catch (e) {
+        console.error('Failed to check eligibility:', e);
+        console.warn('[Eligibility Check] API 호출 실패, 모든 납입기간 비활성화');
+        setPeriodEligibility({ '10': false, '15': false, '20': false });
+      }
+
+      // API 실패 시 기본 연령 제한만 적용
+      setPeriodEligibility(baseEligibility);
+    };
+    checkEligibility();
+  }, [gender, insuranceAge]);
+
+  // 납입기간 버튼 비활성화 여부 (엑셀 데이터 기반)
+  const is10YearDisabled = !periodEligibility['10'];
+  const is15YearDisabled = !periodEligibility['15'];
+  const is20YearDisabled = !periodEligibility['20'];
 
   // 엑셀 기반 연금액 계산 API 호출 (드림 전용)
   const fetchExcelPension = async (age: number, paymentPeriod: string, paymentAmount: string, gender: string) => {
@@ -275,7 +346,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       return false;
     }
 
-    // 보험연령 안내는 모달에서 처리 (이 상품: 15~70세)
+    // 보험연령 안내는 모달에서 처리 (이 상품: 15~60세)
     const formInsuranceAge = Number(getInsuranceAge(birth));
 
     if (!phone) {
@@ -336,7 +407,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const handleVerifyOTP = async () => {
     const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-    if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 70) return;
+    if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 60) return;
     if (otpCode.length !== 6) {
       alert("6자리 인증번호를 입력해주세요.");
       return;
@@ -697,7 +768,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
-                <span>가입 15~70세 / 연금개시 55~80세</span>
+                <span>가입 15~60세 / 연금개시 55~80세</span>
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
@@ -814,17 +885,34 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div>
                   <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">납입기간</label>
                   <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                    {['10년', '15년', '20년'].map((period) => (
-                      <label key={period} className="relative cursor-pointer">
-                        {period === '10년' && (
-                          <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#c084fc] to-[#9333ea] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
-                        )}
-                        <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
-                        <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#c084fc] bg-[#c084fc]/5 text-[#c084fc] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
-                          {period}
-                        </div>
-                      </label>
-                    ))}
+                    {['10년', '15년', '20년'].map((period) => {
+                      const periodNum = parseInt(period.replace(/[^0-9]/g, ''));
+                      const isDisabled = (periodNum === 10 && is10YearDisabled) || (periodNum === 15 && is15YearDisabled) || (periodNum === 20 && is20YearDisabled);
+                      return (
+                        <label key={period} className={`relative ${isDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}>
+                          {period === '10년' && !isDisabled && (
+                            <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#c084fc] to-[#9333ea] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
+                          )}
+                          <input
+                            type="radio"
+                            name="paymentPeriod"
+                            value={period}
+                            checked={paymentPeriod === period}
+                            onChange={handlePaymentPeriodChange}
+                            disabled={isDisabled}
+                            className="peer sr-only"
+                          />
+                          <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${isDisabled
+                            ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
+                            : paymentPeriod === period
+                              ? 'border-[#c084fc] bg-[#c084fc]/5 text-[#c084fc] font-bold'
+                              : 'border-gray-200 hover:border-gray-300'
+                            }`}>
+                            {period}
+                          </div>
+                        </label>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -832,7 +920,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div>
                   <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">월 납입금액</label>
                   <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                    {['30만원', '50만원', '100만원'].map((amount) => (
+                    {['30만원', '50만원', '70만원', '100만원', '130만원', '150만원'].map((amount) => (
                       <label key={amount} className="cursor-pointer">
                         <input type="radio" name="paymentAmount" value={amount} checked={paymentAmount === amount} onChange={handlePaymentAmountChange} className="peer sr-only" />
                         <div className={`w-full text-center py-2 sm:py-2.5 text-xs sm:text-sm border-2 rounded-lg transition-all ${paymentAmount === amount ? 'border-[#c084fc] bg-[#c084fc]/5 text-[#c084fc] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
@@ -898,7 +986,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         <div className="space-y-2 sm:space-y-3">
           {isAgeKnown && !isAgeEligible && (
             <div className="bg-red-50 border border-red-200 text-red-700 rounded p-1.5 sm:p-2 text-xs sm:text-sm">
-              이 상품은 15세~70세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
+              이 상품은 15세~60세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
               계산 기능은 이용하실 수 없습니다.
             </div>
           )}
