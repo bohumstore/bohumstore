@@ -195,12 +195,11 @@ export default function ProductInfo() {
             <table className="w-full border-collapse text-xs sm:text-sm md:text-base">
               <thead>
                 <tr className="bg-[#1e3a8a] text-white">
-                  <th className="border border-gray-300 p-1 sm:p-2 md:p-2 leading-tight w-[22%] sm:w-[20%]">트리플 레벨업<br />보증시점</th>
-                  <th className="border border-gray-300 p-1 sm:p-2 md:p-2 leading-tight w-[23%] sm:w-[25%]">트리플 레벨업<br />보증 기준금액</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 md:p-2 leading-tight w-[22%] sm:w-[20%]" rowSpan={2}>트리플 레벨업<br />보증시점</th>
+                  <th className="border border-gray-300 p-1 sm:p-2 md:p-2 leading-tight w-[23%] sm:w-[25%]" rowSpan={2}>트리플 레벨업<br />보증 기준금액</th>
                   <th className="border border-gray-300 p-1 sm:p-2 md:p-2" colSpan={3}>트리플 레벨업 보증비율</th>
                 </tr>
                 <tr className="bg-[#1e3a8a] text-white">
-                  <th className="border border-gray-300 p-1 sm:p-2 md:p-2" colSpan={2}></th>
                   <th className="border border-gray-300 p-1 sm:p-2 md:p-2 w-[18%] sm:w-[18%]">5년납</th>
                   <th className="border border-gray-300 p-1 sm:p-2 md:p-2 w-[18%] sm:w-[18%]">7년납</th>
                   <th className="border border-gray-300 p-1 sm:p-2 md:p-2 w-[19%] sm:w-[19%]">10년납</th>
@@ -208,21 +207,21 @@ export default function ProductInfo() {
               </thead>
               <tbody>
                 <tr>
-                  <td className="border border-gray-300 p-1 sm:p-2 md:p-2 leading-tight text-xs sm:text-sm">계약일부터 7년<br />경과시점의 연계약해당일</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 md:p-3 leading-tight text-center text-xs sm:text-sm" rowSpan={2}>보증시점 전일까지의<br />"기준 기본보험료"</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 md:p-2 leading-tight text-center text-xs sm:text-sm">계약일부터 7년<br />경과시점의 연계약해당일</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 md:p-3 leading-tight text-center text-xs sm:text-sm" rowSpan={3}>보증시점 전일까지의<br />"기준 기본보험료"</td>
                   <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-center font-bold text-sm sm:text-base">100%</td>
                   <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-center font-bold text-sm sm:text-base">100%</td>
                   <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-center font-bold text-sm sm:text-base">100%</td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-300 p-1 sm:p-2 md:p-2 leading-tight text-xs sm:text-sm">계약일부터 10년<br />경과시점의 연계약해당일</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 md:p-2 leading-tight text-center text-xs sm:text-sm">계약일부터 10년<br />경과시점의 연계약해당일</td>
                   <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-center font-bold text-red-600 text-sm sm:text-base">130%</td>
                   <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-center font-bold text-red-600 text-sm sm:text-base">125%</td>
                   <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-center font-bold text-red-600 text-sm sm:text-base">120%</td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-xs sm:text-sm">연금개시시점</td>
-                  <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-center leading-tight text-xs sm:text-sm" colSpan={4}>
+                  <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-center text-xs sm:text-sm">연금개시시점</td>
+                  <td className="border border-gray-300 p-1 sm:p-2 md:p-2 text-center text-sm sm:text-base" colSpan={3}>
                     계약일부터 10년 경과시점의 트리플 레벨업 보증비율<br />
                     + ("연금개시전 보험기간" - 10(년)) × 2%
                   </td>

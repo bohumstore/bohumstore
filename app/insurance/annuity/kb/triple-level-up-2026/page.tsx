@@ -76,10 +76,10 @@ export default function KBTripleLevelUpAnnuityPage() {
             <Tabs tabs={tabs} />
             {/* 하단 버튼 */}
             <div className="flex flex-col md:flex-row gap-4 justify-center md:mt-10">
-              <button type="button" onClick={() => window.open('/kb_guide_20260801.pdf', '_blank')} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
+              <button type="button" onClick={() => window.open('/kb_guide.pdf', '_blank')} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
                 상품설명서
               </button>
-              <button type="button" onClick={() => window.open('/kb_guide_20260802.pdf', '_blank')} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
+              <button type="button" onClick={() => window.open('/kb_guide2.pdf', '_blank')} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
                 약관
               </button>
               <button type="button" onClick={() => setShowNotice(true)} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">

@@ -64,7 +64,7 @@ export default function KBTripleLevelUpAnnuityPage() {
       <Modal title="개인정보 수집 및 이용 동의" open={showPrivacy} onClose={() => setShowPrivacy(false)}>
         <PrivacyConsent />
       </Modal>
-      <div 
+      <div
         className="font-sans min-h-screen bg-[#f8f8f8] flex flex-col items-center w-full"
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -76,10 +76,10 @@ export default function KBTripleLevelUpAnnuityPage() {
             <Tabs tabs={tabs} />
             {/* 하단 버튼 */}
             <div className="flex flex-col md:flex-row gap-4 justify-center md:mt-10">
-              <button type="button" onClick={() => window.open('/kb-guide.pdf', '_blank')} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
+              <button type="button" onClick={() => window.open('/kb_guide.pdf', '_blank')} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
                 상품설명서
               </button>
-              <button type="button" onClick={() => window.open('/kb-guide2.pdf', '_blank')} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
+              <button type="button" onClick={() => window.open('/kb_guide2.pdf', '_blank')} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
                 약관
               </button>
               <button type="button" onClick={() => setShowNotice(true)} className="flex-1 md:flex-none border border-[#e0e0e0] rounded-md px-8 py-4 text-lg font-bold text-gray-700 bg-white hover:bg-gray-100 transition cursor-pointer">
@@ -115,46 +115,46 @@ export default function KBTripleLevelUpAnnuityPage() {
           </div>
         </div>
         <Footer />
-        
+
         {/* 맨 위로 & 계산하기 버튼 - 모달이 열렸을 때는 숨김 */}
         {!isModalOpen && !showPrivacy && !showNotice && !isInputFocused && !isHeaderMenuOpen && (
-        <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 flex flex-col gap-2 sm:gap-3">
-          {/* 계산하기 버튼 */}
-          <button 
-            onClick={() => {
-              const calculatorBox = document.getElementById('calculator-box');
-              if (calculatorBox) {
-                calculatorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }
-            }}
-            className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
-            aria-label="계산하기"
-          >
-            <span className="text-xs font-semibold">계산</span>
-            <img src="/Calculator.png" alt="계산하기" className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
+          <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 flex flex-col gap-2 sm:gap-3">
+            {/* 계산하기 버튼 */}
+            <button
+              onClick={() => {
+                const calculatorBox = document.getElementById('calculator-box');
+                if (calculatorBox) {
+                  calculatorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+              }}
+              className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
+              aria-label="계산하기"
+            >
+              <span className="text-xs font-semibold">계산</span>
+              <img src="/Calculator.png" alt="계산하기" className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
 
-          {/* 카톡상담 버튼 */}
-          <button 
-            onClick={() => window.open('https://pf.kakao.com/_lrubxb/chat', '_blank')}
-            className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
-            aria-label="카톡상담"
-          >
-            <span className="text-xs font-semibold">카톡</span>
-            <img src="/kakaotalk.png" alt="카톡상담" className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
-          
-          {/* 맨 위로 버튼 */}
-          <button 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="bg-white text-gray-600 rounded-full p-3 sm:p-4 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200"
-            aria-label="맨 위로"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-            </svg>
-          </button>
-        </div>
+            {/* 카톡상담 버튼 */}
+            <button
+              onClick={() => window.open('https://pf.kakao.com/_lrubxb/chat', '_blank')}
+              className="bg-white text-gray-600 rounded-2xl px-2 py-2 sm:px-3 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200 flex flex-col items-center gap-1"
+              aria-label="카톡상담"
+            >
+              <span className="text-xs font-semibold">카톡</span>
+              <img src="/kakaotalk.png" alt="카톡상담" className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+
+            {/* 맨 위로 버튼 */}
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="bg-white text-gray-600 rounded-full p-3 sm:p-4 shadow-lg hover:shadow-xl transition-all duration-200 hover:bg-gray-50 border border-gray-200"
+              aria-label="맨 위로"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+              </svg>
+            </button>
+          </div>
         )}
       </div>
     </>

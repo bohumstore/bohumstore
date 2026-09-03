@@ -9,7 +9,7 @@ interface NoticeProps {
 export default function Notice({ open, onClose }: NoticeProps) {
   return (
     <Modal title="가입시 알아두실 사항" open={open} onClose={onClose}>
-      <div className="overflow-y-auto px-6 py-4 text-[15px] leading-relaxed" style={{maxHeight:'60vh'}}>
+      <div className="overflow-y-auto px-6 py-4 text-[15px] leading-relaxed" style={{ maxHeight: '60vh' }}>
         <div className="mb-4">
           <div className="text-[#d32f2f]">보험계약자는 회사 등으로부터 상품에 대해 충분한 설명을 받을 권리가 있으며, 가입에 앞서 그 설명을 이해한 후 거래하시기 바랍니다.</div>
           <div className="text-[#d32f2f]">이 자료는 요약된 내용으로 자세한 사항은 상품설명서 및 약관을 통해 반드시 확인하시기 바랍니다.</div>
@@ -35,8 +35,8 @@ export default function Notice({ open, onClose }: NoticeProps) {
           <div className="font-bold mb-1">■ 보험금 지급의 제한에 관한 사항</div>
           <div>회사는 다음 중 어느 한 가지로 보험금 지급사유 또는 보험료 납입면제사유가 발생한 때에는 보험금을 지급하지 않거나 보험료의 납입을 면제하지 않습니다.</div>
           <div className="mt-2">
-            1. 피보험자가 고의로 자신을 해친 경우. 다만, 피보험자가 심신상실 등으로 자유로운 의사결정을 할 수 없는 상태에서 자신을 해친 경우에는 보험금을 지급합니다.<br/>
-            2. 보험수익자가 고의로 피보험자를 해친 경우. 다만, 그 보험수익자가 보험금의 일부 보험수익자인 경우에는 다른 보험수익자에 대한 보험금은 지급합니다.<br/>
+            1. 피보험자가 고의로 자신을 해친 경우. 다만, 피보험자가 심신상실 등으로 자유로운 의사결정을 할 수 없는 상태에서 자신을 해친 경우에는 보험금을 지급합니다.<br />
+            2. 보험수익자가 고의로 피보험자를 해친 경우. 다만, 그 보험수익자가 보험금의 일부 보험수익자인 경우에는 다른 보험수익자에 대한 보험금은 지급합니다.<br />
             3. 계약자가 고의로 피보험자를 해친 경우
           </div>
         </div>
@@ -52,8 +52,8 @@ export default function Notice({ open, onClose }: NoticeProps) {
           <div className="font-bold mb-1">■ 보험계약 품질보증에 관한 사항</div>
           <div>아래 3가지 중 1개라도 해당하는 경우 계약자는 계약이 성립한 날부터 3개월 이내에 계약을 취소할 수 있으며 이 경우 회사는 계약자에게 납입한 보험료 전액과 정해진 이자를 지급하여 드립니다.</div>
           <div className="mt-2">
-            약관 및 청약서를 받지 못한 경우<br/>
-            청약시 약관의 중요내용을 설명받지 못한 경우<br/>
+            약관 및 청약서를 받지 못한 경우<br />
+            청약시 약관의 중요내용을 설명받지 못한 경우<br />
             청약서에 자필서명(전자서명 포함)이 없는 경우
           </div>
         </div>
@@ -68,10 +68,10 @@ export default function Notice({ open, onClose }: NoticeProps) {
         <div className="mb-4">
           <div className="font-bold mb-1">■ 예금자보호에 관한 사항</div>
           <div>이 보험계약은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금)에 기타지급금을 합한 금액이 1인당 "1억원까지"(본 보험회사의 여타 보호상품과 합산) 보호됩니다. 이와 별도로 본 보험회사 보호상품의 사고보험금을 합산한 금액이 1인당 "1억원까지" 보호됩니다. 다만, 보험계약자 및 보험료 납부자가 법인인 보험계약 등은 예금자보호법에 의해 보호되지 않습니다.</div>
-          <br/>
+          <br />
           <img src="/1m.png" alt="예금자보호 안내" className="w-full max-w-28 mx-auto" />
         </div>
-        
+
         <div className="mb-4">
           <div className="text-sm text-gray-600">
             <hr className="my-3 border-gray-300" />
