@@ -117,7 +117,7 @@ export default function Surrender() {
             <tr className="bg-[#1e3a8a] text-white">
               <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm" colSpan={2}>구분</th>
               <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">최저보증이율</th>
-              <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2026년09월<br />평균공시이율2.5%가정<br />[공시이율(2.51%)을상한으로함]</th>
+              <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2026년09월<br />평균공시이율2.5%가정<br />[공시이율(2.51%)을 상한으로 함]</th>
               <th className="border border-gray-300 p-0.5 text-[10px] md:text-sm">2026년09월<br />현재공시이율(2.51%)</th>
             </tr>
             <tr>

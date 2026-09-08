@@ -59,7 +59,10 @@ export default function Notice({ open, onClose }: NoticeProps) {
           <div>· 계약자가 납입한 보험료는 불의의 사고를 당한 다른 가입자에게 보험금으로 지급되고 보험회사 운영에 필요한 경비로 사용되므로 중도해지시 지급되는 해약환급금은 납입한 보험료보다 적거나 없을 수 있습니다.</div>
         </div>
         <div className="mb-4">
-          <div className="font-bold mb-1">예금자보호에 관한 사항</div>
+          <div className="flex items-center gap-2 mb-1">
+            <div className="font-bold">예금자보호에 관한 사항</div>
+            <img src="/1m.png" alt="예금보험공사 보호금융상품 1인당 최고 1억원" className="h-[70px] flex-shrink-0" />
+          </div>
           <div className="text-[#d32f2f]">· 이 보험계약은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금)에 기타지급금을 합한 금액이 1인당 "1억원까지"(본 보험회사의 여타 보호상품과 합산) 보호됩니다. 이와 별도로 본 보험회사 보호상품의 사고보험금을 합산한 금액이 1인당 "1억원까지" 보호됩니다. 다만, 보험계약자 및 보험료 납부자가 법인인 보험계약의 경우에는 예금자보호법에 의해 보호되지 않습니다.</div>
         </div>
         <div className="mb-4">
@@ -81,12 +84,6 @@ export default function Notice({ open, onClose }: NoticeProps) {
         <div className="mb-4">
           <div className="font-bold mb-1">고령계약자와 관련된 사항</div>
           <div>· 고령금융소비자는 금융상품 상담 및 가입 시 상품에 대한 원금손실 가능성, 손실 가능범위, 중도해지시 불이익 등의 사항을 우선적으로 파악하고 이해한 뒤에 가입하여야 합니다.</div>
-        </div>
-
-        <div className="mb-4">
-          <div className="flex justify-center">
-            <img src="/1m.png" alt="예금보험공사 보호금융상품 1인당 최고 1억원" className="w-32" />
-          </div>
         </div>
 
         <div className="mb-4">
