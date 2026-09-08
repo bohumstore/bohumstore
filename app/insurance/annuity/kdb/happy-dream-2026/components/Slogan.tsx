@@ -791,15 +791,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <p className="text-[10px] sm:text-xs md:text-sm font-bold">생존 시</p>
                   </div>
                   <div className="border-2 border-purple-600 rounded-b-lg p-2 sm:p-3 md:p-3.5 flex-1 flex flex-col justify-center items-center bg-purple-50 min-h-[130px] sm:min-h-[140px] md:min-h-[150px]">
-                    <p className="text-xs sm:text-sm md:text-base font-bold text-purple-900 mb-1">최대 100세까지</p>
+                    <p className="text-xs sm:text-sm md:text-base font-bold text-purple-900 mb-1">종신 지급</p>
                     <p className="text-[9px] sm:text-[10px] md:text-xs text-gray-600 text-center leading-tight">
-                      (예시) 100세<br />최종연금지급일
+                      연금개시 후<br />피보험자 생존 시<br />종신 지급
                     </p>
-                    <div className="mt-1.5 pt-1.5 border-t border-purple-200 w-full">
-                      <p className="text-[8px] sm:text-[9px] md:text-[10px] text-gray-500 text-center">
-                        = 피보험자의 99세<br />계약 해당일
-                      </p>
-                    </div>
                   </div>
                 </div>
 
@@ -1066,10 +1061,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 20년 보증기간 연금액 */}
+                {/* 20년 생존 시 누적 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 생존 시 누적 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#ef4444]">
                         {isVerified ? (
@@ -1082,10 +1077,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 100세까지 생존 시 총 받는 금액 */}
+                {/* 100세 생존 시 누적 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세 생존 시 누적 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#10b981]">{isVerified ? `약 ${serverPension?.totalUntil100.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
                       {isVerified && <span className="text-[#3a8094]"> 원</span>}
@@ -1163,19 +1158,19 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 20년 보증기간 연금액 */}
+                {/* 20년 생존 시 누적 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 생존 시 누적 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#ef4444]">인증 후 확인가능</span>
                     </span>
                   </div>
                 </div>
-                {/* 100세까지 생존 시 총 받는 금액 */}
+                {/* 100세 생존 시 누적 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세 생존 시 누적 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#10b981]">인증 후 확인가능</span>
                     </span>

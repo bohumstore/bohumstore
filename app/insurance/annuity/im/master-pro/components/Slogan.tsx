@@ -501,7 +501,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <ul className="mb-4 sm:mb-5 md:mb-6 space-y-1.5 sm:space-y-2">
               <li className="flex items-center text-sm sm:text-base md:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-base sm:text-lg md:text-xl mr-1.5 sm:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
-                <span>펀드 성과 무관 <span className="font-bold text-[#ffd700]">최대 30년 연단리 7%</span> 보증</span>
+                <span>펀드 성과 무관 <span className="font-bold text-[#ffd700]">20년 생존 시 누적 연금액</span> 보증</span>
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-base sm:text-lg md:text-xl mr-1.5 sm:mr-2 text-[#ffd700] flex-shrink-0">✔</span>

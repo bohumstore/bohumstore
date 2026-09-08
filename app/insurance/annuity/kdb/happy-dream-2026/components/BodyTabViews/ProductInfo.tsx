@@ -254,7 +254,7 @@ export default function ProductInfo() {
                   </tr>
                   <tr>
                     <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm font-semibold">부가가능 특약</td>
-                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm leading-tight sm:leading-relaxed">(무)신보험료납입면제특약 (3대질병형)<br />※선택특약은 주계약 월납보험료 50만원 초과시 가입불가하며, 주계약 보험료 납입기간 5·7·10년 선택시에만 가입가능</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm leading-tight sm:leading-relaxed">없음</td>
                   </tr>
                   <tr>
                     <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm font-semibold">가입나이</td>

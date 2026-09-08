@@ -224,21 +224,6 @@ export default function ProductInfo() {
         </div>
       </div>
 
-      {/* 보험료 납입면제 */}
-      <div className="space-y-4">
-        <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">보험료 납입면제 [(무)신보험료납입면제특약 (3대질병형) 선택시]</h3>
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-          <div className="space-y-4">
-            <p className="text-base leading-relaxed">
-              암보장개시일 이후에 암(기타피부암, 갑상선암, 대장점막내암 및 비침습 방광암 제외), 보장개시일 이후에 뇌출혈 또는 급성심근경색증으로 진단이 확정되었을 경우 주계약, 대상이 되는 특약 및 이 특약의 차회 이후의 보험료 납입을 면제해드립니다.
-            </p>
-            <div className="space-y-2 text-sm">
-              <div className="text-red-600">※ 암보장개시일은 계약일(부활(효력회복)일)부터 그 날을 포함하여 90일이 되는 날의 다음날입니다.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* 보험차익 비과세 혜택 */}
       <div className="space-y-4">
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">보험차익 비과세 혜택</h3>
@@ -315,7 +300,7 @@ export default function ProductInfo() {
                   </tr>
                   <tr>
                     <td className="border border-gray-300 p-1 sm:p-2 md:p-3 font-bold text-xs sm:text-sm">부가가능 특약</td>
-                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm">(무)신보험료납입면제특약(3대질병형)</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm">없음</td>
                   </tr>
                   <tr>
                     <td className="border border-gray-300 p-1 sm:p-2 md:p-3 font-bold text-xs sm:text-sm">가입나이</td>

@@ -264,7 +264,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         mounthlyPremium: paymentAmount, // 실제 선택값
         paymentPeriod: paymentPeriod,   // 실제 선택값
         monthlyPension: calculatedPensionAmounts.monthly, // 월 연금액
-        guaranteedPension: calculatedPensionAmounts.guaranteed, // 20년 보증기간 연금액
+        guaranteedPension: calculatedPensionAmounts.guaranteed, // 20년 생존 시 누적 연금액
         pensionStartAge: calculatedPensionAmounts.pensionStartAge, // 연금개시연령 (카카오 메시지용)
         totalUntil100: calculatedPensionAmounts.totalUntil100,     // 100세까지 총 수령액 (카카오 메시지용)
         templateId: "UB_8705", // 고객용 연금액 계산 결과 전송용 템플릿
@@ -1126,10 +1126,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 20년 보증기간 연금액 */}
+                {/* 20년 생존 시 누적 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 생존 시 누적 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#ef4444]">
                         {isVerified ? (
@@ -1141,10 +1141,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 100세까지 생존 시 총 받는 금액 */}
+                {/* 100세 생존 시 누적 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세 생존 시 누적 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#10b981]">
                         {isVerified ? (
@@ -1235,19 +1235,19 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 20년 보증기간 연금액 */}
+                {/* 20년 생존 시 누적 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 생존 시 누적 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#ef4444]">인증 후 확인가능</span>
                     </span>
                   </div>
                 </div>
-                {/* 100세까지 생존 시 총 받는 금액 */}
+                {/* 100세 생존 시 누적 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세 생존 시 누적 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#10b981]">인증 후 확인가능</span>
                     </span>

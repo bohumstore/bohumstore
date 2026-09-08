@@ -818,7 +818,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const performanceBonus = Math.round(monthlyPension * 0.15); // 15% 실적배당 가정
     const performancePension = monthlyPension + performanceBonus;
 
-    // 100세까지 생존 시 총 받는 금액
+    // 100세 생존 시 누적 연금액
     const totalPensionUntil100 = monthlyPension * 12 * (100 - pensionStartAge);
 
     return {
@@ -1235,20 +1235,20 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 20년 보증기간 연금액 */}
+                {/* 20년 생존 시 누적 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 생존 시 누적 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#ef4444]">{isVerified ? `약 ${guaranteedAmount.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
                       {isVerified && <span className="text-[#3a8094]"> 원</span>}
                     </span>
                   </div>
                 </div>
-                {/* 100세까지 생존 시 총 받는 금액 */}
+                {/* 100세 생존 시 누적 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세 생존 시 누적 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#10b981]">{isVerified ? `약 ${pensionAmounts.totalUntil100?.toLocaleString('en-US')}` : "인증 후 확인가능"}</span>
                       {isVerified && <span className="text-[#3a8094]"> 원</span>}
@@ -1326,17 +1326,17 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 20년 보증기간 연금액 */}
+                {/* 20년 생존 시 누적 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 보증기간 연금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>20년 생존 시 누적 연금액</span>
                     <span className="font-bold"><span className="text-[#ef4444]">인증 후 확인가능</span></span>
                   </div>
                 </div>
-                {/* 100세까지 생존 시 총 받는 금액 */}
+                {/* 100세 생존 시 누적 연금액 */}
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세까지 생존 시 총 받는 금액</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>100세 생존 시 누적 연금액</span>
                     <span className="font-bold">
                       <span className="text-[#10b981]">인증 후 확인가능</span>
                     </span>
