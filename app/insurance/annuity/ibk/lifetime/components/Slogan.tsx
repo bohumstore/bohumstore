@@ -861,8 +861,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
             {/* 메인 슬로건 */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 md:mb-6 lg:mb-4 leading-tight">
-              20년까지 연단리 8%!<br />
-              보증되는 변액연금보험!
+              연단리 8%!<br />
+              평생 받는 변액연금보험!
             </h1>
 
             {/* 간단한 특징 설명 */}
@@ -1051,7 +1051,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">납입기간</label>
                   {isAgeKnown && Number(insuranceAge) >= 66 && Number(insuranceAge) <= 68 ? (
                     // 66~68세: 7년납 자동 적용
-                    <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                    <div className="grid grid-cols-3 gap-2">
                       <div className="col-span-3">
                         <div className="w-full text-center py-2.5 text-sm border-2 border-[#f59e0b] bg-[#f59e0b]/5 text-[#f59e0b] font-bold rounded-lg">
                           7년
