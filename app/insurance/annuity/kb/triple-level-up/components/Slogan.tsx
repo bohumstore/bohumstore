@@ -683,7 +683,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             </div>
           </div>
         </div>
-      </section>
+      </section >
       <Modal
         title={
           counselType === 1 ? (
