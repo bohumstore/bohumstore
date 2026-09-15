@@ -47,11 +47,11 @@ export default function Notice({ open, onClose }: NoticeProps) {
         </div>
 
         <div className="mb-5">
-          <div className="font-bold mb-2">예금자보호 안내</div>
-          <div className="mb-3 text-red-500">이 보험계약은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금)에 기타지급금을 합한 금액이 1인당 "1억원까지"(본 보험회사의 여타 보호상품과 합산) 보호됩니다. 이와 별도로 본 보험회사 보호상품의 사고보험금을 합산한 금액이 1인당 "1억원까지" 보호됩니다. 다만, 보험계약자 및 보험료납부자가 법인인 보험계약의 경우에는 보호되지 않습니다.</div>
-          <div className="flex justify-center my-3">
-            <img src="/1m.png" alt="예금보험공사 보호금융상품 1인당 최고 1억원" className="w-32" />
+          <div className="flex items-center gap-2 mb-2">
+            <img src="/1m.png" alt="예금보험공사 보호금융상품 1인당 최고 1억원" className="h-[60px] flex-shrink-0" />
+            <div className="font-bold">예금자보호 안내</div>
           </div>
+          <div className="text-red-500">이 보험계약은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금)에 기타지급금을 합한 금액이 1인당 "1억원까지"(본 보험회사의 여타 보호상품과 합산) 보호됩니다. 이와 별도로 본 보험회사 보호상품의 사고보험금을 합산한 금액이 1인당 "1억원까지" 보호됩니다. 다만, 보험계약자 및 보험료납부자가 법인인 보험계약의 경우에는 보호되지 않습니다.</div>
         </div>
 
         <div className="mb-5">

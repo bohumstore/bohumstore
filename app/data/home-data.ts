@@ -68,7 +68,7 @@ export const slogans: Slogan[] = [
       '추가납입 & 중도인출 & 연금전환 가능'
     ],
     company: '메트라이프생명',
-    logo: '/metlife-logo.png'
+    logo: '/metlife-New-logo.png'
   },
   {
     id: 'aia-dollar-oneshot',
@@ -118,7 +118,7 @@ export const slogans: Slogan[] = [
       '15~70세 가입 가능'
     ],
     company: '메트라이프생명',
-    logo: '/metlife-logo.png'
+    logo: '/metlife-New-logo.png'
   },
   {
     id: 'im-plus-pro',
@@ -226,7 +226,7 @@ export const mainProducts: MainProduct[] = [
     id: 'metlife-dollar-annuity',
     name: '메트라이프 오로지연금을위한 달러연금보험',
     company: '메트라이프생명',
-    logo: '/metlife-logo.png',
+    logo: '/metlife-New-logo.png',
     path: '/insurance/annuity/metlife/only-dollar',
     description: '공시이율 4.69%, 달러로 준비하는 안정적인 연금',
     badge: 'NEW',
@@ -292,7 +292,7 @@ export const mainProducts: MainProduct[] = [
     id: 'metlife-usd',
     name: '메트라이프 달러종신보험Plus',
     company: '메트라이프생명',
-    logo: '/metlife-logo.png',
+    logo: '/metlife-New-logo.png',
     path: '/insurance/whole-life/metlife/usd',
     description: '달러/원화 선택 수령, 원화고정납입옵션으로 환율 걱정 無',
     badge: 'TOP',

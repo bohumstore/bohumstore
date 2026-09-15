@@ -7,7 +7,7 @@ export const productStructuredDataMap = {
     provider: '메트라이프생명',
     category: '달러연금보험',
     url: 'https://bohumstore.net/insurance/annuity/metlife/only-dollar',
-    image: 'https://bohumstore.net/metlife-logo.png'
+    image: 'https://bohumstore.net/metlife-New-logo.png'
   },
   'aia-dollar-oneshot': {
     name: 'AIA 달러 일시납 연금보험',
@@ -63,7 +63,7 @@ export const productStructuredDataMap = {
     provider: '메트라이프생명',
     category: '달러종신보험',
     url: 'https://bohumstore.net/insurance/whole-life/metlife/usd',
-    image: 'https://bohumstore.net/metlife-logo.png'
+    image: 'https://bohumstore.net/metlife-New-logo.png'
   },
   'shinhan-more-the-dream': {
     name: '신한 모아더드림Plus 종신보험',

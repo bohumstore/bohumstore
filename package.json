@@ -18,6 +18,7 @@
     "@supabase/supabase-js": "^2.50.2",
     "@tailwindcss/postcss": "^4.1.12",
     "axios": "^1.10.0",
+    "canvas": "^3.2.3",
     "date-fns": "^4.1.0",
     "dotenv": "^17.2.1",
     "fireworks": "^2.2.7",
@@ -28,6 +29,7 @@
     "playwright": "^1.54.2",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
+    "sharp": "^0.35.4",
     "swiper": "^11.2.10",
     "xlsx": "^0.18.5"
   },

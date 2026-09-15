@@ -519,7 +519,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <div className="flex items-center gap-2 text-sm text-white mb-2">
               <div className="bg-white rounded px-1.5 py-0.5">
                 <Image
-                  src="/metlife-logo.png"
+                  src="/metlife-New-logo.png"
                   alt="메트라이프생명 로고"
                   width={80}
                   height={24}
@@ -532,7 +532,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
             {/* 상품명 */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-5 sm:mb-6 md:mb-7 leading-tight">
-              (무) 백만인을 위한<br /> 달러종신보험 Plus
+              (무)백만인을위한<br /> 달러종신보험Plus
             </h1>
 
             {/* 메인 타이틀 */}
@@ -547,7 +547,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             </p>
 
             {/* 3개의 핵심 혜택 카드 */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-3 lg:gap-4 w-full max-w-lg lg:max-w-xl mb-6">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3 lg:gap-4 w-full max-w-lg lg:max-w-xl mb-2">
               {/* 달러/원화 선택 - 강조 */}
               <div className="bg-gradient-to-br from-[#1e3a5f] to-[#0f2744] rounded-xl p-3 sm:p-4 border-2 border-[#00d4aa]/70 hover:border-[#00d4aa] transition-all group relative overflow-hidden shadow-lg shadow-[#00d4aa]/30">
                 <div className="absolute inset-0 bg-gradient-to-r from-[#00d4aa]/0 via-[#00d4aa]/10 to-[#00d4aa]/0 animate-pulse"></div>
@@ -556,8 +556,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
                 </div>
-                <p className="text-[10px] sm:text-xs text-white/90 text-center mb-0.5 relative z-10">통화 선택</p>
-                <p className="text-base sm:text-xl font-black text-[#00d4aa] text-center relative z-10 drop-shadow-[0_0_10px_rgba(0,212,170,0.6)]">$/₩ 자유</p>
+                <p className="text-[10px] sm:text-xs text-white/90 text-center mb-0.5 relative z-10">보험금 지급 시</p>
+                <p className="text-base sm:text-xl font-black text-[#00d4aa] text-center relative z-10 drop-shadow-[0_0_10px_rgba(0,212,170,0.6)]">$/₩ 선택</p>
               </div>
 
               {/* 해약환급금 */}
@@ -585,6 +585,11 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <p className="text-base sm:text-xl font-black text-[#a78bfa] text-center relative z-10 drop-shadow-[0_0_10px_rgba(167,139,250,0.6)]">최대 150%</p>
               </div>
             </div>
+
+            {/* 가입조건 예시 */}
+            <p className="text-[10px] sm:text-xs text-white/70 text-center mb-6 w-full max-w-lg lg:max-w-xl">
+              [주계약 가입금액 1만달러, 40세 남자, 5년납, 월납 기준]
+            </p>
 
             {/* 신뢰 뱃지 - 강조 */}
             <div className="flex items-center gap-3 sm:gap-4 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border-2 border-white/20 shadow-lg">
