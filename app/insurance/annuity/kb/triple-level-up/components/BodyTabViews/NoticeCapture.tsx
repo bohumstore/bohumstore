@@ -5,7 +5,7 @@ export default function NoticeCapture() {
     <div className="max-w-[860px] mx-auto bg-white">
       <div className="px-6 py-4">
         {/* 제목과 밑줄 */}
-        <h2 className="text-[#FBAF00] text-2xl font-bold border-b-2 border-[#FBAF00] pb-2 mb-6">가입시 알아두실 사항</h2>
+        <h2 className="text-[#222] text-2xl font-bold border-b-2 border-[#222] pb-2 mb-6">가입시 알아두실 사항</h2>
 
         {/* 내용 */}
         <div className="text-[15px] leading-relaxed">

@@ -184,40 +184,40 @@ export const slogans: Slogan[] = [
     ],
     company: 'KDB생명',
     logo: '/kdb-logo.png'
-  },
-  {
-    id: 'hana-hanaro',
-    title: '10년시점 120.53% 환급률',
-    subtitle: '간편심사형 가입 가능',
-    description: '하나생명 하나로 THE 연결된 종신보험으로 보장성 중심 설계와 간편심사형 가입을 확인하세요.',
-    path: '/insurance/whole-life/hana/hanaro',
-    color: 'from-teal-500 to-teal-600',
-    bgColor: 'bg-teal-50',
-    features: [
-      '간편심사형으로도 가입 가능',
-      '사망을 주된 보장으로 하는 보장성 종신보험',
-      '해약환급금 일부지급형'
-    ],
-    company: '하나생명',
-    logo: '/hana-logo.png'
-  },
-  {
-    id: 'hana-only',
-    title: '연단리 7% 보증',
-    subtitle: '변액연금의 높은 수익성',
-    description: '하나뿐인 변액연금보험으로 최저사망적립액과 최저연금지급액을 보증받으세요.',
-    path: '/insurance/annuity/hana/hana-only',
-    color: 'from-emerald-500 to-emerald-600',
-    bgColor: 'bg-emerald-50',
-    features: [
-      '최대 연단리 7% 보증이율 적용',
-      '최저사망적립액 및 최저연금지급액 보증',
-      '가입나이 0~68세 / 연금개시 30~85세',
-      '월납 20만원부터 가입 가능'
-    ],
-    company: '하나생명',
-    logo: '/hana-logo.png'
   }
+  // {
+  //   id: 'hana-hanaro',
+  //   title: '10년시점 120.53% 환급률',
+  //   subtitle: '간편심사형 가입 가능',
+  //   description: '하나생명 하나로 THE 연결된 종신보험으로 보장성 중심 설계와 간편심사형 가입을 확인하세요.',
+  //   path: '/insurance/whole-life/hana/hanaro',
+  //   color: 'from-teal-500 to-teal-600',
+  //   bgColor: 'bg-teal-50',
+  //   features: [
+  //     '간편심사형으로도 가입 가능',
+  //     '사망을 주된 보장으로 하는 보장성 종신보험',
+  //     '해약환급금 일부지급형'
+  //   ],
+  //   company: '하나생명',
+  //   logo: '/hana-logo.png'
+  // },
+  // {
+  //   id: 'hana-only',
+  //   title: '연단리 7% 보증',
+  //   subtitle: '변액연금의 높은 수익성',
+  //   description: '하나뿐인 변액연금보험으로 최저사망적립액과 최저연금지급액을 보증받으세요.',
+  //   path: '/insurance/annuity/hana/hana-only',
+  //   color: 'from-emerald-500 to-emerald-600',
+  //   bgColor: 'bg-emerald-50',
+  //   features: [
+  //     '최대 연단리 7% 보증이율 적용',
+  //     '최저사망적립액 및 최저연금지급액 보증',
+  //     '가입나이 0~68세 / 연금개시 30~85세',
+  //     '월납 20만원부터 가입 가능'
+  //   ],
+  //   company: '하나생명',
+  //   logo: '/hana-logo.png'
+  // }
 ];
 
 // 메인 상품 데이터
@@ -266,17 +266,17 @@ export const mainProducts: MainProduct[] = [
     category: '변액연금',
     highlight: '연단리 8% 보증'
   },
-  {
-    id: 'hana-only',
-    name: '하나뿐인 변액연금보험',
-    company: '하나생명',
-    logo: '/hana-logo.png',
-    path: '/insurance/annuity/hana/hana-only',
-    description: '최대 연단리 7% 보증, 최저사망적립액 및 최저연금지급액 보증',
-    badge: 'NEW',
-    category: '변액연금',
-    highlight: '연단리 7% 보증'
-  },
+  // {
+  //   id: 'hana-only',
+  //   name: '하나뿐인 변액연금보험',
+  //   company: '하나생명',
+  //   logo: '/hana-logo.png',
+  //   path: '/insurance/annuity/hana/hana-only',
+  //   description: '최대 연단리 7% 보증, 최저사망적립액 및 최저연금지급액 보증',
+  //   badge: 'NEW',
+  //   category: '변액연금',
+  //   highlight: '연단리 7% 보증'
+  // },
   {
     id: 'kdb-happy-dream',
     name: 'KDB 행복드림 변액연금보험',
@@ -299,17 +299,17 @@ export const mainProducts: MainProduct[] = [
     category: '달러종신보험',
     highlight: '10년시점 124.9%'
   },
-  {
-    id: 'hana-hanaro',
-    name: '하나생명 하나로 THE 연결된 종신보험',
-    company: '하나생명',
-    logo: '/hana-logo.png',
-    path: '/insurance/whole-life/hana/hanaro',
-    description: '간편심사형 가입 가능, 보장성 중심의 종신보험',
-    badge: '',
-    category: '종신보험',
-    highlight: '10년시점 120.53%'
-  },
+  // {
+  //   id: 'hana-hanaro',
+  //   name: '하나생명 하나로 THE 연결된 종신보험',
+  //   company: '하나생명',
+  //   logo: '/hana-logo.png',
+  //   path: '/insurance/whole-life/hana/hanaro',
+  //   description: '간편심사형 가입 가능, 보장성 중심의 종신보험',
+  //   badge: '',
+  //   category: '종신보험',
+  //   highlight: '10년시점 120.53%'
+  // },
   {
     id: 'kdb-happy-plus',
     name: 'KDB 행복플러스 연금보험(보증형)',

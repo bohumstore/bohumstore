@@ -1,3 +1,4 @@
+"use client";
 import React from 'react'
 import { useState } from 'react';
 
@@ -5,7 +6,7 @@ export default function ProductInfo() {
   const [showResultModal, setShowResultModal] = useState(false);
 
   return (
-    <div className="space-y-8 px-2 sm:px-4 md:px-8 py-4 md:py-6">
+    <div className="space-y-8 px-4 sm:px-4 md:px-8 py-4 md:py-6">
       {/* 보증여부에 따른 상품 비교 */}
       <div className="space-y-4">
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">보증여부에 따른 상품 비교</h3>

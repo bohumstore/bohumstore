@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Surrender() {
   return (
-    <div className="space-y-8 px-2 sm:px-4 md:px-8 py-4 md:py-6">
+    <div className="space-y-8 px-4 sm:px-4 md:px-8 py-4 md:py-6">
       <div className="mb-2">
         <div className="text-[#1e3a8a] text-2xl md:text-3xl font-extrabold mb-1">■ 해약환급금 예시표</div>
         <div className="w-full h-1 bg-[#1e3a8a] mb-3" />
@@ -16,17 +16,17 @@ export default function Surrender() {
           </div>
         </div>
       </div>
-      
+
       {/* 표 */}
       <div className="overflow-x-auto">
         <table className="w-full text-center text-xs md:text-sm border-collapse">
           <thead>
             <tr className="bg-[#1e3a8a] text-white align-middle">
-              <th className="border border-gray-300 p-1 md:p-2" rowSpan={2}>경과<br/>기간</th>
-              <th className="border border-gray-300 p-1 md:p-2" rowSpan={2}>보험<br/>나이</th>
-              <th className="border border-gray-300 p-1 md:p-2" rowSpan={2}>납입보험료<br/>(A)</th>
-              <th className="border border-gray-300 p-1 md:p-2" colSpan={2}>①최저보증이율가정<br/>(5년이내 1.0%<br/>5년초과 0.7%)</th>
-              <th className="border border-gray-300 p-1 md:p-2" colSpan={2}>②평균공시이율과 현재 공시<br/>이율 중 낮은 이율 2.50% 가정</th>
+              <th className="border border-gray-300 p-1 md:p-2" rowSpan={2}>경과<br />기간</th>
+              <th className="border border-gray-300 p-1 md:p-2" rowSpan={2}>보험<br />나이</th>
+              <th className="border border-gray-300 p-1 md:p-2" rowSpan={2}>납입보험료<br />(A)</th>
+              <th className="border border-gray-300 p-1 md:p-2" colSpan={2}>①최저보증이율가정<br />(5년이내 1.0%<br />5년초과 0.7%)</th>
+              <th className="border border-gray-300 p-1 md:p-2" colSpan={2}>②평균공시이율과 현재 공시<br />이율 중 낮은 이율 2.50% 가정</th>
               <th className="border border-gray-300 p-1 md:p-2" colSpan={2}>③현재 공시이율 4.69% 가정</th>
             </tr>
             <tr className="bg-[#1e3a8a] text-white">

@@ -29,7 +29,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const [phone, setPhone] = useState("");
   const [paymentPeriod, setPaymentPeriod] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
-  const [isChecked, setIsChecked] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
 
   const [showResultModal, setShowResultModal] = useState(false)
   const [otpSent, setOtpSent] = useState(false)
@@ -1150,9 +1150,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                         const isAvailable = !isAgeKnown || availablePaymentPeriods.includes(period);
                         return (
                           <label key={period} className={`relative ${isAvailable ? 'cursor-pointer' : 'cursor-not-allowed'}`}>
-                            {period === '10년' && isAvailable && (
+                            {/* {period === '10년' && isAvailable && (
                               <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#00a884] to-[#008c73] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
-                            )}
+                            )} */}
                             <input
                               type="radio"
                               name="paymentPeriod"

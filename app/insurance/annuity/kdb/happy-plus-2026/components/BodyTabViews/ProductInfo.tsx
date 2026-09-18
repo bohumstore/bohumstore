@@ -3,7 +3,7 @@ import React from 'react'
 export default function ProductInfo() {
 
   return (
-    <div className="space-y-8 px-2 sm:px-4 md:px-8 py-4 md:py-6">
+    <div className="space-y-8 px-4 sm:px-4 md:px-8 py-4 md:py-6">
       {/* 상품특징 제목 */}
       <h2 className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2">상품정보</h2>
 

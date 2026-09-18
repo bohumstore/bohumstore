@@ -64,15 +64,15 @@ export default function Header() {
 
   const menuItems = [
     {
-      title: "종신보험",
-      titleMain: "종신보험",
+      title: "연금보험",
+      titleMain: "연금보험",
       titleSub: "환급률↑",
       titleSubColor: "text-rose-500",
-      id: "whole-life",
+      id: "annuity-refund",
       subItems: [
-        { name: "원화고정납입달러종신보험", path: "/insurance/whole-life/metlife/usd", badge: "달러" },
-        { name: "신한 모아더드림Plus종신보험", path: "/insurance/whole-life/shinhan/more-the-dream", badge: null },
-        { name: "하나로THE연결된종신보험", path: "/insurance/whole-life/hana/hanaro", badge: null }
+        { name: "오로지연금을위한달러연금보험", path: "/insurance/annuity/metlife/only-dollar", badge: "달러" },
+        { name: "iM PlusPRO연금보험(보증형)", path: "/insurance/annuity/im/plus-pro", badge: null },
+        { name: "KB 트리플레벨업연금보험(보증형)", path: "/insurance/annuity/kb/triple-level-up", badge: null }
       ]
     },
     {
@@ -84,20 +84,8 @@ export default function Header() {
       subItems: [
         { name: "8%평생보증변액연금보험", path: "/insurance/annuity/ibk/lifetime", badge: null },
         { name: "7%평생보증변액연금보험", path: "/insurance/annuity/kdb/happy-dream", badge: null },
-        { name: "하나뿐인변액연금보험", path: "/insurance/annuity/hana/hana-only", badge: null },
+        // { name: "하나뿐인변액연금보험", path: "/insurance/annuity/hana/hana-only", badge: null },
         { name: "7%평생보증연금보험(비변액)", path: "/insurance/annuity/kdb/happy-plus", badge: null }
-      ]
-    },
-    {
-      title: "연금보험",
-      titleMain: "연금보험",
-      titleSub: "환급률↑",
-      titleSubColor: "text-rose-500",
-      id: "annuity-refund",
-      subItems: [
-        { name: "오로지연금을위한달러연금보험", path: "/insurance/annuity/metlife/only-dollar", badge: "달러" },
-        { name: "iM PlusPRO연금보험(보증형)", path: "/insurance/annuity/im/plus-pro", badge: null },
-        { name: "KB 트리플레벨업연금보험(보증형)", path: "/insurance/annuity/kb/triple-level-up", badge: null }
       ]
     },
     {
@@ -111,14 +99,26 @@ export default function Header() {
       ]
     },
     {
-      title: "건강보험",
-      titleMain: "건강보험",
-      titleSub: null,
-      id: "health",
+      title: "종신보험",
+      titleMain: "종신보험",
+      titleSub: "환급률↑",
+      titleSubColor: "text-rose-500",
+      id: "whole-life",
       subItems: [
-        { name: "간병인보험", path: "/insurance/carer", badge: null }
+        { name: "원화고정납입달러종신보험", path: "/insurance/whole-life/metlife/usd", badge: "달러" },
+        { name: "신한 모아더드림Plus종신보험", path: "/insurance/whole-life/shinhan/more-the-dream", badge: null }
+        // { name: "하나로THE연결된종신보험", path: "/insurance/whole-life/hana/hanaro", badge: null }
       ]
     }
+    // {
+    //   title: "건강보험",
+    //   titleMain: "건강보험",
+    //   titleSub: null,
+    //   id: "health",
+    //   subItems: [
+    //     { name: "간병인보험", path: "/insurance/carer", badge: null }
+    //   ]
+    // }
   ];
 
   return (
@@ -242,39 +242,39 @@ export default function Header() {
                     </div>
                   </li>
                 ))}
-
-                {/* 상담신청 메뉴 (단독) */}
-                <li className="mt-6 px-6">
-                  <div className="space-y-2">
-                    <div className="relative">
-                      <div className="absolute -top-3 sm:-top-4 left-0 right-0 flex justify-center z-10">
-                        <span className="bg-gradient-to-r from-red-500 to-rose-500 text-white text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-lg animate-bounce whitespace-nowrap">
-                          무료 상담
-                        </span>
-                      </div>
-                      <Link
-                        href="/insurance/a_consult"
-                        onClick={closeMenu}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl py-3.5 text-base transition flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25"
-                      >
-                        <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-5 h-5'>
-                          <path strokeLinecap='round' strokeLinejoin='round' d='M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z' />
-                        </svg>
-                        상담신청
-                      </Link>
-                    </div>
-                    <a
-                      href="https://pf.kakao.com/_lrubxb/chat"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-3.5 text-base flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer shadow-lg shadow-[#fee500]/25"
-                    >
-                      <ChatBubbleLeftRightIcon className="w-5 h-5" />
-                      채팅상담
-                    </a>
-                  </div>
-                </li>
               </ul>
+            </div>
+
+            {/* 상담신청 메뉴 */}
+            <div className="mt-auto px-6 py-4 border-t border-gray-100">
+              <div className="space-y-2">
+                <div className="relative">
+                  <div className="absolute -top-3 sm:-top-4 left-0 right-0 flex justify-center z-10">
+                    <span className="bg-gradient-to-r from-red-500 to-rose-500 text-white text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-lg animate-bounce whitespace-nowrap">
+                      무료 상담
+                    </span>
+                  </div>
+                  <Link
+                    href="/insurance/a_consult"
+                    onClick={closeMenu}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl py-3.5 text-base transition flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25"
+                  >
+                    <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-5 h-5'>
+                      <path strokeLinecap='round' strokeLinejoin='round' d='M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z' />
+                    </svg>
+                    상담신청
+                  </Link>
+                </div>
+                <a
+                  href="https://pf.kakao.com/_lrubxb/chat"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-[#fee500] text-[#3d1e1e] font-bold rounded-xl py-3.5 text-base flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer shadow-lg shadow-[#fee500]/25"
+                >
+                  <ChatBubbleLeftRightIcon className="w-5 h-5" />
+                  채팅상담
+                </a>
+              </div>
             </div>
 
             {/* 하단 간결한 문구 */}

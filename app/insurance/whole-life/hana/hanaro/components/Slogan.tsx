@@ -26,13 +26,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const [phone, setPhone] = useState("");
   const [paymentPeriod, setPaymentPeriod] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
-  const [isChecked, setIsChecked] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
 
   const [showResultModal, setShowResultModal] = useState(false)
-  const [otpSent, setOtpSent]   = useState(false)
-  const [otpCode, setOtpCode]   = useState("")
+  const [otpSent, setOtpSent] = useState(false)
+  const [otpCode, setOtpCode] = useState("")
   const [verifying, setVerifying] = useState(false)
-  const [errorMsg, setErrorMsg]  = useState("")
+  const [errorMsg, setErrorMsg] = useState("")
   const [otpTimer, setOtpTimer] = useState(0);
   const [otpResendAvailable, setOtpResendAvailable] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
@@ -114,16 +114,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       alert('개인정보 수집 및 이용에 동의해주세요.');
       return false;
     }
-    if (!gender) { 
-      alert('성별을 선택해주세요.'); 
+    if (!gender) {
+      alert('성별을 선택해주세요.');
       return false;
     }
-    if (!name) { 
-      alert('이름을 입력해주세요.'); 
+    if (!name) {
+      alert('이름을 입력해주세요.');
       return false;
     }
-    if (!birth) { 
-      alert('생년월일을 입력해주세요.'); 
+    if (!birth) {
+      alert('생년월일을 입력해주세요.');
       return false;
     }
     if (!/^\d{8}$/.test(birth)) {
@@ -134,13 +134,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const birthMonth = parseInt(birth.substring(4, 6));
     const birthDay = parseInt(birth.substring(6, 8));
     const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
-    
+
     if (birthYear < 1900 || birthYear > new Date().getFullYear() ||
-        birthMonth < 1 || birthMonth > 12 ||
-        birthDay < 1 || birthDay > 31 ||
-        birthDate.getFullYear() !== birthYear ||
-        birthDate.getMonth() !== birthMonth - 1 ||
-        birthDate.getDate() !== birthDay) {
+      birthMonth < 1 || birthMonth > 12 ||
+      birthDay < 1 || birthDay > 31 ||
+      birthDate.getFullYear() !== birthYear ||
+      birthDate.getMonth() !== birthMonth - 1 ||
+      birthDate.getDate() !== birthDay) {
       alert('올바른 생년월일을 입력해주세요.');
       return false;
     }
@@ -148,8 +148,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     // 보험연령 안내는 모달에서 처리 (이 상품: 15~70세)
     const formInsuranceAge = Number(getInsuranceAge(birth));
 
-    if (!phone) { 
-      alert('연락처를 입력해주세요.'); 
+    if (!phone) {
+      alert('연락처를 입력해주세요.');
       return false;
     }
     if (!/^\d{11}$/.test(phone)) {
@@ -176,8 +176,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const templateId = 'UA_7754'; // 임시로 기존 작동하는 템플릿 사용
     console.log(`[CLIENT] 인증번호 전송 시작: ${new Date().toISOString()}`);
     try {
-      const response = await request.post('/api/postOTP', { 
-        phone, 
+      const response = await request.post('/api/postOTP', {
+        phone,
         templateId,
         companyName: productConfig?.config.companyName || "하나생명",
         productName: productConfig?.config.name || "하나로THE연결된종신보험"
@@ -219,59 +219,59 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   };
 
   const handleVerifyOTP = async () => {
-  const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-  if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 69) return;
-  if (otpCode.length !== 6) {
-    alert("6자리 인증번호를 입력해주세요.");
-    return;
-  }
-
-  setVerifying(true);
-  try {
-    const res = await request.post("/api/verifyOTP", {
-      phone,
-      name,
-      birth,
-      gender,
-      code: otpCode,
-      counselType: counselType,
-      companyId: INSURANCE_COMPANY_ID,
-      productId: INSURANCE_PRODUCT_ID,
-      counselTime: consultTime,
-      mounthlyPremium: paymentAmount, // 실제 선택값
-      paymentPeriod: paymentPeriod,   // 실제 선택값
-      tenYearReturnRate: rate ? (rate * 100).toFixed(2) : '-', // 환급률 (소수점 둘째 자리까지)
-      interestValue, // 확정이자(실제 값)
-      refundValue,   // 예상해약환급금(실제 값)
-      templateId: "UB_8712"
-    });
-    if (res.data.success) {
-      // 방문자 추적: 환급금 확인
-      try {
-        await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
-          phone,
-          name,
-          counsel_type_id: 1, // 환급금 확인
-          utm_source: 'direct',
-          utm_campaign: 'premium_calculation'
-        });
-        console.log("[CLIENT] 방문자 추적 성공: 환급금 확인");
-      } catch (trackingError) {
-        console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
-      }
-      
-      setIsVerified(true);
-      setOtpSent(false);
-      // alert 제거: 바로 결과 표시
-    } else {
-      alert("인증에 실패했습니다.");
+    const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
+    if (isNaN(ageForVerify) || ageForVerify < 15 || ageForVerify > 69) return;
+    if (otpCode.length !== 6) {
+      alert("6자리 인증번호를 입력해주세요.");
+      return;
     }
-  } catch (e: any) {
-    alert(e.error || "인증에 실패했습니다.");
-  } finally {
-    setVerifying(false);
-  }
-};
+
+    setVerifying(true);
+    try {
+      const res = await request.post("/api/verifyOTP", {
+        phone,
+        name,
+        birth,
+        gender,
+        code: otpCode,
+        counselType: counselType,
+        companyId: INSURANCE_COMPANY_ID,
+        productId: INSURANCE_PRODUCT_ID,
+        counselTime: consultTime,
+        mounthlyPremium: paymentAmount, // 실제 선택값
+        paymentPeriod: paymentPeriod,   // 실제 선택값
+        tenYearReturnRate: rate ? (rate * 100).toFixed(2) : '-', // 환급률 (소수점 둘째 자리까지)
+        interestValue, // 확정이자(실제 값)
+        refundValue,   // 예상해약환급금(실제 값)
+        templateId: "UB_8712"
+      });
+      if (res.data.success) {
+        // 방문자 추적: 환급금 확인
+        try {
+          await trackPremiumCheck(INSURANCE_PRODUCT_ID, INSURANCE_COMPANY_ID, {
+            phone,
+            name,
+            counsel_type_id: 1, // 환급금 확인
+            utm_source: 'direct',
+            utm_campaign: 'premium_calculation'
+          });
+          console.log("[CLIENT] 방문자 추적 성공: 환급금 확인");
+        } catch (trackingError) {
+          console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
+        }
+
+        setIsVerified(true);
+        setOtpSent(false);
+        // alert 제거: 바로 결과 표시
+      } else {
+        alert("인증에 실패했습니다.");
+      }
+    } catch (e: any) {
+      alert(e.error || "인증에 실패했습니다.");
+    } finally {
+      setVerifying(false);
+    }
+  };
 
 
   const handleBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -374,13 +374,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
       let tenYearReturnRate = '-';
       let interestValue = '-';
       let refundValue = '-';
-      
+
       if (paymentPeriod && paymentAmount) {
         tenYearReturnRate = rate ? (rate * 100).toFixed(2) : '-';
         interestValue = total ? (total * interestRate).toLocaleString('ko-KR') : '-';
         refundValue = total ? (total * rate).toLocaleString('ko-KR') : '-';
       }
-      
+
       const res = await request.post("/api/verifyOTP", {
         phone,
         name,
@@ -420,12 +420,12 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     const birthYear = parseInt(birth.substring(0, 4));
     const birthMonth = parseInt(birth.substring(4, 6));
     const birthDay = parseInt(birth.substring(6, 8));
-    
+
     // 생년월일에 6개월을 더한 날짜 계산
     const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
     const insuranceBaseDate = new Date(birthDate);
     insuranceBaseDate.setMonth(insuranceBaseDate.getMonth() + 6);
-    
+
     // 현재 날짜와 보험기준일(생년월일+6개월)의 차이로 보험연령 계산
     const today = new Date();
     let insuranceAge = today.getFullYear() - insuranceBaseDate.getFullYear();
@@ -435,7 +435,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     ) {
       insuranceAge -= 1;
     }
-    
+
     return insuranceAge + 1;
   };
 
@@ -444,7 +444,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   // 연령 적합성 (납입기간별 연령 제한)
   const isAgeKnown = insuranceAge !== '';
   const numericInsuranceAge = isAgeKnown ? Number(insuranceAge) : NaN;
-  
+
   // 납입기간별 가입 가능 연령 범위 (가장 넓은 범위 기준)
   const getAgeRange = (period: string) => {
     if (period.includes('5')) return { min: 15, max: 64 };
@@ -452,10 +452,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     if (period.includes('10')) return { min: 15, max: 69 };
     return { min: 15, max: 70 }; // 기본값
   };
-  
+
   const ageRange = getAgeRange(paymentPeriod);
   const isAgeEligible = isAgeKnown && numericInsuranceAge >= ageRange.min && numericInsuranceAge <= ageRange.max;
-  
+
   // 가능한 납입기간 찾기
   const getAvailablePaymentPeriods = (age: number) => {
     const available = [];
@@ -464,7 +464,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     if (age >= 15 && age <= 69) available.push('10년납');
     return available;
   };
-  
+
   const availablePaymentPeriods = isAgeKnown ? getAvailablePaymentPeriods(numericInsuranceAge) : [];
 
   // 총 납입액, 환급률, 확정이자, 해약환급금 계산
@@ -477,7 +477,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   }
   const months = parseInt(paymentPeriod.replace(/[^0-9]/g, '')) * 12;
   const total = (!isNaN(amount) && !isNaN(months) && amount > 0 && months > 0) ? amount * months : 0;
-  
+
   // 실제 해약환급금 예시표 기반 계산 (10년 시점, 1형 일반심사형 기준)
   // 기준: 40세 남자, 5,000만원 가입금액
   const getRefundData = (period: string, monthlyAmount: string) => {
@@ -534,13 +534,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     }
     return { totalPaid: total, refund: total * 1.2053, rate: 1.2053 };
   };
-  
+
   const refundData = getRefundData(paymentPeriod, paymentAmount);
   const rate = refundData.rate;
   const interestRate = rate - 1;
   const actualRefund = refundData.refund;
   const actualInterest = actualRefund - refundData.totalPaid;
-  
+
   const interestValue = actualInterest > 0 ? actualInterest.toLocaleString('en-US') : '-';
   const refundValue = actualRefund > 0 ? actualRefund.toLocaleString('en-US') : '-';
 
@@ -554,10 +554,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
             <div className="flex items-center gap-2 text-sm text-gray-700 mb-1.5">
-              <img src="/hana-logo.png" alt="하나생명 로고" className="h-6 sm:h-8 w-auto" style={{minWidth:'24px'}} />
+              <img src="/hana-logo.png" alt="하나생명 로고" className="h-6 sm:h-8 w-auto" style={{ minWidth: '24px' }} />
             </div>
             <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-1 sm:mb-1.5 md:mb-2.5 lg:mb-2 leading-tight">(무)하나로 THE 연결된 종신보험<br /><span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">(해약환급금 일부지급형)</span></h1>
-            
+
             <p className="text-xs text-gray-700 mb-3 sm:mb-4 md:mb-5 lg:mb-5 text-center">
               * 이 상품은 사망을 보장하는 종신보험으로, 저축성보험(연금)이 아닙니다.
             </p>
@@ -594,30 +594,30 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             </ul>
             {/* 환급률 안내 UI */}
             <div className="w-full max-w-2xl lg:max-w-3xl mx-auto mb-3 sm:mb-4 overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-[0_16px_36px_rgba(13,148,136,0.12)]">
-                <div className="overflow-x-auto bg-white">
-                  <table className="w-full table-fixed border-collapse text-[11px] sm:text-xs md:text-sm">
-                    <thead>
-                      <tr className="bg-emerald-50 text-emerald-900">
-                        <th className="w-[32%] border-b border-emerald-100 px-3 py-2 text-center font-bold sm:px-4 sm:py-2.5">구분</th>
-                        <th className="border-b border-emerald-100 px-3 py-2 text-center font-bold sm:px-4 sm:py-2.5">유의사항</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="align-top">
-                        <td className="border-b border-r border-emerald-100 bg-emerald-50/50 px-3 py-2.5 text-center font-semibold text-emerald-900 break-keep sm:px-4 sm:py-3">단기납 종신보험</td>
-                        <td className="border-b border-emerald-100 px-3 py-2.5 text-left text-gray-700 break-keep leading-relaxed sm:px-4 sm:py-3">단기납 종신보험은 동일한 보장내용의 일반 종신보험에 비해 보험료가 비쌀 수 있습니다.</td>
-                      </tr>
-                      <tr className="align-top bg-slate-50/40">
-                        <td className="border-b border-r border-emerald-100 bg-emerald-50/50 px-3 py-2.5 text-center font-semibold text-emerald-900 break-keep sm:px-4 sm:py-3">체증형 종신보험</td>
-                        <td className="border-b border-emerald-100 px-3 py-2.5 text-left text-gray-700 break-keep leading-relaxed sm:px-4 sm:py-3">체증형 종신보험은 동일한 보장내용의 표준형 종신보험에 비해 사망보험금이 증가하는만큼 보험료가 비쌀 수 있습니다.</td>
-                      </tr>
-                      <tr className="align-top">
-                        <td className="border-r border-emerald-100 bg-emerald-50/50 px-3 py-2.5 text-center font-semibold text-emerald-900 break-keep sm:px-4 sm:py-3">해약환급금 일부지급형 종신보험</td>
-                        <td className="px-3 py-2.5 text-left text-gray-700 break-keep leading-relaxed sm:px-4 sm:py-3">해약환급금 일부지급형 종신보험은 해약환급금이 일반형상품보다 적거나 없을 수 있습니다.</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+              <div className="overflow-x-auto bg-white">
+                <table className="w-full table-fixed border-collapse text-[11px] sm:text-xs md:text-sm">
+                  <thead>
+                    <tr className="bg-emerald-50 text-emerald-900">
+                      <th className="w-[32%] border-b border-emerald-100 px-3 py-2 text-center font-bold sm:px-4 sm:py-2.5">구분</th>
+                      <th className="border-b border-emerald-100 px-3 py-2 text-center font-bold sm:px-4 sm:py-2.5">유의사항</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="align-top">
+                      <td className="border-b border-r border-emerald-100 bg-emerald-50/50 px-3 py-2.5 text-center font-semibold text-emerald-900 break-keep sm:px-4 sm:py-3">단기납 종신보험</td>
+                      <td className="border-b border-emerald-100 px-3 py-2.5 text-left text-gray-700 break-keep leading-relaxed sm:px-4 sm:py-3">단기납 종신보험은 동일한 보장내용의 일반 종신보험에 비해 보험료가 비쌀 수 있습니다.</td>
+                    </tr>
+                    <tr className="align-top bg-slate-50/40">
+                      <td className="border-b border-r border-emerald-100 bg-emerald-50/50 px-3 py-2.5 text-center font-semibold text-emerald-900 break-keep sm:px-4 sm:py-3">체증형 종신보험</td>
+                      <td className="border-b border-emerald-100 px-3 py-2.5 text-left text-gray-700 break-keep leading-relaxed sm:px-4 sm:py-3">체증형 종신보험은 동일한 보장내용의 표준형 종신보험에 비해 사망보험금이 증가하는만큼 보험료가 비쌀 수 있습니다.</td>
+                    </tr>
+                    <tr className="align-top">
+                      <td className="border-r border-emerald-100 bg-emerald-50/50 px-3 py-2.5 text-center font-semibold text-emerald-900 break-keep sm:px-4 sm:py-3">해약환급금 일부지급형 종신보험</td>
+                      <td className="px-3 py-2.5 text-left text-gray-700 break-keep leading-relaxed sm:px-4 sm:py-3">해약환급금 일부지급형 종신보험은 해약환급금이 일반형상품보다 적거나 없을 수 있습니다.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
           {/* 오른쪽: 환급금 확인 카드 */}
@@ -672,9 +672,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div className="grid grid-cols-3 gap-2">
                     {['5년납', '7년납', '10년납'].map((period) => (
                       <label key={period} className="relative cursor-pointer">
-                        {period === '5년납' && (
+                        {/* {period === '5년납' && (
                           <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white text-xs font-bold px-2.5 py-0.5 rounded-full shadow-lg z-10 animate-bounce">추천</span>
-                        )}
+                        )} */}
                         <input type="radio" name="paymentPeriod" value={period} checked={paymentPeriod === period} onChange={handlePaymentPeriodChange} className="peer sr-only" />
                         <div className={`w-full text-center py-2.5 text-sm border-2 rounded-lg transition-all ${paymentPeriod === period ? 'border-[#14b8a6] bg-[#14b8a6]/5 text-[#14b8a6] font-bold' : 'border-gray-200 hover:border-gray-300'}`}>
                           {period}
@@ -703,7 +703,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="flex items-center gap-2">
                   <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-4 h-4 text-[#14b8a6] rounded border-gray-300 cursor-pointer focus:ring-[#14b8a6]" />
                   <span className="text-xs text-gray-600">
-                    개인정보 수집 및 이용에 동의합니다. 
+                    개인정보 수집 및 이용에 동의합니다.
                     <button type="button" onClick={onOpenPrivacy} className="text-[#14b8a6] underline ml-1 hover:text-[#0f766e]">자세히 보기</button>
                   </span>
                 </div>
@@ -732,7 +732,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           </div>
         </div>
       </section>
-      <Modal 
+      <Modal
         title={
           counselType === 1 ? (
             <span className="flex items-center gap-2">
@@ -742,7 +742,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           ) : (
             <span className="flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-[#fa5a5a]">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z"/>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z" />
               </svg>
               상담 신청하기
             </span>
@@ -984,7 +984,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors mt-1 sm:mt-2 bg-[#fa5a5a] text-white hover:bg-[#e14949] flex items-center justify-center gap-2"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z"/>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z" />
                     </svg>
                     상담 신청하기
                   </button>
@@ -999,7 +999,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         title={
           <span className="flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-[#fa5a5a]">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z"/>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.25a1 1 0 01-1 1A17.93 17.93 0 013 5a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z" />
             </svg>
             상담 신청하기
           </span>
