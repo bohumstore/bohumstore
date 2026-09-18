@@ -653,7 +653,7 @@ export default function CoverageDetails() {
               <table className="w-full border-collapse">
                 <tbody>
                   <tr>
-                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">없음</td>
+                    <td className="border border-gray-300 p-2 sm:p-3 text-xs sm:text-sm">연금전환특약(무), 장애인전용보험전환특약, 지정대리청구서비스특약, 변액보험 펀드추가서비스특약</td>
                   </tr>
                 </tbody>
               </table>

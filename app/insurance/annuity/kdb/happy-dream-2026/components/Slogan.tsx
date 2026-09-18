@@ -767,7 +767,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <ul className="mb-3 sm:mb-5 md:mb-8 lg:mb-8 space-y-1 sm:space-y-1.5 md:space-y-2.5 lg:space-y-2">
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
-                <span className="leading-tight">연단리 7% 최저연금기준금액 보증 <span className="text-[10px] sm:text-xs text-gray-300">(20년까지)</span></span>
+                <span className="leading-tight">최저연금기준금액 연단리 7% 기준 <span className="text-[10px] sm:text-xs text-gray-300">(20년까지)</span></span>
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
@@ -802,10 +802,10 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="flex flex-col relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent animate-shine-strong"></div>
                   <div className="bg-orange-600 text-white text-center py-1 sm:py-1.5 md:py-2 rounded-t-lg relative z-10">
-                    <p className="text-[10px] sm:text-xs md:text-sm font-bold">보증금리 Top</p>
+                    <p className="text-[10px] sm:text-xs md:text-sm font-bold">최저연금기준금액</p>
                   </div>
                   <div className="border-2 border-orange-600 rounded-b-lg p-2 sm:p-3 md:p-3.5 flex-1 flex flex-col justify-center items-center bg-orange-50 relative z-10 min-h-[130px] sm:min-h-[140px] md:min-h-[150px]">
-                    <p className="text-[8px] sm:text-[9px] md:text-[10px] text-gray-600 mb-0.5">최대 연단리</p>
+                    <p className="text-[8px] sm:text-[9px] md:text-[10px] text-gray-600 mb-0.5">연단리 기준</p>
                     <p className="text-3xl sm:text-4xl md:text-5xl font-black text-orange-600 mb-1.5 animate-bounce">7%</p>
                     <div className="w-full space-y-0.5 sm:space-y-1">
                       <div className="bg-white rounded px-1 sm:px-1.5 md:px-2 py-0.5 sm:py-1 text-center border border-orange-200">
@@ -827,7 +827,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     <p className="text-xs sm:text-sm md:text-base font-bold text-purple-900 mb-1">최저사망적립액</p>
                     <p className="text-xs sm:text-sm md:text-base font-bold text-purple-900 mb-1.5">보장</p>
                     <p className="text-[9px] sm:text-[10px] md:text-xs text-gray-600 text-center leading-tight">
-                      장래 공시이율과<br />관계없이
+                      특별계정 운용실적과<br />관계없이
                     </p>
                   </div>
                 </div>

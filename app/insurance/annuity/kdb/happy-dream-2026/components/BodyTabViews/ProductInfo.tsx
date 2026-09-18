@@ -162,11 +162,11 @@ export default function ProductInfo() {
               추가납입, 중도인출, 보험료납입일시중지제도, 선지급행복자금을 이용한 유연한 자금활용
             </p>
             <div className="space-y-2 text-sm">
-              <div>중도인출시 연금기준금액 및 실적배당 종신연금액은 감소할 수 있습니다.</div>
+              <div>중도인출시 연금기준금액 및 실적배당 종신연금액은 감소합니다.</div>
               <div>- 중도인출수수료 없음 / 추가납입사업비 (추가보험료의 1.5%) 차감</div>
               <div>- 중도인출은 계약일부터 1개월이 지난 이후 보험기간 중 보험년도 기준 연12회 가능</div>
-              <div>- 보험료 납입 일시중지는 납입기간의 1/2이 지난후, 5회한도로 누적하여 36개월을 초과할 수 없음</div>
-              <div>- 선지급행복자금을 신청하는 경우 연금기준금액에 선지급행복자금 신청비율(0%~30%, 10%단위)을 곱한 금액을 일시금 또는 확정연금으로 지급하여 드립니다.</div>
+              <div>- 보험료 납입 일시중지는 납입기간의 1/2이 지난후(다만, 납입기간이 10년 이상인 경우 5년 경과 후), 5회한도로 누적하여 36개월을 초과할 수 없음</div>
+              <div>- 선지급행복자금을 신청하는 경우 연금기준금액에 선지급행복자금 신청비율(10%~30%, 10%p 단위)을 곱한 금액을 일시금 또는 확정연금으로 지급하여 드립니다.</div>
             </div>
           </div>
         </div>
@@ -204,7 +204,7 @@ export default function ProductInfo() {
                   </tr>
                   <tr>
                     <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm font-semibold">선지급행복자금 신청 비율</td>
-                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm">최소 0%에서 30%까지 10%p 단위로 신청 가능</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm">최소 10%에서 30%까지 10%p 단위로 신청 가능</td>
                   </tr>
                   <tr>
                     <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm font-semibold">선지급행복자금 기간</td>
@@ -254,7 +254,7 @@ export default function ProductInfo() {
                   </tr>
                   <tr>
                     <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm font-semibold">부가가능 특약</td>
-                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm leading-tight sm:leading-relaxed">없음</td>
+                    <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm leading-tight sm:leading-relaxed">연금전환특약(무), 장애인전용보험전환특약, 지정대리청구서비스특약, 변액보험 펀드추가서비스특약</td>
                   </tr>
                   <tr>
                     <td className="border border-gray-300 p-1 sm:p-2 md:p-3 text-xs sm:text-sm font-semibold">가입나이</td>
