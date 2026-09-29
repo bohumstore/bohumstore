@@ -10,7 +10,7 @@ import FireworksEffect from '@/app/components/shared/FireworksEffect';
 import { trackPremiumCheck } from "@/app/utils/visitorTracking";
 
 // 현재 경로에 맞는 상품 정보 가져오기
-const currentPath = '/insurance/annuity/kdb/happy-dream';
+const currentPath = '/insurance/annuity/kdb/happy-dream-2026';
 const productConfig = getProductConfigByPath(currentPath);
 
 const INSURANCE_COMPANY_ID = 2; // KDB 생명보험
@@ -139,7 +139,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           age,
           paymentPeriod: years,
           monthlyPayment,
-          productType: 'happy-dream'
+          productType: 'happy-dream-2026'
         })
       });
       if (!response.ok) return null;
@@ -211,7 +211,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           body: JSON.stringify({
             gender,
             age: age,
-            productType: 'happy-dream',
+            productType: 'happy-dream-2026',
             mode: 'eligibility'
           })
         });
@@ -278,7 +278,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           age,
           paymentPeriod: years,
           monthlyPayment,
-          productType: 'happy-dream'
+          productType: 'happy-dream-2026'
         })
       });
       if (!response.ok) {
@@ -509,7 +509,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const handleSendOTP = async () => {
     const ageForOtp = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-    if (isNaN(ageForOtp) || ageForOtp < 15 || ageForOtp > 70) return;
+    if (isNaN(ageForOtp) || ageForOtp < 15 || ageForOtp > 60) return;
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
@@ -754,17 +754,20 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         <div className="max-w-6xl mx-auto flex flex-col md:flex-col lg:flex-row items-center md:items-center lg:items-start justify-center lg:justify-between gap-4 md:gap-8 lg:gap-12 px-4 md:px-6 lg:px-4 md:py-4 lg:py-4">
           {/* 왼쪽: 상품 설명/이미지 */}
           <div className="flex-1 flex flex-col items-center md:items-center lg:items-start text-center md:text-center lg:text-left">
-            <div className="flex items-center gap-2 text-sm text-white mb-2">
-              {/* <img src="/kdb-logo.png" alt="KDB 로고" className="h-6 w-auto" style={{minWidth:'24px'}} /> */}
+            <div className="flex items-center gap-2 mb-3">
+              <div className="bg-white rounded-lg px-2 py-1.5 shadow-md">
+                <img src="/kdb-logo.png" alt="KDB생명 로고" className="h-6 w-auto" />
+              </div>
+              <span className="text-white font-bold text-base">KDB생명보험</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 md:mb-6 lg:mb-4 leading-tight">
-              20년까지 연단리 7%!<br />
-              변액연금보험!
+              더! 행복드림<br />
+              변액연금보험(무)
             </h1>
             <ul className="mb-3 sm:mb-5 md:mb-8 lg:mb-8 space-y-1 sm:space-y-1.5 md:space-y-2.5 lg:space-y-2">
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
-                <span className="leading-tight">연단리 7% 최저연금기준금액 보증 <span className="text-[10px] sm:text-xs text-gray-300">(20년까지)</span></span>
+                <span className="leading-tight">최저연금기준금액 연단리 7% 기준 <span className="text-[10px] sm:text-xs text-gray-300">(20년까지)</span></span>
               </li>
               <li className="flex items-center text-sm sm:text-base md:text-lg lg:text-lg text-white justify-center md:justify-center lg:justify-start">
                 <span className="text-sm sm:text-base md:text-lg lg:text-xl mr-1 sm:mr-1.5 md:mr-2.5 lg:mr-2 text-[#ffd700] flex-shrink-0">✔</span>
@@ -780,57 +783,56 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               </li>
             </ul>
             {/* 보증 내용 박스 */}
-            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-3 sm:mb-4 p-4 sm:p-5 md:p-6 lg:p-4 px-4 sm:px-5 md:px-6 lg:px-4 pt-5 sm:pt-6 md:pt-7 lg:pt-6 pb-5 sm:pb-6 md:pb-7 lg:pb-6">
-              <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 lg:gap-3 mb-2 sm:mb-3">
+            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto bg-white rounded-xl shadow-lg mb-3 sm:mb-4 p-3 sm:p-4 md:p-5">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4">
                 {/* 1. 생존 시 최대 100세까지 */}
-                <div className="text-center p-1.5 sm:p-2 md:p-3 lg:p-3 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg shadow-md border border-purple-200 transition-all duration-300 flex flex-col justify-between min-h-[120px] sm:min-h-[140px] md:min-h-[160px]">
-                  <div>
-                    <div className="inline-block bg-gradient-to-r from-purple-600 to-purple-700 text-white text-[10px] sm:text-xs md:text-sm font-bold px-1.5 sm:px-2 md:px-3 py-1 sm:py-1.5 rounded-full mb-1 sm:mb-2 shadow-md">생존 시 최대 100세까지</div>
+                <div className="flex flex-col">
+                  <div className="bg-purple-600 text-white text-center py-1 sm:py-1.5 md:py-2 rounded-t-lg">
+                    <p className="text-[10px] sm:text-xs md:text-sm font-bold">생존 시</p>
                   </div>
-                  <div className="flex-1 flex items-center justify-center">
-                    <div className="text-[10px] sm:text-xs text-gray-700 leading-tight font-medium">
-                      (예시) 100세<br />최종연금지급일
-                    </div>
-                  </div>
-                  <div className="text-[10px] sm:text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-1 sm:p-1.5">
-                    = 피보험자의 99세<br />계약 해당일
+                  <div className="border-2 border-purple-600 rounded-b-lg p-2 sm:p-3 md:p-3.5 flex-1 flex flex-col justify-center items-center bg-purple-50 min-h-[130px] sm:min-h-[140px] md:min-h-[150px]">
+                    <p className="text-xs sm:text-sm md:text-base font-bold text-purple-900 mb-1">종신 지급</p>
+                    <p className="text-[9px] sm:text-[10px] md:text-xs text-gray-600 text-center leading-tight">
+                      연금개시 후<br />피보험자 생존 시<br />종신 지급
+                    </p>
                   </div>
                 </div>
 
                 {/* 2. 보증금리 Top */}
-                <div className="text-center p-1.5 sm:p-2 md:p-3 lg:p-3 bg-gradient-to-br from-pink-100 to-pink-200 rounded-lg shadow-md border border-pink-200 transition-all duration-300 relative overflow-hidden flex flex-col justify-between min-h-[120px] sm:min-h-[140px] md:min-h-[160px]">
+                <div className="flex flex-col relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent animate-shine-strong"></div>
-                  <div className="relative z-10">
-                    <div className="inline-block bg-gradient-to-r from-pink-600 to-pink-700 text-white text-[10px] sm:text-xs md:text-sm font-bold px-1.5 sm:px-2 md:px-3 py-1 sm:py-1.5 rounded-full mb-1 sm:mb-2 shadow-md">보증금리 Top</div>
-                    <div className="flex items-center justify-center mb-2">
-                      <div className="text-[10px] sm:text-xs text-gray-700 mr-1 sm:mr-2 font-semibold leading-tight">
-                        최대<br />연단리
-                      </div>
-                      <div className="text-2xl sm:text-3xl md:text-4xl font-black text-orange-600 drop-shadow-2xl animate-bounce">7%</div>
-                    </div>
+                  <div className="bg-orange-600 text-white text-center py-1 sm:py-1.5 md:py-2 rounded-t-lg relative z-10">
+                    <p className="text-[10px] sm:text-xs md:text-sm font-bold">최저연금기준금액</p>
                   </div>
-                  <div className="text-[10px] sm:text-xs text-gray-600 space-y-0.5 sm:space-y-1 leading-tight relative z-10 mt-auto">
-                    <div className="bg-white/60 rounded-lg p-0.5 sm:p-1 font-medium">계약일로부터<br />20년: 7%</div>
-                    <div className="bg-white/60 rounded-lg p-0.5 sm:p-1 font-medium">20년~연금개시까지: <span className="text-blue-600 font-bold">6%</span></div>
+                  <div className="border-2 border-orange-600 rounded-b-lg p-2 sm:p-3 md:p-3.5 flex-1 flex flex-col justify-center items-center bg-orange-50 relative z-10 min-h-[130px] sm:min-h-[140px] md:min-h-[150px]">
+                    <p className="text-[8px] sm:text-[9px] md:text-[10px] text-gray-600 mb-0.5">연단리 기준</p>
+                    <p className="text-3xl sm:text-4xl md:text-5xl font-black text-orange-600 mb-1.5 animate-bounce">7%</p>
+                    <div className="w-full space-y-0.5 sm:space-y-1">
+                      <div className="bg-white rounded px-1 sm:px-1.5 md:px-2 py-0.5 sm:py-1 text-center border border-orange-200">
+                        <p className="text-[8px] sm:text-[9px] md:text-[10px] text-gray-700">계약일~20년: <span className="font-bold text-orange-600">7%</span></p>
+                      </div>
+                      <div className="bg-white rounded px-1 sm:px-1.5 md:px-2 py-0.5 sm:py-1 text-center border border-orange-200">
+                        <p className="text-[8px] sm:text-[9px] md:text-[10px] text-gray-700">20년~연금개시: <span className="font-bold text-purple-600">6%</span></p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
                 {/* 3. 사망 시에도 보장 */}
-                <div className="text-center p-1.5 sm:p-2 md:p-3 lg:p-3 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg shadow-md border border-indigo-200 transition-all duration-300 flex flex-col justify-between min-h-[120px] sm:min-h-[140px] md:min-h-[160px]">
-                  <div>
-                    <div className="inline-block bg-gradient-to-r from-indigo-600 to-indigo-700 text-white text-[10px] sm:text-xs md:text-sm font-bold px-1.5 sm:px-2 md:px-3 py-1 sm:py-1.5 rounded-full mb-1 sm:mb-2 shadow-md">사망시에도<br />보장</div>
+                <div className="flex flex-col">
+                  <div className="bg-purple-600 text-white text-center py-1 sm:py-1.5 md:py-2 rounded-t-lg">
+                    <p className="text-[10px] sm:text-xs md:text-sm font-bold">사망 시</p>
                   </div>
-                  <div className="flex-1 flex items-center justify-center">
-                    <div className="text-[10px] sm:text-xs font-bold text-gray-800 leading-tight">
-                      최저 사망적립액<br />보장
-                    </div>
-                  </div>
-                  <div className="text-[10px] sm:text-xs text-gray-600 leading-tight bg-white/50 rounded-lg p-1 sm:p-1.5">
-                    장래 공시이율과<br />관계없이
+                  <div className="border-2 border-purple-600 rounded-b-lg p-2 sm:p-3 md:p-3.5 flex-1 flex flex-col justify-center items-center bg-purple-50 min-h-[130px] sm:min-h-[140px] md:min-h-[150px]">
+                    <p className="text-xs sm:text-sm md:text-base font-bold text-purple-900 mb-1">최저사망적립액</p>
+                    <p className="text-xs sm:text-sm md:text-base font-bold text-purple-900 mb-1.5">보장</p>
+                    <p className="text-[9px] sm:text-[10px] md:text-xs text-gray-600 text-center leading-tight">
+                      특별계정 운용실적과<br />관계없이
+                    </p>
                   </div>
                 </div>
               </div>
-              <div className="text-xs text-gray-700 text-center mt-4">
+              <div className="text-[10px] sm:text-xs text-gray-600 text-center mt-2 sm:mt-3 md:mt-4 pt-2 sm:pt-2.5 md:pt-3 border-t border-gray-200">
                 <p>※ 대표계약기준(40세 남자, 10년납, 연금개시 나이 65세), 복리이자율로 환산시 4.32%</p>
               </div>
             </div>
@@ -932,7 +934,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 </div>
 
                 {/* 개인정보 동의 */}
-                <div className="flex items-center gap-2 mb-2.5 sm:mb-3 md:mb-4">
+                <div className="flex items-center gap-2 mb-4">
                   <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#c084fc] rounded border-gray-300 cursor-pointer focus:ring-[#c084fc]" />
                   <span className="text-[10px] sm:text-xs text-gray-600">
                     개인정보 수집 및 이용에 동의합니다.
@@ -1111,13 +1113,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>보험사</span>
-                    {isVerified ? <span className="font-bold text-[#3a8094]">KDB생명</span> : <span className="font-medium text-[#7c3aed] text-xs">🔒 인증 후 확인</span>}
+                    <span className="font-bold text-[#3a8094]">KDB생명</span>
                   </div>
                 </div>
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-[#3a8094] mr-1'>▸</span>상품명</span>
-                    {isVerified ? <span className="font-bold text-[#3a8094]">더!행복드림변액연금보험</span> : <span className="font-medium text-[#7c3aed] text-xs">🔒 인증 후 확인</span>}
+                    <span className="font-bold text-[#3a8094]">더!행복드림변액연금보험</span>
                   </div>
                 </div>
                 <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">

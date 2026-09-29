@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Surrender() {
   return (
-    <div className="space-y-8 px-2 sm:px-4 md:px-8 py-4 md:py-6">
+    <div className="space-y-8 px-4 sm:px-4 md:px-8 py-4 md:py-6">
       <div className="mb-2">
         <div className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2">해약환급금 예시표</div>
         <div className="text-xs text-gray-600 text-right ml-2 pb-0 mt-4">

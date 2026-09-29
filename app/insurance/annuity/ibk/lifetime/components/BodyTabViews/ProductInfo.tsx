@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function ProductInfo() {
   return (
-    <div className="space-y-6 px-2 sm:px-4 md:px-8 py-3 md:py-4">
+    <div className="space-y-6 px-4 sm:px-4 md:px-8 py-3 md:py-4">
       {/* 가입안내 */}
       <div className="space-y-4">
         <h3 className="text-xl font-bold border-l-4 border-[#1e3a8a] pl-3">가입안내</h3>

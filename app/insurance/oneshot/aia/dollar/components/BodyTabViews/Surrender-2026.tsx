@@ -163,10 +163,10 @@ const ScenarioTable = ({ scenario }: ScenarioTableProps) => {
                   <td className={`border border-gray-300 px-2 ${is10Year ? 'py-3 font-bold text-red-800' : 'py-2'} text-right whitespace-nowrap`}>{row.premium}</td>
                   <td className={`border border-gray-300 px-2 ${is10Year ? 'py-3 font-bold text-red-800' : 'py-2'} text-right whitespace-nowrap`}>{row.maleRefund}</td>
                   <td className={`border border-gray-300 px-2 ${is10Year ? 'py-3 font-bold text-red-800' : 'py-2'} text-right whitespace-nowrap`}>{row.maleRefundRate}</td>
-                  <td className={`border border-gray-300 px-2 ${is10Year ? 'py-3 font-bold text-red-800' : 'py-2'} text-right whitespace-nowrap`}>{row.femaleRefund}</td>
-                  <td className={`border border-gray-300 px-2 ${is10Year ? 'py-3 font-bold text-red-800' : 'py-2'} text-right whitespace-nowrap`}>{row.femaleRefundRate}</td>
                   <td className={`border border-gray-300 px-2 ${is10Year ? 'py-3 font-bold text-red-800' : 'py-2'} text-right whitespace-nowrap`}>{row.maleAccumulated}</td>
                   <td className={`border border-gray-300 px-2 ${is10Year ? 'py-3 font-bold text-red-800' : 'py-2'} text-right whitespace-nowrap`}>{row.maleAccumulatedRate}</td>
+                  <td className={`border border-gray-300 px-2 ${is10Year ? 'py-3 font-bold text-red-800' : 'py-2'} text-right whitespace-nowrap`}>{row.femaleRefund}</td>
+                  <td className={`border border-gray-300 px-2 ${is10Year ? 'py-3 font-bold text-red-800' : 'py-2'} text-right whitespace-nowrap`}>{row.femaleRefundRate}</td>
                 </tr>
               )
             })}

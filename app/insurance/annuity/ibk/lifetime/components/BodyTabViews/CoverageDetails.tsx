@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function CoverageDetails() {
   return (
-    <div className="space-y-6 px-2 sm:px-4 md:px-8 py-3 md:py-4">
+    <div className="space-y-6 px-4 sm:px-4 md:px-8 py-3 md:py-4">
       <h2 className="text-[#1e3a8a] text-2xl font-bold border-b-2 border-[#1e3a8a] pb-2">보장내용</h2>
 
       {/* 연금지급형태 변경 시 해당 */}

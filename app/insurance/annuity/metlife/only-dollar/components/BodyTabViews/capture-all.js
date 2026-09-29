@@ -47,10 +47,10 @@ async function capturePage(pageInfo, isPC) {
     await page.addStyleTag({
       content: `
       /* 메인 컬러 적용 */
-      .text-\\[\\#1e3a8a\\] { color: #1563A9 !important; }
-      .bg-\\[\\#1e3a8a\\] { background-color: #1563A9 !important; }
-      .border-\\[\\#1e3a8a\\] { border-color: #1563A9 !important; }
-      .border-l-\\[\\#1e3a8a\\] { border-left-color: #1563A9 !important; }
+      .text-\\[\\#1e3a8a\\] { color: #003652 !important; }
+      .bg-\\[\\#1e3a8a\\] { background-color: #003652 !important; }
+      .border-\\[\\#1e3a8a\\] { border-color: #003652 !important; }
+      .border-l-\\[\\#1e3a8a\\] { border-left-color: #003652 !important; }
       
       /* 플로팅 UI 제거 */
       .fixed { display: none !important; }

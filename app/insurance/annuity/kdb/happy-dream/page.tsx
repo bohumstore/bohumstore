@@ -13,7 +13,7 @@ import Surrender from "./components/BodyTabViews/Surrender";
 import { supabase } from "../../../../api/supabase";
 import { trackPageVisit } from "../../../../utils/visitorTracking";
 
-export default function KDBHappyPlusAnnuityPage() {
+export default function KDBHappyDream2026AnnuityPage() {
   const tabs = [
     { label: '상품 정보', content: <ProductInfo /> },
     { label: '보장 내용', content: <CoverageDetails /> },
@@ -108,6 +108,7 @@ export default function KDBHappyPlusAnnuityPage() {
             <div>- 보험사 및 상품별로 상이할 수 있으므로, 관련한 세부사항은 반드시 해당 약관을 참조하시기 바랍니다.</div>
             <div>- 위는 예시일 뿐 해당 납입기간이 끝나기 전에 해지를 할경우 해당 표와 실지급금액이 차이가 발생할수 있습니다.</div>
             <div>- 최저보증연금은 연금개시 이전 중도해지시에는 최저보증이 되지 않아 운용결과에 따라 해지환급금에 손실이 발생할 수 있습니다.</div>
+            <div>- 이 상품은 계약자가 납입한 보험료의 일부로 펀드를 구성하며, 납입한 보험료 전액이 특별계정(펀드)에 투입되는 것은 아닙니다.</div>
           </div>
         </div>
         {/* 구분선 */}
@@ -124,7 +125,7 @@ export default function KDBHappyPlusAnnuityPage() {
             <div className="text-red-500">※ 본계약은 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서</div>
             <div className="text-red-500">① 진행이력, 연령등에 따라 가입이 거절되거나 보험료가 인상될 수 있습니다.</div>
             <div className="text-red-500">② 가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</div>
-            <div>※ ㈜메타리치 심의필 25080085호 (2025.08.13~2026.08.12)</div>
+            <div>※ 준법감시인 확인필 제26-09-019호(2026.09.29~2027.09.28)</div>
           </div>
         </div>
         <Footer />

@@ -56,14 +56,14 @@ export const PRODUCT_CONFIGS = {
     ]
   },
   [INSURANCE_PRODUCTS.KDB_HAPPY_DREAM]: {
-    name: '7%평생보증변액연금보험',
+    name: 'KDB 더!행복드림변액연금보험',
     companyId: INSURANCE_COMPANIES.KDB_LIFE,
     companyName: 'KDB생명',
     category: '연금보험',
     features: [
       '20년까지 7%! 변액연금보험!',
       '7% 최저연금기준금액 보증 (20년까지)',
-      '가입 15~70세 / 연금개시 55~80세',
+      '가입 15~60세 / 연금개시 55~80세',
       '실적배당 종신연금 보증지급',
       '최저사망적립액 보증 / 선지급행복자금'
     ]

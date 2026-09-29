@@ -246,7 +246,7 @@ export const mainProducts: MainProduct[] = [
   },
   {
     id: 'aia-dollar-oneshot',
-    name: 'AIA 달러 일시납 연금보험 III',
+    name: 'AIA 달러로 받는 연금보험 III',
     company: 'AIA생명',
     logo: '/images/aia-logo.png',
     path: '/insurance/oneshot/aia/dollar',
@@ -279,7 +279,7 @@ export const mainProducts: MainProduct[] = [
   // },
   {
     id: 'kdb-happy-dream',
-    name: 'KDB 행복드림 변액연금보험',
+    name: 'KDB 더! 행복드림 변액연금보험',
     company: 'KDB생명',
     logo: '/kdb-logo.png',
     path: '/insurance/annuity/kdb/happy-dream',
@@ -311,15 +311,15 @@ export const mainProducts: MainProduct[] = [
   //   highlight: '10년시점 120.53%'
   // },
   {
-    id: 'kdb-happy-plus',
-    name: 'KDB 행복플러스 연금보험(보증형)',
-    company: 'KDB생명',
-    logo: '/kdb-logo.png',
-    path: '/insurance/annuity/kdb/happy-plus',
-    description: '연단리 7% 보증으로 안정적인 노후 준비',
+    id: 'im-plus-pro',
+    name: 'IM라이프 PLUSPRO연금보험',
+    company: 'IM라이프생명',
+    logo: '/im-logo.png',
+    path: '/insurance/annuity/im/plus-pro',
+    description: '목돈마련과 노후준비 동시에, 최저계약자적립액 보증',
     badge: '',
     category: '연금보험',
-    highlight: '연단리 7% 보증'
+    highlight: '10년시점 133% 보증'
   },
   {
     id: 'shinhan-more-the-dream',
@@ -331,18 +331,6 @@ export const mainProducts: MainProduct[] = [
     badge: '',
     category: '종신보험',
     highlight: '10년시점 120.5%'
-  },
-  {
-    id: 'im-plus-pro',
-    name: 'IM Plus PRO연금보험 무배당 2604(보증비용부과형)',
-    company: 'IM라이프생명',
-    logo: '/im-logo.png',
-    path: '/insurance/annuity/im/plus-pro',
-    description: '목돈마련과 노후준비 동시에, 최저계약자적립액 보증',
-    badge: '',
-    category: '연금보험',
-    highlight: '10년시점 133% 보증',
-    hidden: true
   }
 ];
 

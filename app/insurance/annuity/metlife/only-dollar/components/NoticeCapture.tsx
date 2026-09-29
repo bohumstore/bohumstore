@@ -4,8 +4,8 @@ export default function NoticeCapture() {
   return (
     <div className="space-y-8 px-4 sm:px-4 md:px-8 py-4 md:py-6">
       <div className="mb-2">
-        <div className="text-[#1563A9] text-2xl md:text-3xl font-extrabold mb-1">가입시 알아두실 사항</div>
-        <div className="w-full h-1 bg-[#1563A9] mb-3" />
+        <div className="text-[#003652] text-2xl md:text-3xl font-extrabold mb-1">가입시 알아두실 사항</div>
+        <div className="w-full h-1 bg-[#003652] mb-3" />
       </div>
 
       <div className="mb-4">
