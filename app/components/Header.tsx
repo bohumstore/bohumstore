@@ -105,7 +105,7 @@ export default function Header() {
       titleSubColor: "text-rose-500",
       id: "whole-life",
       subItems: [
-        { name: "원화고정납입달러종신보험", path: "/insurance/whole-life/metlife/usd", badge: "달러" },
+        { name: "백만인을위한달러종신보험Plus", path: "/insurance/whole-life/metlife/usd", badge: "달러" },
         { name: "신한 모아더드림Plus종신보험", path: "/insurance/whole-life/shinhan/more-the-dream", badge: null }
         // { name: "하나로THE연결된종신보험", path: "/insurance/whole-life/hana/hanaro", badge: null }
       ]

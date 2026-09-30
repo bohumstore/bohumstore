@@ -290,7 +290,7 @@ export const mainProducts: MainProduct[] = [
   },
   {
     id: 'metlife-usd',
-    name: '메트라이프 달러종신보험Plus',
+    name: '메트라이프 백만인을위한 달러종신보험Plus',
     company: '메트라이프생명',
     logo: '/metlife-New-logo.png',
     path: '/insurance/whole-life/metlife/usd',
