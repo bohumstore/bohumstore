@@ -1,15 +1,11 @@
-import Modal from '@/app/components/Modal'
 import React from 'react'
 
-interface NoticeProps {
-  open: boolean;
-  onClose: () => void;
-}
-
-export default function Notice({ open, onClose }: NoticeProps) {
+export default function NoticeCapture() {
   return (
-    <Modal title="가입시 알아두실 사항" open={open} onClose={onClose}>
-      <div className="overflow-y-auto px-6 py-4 text-[15px] leading-relaxed" style={{ maxHeight: '60vh' }}>
+    <div className="px-4 sm:px-4 md:px-8 py-4 md:py-6">
+      <h2 className="text-[#01B597] text-2xl font-bold border-b-2 border-[#01B597] pb-2 mb-6">가입시 알아두실 사항</h2>
+
+      <div className="text-[15px] leading-relaxed">
         <div className="mb-4">
           <div className="font-bold mb-2">보험계약 청약</div>
           <div>보험계약 청약시 보험상품명, 보험기간, 보험료 납입기간, 피보험자 등을 반드시 확인하시고 보험상품 내용을 설명 받으시기 바랍니다. 또한 해당 보험약관을 참조하시기 바랍니다.</div>
@@ -98,8 +94,6 @@ export default function Notice({ open, onClose }: NoticeProps) {
           </div>
         </div>
       </div>
-    </Modal>
-  );
+    </div>
+  )
 }
-
-

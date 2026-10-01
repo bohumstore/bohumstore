@@ -20,20 +20,21 @@ export default function Surrender() {
         <div className="overflow-x-auto">
           <table className="w-full text-center text-xs md:text-sm min-w-[320px]">
             <colgroup>
-              <col className="w-[6%]" />
               <col className="w-[7%]" />
-              <col className="w-[7%]" />
-              <col className="w-[7%]" />
-              <col className="w-[7%]" />
-              <col className="w-[7%]" />
-              <col className="w-[7%]" />
-              <col className="w-[7%]" />
-              <col className="w-[7%]" />
-              <col className="w-[7%]" />
-              <col className="w-[7%]" />
-              <col className="w-[7%]" />
-              <col className="w-[7%]" />
-              <col className="w-[7%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
             </colgroup>
             <thead>
               <tr className="bg-[#1e3a8a] text-white">
@@ -89,20 +90,21 @@ export default function Surrender() {
         <div className="overflow-x-auto">
           <table className="w-full text-center text-xs md:text-sm min-w-[320px]">
             <colgroup>
-              <col className="w-[6%]" />
-              <col className="w-[6%]" />
-              <col className="w-[6%]" />
-              <col className="w-[6%]" />
-              <col className="w-[6%]" />
-              <col className="w-[6%]" />
-              <col className="w-[6%]" />
-              <col className="w-[6%]" />
-              <col className="w-[6%]" />
-              <col className="w-[6%]" />
-              <col className="w-[6%]" />
-              <col className="w-[6%]" />
-              <col className="w-[6%]" />
-              <col className="w-[6%]" />
+              <col className="w-[7%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
+              <col className="w-[6.6%]" />
             </colgroup>
             <thead>
               <tr className="bg-[#1e3a8a] text-white">

@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 		console.log('[API] 요청 데이터:', { customerName, gender, age, paymentPeriod, monthlyPayment, productType, mode });
 
 		// 입력값 검증
-		if (mode === 'eligibility') {
+		if (mode === 'eligibility' || mode === 'startAges') {
 			if (!gender || !age) {
 				console.log('[API] 적격성 모드 필수 입력값 누락:', { gender, age });
 				return NextResponse.json(
@@ -43,9 +43,9 @@ export async function POST(request: NextRequest) {
 		let sheetName = '';
 
 		// IBK 연금, 하나생명, KDB 행복드림/플러스 시리즈는 단일 시트 'search results' 사용 (모든 월납입액 데이터가 한 시트에 있음)
-		if (resolvedProductType === 'ibk-lifetime' || resolvedProductType === 'hana-only' || resolvedProductType === 'happy-dream' || resolvedProductType === 'happy-dream-2026' || resolvedProductType === 'happy-plus' || resolvedProductType === 'happy-plus-2026') {
+		if (resolvedProductType === 'ibk-lifetime' || resolvedProductType === 'hana-only' || resolvedProductType === 'happy-dream' || resolvedProductType === 'happy-dream-2026' || resolvedProductType === 'happy-plus' || resolvedProductType === 'happy-plus-2026' || resolvedProductType === 'master-pro') {
 			sheetName = 'search results';
-		} else if (mode === 'eligibility') {
+		} else if (mode === 'eligibility' || mode === 'startAges') {
 			// 적격성 확인은 30만원 시트를 기본으로 사용 (없으면 첫 시트로 대체)
 			sheetName = '30k';
 		} else {
@@ -78,7 +78,8 @@ export async function POST(request: NextRequest) {
 			'100세까지총수령액',
 			'100세까지 총 수령액',
 			'100세총수령액',
-			'총 수령액(100세)'
+			'총 수령액(100세)',
+			'100세 생존 시 누적 연금액'
 		];
 		const pensionStartAgeHeaderCandidates: string[] = ['연금개시연령', '연금개시연령(세)'];
 		const yearlyPensionHeaderCandidates: string[] = ['연지급연금액', '연지급 연금액', '연 연금액', '연연금액'];
@@ -149,6 +150,14 @@ export async function POST(request: NextRequest) {
 				'20년보증기간총액',
 				'20년보증기간연금액'
 			];
+		} else if (resolvedProductType === 'master-pro') {
+			candidatePaths = [
+				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'im', 'master-pro', 'master-pro_31~50_20261001.xlsx'),
+				path.join(process.cwd(), 'public', 'master-pro_31~50_20261001.xlsx')
+			];
+			monthlyPensionHeaderCandidates = ['월 연금액', '월연금액'];
+			performancePensionHeaderCandidates = [];
+			guaranteedAmountHeaderCandidates = ['20년 생존 시 누적 연금액', '20년생존시누적연금액'];
 		} else if (resolvedProductType === 'happy-plus') {
 			candidatePaths = [
 				path.join(process.cwd(), 'app', 'insurance', 'annuity', 'kdb', 'happy-plus', 'kdb_plus_15-70.xlsx'),
@@ -332,6 +341,28 @@ export async function POST(request: NextRequest) {
 				{ error: '필수 컬럼을 찾을 수 없습니다.' },
 				{ status: 500 }
 			);
+		}
+
+		// 납입기간별 연금개시연령 조회 모드: 성별/연령에 해당하는 모든 납입기간의 연금개시연령 반환
+		if (mode === 'startAges') {
+			const mapped = mapGender(gender);
+			const ageInt = parseInt(age.toString());
+			const startAges: Record<string, number> = {};
+			if (pensionStartAgeIndex !== -1) {
+				for (let i = headerRowIndex + 1; i < jsonData.length; i++) {
+					const row = jsonData[i] as any[];
+					if (row.length <= Math.max(genderIndex, ageIndex, periodIndex, pensionStartAgeIndex)) continue;
+					const rawGender = String(row[genderIndex] ?? '').trim();
+					const rowGender = rawGender.startsWith('남') ? '남' : rawGender.startsWith('여') ? '여' : rawGender;
+					if (rowGender !== mapped || parseInt(row[ageIndex]) !== ageInt) continue;
+					const period = parseInt(row[periodIndex]);
+					const start = parseInt(String(row[pensionStartAgeIndex]).replace(/[^0-9]/g, ''));
+					if (!isNaN(period) && !isNaN(start) && start > 0 && !(String(period) in startAges)) {
+						startAges[String(period)] = start;
+					}
+				}
+			}
+			return NextResponse.json({ success: true, startAges });
 		}
 
 		// 적격성 확인 모드: 각 납입기간별(5/10/12/15/20)로 해당 연령/성별 데이터가 비어있지 않은지 반환
@@ -544,6 +575,7 @@ export async function POST(request: NextRequest) {
 				monthlyPayment: cleanMonthlyPayment,
 				pensionStartAge,
 				monthlyPension,
+				yearlyPension,
 				performancePension,
 				guaranteedAmount,
 				totalUntil100,

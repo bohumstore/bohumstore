@@ -13,6 +13,48 @@ const productConfig = getProductConfigByPath(currentPath);
 
 const INSURANCE_COMPANY_ID = 10; // im라이프
 const INSURANCE_PRODUCT_ID = 15; // MasterPRO연금보험
+const MIN_AGE = 31;
+const MAX_AGE = 50;
+
+type PensionResult = {
+  pensionStartAge: number;
+  monthly: number;
+  yearly: number;
+  guaranteed20: number;
+  totalUntil100: number;
+  notice: string;
+};
+
+const EMPTY_PENSION: PensionResult = { pensionStartAge: 0, monthly: 0, yearly: 0, guaranteed20: 0, totalUntil100: 0, notice: '' };
+const formatWon = (n: number) => (n > 0 ? `${n.toLocaleString('ko-KR')} 원` : '-');
+
+const fetchExcelPension = async (customerName: string, gender: string, age: number, paymentPeriod: string, paymentAmount: string): Promise<PensionResult | null> => {
+  const years = parseInt(paymentPeriod.replace(/[^0-9]/g, ''));
+  const digits = parseInt(paymentAmount.replace(/[^0-9]/g, ''));
+  if (!age || !years || !digits || !gender) return null;
+  const monthlyPayment = paymentAmount.includes('만원') ? digits * 10000 : digits;
+  try {
+    const response = await fetch('/api/calculate-pension/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ customerName: customerName || 'temp', gender, age, paymentPeriod: years, monthlyPayment, productType: 'master-pro' })
+    });
+    if (!response.ok) return null;
+    const result = await response.json();
+    if (!result.success || !result.data) return null;
+    return {
+      pensionStartAge: result.data.pensionStartAge || 0,
+      monthly: Math.round(result.data.monthlyPension || 0),
+      yearly: Math.round(result.data.yearlyPension || 0),
+      guaranteed20: Math.round(result.data.guaranteedAmount || 0),
+      totalUntil100: Math.round(result.data.totalUntil100 || 0),
+      notice: result.data.notice || ''
+    };
+  } catch (e) {
+    console.error('[CLIENT] 연금액 조회 실패:', e);
+    return null;
+  }
+};
 
 type SloganProps = {
   onOpenPrivacy: () => void
@@ -37,6 +79,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const [otpTimer, setOtpTimer] = useState(0);
   const [otpResendAvailable, setOtpResendAvailable] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
+  const [pensionStartAgePreview, setPensionStartAgePreview] = useState<number | null>(null);
+  const [verifiedPension, setVerifiedPension] = useState<PensionResult | null>(null);
 
   const [showConsultModal, setShowConsultModal] = useState(false);
   const [consultOtpCode, setConsultOtpCode] = useState('');
@@ -221,7 +265,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const handleVerifyOTP = async () => {
     const ageForVerify = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-    if (isNaN(ageForVerify) || ageForVerify < 31 || ageForVerify > 50) return;
+    if (isNaN(ageForVerify) || ageForVerify < MIN_AGE || ageForVerify > MAX_AGE) return;
     if (otpCode.length !== 6) {
       alert("6자리 인증번호를 입력해주세요.");
       return;
@@ -229,6 +273,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
     setVerifying(true);
     try {
+      const pension = (await fetchExcelPension(name, gender, ageForVerify, paymentPeriod, paymentAmount)) || EMPTY_PENSION;
       const res = await request.post("/api/verifyOTP", {
         phone,
         name,
@@ -241,10 +286,13 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         counselTime: consultTime,
         mounthlyPremium: paymentAmount, // 실제 선택값
         paymentPeriod: paymentPeriod,   // 실제 선택값
-        tenYearReturnRate: rate ? Math.round(rate * 100) : '-', // 환급률
-        interestValue, // 확정이자(실제 값)
-        refundValue,    // 예상해약환급금(실제 값)
-        templateId: "UB_8712"
+        monthlyPension: pension.monthly,
+        yearlyPension: pension.yearly,
+        guaranteedPension: pension.guaranteed20,
+        totalUntil100: pension.totalUntil100,
+        pensionStartAge: pension.pensionStartAge,
+        templateId: "UB_8705",
+        adminTemplateId: "UA_8331"
       });
       if (res.data.success) {
         // 방문자 추적: 환급금 확인
@@ -261,6 +309,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           console.warn("[CLIENT] 방문자 추적 실패 (무시됨):", trackingError);
         }
 
+        setVerifiedPension(pension);
         setIsVerified(true);
         setOtpSent(false);
         // alert 제거: 바로 결과 표시
@@ -296,7 +345,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
 
   const handleSendOTP = async () => {
     const ageForOtp = insuranceAge !== '' ? Number(insuranceAge) : NaN;
-    if (isNaN(ageForOtp) || ageForOtp < 31 || ageForOtp > 50) return;
+    if (isNaN(ageForOtp) || ageForOtp < MIN_AGE || ageForOtp > MAX_AGE) return;
     setOtpTimer(180); // 3분
     setOtpResendAvailable(false);
     await handlePostOTP(); // 인증번호 전송 및 otpSent true 처리
@@ -315,6 +364,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   // 모달 닫힐 때 인증상태 초기화
   const handleCloseModal = () => {
     setIsVerified(false);
+    setVerifiedPension(null);
     setShowResultModal(false);
     setOtpTimer(0);
     setOtpResendAvailable(true);
@@ -455,7 +505,20 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   // 연령 적합성 (31~50세)
   const isAgeKnown = insuranceAge !== '';
   const numericInsuranceAge = isAgeKnown ? Number(insuranceAge) : NaN;
-  const isAgeEligible = isAgeKnown && numericInsuranceAge >= 31 && numericInsuranceAge <= 50;
+  const isAgeEligible = isAgeKnown && numericInsuranceAge >= MIN_AGE && numericInsuranceAge <= MAX_AGE;
+
+  // 보험연령에 맞는 연금개시연령 미리보기 (엑셀 조회)
+  useEffect(() => {
+    if (!isAgeEligible) {
+      setPensionStartAgePreview(null);
+      return;
+    }
+    let cancelled = false;
+    fetchExcelPension('', gender || 'M', numericInsuranceAge, paymentPeriod || '10년', paymentAmount || '30만원').then((p) => {
+      if (!cancelled) setPensionStartAgePreview(p && p.pensionStartAge > 0 ? p.pensionStartAge : null);
+    });
+    return () => { cancelled = true; };
+  }, [isAgeEligible, numericInsuranceAge, gender, paymentPeriod, paymentAmount]);
 
   // 총 납입액, 환급률, 확정이자, 해약환급금 계산
   let amount = 0;
@@ -583,9 +646,9 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div className="w-7 h-7 sm:w-8 sm:h-8 bg-indigo-700 rounded-lg flex items-center justify-center">
                     <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
-                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">해약환급금 계산하기</h3>
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">연금액 계산하기</h3>
                 </div>
-                <p className="text-gray-700 text-[11px] sm:text-xs md:text-sm ml-9 sm:ml-10">간단한 정보 입력으로 예상 해약환급금을 확인하세요</p>
+                <p className="text-gray-700 text-[11px] sm:text-xs md:text-sm ml-9 sm:ml-10">간단한 정보 입력으로 예상 연금액을 확인하세요</p>
               </div>
               <form className="flex flex-col gap-2.5 sm:gap-3 md:gap-4" onSubmit={handleInsuranceCostCalculate}>
                 {/* 성별/이름 */}
@@ -614,6 +677,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div>
                     <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">생년월일 <span className="text-red-500">*</span></label>
                     <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" placeholder="19880818" maxLength={8} />
+                    {isAgeKnown && isAgeEligible && (
+                      <p className="mt-1 text-[11px] sm:text-xs text-indigo-700 font-medium">
+                        보험연령 {numericInsuranceAge}세{pensionStartAgePreview ? ` · 연금개시 ${pensionStartAgePreview}세` : ''}
+                      </p>
+                    )}
+                    {isAgeKnown && !isAgeEligible && (
+                      <p className="mt-1 text-[11px] sm:text-xs text-red-600 font-medium">
+                        보험연령 {numericInsuranceAge}세: 가입불가 ({MIN_AGE}~{MAX_AGE}세만 가입 가능)
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">연락처 <span className="text-red-500">*</span></label>
@@ -667,7 +740,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 <div className="flex flex-col gap-1.5 sm:gap-2 mt-1">
                   <button type="submit" className="w-full bg-indigo-700 text-white font-bold rounded-xl py-3 sm:py-3.5 text-sm sm:text-base hover:bg-indigo-800 transition flex items-center justify-center gap-2 shadow-lg cursor-pointer">
                     <CalculatorIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                    해약환급금 확인하기
+                    연금액 확인하기
                   </button>
                   <div className="flex gap-1.5 sm:gap-2">
                     <button type="button" onClick={handleOpenConsultModal} className="flex-1 bg-[#fa5a5a] text-white font-bold rounded-xl py-2.5 sm:py-3 text-xs sm:text-sm flex items-center justify-center gap-1 sm:gap-1.5 hover:opacity-95 transition cursor-pointer">
@@ -692,7 +765,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
           counselType === 1 ? (
             <span className="flex items-center gap-2">
               <CalculatorIcon className="w-6 h-6 text-[#3a8094]" />
-              환급금 확인하기
+              연금액 확인하기
             </span>
           ) : (
             <span className="flex items-center gap-2">
@@ -709,8 +782,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
         <div className="space-y-2 sm:space-y-3">
           {isAgeKnown && !isAgeEligible && (
             <div className="bg-red-50 border border-red-200 text-red-700 rounded p-1.5 sm:p-2 text-xs sm:text-sm">
-              이 상품은 31세~50세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아닙니다.
-              계산 기능은 이용하실 수 없습니다.
+              가입불가 안내: 이 상품은 보험연령 {MIN_AGE}세~{MAX_AGE}세까지만 가입 가능합니다. 현재 보험연령 {numericInsuranceAge}세는 가입 대상이 아니므로 연금액을 확인하실 수 없습니다.
             </div>
           )}
           {/* 환급금 산출 완료 안내 박스 (인증 후) */}
@@ -718,7 +790,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
             <>
               <FireworksEffect show={true} />
               <div className="bg-[#f8f8ff] rounded p-2 sm:p-2.5 mb-1.5 sm:mb-2 text-center">
-                <div className="text-base sm:text-lg text-black font-bold">환급금 산출이 완료되었습니다.</div>
+                <div className="text-base sm:text-lg text-black font-bold">연금액 산출이 완료되었습니다.</div>
               </div>
               {/* 환급금 결과값 UI (상세 정보) */}
               <div className="bg-gray-50 rounded-lg p-1.5 sm:p-2">
@@ -763,34 +835,24 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 10년 시점 환급률 */}
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-indigo-600 mr-1'>▸</span>10년 시점 환급률</span>
-                    <span className="font-bold">
-                      <span className="text-indigo-700">{rate ? Math.round(rate * 100) : '-'}</span>{' '}<span className="text-indigo-700">%</span>
-                    </span>
+                {[
+                  { label: '연금개시연령', value: verifiedPension && verifiedPension.pensionStartAge > 0 ? `${verifiedPension.pensionStartAge} 세` : '-', color: 'text-[#7c3aed]' },
+                  { label: '월 연금액', value: (verifiedPension?.monthly ?? 0) > 0 ? `약 ${verifiedPension!.monthly.toLocaleString('en-US')} 원` : '별도 상담 문의', color: 'text-[#3b82f6]' },
+                  { label: '20년 생존 시 누적 연금액', value: (verifiedPension?.guaranteed20 ?? 0) > 0 ? `약 ${verifiedPension!.guaranteed20.toLocaleString('en-US')} 원` : '별도 상담 문의', color: 'text-[#ef4444]' },
+                  { label: '100세 생존 시 누적 연금액', value: (verifiedPension?.totalUntil100 ?? 0) > 0 ? `약 ${verifiedPension!.totalUntil100.toLocaleString('en-US')} 원` : '별도 상담 문의', color: 'text-[#10b981]' },
+                ].map((row) => (
+                  <div key={row.label} className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-indigo-600 mr-1'>▸</span>{row.label}</span>
+                      <span className={`font-bold ${row.color}`}>{row.value}</span>
+                    </div>
                   </div>
-                </div>
-                {/* 10년 확정이자 */}
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-indigo-600 mr-1'>▸</span>10년 확정이자</span>
-                    <span className="font-bold">
-                      <span className="text-indigo-700">{interestValue}</span>{' '}<span className="text-indigo-700">원</span>
-                    </span>
-                  </div>
-                </div>
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-indigo-600 mr-1'>▸</span>10년 시점 예상 해약환급금</span>
-                    <span className="font-bold">
-                      <span className="text-[#ef4444]">{refundValue}</span>{' '}<span className="text-indigo-700">원</span>
-                    </span>
-                  </div>
-                </div>
+                ))}
+                {verifiedPension?.notice && (
+                  <div className="text-xs text-gray-700 mt-2">※ {verifiedPension.notice}</div>
+                )}
                 <div className="text-xs text-gray-700 text-center mt-4">
-                  * 실제 보험료 및 해약환급금은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
+                  * 실제 연금액은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
                   <br />
                   * 본 계산 결과는 참고용이며, 실제 계약 시 보험사 약관 및 상품설명서를 확인 바랍니다.
                 </div>
@@ -842,34 +904,21 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                     </span>
                   </div>
                 </div>
-                {/* 10년 시점 환급률 */}
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-indigo-600 mr-1'>▸</span>10년 시점 환급률</span>
-                    <span className="font-bold">
-                      <span className="text-indigo-700">?</span>{' '}<span className="text-indigo-700">%</span>
-                    </span>
+                {[
+                  { label: '연금개시연령', value: isAgeEligible && pensionStartAgePreview ? `${pensionStartAgePreview} 세` : '?', color: 'text-[#7c3aed]' },
+                  { label: '월 연금액', value: '인증 후 확인가능', color: 'text-[#3b82f6]' },
+                  { label: '20년 생존 시 누적 연금액', value: '인증 후 확인가능', color: 'text-[#ef4444]' },
+                  { label: '100세 생존 시 누적 연금액', value: '인증 후 확인가능', color: 'text-[#10b981]' },
+                ].map((row) => (
+                  <div key={row.label} className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-indigo-600 mr-1'>▸</span>{row.label}</span>
+                      <span className={`font-bold ${row.color}`}>{row.value}</span>
+                    </div>
                   </div>
-                </div>
-                {/* 10년 확정이자 */}
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-indigo-600 mr-1'>▸</span>10년 확정이자</span>
-                    <span className="font-bold">
-                      <span className="text-indigo-700">?</span>{' '}<span className="text-indigo-700">원</span>
-                    </span>
-                  </div>
-                </div>
-                <div className="bg-white p-1.5 sm:p-2 rounded border border-gray-200">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-xs sm:text-sm text-gray-600 font-medium"><span className='text-indigo-600 mr-1'>▸</span>10년 시점 예상 해약환급금</span>
-                    <span className="font-bold">
-                      <span className="text-[#ef4444]">?</span>{' '}<span className="text-indigo-700">원</span>
-                    </span>
-                  </div>
-                </div>
+                ))}
                 <div className="text-xs text-gray-700 text-center mt-4">
-                  * 실제 보험료 및 해약환급금은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
+                  * 실제 연금액은 가입시점 및 고객 정보에 따라 달라질 수 있습니다.
                   <div className="mt-0.5 text-[#3a8094]">* 휴대폰 인증 완료 후 상세 정보를 확인하실 수 있습니다.</div>
                 </div>
               </div>
@@ -877,7 +926,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
               <div className="bg-gray-50 rounded-lg p-1.5 sm:p-2 mt-0">
                 <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-1">휴대폰 인증</h3>
                 <p className="text-xs sm:text-sm text-gray-600 mb-1">
-                  정확한 환급금 확인을 위해 휴대폰 인증이 필요합니다.
+                  정확한 연금액 확인을 위해 휴대폰 인증이 필요합니다.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2 mb-2 sm:mb-3 items-stretch sm:items-center">
                   <input

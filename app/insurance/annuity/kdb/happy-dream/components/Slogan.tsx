@@ -7,6 +7,7 @@ import { queryUsers, createUser, queryCounsel, createCounsel } from '@/app/utils
 import { getProductConfigByPath, getTemplateIdByPath } from '@/app/constants/insurance';
 import { calculateAnnuityStartAge } from '@/app/utils/annuityCalculator';
 import FireworksEffect from '@/app/components/shared/FireworksEffect';
+import { usePensionStartAgePreview } from '@/app/utils/usePensionStartAgePreview';
 import { trackPremiumCheck } from "@/app/utils/visitorTracking";
 
 // 현재 경로에 맞는 상품 정보 가져오기
@@ -113,6 +114,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
   const isAgeKnown = insuranceAge !== '';
   const numericInsuranceAge = isAgeKnown ? Number(insuranceAge) : NaN;
   const isAgeEligible = isAgeKnown && numericInsuranceAge >= 15 && numericInsuranceAge <= 60;
+  const startAgePreview = usePensionStartAgePreview('happy-dream-2026', gender, numericInsuranceAge, isAgeEligible);
 
   // 연금개시연령 계산 함수 (기본 로직)
   const getPensionStartAge = (age: number, paymentPeriod: string) => {
@@ -876,6 +878,16 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                   <div>
                     <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">생년월일 <span className="text-red-500">*</span></label>
                     <input type="text" inputMode="numeric" pattern="[0-9]*" ref={birthInputRef} value={birth} onChange={handleBirthChange} onFocus={handleInputFocus} className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-[#c084fc]/20 focus:border-[#c084fc] transition-all" placeholder="19880818" maxLength={8} />
+                    {isAgeKnown && isAgeEligible && (
+                      <p className="mt-1 text-[11px] sm:text-xs text-gray-700 font-medium">
+                        보험연령 {numericInsuranceAge}세{(currentPensionStartAge || startAgePreview) ? ` · 연금개시 ${currentPensionStartAge ? `${currentPensionStartAge}세` : startAgePreview}` : ''}
+                      </p>
+                    )}
+                    {isAgeKnown && !isAgeEligible && (
+                      <p className="mt-1 text-[11px] sm:text-xs text-red-600 font-medium">
+                        보험연령 {numericInsuranceAge}세: 가입불가 (15~60세만 가입 가능)
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-[11px] sm:text-xs font-medium text-gray-600 mb-1 sm:mb-1.5">연락처 <span className="text-red-500">*</span></label>
