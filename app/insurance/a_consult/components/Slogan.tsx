@@ -431,7 +431,7 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
                 </div>
                 <div className="flex items-start gap-2 text-sm sm:text-base text-gray-600">
                   <span className="text-orange-400 flex-shrink-0 animate-pulse">▸</span>
-                  <span>AIA 일시납 달러 <span className="font-semibold text-red-500">10년시점 157.87% 환급률 보증</span></span>
+                  <span>AIA 일시납 달러 <span className="font-semibold text-red-500">10년시점 169.51% 환급률 보증</span></span>
                 </div>
               </div>
             </div>
