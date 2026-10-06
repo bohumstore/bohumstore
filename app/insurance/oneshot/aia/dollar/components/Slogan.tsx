@@ -486,8 +486,8 @@ export default function Slogan({ onOpenPrivacy, onModalStateChange }: SloganProp
     ? getRefundRate(numericInsuranceAge, gender as Gender)
     : null;
 
-  // 환급률 (소수점 형태, 예: 1.5787 = 157.87%)
-  const rate = refundRateFromTable ? refundRateFromTable / 100 : 1.5787;
+  // 환급률 (소수점 형태, 예: 1.6951 = 169.51%)
+  const rate = refundRateFromTable ? refundRateFromTable / 100 : 1.6951;
   const interestRate = rate - 1; // 이자율 = 환급률 - 100%
 
   const interestValue = lumpSum ? parseFloat((lumpSum * interestRate).toFixed(2)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '-';
